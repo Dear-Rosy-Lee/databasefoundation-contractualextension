@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Order>139</Order>
-  <EntranceType>YuLinTu.Component.ExportDataSummaryTask.Entrance</EntranceType>
-  <EntrancePath>.\Components\YuLinTu.Component.ExportDataSummaryTask\Binary\YuLinTu.Component.ExportDataSummaryTask.dll</EntrancePath>
-</WinComponent>
