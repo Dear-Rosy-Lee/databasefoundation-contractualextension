@@ -4,4 +4,8 @@
     <Key>DefaultDataSourceName</Key>
     <Value xsi:type="xsd:string">SourceSQLite</Value>
   </KeyValueOfStringObject>
+  <KeyValueOfStringObject>
+    <Key>DefaultBusinessType</Key>
+    <Value xsi:type="xsd:string">Business.Default</Value>
+  </KeyValueOfStringObject>
 </ArrayOfKeyValueOfStringObject>

@@ -69,4 +69,7 @@
       </KeyValueOfStringObject>
     </Value>
   </KeyValueOfStringObject>
+  <KeyValueOfStringObject>
+    <Key>SessionCode</Key>
+  </KeyValueOfStringObject>
 </ArrayOfKeyValueOfStringObject>

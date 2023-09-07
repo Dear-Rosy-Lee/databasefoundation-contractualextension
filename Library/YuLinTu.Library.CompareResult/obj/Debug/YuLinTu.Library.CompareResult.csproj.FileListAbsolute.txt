@@ -46,3 +46,8 @@ D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\Debug\YuLin
 D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\Debug\YuLinTu.Library.CompareResult.csproj.CopyComplete
 D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\Debug\YuLinTu.Library.CompareResult.dll
 D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\Debug\YuLinTu.Library.CompareResult.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\bin\Debug\Xceed.Wpf.Toolkit.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\bin\Debug\Microsoft.Data.ConnectionUI.Dialog.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\bin\Debug\Microsoft.Windows.Shell.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\bin\Debug\Microsoft.Data.ConnectionUI.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\bin\Debug\zh-Hans\Microsoft.Data.ConnectionUI.Dialog.resources.dll

@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <Order>100</Order>
-    <EntranceType>YuLinTu.Appwork.WindowStateHandler.Entrance</EntranceType>
-    <EntrancePath>.\Components\YuLinTu.Appwork.WindowStateHandler\Binary\YuLinTu.Appwork.WindowStateHandler.dll</EntrancePath>
-    <IsSystemManaged>false</IsSystemManaged>
+  <Order>100</Order>
+  <Name>窗口状态控制</Name>
+  <Catalog>辅助插件</Catalog>
+  <ImageUri>pack://application:,,,/YuLinTu.Resources;component/Images/32/PositionAnchoringGallery.png</ImageUri>
+  <Version>6.8.0.1</Version>
+  <Author>鱼鳞图公司</Author>
+  <Description>自动保存窗口状态，以便在下次启动时还原。</Description>
+  <EntranceType>YuLinTu.Appwork.WindowStateHandler.Entrance</EntranceType>
+  <EntrancePath>D:\WorkSpace\WinFoundation\Workspace\.\Components\YuLinTu.Appwork.WindowStateHandler\Binary\YuLinTu.Appwork.WindowStateHandler.dll</EntrancePath>
+  <IsSystemManaged>false</IsSystemManaged>
+  <IsApplicationDependency>false</IsApplicationDependency>
+  <IsConnected>true</IsConnected>
+  <IsEnabled>true</IsEnabled>
 </WinComponent>

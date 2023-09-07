@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <Order>9</Order>
-    <EntranceType>YuLinTu.Appwork.Network.Entrance</EntranceType>
-    <EntrancePath>.\Components\YuLinTu.Appwork.Network\Binary\YuLinTu.Appwork.Network.dll</EntrancePath>
-    <IsSystemManaged>false</IsSystemManaged>
+  <Order>9</Order>
+  <Name>网络嗅探</Name>
+  <Catalog>系统插件</Catalog>
+  <ImageUri>pack://application:,,,/YuLinTu.Resources;component/Images/32/Publish32.png</ImageUri>
+  <Version>6.8.0.1</Version>
+  <Author>鱼鳞图公司</Author>
+  <Description>自动探测网络是否联通，并在必要时进行网络已连接或已断开的通知。禁用此插件会导致账户同步功能和其他依赖网络通知的功能不可用。</Description>
+  <EntranceType>YuLinTu.Appwork.Network.Entrance</EntranceType>
+  <EntrancePath>D:\WorkSpace\WinFoundation\Workspace\.\Components\YuLinTu.Appwork.Network\Binary\YuLinTu.Appwork.Network.dll</EntrancePath>
+  <IsSystemManaged>false</IsSystemManaged>
+  <IsApplicationDependency>false</IsApplicationDependency>
+  <IsConnected>true</IsConnected>
+  <IsEnabled>true</IsEnabled>
 </WinComponent>

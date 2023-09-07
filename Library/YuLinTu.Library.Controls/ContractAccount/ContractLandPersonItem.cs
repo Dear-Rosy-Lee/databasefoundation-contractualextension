@@ -59,9 +59,12 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private string sumTableArea;
 
+        private string sumContractDelayArea;
+
         private string _quantificitionArea;
         private string _obligateArea;
         private string _landPurpose;
+
 
        
 
@@ -152,7 +155,15 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-
+        public string ContractDelayAreaUI
+        {
+            get { return sumContractDelayArea; }
+            set
+            {
+                sumContractDelayArea = value;
+                NotifyPropertyChanged("ContractDelayAreaUI");
+            }
+        }
         /// <summary>
         /// 量化面积
         /// </summary>

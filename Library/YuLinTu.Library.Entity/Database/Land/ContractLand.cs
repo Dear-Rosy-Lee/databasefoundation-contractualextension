@@ -59,6 +59,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private double? tableArea;
 
+        private double? contractDelayArea;
         /// <summary>
         /// 是否基本农田
         /// </summary>
@@ -441,6 +442,21 @@ namespace YuLinTu.Library.Entity
             {
                 tableArea = value;
                 NotifyPropertyChanged("TableArea");
+            }
+        }
+
+
+        /// <summary>
+        ///延包面积
+        /// </summary>
+        [DataColumn("YBMJ")]
+        public double ContractDelayArea
+        {
+            get { return ContractDelayArea; }
+            set
+            {
+                contractDelayArea = value;
+                NotifyPropertyChanged("ContractDelayArea");
             }
         }
 

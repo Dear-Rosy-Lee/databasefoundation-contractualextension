@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyValueOfStringObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyValueOfStringObject>
+    <Key>YuLinTu.Appwork.New.WorkpageRecorderConfiguration</Key>
+    <Value xsi:type="GlobalSettingsSectionOfWorkpageRecorderConfiguration">
+      <Version>2023-09-07T10:18:45.0729394+08:00</Version>
+      <Settings>
+        <LastWorkpages>
+          <string>YuLinTu.Component.ContractAccount.ContractAccountFramePage, YuLinTu.Component.ContractAccount, Version=8.0.15.602, Culture=neutral, PublicKeyToken=null</string>
+        </LastWorkpages>
+        <LastSelectedWorkpage>YuLinTu.Component.ContractAccount.ContractAccountFramePage, YuLinTu.Component.ContractAccount, Version=8.0.15.602, Culture=neutral, PublicKeyToken=null</LastSelectedWorkpage>
+        <RestoreType>LastAll</RestoreType>
+      </Settings>
+    </Value>
+  </KeyValueOfStringObject>
+</ArrayOfKeyValueOfStringObject>

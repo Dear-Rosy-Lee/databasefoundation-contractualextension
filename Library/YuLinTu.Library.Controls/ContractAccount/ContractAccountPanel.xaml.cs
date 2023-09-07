@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,9 +35,10 @@ namespace YuLinTu.Library.Controls
         private bool allCheck = false;
         private bool isSelected = false;   //用于标记界面上是否有选中项信息(默认为没选中)
         private bool isbatch = false;  //是否批量
-        private SeekLandNeighborSetting seekLandNeighborSet;//用于记录弹出查找四至的选择条件 
+        private SeekLandNeighborSetting seekLandNeighborSet;//用于记录弹出查找四至的选择条件
         private bool isBatch;//是否批量
         private bool _isStockLand = true;
+
         /// <summary>
         /// 当前选择承包方绑定实体(界面实体)
         /// </summary>
@@ -75,12 +77,12 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 数据字典地块类别
         /// </summary>
-        List<Dictionary> listDKLB = new List<Dictionary>();
+        private List<Dictionary> listDKLB = new List<Dictionary>();
 
         /// <summary>
         /// 数据字典地力等级
         /// </summary>
-        List<Dictionary> listDLDJ = new List<Dictionary>();
+        private List<Dictionary> listDLDJ = new List<Dictionary>();
 
         /// <summary>
         /// 承包方绑定集合
@@ -94,6 +96,7 @@ namespace YuLinTu.Library.Controls
 
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private ServiceSetDefine ServiceSetDefine = ServiceSetDefine.GetIntence();
+
         /// <summary>
         /// 是否批处理
         /// </summary>
@@ -110,13 +113,16 @@ namespace YuLinTu.Library.Controls
                 NotifyPropertyChanged("IsBatch");
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
+
+        #endregion Fields
 
         #region Properties
 
@@ -136,7 +142,6 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-
         public SystemSetDefine SystemSet
         {
             get { return SystemSetDefine.GetIntence(); }
@@ -147,12 +152,14 @@ namespace YuLinTu.Library.Controls
             get { return ContractBusinessSettingDefine.GetIntence(); }
         }
 
-        public ContractBusinessImportSurveyDefine ContractLandImportSurveyDefine { get { return ContractBusinessImportSurveyDefine.GetIntence(); } }
+        public ContractBusinessImportSurveyDefine ContractLandImportSurveyDefine
+        { get { return ContractBusinessImportSurveyDefine.GetIntence(); } }
 
         /// <summary>
         /// 地块示意图配置
         /// </summary>
         public ContractBusinessParcelWordSettingDefine ParcelWordSettingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
+
         /// <summary>
         /// 当前地域
         /// </summary>
@@ -170,7 +177,6 @@ namespace YuLinTu.Library.Controls
                     currentAccountItem = null;
                     currentLandBinding = null;
                 }
-
             }
         }
 
@@ -277,7 +283,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Delegate
 
@@ -296,7 +302,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public MenueEnableControl MenueEnableMethod { get; set; }
 
-        #endregion
+        #endregion Delegate
 
         #region Ctor
 
@@ -313,10 +319,9 @@ namespace YuLinTu.Library.Controls
             queueQuery = new TaskQueueDispatcher(Dispatcher);
             queueFilter = new TaskQueueDispatcher(Dispatcher);
             queueClear = new TaskQueueDispatcher(Dispatcher);
-
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -360,7 +365,6 @@ namespace YuLinTu.Library.Controls
                     ca_zoneFullName.Text = "";
                     TheWorkPage.Page.IsBusy = true;
                     accountLandItems.Clear();
-
                 }, ended =>
                 {
                     TheWorkPage.Page.IsBusy = false;
@@ -430,7 +434,6 @@ namespace YuLinTu.Library.Controls
                     }
                 }
             }
-
         }
 
         private int count = 0;
@@ -451,7 +454,7 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
-        /// 数据统计 
+        /// 数据统计
         /// </summary>
         private void DataCount()
         {
@@ -460,7 +463,7 @@ namespace YuLinTu.Library.Controls
             double summaryTableArea = 0;
             double summaryActualArea = 0;
             double summaryAwareArea = 0;
-
+            double? summrayContractDelayArea = 0;
             int i = -1;
 
             foreach (var item in accountLandItems)
@@ -468,6 +471,7 @@ namespace YuLinTu.Library.Controls
                 double virtualPersonActualArea = 0;
                 double virtualPersonTableArea = 0;
                 double virtualPersonAwareArea = 0;
+                double? virtualPersonContractDelayArea = 0;
                 i++;
                 if (!view.IsItemVisible(item))
                 {
@@ -489,14 +493,17 @@ namespace YuLinTu.Library.Controls
                         summaryTableArea += tableArea;
                         summaryActualArea += land.Tag.ActualArea;
                         summaryAwareArea += land.Tag.AwareArea;
+                        summrayContractDelayArea += land.Tag.ContractDelayArea;
                         virtualPersonActualArea += land.Tag.ActualArea;
                         virtualPersonTableArea += tableArea;
                         virtualPersonAwareArea += land.Tag.AwareArea;
+                        virtualPersonContractDelayArea += land.Tag.ContractDelayArea;
                     }
                 }
                 item.ActualAreaUI = virtualPersonActualArea.AreaFormat(2);
                 item.AwareAreaUI = virtualPersonAwareArea.AreaFormat(2);
                 item.TableAreaUI = virtualPersonTableArea.AreaFormat(2);
+                item.ContractDelayAreaUI = virtualPersonContractDelayArea.AreaFormat(2);
             }
 
             //加上确股地块统计信息
@@ -520,7 +527,6 @@ namespace YuLinTu.Library.Controls
                         summaryAwareArea = summaryAwareArea + Convert.ToDouble(landStock.Sum(o => o.AwareArea));
                     }
                 }
-
             }
 
             AccountSummary.FamilyCount = familyCount;
@@ -528,10 +534,9 @@ namespace YuLinTu.Library.Controls
             AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
             AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
             AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
-
         }
 
-        #endregion
+        #endregion 获取数据
 
         #region 右键菜单
 
@@ -628,7 +633,6 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void miSingle_Click(object sender, RoutedEventArgs e)
         {
-
             MultiParcelExport();
         }
 
@@ -637,7 +641,6 @@ namespace YuLinTu.Library.Controls
         ///// </summary>
         //private void miDouble_Click(object sender, RoutedEventArgs e)
         //{
-
         //}
 
         /// <summary>
@@ -650,7 +653,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 检索数据之地块名称空值
-        /// </summary>  
+        /// </summary>
         private void miSearchLandNameNull_Click(object sender, RoutedEventArgs e)
         {
             LandNameNullSearch();
@@ -658,7 +661,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 检索数据之二轮合同面积空值
-        /// </summary>   
+        /// </summary>
         private void miSearchTableAreaNull_Click(object sender, RoutedEventArgs e)
         {
             ContractAreaNullSearch();
@@ -666,7 +669,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 检索数据之实测面积空值
-        /// </summary>  
+        /// </summary>
         private void miSearchActualAreaNull_Click(object sender, RoutedEventArgs e)
         {
             ActualAreaNullSearch();
@@ -682,7 +685,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 检索数据之是否基本农田空值
-        /// </summary>   
+        /// </summary>
         private void miSearchIsFarmerNull_Click(object sender, RoutedEventArgs e)
         {
             FarmerLandNullSearch();
@@ -690,13 +693,13 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 检索数据之地力等级空值
-        /// </summary>  
+        /// </summary>
         private void miSearchLandLevelNull_Click(object sender, RoutedEventArgs e)
         {
             LandLevelNullSearch();
         }
 
-        #endregion
+        #endregion 右键菜单
 
         #region Methods - Private
 
@@ -727,12 +730,15 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.ExportSurveyTable:
                         ExportPublishWordTask(saveFilePath, taskDes, taskName, listPerson);
                         break;
+
                     case eContractAccountType.VolumnExportSurveyTable:
                         ExportPublishWordTaskGroup(saveFilePath, taskDes, taskName);
                         break;
+
                     case eContractAccountType.ExportLandSurveyWord:
                         ExportLandWordTask(saveFilePath, taskDes, taskName, listPerson);
                         break;
+
                     case eContractAccountType.VolumnExportLandSurveyTable:
                         ExportLandWordTaskGroup(saveFilePath, taskDes, taskName);
                         break;
@@ -748,9 +754,11 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportSenderTableWord:
                         ExportSenderWordTaskGroup(saveFilePath, taskDes, taskName);
                         break;
+
                     case eContractAccountType.ExportContractorTable:
                         ExportVPWordTask(saveFilePath, taskDes, taskName, listPerson);
                         break;
+
                     case eContractAccountType.VolumnExportContractorTable:
                         ExportVPWordTaskGroup(saveFilePath, taskDes, taskName);
                         break;
@@ -760,6 +768,7 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportSummaryExcel:   //批量导出数据汇总表
                         TaskGroupExportSummaryExcel(eContractAccountType.ExportSummaryExcel, taskDes, taskName, saveFilePath);
                         break;
+
                     case eContractAccountType.ExportSingleFamilySurveyExcel:  //单户调查表-excel
                         TaskExportSingleFamilySurveyExcel(type, taskDes, taskName, saveFilePath, listPerson);
                         break;
@@ -769,12 +778,15 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportSingleFamilySurveyExcel:  //单户调查表-excel
                         TaskGroupExportSingleFamilySurveyExcel(eContractAccountType.ExportSingleFamilySurveyExcel, taskDes, taskName, saveFilePath);
                         break;
+
                     case eContractAccountType.VolumnExportVirtualPersonExcel:  //批量承包方调查表Excel
                         ExportVPExcelTaskGroup(saveFilePath, taskDes, taskName);
                         break;
+
                     case eContractAccountType.ExportMultiParcelOfFamily: //地块示意图
                         ExportMultiParcelTask(saveFilePath, listPerson, taskDes, taskName, isStockLand);
                         break;
+
                     case eContractAccountType.VolumnExportMultiParcelOfFamily:  //批量导出地块示意图
                         ExportMultiParcelTaskGroup(saveFilePath, taskName, taskDes, isStockLand);
                         break;
@@ -784,18 +796,23 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.ExportSingleFamilyConfirmExcel:
                         TaskExportContractAccountExcel(type, taskDes, taskName, saveFilePath, listPerson, TableType);
                         break;
+
                     case eContractAccountType.ExportSendTableExcel:   //发包方调查表Excel
                         ExportSenderExcelTask(saveFilePath, taskDes, taskName);
                         break;
+
                     case eContractAccountType.VolumnExportContractAccountExcel:
                         TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, taskDes, taskName, saveFilePath, TableType);
                         break;
+
                     case eContractAccountType.VolumnExportSingleFamilyConfirmExcel:
                         TaskGroupExportContractAccountExcel(eContractAccountType.ExportSingleFamilyConfirmExcel, taskDes, taskName, saveFilePath, TableType);
                         break;
+
                     case eContractAccountType.ExportVillageDeclare:   //导出村组公示表
                         TaskExportVillagesDeclare(eContractAccountType.ExportVillageDeclare, taskDes, taskName, saveFilePath);
                         break;
+
                     case eContractAccountType.VolumnExportVillageDeclare:   //批量导出村组公示表
                         TaskGroupExportVillagesDeclare(eContractAccountType.ExportVillageDeclare, taskDes, taskName, saveFilePath);
                         break;
@@ -863,7 +880,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -925,7 +941,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -933,8 +948,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             import.StartAsync();
-
-
         }
 
         /// <summary>
@@ -980,7 +993,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1032,7 +1044,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1040,8 +1051,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             import.StartAsync();
-
-
         }
 
         /// <summary>
@@ -1088,7 +1097,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1139,7 +1147,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1147,8 +1154,8 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             import.StartAsync();
-
         }
+
         private void TaskExportCategorySummaryExcel()
         {
             TaskExportCategorySummaryExcelArgument meta = new TaskExportCategorySummaryExcelArgument();
@@ -1163,7 +1170,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1218,7 +1224,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1270,7 +1275,6 @@ namespace YuLinTu.Library.Controls
 
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-
             });
             TheWorkPage.TaskCenter.Add(import);
             if (ShowTaskViewer != null)
@@ -1278,7 +1282,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             import.StartAsync();
-
         }
 
         /// <summary>
@@ -1306,6 +1309,7 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.ExportContractAccountExcel:
                         ExportCommonOperateTzbb(type, TableType, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.ExportSingleFamilyConfirmExcel:
                         ExportCommonOperateTzbb(type, TableType, taskDes, taskName, extPage.FileName, messageName);
                         break;
@@ -1347,8 +1351,6 @@ namespace YuLinTu.Library.Controls
             {
                 return;
             }
-
-
         }
 
         /// <summary>
@@ -1474,27 +1476,35 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportSurveyTable:
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
+
                     case eContractAccountType.VolumnExportLandSurveyTable:
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
+
                     case eContractAccountType.VolumnExportPublishTable:
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.VolumnExportContractorTable:
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
+
                     case eContractAccountType.ExportSummaryExcel:   //导出数据汇总表
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.ExportVillageDeclare:  //导出村组公示公告Word
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.ExportSingleFamilySurveyExcel:  //单户调查表-excel
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.VolumnExportVirtualPersonExcel://承包方调查表
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractAccountType.ExportMultiParcelOfFamily: //地块示意图
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
@@ -1572,7 +1582,7 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
                 var zoneStation = DbContext.CreateZoneWorkStation();
-                int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+                int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
                 if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
                 {
@@ -1591,7 +1601,7 @@ namespace YuLinTu.Library.Controls
             });
         }
 
-        #endregion
+        #endregion Methods - Private
 
         #region Methods -Events
 
@@ -1619,8 +1629,8 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void view_HasItemsGetter(object sender, MetroViewItemHasItemsEventArgs e)
         {
-
         }
+
         private void view_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GetSelectItem();
@@ -1651,7 +1661,7 @@ namespace YuLinTu.Library.Controls
             IsBatch = (bool)caIsbatch.IsChecked;
         }
 
-        #endregion
+        #endregion Methods -Events
 
         #region Methods -Publics
 
@@ -1669,7 +1679,7 @@ namespace YuLinTu.Library.Controls
             InitialControl(currentZone.FullCode);
         }
 
-        #endregion
+        #endregion Methods -Publics
 
         #region Method-过滤数据
 
@@ -1791,7 +1801,6 @@ namespace YuLinTu.Library.Controls
                         return true;
                 }
 
-
                 return has;
             }, true);
         }
@@ -1837,7 +1846,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Method-过滤数据
 
         #region Method-地块基本操作
 
@@ -1943,7 +1952,7 @@ namespace YuLinTu.Library.Controls
 
                 DataCount();
                 ContractLand contractLand = addPage.CurrentLand;  //当前添加的承包地块(数据库实体)
-                landList.Add(contractLand);   //向集合中添加新增地块 
+                landList.Add(contractLand);   //向集合中添加新增地块
             });
         }
 
@@ -2016,7 +2025,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (CurrentAccountItem == null) return;
                     var landBinding = new ContractLandBinding(landTemp);
-                    ContractLandPersonItemHelper.ConvertCodeToName(landBinding, listDKLB, listDLDJ);  //地块类别名称和地力等级名称    
+                    ContractLandPersonItemHelper.ConvertCodeToName(landBinding, listDKLB, listDLDJ);  //地块类别名称和地力等级名称
                     CurrentLandBinding.CopyPropertiesFrom(landBinding);
                     string actualArea = ContractLandPersonItemHelper.SumActualArea(CurrentAccountItem);
                     string awareArea = ContractLandPersonItemHelper.SumAwareArea(CurrentAccountItem);
@@ -2026,7 +2035,6 @@ namespace YuLinTu.Library.Controls
                     CurrentAccountItem.TableAreaUI = tableArea;    //更改承包方二轮合同面积显示信息
                     if (CurrentAccountItem.Tag.Name != editPage.CurrentPerson.Name)
                     {
-
                         //此时改变了当前编辑地块的承包人(要更改界面显示的承包方名称、实测面积和确权面积)
                         ContractLandPersonItem personItem = accountLandItems.FirstOrDefault(c => c.ID == editPage.CurrentPerson.ID);
                         //陈泽林 20161020 如果该承包方没有显示在台账中就新增
@@ -2203,7 +2211,7 @@ namespace YuLinTu.Library.Controls
                     CurrentAccountItem.Name = ContractLandPersonItemHelper.CreateItemName(CurrentAccountItem.Tag, CurrentAccountItem.Children.Count());
                     if (CurrentAccountItem.Children.Count == 0)
                     {
-                        CurrentAccountItem.Visibility = Visibility.Collapsed;   //没有地块则不显示 
+                        CurrentAccountItem.Visibility = Visibility.Collapsed;   //没有地块则不显示
                         accountLandItems.Remove(CurrentAccountItem);
                     }
                 }));
@@ -2212,7 +2220,6 @@ namespace YuLinTu.Library.Controls
                 landList.Remove(landRemove);    //从集合中移除删除的地块
                 var args = MessageExtend.ContractAccountMsg(DbContext, ContractAccountMessage.CONTRACTLAND_DELETE_COMPLETE, land, CurrentZone.FullCode);
                 TheWorkPage.Workspace.Message.Send(this, args);
-
             });
             ShowBox(ContractAccountInfo.ContractLandDel, ContractAccountInfo.CurrentLandDelSure, eMessageGrade.Infomation, action);
         }
@@ -2228,7 +2235,7 @@ namespace YuLinTu.Library.Controls
             Refresh();
         }
 
-        #endregion
+        #endregion Method-地块基本操作
 
         #region Method-导入数据
 
@@ -2597,10 +2604,9 @@ namespace YuLinTu.Library.Controls
                      return;
                  }
              });
-
         }
 
-        #endregion
+        #endregion Method-导入数据
 
         #region Method-导出数据
 
@@ -2725,7 +2731,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Method-导出数据模板
 
         #region Method-调查报表-导出Word
 
@@ -2760,6 +2766,7 @@ namespace YuLinTu.Library.Controls
                         YuLinTu.Library.Business.ExportSenderWord senderTable = new YuLinTu.Library.Business.ExportSenderWord();
 
                         #region 通过反射等机制定制化具体的业务处理类
+
                         var temp = WorksheetConfigHelper.GetInstance(senderTable);
                         if (temp != null && temp.TemplatePath != null)
                         {
@@ -2767,7 +2774,8 @@ namespace YuLinTu.Library.Controls
                                 senderTable = (YuLinTu.Library.Business.ExportSenderWord)temp;
                             tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                         }
-                        #endregion
+
+                        #endregion 通过反射等机制定制化具体的业务处理类
 
                         senderTable.OpenTemplate(tempPath);
                         senderTable.PrintPreview(tissues.FirstOrDefault(), SystemSet.DefaultPath + "\\" + tissues.FirstOrDefault().Name + "-发包方调查表");
@@ -2899,7 +2907,6 @@ namespace YuLinTu.Library.Controls
                     }
                     else
                     {
-
                         if (CurrentAccountItem == null)
                         {
                             ShowBox(ContractAccountInfo.ExportDataWord, ContractAccountInfo.ViewDataNo);
@@ -3084,7 +3091,6 @@ namespace YuLinTu.Library.Controls
                     }
                     else
                     {
-
                         CurrentLandBinding.Tag.LandNumberFormat(SystemSetDefine);
                         bool flag = ContractAccountBusiness.ExportLandWord(currentZone, CurrentLandBinding.Tag, CurrentAccountItem.Tag, DictList);
                     }
@@ -3291,7 +3297,7 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        #endregion
+        #endregion Method-调查报表-导出Word
 
         #region Method-调查报表-导出Excel
 
@@ -3516,7 +3522,6 @@ namespace YuLinTu.Library.Controls
                     TaskExportBoundaryInfoExcel(eContractAccountType.ExportBoundaryInfoExcel, ContractAccountInfo.ExportBoundaryInfoExcel, ContractAccountInfo.ExportSurveyTableData, SystemSet.DefaultPath);
                     //       ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportBoundaryInfoExcel,
                     //eContractAccountType.ExportBoundaryInfoExcel, ContractAccountInfo.ExportBoundaryInfoExcel, ContractAccountInfo.ExportSurveyTableData);
-
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
                 {
@@ -3724,7 +3729,7 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        #endregion
+        #endregion Method-调查报表-导出Excel
 
         #region Method-台账导出
 
@@ -3758,7 +3763,7 @@ namespace YuLinTu.Library.Controls
 
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
@@ -3830,7 +3835,7 @@ namespace YuLinTu.Library.Controls
             }
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
@@ -3863,7 +3868,7 @@ namespace YuLinTu.Library.Controls
             }
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
@@ -3925,9 +3930,7 @@ namespace YuLinTu.Library.Controls
                 {
                     isbatch = true;
                     ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportSingleFamilyConfirmExcel, ContractAccountInfo.ExportFamilyConfirmTable, ContractAccountInfo.ExportTable, TableType, null);
-
                 }
-
             }
             else
             {
@@ -3943,7 +3946,6 @@ namespace YuLinTu.Library.Controls
                     //ShowBox(ContractAccountInfo.ExportData, "导出成功", eMessageGrade.Infomation);
                 }
             }
-
         }
 
         /// <summary>
@@ -3981,6 +3983,7 @@ namespace YuLinTu.Library.Controls
                 ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -3988,7 +3991,8 @@ namespace YuLinTu.Library.Controls
                         export = (ExportContractorSurveyExcel)temp;
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 string savePath = fileName + @"\" + familyNumber + "-" + selectVirtualPerson.Name + "-" + "单户确认表" + ".xls";
                 export.SaveFilePath = savePath;
@@ -4017,7 +4021,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public void ExportLandSingleSurveyTable()
         {
-            //导出excel表业务类型，默认为承包方调查表         
+            //导出excel表业务类型，默认为承包方调查表
             if (CurrentZone == null)
             {
                 ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
@@ -4146,7 +4150,7 @@ namespace YuLinTu.Library.Controls
             }
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
@@ -4163,12 +4167,12 @@ namespace YuLinTu.Library.Controls
                 return;
             }
         }
+
         /// <summary>
         /// 地块类别汇总表
         /// </summary>
         public void ExportCategorySummary()
         {
-
             if (CurrentZone == null)
             {
                 //没有选择导出地域
@@ -4177,7 +4181,7 @@ namespace YuLinTu.Library.Controls
             }
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
             if (currentZone.Level > eZoneLevel.County)
             {
                 ShowBox(ContractAccountInfo.ExportData, "请选择县或县以下级别地域进行导出");
@@ -4205,7 +4209,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 导出村组公示公告表Word
-        /// </summary>    
+        /// </summary>
         public void VillagesDeclareWord(Zone zone, string filePath, DateSetting dateSetting = null)
         {
             try
@@ -4226,13 +4230,13 @@ namespace YuLinTu.Library.Controls
                 }
                 string statueDes = excelName + "公示公告";
                 string savePath = filePath + @"\" + excelName + TemplateFile.AnnouncementWord + ".doc";   //保存文件全路径
-                string templatePath = TemplateHelper.WordTemplate(TemplateFile.AnnouncementWord);  //模板路径               
+                string templatePath = TemplateHelper.WordTemplate(TemplateFile.AnnouncementWord);  //模板路径
                 ExportAnnouncementWord exportWord = new ExportAnnouncementWord(DbContext);
                 exportWord.CurrentZone = zone;
                 exportWord.DateSettingForAnnoucementWord = dateSetting;
                 exportWord.ListPerson = listVp;
                 exportWord.ListLand = listLand;
-                if (exportWord.OpenTemplate(templatePath))   //打开模板  
+                if (exportWord.OpenTemplate(templatePath))   //打开模板
                     exportWord.SaveAs(zone, savePath);
                 listVp = null;
                 listLand = null;
@@ -4243,7 +4247,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Method-台账导出
 
         #region Method-导出地域下Shape数据
 
@@ -4480,9 +4484,9 @@ namespace YuLinTu.Library.Controls
             });
         }
 
-        #endregion
+        #endregion Method-导出地域下Shape数据
 
-        #endregion
+        #endregion Method-导出数据
 
         #region Method-地籍数据处理
 
@@ -4559,7 +4563,6 @@ namespace YuLinTu.Library.Controls
                         ContractAccountBusiness.ExportDotResultExcel(currentZone, currentLandBinding.Tag, SystemSet.DefaultPath);
                     }
                 }
-
             }
             else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenZone != null && childrenZone.Count > 0)
             {
@@ -4825,7 +4828,6 @@ namespace YuLinTu.Library.Controls
                     };
                     TheWorkPage.Page.ShowMessageBox(confirmPage, (b, r) =>
                     {
-
                     });
                 }
                 else
@@ -4952,11 +4954,9 @@ namespace YuLinTu.Library.Controls
                             ShowBox(ContractAccountInfo.ExportMultiParcelOfFamily, ex.Message);
                             return;
                         }
-
                     };
                     TheWorkPage.Page.ShowMessageBox(confirmPage, (b, r) =>
                     {
-
                     });
                 }
                 else
@@ -5113,7 +5113,7 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        #endregion
+        #endregion Method-地籍数据处理
 
         #region Method-工具
 
@@ -5132,6 +5132,7 @@ namespace YuLinTu.Library.Controls
                 return;
             LandFilterTool("");
         }
+
         /// <summary>
         /// 显示对于承包地块
         /// </summary>
@@ -5169,7 +5170,6 @@ namespace YuLinTu.Library.Controls
             List<Zone> childrenZone = new List<Zone>();
             childrenZone = allZones.FindAll(c => c.FullCode != currentZone.FullCode);
             landList = ContractAccountBusiness.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
-
 
             if ((currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && childrenZone.Count == 0)) && (landList == null || landList.Count == 0))
             {
@@ -5411,7 +5411,8 @@ namespace YuLinTu.Library.Controls
             meta.SingleLand = singleLand;
             return meta;
         }
-        #endregion
+
+        #endregion Method-工具-初始化界址点线
 
         #region Method-工具-根据有效点初始化界址线
 
@@ -5652,7 +5653,7 @@ namespace YuLinTu.Library.Controls
             taskGroup.StartAsync();
         }
 
-        #endregion
+        #endregion Method-工具-根据有效点初始化界址线
 
         /// <summary>
         /// 查找四至
@@ -6177,7 +6178,6 @@ namespace YuLinTu.Library.Controls
                 }
                 DataCount();
                 Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }));
-
             };
             clearDlg.ConfirmTerminated += (s, e) =>
             {
@@ -6274,10 +6274,9 @@ namespace YuLinTu.Library.Controls
                     personBind.Name = ConvertContractor.CreateItemName(personBind.Tag, showitemCount) + ConvertContractor.CreateItemNumber(personBind.Tag);
                 }
             }
-
         }
 
-        #endregion
+        #endregion Method-辅助-工具-地块过滤
 
         #region Method-辅助-工具-初始数据
 
@@ -6344,7 +6343,6 @@ namespace YuLinTu.Library.Controls
             }
             operation.StartAsync();
         }
-
 
         /// <summary>
         /// 工具之初始化地块批量查找周边地块任务-按镇
@@ -6416,7 +6414,6 @@ namespace YuLinTu.Library.Controls
             }
             operation.StartAsync();
         }
-
 
         /// <summary>
         /// 工具之初始化地块属性信息(组任务)
@@ -6687,9 +6684,9 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        #endregion
+        #endregion Method-辅助-工具-初始数据
 
-        #region  Method-辅助-工具-地块检索
+        #region Method-辅助-工具-地块检索
 
         /// <summary>
         /// 工具-检索
@@ -6751,26 +6748,32 @@ namespace YuLinTu.Library.Controls
                     if (string.IsNullOrEmpty(child.Tag.Name))
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchContractAreaNull:
                     if (string.IsNullOrEmpty(child.Tag.TableArea.ToString()) || child.Tag.TableArea == 0)
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchActualAreaNull:
                     if (string.IsNullOrEmpty(child.Tag.ActualArea.ToString()) || child.Tag.ActualArea == 0)
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchAwareAreaNull:
                     if (string.IsNullOrEmpty(child.Tag.AwareArea.ToString()) || child.Tag.AwareArea == 0)
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchIsFarmerNull:
                     if (string.IsNullOrEmpty(child.IsFarmerLandUI) || (!string.IsNullOrEmpty(child.IsFarmerLandUI) && child.IsFarmerLandUI == ""))
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchLandLevelNull:
                     if (string.IsNullOrEmpty(child.LandLevelUI) || (!string.IsNullOrEmpty(child.LandLevelUI) && child.LandLevelUI == ""))
                         isNull = true;
                     break;
+
                 case eContractAccountType.SearchLandShapeNull:
                     if (child.Tag.Shape == null)
                         isNull = true;
@@ -6779,7 +6782,7 @@ namespace YuLinTu.Library.Controls
             return isNull;
         }
 
-        #endregion
+        #endregion Method-辅助-工具-地块检索
 
         #region Method-辅助方法-其它
 
@@ -6862,7 +6865,7 @@ namespace YuLinTu.Library.Controls
             TheWorkPage.Workspace.Message.Send(this, args);
         }
 
-        #endregion
+        #endregion Method-辅助方法-其它
 
         #region Methods-是否批量
 
@@ -6878,7 +6881,7 @@ namespace YuLinTu.Library.Controls
         //    }
         //}
 
-        #endregion
+        #endregion Methods-是否批量
 
         #region Methods-辅助-台账报表
 
@@ -6954,7 +6957,7 @@ namespace YuLinTu.Library.Controls
             return allZones;
         }
 
-        #endregion
+        #endregion Methods-辅助-台账报表
 
         #region Methods -上传下载
 
@@ -7078,11 +7081,11 @@ namespace YuLinTu.Library.Controls
             return section.Settings;
         }
 
-        #endregion
+        #endregion Methods -上传下载
 
-        #endregion
+        #endregion Method-工具
 
-        #endregion
+        #endregion Methods
 
         private void view_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -7092,6 +7095,7 @@ namespace YuLinTu.Library.Controls
             //if(TheWorkPage.Page.IsBusy)
             //    CommitTables(this.view);
         }
+
         //private bool IsUnderTabHeader(DependencyObject control)
         //{
         //    if (control is TabItem)
@@ -7117,4 +7121,3 @@ namespace YuLinTu.Library.Controls
         //}
     }
 }
-
