@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyValueOfStringObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyValueOfStringObject>
+    <Key>YuLinTu.Library.Business.ServiceSetDefine</Key>
+    <Value xsi:type="GlobalSettingsSectionOfServiceSetDefine">
+      <Version>2023-09-07T10:01:58.795371+08:00</Version>
+      <Settings>
+        <UseSafeConfirm>false</UseSafeConfirm>
+        <BusinessSecurityAddress>http://192.168.2.4:1860/SSO/Access/AuthOnLogin?app=YuLinTu&amp;user=</BusinessSecurityAddress>
+        <BusinessDataAddress>http://192.168.2.4:1862/CLRegistrationService.svc</BusinessDataAddress>
+      </Settings>
+    </Value>
+  </KeyValueOfStringObject>
+</ArrayOfKeyValueOfStringObject>

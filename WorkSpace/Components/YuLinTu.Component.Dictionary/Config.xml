@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>401</Order>
+  <EntranceType>YuLinTu.Component.Dictionary.Entrance</EntranceType>
+  <!--相对路径:相对于生成的应用程序的路径-->
+  <EntrancePath>.\Components\YuLinTu.Component.Dictionary\Binary\YuLinTu.Component.Dictionary.dll</EntrancePath>
+</WinComponent>
+

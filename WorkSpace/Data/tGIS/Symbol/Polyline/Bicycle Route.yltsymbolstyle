@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Bicycle Route</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF00ED88</StrokeColor>
+        <StrokeThickness>13</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>3</Interval>
+          <Mark>1</Mark>
+          <Gap>10</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF00ED88</StrokeColor>
+        <StrokeThickness>1</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>1</Interval>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>
