@@ -1,0 +1,233 @@
+﻿<UserControl x:Class="YuLinTu.Library.Controls.SecondAccountPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:local="clr-namespace:YuLinTu.Library.Controls">
+    <UserControl.Resources>
+        <local:SecondAccountImgConvert x:Key="ImgConvert"/>
+        <local:GenderValueConvert x:Key="GenderConvert"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                SnapsToDevicePixels="True"
+                BorderThickness="0,0,0,1"
+                Height="33"
+                Padding="8,0"
+                BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+                Background="{DynamicResource Metro_Window_Style_Background_Lighter}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <cmps:ImageTextItem Grid.Column="0"
+                                    Name="lbzone"
+                                    ImageTextSpacing="8"
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"></cmps:ImageTextItem>
+                <StackPanel Grid.Column="1" 
+                            Name="sp_FamilyInfo" 
+                            HorizontalAlignment="Right" 
+                            Orientation="Horizontal" 
+                            VerticalAlignment="Stretch">
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+                    <cmps:ImageTextItem  Name="lb_familycount"
+                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"
+                                         ToolTip="总户数"
+                                         MinWidth="45"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding SecondSummary.VirtualPersonCount}"
+                                         Margin="12,0,0,0"/>
+
+                    <cmps:ImageTextItem  Name="lb_landcount"
+                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"
+                                         ToolTip="总地块数"
+                                         MinWidth="45"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding SecondSummary.SecondLandCount}"
+                                         Margin="8,0,0,0"/>
+
+                    <cmps:ImageTextItem  Name="lb_area"
+                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/表16_4.png"
+                                         ToolTip="总台账面积"
+                                         MinWidth="45"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding SecondSummary.TotalTableArea}"
+                                         Margin="8,0,12,0"/>
+
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+
+                    <metro:MetroButton Name="btn_refresh" 
+                                       Click="btn_refresh_Click" VerticalAlignment="Stretch"
+                                       Width="30">
+                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/Refresh.png" />
+                    </metro:MetroButton>
+
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+
+                    <cmps:MetroTextBox Name="txtWhere"
+                                       Width="130"
+                                       Height="25"
+                                       Watermask="快速过滤"
+                                       Margin="3,0,10,0"
+                                       TextChanged="txtWhere_TextChanged"/>
+                    <CheckBox Content="全匹配"
+                              VerticalAlignment="Center"
+                              Name="cb_ComplateInfo"
+                              Click="cb_ComplateInfo_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <cmps:MetroTreeListView Name="treeViewLandInfo"    
+                                HeaderVisibility="Visible"
+                                HeaderBorderThickness="0"
+                                HeaderThumbBorderWidth="0"
+                                ItemAutoExpand="True"
+                                ItemPadding="2,4"
+                                BorderThickness="0"
+                                BorderBrush="LightGray"                            
+                                Grid.Row="1"
+                                EnabledAsyncLoading="False"
+                                ExpandItemWhenLeftMouseDoubleClick="False"
+                                HasItemsGetter="treeViewLandInfo_HasItemsGetter" 
+                                SelectedItemChanged="treeViewLandInfo_SelectedItemChanged"  
+                                MouseDoubleClick="treeViewLandInfo_MouseDoubleClick"
+                                ContextMenuOpening="treeViewLandInfo_ContextMenuOpening">
+            <cmps:MetroTreeListView.View>
+                <!--  这里要绑定数据 根据数据实体修改对应的绑定 -->
+                <GridView x:Name="viewGrid">
+                    <GridViewColumn Header="名称" Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <cmps:MetroTreeListViewItemToggleButton></cmps:MetroTreeListViewItemToggleButton>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <Image Source="{Binding Img,Converter={StaticResource ImgConvert}}" Height="15" Width="15" HorizontalAlignment="Left" Margin="0,0,5,0"/>
+                                        <TextBlock x:Name="tbName" Text="{Binding Name, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="台账面积(亩)" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding TableArea, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="地  类" Width="80">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding LandName, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="四至东(右)" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding NeighborEast, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="四至南(下)" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding NeighborSouth, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="四至西(左)" Width="100" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding NeighborWest,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="四至北(上)" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding NeighborNorth,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="备  注"  Width="250">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Comment,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </cmps:MetroTreeListView.View>
+
+            <!-- 数据呈现区右键弹出菜单 这里看情况修改 -->
+            <cmps:MetroTreeListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="编辑承包方" Name="miEditPerson" Click="miEditPerson_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/字段16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="删除承包方" Name="miDeltPerson" Click="miDeltPerson_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/错误16_2.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="添加地块" Name="miAddLand" Click="miAddLand_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加户主16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="Uniform" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="编辑地块" Name="miAEditLand" Click="miAEditLand_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加书记16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="删除地块" Name="miDeltLand" Click="miDeltLand_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="清空" Name="miClear" Click="miClear_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="Uniform" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="设置">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="Uniform" Height="16"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="二轮台账导出表设置" Name="miTableExport"  Click="miTableExport_Click">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="Uniform" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </cmps:MetroTreeListView.ContextMenu>
+        </cmps:MetroTreeListView>
+    </Grid>
+</UserControl>

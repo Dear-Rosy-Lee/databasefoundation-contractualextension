@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Railroad, Abandoned</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>4</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>0</Mark>
+          <Gap>6</Gap>
+          <Mark>1</Mark>
+          <Gap>9</Gap>
+          <Mark>1</Mark>
+          <Gap>5</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>0.4</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>1</Mark>
+          <Gap>1</Gap>
+          <Mark>9</Mark>
+          <Gap>1</Gap>
+          <Mark>9</Mark>
+          <Gap>1</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

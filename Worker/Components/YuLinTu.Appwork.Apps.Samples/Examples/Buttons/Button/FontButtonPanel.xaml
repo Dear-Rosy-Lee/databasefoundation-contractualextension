@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="YuLinTu.Appwork.Apps.Samples.Examples.FontButtonPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples.Examples"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+            <StackPanel>
+                <Button Style="{StaticResource btn}"
+                        Margin="5,5,0,5">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+                <Button Style="{StaticResource btn}"
+                        Margin="5,5,0,5"
+                        IsEnabled="False">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+                <Button Style="{StaticResource btn-default}"
+                        Margin="5,5,0,5">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+                <Button Style="{StaticResource btn-default}"
+                        Margin="5,5,0,5"
+                        IsEnabled="False">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+                <Button Style="{StaticResource btn-primary}"
+                        Margin="5,5,0,5">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+                <Button Style="{StaticResource btn-primary}"
+                        Margin="5,5,0,5"
+                        IsEnabled="False">
+                    <ylt:FontIcon Icon="&#xf013;"
+                                  IconSize="16"
+                                  Text="Font Button"></ylt:FontIcon>
+                </Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

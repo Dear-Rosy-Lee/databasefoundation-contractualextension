@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Med Yellow</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="SimpleFillSymbol">
+        <BackgroundColor>#FFEEF1A0</BackgroundColor>
+        <Border type="MultiLayerLineSymbol">
+          <Layer>
+            <Symbol type="SimpleLineSymbol">
+              <StrokeColor>#FF000000</StrokeColor>
+              <StrokeThickness>0.4</StrokeThickness>
+              <Style>Solid</Style>
+            </Symbol>
+          </Layer>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

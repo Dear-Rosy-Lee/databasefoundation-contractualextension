@@ -1,0 +1,245 @@
+﻿<am:InfoPageBase x:Class="YuLinTu.Library.Controls.ContractConcordInitializePage"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                            xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                            xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                            xmlns:am="clr-namespace:YuLinTu.Library.Controls"
+                            Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
+                            Header="初始化合同信息"
+                            MinHeight="170" MinWidth="560">
+    <am:InfoPageBase.Resources>
+        <am:ConcordCheckValueConvert x:Key="ConcordCheckValueConvert"/>
+    </am:InfoPageBase.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style x:Key="LableStyle" TargetType="Label">
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+        </Grid.Resources>
+        <ScrollViewer  HorizontalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <cmps:LoadingIcon Width="16"
+                              Height="16"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                              RenderOptions.BitmapScalingMode="NearestNeighbor"></cmps:LoadingIcon>
+
+                <TabControl Name="tbControl" Margin="10,10,10,5" Height="350" Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}">
+                    <TabItem Header="基本信息" x:FieldModifier="public" x:Name="tbInfo">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="105"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="105"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="55"/>
+                                <RowDefinition Height="55"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="发包方:" Grid.Row="0" VerticalAlignment="Center"/>
+                            <cmps:MetroComboBox Name="cbTissue" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2" Padding="7,0,0,0"  Grid.Row="0" Grid.Column="1" TabIndex="1"  />
+
+                            <!--<CheckBox Content="承包方地址:" Name="cbAddress" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="6,0,0,0" TabIndex="2"/>
+                            <cmps:MetroTextBox Height="30" Name="txtAddress" Grid.Row="1" IsEnabled="{Binding ElementName=cbAddress,Path=IsChecked}" Margin="0,0,5,0"
+                                               Grid.Column="1" Grid.ColumnSpan="3" MaxLength="20" VerticalAlignment="Center" TabIndex="3" />-->
+
+                            <metro:MetroButton DockPanel.Dock="Right" Padding="5" x:Name="btnSelectPerson" Click="btnSelectPerson_Click" Height="30" IsEnabled="{Binding CanClose}"
+                                               Style="{StaticResource Metro_Button_Paneled_Style}" Grid.Row="0" TabIndex="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="60,5,0,7">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"
+                                           Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"/>
+                                    <TextBlock Margin="3,0,0,0" VerticalAlignment="Center" Text="选择承包方"/>
+                                </StackPanel>
+                            </metro:MetroButton>
+
+                            <!--<metro:MetroButton Content="选择承包方" Name="btnSelectPerson" Grid.Row="1" Grid.Column="3" Height="30" Margin="10,0,0,0" 
+                                               Click="btnSelectPerson_Click" Style="{StaticResource Metro_Button_Paneled_Style}"/>-->
+
+                            <!--<CheckBox VerticalAlignment="Center" Content="设置小数:" Name="cbPointSet" Grid.Row="2" Margin="6,0,0,0" TabIndex="5"/>
+                            <DockPanel LastChildFill="True" Grid.Row="2" Grid.Column="1">
+                                <Label Content="位" DockPanel.Dock="Right" VerticalAlignment="Center"/>
+                                <wpftoolkit:IntegerUpDown x:Name="txt_Point" IsEnabled="{Binding ElementName=cbPointSet,Path=IsChecked}" Minimum="2" Value="2"  Height="30"
+                                            VerticalAlignment="Center" Increment="1" BorderThickness="1" 
+                                            Maximum="4" TabIndex="6" />
+                            </DockPanel>
+
+                            <Label Content="设置模式:"  Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>   
+                            <cmps:MetroComboBox Name="cbModule" IsEnabled="{Binding ElementName=cbPointSet,Path=IsChecked}" 
+                                                Height="30" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Padding="7,0,0,0" VerticalAlignment="Center" TabIndex="7">
+                                <ComboBoxItem  IsSelected="True">截取</ComboBoxItem>
+                                <ComboBoxItem >四舍五入</ComboBoxItem>
+                            </cmps:MetroComboBox>
+
+                            <Label Content="面积选择:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                            <cmps:MetroComboBox Name="cmbAreaSelect" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"  IsEnabled="{Binding ElementName=cbPointSet,Path=IsChecked}" Height="30" Padding="7,0,0,0" VerticalAlignment="Center" TabIndex="8">
+                                <ComboBoxItem  IsSelected="True">实测面积</ComboBoxItem>
+                                <ComboBoxItem >确权面积</ComboBoxItem>
+                            </cmps:MetroComboBox>-->
+
+                            <Label Content="承包期限设置:" Grid.Row="1" VerticalAlignment="Center" Height="30" VerticalContentAlignment="Center"/>
+                            <CheckBox Name="cbLongtime" VerticalAlignment="Center" Content="设置承包期限为长久" 
+                                      Grid.Row="1" Grid.Column="1" Padding="7,0,0,0" TabIndex="3"/>
+
+                            <!--<Label Content="其他设置:"  Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="30" VerticalContentAlignment="Center"/>
+                            <CheckBox Name="cbReArea" VerticalAlignment="Center" Content="重新计算合同中的面积" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Padding="7,0,0,0" TabIndex="11" />-->
+
+                            <Label Content="承包起始日期:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                            <wpftoolkit:DateTimeUpDown Name="txtStartTime" Height="30"  IsEnabled="{Binding ElementName=cbLongtime,Path=IsChecked ,Converter={StaticResource ConcordCheckValueConvert}}"
+                                                       Format="ShortDate" FormatString="yyyy年MM月dd日" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" TabIndex="4"/>
+                            <Label Content="承包结束日期:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"  />
+                            <wpftoolkit:DateTimeUpDown Name="txt_EndTime" Height="30" IsEnabled="{Binding ElementName=cbLongtime,Path=IsChecked ,Converter={StaticResource ConcordCheckValueConvert}}"
+                                                       Format="ShortDate" FormatString="yyyy年MM月dd日" Grid.Row="2" Grid.Column="3"  Grid.ColumnSpan="2" VerticalAlignment="Center" TabIndex="5"/>
+
+                            <Label Content="承包方式:" Grid.Row="3" VerticalAlignment="Center" Visibility="{Binding ElementName=txt_Phone,Path=Visibility}"  />
+                            <cmps:MetroComboBox Name="cbContractWay"  Height="30" Padding="7,0,0,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" TabIndex="6"/>
+
+                            <Label Content="土地用途:" Grid.Row="3" VerticalAlignment="Center" Grid.Column="2" Margin="5,0,0,0"/>
+                            <cmps:MetroComboBox Name="cbLandPurpose"  Height="30" Padding="7,0,0,0" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" TabIndex="7"/>
+
+                            <Label Content="地块类别:" Grid.Row="5" VerticalAlignment="Top"/>
+                            <DockPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Height="60" VerticalAlignment="Center" LastChildFill="True" >
+                                <cmps:MetroListBox x:Name="lbItem"
+                                                   Margin="0,5,0,0"
+                                                   Height="60"
+                                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                                   Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}" TabIndex="10" >
+                                    <cmps:MetroListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </cmps:MetroListBox.ItemsPanel>
+                                    <cmps:MetroListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding Status}" Width="100" BorderThickness="0"/>
+                                        </DataTemplate>
+                                    </cmps:MetroListBox.ItemTemplate>
+                                </cmps:MetroListBox>
+                            </DockPanel>
+                            <Label Content="承包方签订日期:"
+                                   Grid.Row="4"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center" />
+                            <wpftoolkit:DateTimeUpDown Name="ContractDateTime"
+                                                       Height="30"
+                                                       Format="ShortDate"
+                                                       FormatString="yyyy年MM月dd日"
+                                                       Grid.Row="4"
+                                                       Grid.Column="1"
+                                                       VerticalAlignment="Center"
+                                                       TabIndex="8" />
+                            <Label Content="发包方签订日期:"
+                                   Grid.Row="4"
+                                   Grid.Column="2"
+                                   VerticalAlignment="Center" />
+                            <wpftoolkit:DateTimeUpDown Name="SenderDateTime"
+                                                       Height="30"
+                                                       Format="ShortDate"
+                                                       FormatString="yyyy年MM月dd日"
+                                                       Grid.Row="4"
+                                                       Grid.Column="3"
+                                                       Grid.ColumnSpan="2"
+                                                       VerticalAlignment="Center"
+                                                       TabIndex="9" />
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="调查信息" x:FieldModifier="public" x:Name="tbitemExpand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="105"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="195"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <CheckBox x:Name="cbSurveyPersonName"  Content="记事人:"  Grid.Row="1"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <cmps:MetroTextBox Height="30" Name="txtSurvey" Text="{Binding Concord.PublicityChroniclePerson,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbSurveyPersonName,Path=IsChecked}" />
+                            <CheckBox x:Name="cbSurveyDate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,5,0,0" Content="记事日期:" Grid.Row="1"  Grid.Column="2" />
+                            <wpftoolkit:DateTimeUpDown Height="30" Name="txtSurveyDate" Value="{Binding Concord.PublicityDate,Mode=TwoWay}" Format="ShortDate" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbSurveyDate,Path=IsChecked}"/>
+
+                            <CheckBox x:Name="cbSurveyInfo" HorizontalAlignment="Left" VerticalAlignment="Center" Content="公示记事:"  Grid.Row="2" />
+                            <cmps:MetroTextBox Height="30" Name="txtSurveyInfo" Text="{Binding Concord.SurveyChronicle,Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" MaxLength="150" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbSurveyInfo,Path=IsChecked}"/>
+
+                           
+                            <CheckBox x:Name="cbPub" HorizontalAlignment="Left" VerticalAlignment="Center" Content="审核人:" Grid.Row="5" />
+                            <cmps:MetroTextBox Height="30" Name="txtPub"  Grid.Row="5" Text="{Binding Concord.PublicityCheckPerson,Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbPub,Path=IsChecked}"/>
+                            <CheckBox x:Name="cbPubDate" HorizontalAlignment="Left" VerticalAlignment="Center" Content="公示审核日期:" Grid.Row="5" Margin="10,5,0,0" Grid.Column="2"  />
+                            <wpftoolkit:DateTimeUpDown Name="txtCheckDate" Height="30" Value="{Binding Concord.PublicityCheckDate,Mode=TwoWay}" Format="ShortDate" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbPubDate,Path=IsChecked}"/>
+
+                            <CheckBox x:Name="cbPubInfo" HorizontalAlignment="Left" VerticalAlignment="Center"  Content="公示结果&#13;审核意见:" Width="80" Padding="5,5,0,0"  Grid.Row="6" />
+                            <cmps:MetroTextBox Height="60" AcceptsReturn="True" VerticalContentAlignment="Top"  TextWrapping="Wrap" Name="txtPubInfo" Text="{Binding Concord.PublicityCheckOpinion,Mode=TwoWay}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" MaxLength="150" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbPubInfo,Path=IsChecked}"/>
+
+                             <CheckBox x:Name="cbCheck" HorizontalAlignment="Left" VerticalAlignment="Center" Content="承包方代表:" Grid.Row="3" />
+                            <cmps:MetroTextBox Height="30" Name="txtCheck"  Text="{Binding Concord.PublicityContractor,Mode=TwoWay}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsEnabled="False" /><!--IsEnabled="{Binding ElementName=cbCheck,Path=IsChecked}"-->
+                            <CheckBox x:Name="cbCheckDate" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,5,0,0" Content="公示结果日期:" Grid.Row="3" Grid.Column="2" />
+                            <wpftoolkit:DateTimeUpDown Height="30" Name="txtResultDate" Value="{Binding Concord.PublicityResultDate,Mode=TwoWay}"  Grid.Row="3" Format="ShortDate" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbCheckDate,Path=IsChecked}"/>
+
+                            <CheckBox x:Name="cbCheckInfo" HorizontalAlignment="Left" VerticalAlignment="Center" Content="承包方代表对&#13;公示结果意见:" Padding="5,5,0,0"    Grid.Row="4" />
+                            <cmps:MetroTextBox Height="60" AcceptsReturn="True" VerticalContentAlignment="Top" TextWrapping="Wrap" Name="txtCheckInfo" Grid.Row="4" Text="{Binding Concord.PublicityResult,Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="3" MaxLength="150" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbCheckInfo,Path=IsChecked}"/>
+                                                       
+                            <CheckBox x:Name="cbComment" HorizontalAlignment="Left" VerticalAlignment="Center" Content="备注:" Grid.Row="7" Grid.Column="0" />
+                            <cmps:MetroTextBox Height="30" Margin="0,5,0,0" Name="txtComment" Text="{Binding Concord.Comment,Mode=TwoWay}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" MaxLength="50" VerticalAlignment="Center" VerticalContentAlignment="Top" IsEnabled="{Binding ElementName=cbComment,Path=IsChecked}"/>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </ScrollViewer>
+        <Border BorderThickness="0,1,0,0" Grid.Row="1" BorderBrush="LightGray" Margin="10,0,10,0" SnapsToDevicePixels="True">
+            <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" VerticalAlignment="Bottom" Margin="0,5,0,5" DockPanel.Dock="Bottom">
+                <metro:MetroButton Height="30" Margin="5,0,0,0" DockPanel.Dock="Right"
+                               Padding="5"
+                               Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                               Style="{StaticResource Metro_Button_Paneled_Style}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                    Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"></Image>
+                        <TextBlock Margin="3,0,0,0"
+                           VerticalAlignment="Center"
+                         Text="取消"></TextBlock>
+                    </StackPanel>
+                </metro:MetroButton>
+                <metro:MetroButton DockPanel.Dock="Right"
+                               Padding="5" x:Name="btnConfirm"
+                               Click="btnConfirm_Click" Height="30"
+                                   IsEnabled="{Binding CanClose}"
+                               Style="{StaticResource Metro_Button_Paneled_Style}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"
+                       Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"></Image>
+                        <TextBlock Margin="3,0,0,0"
+                           VerticalAlignment="Center"
+                           Text="确定"></TextBlock>
+                    </StackPanel>
+                </metro:MetroButton>
+            </DockPanel>
+        </Border>
+    </Grid>
+</am:InfoPageBase>

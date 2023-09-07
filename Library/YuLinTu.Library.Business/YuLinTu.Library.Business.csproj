@@ -1,0 +1,818 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08AC55A7-5A0D-4A50-8EE7-93148A22250A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Library.Business</RootNamespace>
+    <AssemblyName>YuLinTu.Library.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ContractLand.Exchange2">
+      <HintPath>..\..\Dependencies\Exchange\ContractLand.Exchange2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Projections">
+      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Projections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeoAPI">
+      <HintPath>..\..\Dependencies\NTS\GeoAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\Dependencies\ZIP\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\Dependencies\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Python\Microsoft.Scripting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\..\Dependencies\NTS\NetTopologySuite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO">
+      <HintPath>..\..\Dependencies\NTS\NetTopologySuite.IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.GeoTools">
+      <HintPath>..\..\Dependencies\NTS\NetTopologySuite.IO.GeoTools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.ShapeFile">
+      <HintPath>..\..\Dependencies\NTS\NetTopologySuite.IO.ShapeFile.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\Dependencies\NPOI\NPOI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\Dependencies\NPOI\NPOI.OOXML.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\Dependencies\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\Dependencies\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\Dependencies\Spatialite\System.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\..\Dependencies\Thought\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="YuLinTu, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Core">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Data, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Dynamic, Version=5.5.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Framework, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Shapefile, Version=5.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Shapefile.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Data.SQLite, Version=5.5.5.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Diagnostics, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Diagrams">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagrams.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Excel">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Excel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.NetAux, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.PropertyRight.Common">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.PropertyRight.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.PropertyRight.ContractLand.Common">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.PropertyRight.ContractLand.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.PropertyRight.Services.SyncClient">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.PropertyRight.Services.SyncClient.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Spatial">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Spatial.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.tGIS">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.tGIS.Client">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.tGISCNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGISCNet.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Unity, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Core, Version=5.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Wpf, Version=5.5.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Wpf.Metro">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Word">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Word.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Common\DataBase\DataBaseSource.cs" />
+    <Compile Include="Common\DataBase\UpgradeDatabase.cs" />
+    <Compile Include="Common\Export\AddressExporthHelper.cs" />
+    <Compile Include="Common\Export\ExportDataSummarySelectTable.cs" />
+    <Compile Include="Common\Export\LandNumericFormatHelper.cs" />
+    <Compile Include="Common\Export\CreateDirectoryHelper.cs" />
+    <Compile Include="Common\Extend\ConcordExtend.cs" />
+    <Compile Include="Common\Extend\ContractRegeditBookExtend.cs" />
+    <Compile Include="Common\Extend\ContractRegeditBookPreviewSetInfo.cs" />
+    <Compile Include="Common\Extend\DataSummarySelectPersonsExtend.cs" />
+    <Compile Include="Common\Extend\StringExtend.cs" />
+    <Compile Include="Common\InitializeNameBySet.cs" />
+    <Compile Include="Common\LandCategoryMapping.cs" />
+    <Compile Include="Common\LandEntityOperator.cs" />
+    <Compile Include="Common\SearchNeighborCommon.cs" />
+    <Compile Include="Common\SelectPersons.cs" />
+    <Compile Include="Concord\ConcordApplicationPrinter.cs" />
+    <Compile Include="Concord\ConcordApplicationPrinterData.cs" />
+    <Compile Include="Common\Extend\PersonSelectedInfo.cs" />
+    <Compile Include="Concord\ConcordBusiness.cs" />
+    <Compile Include="Concord\ConcordMessage.cs" />
+    <Compile Include="Concord\ConcordMessageContext.cs" />
+    <Compile Include="Concord\ExportApplicationBook\TaskExportApplicationBookArgument.cs" />
+    <Compile Include="Concord\ExportApplicationBook\TaskExportApplicationBookOperation.cs" />
+    <Compile Include="Concord\ExportApplicationBook\TaskGroupExportApplicationBookArgument.cs" />
+    <Compile Include="Concord\ExportApplicationBook\TaskGroupExportApplicationBookOperation.cs" />
+    <Compile Include="Concord\ExportConcordInformationTable\TaskConcordInformationTableArgument.cs" />
+    <Compile Include="Concord\ExportConcordInformationTable\TaskConcordInformationTableOperation.cs" />
+    <Compile Include="Concord\ExportConcordInformationTable\TaskGroupConcordInformationTableArgument.cs" />
+    <Compile Include="Concord\ExportConcordInformationTable\TaskGroupConcordInformationTableOperation.cs" />
+    <Compile Include="Concord\ExportContractConcord.cs" />
+    <Compile Include="Concord\ExportLandRequireBook.cs" />
+    <Compile Include="Concord\ExportRequireBookByFamily\TaskGroupRequireBookByFamilyArgument.cs" />
+    <Compile Include="Concord\ExportRequireBookByFamily\TaskGroupRequireBookByFamilyOperation.cs" />
+    <Compile Include="Concord\ExportRequireBookByFamily\TaskRequireBookByFamilyArgument.cs" />
+    <Compile Include="Concord\ExportRequireBookByFamily\TaskRequireBookByFamilyOperation.cs" />
+    <Compile Include="Concord\ExportRequireBookByOther\TaskGroupRequireBookByOtherArgument.cs" />
+    <Compile Include="Concord\ExportRequireBookByOther\TaskGroupRequireBookByOtherOperation.cs" />
+    <Compile Include="Concord\ExportRequireBookByOther\TaskRequireBookByOtherArgument.cs" />
+    <Compile Include="Concord\ExportRequireBookByOther\TaskRequireBookByOtherOperation.cs" />
+    <Compile Include="Concord\TaskConcordInitialize\TaskConcordInitializeArgument.cs" />
+    <Compile Include="Concord\TaskConcordInitialize\TaskConcordInitializeOperation.cs" />
+    <Compile Include="Concord\TaskConcordInitialize\TaskGroupConcordInitializeArgument.cs" />
+    <Compile Include="Concord\TaskConcordInitialize\TaskGroupConcordInitializeOperation.cs" />
+    <Compile Include="Concord\TaskContractConcordArgument.cs" />
+    <Compile Include="Concord\TaskContractConcordOperation.cs" />
+    <Compile Include="Concord\TaskExportConcordData\TaskExportConcordDataArgument.cs" />
+    <Compile Include="Concord\TaskExportConcordData\TaskExportConcordDataOperation.cs" />
+    <Compile Include="Concord\TaskExportConcordData\TaskGroupExportConcordDataArgument.cs" />
+    <Compile Include="Concord\TaskExportConcordData\TaskGroupExportConcordDataOperation.cs" />
+    <Compile Include="Configuration\CommonSelectZoneDefine.cs" />
+    <Compile Include="Configuration\ConcordApplicationSet.cs" />
+    <Compile Include="Configuration\ConcordDetailTableSettingDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessImportSurveyDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessOutputSurveyDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessParcelWordAllExtendSettingDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessParcelWordLandSettingDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessParcelWordSettingDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessSettingDefine.cs" />
+    <Compile Include="Configuration\ContractConcordSettingDefine.cs" />
+    <Compile Include="Configuration\ContractRegeditBookDataSummaryDefine.cs" />
+    <Compile Include="Configuration\ContractRegeditBookSettingDefine.cs" />
+    <Compile Include="Configuration\DataSummaryDefine.cs" />
+    <Compile Include="Configuration\DiagramFoundationLabelCommonSetting.cs" />
+    <Compile Include="Configuration\DownloadSettingDefine.cs" />
+    <Compile Include="Configuration\ExportContractLandShapeDefine.cs" />
+    <Compile Include="Configuration\ImportAccountLandShapeSettingDefine.cs" />
+    <Compile Include="Configuration\ImportBoundaryAddressCoilDefine.cs" />
+    <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
+    <Compile Include="Configuration\ImportZDBZDefine.cs" />
+    <Compile Include="Configuration\PublicityConfirmDefine.cs" />
+    <Compile Include="Configuration\SingleFamilySurveyDefine.cs" />
+    <Compile Include="Configuration\TaskExportLandDotCoilSettingDefine.cs" />
+    <Compile Include="Configuration\UploadSettingDefine.cs" />
+    <Compile Include="ContractAccount\AccountLandBusinessMark.cs" />
+    <Compile Include="ContractAccount\AccountLandBusiness.cs" />
+    <Compile Include="Common\Export\AgricultureBookMark.cs" />
+    <Compile Include="Common\Export\AgricultureWordBook.cs" />
+    <Compile Include="Common\Export\WordBookMark.cs" />
+    <Compile Include="Common\Extend\VirtualPersonExtend.cs" />
+    <Compile Include="Configuration\CommonBusinessDefine.cs" />
+    <Compile Include="Common\Upload\ServiceHelper.cs" />
+    <Compile Include="Configuration\CommonConfigSelector.cs" />
+    <Compile Include="Configuration\FamilyDefine.cs" />
+    <Compile Include="Configuration\FamilyImportDefine.cs" />
+    <Compile Include="Configuration\ServiceSetDefine.cs" />
+    <Compile Include="Configuration\ZoneDefine.cs" />
+    <Compile Include="Configuration\FamilyOtherDefine.cs" />
+    <Compile Include="Configuration\FamilyOutputDefine.cs" />
+    <Compile Include="Configuration\LetterToNumber.cs" />
+    <Compile Include="Configuration\PropertyDescriptorBuilderSelector.cs" />
+    <Compile Include="Configuration\PropertyTriggerFamilyImportConfigState.cs" />
+    <Compile Include="Configuration\SecondTableExportDefine.cs" />
+    <Compile Include="Configuration\SystemSetDefine.cs" />
+    <Compile Include="ContractAccount\AccountLandMessageContext.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\ExportBoundaryAddressDotResult.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\AgricultureLandDotSurvey.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContractAccount\BoundaryAddressFolder\ImportBoundaryAddressCoil.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\ImportBoundaryAddressDot.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskExportDotResultArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskExportDotResultOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupExportDotResultArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupExportDotResultOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupImportCoilArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupImportCoilOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupImportDotArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupImportBoundary.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskGroupImportDotOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskImportBoundarytArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskImportCoilArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskImportCoilOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskImportDotArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskImportDotOperation.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\ImportDotSurveyTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskTopGropExportDotResultArgument.cs" />
+    <Compile Include="ContractAccount\BoundaryAddressFolder\TaskTopGroupExportDotResultOperation.cs" />
+    <Compile Include="ContractAccount\ContractAccountLandFamily.cs" />
+    <Compile Include="ContractAccount\ContractAccountMessage.cs" />
+    <Compile Include="ContractAccount\DataExchange\AgricultureBookMapping.cs" />
+    <Compile Include="ContractAccount\DataExchange\AgricultureExchangeEntity.cs" />
+    <Compile Include="ContractAccount\DataExchange\AgricultureInformationMapping.cs" />
+    <Compile Include="ContractAccount\DataExchange\ArcLandExportProgress.cs" />
+    <Compile Include="ContractAccount\DataExchange\ArcLandImportProgress.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContractAccount\DataExchange\ExhangeCount.cs" />
+    <Compile Include="ContractAccount\DataExchange\ImportAgricultureLandPackage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContractAccount\DataExchange\InitalizeLandEntity.cs" />
+    <Compile Include="ContractAccount\DataExchange\ArcLandImporArgument.cs" />
+    <Compile Include="ContractAccount\DataExchange\TaskGroupExportZip.cs" />
+    <Compile Include="ContractAccount\DataExchange\TaskGroupImportZip.cs" />
+    <Compile Include="ContractAccount\EditLanceParcelBusiness.Argument.cs">
+      <DependentUpon>EditLandParcelBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\EditLandParcelBusiness.cs" />
+    <Compile Include="ContractAccount\ExportAccountFiveTableFolder\TaskAccountFiveTableArgument.cs" />
+    <Compile Include="ContractAccount\ExportAccountFiveTableFolder\TaskAccountFiveTableOperation.cs" />
+    <Compile Include="ContractAccount\ExportAccountFiveTableFolder\TaskGroupAccountFiveTableArgument.cs" />
+    <Compile Include="ContractAccount\ExportAccountFiveTableFolder\TaskGroupAccountFiveTableOperation.cs" />
+    <Compile Include="ContractAccount\ExportAnnouncementWord.cs" />
+    <Compile Include="ContractAccount\DateSetting.cs" />
+    <Compile Include="ContractAccount\ExportBoundaryInfoExcelFolder\ExportBoundaryInfoExcel.cs" />
+    <Compile Include="ContractAccount\ExportBoundaryInfoExcelFolder\TaskExportBoundaryInfoExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportBoundaryInfoExcelFolder\TaskExportBoundaryInfoExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportBoundaryInfoExcelFolder\TaskGroupExportBoundaryInfoExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportBoundaryInfoExcelFolder\TaskGroupExportBoundaryInfoExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportCategorySummary\ExportCategorySummaryExcel.cs" />
+    <Compile Include="ContractAccount\ExportCategorySummary\TaskExportCategorySummaryExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportCategorySummary\TaskExportCategorySummaryExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\ExportContractLandParcelWord.cs" />
+    <Compile Include="ContractAccount\ExportContractorLandSingleSurveyTable.cs" />
+    <Compile Include="ContractAccount\ExportContractorSurveyExcel.cs" />
+    <Compile Include="ContractAccount\ExportContractorSurveyExcelTitle.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\ExportLandCoilGeoToShape.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\ExportLandCoilShapeBusiness.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\ExportLandDotGeoToShape.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\ExportLandDotShapeBusiness.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskExportLandCoilShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskExportLandCoilShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskExportLandDotShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskExportLandDotShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskGroupExportLandCoilShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskGroupExportLandCoilShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskGroupExportLandDotShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandDotCoilShape\TaskGroupExportLandDotShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandInfomationExcelTable.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\ExportLandParcelMainOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\TaskExportMultiParcelWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\TaskExportMultiParcelWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\TaskGroupExportMultiParcelWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandParcel\TaskGroupExportMultiParcelWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\ExportLandGeoToShape.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\ExportLandShapeBusiness.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\TaskExportLandShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\TaskExportLandShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\TaskGroupExportLandShapeArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandShape\TaskGroupExportLandShapeOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportGroupLandSingleSurveyTableArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportGroupLandSingleSurveyTableOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportLandSingleSurveyTableArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportLandSingleSurveyTableOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandSurveyWordTable.cs" />
+    <Compile Include="ContractAccount\ExportPublicityWordTable.cs" />
+    <Compile Include="ContractAccount\ExportContractorSummaryExcel.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportPublishWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportPublishWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSenderExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSenderExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSenderWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSenderWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSurveyPublishExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportSurveyPublishExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportPublishWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportPublishWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportSenderWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportSenderWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportSurveyPublishExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportSurveyPublishExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportVPExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportVPExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportVPWordArgument.cs" />
+    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportVPWordOperation.cs" />
+    <Compile Include="ContractAccount\ExportSummaryExcelFolder\TaskExportSummaryExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSummaryExcelFolder\TaskExportSummaryExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportSummaryExcelFolder\TaskGroupExportSummaryExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportSummaryExcelFolder\TaskGroupExportSummaryExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportVillagesDeclareFolder\TaskExportVillagesDeclareArgument.cs" />
+    <Compile Include="ContractAccount\ExportVillagesDeclareFolder\TaskExportVillagesDeclareOperation.cs" />
+    <Compile Include="ContractAccount\ExportVillagesDeclareFolder\TaskGroupExportVillagesDeclareArgument.cs" />
+    <Compile Include="ContractAccount\ExportVillagesDeclareFolder\TaskGroupExportVillagesDeclareOperation.cs" />
+    <Compile Include="ContractAccount\ImportContractAccountLandTable.cs" />
+    <Compile Include="ContractAccount\ImportData\TaskGroupImportLandTableArgument.cs" />
+    <Compile Include="ContractAccount\ImportData\TaskGroupImportLandTableOperation.cs" />
+    <Compile Include="ContractAccount\ImportData\TaskImportLandTableArgument.cs" />
+    <Compile Include="ContractAccount\ImportData\TaskImportLandTableOperation.cs" />
+    <Compile Include="ContractAccount\InitalizeContractorSurveyExcel.cs" />
+    <Compile Include="ContractAccount\InitalizeSecondLandTableInformation.cs" />
+    <Compile Include="ContractAccount\InitalizeLandSurveyInformation.cs" />
+    <Compile Include="ContractAccount\InitalzieContractorInformation.cs" />
+    <Compile Include="ContractAccount\InitalzieLandInformation.cs" />
+    <Compile Include="ContractAccount\InitializeLandCoilFolder\InitializeLandCoil.cs" />
+    <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskGroupInitializeLandCoilArgument.cs" />
+    <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskGroupInitializeLandCoilOperation.cs" />
+    <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskInitializeLandCoilArgument.cs" />
+    <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskInitializeLandCoilOperation.cs" />
+    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\InitializeLandDotCoil.cs" />
+    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\InitialJZXInfoUseSN.cs" />
+    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\TaskInitializeLandDotCoilArgument.cs" />
+    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\TaskInitializeLandDotCoilOperation.cs" />
+    <Compile Include="ContractAccount\InitializeLandNeighborInfoFolder\InitializeLandNeighborInfo.cs" />
+    <Compile Include="ContractAccount\InitializeLandNeighborInfoFolder\TaskGroupInitializeLandNeighborInfoArgument.cs" />
+    <Compile Include="ContractAccount\InitializeLandNeighborInfoFolder\TaskGroupInitializeLandNeighborInfoOperation.cs" />
+    <Compile Include="ContractAccount\InitializeLandNeighborInfoFolder\TaskInitializeLandNeighborInfoArgument.cs" />
+    <Compile Include="ContractAccount\InitializeLandNeighborInfoFolder\TaskInitializeLandNeighborInfoOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialAreaArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialAreaNumericFormatArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialAreaNumericFormatOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialAreaOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialImageNumberArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialImageNumberOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialIsFarmerArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialIsFarmerOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialLandInfoArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskGroupInitialLandInfoOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialAreaArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialAreaNumericFormatArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialAreaNumericFormatOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialAreaOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialImageNumberArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialImageNumberOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialIsFarmerArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialIsFarmerOperation.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialLandInfoArgument.cs" />
+    <Compile Include="ContractAccount\InitializeToolFolder\TaskInitialLandInfoOperation.cs" />
+    <Compile Include="ContractAccount\MessageParameter.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeekBoundary\BoundaryEdge.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeekBoundary\BoundaryPoly.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeekBoundary\EdgeBase.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeekBoundary\FindLandBoundary.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeek\FoundOrientationCore.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeek\FoundOrientationCoreBase.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\CsharpSeek\FoundOrientationEntity.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\SeekLandNeighborBus.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\TaskGroupSeekLandNeighborArgument.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\TaskGroupSeekLandNeighborOperation.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\TaskSeekLandNeighborArgument.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborFolder\TaskSeekLandNeighborOperation.cs" />
+    <Compile Include="ContractAccount\SeekLandNeighborSetting.cs" />
+    <Compile Include="ContractAccount\TaskContractAccountArgument.cs" />
+    <Compile Include="ContractAccount\TaskContractAccountOperation.cs" />
+    <Compile Include="ContractRegeditBook\AgricultureUtility.cs" />
+    <Compile Include="ContractRegeditBook\AgriLandExpressExcelProgress.cs" />
+    <Compile Include="ContractRegeditBook\AgriLandExpressProgress.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookBusiness.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookMessageContext.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookPrinterData.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookWork.cs" />
+    <Compile Include="ContractRegeditBook\ContractWarrantInformationWriter.cs" />
+    <Compile Include="ContractRegeditBook\ControlEntity.cs" />
+    <Compile Include="ContractRegeditBook\ExportAwareTable\TaskExportAwareTableArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportAwareTable\TaskExportAwareTableOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportAwareTable\TaskGroupExportAwareTableArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportAwareTable\TaskGroupExportAwareTableOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskExportFamilyConfirmArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskExportFamilyConfirmOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskGroupExportFamilyConfirmArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskGroupExportFamilyConfirmOperation.cs" />
+    <Compile Include="ContractRegeditBook\WarrantNumberCheck\TaskWarrantCheckArgument.cs" />
+    <Compile Include="ContractRegeditBook\WarrantNumberCheck\TaskWarrantCheckOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrantSummary\TaskExportWarrantSummaryArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrantSummary\TaskExportWarrantSummaryOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrantSummary\TaskGroupExportWarrantSummaryArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrantSummary\TaskGroupExportWarrantSummaryOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrant\ContractWarrantPrinter.cs" />
+    <Compile Include="ContractRegeditBook\ExAgricultureString.cs" />
+    <Compile Include="ContractRegeditBook\ExportAwareInventoryTable.cs" />
+    <Compile Include="ContractRegeditBook\ExportRegeditBook\TaskExportRegeditBookArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportRegeditBook\TaskExportRegeditBookOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportRegeditBook\TaskGroupExportRegeditBookArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportRegeditBook\TaskGroupExportRegeditBookOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportSingleFamilyConfirmTable.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrant\TaskExportWarrentArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrant\TaskExportWarrentOperation.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrant\TaskGroupExportWarrentArgument.cs" />
+    <Compile Include="ContractRegeditBook\ExportWarrant\TaskGroupExportWarrentOperation.cs" />
+    <Compile Include="ContractRegeditBook\ICNHelper.cs" />
+    <Compile Include="ContractRegeditBook\QRValueSettingEntity.cs" />
+    <Compile Include="ContractRegeditBook\TaskContractRegeditBookArgument.cs" />
+    <Compile Include="ContractRegeditBook\TaskContractRegeditBookOperation.cs" />
+    <Compile Include="ContractRegeditBook\TaskInitalizeWarrent\TaskGroupInitalizeWarrentArgument.cs" />
+    <Compile Include="ContractRegeditBook\TaskInitalizeWarrent\TaskGroupInitalizeWarrentOperation.cs" />
+    <Compile Include="ContractRegeditBook\TaskResetAllSerialNumberOperation.cs" />
+    <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskDataSummaryExportArgument.cs" />
+    <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskDataSummaryExportOperation.cs" />
+    <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskGroupDataSummaryExportArgument.cs" />
+    <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskGroupDataSummaryExportOperation.cs" />
+    <Compile Include="DictionaryConvert\BoolDicConvert.cs" />
+    <Compile Include="DictionaryConvert\ContractorTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\ContractWayConvert.cs" />
+    <Compile Include="DictionaryConvert\ControlDotLevelConvert.cs" />
+    <Compile Include="DictionaryConvert\CredentialsConvert.cs" />
+    <Compile Include="DictionaryConvert\DGuidepostTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\DictionaryConvert.cs" />
+    <Compile Include="DictionaryConvert\DictionaryHelper.cs" />
+    <Compile Include="DictionaryConvert\DLineTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\DLocationConvert.cs" />
+    <Compile Include="DictionaryConvert\GenderConvert.cs" />
+    <Compile Include="DictionaryConvert\GrassTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\LandLevelConvert.cs" />
+    <Compile Include="DictionaryConvert\LandProtectionConvert.cs" />
+    <Compile Include="DictionaryConvert\LandPurposeConvert.cs" />
+    <Compile Include="DictionaryConvert\LandUseTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\OperateWayConvert.cs" />
+    <Compile Include="DictionaryConvert\OwnershipConvert.cs" />
+    <Compile Include="DictionaryConvert\PlantTypeConvert.cs" />
+    <Compile Include="DictionaryConvert\SharePersonCommentConvert.cs" />
+    <Compile Include="DictionaryConvert\StoneTypeConvert.cs" />
+    <Compile Include="Dictionary\DictionaryBusiness.cs" />
+    <Compile Include="Dictionary\DictionaryMessageContext.cs" />
+    <Compile Include="Dictionary\DictLeftSidebarStateConfig.cs" />
+    <Compile Include="Enum\eContractAccountType.cs" />
+    <Compile Include="Enum\eContractConcordArgType.cs" />
+    <Compile Include="Enum\eContractRegeditBookType.cs" />
+    <Compile Include="Enum\eImportLandClipType.cs" />
+    <Compile Include="SecondTableLand\ExportBoundarySettleExcel.cs" />
+    <Compile Include="SecondTableLand\ExportSingleFamilyExcel.cs" />
+    <Compile Include="SecondTableLand\ImportSecondSurveryTable.cs" />
+    <Compile Include="SecondTableLand\LandFamily.cs" />
+    <Compile Include="SecondTableLand\ReadLandInformation.cs" />
+    <Compile Include="Enum\eSecondTableArgType.cs" />
+    <Compile Include="SecondTableLand\ExportContractSurveyExcel.cs" />
+    <Compile Include="SecondTableLand\ExportSecondLandPublicExcel.cs" />
+    <Compile Include="SecondTableLand\ExportSecondLandSignExcel.cs" />
+    <Compile Include="SecondTableLand\ExportSecondLandFamilyExcel.cs" />
+    <Compile Include="SecondTableLand\SecondTableLandBusiness.cs" />
+    <Compile Include="SecondTableLand\SecondTableLandFamily.cs" />
+    <Compile Include="SecondTableLand\SecondTableLandMessage.cs" />
+    <Compile Include="SecondTableLand\SecondTableLandOperator.cs" />
+    <Compile Include="SecondTableLand\SecondTableMessageContext.cs" />
+    <Compile Include="SecondTableLand\TaskSecondTableArgument.cs" />
+    <Compile Include="SecondTableLand\TaskSecondTableOperation.cs" />
+    <Compile Include="SecondTableLand\VerifyLandInformation.cs" />
+    <Compile Include="ContractRegeditBook\SettingEntity.cs" />
+    <Compile Include="Setting\AgriculturePrintSetting.cs" />
+    <Compile Include="Task\DataProcess.cs" />
+    <Compile Include="Tool\ToolChinese.cs" />
+    <Compile Include="Tool\ToolCoding.cs" />
+    <Compile Include="Tool\ToolFile.cs" />
+    <Compile Include="Tool\ToolShowDialog.cs" />
+    <Compile Include="Tool\ToolGeometry.cs" />
+    <Compile Include="Tool\ToolUser.cs" />
+    <Compile Include="Enum\eLanguage.cs" />
+    <Compile Include="Common\FamilyRelationShip.cs" />
+    <Compile Include="Common\HeaderLanguage.cs" />
+    <Compile Include="Common\Extend\MessageExtend.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\MultiObjectArg.cs" />
+    <Compile Include="Common\Extend\ZoneCodeExtend.cs" />
+    <Compile Include="Common\Extend\WorkStationExtend.cs" />
+    <Compile Include="Common\Export\TemplateFile.cs" />
+    <Compile Include="Common\Export\TemplateHelper.cs" />
+    <Compile Include="Common\ReferenceHelper.cs" />
+    <Compile Include="Common\ModuleMsgArgs.cs" />
+    <Compile Include="Enum\eImportType.cs" />
+    <Compile Include="Common\Export\ExportShapeBase.cs" />
+    <Compile Include="Enum\ePersonArgType.cs" />
+    <Compile Include="Enum\eZoneArgType.cs" />
+    <Compile Include="Sender\ExcelReaderSender.cs" />
+    <Compile Include="Sender\ExportSenderExcel.cs" />
+    <Compile Include="Sender\ExportSenderWord.cs" />
+    <Compile Include="Sender\ImportSenderData.cs" />
+    <Compile Include="Sender\SenderMessage.cs" />
+    <Compile Include="Sender\SenderDataBusiness.cs" />
+    <Compile Include="Sender\SenderMessageContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\YuLinTuDataComment.cs" />
+    <Compile Include="Mapping\InitalizeDataMapping.cs" />
+    <Compile Include="Mapping\InitalizeMappingData.cs" />
+    <Compile Include="Sender\TaskSenderArgument.cs" />
+    <Compile Include="Sender\TaskSenderOperation.cs" />
+    <Compile Include="Setting\AgricultureSetting.cs" />
+    <Compile Include="SharpZip\SharpZipOperation.cs" />
+    <Compile Include="Tool\ToolAssemblyInfoConfig.cs" />
+    <Compile Include="Tool\ToolConfiguration.cs" />
+    <Compile Include="Tool\ToolDateTime.cs" />
+    <Compile Include="Tool\ToolException.cs" />
+    <Compile Include="Tool\ToolICN.cs" />
+    <Compile Include="Tool\ToolMath.cs" />
+    <Compile Include="Tool\ToolProgress.cs" />
+    <Compile Include="Tool\ToolSerialization.cs" />
+    <Compile Include="Tool\ToolString.cs" />
+    <Compile Include="VirtualPerson\ExportData\ExportContractorTable.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\ExportApplyBook.cs" />
+    <Compile Include="VirtualPerson\ExportData\ExportContractorExcel.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskExportVirtualPersonExcelArgument.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskExportVirtualPersonExcelOperation.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskExportVirtualPersonWordArgument.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskExportVirtualPersonWordOperation.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskGroupExportVirtualPersonExcelArgument.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskGroupExportVirtualPersonExcelOperation.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskGroupExportVirtualPersonWordArgument.cs" />
+    <Compile Include="VirtualPerson\ExportData\TaskGroupExportVirtualPersonWordOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\ExportDelegateBook.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\ExportIdeaBook.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportApplyBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportApplyBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportDelegateBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportDelegateBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportIdeaBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportIdeaBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportSurveyBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskExportSurveyBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportApplyBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportApplyBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportDelegateBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportDelegateBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportIdeaBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportIdeaBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookArgument.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookOperation.cs" />
+    <Compile Include="VirtualPerson\ExportMaterial\ExportSurveyBook.cs" />
+    <Compile Include="VirtualPerson\ImportData\ImportContractorSurveyTable.cs" />
+    <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableArgument.cs" />
+    <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableOperation.cs" />
+    <Compile Include="VirtualPerson\ImportData\TaskImportVirtualPersonTableArgument.cs" />
+    <Compile Include="VirtualPerson\ImportData\TaskImportVirtualPersonTableOperation.cs" />
+    <Compile Include="VirtualPerson\InitializeData\TaskGroupInitialVirtualPersonArgument.cs" />
+    <Compile Include="VirtualPerson\InitializeData\TaskGroupInitialVirtualPersonOperation.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskGroupInitialVPRelationShipArgument.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskInitialVPRelationShipArgument.cs" />
+    <Compile Include="VirtualPerson\InitializeData\TaskInitialVirtualPersonArgument.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskGroupInitialVPRelationShipOperation.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskInitialVPRelationShipOperation.cs" />
+    <Compile Include="VirtualPerson\InitializeData\TaskInitialVirtualPersonOperation.cs" />
+    <Compile Include="VirtualPerson\ImportData\ReadFamilyInformation.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskGroupRelationDealArgument.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskRelationDealArgument.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskGroupRelationDealOperation.cs" />
+    <Compile Include="VirtualPerson\RelationDeal\TaskRelationDealOperation.cs" />
+    <Compile Include="VirtualPerson\RepairData\TaskGroupRepairSharePersonOperation.Argument.cs">
+      <DependentUpon>TaskGroupRepairSharePersonOperation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\RepairData\TaskGroupRepairSharePersonOperation.cs" />
+    <Compile Include="VirtualPerson\RepairData\TaskRepairSharePersonOperation.Argument.cs">
+      <DependentUpon>TaskRepairSharePersonOperation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\RepairData\TaskRepairSharePersonOperation.cs" />
+    <Compile Include="VirtualPerson\TaskVirtualPersonOperation.cs" />
+    <Compile Include="VirtualPerson\TaskVirtualPersonArgument.cs" />
+    <Compile Include="VirtualPerson\ImportData\VerifyFamilyInformation.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonMessage.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonMessageContext.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonBusiness.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonOperator.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookMessage.cs" />
+    <Compile Include="Zone\ExportZonePackage.cs" />
+    <Compile Include="Zone\ExcelReaderZone.cs" />
+    <Compile Include="Zone\ExportZoneToShape.cs" />
+    <Compile Include="Zone\ExportZoneToExcel.cs" />
+    <Compile Include="Zone\ImportZoneShape.cs" />
+    <Compile Include="Zone\ImportZoneData.cs" />
+    <Compile Include="Zone\TaskZoneArgument.cs" />
+    <Compile Include="Zone\TaskZoneOperation.cs" />
+    <Compile Include="Zone\ZoneEventDefine.cs" />
+    <Compile Include="Zone\ZoneMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Zone\ZoneDataBusiness.cs" />
+    <Compile Include="Zone\ZoneMessageContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
+      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
+      <Name>YuLinTu.Library.Entity</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
+      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
+      <Name>YuLinTu.Library.Log</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
+      <Project>{d52b9ce3-8d34-4a2a-9823-d9208f846d97}</Project>
+      <Name>YuLinTu.Library.Office</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
+      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
+      <Name>YuLinTu.Library.Repository</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.WinFoundationAux2018.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.WinFoundationAux2018</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
+      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
+      <Name>YuLinTu.Library.WorkStation</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

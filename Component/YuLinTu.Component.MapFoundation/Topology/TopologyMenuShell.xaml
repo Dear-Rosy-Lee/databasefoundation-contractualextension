@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="YuLinTu.Component.MapFoundation.TopologyMenuShell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YuLinTu.Component.MapFoundation"
+             xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro">
+    <MenuItem>
+        <MenuItem.Icon>
+            <cmps:AutoGrayImage SnapsToDevicePixels="True"
+                                RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/map.png"></cmps:AutoGrayImage>
+        </MenuItem.Icon>
+        <MenuItem.Header>
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontWeight="Bold"
+                           Text="按当前行政地域"></TextBlock>
+                <TextBlock Margin="0,2,0,0"
+                           Text="使用当前选择的行政地域的区域范围作为拓扑检查的范围"></TextBlock>
+            </StackPanel>
+        </MenuItem.Header>
+    </MenuItem>
+</UserControl>

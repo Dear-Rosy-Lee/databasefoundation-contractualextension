@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="YuLinTu.Library.Controls.DictManagerPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:local="clr-namespace:YuLinTu.Library.Controls"   
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="800">
+    <Grid>
+        <cmps:MetroTreeGrid Name="dictGrid"
+                             BorderThickness="0,0,0,0"                            
+                             cmps:DataGridAttacher.ContentBorderThickness="0,1,0,0"
+                              cmps:DataGridAttacher.ColumnHeaderThumbWidth="1"
+                                Visibility="Visible" 
+                                ItemAutoExpand="True"
+                                ItemPadding="4,6" CanUserAddRows="False" CanUserDeleteRows="False"
+                                BorderBrush="LightGray"
+                                MouseDoubleClick="dictGrid_MouseDoubleClick">
+            <!--HeaderBackgroundDefault="{DynamicResource Metro_Window_Style_Background_Lighter}" 
+                                
+                                ItemToggleHiddenState="Collapsed"
+                                HeaderThumbBorderWidth="1"
+                                EnabledAsyncLoading="False"-->
+            <cmps:MetroTreeGrid.Columns>
+                <DataGridTemplateColumn Header="名称"
+                                        SortMemberPath="Name"
+                                        Width="300"  cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Library.Controls;component/Resources/属性16.png"
+                                                        Text="{Binding Object.Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="编码"
+                                        SortMemberPath="Code"
+                                        Width="300"  cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Object.Code}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="说明"
+                                        SortMemberPath="Comment"
+                                        Width="530"  cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Object.Comment}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </cmps:MetroTreeGrid.Columns>
+            <cmps:MetroTreeGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="添加属性" Name="muAdd" Click="muAdd_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                                   SnapsToDevicePixels="True" 
+                                   Stretch="Uniform" 
+                                   Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="编辑属性" Name="muEdit" Click="muEdit_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/字段16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                                   SnapsToDevicePixels="True" 
+                                   Stretch="Uniform" 
+                                   Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="删除属性" Name="muDelete" Click="muDelete_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/错误16_2.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                                   SnapsToDevicePixels="True" 
+                                   Stretch="Uniform" 
+                                   Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="清空属性" Name="muClear" Click="muClear_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                                   SnapsToDevicePixels="True" 
+                                   Stretch="Uniform" 
+                                   Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="刷新属性" Name="muRefresh" Click="muRefresh_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/刷新16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                                   SnapsToDevicePixels="True" 
+                                   Stretch="Uniform" 
+                                   Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </cmps:MetroTreeGrid.ContextMenu>
+        </cmps:MetroTreeGrid>
+    </Grid>
+</UserControl>

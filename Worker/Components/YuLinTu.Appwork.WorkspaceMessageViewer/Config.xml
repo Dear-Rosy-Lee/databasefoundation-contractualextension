@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Order>100</Order>
+    <Name>工作空间消息查看器</Name>
+    <Catalog>辅助插件</Catalog>
+    <ImageUri>pack://application:,,,/YuLinTu.Resources;component/Images/32/FileDocumentInspect.png</ImageUri>
+    <Version>6.7.2.1</Version>
+    <Author>鱼鳞图公司</Author>
+    <Description>在主窗体右上角的帮助栏中，增加一个消息查看器，用于查看当前工作空间中的消息信息。</Description>
+    <EntranceType>YuLinTu.Appwork.WorkspaceMessageViewer.Entrance</EntranceType>
+    <EntrancePath>.\Components\YuLinTu.Appwork.WorkspaceMessageViewer\Binary\YuLinTu.Appwork.WorkspaceMessageViewer.dll</EntrancePath>
+    <IsSystemManaged>false</IsSystemManaged>
+    <IsApplicationDependency>false</IsApplicationDependency>
+    <IsConnected>true</IsConnected>
+    <IsEnabled>false</IsEnabled>
+</WinComponent>

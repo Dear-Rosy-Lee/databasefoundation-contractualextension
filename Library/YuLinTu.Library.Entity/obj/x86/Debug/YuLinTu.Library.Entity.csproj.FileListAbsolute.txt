@@ -1,0 +1,9 @@
+D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.Entity.dll
+D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.Entity.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.g.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.Properties.Resources.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.csproj.GenerateResource.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Entity\obj\x86\Debug\YuLinTu.Library.Entity.pdb

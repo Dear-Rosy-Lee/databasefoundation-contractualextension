@@ -1,0 +1,13 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.Sender\Binary\YuLinTu.Component.Sender.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.Sender\Binary\YuLinTu.Component.Sender.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\Controls\SenderFramePage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\Controls\SenderFramePage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.Properties.Resources.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.csproj.GenerateResource.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Sender\obj\x86\Debug\YuLinTu.Component.Sender.pdb

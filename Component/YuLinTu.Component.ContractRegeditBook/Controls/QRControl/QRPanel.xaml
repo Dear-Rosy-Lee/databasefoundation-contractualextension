@@ -1,0 +1,225 @@
+﻿<UserControl x:Class="YuLinTu.Component.ContractRegeditBook.Controls.QRControl.QRPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:YuLinTu.Component.ContractRegeditBook.Controls.QRControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
+    <UserControl.Resources>
+        <Style x:Key="NavegationBorder" TargetType="Border">
+            <Setter Property="Background" Value="#F1F1F1"/>
+            <Setter Property="CornerRadius" Value="1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1,0,1,0"></Setter>
+        </Style>
+        <Style x:Key="EWMBorder" TargetType="Border">
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,3,0,0"/>
+            <Setter Property="Background" Value="#F1F1F1"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#B2C0D5"></Setter>
+                    <!--<Setter Property="BorderBrush" Value="LightBlue"></Setter>-->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DeleteButton" TargetType="metro:MetroButton">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,3,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="metro:MetroButton">
+                        <Border Name="mainBorder" Background="#F1F1F1">
+                            <StackPanel Orientation="Vertical">
+                                <Image Width="20" Height="20" Source="/YuLinTu.Component.ContractRegeditBook;Component/Resources/delete.png" HorizontalAlignment="Center" Margin="0,3,0,0"></Image>
+                                <TextBlock Text="删除控件" 
+                                           VerticalAlignment="Center" 
+                                           Height="20" Foreground="Black" 
+                                           HorizontalAlignment="Center" 
+                                           FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="mainBorder" Property="Background" Value="#B2C0D5"></Setter>
+                                <!--<Setter TargetName="mainBorder" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="mainBorder" Property="BorderBrush" Value="LightBlue"></Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter  Property="Background"  Value="#DAE1EB"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SaveButton" TargetType="metro:MetroButton">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,3,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="metro:MetroButton">
+                        <Border Name="mainBorder" Background="#F1F1F1">
+                            <StackPanel Orientation="Vertical">
+                                <Image Width="20" Height="20" Source="/YuLinTu.Component.ContractRegeditBook;Component/Resources/saveTemplate.png" HorizontalAlignment="Center" Margin="0,3,0,0"></Image>
+                                <TextBlock Text="保存模板" 
+                                           VerticalAlignment="Center" 
+                                           Height="20" Foreground="Black" 
+                                           HorizontalAlignment="Center" 
+                                           FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="mainBorder" Property="Background" Value="#B2C0D5"></Setter>
+                                <!--<Setter TargetName="mainBorder" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="mainBorder" Property="BorderBrush" Value="LightBlue"></Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter  Property="Background"  Value="#DAE1EB"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EwmButton" TargetType="metro:MetroButton">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,3,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="metro:MetroButton">
+                        <Border Name="mainBorder" Background="#F1F1F1">
+                            <StackPanel Orientation="Vertical">
+                                <Image Width="20" Height="20" Source="/YuLinTu.Component.ContractRegeditBook;Component/Resources/ewm.png" HorizontalAlignment="Center" Margin="0,3,0,0"></Image>
+                                <TextBlock Text="预览二维码样式" 
+                                           VerticalAlignment="Center" 
+                                           Height="20" Foreground="Black" 
+                                           HorizontalAlignment="Center" 
+                                           FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="mainBorder" Property="Background" Value="#B2C0D5"></Setter>
+                                <!--<Setter TargetName="mainBorder" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="mainBorder" Property="BorderBrush" Value="LightBlue"></Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter  Property="Background"  Value="#B2C0D5"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Style="{StaticResource NavegationBorder}" Name="navegation">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border  Margin="0,0,0,0" >
+                    <StackPanel Orientation="Horizontal">
+                        <Border Style="{StaticResource EWMBorder}"
+                            ToolTip="添加二微码控件"
+                            Name="controlBorder"
+                            VerticalAlignment="Center"
+                            MouseEnter="controlBorder_MouseEnter"
+                            MouseLeave="controlBorder_MouseLeave"
+                            MouseLeftButtonDown="controlBorder_MouseLeftButtonDown">
+                            <StackPanel Orientation="Vertical">
+                                <Image Width="20" 
+                                       Height="20" 
+                                       Source="/YuLinTu.Component.ContractRegeditBook;Component/Resources/AddAccount.png" 
+                                       HorizontalAlignment="Center" 
+                                       Margin="0,3,0,0"/>
+                                <TextBlock Text="添加控件" VerticalAlignment="Center" 
+                                       Height="20" 
+                                       Foreground="Black" 
+                                       HorizontalAlignment="Center" 
+                                       FontSize="11"/>
+                            </StackPanel>
+                        </Border>
+                        <metro:MetroButton Name="ClearBtn" Style="{StaticResource DeleteButton}" ToolTip="删除二维码控件" VerticalAlignment="Center"  Click="ClearBtn_Click"/>
+                        <!--<metro:MetroButton Name="SaveBtn"  Style="{StaticResource SaveButton}" ToolTip="保存二维码模板" VerticalAlignment="Center" Click="SaveBtn_Click"/>-->
+                        <metro:MetroButton Name="CreateEWMBtn" Style="{StaticResource EwmButton}" ToolTip="预览二维码样式" VerticalAlignment="Center" Click="CreateEWMBtn_Click"/>
+                        <!--<Button Content="浏览文本" FontSize="10" Name="glanceText" Width="55" Margin="5,0,0,0" Height="30" Click="glanceText_Click"/>-->
+                    </StackPanel>
+                </Border>
+                <Border  Margin="20,0,0,0" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" >
+
+                        <TextBlock Text="高宽度:" 
+                                   Margin="3,0,3,0"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                        <wpftoolkit:DoubleUpDown Name="ewmSize"
+                            Height="20" 
+                            Width="50" 
+                            Minimum="30" 
+                            Maximum="200" 
+                            Value="100"/>
+                        <TextBlock Text="行数:"
+                                   Margin="5,0,3,0"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                        <wpftoolkit:DoubleUpDown 
+                            Name="rowNum"
+                            Height="20" 
+                            Width="50" 
+                            Minimum="6" 
+                            Maximum="15"
+                            
+                            ValueChanged="NumericUpDown_ValueChanged"
+                            Value="6"/>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+        </Border>
+        <Popup Name="dispalyTextPop" 
+               Width="200" 
+               Height="200"
+               StaysOpen="False"
+               PlacementTarget="{Binding ElementName=CreateEWMBtn}">
+            <StackPanel Background="#D2D9E3" >
+                <Image Name="displayImg" Margin="0,50,0,0" Width="100" Height="100" VerticalAlignment="Center"></Image>
+                <!--<TextBlock Name="displayText"></TextBlock>-->
+            </StackPanel>
+        </Popup>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Canvas Name="mainCanvas" >
+
+            </Canvas>
+        </ScrollViewer>
+    </Grid>
+
+
+</UserControl>

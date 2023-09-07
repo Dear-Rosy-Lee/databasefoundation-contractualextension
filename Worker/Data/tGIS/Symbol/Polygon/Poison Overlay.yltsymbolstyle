@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Poison Overlay</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FFE1C71F</StrokeColor>
+          <StrokeThickness>3</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FFE1C71F</BackgroundColor>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>1.5</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0.4</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+            <Mark>6</Mark>
+            <Gap>2</Gap>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF000000</BackgroundColor>
+        <Border type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

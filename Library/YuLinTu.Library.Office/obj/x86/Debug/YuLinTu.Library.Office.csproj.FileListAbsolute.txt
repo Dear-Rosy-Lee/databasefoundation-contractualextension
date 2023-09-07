@@ -1,0 +1,6 @@
+D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.Office.dll
+D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.Office.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Office\obj\x86\Debug\YuLinTu.Library.Office.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Office\obj\x86\Debug\YuLinTu.Library.Office.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Office\obj\x86\Debug\YuLinTu.Library.Office.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Office\obj\x86\Debug\YuLinTu.Library.Office.pdb

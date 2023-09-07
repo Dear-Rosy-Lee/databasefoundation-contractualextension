@@ -1,0 +1,139 @@
+﻿<appCore:OptionsEditor x:Class="YuLinTu.Component.Setting.CommonBusinessSetting"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                       xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                       xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                       xmlns:appCore="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core">
+    <StackPanel Orientation="Vertical">
+        <cmps:OptionsContainer Text="导航选项">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="90" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox  Grid.Row="0"
+                               Grid.ColumnSpan="2"
+                               Visibility="Collapsed"
+                               VerticalAlignment="Center"
+                               Margin="0,0,0,0">行政区域导航</CheckBox>
+                    <DockPanel Grid.Row="1"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Margin="0,0,0,0">
+                        <TextBlock DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"
+                                   Width="100"
+                                   Text="最大级地域:"></TextBlock>
+                        <cmps:MetroTextBox DockPanel.Dock="Left"
+                                           MinWidth="240"
+                                           Height="30"
+                                           Text="{Binding CommonBusinessSettingDefine.CurrentZoneFullName, Mode=TwoWay}"
+                                           VerticalAlignment="Center"
+                                           IsReadOnly="True"
+                                           Margin="0,0,8,0"></cmps:MetroTextBox>
+                    </DockPanel>
+                    <metro:MetroButton x:Name="btnChangeCommon"
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Margin="0,0,0,0"
+                                       Padding="10,0"
+                                       Style="{StaticResource Metro_Button_Paneled_Style}"
+                                       Height="30"
+                                       Width="90"
+                                       VerticalAlignment="Center"
+                                       Click="btnChangeCommon_Click"
+                                       Grid.ColumnSpan="3"
+                                       Content="更改"></metro:MetroButton>
+                    <CheckBox Grid.Row="2"
+                              Grid.ColumnSpan="4"
+                              IsChecked="{Binding CommonBusinessSettingDefine.NavUniformity, Mode=TwoWay }"
+                              VerticalAlignment="Center"
+                              Margin="0,8,0,0"
+                              Visibility="Collapsed">保持导航一致性</CheckBox>
+                    <CheckBox Grid.Row="3"
+                              Grid.ColumnSpan="4"
+                              IsChecked="{Binding CommonBusinessSettingDefine.RegisterFormat, Mode=TwoWay }"
+                              VerticalAlignment="Center"
+                              Margin="0,8,0,0"
+                              Visibility="Collapsed">采用注册模板风格(设置后重启软件生效)</CheckBox>
+                </Grid>
+            </StackPanel>
+        </cmps:OptionsContainer>
+        <!--已经移动到SpatialReferenceSetting设置 by sunjie
+        <cmps:OptionsContainer Text="数据库升级">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <metro:MetroButton Name="updateDatabase"
+                                   Content="手动更新"
+                                   Height="30"
+                                   Width="90"
+                                   Margin="0,0,0,0"
+                                   Padding="10,0"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource Metro_Button_Paneled_Style}"
+                                   VerticalAlignment="Center"
+                                   HorizontalContentAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Click="updateDatabase_Click"></metro:MetroButton>
+                <Label  Grid.Row="0"
+                        Foreground="{DynamicResource Metro_Window_Style_Foreground}"
+                        Margin="10,0,2,0"
+                        Grid.Column="1">设置数据库承包地承包方式为家庭承包</Label>
+                <metro:MetroButton Name="SetDataBaseCBFS"
+                                   Content="设置"
+                                   Height="30"
+                                   Width="90"
+                                   Grid.Row="0"
+                                   Margin="0,0,0,0"
+                                   Padding="10,0"
+                                   Grid.Column="2"
+                                   Style="{StaticResource Metro_Button_Paneled_Style}"
+                                   VerticalAlignment="Center"
+                                   HorizontalContentAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Click="SetDataBaseCBFS_Click"></metro:MetroButton>
+            </Grid>
+        </cmps:OptionsContainer>-->
+        <!--<cmps:OptionsContainer Text="数据库备份" >
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Row="0" 
+                            VerticalAlignment="Center" Margin="0,0,0,0" >
+                    <TextBlock DockPanel.Dock="Left"
+                                   VerticalAlignment="Center" 
+                                   Text="请选择数据库备份所在路径:" Margin="0,0,8,0" ></TextBlock>
+                    <cmps:FolderBrowserTextBox DockPanel.Dock="Left" Height="30" Margin="0,0,8,0" ></cmps:FolderBrowserTextBox>
+                </DockPanel>
+                <metro:MetroButton  Grid.Column="1" Grid.Row="0" Margin="0,0,0,0"  Style="{StaticResource Metro_Button_Paneled_Style}"
+                                            Height="30" Width="90" Content="开始"  VerticalAlignment="Center" />
+                </Grid>
+    </StackPanel>
+    </cmps:OptionsContainer> -->
+    </StackPanel>
+</appCore:OptionsEditor>

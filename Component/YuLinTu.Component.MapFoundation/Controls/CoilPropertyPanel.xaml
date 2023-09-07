@@ -1,0 +1,349 @@
+﻿<UserControl x:Class="YuLinTu.Component.MapFoundation.CoilPropertyPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:YuLinTu.Component.MapFoundation"
+             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:am="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
+             Padding="0">
+    <!--<DockPanel   Margin="0,5,0,5" LastChildFill="True"> Width="Auto"
+             Height="800"
+             MaxHeight="800"-->
+    <Grid  Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Padding="2"
+                   Margin="8,8,0,8"
+                   Name="title"
+                   Height="30"
+                   FontSize="20"
+                   Text="界址线"
+                   Foreground="{DynamicResource Metro_Window_Style_Foreground_Highlight}"
+                   HorizontalAlignment="Left">
+        </TextBlock>
+
+        <Grid  Grid.Row="1">
+            <Grid.Resources>
+                <am:ContractAccountImgConvert x:Key="ImgConvert" />
+            </Grid.Resources>
+            <cmps:LoadingIcon Width="16"
+                              Height="16"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Visibility="{Binding Path=BusyIs, Converter={StaticResource BoolToVisibilityConverter}}"
+                              RenderOptions.BitmapScalingMode="NearestNeighbor"></cmps:LoadingIcon>
+            <cmps:VirtualizingMetroTreeView Name="coilView"
+                                            HeaderVisibility="Visible"
+                                            HeaderBorderThickness="0,1,0,1"
+                                            HeaderThumbBorderWidth="1"
+                                            ItemAutoExpand="False"
+                                            ItemPadding="2,4"
+                                            Background="Transparent"
+                                            BorderThickness="0,0,0,1"
+                                            BorderBrush="LightGray"
+                                            ExpandItemWhenLeftMouseDoubleClick="False"
+                                            x:FieldModifier="public"
+                                            HeaderFontWeight="Bold"
+                                            SelectedItemChanged="coilView_SelectedItemChanged">
+                <cmps:VirtualizingMetroTreeView.View>
+                    <GridView x:Name="coilGridView"
+                              x:FieldModifier="public">
+
+                        <GridViewColumn Header="序号"
+                                        Width="65"
+                                        x:Name="coilNumber">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <StackPanel HorizontalAlignment="Left"
+                                                    Orientation="Horizontal">
+                                            <cmps:ImageTextItem Image="{Binding Img,Converter={StaticResource ImgConvert}}"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Left"
+                                                                Margin="3,0,0,0"
+                                                                Text="{Binding CoilNumberUI}"
+                                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="起点"
+                                        Width="52"
+                                        x:Name="startPoint">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding StartPointUI}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="终点"
+                                        Width="52"
+                                        x:Name="endPoint">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding EndPointUI}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="长度"
+                                        Width="80"
+                                        x:Name="coilLength">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding CoilLengthUI}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </cmps:VirtualizingMetroTreeView.View>
+            </cmps:VirtualizingMetroTreeView>
+        </Grid>
+
+
+        <DockPanel Grid.Row="2"
+                   LastChildFill="True"
+                   Margin="10">
+            <Grid Name="dotInfoGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="37" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="37" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="37" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="37" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="LableStyle"
+                           TargetType="Label">
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Left" />
+                        <Setter Property="HorizontalAlignment"
+                                Value="Left" />
+                    </Style>
+                </Grid.Resources>
+
+                <cmps:ImageTextItem Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="5,0,0,0"
+                                    Text="界线性质:"
+                                    IsRequired="True"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left" />
+                <cmps:MetroComboBox Name="cbCoilProperty"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Height="30"
+                                    Grid.ColumnSpan="1"
+                                    Padding="7,0,0,0"
+                                    VerticalAlignment="Center"
+                                    TabIndex="1" />
+
+                <cmps:ImageTextItem Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="5,0,0,0"
+                                    Text="界址线类别:"
+                                    IsRequired="True"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" />
+                <cmps:MetroComboBox Name="cbCoilType"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Height="30"
+                                    Grid.ColumnSpan="1"
+                                    Padding="7,0,0,0"
+                                    VerticalAlignment="Center"
+                                    TabIndex="2" />
+
+                <cmps:ImageTextItem Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="5,0,0,0"
+                                    Text="界址线位置:"
+                                    IsRequired="True"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" />
+                <cmps:MetroComboBox Name="cbCoilPosition"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Height="30"
+                                    Grid.ColumnSpan="1"
+                                    Padding="7,0,0,0"
+                                    VerticalAlignment="Center"
+                                    TabIndex="3" />
+
+                <Label Content="界址线说明:"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilDescription"
+                                   Grid.Row="3"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding CurrentCoil.Description,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="4"
+                                   MaxLength="300" />
+                <Label Content="毗邻地物承包方:"
+                       Grid.Row="4"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilNeighbor"
+                                   Grid.Row="4"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding  CurrentCoil.NeighborPerson,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="5"
+                                   MaxLength="100" />
+
+                <Label Content="毗邻地物指界人:"
+                       Grid.Row="5"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilPrefer"
+                                   Grid.Row="5"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding CurrentCoil.NeighborFefer,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="6"
+                                   MaxLength="100" />
+
+                <!--<Label Content="权属界线协议书编号:"
+                       Grid.Row="6"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilProtocolNumber"
+                                   Grid.Row="6"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding AgreementNumber,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="7"
+                                   MaxLength="30" />
+
+                <Label Content="权属界线协议书:"
+                       Grid.Row="7"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilProtocolBook"
+                                   Grid.Row="7"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding AgreementBook,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="8"
+                                   MaxLength="100" />
+
+                <Label Content="权属争议原由书编号:"
+                       Grid.Row="8"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilDisputeNumber"
+                                   Grid.Row="8"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding ControversyNumber,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="9"
+                                   MaxLength="30" />
+
+                <Label Content="权属争议原由书:"
+                       Grid.Row="9"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Name="txtCoilDisputeBook"
+                                   Grid.Row="9"
+                                   Grid.Column="1"
+                                   Height="30"
+                                   Text="{Binding ControversyBook,Mode=TwoWay}"
+                                   VerticalAlignment="Center"
+                                   TabIndex="10"
+                                   MaxLength="100" />-->
+
+                <Label Content="备注:"
+                       Grid.Row="6"
+                       Grid.Column="0"
+                       Style="{StaticResource LableStyle}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left" />
+                <cmps:MetroTextBox Height="30"
+                                   TabIndex="11"
+                                   Name="txtCoilComment"
+                                   BorderThickness="1,1,1,1"
+                                   Grid.Row="6"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="3"
+                                   MaxLength="500"
+                                   InputMethod.IsInputMethodEnabled="True"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,0,0"
+                                   IsEnabled="True"
+                                   VerticalContentAlignment="Top"
+                                   Text="{Binding CurrentCoil.Comment,Mode=TwoWay}" />
+
+                <metro:MetroButton Grid.Row="7"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right"
+                                   Height="30"
+                                   Width="100"
+                                   Style="{StaticResource Metro_Button_Paneled_Style}"
+                                   x:Name="mbtnLandOK"
+                                   Click="mbtnLandOK_Click"
+                                   IsEnabled="{Binding CanClose}">
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
+                                        Text="确定">
+                    </cmps:ImageTextItem>
+                </metro:MetroButton>
+            </Grid>
+        </DockPanel>
+        <!--<Border BorderThickness="0,1,0,0"
+                Grid.Row="1"
+                BorderBrush="LightGray"
+                Margin="10,0,10,0"
+                SnapsToDevicePixels="True">
+        </Border>-->
+
+    </Grid>
+    <!--</DockPanel>-->
+
+</UserControl>

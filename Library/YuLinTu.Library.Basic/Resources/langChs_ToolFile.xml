@@ -1,0 +1,9 @@
+<language>
+    <flt29901>所有文件(*.*)|*.*</flt29901>
+    <flt29902>Excel 文件(*.xls,*.xlsx)|*.xls;*.xlsx</flt29902>
+    <flt29903>Shape 文件(*.shp)|*.shp</flt29903>
+    <flt29904>Dwg 文件(*.dwg)|*.dwg</flt29904>
+    <flt29905>MapGis 工程文件(*.mpj)|*.mpj</flt29905>
+    <flt29906>Xml 文件(*.xml)|*.xml</flt29906>
+    <flt29907>文本文件(*.txt)|*.txt</flt29907>
+</language>

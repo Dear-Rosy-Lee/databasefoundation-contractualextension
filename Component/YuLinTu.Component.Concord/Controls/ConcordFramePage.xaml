@@ -1,0 +1,296 @@
+﻿<core:NavigatableWorkpageFrame x:Class="YuLinTu.Component.Concord.ConcordFramePage"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                               xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:core="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                               xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                               xmlns:viewer="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
+                               xmlns:resx="clr-namespace:YuLinTu.Library.Resources.Properties;assembly=YuLinTu.Library.Resources"
+                               mc:Ignorable="d"
+                               d:DesignHeight="480"
+                               d:DesignWidth="800"
+                               Title="承包合同"
+                               Description="承包合同管理"
+                               Category="应用"
+                               Icon="pack://application:,,,/YuLinTu.Component.Concord;component/Resources/map.png"
+                               Image="pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/ccc78.png"
+                               LeftSidebarLength="265"
+                               IsLeftSidebarExpanded="False">
+    <core:WorkpageFrame.Toolbar>
+        <DockPanel TextElement.FontSize="12" LastChildFill="False" Height="90">
+            <cmps:TabControlItemRibbonContainer Text="基本操作"
+                                                Name="EditContainer"
+                                                x:FieldModifier="public">
+                <metro:MetroButton x:Name="mbtnAdd"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="添加"
+                                        ToolTip="添加一个合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnEdit"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="编辑"
+                                        ToolTip="编辑当前选择合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/编辑数据32.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnDel"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="删除"
+                                        ToolTip="删除当前选择合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Clear.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="合同数据处理"
+                                                Name="ConcordDataContainer"
+                                                x:FieldModifier="public">
+                <metro:MetroButton x:Name="mbtnContactConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="签订合同"
+                                        ToolTip="根据当前地域下承包方、发包方、承包地块等信息签订承包合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/InitialData.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnPreviewConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="预览合同"
+                                        ToolTip="预览当前选择合同信息"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnExportConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="导出合同"
+                                        ToolTip="导出当前选择合同数据"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnPrintConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Visibility="Collapsed">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="打印合同"
+                                        ToolTip="打印当前选择合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasurePrint.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="家庭承包方式"
+                                                Name="contractStyleContainer"
+                                                x:FieldModifier="public">
+                <tk:DropDownButton  Name="mbtnCollectBook"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="集体申请书"
+                                            ToolTip="当前地域下集体申请书处理"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/集体经济组织32.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel>
+                            <metro:MetroButton x:Name="mbtnPrintViewApplication"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="预览集体申请书"
+                                                    ToolTip="预览当前地域下集体申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnExportApplicationBook"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="导出集体申请书"
+                                                    ToolTip="导出当前地域下集体申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnPrintApplication"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public"
+                                               Visibility="Collapsed">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="打印集体申请书"
+                                                    ToolTip="打印当前地域下集体申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasurePrint.png" />
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+                <tk:DropDownButton  Name="mbtnSingleBook"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="单户申请书"
+                                            ToolTip="当前选择的农户申请书处理"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/人口管理32.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel>
+                            <metro:MetroButton x:Name="mbtnPrintRequireBook"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="预览单户申请书"
+                                                    ToolTip="预览当前选择的农户申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnExportApplicationByFamily"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="导出单户申请书"
+                                                    ToolTip="导出当前地域下单户申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnBatchPrintAppFamily"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public"
+                                               Visibility="Collapsed">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="打印单户申请书"
+                                                    ToolTip="打印当前选择的农户申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasurePrint.png" />
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="其他承包方式"
+                                                Name="otherContractStyleContainer"
+                                                x:FieldModifier="public">
+                <tk:DropDownButton  Name="mbtnOtherSingleBook"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="单户申请书"
+                                            ToolTip="当前选择的非家庭承包方式申请书处理"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/人口信息32.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel>
+                            <metro:MetroButton x:Name="mbtnPrintViewOtherApplication"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="预览单户申请书"
+                                                    ToolTip="预览当前选择的非家庭承包方式申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnExportApplicationByOther"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="导出单户申请书"
+                                                    ToolTip="导出当前选择非家庭承包方式申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="mbtnPrintOtherApplication"
+                                               Padding="8,4"
+                                               VerticalContentAlignment="Stretch"
+                                               x:FieldModifier="public"
+                                               Visibility="Collapsed">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="打印单户申请书"
+                                                    ToolTip="打印当前选择的农户非家庭承包方式申请书"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasurePrint.png" />
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="工具"
+                                                Name="ToolContainer"
+                                                x:FieldModifier="public">
+                <metro:MetroButton x:Name="mbtnConcordInformation"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="合同明细表"
+                                        ToolTip="导出承包合同明细表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnClear"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="清空"
+                                        ToolTip="清空选择地域下所有合同数据"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空32.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnRefresh"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="刷新"
+                                        ToolTip="刷新"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/刷新32.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="其他"
+                                                Name="OtherContainer"
+                                                Visibility="Collapsed"
+                                                x:FieldModifier="public">
+            </cmps:TabControlItemRibbonContainer>
+        </DockPanel>
+    </core:WorkpageFrame.Toolbar>
+    <core:NavigatableWorkpageFrame.LeftToolbar>
+        <DockPanel LastChildFill="False">
+        </DockPanel>
+    </core:NavigatableWorkpageFrame.LeftToolbar>
+    <Grid>
+        <viewer:ConcordPanel x:Name="concordPanel"
+                             x:FieldModifier="public" />
+    </Grid>
+</core:NavigatableWorkpageFrame>

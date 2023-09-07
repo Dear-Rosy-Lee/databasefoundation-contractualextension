@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Green</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="SimpleFillSymbol">
+        <BackgroundColor>#FF73B273</BackgroundColor>
+        <Border type="SimpleLineSymbol">
+          <StrokeColor>#FF6E6E6E</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Style>Solid</Style>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

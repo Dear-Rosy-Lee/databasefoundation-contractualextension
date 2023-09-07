@@ -1,0 +1,758 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DiagramsView>
+    <Extent>5589.21488461546,4378.03929838156,4964.36297469306,3031.83854781342</Extent>
+    <Paper>
+        <PaperShape>
+            <Width>3000</Width>
+            <Height>3000</Height>
+            <X>7100</X>
+            <Y>4450</Y>
+            <Margin>0,0,0,0</Margin>
+            <RotateCenterX>1500</RotateCenterX>
+            <RotateCenterY>1500</RotateCenterY>
+            <RotateCenterXRate>0.5</RotateCenterXRate>
+            <RotateCenterYRate>0.5</RotateCenterYRate>
+            <CanSelect>True</CanSelect>
+            <CanMove>True</CanMove>
+            <CanResize>True</CanResize>
+            <Angle>0</Angle>
+            <TranformMatrix>Identity</TranformMatrix>
+            <BorderWidth>4.36235762275313</BorderWidth>
+            <BorderColor>#FFD3D3D3</BorderColor>
+            <BackgroundColor>#FFFFFFFF</BackgroundColor>
+            <FontFamily>微软雅黑</FontFamily>
+            <FontSize>13</FontSize>
+            <IsBold>False</IsBold>
+            <FontColor>#FFFFFFFF</FontColor>
+            <HorizontalAlignment>Center</HorizontalAlignment>
+            <VerticalAlignment>Center</VerticalAlignment>
+        </PaperShape>
+        <UI />
+    </Paper>
+    <Diagrams>
+        <Diagram>
+            <RectangleShape>
+                <Width>2800</Width>
+                <Height>2500</Height>
+                <X>100</X>
+                <Y>200</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>1400</RotateCenterX>
+                <RotateCenterY>1250</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>2</BorderWidth>
+                <BorderColor>#FF000000</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>13</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FFFFFFFF</FontColor>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </RectangleShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>2800</Width>
+                <Height>134</Height>
+                <X>100</X>
+                <Y>63</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>1400</RotateCenterX>
+                <RotateCenterY>67</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>title</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>66</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>农村土地承包经营权土地分布图</Text>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <MapShape>
+                <Width>2700</Width>
+                <Height>2400</Height>
+                <X>150</X>
+                <Y>250</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>1350</RotateCenterX>
+                <RotateCenterY>1200</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>2</BorderWidth>
+                <BorderColor>#FF696969</BorderColor>
+                <BackgroundColor>#FFFFFFFF</BackgroundColor>
+                <Name>map</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>13</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FFFFFFFF</FontColor>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </MapShape>
+            <UI>
+                <Map>
+                    <Extent>
+                        <MinX>191545.24522826105</MinX>
+                        <MaxX>194087.70022198415</MaxX>
+                        <MinY>229348.5391729929</MinY>
+                        <MaxY>231608.080035367</MaxY>
+                        <SpatialReference>
+                            <WKID>2380</WKID>
+                            <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                        </SpatialReference>
+                    </Extent>
+                    <SpatialReference>
+                        <WKID>2380</WKID>
+                        <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                    </SpatialReference>
+                    <Layers>
+                        <GroupLayer>
+                            <ID>6d85b815-d80a-46b3-8c67-30e689d51ed2</ID>
+                            <Name>鱼鳞图</Name>
+                            <Description></Description>
+                            <Visible>True</Visible>
+                            <MinimizeScale>0</MinimizeScale>
+                            <MaximizeScale>2147483647</MaximizeScale>
+                            <Selectable>True</Selectable>
+                            <Editable>True</Editable>
+                            <Drawable>True</Drawable>
+                            <Where></Where>
+                            <Layers>
+                                <GroupLayer>
+                                    <ID>b655899c-5380-4783-8188-7bdd1a4344c8</ID>
+                                    <Name>行政地域</Name>
+                                    <Description></Description>
+                                    <Visible>True</Visible>
+                                    <MinimizeScale>0</MinimizeScale>
+                                    <MaximizeScale>2147483647</MaximizeScale>
+                                    <Selectable>False</Selectable>
+                                    <Editable>False</Editable>
+                                    <Drawable>False</Drawable>
+                                    <Where></Where>
+                                    <Layers>
+                                        <VectorLayer>
+                                            <ID>cd58d28e-4562-4889-8129-1e444367adf4</ID>
+                                            <Name>市</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where>ZoneLevel = 5</Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFF7F3F0</BackgroundColor>
+                                                    <BorderStrokeColor>#FFC4BFBD</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>Name</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>14</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>2</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>False</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ArcGisZone</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where>ZoneLevel = 5</Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                        <VectorLayer>
+                                            <ID>cd58d28e-4562-4889-8129-1e444367adf4</ID>
+                                            <Name>县</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where>ZoneLevel = 4</Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFEDE8E6</BackgroundColor>
+                                                    <BorderStrokeColor>#FFC4BFBD</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>Name</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>13</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>2</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>False</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ArcGisZone</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where>ZoneLevel = 4</Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                        <VectorLayer>
+                                            <ID>cd58d28e-4562-4889-8129-1e444367adf4</ID>
+                                            <Name>镇</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where>ZoneLevel = 3</Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFEFEBDB</BackgroundColor>
+                                                    <BorderStrokeColor>#FFC4BFBD</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>Name</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>14</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>3</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>False</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ArcGisZone</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where>ZoneLevel = 3</Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                        <VectorLayer>
+                                            <ID>cd58d28e-4562-4889-8129-1e444367adf4</ID>
+                                            <Name>村</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where>ZoneLevel = 2</Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFF9F2D8</BackgroundColor>
+                                                    <BorderStrokeColor>#FF9E9470</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>Name</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>12</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>3</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>False</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ArcGisZone</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where>ZoneLevel = 2</Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                        <VectorLayer>
+                                            <ID>cd58d28e-4562-4889-8129-1e444367adf4</ID>
+                                            <Name>组</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where>ZoneLevel = 1 || ZoneLevel == null</Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFFAF5D1</BackgroundColor>
+                                                    <BorderStrokeColor>#FFA3A17A</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>Name</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>12</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>3</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>False</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ArcGisZone</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where>ZoneLevel = 1 || ZoneLevel == null</Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                    </Layers>
+                                </GroupLayer>
+                                <GroupLayer>
+                                    <ID>b758a24a-794c-4582-a2cb-6aefdf8ffb26</ID>
+                                    <Name>权属</Name>
+                                    <Description></Description>
+                                    <Visible>True</Visible>
+                                    <MinimizeScale>0</MinimizeScale>
+                                    <MaximizeScale>2147483647</MaximizeScale>
+                                    <Selectable>True</Selectable>
+                                    <Editable>True</Editable>
+                                    <Drawable>True</Drawable>
+                                    <Where></Where>
+                                    <Layers>
+                                        <VectorLayer>
+                                            <ID>6fb417cf-6d88-4815-8819-41aeb5fa41cf</ID>
+                                            <Name>承包地</Name>
+                                            <Description></Description>
+                                            <Visible>True</Visible>
+                                            <MinimizeScale>0</MinimizeScale>
+                                            <MaximizeScale>2147483647</MaximizeScale>
+                                            <Selectable>True</Selectable>
+                                            <Editable>True</Editable>
+                                            <Drawable>True</Drawable>
+                                            <Where></Where>
+                                            <Renderer type="SimpleRenderer">
+                                                <Symbol type="SimplePolygonSymbol">
+                                                    <BackgroundColor>#FFCCE1A0</BackgroundColor>
+                                                    <BorderStrokeColor>#FF728944</BorderStrokeColor>
+                                                    <BorderThickness>1</BorderThickness>
+                                                </Symbol>
+                                            </Renderer>
+                                            <Labeler type="SimpleLabeler">
+                                                <Enabled>True</Enabled>
+                                                <LabelProperty>HouseHolde</LabelProperty>
+                                                <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
+                                                    <AllowOverlapping>False</AllowOverlapping>
+                                                    <ForegroundColor>#FF000000</ForegroundColor>
+                                                    <BackgroundColor>#00FFFFFF</BackgroundColor>
+                                                    <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
+                                                    <BorderThickness>0</BorderThickness>
+                                                    <FontSize>11</FontSize>
+                                                    <FontFamily>微软雅黑</FontFamily>
+                                                    <FontStyle>Regular</FontStyle>
+                                                    <OffsetX>0</OffsetX>
+                                                    <OffsetY>0</OffsetY>
+                                                    <GlowEffect>True</GlowEffect>
+                                                    <GlowEffectSize>3</GlowEffectSize>
+                                                    <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+                                                    <AllowTextOverflow>True</AllowTextOverflow>
+                                                </Symbol>
+                                            </Labeler>
+                                            <DataSource type="ShapefileGeoSource">
+                                                <Schema></Schema>
+                                                <ElementName>ContractLand</ElementName>
+                                                <Provider>
+                                                    <Name>Common.Shapefile</Name>
+                                                    <ConnectionString>usemanagedlibrary=False;path="J:\Downloads\Data\一个区县测试数据\New folder"</ConnectionString>
+                                                    <AbsolutePath>J:\Downloads\Data\一个区县测试数据\New folder</AbsolutePath>
+                                                    <RelativePath>Data\一个区县测试数据\New folder</RelativePath>
+                                                </Provider>
+                                                <SpatialReference>
+                                                    <WKID>2380</WKID>
+                                                    <WKT>PROJCS["Xian_1980_3_Degree_GK_CM_105E",GEOGCS["GCS_Xian_1980",DATUM["D_Xian_1980",SPHEROID["Xian_1980",6378140.0,298.257]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Gauss_Kruger"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",105.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",2380]]</WKT>
+                                                </SpatialReference>
+                                                <Where></Where>
+                                                <GeometryType>Polygon</GeometryType>
+                                                <PrimaryPropertyNames>___FID___</PrimaryPropertyNames>
+                                            </DataSource>
+                                        </VectorLayer>
+                                    </Layers>
+                                </GroupLayer>
+                            </Layers>
+                        </GroupLayer>
+                    </Layers>
+                </Map>
+            </UI>
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>84</Width>
+                <Height>28</Height>
+                <X>2812</X>
+                <Y>163</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>42</RotateCenterX>
+                <RotateCenterY>14</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>18</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>秘密</Text>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>144</Width>
+                <Height>28</Height>
+                <X>2649</X>
+                <Y>162</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>72</RotateCenterX>
+                <RotateCenterY>14</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>18</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>单位面积：</Text>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>77</Width>
+                <Height>28</Height>
+                <X>2751</X>
+                <Y>162</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>38.5</RotateCenterX>
+                <RotateCenterY>14</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>unitName</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>18</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>亩</Text>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>296</Width>
+                <Height>179</Height>
+                <X>126</X>
+                <Y>2707</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>148</RotateCenterX>
+                <RotateCenterY>89.5</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>23</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>2014年12月数字化成图
+2000国家大地坐标系
+1985国家高程基准
+2007年版图式</Text>
+                <HorizontalAlignment>Left</HorizontalAlignment>
+                <VerticalAlignment>Top</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>296</Width>
+                <Height>179</Height>
+                <X>1427</X>
+                <Y>2717</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>148</RotateCenterX>
+                <RotateCenterY>89.5</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>scale</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>23</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>1：2000</Text>
+                <HorizontalAlignment>Left</HorizontalAlignment>
+                <VerticalAlignment>Top</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>75</Width>
+                <Height>45</Height>
+                <X>2793</X>
+                <Y>2737</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>37.5</RotateCenterX>
+                <RotateCenterY>22.5</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>scale</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>23</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>制图</Text>
+                <HorizontalAlignment>Center</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>535</Width>
+                <Height>45</Height>
+                <X>2250</X>
+                <Y>2714</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>267.5</RotateCenterX>
+                <RotateCenterY>22.5</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>scale</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>23</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>达州市通川区农业局</Text>
+                <HorizontalAlignment>Right</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+        <Diagram>
+            <TextShape>
+                <Width>535</Width>
+                <Height>45</Height>
+                <X>2250</X>
+                <Y>2759</Y>
+                <Margin>0,0,0,0</Margin>
+                <RotateCenterX>267.5</RotateCenterX>
+                <RotateCenterY>22.5</RotateCenterY>
+                <RotateCenterXRate>0.5</RotateCenterXRate>
+                <RotateCenterYRate>0.5</RotateCenterYRate>
+                <CanSelect>True</CanSelect>
+                <CanMove>True</CanMove>
+                <CanResize>True</CanResize>
+                <Angle>0</Angle>
+                <TranformMatrix>Identity</TranformMatrix>
+                <BorderWidth>0</BorderWidth>
+                <BorderColor>#FFC8C8C8</BorderColor>
+                <BackgroundColor>#00FFFFFF</BackgroundColor>
+                <Name>scale</Name>
+                <FontFamily>微软雅黑</FontFamily>
+                <FontSize>23</FontSize>
+                <IsBold>False</IsBold>
+                <FontColor>#FF000000</FontColor>
+                <Text>四川鱼鳞图信息技术股份有限公司</Text>
+                <HorizontalAlignment>Right</HorizontalAlignment>
+                <VerticalAlignment>Center</VerticalAlignment>
+            </TextShape>
+            <UI />
+        </Diagram>
+    </Diagrams>
+</DiagramsView>

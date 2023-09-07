@@ -1,0 +1,7 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.SeparateDataBaseTask\Binary\YuLinTu.Component.SeparateDataBaseTask.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.SeparateDataBaseTask\Binary\YuLinTu.Component.SeparateDataBaseTask.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.SeparateDataBaseTask\obj\x86\Debug\YuLinTu.Component.SeparateDataBaseTask.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.SeparateDataBaseTask\obj\x86\Debug\YuLinTu.Component.SeparateDataBaseTask.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.SeparateDataBaseTask\obj\x86\Debug\YuLinTu.Component.SeparateDataBaseTask.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.SeparateDataBaseTask\obj\x86\Debug\YuLinTu.Component.SeparateDataBaseTask.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.SeparateDataBaseTask\obj\x86\Debug\YuLinTu.Component.SeparateDataBaseTask.pdb

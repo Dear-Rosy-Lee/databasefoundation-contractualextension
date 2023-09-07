@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="YuLinTu.Appwork.Apps.Samples.Examples.TabControlPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples.Examples"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <Grid Background="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundLighterBrushKey}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="330"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Margin="20"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource {x:Static ylt:ResourceKeys.BorderBrushKey}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="0,0,0,1"
+                        BorderBrush="{DynamicResource {x:Static ylt:ResourceKeys.BorderBrushKey}}"
+                        Background="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundBrushKey}}">
+                    <DockPanel Style="{StaticResource toolbar}"
+                               Margin="5">
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="10"
+                                   Text="SelectedIndex : "></TextBlock>
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="{Binding SelectedIndex, ElementName=tabControl}"></TextBlock>
+                        <Button DockPanel.Dock="Right"
+                                Margin="5,0,0,0"
+                                MinWidth="80"
+                                Style="{StaticResource btn-default}"
+                                Command="{Binding CommandClearTab}">
+                            <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/cross-script.png"
+                                               Text="Clear">
+                            </ylt:ImageTextItem>
+                        </Button>
+                        <Button DockPanel.Dock="Right"
+                                Margin="5,0,0,0"
+                                MinWidth="80"
+                                Style="{StaticResource btn-default}"
+                                Command="{Binding CommandRemoveTab}">
+                            <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/minus.png"
+                                               Text="Remove">
+                            </ylt:ImageTextItem>
+                        </Button>
+                        <Button DockPanel.Dock="Right"
+                                Margin="5,0,0,0"
+                                MinWidth="80"
+                                Style="{StaticResource btn-default}"
+                                Command="{Binding CommandInsert}">
+                            <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png"
+                                               Text="Insert">
+                            </ylt:ImageTextItem>
+                        </Button>
+                        <Button DockPanel.Dock="Right"
+                                Margin="5,0,0,0"
+                                MinWidth="80"
+                                Style="{StaticResource btn-default}"
+                                Command="{Binding CommandAddTab}">
+                            <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png"
+                                               Text="Add">
+                            </ylt:ImageTextItem>
+                        </Button>
+                    </DockPanel>
+                </Border>
+                <ylt:MetroListTabControl Name="tabControl"
+                                         Grid.Row="1"
+                                         ItemPadding="20,10"
+                                         SelectedIndex="{Binding Config.SelectedTabIndex, Mode=TwoWay}"
+                                         SelectorVisibility="{Binding Config.SelectorVisibility}"
+                                         SelectorLength="{Binding Config.SelectorLength}"
+                                         SelectorReverse="{Binding Config.SelectorReverse}"
+                                         Direction="{Binding Config.Direction}"
+                                         TabsSource="{Binding Tabs}"
+                                         HeaderBackground="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundBrushKey}}">
+                    <ylt:MetroListTabControl.ItemTemplate>
+                        <DataTemplate>
+                            <ylt:MetroListTabItem>
+                                <ylt:MetroListTabItem.Header>
+                                    <TextBlock Text="{Binding}"></TextBlock>
+                                </ylt:MetroListTabItem.Header>
+                                <TextBlock Text="{Binding}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"></TextBlock>
+                            </ylt:MetroListTabItem>
+                        </DataTemplate>
+                    </ylt:MetroListTabControl.ItemTemplate>
+                </ylt:MetroListTabControl>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1"
+                BorderThickness="1,0,0,0"
+                Padding="10,0"
+                Background="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundLighterBrushKey}}"
+                BorderBrush="{DynamicResource {x:Static ylt:ResourceKeys.BorderBrushKey}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Margin="10,10,10,10"
+                           FontSize="20"
+                           Foreground="{DynamicResource {x:Static ylt:ResourceKeys.ThemeBrushKey}}"
+                           Text="属性"></TextBlock>
+                <ylt:PropertyGrid Grid.Row="1"
+                                  Object="{Binding Config}"></ylt:PropertyGrid>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

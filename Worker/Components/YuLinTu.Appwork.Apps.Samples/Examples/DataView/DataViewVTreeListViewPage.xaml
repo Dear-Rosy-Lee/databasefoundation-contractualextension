@@ -1,0 +1,208 @@
+﻿<ylt:Page x:Class="YuLinTu.Appwork.Apps.Samples.Examples.DataView.DataViewVTreeListViewPage"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+          xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples"
+          d:DesignWidth="800"
+          d:DesignHeight="480"
+          mc:Ignorable="d">
+    <ylt:Page.Resources>
+        <local:BinaryToImageConverter x:Key="BinaryToImageConverter"></local:BinaryToImageConverter>
+        <local:CountryToImageConverter x:Key="CountryToImageConverter"></local:CountryToImageConverter>
+    </ylt:Page.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CommandLoaded}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <ylt:ClassicLayout>
+
+        <ylt:ClassicLayout.Toolbar>
+            <DockPanel LastChildFill="False"
+                       TextElement.FontSize="12">
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/Refresh.png"
+                                           Text="Refresh" />
+                    </ylt:MetroButton>
+                </ylt:TabControlItemRibbonContainer>
+            </DockPanel>
+        </ylt:ClassicLayout.Toolbar>
+
+        <ylt:ClassicLayout.Statusbar>
+            <DockPanel LastChildFill="False">
+
+                <ylt:ImageTextItem DockPanel.Dock="Right"
+                                   Margin="10,0"
+                                   ToolTip="Employee Count"
+                                   Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/Account.png"
+                                   Text="{Binding EmployeeCount}">
+                </ylt:ImageTextItem>
+
+                <ylt:ImageTextItem DockPanel.Dock="Right"
+                                   Margin="10,0,0,0"
+                                   ToolTip="Country Count"
+                                   Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/category.png"
+                                   Text="{Binding CountryCount}">
+                </ylt:ImageTextItem>
+
+                <ylt:SeparatorV DockPanel.Dock="Right"></ylt:SeparatorV>
+            </DockPanel>
+        </ylt:ClassicLayout.Statusbar>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource {x:Static ylt:ResourceKeys.BorderBrushKey}}"
+                    Background="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundBrushKey}}">
+                <ylt:MetroTextBox Margin="5,3,3,3"
+                                  Width="200"
+                                  Height="30"
+                                  Watermask="请输入过滤关键字"
+                                  IsEnabled="False"
+                                  HorizontalAlignment="Right"
+                                  Text="{Binding FilterKey, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <ylt:InvokeCommandActionEx Command="{Binding CommandFilter}"
+                                                       CommandParameter="{Binding ElementName=tree}"></ylt:InvokeCommandActionEx>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ylt:MetroTextBox>
+            </Border>
+            <ylt:VirtualizingMetroTreeView Grid.Row="1"
+                                           Name="tree"
+                                           RootItemAutoExpand="True"
+                                           Roots="{Binding Items}"
+                                           HeaderFontWeight="Bold"
+                                           ItemHeight="NaN"
+                                           ItemPadding="5"
+                                           HeaderThumbBorderWidth="0"
+                                           HeaderBorderThickness="0"
+                                           HeaderPadding="10,6"
+                                           ylt:VirtualizingMetroTreeViewSort.IsSortEnabled="True">
+                <ylt:VirtualizingMetroTreeView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name"
+                                        Width="200"
+                                        ylt:VirtualizingMetroTreeViewSort.PropertyName="Name">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ylt:VirtualizingMetroTreeViewItemToggleButton></ylt:VirtualizingMetroTreeViewItemToggleButton>
+                                        <ContentControl Content="{Binding}">
+                                            <ContentControl.Resources>
+                                                <DataTemplate DataType="{x:Type local:EmployeeItem}">
+                                                    <ylt:ImageTextItem VerticalAlignment="Center"
+                                                                       Margin="3,0,0,0"
+                                                                       Image="{Binding Photo, Converter={StaticResource BinaryToImageConverter}}"
+                                                                       Text="{Binding Name}"></ylt:ImageTextItem>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type local:CountryItem}">
+                                                    <StackPanel Orientation="Horizontal"
+                                                                Margin="3,3">
+                                                        <Image MaxHeight="20"
+                                                               Source="{Binding Name, Converter={StaticResource CountryToImageConverter}}"></Image>
+                                                        <TextBlock Margin="5,0,0,0"
+                                                                   VerticalAlignment="Center"
+                                                                   Text="{Binding Name}"></TextBlock>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ContentControl.Resources>
+                                        </ContentControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="OrderID"
+                                        Width="100"
+                                        ylt:VirtualizingMetroTreeViewSort.PropertyName="OrderID">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader"
+                                       BasedOn="{StaticResource Metro_VirtualizingTreeView_HeaderContainer_Sytle}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Right"></Setter>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               Text="{Binding OrderID}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Freight"
+                                        Width="100"
+                                        ylt:VirtualizingMetroTreeViewSort.PropertyName="Freight">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader"
+                                       BasedOn="{StaticResource Metro_VirtualizingTreeView_HeaderContainer_Sytle}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Right"></Setter>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               Text="{Binding Freight, StringFormat=\{0:C\}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Date"
+                                        Width="200"
+                                        ylt:VirtualizingMetroTreeViewSort.PropertyName="OrderDate">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader"
+                                       BasedOn="{StaticResource Metro_VirtualizingTreeView_HeaderContainer_Sytle}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center"></Setter>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Text="{Binding OrderDate, StringFormat='yyyy年MM月dd日'}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="City"
+                                        Width="150"
+                                        ylt:VirtualizingMetroTreeViewSort.PropertyName="ShipCity">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  VerticalAlignment="Center"
+                                                Text="{Binding ShipCity}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Address"
+                                        Width="300">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  VerticalAlignment="Center"
+                                                Text="{Binding ShipAddress}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ylt:VirtualizingMetroTreeView.View>
+            </ylt:VirtualizingMetroTreeView>
+        </Grid>
+
+    </ylt:ClassicLayout>
+</ylt:Page>

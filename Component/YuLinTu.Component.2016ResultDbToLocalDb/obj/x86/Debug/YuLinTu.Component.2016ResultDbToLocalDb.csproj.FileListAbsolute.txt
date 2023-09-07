@@ -1,0 +1,12 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Binary\YuLinTu.Component.ResultDbof2016ToLocalDb.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Binary\YuLinTu.Component.ResultDbof2016ToLocalDb.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.2016ResultDbToLocalDb.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\Task\FileChoiceControl.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\Task\FileChoicePage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\Task\FileChoiceControl.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\Task\FileChoicePage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.ResultDbof2016ToLocalDb_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.ResultDbof2016ToLocalDb.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.2016ResultDbToLocalDb.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.ResultDbof2016ToLocalDb.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.2016ResultDbToLocalDb\obj\x86\Debug\YuLinTu.Component.ResultDbof2016ToLocalDb.pdb

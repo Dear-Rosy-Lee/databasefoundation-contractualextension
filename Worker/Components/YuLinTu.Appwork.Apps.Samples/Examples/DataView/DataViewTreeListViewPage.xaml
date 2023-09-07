@@ -1,0 +1,93 @@
+﻿<ylt:Page x:Class="YuLinTu.Appwork.Apps.Samples.Examples.DataView.DataViewTreeListViewPage"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+          xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples"
+          d:DesignWidth="800"
+          d:DesignHeight="480"
+          mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CommandLoaded}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <ylt:Page.Resources>
+        <local:FileTypeToImageConverter x:Key="FileTypeToImageConverter"></local:FileTypeToImageConverter>
+        <local:FileTypeToTextConverter x:Key="FileTypeToTextConverter"></local:FileTypeToTextConverter>
+    </ylt:Page.Resources>
+
+
+    <ylt:ClassicLayout>
+
+
+        <Grid>
+            <ylt:MetroTreeListView Name="treeViewer"
+                                   HeaderBorderThickness="0"
+                                   HeaderThumbBorderWidth="0"
+                                   RootItemAutoExpand="True"
+                                   HeaderFontWeight="Bold"
+                                   ItemPadding="5"
+                                   HeaderPadding="12,6"
+                                   SelectedNode="{Binding SelectedItem, Mode=TwoWay}"
+                                   ItemsSource="{Binding TreeViewItemsSource}">
+                <i:Interaction.Triggers>
+                    <ylt:AsyncEventTrigger EventName="HasItemsGetter">
+                        <ylt:InvokeCommandActionEx Command="{Binding CommandHasItemsGetter}"></ylt:InvokeCommandActionEx>
+                    </ylt:AsyncEventTrigger>
+                    <ylt:AsyncEventTrigger EventName="ItemsGetter">
+                        <ylt:InvokeCommandActionEx Command="{Binding CommandItemGetter}"></ylt:InvokeCommandActionEx>
+                    </ylt:AsyncEventTrigger>
+                </i:Interaction.Triggers>
+
+                <ylt:MetroTreeListView.View>
+                    <GridView>
+                        <GridViewColumn Header="名称"
+                                        Width="450">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ylt:MetroTreeListViewItemToggleButton></ylt:MetroTreeListViewItemToggleButton>
+                                        <ylt:ImageTextItem Image="{Binding IsFile, Converter={StaticResource FileTypeToImageConverter}}"
+                                                           Text="{Binding Name}"
+                                                           Margin="3,0,0,0"></ylt:ImageTextItem>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="类型"
+                                        Width="100">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader"
+                                       BasedOn="{StaticResource Metro_TreeListView_HeaderContainer_Sytle}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center"></Setter>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Text="{Binding IsFile, Converter={StaticResource FileTypeToTextConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="修改时间"
+                                        Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  VerticalAlignment="Center"
+                                                Text="{Binding DateTimeModified}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ylt:MetroTreeListView.View>
+            </ylt:MetroTreeListView>
+        </Grid>
+
+    </ylt:ClassicLayout>
+</ylt:Page>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Freeway, Proposed</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FFFF3737</StrokeColor>
+        <StrokeThickness>3.6</StrokeThickness>
+        <Template>
+          <Interval>0.2</Interval>
+          <Mark>0</Mark>
+          <Gap>1</Gap>
+          <Mark>18</Mark>
+          <Gap>6</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>6.4</StrokeThickness>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>4</Mark>
+          <Gap>1</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

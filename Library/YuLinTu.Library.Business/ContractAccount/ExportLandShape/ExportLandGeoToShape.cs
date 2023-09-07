@@ -1,0 +1,398 @@
+﻿/*
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using YuLinTu.Library.Office;
+using YuLinTu.Library.Entity;
+using System.IO;
+using YuLinTu.Data;
+using YuLinTu.Library.Repository;
+using NetTopologySuite.IO;
+using NetTopologySuite.Features;
+using YuLinTu.Library.WorkStation;
+
+namespace YuLinTu.Library.Business
+{
+    public class ExportLandGeoToShape : ExportShapeBase
+    {
+        #region Fields
+
+        private Zone currentZone;
+
+        #endregion
+
+        #region Property
+
+        /// <summary>
+        /// 地域集合
+        /// </summary>
+        public List<Zone> ZoneList { get; set; }
+
+        /// <summary>
+        /// 有空间数据的地块集合
+        /// </summary>
+        public List<ContractLand> ListGeoLand { get; set; }
+
+
+        /// <summary>
+        /// 是14位编码/否16位编码//默认为14位不改动
+        /// </summary>
+        public bool IsStandCode { get; set; }
+
+        /// <summary>
+        /// 地域
+        /// </summary>
+        public Zone CurrentZone
+        {
+            get { return currentZone; }
+            set { currentZone = value; }
+        }
+
+        /// <summary>
+        /// 当前地域下所有承包方
+        /// </summary>
+        public List<VirtualPerson> ListVp { get; set; }
+
+
+        /// <summary>
+        /// 导出表头语言
+        /// </summary>
+        public eLanguage Lang { get; set; }
+
+        /// <summary>
+        /// 地域描述
+        /// </summary>
+        public string ZoneDesc { get; set; }
+
+        /// <summary>
+        /// 导出shape图斑设置实体
+        /// </summary>
+        public ExportContractLandShapeDefine exportContractLandShapeDefine = ExportContractLandShapeDefine.GetIntence();
+
+        /// <summary>
+        /// 数据字典
+        /// </summary>
+        public List<Dictionary> DictList { get; set; }
+
+        #endregion
+
+        #region Ctor
+
+        public ExportLandGeoToShape(ExportContractLandShapeDefine exportSet)
+            : base(exportSet)
+        {
+
+        }
+
+
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// 创建Feature集合
+        /// </summary>
+        public List<IFeature> CreateFeatureList(List<ContractLand> geoLands)
+        {
+            List<IFeature> list = new List<IFeature>();
+            if (geoLands == null || geoLands.Count == 0)
+            {
+                return list;
+            }
+            toolProgress.InitializationPercent(geoLands.Count, 99, 1);
+            //TODO Sunjie 导出图斑时某个图斑异常，暂时跳过处理！以后考虑抛出警告
+            foreach (var item in geoLands)
+            {
+                try
+                {
+                    toolProgress.DynamicProgress(ZoneDesc);
+                    AttributesTable attributes = CreateAttributesTable<ContractLand>(item);
+                    YuLinTu.Spatial.Geometry geometry = item.Shape as YuLinTu.Spatial.Geometry;
+                    if (geometry == null || geometry.Instance == null)
+                    {
+                        continue;
+                    }
+                    //if (geometry.IsValid() == false)
+                    //{
+                    //    this.ReportInfomation(string.Format("地块{0}数据图斑无效，已忽略，请检查!", item.LandNumber));
+                    //    continue;
+                    //}
+                    if (geometry.GeometryType.Equals(Spatial.eGeometryType.Unknown) || geometry.GeometryType.Equals(Spatial.eGeometryType.GeometryCollection))
+                    {
+                        this.ReportInfomation(string.Format("地块{0}数据图斑不是面状数据，已忽略，请检查!", item.LandNumber));
+                        continue;
+                    }
+                    SetReference(geometry);
+                    Feature feature = new Feature(geometry.Instance, attributes);
+                    list.Add(feature);
+                }
+                catch
+                {
+                    this.ReportInfomation(string.Format("地块{0}数据有图斑异常，已忽略，请检查!", item.LandNumber));
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 创建Feature集合
+        /// </summary>
+        public override List<IFeature> CreateFeatureList()
+        {
+            List<IFeature> list = new List<IFeature>();
+            if (ListGeoLand == null || ListGeoLand.Count == 0)
+            {
+                this.ReportError("未获取到有空间信息的地块数据!");
+                return list;
+            }
+            list = CreateFeatureList(ListGeoLand);
+            if (list.Count == 0)
+            {
+                this.ReportInfomation("地域中不包含有图斑的地块数据!");
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取配置
+        /// </summary>  
+        public override object GetExportSetting(object exportSetting = null)
+        {
+            return exportContractLandShapeDefine as object;
+        }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary>
+        public override DbaseFileHeader CreateHeader(IFeature feature = null, int count = 0)
+        {
+            if (exportContractLandShapeDefine == null) return null;
+            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
+            if (Lang == eLanguage.CN)
+            {
+                if (exportContractLandShapeDefine.NameIndex) header.AddColumn("承包方名称", 'C', 150, 0);
+                if (exportContractLandShapeDefine.VPNumberIndex) header.AddColumn("证件号码", 'C', 150, 0);
+                if (exportContractLandShapeDefine.VPCommentIndex) header.AddColumn("户主备注", 'C', 250, 0);
+                if (exportContractLandShapeDefine.LandNameIndex) header.AddColumn("地块名称", 'C', 150, 0);
+                if (exportContractLandShapeDefine.CadastralNumberIndex) header.AddColumn("地块编码", 'C', 150, 0);
+                if (exportContractLandShapeDefine.SurveyNumberIndex) header.AddColumn("调查编码", 'C', 150, 0);
+                header.AddColumn("地域名称", 'C', 150, 0);
+                header.AddColumn("地域编码", 'C', 150, 0);
+                if (exportContractLandShapeDefine.ImageNumberIndex) header.AddColumn("图幅编号", 'C', 150, 0);
+                if (exportContractLandShapeDefine.TableAreaIndex) header.AddColumn("台账面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.ActualAreaIndex) header.AddColumn("实测面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.EastIndex) header.AddColumn("四至东", 'C', 150, 0);
+                if (exportContractLandShapeDefine.SourthIndex) header.AddColumn("四至南", 'C', 150, 0);
+                if (exportContractLandShapeDefine.WestIndex) header.AddColumn("四至西", 'C', 150, 0);
+                if (exportContractLandShapeDefine.NorthIndex) header.AddColumn("四至北", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandPurposeIndex) header.AddColumn("土地用途", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandLevelIndex) header.AddColumn("地力等级", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandTypeIndex) header.AddColumn("利用类型", 'C', 150, 0);
+                if (exportContractLandShapeDefine.IsFarmerLandIndex) header.AddColumn("基本农田", 'C', 150, 0);
+                if (exportContractLandShapeDefine.ReferPersonIndex) header.AddColumn("指界人", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandTypeNameIndex) header.AddColumn("地类名称", 'C', 150, 0);
+                if (exportContractLandShapeDefine.IsFlyLandIndex) header.AddColumn("是否飞地", 'C', 150, 0);
+                if (exportContractLandShapeDefine.VPTelephoneIndex) header.AddColumn("电话号码", 'C', 150, 0);
+                if (exportContractLandShapeDefine.ElevationIndex) header.AddColumn("海拔高度", 'C', 150, 0);
+                if (exportContractLandShapeDefine.ArableTypeIndex) header.AddColumn("地块类别", 'C', 150, 0);
+                if (exportContractLandShapeDefine.AwareAreaIndex) header.AddColumn("确权面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.MotorizeAreaIndex) header.AddColumn("机动地面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.ConstructModeIndex) header.AddColumn("承包方式", 'C', 150, 0);
+                if (exportContractLandShapeDefine.PlotNumberIndex) header.AddColumn("畦数", 'C', 150, 0);
+                if (exportContractLandShapeDefine.PlatTypeIndex) header.AddColumn("种植类型", 'C', 150, 0);
+                if (exportContractLandShapeDefine.ManagementTypeIndex) header.AddColumn("经营方式", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandPlantIndex) header.AddColumn("耕保类型", 'C', 150, 0);
+                if (exportContractLandShapeDefine.SourceNameIndex) header.AddColumn("原户主姓名", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandLocationIndex) header.AddColumn("座落方位", 'C', 150, 0);
+                if (exportContractLandShapeDefine.IsTransterIndex) header.AddColumn("是否流转", 'C', 150, 0);
+                if (exportContractLandShapeDefine.TransterModeIndex) header.AddColumn("流转方式", 'C', 150, 0);
+                if (exportContractLandShapeDefine.TransterTermIndex) header.AddColumn("流转期限", 'C', 150, 0);
+                if (exportContractLandShapeDefine.TransterAreaIndex) header.AddColumn("流转面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.LandSurveyPersonIndex) header.AddColumn("调查员", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandSurveyDateIndex) header.AddColumn("调查日期", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandSurveyChronicleIndex) header.AddColumn("调查记事", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandCheckPersonIndex) header.AddColumn("审核人", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandCheckDateIndex) header.AddColumn("审核日期", 'C', 150, 0);
+                if (exportContractLandShapeDefine.LandCheckOpinionIndex) header.AddColumn("审核意见", 'C', 150, 0);
+                if (exportContractLandShapeDefine.CommentIndex) header.AddColumn("备注", 'C', 250, 0);
+            }
+
+            return header;
+        }
+
+        ///<summary>
+        ///创建属性表
+        ///</summary>
+        ///<returns></returns>
+        public override AttributesTable CreateAttributesTable<T>(T en)
+        {
+            if (exportContractLandShapeDefine == null) return null;
+            ContractLand geoland = en as ContractLand;
+            if (geoland == null)
+                return null;
+            AttributesTable attributes = new AttributesTable();
+
+            if (Lang == eLanguage.CN)
+            {
+                if (exportContractLandShapeDefine.NameIndex) attributes.AddAttribute("承包方名称", geoland.OwnerName);
+
+                if (exportContractLandShapeDefine.VPNumberIndex)
+                {
+                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
+                    if (vp == null)
+                    {
+                        attributes.AddAttribute("证件号码", "");
+                    }
+                    else
+                    {
+                        attributes.AddAttribute("证件号码", vp.Number);
+                    }
+                }
+                if (exportContractLandShapeDefine.VPCommentIndex)
+                {
+                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
+                    if (vp == null)
+                    {
+                        attributes.AddAttribute("户主备注", "");
+                    }
+                    else
+                    {
+                        attributes.AddAttribute("户主备注", vp.Comment);
+                    }
+                }
+
+                if (exportContractLandShapeDefine.LandNameIndex) attributes.AddAttribute("地块名称", geoland.Name);
+                if (exportContractLandShapeDefine.CadastralNumberIndex)
+                {
+                    int getlandnumcount = exportContractLandShapeDefine.LandNumberGetCount;
+                    int length = geoland.LandNumber == null ? 0 : geoland.LandNumber.Length;
+                    if ((geoland.LandNumber != "" || geoland.LandNumber != null) && length > getlandnumcount)
+                    {
+                        string landendnum = geoland.LandNumber.Substring(getlandnumcount, length - getlandnumcount);
+                        attributes.AddAttribute("地块编码", getlandnumcount == 0 ? geoland.LandNumber : landendnum);
+                    }
+                    else
+                    {
+                        attributes.AddAttribute("地块编码", "");
+                    }
+                }
+                if (exportContractLandShapeDefine.SurveyNumberIndex) attributes.AddAttribute("调查编码", geoland.SurveyNumber);
+                attributes.AddAttribute("地域名称", geoland.ZoneName.IsNullOrEmpty() ? geoland.LocationName : geoland.ZoneName);
+                attributes.AddAttribute("地域编码", geoland.ZoneCode.IsNullOrEmpty() ? geoland.LocationCode : geoland.ZoneCode);
+                if (exportContractLandShapeDefine.ImageNumberIndex) attributes.AddAttribute("图幅编号", geoland.LandExpand != null ? geoland.LandExpand.ImageNumber : "");
+                if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("台账面积", geoland.TableArea != null ? geoland.TableArea.Value.ToString("0.00") : "0");
+                if (exportContractLandShapeDefine.ActualAreaIndex) attributes.AddAttribute("实测面积", geoland.ActualArea.ToString("0.00"));
+
+                if (exportContractLandShapeDefine.EastIndex) attributes.AddAttribute("四至东", geoland.NeighborEast);
+                if (exportContractLandShapeDefine.SourthIndex) attributes.AddAttribute("四至南", geoland.NeighborSouth);
+                if (exportContractLandShapeDefine.WestIndex) attributes.AddAttribute("四至西", geoland.NeighborWest);
+                if (exportContractLandShapeDefine.NorthIndex) attributes.AddAttribute("四至北", geoland.NeighborNorth);
+                if (exportContractLandShapeDefine.LandPurposeIndex)
+                {
+                    var dictTDYT = DictList.Find(c => c.Code == geoland.Purpose && c.GroupCode == DictionaryTypeInfo.TDYT);
+                    attributes.AddAttribute("土地用途", dictTDYT == null ? "" : dictTDYT.Name);
+                }
+                if (exportContractLandShapeDefine.LandLevelIndex)
+                {
+                    var dictDLDJ = DictList.Find(c => c.Code == geoland.LandLevel && c.GroupCode == DictionaryTypeInfo.DLDJ);
+                    attributes.AddAttribute("地力等级", dictDLDJ == null ? "" : dictDLDJ.Name);
+                }
+                if (exportContractLandShapeDefine.LandTypeIndex)
+                {
+                    var dictTDLYLX = DictList.Find(c => c.Code == geoland.LandCode && c.GroupCode == DictionaryTypeInfo.TDLYLX);
+                    attributes.AddAttribute("利用类型", dictTDLYLX == null ? "" : dictTDLYLX.Name);
+                }
+                if (exportContractLandShapeDefine.IsFarmerLandIndex) attributes.AddAttribute("基本农田", geoland.IsFarmerLand != null ? (geoland.IsFarmerLand == true ? "是" : "否") : "");
+                if (exportContractLandShapeDefine.ReferPersonIndex) attributes.AddAttribute("指界人", geoland.LandExpand != null ? geoland.LandExpand.ReferPerson : "");
+                if (exportContractLandShapeDefine.LandTypeNameIndex)
+                {
+                    attributes.AddAttribute("地类名称", geoland.LandName);
+                }
+                if (exportContractLandShapeDefine.IsFlyLandIndex) attributes.AddAttribute("是否飞地", geoland.IsFlyLand == true ? "是" : "否");
+                if (exportContractLandShapeDefine.VPTelephoneIndex)
+                {
+                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
+                    if (vp == null)
+                    {
+                        attributes.AddAttribute("电话号码", "");
+                    }
+                    else
+                    {
+                        attributes.AddAttribute("电话号码", vp.Telephone);
+                    }
+                }
+
+                if (exportContractLandShapeDefine.ElevationIndex)
+                {
+                    if (geoland.LandExpand == null || geoland.LandExpand.Elevation == null)
+                    {
+                        attributes.AddAttribute("海拔高度", "");
+                    }
+                    else
+                    {
+                        attributes.AddAttribute("海拔高度", geoland.LandExpand.Elevation != null ? geoland.LandExpand.Elevation.Value.ToString() : null);
+                    }
+
+                }
+                if (exportContractLandShapeDefine.ArableTypeIndex)
+                {
+                    var dictDKLB = DictList.Find(c => c.Code == geoland.LandCategory && c.GroupCode == DictionaryTypeInfo.DKLB);
+                    attributes.AddAttribute("地块类别", dictDKLB == null ? "" : dictDKLB.Name);
+                }
+                if (exportContractLandShapeDefine.AwareAreaIndex) attributes.AddAttribute("确权面积", geoland.AwareArea.ToString("0.00"));
+                if (exportContractLandShapeDefine.MotorizeAreaIndex) attributes.AddAttribute("机动地面积", (geoland.MotorizeLandArea != null ? geoland.MotorizeLandArea.Value.ToString("0.00") : "0"));
+                if (exportContractLandShapeDefine.ConstructModeIndex)
+                {
+                    var dictCBFS = DictList.Find(c => c.Code == geoland.ConstructMode && c.GroupCode == DictionaryTypeInfo.CBJYQQDFS);
+                    attributes.AddAttribute("承包方式", dictCBFS == null ? "" : dictCBFS.Name);
+                }
+                if (exportContractLandShapeDefine.PlotNumberIndex) attributes.AddAttribute("畦数", geoland.PlotNumber);
+                if (exportContractLandShapeDefine.PlatTypeIndex)
+                {
+                    var dictZZLX = DictList.Find(c => c.Code == geoland.PlatType && c.GroupCode == DictionaryTypeInfo.ZZLX);
+
+                    attributes.AddAttribute("种植类型", dictZZLX == null ? "" : dictZZLX.Name);
+                }
+                if (exportContractLandShapeDefine.ManagementTypeIndex)
+                {
+                    var dictJYFS = DictList.Find(c => c.Code == geoland.ManagementType && c.GroupCode == DictionaryTypeInfo.JYFS);
+
+                    attributes.AddAttribute("经营方式", dictJYFS == null ? "" : dictJYFS.Name);
+                }
+                if (exportContractLandShapeDefine.LandPlantIndex)
+                {
+                    var dictGBLX = DictList.Find(c => c.Code == geoland.PlantType && c.GroupCode == DictionaryTypeInfo.GBZL);
+
+                    attributes.AddAttribute("耕保类型", dictGBLX == null ? "" : dictGBLX.Name);
+                }
+                if (exportContractLandShapeDefine.SourceNameIndex) attributes.AddAttribute("原户主姓名", geoland.FormerPerson);
+                if (exportContractLandShapeDefine.LandLocationIndex) attributes.AddAttribute("座落方位", geoland.LocationName);
+                if (exportContractLandShapeDefine.IsTransterIndex) attributes.AddAttribute("是否流转", geoland.IsTransfer == true ? "是" : "否");
+                if (exportContractLandShapeDefine.TransterModeIndex)
+                {
+                    var dictLZFS = DictList.Find(c => c.Code == geoland.TransferType && c.GroupCode == DictionaryTypeInfo.LZLX);
+                    attributes.AddAttribute("流转方式", dictLZFS == null ? "" : dictLZFS.Name);
+                }
+                if (exportContractLandShapeDefine.TransterTermIndex) attributes.AddAttribute("流转期限", geoland.TransferTime);
+                if (exportContractLandShapeDefine.TransterAreaIndex) attributes.AddAttribute("流转面积", geoland.PertainToArea);
+                if (exportContractLandShapeDefine.LandSurveyPersonIndex) attributes.AddAttribute("调查员", geoland.LandExpand != null ? geoland.LandExpand.SurveyPerson : "");
+                if (exportContractLandShapeDefine.LandSurveyDateIndex) attributes.AddAttribute("调查日期", geoland.LandExpand != null ? geoland.LandExpand.SurveyDate : null);
+                if (exportContractLandShapeDefine.LandSurveyChronicleIndex) attributes.AddAttribute("调查记事", geoland.LandExpand != null ? geoland.LandExpand.SurveyChronicle : "");
+                if (exportContractLandShapeDefine.LandCheckPersonIndex) attributes.AddAttribute("审核人", geoland.LandExpand != null ? geoland.LandExpand.CheckPerson : "");
+                if (exportContractLandShapeDefine.LandCheckDateIndex) attributes.AddAttribute("审核日期", geoland.LandExpand != null ? geoland.LandExpand.CheckDate : null);
+                if (exportContractLandShapeDefine.LandCheckOpinionIndex) attributes.AddAttribute("审核意见", geoland.LandExpand != null ? geoland.LandExpand.CheckOpinion : "");
+                if (exportContractLandShapeDefine.CommentIndex) attributes.AddAttribute("备注", geoland.Comment);
+            }
+            return attributes;
+        }
+
+        #endregion
+
+
+
+    }
+}

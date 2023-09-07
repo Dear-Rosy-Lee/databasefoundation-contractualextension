@@ -1,0 +1,441 @@
+﻿<UserControl x:Class="YuLinTu.Library.Controls.VirtualPersonPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:local="clr-namespace:YuLinTu.Library.Controls">
+    <UserControl.Resources>
+        <local:ImageValueConvert x:Key="ImgConvert" />
+        <local:GenderValueConvert x:Key="GenderConvert" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                SnapsToDevicePixels="True"
+                BorderThickness="0,0,0,1"
+                Height="33"
+                Padding="8,0"
+                BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+                Background="{DynamicResource Metro_Window_Style_Background_Lighter}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <cmps:ImageTextItem Grid.Column="0"
+                                    Name="lbzone"
+                                    ImageTextSpacing="8"
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"></cmps:ImageTextItem>
+                <StackPanel Grid.Column="1"
+                            Name="sp_FamilyInfo"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Stretch">
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+                    
+                    <CheckBox Content="是否批量"
+                              VerticalAlignment="Center"
+                              Name="cbIsbatch" 
+                              IsChecked="{Binding Path=IsBatch}"
+                              Margin="8,0,8,0" />
+                    <cmps:Separator Orientation="Vertical"
+                                    Visibility="{Binding ElementName=cbIsbatch,Path=Visibility}"></cmps:Separator>
+                    <cmps:ImageTextItem  Name="lb_family"
+                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"
+                                         ToolTip="总户数"
+                                         MinWidth="50"
+                                         Margin="12,0,0,0"
+                                         VerticalAlignment="Center"
+                                         Text="{Binding Summary.FamilyCount}" />
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/FileCreateDocumentWorkspace.png"
+                                        Text="{Binding Summary.PersonCount}"
+                                        ToolTip="总人数"
+                                        MinWidth="60"
+                                        VerticalAlignment="Center"
+                                        Margin="8,0,0,0" />
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/男16.png"
+                                        ToolTip="男性人数"
+                                        MinWidth="60"
+                                        Text="{Binding Summary.MaleCount}"
+                                        VerticalAlignment="Center"
+                                        Margin="8,0,0,0" />
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/女16.png"
+                                        Text="{Binding Summary.FeMaleCount}"
+                                        ToolTip="女性人数"
+                                        MinWidth="60"
+                                        VerticalAlignment="Center"
+                                        Margin="8,0,0,0" />
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主_黑16.png"
+                                        Text="{Binding Summary.UnknowGenderCount}"
+                                        ToolTip="未知性别人数"
+                                        MinWidth="50"
+                                        VerticalAlignment="Center"
+                                        Margin="8,0,0,0" />
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+                    <metro:MetroButton Name="btn_refresh"
+                                       Width="30"
+                                       VerticalAlignment="Stretch"
+                                       Click="btn_refresh_Click">
+                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/Refresh.png" />
+                    </metro:MetroButton>
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+                    <cmps:MetroTextBox Name="txtWhere"
+                                       Width="130"
+                                       Height="25"
+                                       Watermask="快速过滤"
+                                       Margin="4,0,10,0"
+                                       TextChanged="txtWhere_TextChanged" />
+                    <CheckBox Content="全匹配"
+                              VerticalAlignment="Center"
+                              Name="cb_ComplateInfo"
+                              Click="cb_ComplateInfo_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <cmps:MetroTreeGrid Name="view"
+                            ItemAutoExpand="True"
+                            BorderThickness="0"
+                            Grid.Row="1"
+                            cmps:DataGridAttacher.ContentBorderThickness="0,1,0,0"
+                            cmps:DataGridAttacher.ColumnHeaderThumbWidth="1"
+                            x:FieldModifier="public"
+                            ExpandItemWhenLeftMouseDoubleClick="False"
+                            MouseDoubleClick="view_MouseDoubleClick"
+                            SelectionChanged="view_SelectionChanged"
+                            MouseRightButtonDown="view_MouseRightButtonDown">
+            <cmps:MetroTreeGrid.Columns>
+                <DataGridTemplateColumn Width="290"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="Name"
+                                        Header="名称">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <cmps:MetroTreeGridRowToggleButton></cmps:MetroTreeGridRowToggleButton>
+                                <StackPanel HorizontalAlignment="Left"
+                                            Orientation="Horizontal">
+                                    <cmps:ImageTextItem Image="{Binding Object.Img,Converter={StaticResource ImgConvert}}"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="2,0,0,0"
+                                                        x:Name="tbName"
+                                                        Text="{Binding Object.Name}"
+                                                        VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DockPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Object.Status}"
+                                             Value="1">
+                                    <Setter TargetName="tbName"
+                                            Property="Foreground"
+                                            Value="#BF2F0B" />
+                                    <Setter TargetName="tbName"
+                                            Property="FontWeight"
+                                            Value="Bold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Object.Status}"
+                                             Value="2">
+                                    <Setter TargetName="tbName"
+                                            Property="Foreground"
+                                            Value="Green" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="证件号码"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="ICN"
+                                        Width="180">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.ICN}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="年龄"
+                                        Width="100"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="Age"
+                                        x:Name="gcAge">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Age}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="性别"
+                                        Width="100"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="Gender"
+                                        x:Name="gcGender">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Gender,Converter={StaticResource GenderConvert}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="家庭关系"
+                                        Width="150"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="Relationship"
+                                        x:Name="gcRelation">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Relationship}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="入股份数"
+                                        Width="100"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="EquityValue"
+                                        x:Name="gcEqnum">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.EquityValue}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="入股面积"
+                                        Width="100"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="EquityArea"
+                                        x:Name="gcEqArea">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.EquityArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="承包人口"
+                                        Width="72"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="ContractorNumber"
+                                        x:Name="gcPersonCount">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.ContractorNumber}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="总台账面积(亩)"
+                                        Width="108"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="TotalTableArea"
+                                        x:Name="gcTotalTableArea">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.TotalTableArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="备注"
+                                        cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        SortMemberPath="Comment"
+                                        Width="330">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Comment}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </cmps:MetroTreeGrid.Columns>
+
+            <cmps:MetroTreeGrid.ContextMenu>
+                <ContextMenu FontSize="13"
+                             x:Name="aContextMenu">
+                    <MenuItem Header="新增承包方"
+                              Name="miAdd"
+                              Click="miAdd_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加户主16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="Uniform"
+                                   Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="新增共有人"
+                              Name="miAddSharePerson"
+                              Click="miAddSharePerson_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加书记16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="编辑"
+                              Name="miEdit"
+                              Click="miEdit_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/字段16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="删除"
+                              Name="miDel"
+                              Click="miDel_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/错误16_2.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="设置户主"
+                              Name="miSet"
+                              Click="miSet_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/自然人16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="锁定/解锁承包方"
+                              x:Name="miLock"
+                              Click="miLock_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="初始数据"
+                              Name="miInitall"
+                              Click="miInitall_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <!--<MenuItem Header="分户"
+                              Name="miSplit"
+                              Click="miSplit_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/分割16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="None" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="合户"
+                              Name="miCombine"
+                              Click="miCombine_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/人口管理16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="Uniform"
+                                   Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>-->
+
+                    <MenuItem Header="户号详情"
+                              Name="miNumber"
+                              Click="miNumber_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户号详情.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="Uniform"
+                                   Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="清空"
+                              Name="miClear"
+                              Click="miClear_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="Uniform"
+                                   Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="设置"
+                              x:Name="setMenu"
+                              Visibility="Collapsed">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   SnapsToDevicePixels="True"
+                                   Stretch="Uniform"
+                                   Height="16" />
+                        </MenuItem.Icon>
+                        <MenuItem Header="导入调查表设置"
+                                  Name="miDataImport"
+                                  Click="miDataImport_Click"
+                                  Visibility="Collapsed">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       SnapsToDevicePixels="True"
+                                       Stretch="Uniform"
+                                       Height="16" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="导出表格内容设置"
+                                  Name="miDataOutput"
+                                  Click="miDataOutput_Click"
+                                  Visibility="Collapsed">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       SnapsToDevicePixels="True"
+                                       Stretch="Uniform"
+                                       Height="16" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </cmps:MetroTreeGrid.ContextMenu>
+
+        </cmps:MetroTreeGrid>
+    </Grid>
+</UserControl>

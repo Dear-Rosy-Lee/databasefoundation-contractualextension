@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{819885A6-5D65-4D29-97C8-F4C9E0CC7EC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Library.Resources</RootNamespace>
+    <AssemblyName>YuLinTu.Library.Resources</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Workspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\map16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\VoteMenu.png" />
+    <Resource Include="Resources\TranslationToolTip.png" />
+    <Resource Include="Resources\GroupNamedCells.png" />
+    <Resource Include="Resources\GroupMacro.png" />
+    <Resource Include="Resources\FileProperties.png" />
+    <Resource Include="Resources\DocumentPanelTemplate.png" />
+    <Resource Include="Resources\document-text.png" />
+    <Resource Include="Resources\CoverPageInsertGallery.png" />
+    <Resource Include="Resources\color-swatch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Add.png" />
+    <Resource Include="Resources\Clear.png" />
+    <Resource Include="Resources\ExportExcel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Shape32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\expackage.png" />
+    <Resource Include="Resources\_2D饼.png" />
+    <Resource Include="Resources\刷新32.png" />
+    <Resource Include="Resources\清空32.png" />
+    <Resource Include="Resources\编辑图形32.png" />
+    <Resource Include="Resources\编辑数据32.png" />
+    <Resource Include="Resources\导入户籍32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\县16.png" />
+    <Resource Include="Resources\市16.png" />
+    <Resource Include="Resources\村16.png" />
+    <Resource Include="Resources\点16.png" />
+    <Resource Include="Resources\省16.png" />
+    <Resource Include="Resources\组16.png" />
+    <Resource Include="Resources\镇16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Identify16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\文档32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Sender.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Sender32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Word.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\管理列表16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\女16.png" />
+    <Resource Include="Resources\户主16.png" />
+    <Resource Include="Resources\户主_黑16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\男16.png" />
+    <Resource Include="Resources\群众16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\业务32.png" />
+    <Resource Include="Resources\人口信息32.png" />
+    <Resource Include="Resources\人口管理32.png" />
+    <Resource Include="Resources\区域分析32.png" />
+    <Resource Include="Resources\户籍管理32.png" />
+    <Resource Include="Resources\设置户主_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\集体经济组织32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\LockPerson.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SetIco.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Setdata.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MeasureBook.png" />
+    <Resource Include="Resources\MeasureExport.png" />
+    <Resource Include="Resources\MeasurePrint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\刷新16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\字段16.png" />
+    <Resource Include="Resources\添加书记16.png" />
+    <Resource Include="Resources\添加户主16.png" />
+    <Resource Include="Resources\错误16_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\自然人16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\人口管理16.png" />
+    <Resource Include="Resources\分割16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\数据库文件16.png" />
+    <Resource Include="Resources\清空16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\查找数据_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\是16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\查找数据_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\向右16.png" />
+    <Resource Include="Resources\向左16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConstrainNumeric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\属性16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\党员信息32.png" />
+    <Resource Include="Resources\导出数据32.png" />
+    <Resource Include="Resources\承包地16.png" />
+    <Resource Include="Resources\文件转换32.png" />
+    <Resource Include="Resources\groupmanage32.png" />
+    <Resource Include="Resources\表16_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\详细信息16.png" />
+    <Resource Include="Resources\证书16.png" />
+    <Resource Include="Resources\其它土地.png" />
+    <Resource Include="Resources\经济地块.png" />
+    <Resource Include="Resources\饲料地块.png" />
+    <Resource Include="Resources\自留地32.png" />
+    <Resource Include="Resources\路径.png" />
+    <Resource Include="Resources\集体农用地.png" />
+    <Resource Include="Resources\宅基地.png" />
+    <Resource Include="Resources\林地.png" />
+    <Resource Include="Resources\集体建设用地.png" />
+    <Resource Include="Resources\数据库32_2.png" />
+    <Resource Include="Resources\ImportExcel.png" />
+    <Resource Include="Resources\OutputExcel.png" />
+    <Resource Include="Resources\PersonSetting.png" />
+    <Resource Include="Resources\TableSetting.png" />
+    <Resource Include="Resources\AddInfo16.png" />
+    <Resource Include="Resources\户号详情.png" />
+    <Resource Include="Resources\企业16.png" />
+    <Resource Include="Resources\FileCreateDocumentWorkspace.png" />
+    <Resource Include="Resources\组长管理16.png" />
+    <Resource Include="Resources\Falsh.png" />
+    <Resource Include="Resources\房屋所有权.png" />
+    <Resource Include="Resources\承包地32.png" />
+    <Resource Include="Resources\GoTo.png" />
+    <Resource Include="Resources\InitialData.png" />
+    <Resource Include="Resources\Filter.png" />
+    <Resource Include="Resources\Find.png" />
+    <Resource Include="Resources\BoundaryPoint.png" />
+    <Resource Include="Resources\BoundaryLine.png" />
+    <Resource Include="Resources\LandZip.png" />
+    <Resource Include="Resources\Excel.png" />
+    <Resource Include="Resources\Table.png" />
+    <Resource Include="Resources\SignExcel.png" />
+    <Resource Include="Resources\PubTable.png" />
+    <Resource Include="Resources\DeclareTable.png" />
+    <Resource Include="Resources\SummaryTable.png" />
+    <Resource Include="Resources\SearchNeighor.png" />
+    <Resource Include="Resources\机动地32.png" />
+    <Resource Include="Resources\四荒地.png" />
+    <Resource Include="Resources\AreaMeasure.png" />
+    <Resource Include="Resources\打开16.png" />
+    <Resource Include="Resources\measureArea.png" />
+    <Resource Include="Resources\地块名称.png" />
+    <Resource Include="Resources\awareArea.png" />
+    <Resource Include="Resources\GroupFind.png" />
+    <Resource Include="Resources\面积16.png" />
+    <Resource Include="Resources\合同16.png" />
+    <Resource Include="Resources\miActualArea.png" />
+    <Resource Include="Resources\miAwareArea.png" />
+    <Resource Include="Resources\miIsFarmer.png" />
+    <Resource Include="Resources\miLand.png" />
+    <Resource Include="Resources\miLandLevel.png" />
+    <Resource Include="Resources\miTableArea.png" />
+    <Resource Include="Resources\全图16.png" />
+    <Resource Include="Resources\landGeo.png" />
+    <Resource Include="Resources\miFarmer.png" />
+    <Resource Include="Resources\miInitial.png" />
+    <Resource Include="Resources\miSearch.png" />
+    <Resource Include="Resources\导出word_32.png" />
+    <Resource Include="Resources\AddSetting.png" />
+    <Resource Include="Resources\FileMarkAsFinal.png" />
+    <Resource Include="Resources\展开折叠16.png" />
+    <Resource Include="Resources\导出word_16.png" />
+    <Resource Include="Resources\MapNumber.png" />
+    <Resource Include="Resources\ExportBase.png" />
+    <Resource Include="Resources\CancelSelect.png" />
+    <Resource Include="Resources\组长管理32.png" />
+    <Resource Include="Resources\设置户主_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\取消选择32.png" />
+    <Resource Include="Resources\选择32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ControlsGallery.png" />
+    <Resource Include="Resources\GroupInsertLinks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clipAngle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PauseTimer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ViewGridlines.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ViewsLayoutView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ViewNotesMasterView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\nodeinfo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\修角.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\nodeInformation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\initialJZ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\AreaNumericFormat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\htdc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\htdjspb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\htqddjb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ClearCBDAllLalbel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ContractLandLabelALL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ContractorNameTB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\放大.png" />
+    <Resource Include="Resources\缩小.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\全图32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\上一视图.png" />
+    <Resource Include="Resources\下一视图.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\锁定承包方_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ObjectsGroupMenuOutlook.png" />
+    <Resource Include="Resources\ObjectsUngroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ViewWebLayoutView.png" />
+    <Resource Include="Resources\VisualBasic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GroupCode.png" />
+    <Resource Include="Resources\ShowTimeZones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Copy.png" />
+    <Resource Include="Resources\FormatAsTableGallery.png" />
+    <Resource Include="Resources\GroupRecover.png" />
+    <Resource Include="Resources\GroupTaskOptions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\拉框放大32.png" />
+    <Resource Include="Resources\拉框缩小32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DrawShape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ExportSavedExports.png" />
+    <Resource Include="Resources\FileDocumentInspect.png" />
+    <Resource Include="Resources\globe.png" />
+    <Resource Include="Resources\拉框放大16.png" />
+    <Resource Include="Resources\拉框缩小16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ReviseContents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\AutoFormatWizard.png" />
+    <Resource Include="Resources\CreateLabels.png" />
+    <Resource Include="Resources\ViewPrintLayoutView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ShowTimeZones16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ViewMasterDocumentViewClassic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SelectMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ProposeNewTime.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ShapeOutlineColorPicker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\JZXDescription.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\JzxWZandQLR.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

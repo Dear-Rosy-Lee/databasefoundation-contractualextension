@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Reservoir</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0.9</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF4065EB</StrokeColor>
+          <StrokeThickness>0.4</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF4065EB</BackgroundColor>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF97DBF2</StrokeColor>
+          <StrokeThickness>1.6</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF97DBF2</BackgroundColor>
+        <Border type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

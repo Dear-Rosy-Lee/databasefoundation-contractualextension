@@ -1,0 +1,284 @@
+﻿<appCore:OptionsEditor xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                       xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                       xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                       xmlns:appCore="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       mc:Ignorable="d"
+                       x:Class="YuLinTu.Component.Setting.SystemSetting"
+                       Padding="10,10,10,10"
+                       d:DesignWidth="800"
+                       d:DesignHeight="520">
+    <appCore:OptionsEditor.Resources>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+            <Setter Property="Margin"
+                    Value="0,8,0,0" />
+            <Style.Triggers>
+                <Trigger Property="Grid.Row"
+                         Value="0">
+                    <Setter Property="Margin"
+                            Value="0,0,0,0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DockPanel"
+               x:Key="grid_item">
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Margin"
+                    Value="0,8,0,0" />
+            <Style.Triggers>
+                <Trigger Property="Grid.Row"
+                         Value="0">
+                    <Setter Property="Margin"
+                            Value="0,0,0,0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </appCore:OptionsEditor.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+        <StackPanel Orientation="Vertical">
+            <cmps:ImageTextItem Text="系统相关设置"
+                                DockPanel.Dock="Top"
+                                Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/options_2.png"
+                                Margin="0,0,0,10" />
+
+            <StackPanel Orientation="Vertical">
+                <cmps:OptionsContainer Text="Excel报表表头设置">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Name="BT" Grid.Row="0"
+                                  Grid.Column="0"
+                                  IsChecked="{Binding SystemSettingDefine.TempTableHead, Mode=TwoWay}"
+                                  Content="保持模板表头名称" Checked="CheckBox_Checked" />
+
+                        <CheckBox Grid.Row="0"
+                                  Grid.Column="1"
+                                  IsEnabled="{Binding ElementName=BT,Path=IsChecked,Mode=Default,Converter={StaticResource NotBoolConverter}}"
+                                  IsChecked="{Binding SystemSettingDefine.CityTableHead, Mode=TwoWay}"
+                                  Content="表头中使用市级名称" />
+
+                        <CheckBox Grid.Row="1"
+                                  Grid.Column="0"
+                                  IsEnabled="{Binding ElementName=BT,Path=IsChecked,Mode=Default,Converter={StaticResource NotBoolConverter}}"
+                                  IsChecked="{Binding SystemSettingDefine.CountTableHead, Mode=TwoWay}"
+                                  Content="表头中使用县级名称" />
+
+
+                        <CheckBox Grid.Row="1"
+                                  Grid.Column="1"
+                                  IsEnabled="{Binding ElementName=BT,Path=IsChecked,Mode=Default,Converter={StaticResource NotBoolConverter}}"
+                                  IsChecked="{Binding SystemSettingDefine.TownTableHead, Mode=TwoWay}"
+                                  Content="表头中使用乡级名称" />
+
+
+                        <CheckBox Grid.Row="2"
+                                  Grid.Column="0"
+                                  IsEnabled="{Binding ElementName=BT,Path=IsChecked,Mode=Default,Converter={StaticResource NotBoolConverter}}"
+                                  IsChecked="{Binding SystemSettingDefine.CountryTableHead, Mode=TwoWay}"
+                                  Content="表头中使用村级名称" />
+
+
+                        <CheckBox Grid.Row="2"
+                                  Grid.Column="1"
+                                  IsEnabled="{Binding ElementName=BT,Path=IsChecked,Mode=Default,Converter={StaticResource NotBoolConverter}}"
+                                  IsChecked="{Binding SystemSettingDefine.GroupTableHead, Mode=TwoWay}"
+                                  Content="表头中使用组级名称" />
+                    </Grid>
+
+                </cmps:OptionsContainer>
+
+                <cmps:OptionsContainer Text="报表有关人信息设置"
+                                       Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+
+                        <CheckBox  Grid.Row="0"
+                                   IsChecked="{Binding SystemSettingDefine.SortTable, Mode=TwoWay}"
+                                   Content="按户号排序导出报表" />
+
+                        <CheckBox Grid.Row="1"
+                                  IsChecked="{Binding SystemSettingDefine.NumberTill, Mode=TwoWay}"
+                                  Content="报表中编号填写户号" />
+
+                        <CheckBox Grid.Row="2"
+                                  IsChecked="{Binding SystemSettingDefine.PersonTable, Mode=TwoWay}"
+                                  Content="报表中共有人信息" />
+
+                    </Grid>
+                </cmps:OptionsContainer>
+
+                <cmps:OptionsContainer Text="数据输出设置">
+
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Row="0"
+                                      Grid.Column="0"
+                                      IsChecked="{Binding SystemSettingDefine.PersonTable, Mode=TwoWay}"
+                                      Content="只导出共有人信息" />
+                            <CheckBox Grid.Row="1"
+                                      Grid.Column="0"
+                                      IsChecked="{Binding SystemSettingDefine.AreaIsZero, Mode=TwoWay}"
+                                      Content="面积为零时不填充内容" />
+
+                            <CheckBox Grid.Row="2"
+                                      Visibility="Collapsed"
+                                      Grid.Column="0"
+                                      IsChecked="{Binding SystemSettingDefine.LandGroup, Mode=TwoWay}"
+                                      Content="使用标准地力等级描述" />
+                            <CheckBox Grid.Row="2"
+                                      Grid.Column="0"
+                                      IsChecked="{Binding SystemSettingDefine.ExportTableSenderDesToVillage, Mode=TwoWay}"
+                                      Content="填报单位到村" />
+                            <CheckBox Grid.Row="0"
+                                      Name="cb_fill_location"
+                                      Grid.Column="1"
+                                      IsChecked="{Binding SystemSettingDefine.NergionbourSet, Mode=TwoWay}"
+                                      Content="填写四至内容" />
+                            <CheckBox Grid.Row="1"
+                                      Grid.Column="1"
+                                      IsChecked="{Binding SystemSettingDefine.NergionbourSortSet, Mode=TwoWay}"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=cb_fill_location}"
+                                      Content="四至内容分东、南、西、北显示" />
+
+                            <DockPanel Grid.Row="2"
+                                       Style="{StaticResource grid_item}"
+                                       Grid.Column="1">
+                                <CheckBox x:Name="cbLandNumericFormat"
+                                          IsChecked="{Binding SystemSettingDefine.LandNumericFormatSet, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          DockPanel.Dock="Left"
+                                          Content="截取地块编码" />
+                                <wpftoolkit:IntegerUpDown x:Name="txt_LandNumericFormat"
+                                                          IsEnabled="{Binding IsChecked, ElementName=cbLandNumericFormat}"
+                                                          Minimum="0"
+                                                          Height="25"
+                                                          Width="150"
+                                                          Margin="0,0,0,0"
+                                                          VerticalAlignment="Center"
+                                                          BorderThickness="1"
+                                                          Value="{Binding SystemSettingDefine.LandNumericFormatValueSet, Mode=TwoWay}"
+                                                          HorizontalAlignment="Right" />
+                            </DockPanel>
+
+                            <CheckBox Grid.Row="3"
+                                      Grid.Column="0"
+                                      Name="cb_addressCtl"                                     
+                                      IsChecked="{Binding SystemSettingDefine.ExportAddressToTown, Mode=TwoWay}"
+                                      Content="导出地址到镇处理" />
+
+                            <StackPanel Grid.Row="3" Grid.Column="1" x:Name="stackPanelChooseArea" Visibility="Collapsed" x:FieldModifier="public">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"></ColumnDefinition>
+                                        <ColumnDefinition Width="120"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="面积选择:" Grid.Column="0" />
+                                    <cmps:MetroComboBox x:Name="cmbChooseArea"
+                                            Padding="7,0,0,0"
+                                            TabIndex="3" Grid.Column="1" SelectedIndex="{Binding SystemSettingDefine.ChooseArea,Mode=TwoWay}"
+                                            >
+                                        <ComboBoxItem>二轮合同面积</ComboBoxItem>
+                                        <ComboBoxItem>实测面积</ComboBoxItem>
+                                        <ComboBoxItem>确权面积</ComboBoxItem>
+                                    </cmps:MetroComboBox>
+
+
+                                </Grid>
+                            </StackPanel>
+                            <DockPanel Grid.Row="4" Style="{StaticResource grid_item}"
+                                       x:Name="dockPanelEmptyReplacement" Visibility="Visible" x:FieldModifier="public">
+                                <TextBlock DockPanel.Dock="Left"
+                                           VerticalAlignment="Center"
+                                           Text="空数据替换" />
+                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Right" Text="{Binding SystemSettingDefine.EmptyReplacement, Mode=TwoWay}" />
+                               
+                            </DockPanel>
+                        </Grid>
+                    </StackPanel>
+                </cmps:OptionsContainer>
+
+                <cmps:OptionsContainer Text="其他设置">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <CheckBox Grid.Row="0"
+                                      Visibility="Collapsed"
+                                      IsChecked="{Binding SystemSettingDefine.StatisticSet, Mode=TwoWay}"
+                                      Content="统计数据" />
+
+                            <CheckBox Grid.Row="1"
+                                      Visibility="Collapsed"
+                                      IsChecked="{Binding SystemSettingDefine.UpDownSet, Mode=TwoWay}"
+                                      Content="行政区域限制到组级下使用" />
+
+                            <CheckBox Grid.Row="0"
+                                      IsChecked="{Binding SystemSettingDefine.VillageInlitialSet, Mode=TwoWay}"
+                                      Content="以村为单位进行承包方编码、地块编码统一编码" />
+                            <CheckBox IsChecked="{Binding SystemSettingDefine.ExportVPTableCountContainsDiedPerson,Mode=TwoWay}"
+                                      Grid.Row="1"
+                                      VerticalAlignment="Center"
+                                      Margin="0,10,0,0">导出承包方调查表家庭成员总数包括已故共有人</CheckBox>
+                            <CheckBox Grid.Row="2"
+                                      IsChecked="{Binding SystemSettingDefine.KeepRepeatFlag, Mode=TwoWay}"
+                                      Content="所有导出报表中涉及姓名时去除重复标识" />
+                            <CheckBox Grid.Row="3"
+                                      IsChecked="{Binding SystemSettingDefine.StatisticsDeadPersonInfo, Mode=TwoWay}"
+                                      Content="是否统计去世成员信息" />
+                            <DockPanel Grid.Row="4"
+                                       Style="{StaticResource grid_item}">
+                                <TextBlock DockPanel.Dock="Left"
+                                           VerticalAlignment="Center"
+                                           Text="报表保存路径：" />
+                                <cmps:FolderBrowserTextBox IsReadOnly="True" Text="{Binding SystemSettingDefine.DefaultPath, Mode=TwoWay}" />
+
+                            </DockPanel>
+                        </Grid>
+                    </StackPanel>
+                </cmps:OptionsContainer>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</appCore:OptionsEditor>

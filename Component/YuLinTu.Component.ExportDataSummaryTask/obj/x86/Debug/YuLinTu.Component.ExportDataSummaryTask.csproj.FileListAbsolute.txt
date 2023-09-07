@@ -1,0 +1,11 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ExportDataSummaryTask\Binary\YuLinTu.Component.ExportDataSummaryTask.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ExportDataSummaryTask\Binary\YuLinTu.Component.ExportDataSummaryTask.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\Controls\DataSummaryExportFramePage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\Controls\DataSummaryExportFramePage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportDataSummaryTask\obj\x86\Debug\YuLinTu.Component.ExportDataSummaryTask.pdb

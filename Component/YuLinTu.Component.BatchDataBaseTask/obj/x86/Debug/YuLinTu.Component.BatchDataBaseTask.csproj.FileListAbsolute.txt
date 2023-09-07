@@ -1,0 +1,11 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.BatchDataBaseTask\Binary\YuLinTu.Component.BatchDataBaseTask.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.BatchDataBaseTask\Binary\YuLinTu.Component.BatchDataBaseTask.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\Controls\SelectedFileTextBox.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\Controls\SelectedFileTextBox.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BatchDataBaseTask\obj\x86\Debug\YuLinTu.Component.BatchDataBaseTask.pdb

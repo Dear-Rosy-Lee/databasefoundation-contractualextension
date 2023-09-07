@@ -1,0 +1,15 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.BusinessProcessWizard\Binary\YuLinTu.Component.BusinessProcessWizard.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.BusinessProcessWizard\Binary\YuLinTu.Component.BusinessProcessWizard.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\Controls\BusinessProcessWizardPanel.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\Controls\BusinessProcessWizardFramePage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\Controls\BusinessProcessWizardPanel.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard_MarkupCompile.lref
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\Controls\BusinessProcessWizardFramePage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.BusinessProcessWizard\obj\Debug\YuLinTu.Component.BusinessProcessWizard.pdb

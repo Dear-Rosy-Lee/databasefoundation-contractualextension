@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>High Occupancy Lane Ramp</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#00000000</StrokeColor>
+        <StrokeThickness>2</StrokeThickness>
+        <Offset>0.5</Offset>
+        <Template>
+          <Interval>2</Interval>
+          <Mark>0</Mark>
+          <Gap>1</Gap>
+          <Mark>1</Mark>
+          <Gap>0</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FFEDED00</StrokeColor>
+        <StrokeThickness>0.5</StrokeThickness>
+        <Offset>-0.625</Offset>
+        <Template>
+          <Interval>1</Interval>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>2</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>1</Interval>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

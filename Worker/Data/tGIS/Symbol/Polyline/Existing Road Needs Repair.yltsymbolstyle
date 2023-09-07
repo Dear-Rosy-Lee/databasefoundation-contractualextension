@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Existing Road Needs Repair</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>0.4</StrokeThickness>
+        <Offset>-0.8</Offset>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>4</Mark>
+          <Gap>1</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FF000000</StrokeColor>
+        <StrokeThickness>0.4</StrokeThickness>
+        <Offset>0.8</Offset>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>4</Mark>
+          <Gap>1</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

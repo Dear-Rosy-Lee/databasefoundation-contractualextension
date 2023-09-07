@@ -1,0 +1,47 @@
+﻿<appCore:WorkpageOptionsEditor x:Class="YuLinTu.Component.Zone.ZoneConfigPage"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                               xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:appCore="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                               Padding="10,10,10,10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Vertical">
+
+            <cmps:ImageTextItem Text="基本配置"
+                                Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/GroupNamedCells.png"
+                                Margin="0,0,0,10">
+            </cmps:ImageTextItem>
+
+            <cmps:OptionsContainer Text="数据操作设置">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="9"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="9"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="9"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox IsChecked="{Binding ClearData,Mode=TwoWay}" Grid.Row="0"  VerticalAlignment="Center">清空数据时只清空图斑数据</CheckBox>
+                        <!--<CheckBox IsChecked="{Binding IntiallData,Mode=TwoWay}" Grid.Row="2" VerticalAlignment="Center">使用行政区域名称初始发包方</CheckBox>-->
+                        <CheckBox IsChecked="{Binding ShapeToBase,Mode=TwoWay}" Grid.Row="2" VerticalAlignment="Center">空间地域入库时采用更新操作</CheckBox>
+                        <CheckBox IsChecked="{Binding UseStandCode,Mode=TwoWay}" Grid.Row="4" VerticalAlignment="Center">数据的全编码采用14位标准编码</CheckBox>
+
+                    </Grid>
+                </StackPanel>
+            </cmps:OptionsContainer>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</appCore:WorkpageOptionsEditor>

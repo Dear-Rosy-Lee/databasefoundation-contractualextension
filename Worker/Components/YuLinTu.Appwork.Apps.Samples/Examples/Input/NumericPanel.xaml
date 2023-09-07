@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="YuLinTu.Appwork.Apps.Samples.Examples.Input.NumericPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples.Examples.Input"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <Grid>
+        <StackPanel>
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Left">
+                    <ylt:NumericUpDown Value="5"
+                                       StringFormat="pcs. {0:N2} pcs."
+                                       Maximum="100"
+                                       Width="200"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Value="2000"
+                                       HasDecimals="True"
+                                       Interval=".1"
+                                       StringFormat="0,000.00"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Speedup="False"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Delay="1000"
+                                       ButtonsAlignment="Left"
+                                       Speedup="True"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Value="5"
+                                       ButtonsAlignment="Left"
+                                       TextAlignment="Left"
+                                       Interval="5"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Value="5"
+                                       TextAlignment="Left"
+                                       Minimum="0"
+                                       Maximum="10"
+                                       Margin="10" />
+                    <ylt:NumericUpDown Value="5"
+                                       IsEnabled="False"
+                                       TextAlignment="Left"
+                                       Minimum="0"
+                                       Maximum="10"
+                                       Margin="10" />
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

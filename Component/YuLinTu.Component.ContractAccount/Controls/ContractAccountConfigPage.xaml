@@ -1,0 +1,94 @@
+﻿<appCore:WorkpageOptionsEditor x:Class="YuLinTu.Component.ContractAccount.ContractAccountConfigPage"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                               xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:appCore="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                               Padding="10,10,10,10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Vertical">
+
+            <cmps:ImageTextItem Text="承包经营权确权设置"
+                                Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/PersonSetting.png"
+                                Margin="0,0,0,10">
+            </cmps:ImageTextItem>
+
+            <cmps:OptionsContainer Text="面积设定">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+                        <CheckBox IsChecked="{Binding RightAreaMoreActualArea,Mode=TwoWay}" Grid.Row="0"  VerticalAlignment="Center" Margin="0,0,0,0">允许确权面积大于实测面积(入图时匹配)
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding WriteActualArea,Mode=TwoWay}" Grid.Row="1"  VerticalAlignment="Center" Margin="0,10,0,0">允许调查表中不填写实测面积(入图时匹配)
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding WriteRightArea,Mode=TwoWay}" Grid.Row="2"  VerticalAlignment="Center" Margin="0,10,0,0">允许调查表中不填写确权面积(入图时匹配)
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding UnWriteActualArea,Mode=TwoWay}" Grid.Row="3"  VerticalAlignment="Center" Margin="0,10,0,0">调查表中不填写实测面积(导出时匹配)
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding UnWriteRightArea,Mode=TwoWay}" Grid.Row="4"  VerticalAlignment="Center" Margin="0,10,0,0">调查表中不填写确权面积(导出时匹配)
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding UnWriteConcordArea,Mode=TwoWay}" Grid.Row="5"  VerticalAlignment="Center" Margin="0,10,0,0">调查表中不填写合同面积(导出时匹配)
+                        </CheckBox>
+                    </Grid>
+                </StackPanel>
+            </cmps:OptionsContainer>
+
+            <cmps:OptionsContainer Text="数据设定">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <CheckBox IsChecked="{Binding DisplayCollectUsingCBdata,Mode=TwoWay}" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,0,0">呈现数据时只呈现家庭户信息
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding ClearVirtualPersonData,Mode=TwoWay}" Grid.Row="1"  VerticalAlignment="Center" Margin="0,10,0,0">清空数据时同时清空承包方数据
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding CheckVirtualPersonSurveyTable,Mode=TwoWay}" Grid.Row="2"  VerticalAlignment="Center" Margin="0,10,0,0">允许调查表中身份证号码重复存在
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding SurvyInfoTableLandDisplay,Mode=TwoWay}" Grid.Row="3"  VerticalAlignment="Center" Margin="0,10,0,0">调查信息公示表中根据面积判断地块数量
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding SurveyLimitFillWay,Mode=TwoWay}" Grid.Row="5" VerticalAlignment="Center" Margin="0,10,0,0">地块调查表中界址线说明为空时使用界址线长度填充
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding ExportCompatibleOldDataExchange,Mode=TwoWay}" Grid.Row="6" VerticalAlignment="Center" Margin="0,10,0,0">导出压缩包时符合老版本标准
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding ExportLandTableUseUnitNumber,Mode=TwoWay}" Grid.Row="7" VerticalAlignment="Center" Margin="0,10,0,0">导出地块调查表(word)时界址点号采用统编号
+                        </CheckBox>
+                        <Grid Grid.Row="8" Margin="-5,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"></ColumnDefinition>
+                                <ColumnDefinition Width="60"></ColumnDefinition>
+                                <ColumnDefinition Width="60"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="界址线类别是田垄(梗)时勾选:" Grid.Column="0" VerticalAlignment="Center" />
+                            <RadioButton  Content="田垄" VerticalAlignment="Center"   Grid.Column="1"
+                                           GroupName="lineType" IsChecked="{Binding IsCheckedRibbing,Mode=TwoWay}"/>
+                            <RadioButton  Grid.Column="2" Content="田埂" VerticalAlignment="Center" 
+                                             GroupName="lineType" IsChecked="{Binding IsCheckedBaulk,Mode=TwoWay}" />
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </cmps:OptionsContainer>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</appCore:WorkpageOptionsEditor>

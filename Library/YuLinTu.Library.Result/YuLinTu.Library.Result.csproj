@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87E62C5A-6EC3-4034-A2B7-96F0E0327DFF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Library.Result</RootNamespace>
+    <AssemblyName>YuLinTu.Library.Result</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YuLinTu, Version=6.7.6.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Library.WinFoundationAux">
+      <HintPath>Dll\YuLinTu.Library.WinFoundationAux.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.NetAux, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\VS源代码\BaseAll\进程通信\YuLinTu.Library.Result\Dll\YuLinTu.NetAux.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.tGISCNet">
+      <HintPath>Dll\YuLinTu.tGISCNet.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\ExportShapeTaskArgument.cs" />
+    <Compile Include="Result\ExportShapeTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\DotSpatial.Projections.dll" />
+    <Content Include="Dll\gdal200.dll" />
+    <Content Include="Dll\GeoAPI.dll" />
+    <Content Include="Dll\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="Dll\Microsoft.Practices.Unity.Configuration.dll" />
+    <Content Include="Dll\Microsoft.Practices.Unity.dll" />
+    <Content Include="Dll\NetTopologySuite.dll" />
+    <Content Include="Dll\PowerCollections.dll" />
+    <Content Include="Dll\spatialite\libfreexl-1.dll" />
+    <Content Include="Dll\spatialite\libgcc_s_seh-1.dll" />
+    <Content Include="Dll\spatialite\libgcc_s_seh_64-1.dll" />
+    <Content Include="Dll\spatialite\libgeos-3-5-0.dll" />
+    <Content Include="Dll\spatialite\libgeos_c-1.dll" />
+    <Content Include="Dll\spatialite\libiconv-2.dll" />
+    <Content Include="Dll\spatialite\liblzma-5.dll" />
+    <Content Include="Dll\spatialite\libproj-9.dll" />
+    <Content Include="Dll\spatialite\libsqlite3-0.dll" />
+    <Content Include="Dll\spatialite\libstdc++_64-6.dll" />
+    <Content Include="Dll\spatialite\libstdc++_64-62.dll" />
+    <Content Include="Dll\spatialite\libxml2-2.dll" />
+    <Content Include="Dll\spatialite\mod_spatialite.dll" />
+    <Content Include="Dll\spatialite\sqlite3.exe" />
+    <Content Include="Dll\spatialite\System.Data.SQLite.dll" />
+    <Content Include="Dll\spatialite\zlib1.dll" />
+    <Content Include="Dll\System.Data.SQLite.dll" />
+    <Content Include="Dll\tGISC.dll" />
+    <Content Include="Dll\YuLinTu.Data.dll" />
+    <Content Include="Dll\YuLinTu.Data.Dynamic.dll" />
+    <Content Include="Dll\YuLinTu.Data.Framework.dll" />
+    <Content Include="Dll\YuLinTu.Diagnostics.dll" />
+    <Content Include="Dll\YuLinTu.dll" />
+    <Content Include="Dll\YuLinTu.Interception.dll" />
+    <Content Include="Dll\YuLinTu.IO.dll" />
+    <Content Include="Dll\YuLinTu.Library.WinFoundationAux.dll" />
+    <Content Include="Dll\YuLinTu.NetAux.dll" />
+    <Content Include="Dll\YuLinTu.Script.dll" />
+    <Content Include="Dll\YuLinTu.ServiceModel.dll" />
+    <Content Include="Dll\YuLinTu.tGISCNet.dll" />
+    <Content Include="Dll\YuLinTu.Unity.dll" />
+    <Content Include="Dll\YuLinTu.Windows.Core.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

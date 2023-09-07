@@ -1,0 +1,11 @@
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\bin\x86\Debug\YuLinTu.Library.Map.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\bin\x86\Debug\YuLinTu.Library.Map.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.GroupLayerNewDialog.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.LayerScaleSetDialog.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.LocationParameterDialog.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.Properties.Resources.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.csproj.GenerateResource.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Map\obj\x86\Debug\YuLinTu.Library.Map.pdb

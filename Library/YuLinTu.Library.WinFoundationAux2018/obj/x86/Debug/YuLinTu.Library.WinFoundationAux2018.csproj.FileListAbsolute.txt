@@ -1,0 +1,17 @@
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.Library.WinFoundationAux.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.Library.WinFoundationAux.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\GeoAPI.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\NetTopologySuite.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\PowerCollections.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\System.Data.SQLite.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.Library.Entity.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.NetAux.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.tGISCNet.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\bin\YuLinTu.Library.Entity.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux2018.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux.g.resources
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux2018.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux2018.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.WinFoundationAux2018\obj\x86\Debug\YuLinTu.Library.WinFoundationAux.pdb

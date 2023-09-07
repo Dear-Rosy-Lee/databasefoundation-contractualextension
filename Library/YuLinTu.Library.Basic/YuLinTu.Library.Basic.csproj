@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{65FC560E-B5AD-41CF-874B-B232B1C58F71}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Library.Basic</RootNamespace>
+    <AssemblyName>YuLinTu.Library.Basic</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Workspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AOP\AOPBase.cs" />
+    <Compile Include="AOP\AOPEventArgs.cs" />
+    <Compile Include="AOP\AOPTarget.cs" />
+    <Compile Include="AOP\eInvokeCondition.cs" />
+    <Compile Include="AOP\ExceptionValueAttribute.cs" />
+    <Compile Include="AOP\IAOPTarget.cs" />
+    <Compile Include="AOP\InvokeOverrideRetValue.cs" />
+    <Compile Include="AOP\InvokeTargetAttributeCollection.cs" />
+    <Compile Include="AOP\InvokeTargetAttribute.cs" />
+    <Compile Include="Attribute\EnumNameAttribute.cs" />
+    <Compile Include="Attribute\LangCategoryAttribute.cs" />
+    <Compile Include="Attribute\LangDescriptionAttribute.cs" />
+    <Compile Include="Attribute\LangDisplayNameAttribute.cs" />
+    <Compile Include="Attribute\CatalogAttribute.cs" />
+    <Compile Include="Attribute\ImageAttribute.cs" />
+    <Compile Include="Cache\Cache.cs" />
+    <Compile Include="Delegate\BasicDelegate.cs" />
+    <Compile Include="Cache\CacheT.cs" />
+    <Compile Include="Common\AppDomainSerializationBinder.cs" />
+    <Compile Include="Common\Detention\Detention.cs" />
+    <Compile Include="Common\Detention\DetentionElapsedEventArgs.cs" />
+    <Compile Include="Common\HashtableHasDefault.cs" />
+    <Compile Include="Common\KeyValue\KeyValue.cs" />
+    <Compile Include="Attribute\ObjectPropertyAttribute.cs" />
+    <Compile Include="Common\KeyValue\KeyValueSections.cs" />
+    <Compile Include="Common\KeyValue\KeyValueSettings.cs" />
+    <Compile Include="Common\LevelPath.cs" />
+    <Compile Include="Common\Serialize\ITextSerializable.cs" />
+    <Compile Include="Common\Serialize\TextSerializer.cs" />
+    <Compile Include="Common\SimpleTreeNode.cs" />
+    <Compile Include="Common\SimpleTreeNodeCollection.cs" />
+    <Compile Include="Common\SingleBackgroundWorker.cs" />
+    <Compile Include="Common\Statistics\STTGallery.cs" />
+    <Compile Include="Common\Statistics\STTGroup.cs" />
+    <Compile Include="Common\Statistics\STTMetadata.cs" />
+    <Compile Include="Entity\NamedObject.cs" />
+    <Compile Include="Entity\YltObject.cs" />
+    <Compile Include="Enum\eSearchType.cs" />
+    <Compile Include="Entity\YltEntity.cs" />
+    <Compile Include="Entity\YltEntityCollection.cs" />
+    <Compile Include="Entity\YltEntityID.cs" />
+    <Compile Include="Entity\YltEntityIDName.cs" />
+    <Compile Include="Entity\YltEntityName.cs" />
+    <Compile Include="Attribute\LanguageAttribute.cs" />
+    <Compile Include="Enum\eLevelOption.cs" />
+    <Compile Include="Events\DocumentMessageProgress.cs" />
+    <Compile Include="Extension\ExtensionString.cs" />
+    <Compile Include="File\ConfigBase.cs" />
+    <Compile Include="File\DirectoryCopier.cs" />
+    <Compile Include="File\DirectoryCutter.cs" />
+    <Compile Include="File\DirectoryOperator.cs" />
+    <Compile Include="File\eDirectoryContentType.cs" />
+    <Compile Include="File\eDirectoryOperationType.cs" />
+    <Compile Include="File\DirectoryOperationEventArgs.cs" />
+    <Compile Include="Interface\IAddSystemEntries.cs" />
+    <Compile Include="Interface\IClipboard.cs" />
+    <Compile Include="Interface\IEditable.cs" />
+    <Compile Include="Interface\IExpandable.cs" />
+    <Compile Include="Interface\INavigate.cs" />
+    <Compile Include="Interface\ICloseable.cs" />
+    <Compile Include="Interface\IOpenFileMetadata.cs" />
+    <Compile Include="Interface\IRefreshable.cs" />
+    <Compile Include="Interface\ISaveable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Task\TaskMetadata.cs" />
+    <Compile Include="Task\TaskBase.cs" />
+    <Compile Include="Task\TaskCompletedEventArgs.cs" />
+    <Compile Include="Task\TaskAlertEventArgs.cs" />
+    <Compile Include="Task\TaskProgressChangedEventArgs.cs" />
+    <Compile Include="Task\TaskQueue.cs" />
+    <Compile Include="Task\TaskQueueCompletedEventArgs.cs" />
+    <Compile Include="Task\TaskQueueProgressChangedEventArgs.cs" />
+    <Compile Include="Task\TaskStopException.cs" />
+    <Compile Include="Tool\ToolBasic.cs" />
+    <Compile Include="Tool\ToolCategory.cs" />
+    <Compile Include="Tool\ToolChinese.cs" />
+    <Compile Include="Tool\ToolCoding.cs" />
+    <Compile Include="Tool\ToolCom.cs" />
+    <Compile Include="Tool\ToolConfiguration.cs" />
+    <Compile Include="Tool\ToolConvert.cs" />
+    <Compile Include="Tool\ToolDateTime.cs" />
+    <Compile Include="Tool\ToolDrawing.cs" />
+    <Compile Include="Tool\ToolExcel.cs" />
+    <Compile Include="Tool\ToolException.cs" />
+    <Compile Include="Tool\ToolFile.cs" />
+    <Compile Include="Tool\ToolICN.cs" />
+    <Compile Include="Tool\ToolMath.cs" />
+    <Compile Include="Tool\ToolNetwork.cs" />
+    <Compile Include="Tool\ToolProgress.cs" />
+    <Compile Include="Tool\ToolReflection.cs" />
+    <Compile Include="Tool\ToolRegister.cs" />
+    <Compile Include="Tool\ToolSerialization.cs" />
+    <Compile Include="Tool\ToolServices.cs" />
+    <Compile Include="Tool\ToolString.cs" />
+    <Compile Include="Tool\ToolSystem.cs" />
+    <Compile Include="Tool\ToolThread.cs" />
+    <Compile Include="Tool\ToolUser.cs" />
+    <Compile Include="Trace\Device\ITraceDeviceCollection.cs" />
+    <Compile Include="Trace\Device\TraceDeviceConsole.cs" />
+    <Compile Include="Trace\Enum\eLogGrade.cs" />
+    <Compile Include="Trace\Enum\eOperationType.cs" />
+    <Compile Include="Trace\Enum\eOperationTargetType.cs" />
+    <Compile Include="Trace\Log\ILogCollection.cs" />
+    <Compile Include="Trace\Log\Log.cs" />
+    <Compile Include="Trace\Log\LogCollection.cs" />
+    <Compile Include="Common\Id.cs" />
+    <Compile Include="Trace\Trace.cs" />
+    <Compile Include="Trace\Device\ITraceDevice.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_LogGrade.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_OperationTargetType.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_OperationType.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_ToolFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_Task.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_ToolSystem.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_Config.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\langChs_ToolServices.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

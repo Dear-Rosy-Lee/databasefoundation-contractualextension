@@ -1,0 +1,17 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.DiagramFoundation\Binary\YuLinTu.Component.DiagramFoundation.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.DiagramFoundation\Binary\YuLinTu.Component.DiagramFoundation.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\CBDlabelSetPage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\InvestigationVisioMapPanel.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\TableColumnCountSetPage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\CBDlabelSetPage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\InvestigationVisioMapPanel.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\Controls\TableColumnCountSetPage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.Properties.Resources.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.csproj.GenerateResource.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DiagramFoundation\obj\x86\Debug\YuLinTu.Component.DiagramFoundation.pdb

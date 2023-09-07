@@ -1,0 +1,14 @@
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.Dictionary\Binary\YuLinTu.Component.Dictionary.dll
+D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.Dictionary\Binary\YuLinTu.Component.Dictionary.pdb
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\Controls\DictFramePage.g.cs
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary_MarkupCompile.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary_MarkupCompile.lref
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\Controls\DictFramePage.baml
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.g.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.Properties.Resources.resources
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.csproj.GenerateResource.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.csproj.CopyComplete
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.dll
+D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.Dictionary\obj\x86\Debug\YuLinTu.Component.Dictionary.pdb

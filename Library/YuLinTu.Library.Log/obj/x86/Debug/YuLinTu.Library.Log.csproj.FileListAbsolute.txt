@@ -1,0 +1,6 @@
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\bin\x86\Debug\YuLinTu.Library.Log.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\bin\x86\Debug\YuLinTu.Library.Log.pdb
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\obj\x86\Debug\YuLinTu.Library.Log.csproj.AssemblyReference.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\obj\x86\Debug\YuLinTu.Library.Log.csproj.CoreCompileInputs.cache
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\obj\x86\Debug\YuLinTu.Library.Log.dll
+D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Log\obj\x86\Debug\YuLinTu.Library.Log.pdb

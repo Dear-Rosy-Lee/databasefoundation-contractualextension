@@ -1,0 +1,147 @@
+﻿<am:InfoPageBase x:Class="YuLinTu.Library.Controls.ZoneSelectorPanel"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                 xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                 xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                 xmlns:am="clr-namespace:YuLinTu.Library.Controls"
+                 Width="600"
+                 Height="550"
+                 Header="地域选择">
+    <am:InfoPageBase.Resources>
+        <am:ZoneLengthConvert x:Key="ZoneLengthConvert"></am:ZoneLengthConvert>
+    </am:InfoPageBase.Resources>
+
+
+    <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}"
+          ClipToBounds="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+            <cmps:LoadingIcon Width="16"
+                              Height="16"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                              RenderOptions.BitmapScalingMode="NearestNeighbor"></cmps:LoadingIcon>
+        </Border>
+        <Border Grid.Row="1"
+                Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}"
+                Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="600" />
+                </Grid.ColumnDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <Label  Content="可用的地域列表"
+                            DockPanel.Dock="Left"
+                            Margin="10,0,0,0" />
+                </DockPanel>
+                <Border Grid.Row="1"
+                        Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}">
+                    <cmps:MetroTreeListView x:Name="treeViewer"
+                                            HeaderVisibility="Visible"
+                                            HeaderBorderThickness="0,1,0,1"
+                                            ItemAutoExpand="False"
+                                            ItemPadding="0,2"
+                                            BorderThickness="0,0,0,0"
+                                            BorderBrush="LightGray"
+                                            EnabledAsyncLoading="True"
+                                            ExpandItemWhenLeftMouseDoubleClick="True"
+                                            ItemsGetter="treeViewer_ItemsGetter"
+                                            HasItemsGetter="treeViewer_HasItemsGetter"
+                                            SelectedItemChanged="treeViewer_SelectedItemChanged">
+                        <cmps:MetroTreeListView.View>
+                            <GridView>
+                                <GridViewColumn Width="350"
+                                                Header="地名">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <cmps:MetroTreeListViewItemToggleButton></cmps:MetroTreeListViewItemToggleButton>
+                                                <StackPanel HorizontalAlignment="Left"
+                                                            Orientation="Horizontal">
+                                                    <!--<Image Height="15" Width="15" HorizontalAlignment="Left" Margin="0,0,5,0"/>-->
+                                                    <cmps:ImageTextItem Text="{Binding Name}"
+                                                                        Image="{Binding FullCode,Converter={StaticResource ZoneLengthConvert}}"></cmps:ImageTextItem>
+                                                    <!--<TextBlock x:Name="tbName" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="地域编码"
+                                                Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock Text="{Binding FullCode}"
+                                                           VerticalAlignment="Center" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </cmps:MetroTreeListView.View>
+                    </cmps:MetroTreeListView>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2"
+                Margin="0,0,10,0"
+                BorderThickness="0,1,0,0"
+                SnapsToDevicePixels="True"
+                BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+                Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}"></Border>
+        <DockPanel Grid.Row="3"
+                   Margin="10,5"
+                   LastChildFill="False"
+                   Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}">
+            <metro:MetroButton  DockPanel.Dock="Right"
+                                Padding="10,0"
+                                Height="31"
+                                IsEnabled="{Binding CanClose}"
+                                Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                                Style="{DynamicResource Metro_Button_Paneled_Style}">
+                <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"
+                                    Text="取消">
+                </cmps:ImageTextItem>
+
+            </metro:MetroButton>
+            <metro:MetroButton  DockPanel.Dock="Right"
+                                Padding="10,0"
+                                Height="31"
+                                Margin="0,0,5,0"
+                                x:Name="btnAdd"
+                                Click="btnAdd_Click"
+                                IsEnabled="{Binding CanClose}"
+                                Style="{DynamicResource Metro_Button_Paneled_Style}">
+                <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
+                                    Text="确定">
+                </cmps:ImageTextItem>
+
+            </metro:MetroButton>
+            <cmps:LoadingIcon DockPanel.Dock="Right"
+                              Width="16"
+                              Height="16"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="0,0,5,0"
+                              Visibility="{Binding Path=IsConfirming, Converter={StaticResource BoolToVisibilityHiddenConverter}}"
+                              RenderOptions.BitmapScalingMode="NearestNeighbor"></cmps:LoadingIcon>
+        </DockPanel>
+    </Grid>
+
+</am:InfoPageBase>

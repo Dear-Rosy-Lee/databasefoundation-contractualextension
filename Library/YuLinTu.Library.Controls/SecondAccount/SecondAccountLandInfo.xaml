@@ -1,0 +1,284 @@
+﻿<am:InfoPageBase x:Class="YuLinTu.Library.Controls.SecondAccountLandInfo"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                 xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                 xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                 xmlns:am="clr-namespace:YuLinTu.Library.Controls"
+                 Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
+                 Header="地块信息"
+                 MinHeight="300"
+                 MinWidth="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style x:Key="LableStyle"
+                   TargetType="Label">
+                <Setter Property="Height"
+                        Value="25" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Left" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Left" />
+            </Style>
+        </Grid.Resources>
+        <ScrollViewer  HorizontalScrollBarVisibility="Hidden"
+                       PanningMode="VerticalOnly"
+                       VerticalScrollBarVisibility="Auto">
+            <Grid Margin="10,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Content="地域:"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtZoneName"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="5"
+                                   IsReadOnly="True"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   TabIndex="0" />
+
+                <Label Content="承包方名称:"
+                       Grid.Row="1"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroComboBox x:Name="cmbVirtualPersonName"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Padding="7,0,0,0"
+                                    Height="30"
+                                    SelectionChanged="cmbVirtualPersonName_SelectionChanged"
+                                    TabIndex="1" />
+
+                <Label Content="共有人名称:"
+                       Grid.Row="1"
+                       Grid.Column="3"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtOwnerName"
+                                   Grid.Row="1"
+                                   Grid.Column="5"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   IsReadOnly="True"
+                                   TabIndex="2" />
+
+                <Label Content="地块名称:"
+                       Grid.Row="2"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtName"
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="5"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding Name,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="3" />
+
+                <Label Content="土地利用类型:"
+                       Grid.Row="3"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroComboBox x:Name="cmbLandName"
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Padding="7,0,0,0"
+                                    Height="30"
+                                    SelectionChanged="cmbLandName_SelectionChanged"
+                                    TabIndex="4" />
+
+                <CheckBox Content="二级地类:"
+                          x:Name="cbLandNameSecond"
+                          Grid.Row="3"
+                          Grid.Column="3"
+                          VerticalAlignment="Center"
+                          Click="cbLandNameSecond_Click" />
+                <cmps:MetroComboBox x:Name="cmbLandNameSecond"
+                                    Grid.Row="3"
+                                    Grid.Column="5"
+                                    Padding="7,0,0,0"
+                                    Height="30"
+                                    SelectionChanged="cmbLandNameSecond_SelectionChanged"
+                                    IsEnabled="{Binding ElementName=cbLandNameSecond,Path=IsChecked}"
+                                    TabIndex="5" />
+
+                <CheckBox Content="地类名称:"
+                          x:Name="cbLandNameAlise"
+                          Grid.Row="4"
+                          Grid.Column="3"
+                          VerticalAlignment="Center"
+                          Click="cbLandNameAlise_Click" />
+                <cmps:MetroTextBox x:Name="cmbLandNameAlise"
+                                   Grid.Row="4"
+                                   Grid.Column="5"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding LandName,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="8" />
+
+                <Label Content="台账面积:"
+                       Grid.Column="0"
+                       Grid.Row="4"
+                       Style="{StaticResource LableStyle}" />
+                <DockPanel Grid.Row="4"
+                           Grid.Column="1"
+                           LastChildFill="True">
+                    <Label DockPanel.Dock="Right"
+                           Content="(亩)"
+                           Style="{StaticResource LableStyle}" />
+                    <wpftoolkit:DoubleUpDown   x:Name="cmbTableArea"
+                                               Minimum="0"
+                                               MaxWidth="490"
+                                               Height="30"
+                                               VerticalAlignment="Center"
+                                               Increment="0.1"
+                                               Value="{Binding TableArea,Mode=TwoWay}"
+                                               Maximum="1000"
+                                               TabIndex="6" />
+                </DockPanel>
+
+
+                <Label Content="(亩)"
+                       Grid.Column="2"
+                       Grid.Row="4"
+                       Style="{StaticResource LableStyle}" />
+
+                <Label Content="四至东(右):"
+                       Grid.Row="5"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtLandNeighborToEast"
+                                   Grid.Column="1"
+                                   Grid.Row="5"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding NeighborEast,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="9" />
+
+                <Label Content="四至西(左):"
+                       Grid.Column="3"
+                       Grid.Row="5"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtLandNeighborToWest"
+                                   Grid.Column="5"
+                                   Grid.Row="5"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding NeighborWest,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="10" />
+
+                <Label Content="四至南(下):"
+                       Grid.Row="6"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtLandNeighborToSouth"
+                                   Grid.Column="1"
+                                   Grid.Row="6"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding NeighborSouth,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="11" />
+
+                <Label Content="四至北(上):"
+                       Grid.Column="3"
+                       Grid.Row="6"
+                       Style="{StaticResource LableStyle}" />
+                <cmps:MetroTextBox x:Name="txtLandNeighborToNorth"
+                                   Grid.Column="5"
+                                   Grid.Row="6"
+                                   Height="30"
+                                   VerticalContentAlignment="Center"
+                                   Text="{Binding NeighborNorth,Mode=TwoWay}"
+                                   MaxLength="50"
+                                   TabIndex="12" />
+
+                <Label Content="备注:"
+                       Grid.Row="7"
+                       Style="{StaticResource LableStyle}"
+                       VerticalAlignment="Top" />
+                <cmps:MetroTextBox x:Name="txtComment"
+                                   Grid.Row="7"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="4"
+                                   MaxLength="500"
+                                   TextWrapping="Wrap"
+                                   VerticalScrollBarVisibility="Auto"
+                                   Height="60"
+                                   AcceptsReturn="True"
+                                   VerticalAlignment="Stretch"
+                                   VerticalContentAlignment="Top"
+                                   Margin="0,4,0,4"
+                                   Text="{Binding Comment,Mode=TwoWay}"
+                                   TabIndex="13" />
+            </Grid>
+        </ScrollViewer>
+        <Border BorderThickness="0,1,0,0"
+                Grid.Row="1"
+                BorderBrush="LightGray"
+                Margin="10,0,10,0"
+                SnapsToDevicePixels="True">
+            <DockPanel HorizontalAlignment="Stretch"
+                       LastChildFill="False"
+                       VerticalAlignment="Bottom"
+                       Margin="0,5,0,5"
+                       DockPanel.Dock="Bottom">
+                <metro:MetroButton  Height="30"
+                                    DockPanel.Dock="Right"
+                                    Padding="5"
+                                    Margin="5,0,0,0"
+                                    Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                                    Style="{StaticResource Metro_Button_Paneled_Style}"
+                                    TabIndex="14">
+                    <StackPanel Orientation="Horizontal">
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"></Image>
+                        <TextBlock Margin="3,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Text="取消"></TextBlock>
+                    </StackPanel>
+                </metro:MetroButton>
+                <metro:MetroButton  DockPanel.Dock="Right"
+                                    Padding="5"
+                                    x:Name="mbtnLandOK"
+                                    Click="mbtnLandOK_Click"
+                                    Height="30"
+                                    Style="{StaticResource Metro_Button_Paneled_Style}"
+                                    TabIndex="15">
+                    <StackPanel Orientation="Horizontal">
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Stretch="None"
+                               Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"></Image>
+                        <TextBlock Margin="3,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Text="确定"></TextBlock>
+                    </StackPanel>
+                </metro:MetroButton>
+            </DockPanel>
+        </Border>
+    </Grid>
+</am:InfoPageBase>

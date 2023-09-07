@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="langChs_eAppBuildType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eappbuildtype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eAppPersont" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eapppersont.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBoundaryLineCategory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eboundarylinecategory.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBoundaryLinePosition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eboundarylineposition.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBoundaryNatrueType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eboundarynatruetype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBoundaryPointType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eboundarypointtype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBuildFashion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ebuildfashion.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eBuildHouseType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ebuildhousetype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eCadastralZoneLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ecadastralzonelevel.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eConstructMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_econstructmode.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eConstructType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_econstructtype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eConsturctionPurpose" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_econsturctionpurpose.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eContracterType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_econtractertype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eCredentialsType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ecredentialstype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eGender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_egender.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eHavingLandType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ehavinglandtype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eHouseStructure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ehousestructure.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eInvestScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_einvestscale.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandlevel.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandMarkType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandmarktype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandPropertyType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandpropertytype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandPurposeType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandpurposetype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandSlopelLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandslopellevel.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandUsePersonType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elandusepersontype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eLandUseRightType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_elanduserighttype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eManageType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_emanagetype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eMapSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_emapselect.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eNation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_enation.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_ePlantProtectType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_eplantprotecttype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_estatus.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eTissueMemberType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_etissuemembertype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eTissueType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_etissuetype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eTransferType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_etransfertype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eVirtualPersonStatus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_evirtualpersonstatus.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eVirtualPersonType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_evirtualpersontype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eVirtualType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_evirtualtype.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_eZoneLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_ezonelevel.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="langChs_Zone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\langchs_zone.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+</root>

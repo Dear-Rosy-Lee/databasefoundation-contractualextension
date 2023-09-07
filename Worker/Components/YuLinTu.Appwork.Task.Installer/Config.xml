@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Order>121</Order>
+    <EntranceType>YuLinTu.Appwork.Task.Installer.Entrance</EntranceType>
+    <EntrancePath>.\Components\YuLinTu.Appwork.Task.Installer\Binary\YuLinTu.Appwork.Task.Installer.dll</EntrancePath>
+</WinComponent>

@@ -1,0 +1,89 @@
+﻿<ylt:MetroDialog x:Class="YuLinTu.Appwork.Apps.Samples.Examples.Dialog.SimpleDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+                 xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                 xmlns:local="clr-namespace:YuLinTu.Appwork.Apps.Samples.Examples.Dialog"
+                 Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/DataFormSource.png"
+                 Header="SimpleDialog"
+                 Width="800"
+                 Height="480">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CommandLoaded}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}"
+          ClipToBounds="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsBusy, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ylt:BusyIcon HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding Path=IsBusy, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource BoolToVisibilityConverter}}"
+                          RenderOptions.BitmapScalingMode="NearestNeighbor"
+                          RenderTransformOrigin=".5 .5">
+                <ylt:BusyIcon.RenderTransform>
+                    <ScaleTransform ScaleX=".7"
+                                    ScaleY=".7"></ScaleTransform>
+                </ylt:BusyIcon.RenderTransform>
+            </ylt:BusyIcon>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="10"
+              Visibility="{Binding IsBusy, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource NotBoolToVisibilityConverter}}">
+            <!-- 内容 -->
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Description}"></TextBlock>
+        </Grid>
+        <Border Grid.Row="2"
+                Margin="0,0,10,0"
+                BorderThickness="0,1,0,0"
+                SnapsToDevicePixels="True"
+                BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+                Visibility="{Binding IsBusy, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}"></Border>
+        <DockPanel Grid.Row="3"
+                   Margin="10,5"
+                   LastChildFill="False"
+                   Visibility="{Binding IsBusy, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}">
+            <ylt:MetroButton DockPanel.Dock="Right"
+                             Padding="10,0"
+                             Height="32"
+                             Margin="5,0,0,0"
+                             Style="{StaticResource Metro_Button_Paneled_Style}"
+                             IsEnabled="{Binding CanClose, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}}"
+                             Command="{x:Static ylt:MetroCommands.CloseTabMessageBoxCommand}">
+                <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"
+                                   ImageTextSpacing="6"
+                                   Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=lang1500018}">
+                </ylt:ImageTextItem>
+            </ylt:MetroButton>
+            <ylt:MetroButton DockPanel.Dock="Right"
+                             Height="32"
+                             Padding="10,0"
+                             Style="{StaticResource Metro_Button_Paneled_Style}"
+                             IsEnabled="{Binding CanClose, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}}"
+                             Command="{x:Static ylt:MetroCommands.ConfirmTabMessageBoxCommand}">
+                <ylt:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
+                                   ImageTextSpacing="6"
+                                   Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=lang1190017}">
+                </ylt:ImageTextItem>
+            </ylt:MetroButton>
+            <ylt:LoadingIcon DockPanel.Dock="Right"
+                             Width="16"
+                             Height="16"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Margin="0,0,10,0"
+                             Visibility="{Binding Path=IsConfirming, RelativeSource={RelativeSource AncestorType=ylt:MetroDialog}, Converter={StaticResource BoolToVisibilityHiddenConverter}}"
+                             RenderOptions.BitmapScalingMode="NearestNeighbor"></ylt:LoadingIcon>
+        </DockPanel>
+    </Grid>
+</ylt:MetroDialog>

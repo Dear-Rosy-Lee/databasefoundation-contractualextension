@@ -1,0 +1,10 @@
+﻿<Border Width="100"
+        Height="40"
+        BorderThickness="{0}"
+        BorderBrush="{{DynamicResource {{x:Static ylt:ResourceKeys.{1}}}}}"
+        Background="{{DynamicResource {{x:Static ylt:ResourceKeys.{2}}}}}">
+    <TextBlock HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Foreground="{{DynamicResource {{x:Static ylt:ResourceKeys.{3}}}}}"
+               Text="{4}"></TextBlock>
+</Border>

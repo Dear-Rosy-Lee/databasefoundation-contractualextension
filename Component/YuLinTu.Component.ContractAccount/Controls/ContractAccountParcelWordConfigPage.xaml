@@ -1,0 +1,778 @@
+﻿<appCore:WorkpageOptionsEditor  x:Class="YuLinTu.Component.ContractAccount.ContractAccountParcelWordConfigPage"
+                                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                                xmlns:viewer="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
+                                xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                                xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                                xmlns:appCore="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                                Padding="10,10,10,10">
+    <appCore:WorkpageOptionsEditor.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/YuLinTu.Library.Controls;component/Resources/ContractBusinessParcelWordStyleSetting.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </appCore:WorkpageOptionsEditor.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer.Resources>
+            <viewer:UserBoolValueConvert x:Key="UserBoolValueConvert" />
+        </ScrollViewer.Resources>
+        <StackPanel Orientation="Vertical">
+            <TabControl Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}"
+                        Margin="10,10,10,0">
+                <TabItem Header="本宗设置"
+                         Name="tiOwnerLandSetting">
+                    <StackPanel Orientation="Vertical">
+                    <cmps:OptionsContainer Text="本宗地块设置">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox IsChecked="{Binding IsUseLandTableArea,Mode=TwoWay}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">标注中是否显示二轮合同面积</CheckBox>
+                            <CheckBox IsChecked="{Binding IsUseLandActualArea,Mode=TwoWay}"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Style="{StaticResource checkBox}">标注中是否显示实测面积</CheckBox>
+                            <CheckBox IsChecked="{Binding IsUseLandAwareArea,Mode=TwoWay}"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">标注中是否显示确权面积</CheckBox>
+                            <CheckBox IsChecked="{Binding IsUseLandNumber,Mode=TwoWay}"
+                                      Grid.Row="2"
+                                      Name="cb_IsUseLandNumber"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">标注中是否显示地块编码</CheckBox>
+                            <DockPanel Grid.Row="2"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>标注中地块编码开始截取位数:</Label>
+                                <wpftoolkit:IntegerUpDown IsEnabled="{Binding ElementName=cb_IsUseLandNumber,Path=IsChecked}"
+                                                          Minimum="0"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding GetLandMiniNumber,Mode=TwoWay}" />
+                            </DockPanel>
+                            <CheckBox IsChecked="{Binding IsUseLandName,Mode=TwoWay}"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                      Style="{StaticResource checkBox}">标注中是否显示地块名称</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowJZDGeo,Mode=TwoWay}"
+                                      Name="cbIsShowJZDGeo"
+                                      Grid.Row="3"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">是否显示界址圈</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowJZDNumber,Mode=TwoWay}"                                      
+                                      Grid.Row="3"
+                                      Grid.Column="1"
+                                      Name="ckIsShowJZDNumber"
+                                      Style="{StaticResource checkBox}">是否显示界址点号</CheckBox>
+                                <CheckBox IsChecked="{Binding IsUniteJZDNumber, Mode=TwoWay}"
+                                      Grid.Row="4"
+                                      Grid.Column="1"
+                                      IsEnabled="{Binding ElementName=ckIsShowJZDNumber,Path=IsChecked}"
+                                      Style="{StaticResource checkBox}">是否统一界址点号</CheckBox>
+                            <CheckBox IsChecked="{Binding IsFixedLandGeoWordExtend,Mode=TwoWay}"
+                                      Grid.Row="5"
+                                      Grid.Column="0"
+                                      Name="ckIsFixedLandGeoWordExtend"
+                                      Style="{StaticResource checkBox}">固定本宗图片高度及宽度</CheckBox>
+                            <CheckBox IsChecked="{Binding IsLandTypeSort,Mode=TwoWay}"
+                                      Grid.Row="5"
+                                      Grid.Column="1"
+                                      Style="{StaticResource checkBox}">本宗地块编码排序</CheckBox>
+                            <DockPanel Grid.Row="6"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>本宗图片宽度:</Label>
+                                <wpftoolkit:IntegerUpDown x:Name="tkLandWordWidth"
+                                                          Minimum="1"
+                                                          IsEnabled="{Binding ElementName=ckIsFixedLandGeoWordExtend,Path=IsChecked,Converter={StaticResource UserBoolValueConvert}}"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding LandGeoWordWidth,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="6"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>本宗图片高度:</Label>
+                                <wpftoolkit:IntegerUpDown x:Name="tkLandWordHeight"
+                                                          Minimum="1"
+                                                          IsEnabled="{Binding ElementName=ckIsFixedLandGeoWordExtend,Path=IsChecked,Converter={StaticResource UserBoolValueConvert}}"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding LandGeoWordHeight,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="7"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>本宗地块颜色:</Label>
+                                <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        SelectedColor="{Binding OwnerLandColor,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="7"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>本宗地块线宽:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         Value="{Binding OwnerLandBorderThickness,Mode=TwoWay}" />
+                            </DockPanel>
+                           
+                            <DockPanel Grid.Row="8"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <CheckBox Name="cbLandStartNumber"
+                                          IsChecked="{Binding IsLandNumberStart,Mode=TwoWay}"
+                                          Style="{StaticResource checkBox}">地块示意图地块起始数:</CheckBox>
+                                <wpftoolkit:IntegerUpDown x:Name="tkLandNumberIndex"
+                                                          IsEnabled="{Binding ElementName=cbLandStartNumber,Path=IsChecked}"
+                                                          Minimum="1"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding LandNumberIndex,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="8"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                    <CheckBox Name="cbIsVacuateDotRing"
+                                              IsChecked="{Binding IsVacuateDotRing,Mode=TwoWay}"
+                                              Style="{StaticResource checkBox}">无界址信息下抽稀地块界址圈:</CheckBox>
+                                <wpftoolkit:IntegerUpDown x:Name="tkVacuateDotRingIndex"
+                                                          IsEnabled="{Binding ElementName=cbIsVacuateDotRing,Path=IsChecked}"
+                                                          Minimum="1"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding VacuateDotRingSetIndex,Mode=TwoWay}" />
+                            </DockPanel>
+                            
+                        </Grid>
+                    </cmps:OptionsContainer>
+                        <cmps:OptionsContainer Text="本宗地块导出类别选择">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding ExportContractLandType,Mode=TwoWay}"
+                                              Grid.Row="0"
+                                              Grid.Column="0"
+                                              Style="{StaticResource checkBox}">承包地块</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportPrivateLandType,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">自留地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportMotorizeLandType,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Grid.Column="2"
+                                          Style="{StaticResource checkBox}">机动地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportWasteLandType,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Grid.Column="3"
+                                          Style="{StaticResource checkBox}">开荒地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportCollectiveLandType,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">其他集体土地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportEncollecLandType,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">经济地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportFeedLandType,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="2"
+                                          Style="{StaticResource checkBox}">饲料地</CheckBox>
+                                <CheckBox IsChecked="{Binding ExportAbandonedLandType,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="3"
+                                          Style="{StaticResource checkBox}">撂荒地</CheckBox>
+                            </Grid>
+                        </cmps:OptionsContainer>
+                        <cmps:OptionsContainer Text="本宗地块标注设置">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Row="0"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>本宗地块标注字体:</Label>
+                                    <cmps:FontSelectorComboBox Style="{StaticResource ResourceKey=usualfontselectcb}"
+                                                               SelectedValue="{Binding UseLandLabelFontSet,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="0"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>本宗地块标注颜色:</Label>
+                                    <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                            SelectedColor="{Binding UseLandLabelFontColor,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>本宗地块标注大小:</Label>
+                                    <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                             Value="{Binding UseLandLabelFontSize,Mode=TwoWay}" />
+                                </DockPanel>
+                                <CheckBox IsChecked="{Binding UseLandLabelBold,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">本宗地块标注加粗</CheckBox>
+                                <!--<CheckBox IsChecked="{Binding UseLandLabelUnderLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">本宗地块标注下划线</CheckBox>
+                                <CheckBox IsChecked="{Binding UseLandLabelStrikeLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">本宗地块标注删除线</CheckBox>
+                                <CheckBox IsChecked="{Binding UseLandLabeltiltLine,Mode=TwoWay}"
+                                          Grid.Row="3"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">本宗地块标注倾斜</CheckBox>-->
+                            </Grid>
+                        </cmps:OptionsContainer>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="邻宗设置"
+                         Name="tiNeigborLandSetting">
+                    <StackPanel Orientation="Vertical">
+                        <cmps:OptionsContainer Text="邻宗图形设置">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding IsShowNeighborLandGeo,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">是否显示邻宗地图形</CheckBox>
+                                <CheckBox IsChecked="{Binding ShowlandneighborLabel,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗图无地块相邻显示调查四至</CheckBox>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗地块颜色:</Label>
+                                    <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                            SelectedColor="{Binding NeighborLandColor,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗地块线宽:</Label>
+                                    <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                             Value="{Binding NeighborLandBorderThickness,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>本宗地矩形框向外缓冲查找邻宗方式:</Label>
+                                    <cmps:MetroComboBox  Name="mb_bzLandBufferType"
+                                                         SelectedValue="{Binding OwnerLandBufferType,Mode=TwoWay}"
+                                                         SelectedValuePath="Content"
+                                                         Style="{StaticResource ResourceKey=usualmetrocb}">
+                                        <ComboBoxItem>外边缓冲</ComboBoxItem>
+                                        <ComboBoxItem>边框缓冲</ComboBoxItem>
+                                    </cmps:MetroComboBox>
+                                </DockPanel>
+                                <DockPanel Grid.Row="2"
+                                           Grid.Column="1"
+                                           Style="{StaticResource grid_item}">
+                                    <Label>邻宗查找地块缓冲距离:</Label>
+                                    <wpftoolkit:DoubleUpDown x:Name="tkNeighborLandDistenceIndex"
+                                                             Style="{StaticResource doubleupdown}"
+                                                             Value="{Binding Neighborlandbufferdistence,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="3"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗查找点线面状地物缓冲距离:</Label>
+                                    <wpftoolkit:DoubleUpDown x:Name="tkNeighborDXMzdwDistenceIndex"
+                                                             Style="{StaticResource doubleupdown}"
+                                                             Value="{Binding Neighbordxmzdwbufferdistence,Mode=TwoWay}" />
+                                </DockPanel>
+                                <CheckBox IsChecked="{Binding ShowAlllandneighborLabel,Mode=TwoWay}"
+                                          Grid.Row="3"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗图标注直接使用调查四至</CheckBox>
+                            </Grid>
+                        </cmps:OptionsContainer>
+                        <cmps:OptionsContainer Text="邻宗地块标注设置">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Row="0"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗地块标注字体:</Label>
+                                    <cmps:FontSelectorComboBox Style="{StaticResource ResourceKey=usualfontselectcb}"
+                                                               SelectedValue="{Binding NeighborLandLabelFontSet,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="0"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗地块标注颜色:</Label>
+                                    <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                            SelectedColor="{Binding NeighborLandLabelFontColor,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>邻宗地块标注大小:</Label>
+                                    <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                             Value="{Binding NeighborLandLabelFontSize,Mode=TwoWay}" />
+                                </DockPanel>
+                                <!--<CheckBox IsChecked="{Binding NeighborLandLabelUnderLine,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗地块标注下划线</CheckBox>
+                                <CheckBox IsChecked="{Binding NeighborLandLabelStrikeLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">邻宗地块标注删除线</CheckBox>
+                                <CheckBox IsChecked="{Binding NeighborLandLabeltiltLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗地块标注倾斜</CheckBox>-->
+                                <CheckBox IsChecked="{Binding NeighborLandLabelBold,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗地块标注加粗</CheckBox>
+                            </Grid>
+                        </cmps:OptionsContainer>
+                        <cmps:OptionsContainer Text="其他设置">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding NeighborlandLabeluseDLTGGQname,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Visibility="Collapsed"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">邻宗直接打印调查四至中田埂、道路、沟渠</CheckBox>
+                                <CheckBox IsChecked="{Binding NeighborlandLabelisJTuseLandName,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Visibility="Collapsed"
+                                          Grid.Column="1"
+                                          Style="{StaticResource checkBox}">邻宗为集体地则修改为二级地类名称</CheckBox>
+                                <CheckBox IsChecked="{Binding NeighborlandSearchUseUserAlgorithm,Mode=TwoWay}"
+                                          Grid.Row="1"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">邻宗查找地块使用自定义算法</CheckBox>
+                                <CheckBox IsChecked="{Binding SetNeighborLandWestEastLabelVertical,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="2"
+                                          Style="{StaticResource checkBox}">直接勾选调查四至，或无邻宗地时显示调查四至，东西向的四至需要竖排显示</CheckBox>
+                            </Grid>
+                        </cmps:OptionsContainer>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="全域设置"
+                         Name="tiViewOfAllLandSetting">
+                    <StackPanel Orientation="Vertical">
+                        <cmps:OptionsContainer Text="全域图形设置">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox IsChecked="{Binding ShowdxmzdwHandle,Mode=TwoWay}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">左侧缩略图是否显示点线面状地物</CheckBox>
+                            <CheckBox IsChecked="{Binding IsFixedViewOfAllLandGeoWordExtend,Mode=TwoWay}"
+                                      Grid.Row="0"
+                                      Name="cbIsFixedViewOfAllLandGeoWordExtend"
+                                      Grid.Column="1"
+                                      Style="{StaticResource checkBox}">固定鹰眼显示范围</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowVPallLands,Mode=TwoWay}"
+                                      Grid.Row="1"
+                                      Name="cbIsShowVPallLands"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">显示本户下所有地块</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowOtherVPallLands,Mode=TwoWay}"
+                                      Grid.Row="1"
+                                      Name="cbIsShowOtherVPallLands"
+                                      Grid.Column="1"
+                                      Style="{StaticResource checkBox}">显示非本户下所有地块</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowVillageZoneBoundary,Mode=TwoWay}"
+                                      Grid.Row="2"                                     
+                                      Grid.Column="0"
+                                      Name="cbIsShowVillageZoneBoundary"
+                                      Style="{StaticResource checkBox}">显示村级区域边界</CheckBox>
+                            <CheckBox IsChecked="{Binding IsShowGroupZoneBoundary,Mode=TwoWay}"
+                                      Grid.Row="2"
+                                      Grid.Column="1"
+                                      Name="cbIsShowGroupZoneBoundary"
+                                      Style="{StaticResource checkBox}">显示村民小组边界</CheckBox>
+                            <DockPanel Grid.Row="3"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>鹰眼图宽度:</Label>
+                                <wpftoolkit:IntegerUpDown Minimum="1"
+                                                          IsEnabled="{Binding ElementName=cbIsFixedViewOfAllLandGeoWordExtend,Path=IsChecked,Converter={StaticResource UserBoolValueConvert}}"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding ViewOfAllMultiParcelWitdh,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="3"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>鹰眼图高度:</Label>
+                                <wpftoolkit:IntegerUpDown Minimum="1"
+                                                          IsEnabled="{Binding ElementName=cbIsFixedViewOfAllLandGeoWordExtend,Path=IsChecked,Converter={StaticResource UserBoolValueConvert}}"
+                                                          Style="{StaticResource integerUpDown}"
+                                                          Value="{Binding ViewOfAllMultiParcelHeight,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="4"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>全域本户下地块线宽:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         IsEnabled="{Binding ElementName=cbIsShowVPallLands,Path=IsChecked}"
+                                                         Value="{Binding ViewOfAllvpLandBorderWidth,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="4"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>全域本户下地块填充颜色:</Label>
+                                <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        IsEnabled="{Binding ElementName=cbIsShowVPallLands,Path=IsChecked}"
+                                                        SelectedColor="{Binding ViewOfAllvpLandColor,Mode=TwoWay}" />
+                            </DockPanel>
+                                <DockPanel Grid.Row="5"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                    <Label>全域本户下地块边框颜色:</Label>
+                                    <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        IsEnabled="{Binding ElementName=cbIsShowVPallLands,Path=IsChecked}"
+                                                        SelectedColor="{Binding ViewOfAllvpLandStrokeColor,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="6"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>全域非本户下地块线宽:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         IsEnabled="{Binding ElementName=cbIsShowOtherVPallLands,Path=IsChecked}"
+                                                         Value="{Binding ViewOfAllOthervpLandBorderWidth,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="6"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>全域非本户下地块边框颜色:</Label>
+                                <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        IsEnabled="{Binding ElementName=cbIsShowOtherVPallLands,Path=IsChecked}"
+                                                        SelectedColor="{Binding ViewOfAllOthervpLandColor,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="7"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>组级行政区域边界线宽:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         IsEnabled="{Binding ElementName=cbIsShowGroupZoneBoundary,Path=IsChecked}"
+                                                         Value="{Binding GroupZoneBoundaryBorderWidth,Mode=TwoWay}" />
+                            </DockPanel>                          
+                            <DockPanel Grid.Row="7"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>组级行政区域边界颜色:</Label>
+                                <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        IsEnabled="{Binding ElementName=cbIsShowGroupZoneBoundary,Path=IsChecked}"
+                                                        SelectedColor="{Binding GroupBoundaryBorderColor,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="8"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>村级行政区域边界线宽:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         IsEnabled="{Binding ElementName=cbIsShowVillageZoneBoundary,Path=IsChecked}"
+                                                         Value="{Binding VillageZoneBoundaryBorderWidth,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="8"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>村级行政区域边界颜色:</Label>
+                                <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                        IsEnabled="{Binding ElementName=cbIsShowVillageZoneBoundary,Path=IsChecked}"
+                                                        SelectedColor="{Binding VillageZoneBoundaryBorderColor,Mode=TwoWay}" />
+                            </DockPanel>
+                            <CheckBox IsChecked="{Binding IsShowViewOfAllScale,Mode=TwoWay}"
+                                      Grid.Row="9"
+                                      Name="cbIsShowViewOfAllScale"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">是否显示比例尺</CheckBox>
+                            <DockPanel Grid.Row="9"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>比例尺大小设置:</Label>
+                                <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                         IsEnabled="{Binding ElementName=cbIsShowViewOfAllScale,Path=IsChecked}"
+                                                         Value="{Binding ViewOfAllScaleWH,Mode=TwoWay}" />
+                            </DockPanel>
+                            
+                        </Grid>
+                    </cmps:OptionsContainer>
+                        <cmps:OptionsContainer Text="全域地块标注设置">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="0"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>全域地块标注字体:</Label>
+                                    <cmps:FontSelectorComboBox Style="{StaticResource ResourceKey=usualfontselectcb}"
+                                                               IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                                               SelectedValue="{Binding ViewOfAllLabelFontSet,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="0"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>全域地块标注颜色:</Label>
+                                    <wpftoolkit:ColorPicker Style="{StaticResource colorPicker}"
+                                                            IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                                            SelectedColor="{Binding ViewOfAllLabelFontColor,Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel Grid.Row="1"
+                                           Grid.Column="1"
+                                           Style="{DynamicResource grid_item}">
+                                    <Label>全域地块标注大小:</Label>
+                                    <wpftoolkit:DoubleUpDown Style="{StaticResource doubleupdown}"
+                                                             IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                                             Value="{Binding ViewOfAllLabelFontSize,Mode=TwoWay}" />
+                                </DockPanel>
+                                <CheckBox IsChecked="{Binding ViewOfAllLabelBold,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                          Style="{StaticResource checkBox}">全域地块标注加粗</CheckBox>
+                                <!--<CheckBox IsChecked="{Binding ViewOfAllLabelUnderLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                          Style="{StaticResource checkBox}">全域地块标注下划线</CheckBox>
+                                <CheckBox IsChecked="{Binding ViewOfAllLabelStrikeLine,Mode=TwoWay}"
+                                          Grid.Row="2"
+                                          Grid.Column="1"
+                                          IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                          Style="{StaticResource checkBox}">全域地块标注删除线</CheckBox>
+                                <CheckBox IsChecked="{Binding ViewOfAllLabeltiltLine,Mode=TwoWay}"
+                                          Grid.Row="3"
+                                          IsEnabled="{Binding ElementName=cb_IsShowViewOfAllLabel,Path=IsChecked}"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">全域地块标注倾斜</CheckBox>-->
+                                <CheckBox IsChecked="{Binding IsShowViewOfAllLabel,Mode=TwoWay}"
+                                          Grid.Row="0"
+                                          Name="cb_IsShowViewOfAllLabel"
+                                          Grid.Column="0"
+                                          Style="{StaticResource checkBox}">是否显示全域地块标注</CheckBox>
+                            </Grid>
+                        </cmps:OptionsContainer>
+                    </StackPanel>               
+                </TabItem>
+                <TabItem Header="其它设置"
+                         Name="tiOtherLandSetting">
+                    <cmps:OptionsContainer Text="其它设置">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox IsChecked="{Binding SaveParcelPCAsPDF,Mode=TwoWay}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Style="{StaticResource checkBox}">导出地块示意图片时存为PDF格式</CheckBox>
+                            <DockPanel Grid.Row="1"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label  DockPanel.Dock="Left">制图者:</Label>
+                                <cmps:MetroTextBox x:Name="txtCartographer"
+                                                   Height="30"
+                                                   VerticalContentAlignment="Center"
+                                                   HorizontalContentAlignment="Right"
+                                                   MaxLength="25"
+                                                   Margin="0,0,10,0"
+                                                   Text="{Binding Cartographer,Mode=TwoWay}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="1"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>制图日期:</Label>
+                                <wpftoolkit:DateTimeUpDown x:Name="txtCartographyDate"
+                                                           Height="30"
+                                                           VerticalContentAlignment="Center"
+                                                           Format="ShortDate"
+                                                           Margin="0,0,10,0"
+                                                           Value="{Binding CartographyDate,Mode=TwoWay}"
+                                                           MouseLeave="txtCartographyDate_MouseLeave" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="2"
+                                       Grid.Column="0"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>审核者:</Label>
+                                <cmps:MetroTextBox x:Name="txtCheckPerson"
+                                                   Height="30"
+                                                   VerticalContentAlignment="Center"
+                                                   MaxLength="25"
+                                                   Margin="0,0,10,0"
+                                                   Text="{Binding CheckPerson,Mode=TwoWay}"
+                                                   HorizontalContentAlignment="Right" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="2"
+                                       Grid.Column="1"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>审核日期:</Label>
+                                <wpftoolkit:DateTimeUpDown x:Name="txtCheckDate"
+                                                           Height="30"
+                                                           Margin="0,0,10,0"
+                                                           VerticalContentAlignment="Center"
+                                                           Format="ShortDate"
+                                                           Value="{Binding CheckDate,Mode=TwoWay}"
+                                                           MouseLeave="txtCheckDate_MouseLeave" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="3"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Style="{DynamicResource grid_item}">
+                                <Label>制图单位:</Label>
+                                <cmps:MetroTextBox x:Name="txtCartographyUnit"
+                                                   Height="30"
+                                                   Margin="0,0,10,0"
+                                                   VerticalContentAlignment="Center"
+                                                   MaxLength="25"
+                                                   Text="{Binding CartographyUnit,Mode=TwoWay}"
+                                                   HorizontalContentAlignment="Right" />
+                            </DockPanel>
+                        </Grid>
+                    </cmps:OptionsContainer>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </ScrollViewer>
+</appCore:WorkpageOptionsEditor>
+

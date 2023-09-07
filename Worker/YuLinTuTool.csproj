@@ -1,0 +1,2753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30B6B23A-3DFA-4495-A50E-0FC239DD4A47}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Product.YuLinTuTool</RootNamespace>
+    <AssemblyName>YuLinTuLandTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Workspace\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Workspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ArcGISExplorer.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Workspace\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Appwork.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Workspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Appwork.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=5.3.1.0, Culture=neutral, PublicKeyToken=9ec0ff091d04b091, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Aspose\Aspose.Cells.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Aspose.Words, Version=9.7.0.0, Culture=neutral, PublicKeyToken=586edb5723016262, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Aspose\Aspose.Words.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Data.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=53ab5a198378d4c1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Data.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Extensions, Version=1.7.0.0, Culture=neutral, PublicKeyToken=4d9e49339a7d240c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Modeling.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=712bef29a31a9354, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Modeling.Forms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Projections, Version=1.7.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Projections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Tools, Version=1.7.0.0, Culture=neutral, PublicKeyToken=6219d88fb4baf469, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Tools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Topology, Version=1.7.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotSpatial\DotSpatial.Topology.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\ZIP\Ionic.Zip.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Python\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.ConnectionUI">
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Data.ConnectionUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="NetTopologySuite, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NTS\NetTopologySuite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.GeoTools, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.GeoTools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.ShapeFile, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.ShapeFile.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NPOI\NPOI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NPOI\NPOI.OOXML.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\WpfToolKit\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Data, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Dynamic, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Framework, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Data.Shards, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Shards.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Data.SQLite, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Resources, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Unity, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Core, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Wpf, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.Windows.Wpf.Metro, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AppEntrance.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AppSettings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConnectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\Asia\China Geodetic Coordinate System 2000.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1988.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1989.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1990.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1991.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1992.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1993.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1994.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1996.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 1997.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 2000.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\ITRF 2005.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\NSWC 9Z-2.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\WGS 1966.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\WGS 1972 TBE.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\WGS 1972.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Geographic Coordinate Systems\World\WGS 1984.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 102E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 108E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 114E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 120E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 126E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 132E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 78E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 84E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 90E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 96E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 25.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 26.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 27.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 28.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 30.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 31.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 32.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 33.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 34.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 35.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 36.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 37.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 38.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 39.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 40.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 41.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 42.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 43.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 44.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 3 Degree GK Zone 45.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 13.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 13N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 14.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 14N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 15.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 15N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 16.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 16N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 17.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 17N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 18.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 18N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 19.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 19N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 20.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 20N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 21.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 21N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 22.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 22N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 23.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Beijing 1954\Beijing 1954 GK Zone 23N.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 102E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 108E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 114E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 120E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 126E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 132E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 78E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 84E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 90E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 96E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 25.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 26.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 27.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 28.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 30.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 31.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 32.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 33.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 34.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 35.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 36.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 37.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 38.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 39.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 40.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 41.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 42.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 43.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 44.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 45.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 13.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 14.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 15.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 16.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 17.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 18.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 19.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 20.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 21.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 22.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 23.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 102E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 108E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 114E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 120E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 126E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 132E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 78E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 84E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 90E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 96E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 25.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 26.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 27.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 28.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 30.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 31.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 32.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 33.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 34.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 35.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 36.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 37.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 38.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 39.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 40.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 41.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 42.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 43.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 44.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 3 Degree GK Zone 45.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 13.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 14.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 15.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 16.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 17.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 18.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 19.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 20.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 21.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 22.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\Xian 1980\Xian 1980 GK Zone 23.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Unknow\Unknow.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Aitoff %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Azimuthal Equidistant %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Behrmann %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Berghaus Star AAG.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Bonne %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Cassini %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Craster Parabolic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Cube %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Cylindrical Equal Area %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert I %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert II %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert III %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert IV %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert V %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Eckert VI %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Equidistant Conic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Equidistant Cylindrical %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Flat Polar Quartic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Fuller %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Gall Stereographic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Goode Homolosine %28Land%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Goode Homolosine %28Ocean%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Hammer-Aitoff %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Hotine %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Loximuthal %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Mercator %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Miller Cylindrical %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Mollweide %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\NSIDC EASE Grid Global.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Plate Carree %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Polyconic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Quartic Authalic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Robinson %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Sinusoidal %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Stereographic %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\The World from Space.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Times %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Two Point Equidistant %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Van der Grinten I %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Vertical Perspective %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 EASE Grid Global.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 PDC Mercator.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 Plate Carree.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 Web Mercator %28Auxiliary Sphere%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 Web Mercator.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\WGS 1984 World Mercator.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Winkel I %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Winkel II %28world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\World\Winkel Tripel %28NGS - world%29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Airfield.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Airplane.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Airport.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Asterisk 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Asterisk 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Asterisk 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Asterisk 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Bolt.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Check 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Check 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 10.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 11.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 12.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 13.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 14.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 15.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 16.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 17.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 18.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 19.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 20.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 21.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 22.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 23.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 24.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 8.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Circle 9.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Cross 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Cross 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Cross 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Cross 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Dam Lock.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Diamond 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Diamond 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Diamond 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Diamond 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Diamond 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Handicapped 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Handicapped 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hexagon 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hospital 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Hospital 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Identify.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Inquiry.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Interstate HWY 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Interstate HWY 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Octagon 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pentagon 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pushpin 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pushpin 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Pushpin 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Question.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Rnd Square 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\School 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\School 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 10.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 11.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 12.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 8.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Square 9.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Star 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Trans Canada HWY.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 3.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 5.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 7.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\Triangle 8.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\U.S. Route 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\U.S. Route 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Point\X.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\10%25 Crosshatch.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\10%25 Ordered Stipple.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\10%25 Simple hatch.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\100 Year Flood Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\500 Year Flood Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Beige.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Biohazard Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Blue.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Blue1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Chemical Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Circular Gradient.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Coral.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Cropland.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Glacier.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Grassland.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Green.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Green1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Grey.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Historic Site.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Hollow.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Jade.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Lake.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Lilac.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Linear Gradient.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Lt Orange.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Mangrove.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Med Blue.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Med Green.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Med Yellow.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Noise Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Olive.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Open Pasture.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Orange.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Orchard or Nursery.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Pink.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Poison Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Potential Flood Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Radiation Overlay.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Rectangular Gradient.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Reservoir.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Rose.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Sand.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Scattered Trees 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Scrub 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Snowfield Ice.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Sun.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Swamp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Tan.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Vineyard.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Violet.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Water Intermittent.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Wetlands.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polygon\Yellow.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Aqueduct.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arrow at End.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arrow at Start.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arrow Left Middle.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arrow Right Middle.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arrows at Start and End.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Arterial Street.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Automobile Tunnel.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Bicycle Route.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, City.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, County.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, Military Installation.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, National.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, National.yltsymbolstyle.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, Neighborhood.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, State.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Boundary, Township.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Bus Route.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Canal.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Coastline.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Collector Street.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Bathymetric, Index Primary.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Bathymetric, Index.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Bathymetric, Intermediate.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Bathymetric, Primary.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Bathymetric, Supplementary.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Topographic, Cut.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Topographic, Depression.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Topographic, Index.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Topographic, Intermediate.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Contour, Topographic, Supplementary.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dam.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 1 Long 1 Short.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 1 Long 2 Short.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 1 Long 3 Short.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 2 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 2 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 4 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 4 4.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 6 1.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed 6 6.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed with 1 Dot.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed with 2 Dots.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Dashed with 3 Dots.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Double, Graded.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Double, Nautical Dashed.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Double, Nautical Dashed.yltsymbolstyle.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Double, Plain.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Existing Road Needs Repair.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Existing Road Under Construction.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Expressway Ramp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Expressway.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Ferry.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Freeway Ramp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Freeway, Proposed.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Freeway, Proposed.yltsymbolstyle.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Freeway, Under Construction.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Freeway.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\High Occupancy Lane Ramp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\High Occupancy Lane.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Highway Ramp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Highway.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Major Road.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Mass Transit.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\New Road, Under Construction.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Abandoned.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, In Street.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Multi-Track.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Narrow Gauge Multi-Track.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Narrow Gauge.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Trunkline.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad, Under Construction.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Railroad.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Residential Street.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\River, Navigable.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\River.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Road, Proposed.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Road, Undefined.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Road, Unpaved.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Single, Narrow.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Single, Nautical Dashed 2.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Single, Nautical Dashed.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Single, Nautical Dashed.yltsymbolstyle.bak">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Single, Wide.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Stacked Multi Roadway Ramp.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Stacked Multi Roadway.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Stream or Creek.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Stream, Intermittent.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Toll Road.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Triple, Graded.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Triple, Plain.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\tGIS\Symbol\Polyline\Triple, Wide Center.yltsymbolstyle">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\CJQY.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\CJQY.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\CJQY.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DK.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DK.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DK.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DZDW.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DZDW.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\DZDW.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JBNTBHQ.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JBNTBHQ.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JBNTBHQ.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZD.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZD.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZD.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZX.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZX.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\JZX.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\KZD.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\KZD.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\KZD.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\MZDW.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\MZDW.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\MZDW.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\QYJX.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\QYJX.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\QYJX.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJQY.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJQY.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJQY.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJXZQ.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJXZQ.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XJXZQ.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XZDW.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XZDW.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\XZDW.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJ.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJ.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJ.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJQY.dbf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJQY.shp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ShapeTemplate\ZJQY.shx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Data.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\db.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\MapToDiagramsView.yltdmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A0.H.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A0.V.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A1.H.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A1.V.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A3.H.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A3.V.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A4.H.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\Visio.A4.V.yltvd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\公示无异议声明书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权二轮台帐摸底调查公示确认表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权二轮台帐摸底调查公示表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权二轮台帐摸底调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权公示结果归户表.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权公示表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权单户确认表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权单户签字表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权单户调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权调查表.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权勘界确权调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权单户摸底调查公示确认表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权单户登记申请书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权发包方调查表.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权发包方调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包合同.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包地块调查表.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包地块调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包地块调查表2页.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包地块调查表3页.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包地块调查表其它.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包方调查表.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权承包方调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权数据统计表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权村组公示公告.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权标准地块示意图.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权界址信息表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权界址点成果表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权登记簿.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证共有人扩展.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证共有人扩展.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证其他登记申请书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证地块扩展.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权证地块扩展.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权调查信息公示表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权调查表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权集体登记申请书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\农村土地承包经营权颁证清册.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\地块类别汇总表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\委托代理声明书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\户主代表声明书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\数据库字典.doc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\测绘申请书.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\Driver\YuLinTuRootCA.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\Driver\YuLinTuRootCAT.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\et199.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\et199csp11.sig">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escertd_1033.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escertd_2052.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escfg_1033.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escfg_2052.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escsp_1033.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\escsp_2052.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\esmgr_1033.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\lang\esmgr_2052.lng">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Unity.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Tracker\Binary\YuLinTu.Appwork.Tracker.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Components\YuLinTu.Appwork.Core\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Host\Binary\YuLinTu.Appwork.Host.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Host\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Tracker\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArcGISExplorer.ico" />
+    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Binary\YuLinTu.Appwork.Apps.Extensions.dll" />
+    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Config.xml" />
+    <None Include="Python\find_boundary.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Python\find_orientation.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.ExportResultDataBaseTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.BatchDataBaseTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Binary\YuLinTu.Appwork.ProcessHandler.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Binary\YuLinTu.Appwork.Task.Installer.dll" />
+    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Config.xml" />
+    <None Include="Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Topology\Binary\YuLinTu.Components.tGIS.Topology.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Topology\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.BusinessProcessWizard\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\MeataTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.ExportDataSummaryTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Component.DataCheckerTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.CombinationDataBaseTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.SeparateDataBaseTask\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.DiagramFoundation\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.Diagrams\Binary\YuLinTu.Components.Diagrams.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.Diagrams\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.BusyStatus\Binary\YuLinTu.Appwork.BusyStatus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.BusyStatus\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\ConfigTool_et199.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\escertd_et199.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\esmgr_et199.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\et199csp11.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Token\EnterSafe\ET199\et199csp11_s.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Plugins\Binary\YuLinTu.Appwork.Plugins.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Plugins\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Template\DataBase.mdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.Common\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.ContractRegeditBook\Config.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.Concord\Config.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.ContractAccount\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.Setting\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Binary\YuLinTu.Appwork.Task.Viewer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Measure\Binary\YuLinTu.Components.tGIS.Measure.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Measure\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Search\Binary\YuLinTu.Components.tGIS.Search.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Search\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task.New\Binary\YuLinTu.Appwork.Task.New.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Task.New\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.MapFoundation\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Component.Dictionary\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Binary\YuLinTu.Appwork.ConnectionStrings.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Options\Binary\YuLinTu.Appwork.Options.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Options\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.UndoRedo\Binary\YuLinTu.Appwork.UndoRedo.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.UndoRedo\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.BusyStatus\Binary\YuLinTu.Components.tGIS.BusyStatus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.BusyStatus\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Cancel\Binary\YuLinTu.Components.tGIS.Cancel.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Cancel\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Draw\Binary\YuLinTu.Components.tGIS.Draw.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Draw\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Edit\Binary\YuLinTu.Components.tGIS.Edit.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Edit\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Layers\Binary\YuLinTu.Components.tGIS.Layers.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Layers\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Properties\Binary\YuLinTu.Components.tGIS.Properties.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS.Properties\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS\Binary\YuLinTu.Components.tGIS.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Components.tGIS\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.Zone\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Binary\YuLinTu.Appwork.TaskWatcher.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.Sender\Config.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Component.VirtualPerson\Config.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Authenticate\Binary\YuLinTu.Appwork.Authenticate.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Authenticate\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="zh-Hans\Microsoft.Data.ConnectionUI.Dialog.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Starting\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Starting\Binary\YuLinTu.Appwork.Starting.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Languages\Default.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Language\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Language\Binary\YuLinTu.Appwork.Language.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Binary\YuLinTu.Appwork.WorkpageInstaller.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ThemeSync\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.ThemeSync\Binary\YuLinTu.Appwork.ThemeSync.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.AccountSync\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.AccountSync\Binary\YuLinTu.Appwork.AccountSync.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.SystemSettings\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.SystemSettings\Binary\YuLinTu.Appwork.SystemSettings.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Binary\YuLinTu.Appwork.WindowStateHandler.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Network\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Network\Binary\YuLinTu.Appwork.Network.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Account\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Account\Binary\YuLinTu.Appwork.Account.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.InformationBar\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.InformationBar\Binary\YuLinTu.Appwork.InformationBar.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Information\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.FileIO\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Information\Binary\YuLinTu.Appwork.Information.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.FileIO\Binary\YuLinTu.Appwork.FileIO.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Exit\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Exit\Binary\YuLinTu.Appwork.Exit.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.StartTabControl\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.StartTabControl\Binary\YuLinTu.Appwork.StartTabControl.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Binary\YuLinTu.Appwork.MdiTabControl.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.New\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.HelpBar\Binary\YuLinTu.Appwork.HelpBar.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.HelpBar\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.QuickBar\Binary\YuLinTu.Appwork.QuickBar.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.QuickBar\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Theme\Config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Components\YuLinTu.Appwork.Theme\Binary\YuLinTu.Appwork.Theme.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\YuLinTu.Component.BatchDataBaseTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.BusinessProcessWizard\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.CombinationDataBaseTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Common\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Concord\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.ContractAccount\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.ContractRegeditBook\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.DataCheckerTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.DiagramFoundation\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Dictionary\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.ExportDataSummaryTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.ExportResultDataBaseTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.MapFoundation\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Sender\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.SeparateDataBaseTask\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Setting\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.VirtualPerson\Binary\" />
+    <Folder Include="Components\YuLinTu.Component.Zone\Binary\" />
+    <Folder Include="Data\Apps.Web.Extensions\" />
+    <Folder Include="Data\ArcGIS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
+      <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
+      <Name>YuLinTu.Library.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
+      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
+      <Name>YuLinTu.Library.Command</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
+      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
+      <Name>YuLinTu.Library.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
+      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
+      <Name>YuLinTu.Library.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
+      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
+      <Name>YuLinTu.Library.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Map\YuLinTu.Library.Map.csproj">
+      <Project>{d8d1be49-252f-4167-8245-53285e47e8a0}</Project>
+      <Name>YuLinTu.Library.Map</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
+      <Project>{d52b9ce3-8d34-4a2a-9823-d9208f846d97}</Project>
+      <Name>YuLinTu.Library.Office</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
+      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
+      <Name>YuLinTu.Library.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
+      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
+      <Name>YuLinTu.Library.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.Result\YuLinTu.Library.Result.csproj">
+      <Project>{87e62c5a-6ec3-4034-a2b7-96f0e0327dff}</Project>
+      <Name>YuLinTu.Library.Result</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.WinFoundationAux2018.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.WinFoundationAux2018</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
+      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
+      <Name>YuLinTu.Library.WorkStation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Core\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Chart\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\DotSpatial\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Microsoft\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\NPOI\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\NTS\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Oracle\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Script\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\System\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\WpfToolKit\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\ZIP\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Library\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\History\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\tGis\*.dll" "$(SolutionDir)Workspace\"
+
+rd /s /q "de" "en" "es" "fr" "hu" "it" "ja" "ko" "pr-br" "ro" "pt-br" "ru" "sv"
+del /f /s /q "$(SolutionDir)Workspace\*.tmp"
+del /f /s /q "$(SolutionDir)Workspace\*.pdb"
+del /f /s /q "$(SolutionDir)Workspace\*.application"
+del /f /s /q "$(SolutionDir)Workspace\*.manifest"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
