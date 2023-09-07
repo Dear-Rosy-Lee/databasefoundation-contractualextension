@@ -1,7 +1,0 @@
-D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.CompareResult.dll
-D:\WorkSpace\WinFoundation\WorkSpace\YuLinTu.Library.CompareResult.pdb
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\x86\Debug\YuLinTu.Library.CompareResult.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\x86\Debug\YuLinTu.Library.CompareResult.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\x86\Debug\YuLinTu.Library.CompareResult.csproj.CopyComplete
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\x86\Debug\YuLinTu.Library.CompareResult.dll
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.CompareResult\obj\x86\Debug\YuLinTu.Library.CompareResult.pdb

@@ -1,8 +1,0 @@
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\bin\x86\Debug\YuLinTu.Library.Repository.dll
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\bin\x86\Debug\YuLinTu.Library.Repository.pdb
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.Properties.Resources.resources
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.csproj.GenerateResource.cache
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.dll
-D:\WorkSpace\WinFoundation\Library\YuLinTu.Library.Repository\obj\x86\Debug\YuLinTu.Library.Repository.pdb
