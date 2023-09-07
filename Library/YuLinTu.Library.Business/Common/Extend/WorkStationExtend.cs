@@ -186,6 +186,12 @@ namespace YuLinTu.Library.Business
             {
                 return null;
             }
+            var dataq = db.CreateQuery<ContractLand>().ToList();
+            var l = (from item in dataq
+                    select new
+                    {
+                        item.ContractDelayArea
+                    }).ToList();
             var factory = new ContainerFactory(db);
             var landRep = factory.CreateRepository<IContractLandRepository>();
             var zoneWork = factory.CreateWorkstation<IZoneWorkStation, IZoneRepository>();
