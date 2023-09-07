@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Order>100</Order>
+    <EntranceType>YuLinTu.Appwork.HelpBar.Entrance</EntranceType>
+    <EntrancePath>.\Components\YuLinTu.Appwork.HelpBar\Binary\YuLinTu.Appwork.HelpBar.dll</EntrancePath>
+</WinComponent>

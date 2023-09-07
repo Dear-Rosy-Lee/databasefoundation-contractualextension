@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Circle 16</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerMarkerSymbol">
+    <Layer>
+      <Symbol type="CharacterMarkerSymbol">
+        <CharacterIndex>65</CharacterIndex>
+        <Font>
+          <FontFamily>ESRI Default Marker</FontFamily>
+          <FontSize>18</FontSize>
+          <FontStyle>Regular</FontStyle>
+        </Font>
+        <BackgroundColor>#FF000000</BackgroundColor>
+        <OffsetX>0</OffsetX>
+        <OffsetY>0</OffsetY>
+        <GlowEffect>True</GlowEffect>
+        <GlowEffectSize>3</GlowEffectSize>
+        <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

@@ -59,6 +59,8 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private double? tableArea;
 
+        private double? contractDelayArea;
+
         /// <summary>
         /// 是否基本农田
         /// </summary>
@@ -235,7 +237,6 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private Geometry shape;
 
-
         private string shareArea;
 
         private string concordArea;
@@ -250,7 +251,7 @@ namespace YuLinTu.Library.Entity
 
         private string modulus;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -330,7 +331,6 @@ namespace YuLinTu.Library.Entity
             get { return modulus; }
             set { modulus = value; NotifyPropertyChanged("Modulus"); }
         }
-
 
         /// <summary>
         ///标识码
@@ -441,6 +441,20 @@ namespace YuLinTu.Library.Entity
             {
                 tableArea = value;
                 NotifyPropertyChanged("TableArea");
+            }
+        }
+
+        /// <summary>
+        ///延包面积
+        /// </summary>
+        [DataColumn("YBMJ")]
+        public double? ContractDelayArea
+        {
+            get { return contractDelayArea; }
+            set
+            {
+                contractDelayArea = value;
+                NotifyPropertyChanged("ContractDelayArea");
             }
         }
 
@@ -924,6 +938,7 @@ namespace YuLinTu.Library.Entity
         #region 确权确股
 
         private double quantificicationStockQuantity;
+
         /// <summary>
         /// 量化股数
         /// </summary>
@@ -939,6 +954,7 @@ namespace YuLinTu.Library.Entity
         }
 
         private double obligateStockQuantity;
+
         /// <summary>
         /// 预留股数
         /// </summary>
@@ -953,8 +969,8 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-
         private double quantificitionArea;
+
         /// <summary>
         /// 量化面积
         /// </summary>
@@ -970,6 +986,7 @@ namespace YuLinTu.Library.Entity
         }
 
         private double obligateArea;
+
         /// <summary>
         /// 预留面积
         /// </summary>
@@ -985,6 +1002,7 @@ namespace YuLinTu.Library.Entity
         }
 
         private bool isStockLand;
+
         /// <summary>
         /// 是否确股地块
         /// </summary>
@@ -995,7 +1013,7 @@ namespace YuLinTu.Library.Entity
             set { isStockLand = value; NotifyPropertyChanged("IsStockLand"); }
         }
 
-        #endregion
+        #endregion 确权确股
 
         //[DataColumn(Enabled = false)]
         //public int Img { get { return shape != null ? 1 : 2; } }
@@ -1038,7 +1056,6 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-
         /// <summary>
         /// 空间字段
         /// </summary>
@@ -1052,9 +1069,10 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
+
         /// <summary>
         /// 静态构造方法
         /// </summary>
@@ -1096,13 +1114,14 @@ namespace YuLinTu.Library.Entity
             ActualArea = 0.0;
             AwareArea = 0.0;
             TableArea = 0.0;
+            ContractDelayArea = 0.0;
             LineArea = 0.0;
             MotorizeLandArea = 0.0;
             PertainToArea = 0.0;
             LandName = "";
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -1207,8 +1226,6 @@ namespace YuLinTu.Library.Entity
             }
             return "";
         }
-
-
 
         /// <summary>
         /// 获取地块编号
@@ -1501,7 +1518,7 @@ namespace YuLinTu.Library.Entity
             return sourceString.Trim().Replace(" ", "").Replace("\0", "");
         }
 
-        #endregion
+        #endregion Methods
     }
 
     ///// <summary>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyValueOfStringObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyValueOfStringObject>
+    <Key>YuLinTu.Library.Business.CommonBusinessDefine</Key>
+    <Value xsi:type="GlobalSettingsSectionOfCommonBusinessDefine">
+      <Version>2023-09-07T10:01:45.7967058+08:00</Version>
+      <Settings>
+        <CurrentDataSource />
+        <CurrentZoneFullName>中国</CurrentZoneFullName>
+        <CurrentZoneFullCode>86</CurrentZoneFullCode>
+        <NavUniformity>true</NavUniformity>
+        <RegisterFormat>false</RegisterFormat>
+        <BackUpPath />
+      </Settings>
+    </Value>
+  </KeyValueOfStringObject>
+</ArrayOfKeyValueOfStringObject>
