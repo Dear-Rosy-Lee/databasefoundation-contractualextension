@@ -25,3 +25,4 @@ packages/
 *.zip
 *.rar
 /Worker/AppSettings.config
+/WorkSpace
