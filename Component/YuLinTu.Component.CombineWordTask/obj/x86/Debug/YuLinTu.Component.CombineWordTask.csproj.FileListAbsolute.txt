@@ -1,7 +1,0 @@
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.CombineWordTask\Binary\YuLinTu.Component.CombineWordTask.dll
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.CombineWordTask\Binary\YuLinTu.Component.CombineWordTask.pdb
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombineWordTask\obj\x86\Debug\YuLinTu.Component.CombineWordTask.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombineWordTask\obj\x86\Debug\YuLinTu.Component.CombineWordTask.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombineWordTask\obj\x86\Debug\YuLinTu.Component.CombineWordTask.csproj.CopyComplete
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombineWordTask\obj\x86\Debug\YuLinTu.Component.CombineWordTask.dll
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombineWordTask\obj\x86\Debug\YuLinTu.Component.CombineWordTask.pdb

@@ -1,7 +1,0 @@
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.CombinationDataBaseTask\Binary\YuLinTu.Component.CombinationDataBaseTask.dll
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.CombinationDataBaseTask\Binary\YuLinTu.Component.CombinationDataBaseTask.pdb
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombinationDataBaseTask\obj\x86\Debug\YuLinTu.Component.CombinationDataBaseTask.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombinationDataBaseTask\obj\x86\Debug\YuLinTu.Component.CombinationDataBaseTask.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombinationDataBaseTask\obj\x86\Debug\YuLinTu.Component.CombinationDataBaseTask.csproj.CopyComplete
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombinationDataBaseTask\obj\x86\Debug\YuLinTu.Component.CombinationDataBaseTask.dll
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.CombinationDataBaseTask\obj\x86\Debug\YuLinTu.Component.CombinationDataBaseTask.pdb

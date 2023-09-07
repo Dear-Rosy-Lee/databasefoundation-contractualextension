@@ -1,7 +1,0 @@
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.DataCheckerTask\Binary\YuLinTu.Component.DataCheckerTask.dll
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.DataCheckerTask\Binary\YuLinTu.Component.DataCheckerTask.pdb
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DataCheckerTask\obj\x86\Debug\YuLinTu.Component.DataCheckerTask.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DataCheckerTask\obj\x86\Debug\YuLinTu.Component.DataCheckerTask.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DataCheckerTask\obj\x86\Debug\YuLinTu.Component.DataCheckerTask.csproj.CopyComplete
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DataCheckerTask\obj\x86\Debug\YuLinTu.Component.DataCheckerTask.dll
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.DataCheckerTask\obj\x86\Debug\YuLinTu.Component.DataCheckerTask.pdb

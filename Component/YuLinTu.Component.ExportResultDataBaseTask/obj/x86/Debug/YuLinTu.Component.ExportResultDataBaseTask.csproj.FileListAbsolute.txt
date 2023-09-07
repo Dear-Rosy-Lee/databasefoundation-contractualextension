@@ -1,7 +1,0 @@
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ExportResultDataBaseTask\Binary\YuLinTu.Component.ExportResultDataBaseTask.dll
-D:\WorkSpace\WinFoundation\Workspace\Components\YuLinTu.Component.ExportResultDataBaseTask\Binary\YuLinTu.Component.ExportResultDataBaseTask.pdb
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportResultDataBaseTask\obj\x86\Debug\YuLinTu.Component.ExportResultDataBaseTask.csproj.AssemblyReference.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportResultDataBaseTask\obj\x86\Debug\YuLinTu.Component.ExportResultDataBaseTask.csproj.CoreCompileInputs.cache
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportResultDataBaseTask\obj\x86\Debug\YuLinTu.Component.ExportResultDataBaseTask.csproj.CopyComplete
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportResultDataBaseTask\obj\x86\Debug\YuLinTu.Component.ExportResultDataBaseTask.dll
-D:\WorkSpace\WinFoundation\Component\YuLinTu.Component.ExportResultDataBaseTask\obj\x86\Debug\YuLinTu.Component.ExportResultDataBaseTask.pdb
