@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +30,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string SenderSurveyExcel = "农村土地承包经营权发包方调查表";
 
-
-        #endregion
+        #endregion 发包方
 
         #region 承包方
 
@@ -64,8 +64,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string VirtualPersonSurveyBook = "测绘申请书";
 
-
-        #endregion
+        #endregion 承包方
 
         #region 二轮台账
 
@@ -99,7 +98,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string SecondTableSingleFamilyExcel = "农村土地承包经营权勘界确权单户调查表";
 
-        #endregion
+        #endregion 二轮台账
 
         #region 承包地块
 
@@ -109,9 +108,20 @@ namespace YuLinTu.Library.Business
         public const string ContractLandSurveyWord = "农村土地承包经营权承包地块调查表";
 
         /// <summary>
-        /// 承包地块调查表Excel 
+        /// 承包地块调查表Excel
         /// </summary>
         public const string ContractLandSurveyExceltemp = "农村土地承包经营权调查表";
+
+        /// <summary>
+        /// 扶绥延包摸底调查表Excel
+        ///
+        /// </summary>
+        public const string ContractLandDelaySurveyExceltempFuSui = "扶绥延包摸底调查表";
+
+        /// <summary>
+        /// 宁明延包调查摸底表Excel
+        /// </summary>
+        public const string ContractLandDelaySurveyExceltempNingMing = "宁明延包调查摸底表";
 
         /// <summary>
         /// 承包地块单户调查表Excel
@@ -183,7 +193,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string BoundaryAddressDotResultExcel = "农村土地承包经营权界址点成果表";
 
-        #endregion
+        #endregion 承包地块
 
         #region 界址信息
 
@@ -192,7 +202,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string BoundarySurveyExcel = "农村土地承包经营权界址信息表";
 
-        #endregion
+        #endregion 界址信息
 
         #region 承包合同
 
@@ -216,7 +226,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string ContractConcordWord = "农村土地承包经营权承包合同";
 
-        #endregion
+        #endregion 承包合同
 
         #region 承包权证
 
@@ -230,7 +240,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public const string PrivewRegeditBookWord = "农村土地承包经营权登记簿";
 
-
         /// <summary>
         /// 农村土地承包经营权颁证清册
         /// </summary>
@@ -243,26 +252,26 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 农村土地承包经营权证共有人扩展word
-        /// </summary>       
+        /// </summary>
         public const string RegeditBookSharePersonExtendWord = "农村土地承包经营权证共有人扩展";
 
         /// <summary>
         /// 农村土地承包经营权证共有人扩展excel
-        /// </summary>       
+        /// </summary>
         public const string RegeditBookSharePersonExtendExcel = "农村土地承包经营权证共有人扩展";
 
         /// <summary>
         /// 农村土地承包经营权证地块扩展word
-        /// </summary>       
+        /// </summary>
         public const string RegeditBookLandExtendWord = "农村土地承包经营权证地块扩展";
 
         /// <summary>
         /// 农村土地承包经营权证地块扩展excel
-        /// </summary>       
+        /// </summary>
         public const string RegeditBookLandExtendExcel = "农村土地承包经营权证地块扩展";
 
-        #endregion
+        #endregion 承包权证
 
-        #endregion
+        #endregion Tmelate
     }
 }

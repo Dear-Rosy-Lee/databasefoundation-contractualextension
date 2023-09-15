@@ -168,6 +168,20 @@ namespace YuLinTu.Library.Business
         private int commentIndex;
 
         /// <summary>
+        /// 共有人修改意见索引
+        /// </summary>
+        [DisplayLanguage("共有人修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("共有人修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Gallery = "承包方及家庭成员信息", Catalog = "",
+            Builder = typeof(PropertyDescriptorBuilderSelector),
+            Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public int OpinionIndex
+        {
+            get { return opinionIndex; }
+            set { opinionIndex = value; NotifyPropertyChanged("OpinionIndex"); }
+        }
+        private int opinionIndex;
+        /// <summary>
         /// 承包地共有人索引
         /// </summary>
         [DisplayLanguage("承包地共有人", IsLanguageName = false)]
@@ -655,15 +669,16 @@ namespace YuLinTu.Library.Business
             NumberRelatioinIndex = 8;
             IsSharedLandIndex = 9;
             CommentIndex = 10;
-            ContractorAddressIndex = 11;
-            PostNumberIndex = 12;
-            TelephoneIndex = 13;
-            SurveyPersonIndex = 14;
-            SurveyDateIndex = 15;
-            SurveyChronicleIndex = 16;
-            CheckPersonIndex = 17;
-            CheckDateIndex = 18;
-            CheckOpinionIndex = 19;
+            OpinionIndex = 11;
+            ContractorAddressIndex = 12;
+            PostNumberIndex = 13;
+            TelephoneIndex = 14;
+            SurveyPersonIndex = 15;
+            SurveyDateIndex = 16;
+            SurveyChronicleIndex = 17;
+            CheckPersonIndex = 18;
+            CheckDateIndex = 19;
+            CheckOpinionIndex = 20;
             AccountNatureIndex = -1;
             ExPackageNameIndex = -1;
             ExPackageNumberIndex = -1;

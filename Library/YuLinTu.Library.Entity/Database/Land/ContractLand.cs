@@ -59,7 +59,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private double? tableArea;
 
-        private double? contractDelayArea;
+        private double contractDelayArea;
 
         /// <summary>
         /// 是否基本农田
@@ -250,6 +250,8 @@ namespace YuLinTu.Library.Entity
         private string quantificatAreaByStock;
 
         private string modulus;
+
+        private string opinion;
 
         #endregion Fields
 
@@ -448,13 +450,27 @@ namespace YuLinTu.Library.Entity
         ///延包面积
         /// </summary>
         [DataColumn("YBMJ")]
-        public double? ContractDelayArea
+        public double ContractDelayArea
         {
             get { return contractDelayArea; }
             set
             {
                 contractDelayArea = value;
                 NotifyPropertyChanged("ContractDelayArea");
+            }
+        }
+
+        /// <summary>
+        /// 地块信息修改意见
+        /// </summary>
+        [DataColumn("DKXXXGYJ")]
+        public string Opinion
+        {
+            get { return opinion; }
+            set
+            {
+                opinion = value;
+                NotifyPropertyChanged("Opinion");
             }
         }
 

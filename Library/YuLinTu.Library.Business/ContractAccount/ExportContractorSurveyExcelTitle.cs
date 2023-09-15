@@ -14,7 +14,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 撰写表头信息
     /// </summary>
-    partial class ExportContractorSurveyExcel
+    public partial class ExportContractorSurveyExcel
     {
         /// <summary>
         /// 书写标题
@@ -27,17 +27,20 @@ namespace YuLinTu.Library.Business
                 case 2:
                     titleName = "农村土地承包经营权确权登记公示表";
                     break;
+
                 case 3:
                     titleName = "农村土地承包经营权确权登记签字表";
                     break;
+
                 case 4:
                     titleName = "农村土地承包经营确权登记公示确认表(村组公示)";
                     break;
+
                 case 5:
                     titleName = "农村土地承包经营权单户确认表";
                     break;
             }
-            //titleName = InitalizeTitleName(titleName);   
+            //titleName = InitalizeTitleName(titleName);
             titleName = UnitName + titleName;
             if (!string.IsNullOrEmpty(titleName))
             {
@@ -58,7 +61,7 @@ namespace YuLinTu.Library.Business
             columnIndex = WriteAgricultureLandExpandTitle(columnIndex);//撰写承包地块扩展信息
             columnIndex = WriteSecondLandTitle(columnIndex);//撰写二轮承包地块信息
             columnIndex = WriteLandSurvyeTitle(columnIndex);//撰写地块调查表头
-            if (TableType == 3 || TableType == 5)
+            if (TableType == 3 || TableType == 5 || TableType==4)
             {
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "签字人(按印)", true);
@@ -136,6 +139,11 @@ namespace YuLinTu.Library.Business
             {
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+            }
+            if (contractLandOutputSurveyDefine.FamilyOpinionValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "共有人修改意见", true);
             }
             if (contractLandOutputSurveyDefine.CencueCommentValue)
             {
@@ -470,6 +478,16 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实测总面积", true);
             }
+            if (contractLandOutputSurveyDefine.ContractDelayAreaValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包面积", true);
+            }
+            if (contractLandOutputSurveyDefine.TotalContractDelayAreaValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包总面积", true);
+            }
             if (contractLandOutputSurveyDefine.AwareAreaValue)
             {
                 columnIndex++;
@@ -501,7 +519,6 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "北", true);
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 3) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, "四至", true);
-
             }
             if (contractLandOutputSurveyDefine.LandPurposeValue)
             {
@@ -582,6 +599,11 @@ namespace YuLinTu.Library.Business
             {
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+            }
+            if (contractLandOutputSurveyDefine.OpinionValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块修改意见", true);
             }
             if ((columnIndex - startIndex) >= 0)
             {
@@ -925,7 +947,7 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         //private string GetZoneName(string code, eZoneLevel level)
         //{
-        //    Zone tempZone = DB.Zone.Get(code);   
+        //    Zone tempZone = DB.Zone.Get(code);
         //    if (tempZone.Level != level)
         //    {
         //        return GetZoneName(tempZone.UpLevelCode, level);

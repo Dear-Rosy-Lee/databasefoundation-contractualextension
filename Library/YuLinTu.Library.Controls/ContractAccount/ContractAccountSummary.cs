@@ -20,6 +20,7 @@ namespace YuLinTu.Library.Controls
         private string actualAreaCount = "0.00";
         private string arwareAreaCount = "0.00";
         private string tableAreaCount = "0.00";
+        private string contractDelayAreaCount = "0.00";
 
         #endregion
 
@@ -74,6 +75,19 @@ namespace YuLinTu.Library.Controls
             {
                 actualAreaCount = value;
                 NotifyPropertyChanged("ActualAreaCount");
+            }
+        }
+
+        /// <summary>
+        /// 总延包面积
+        /// </summary>
+        public string ContractDelayAreaCount
+        {
+            get { return contractDelayAreaCount; }
+            set
+            {
+                contractDelayAreaCount = value;
+                NotifyPropertyChanged("ContractDelayAreaCount");
             }
         }
 

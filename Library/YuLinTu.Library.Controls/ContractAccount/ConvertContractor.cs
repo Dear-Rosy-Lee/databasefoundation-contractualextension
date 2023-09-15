@@ -57,6 +57,7 @@ namespace YuLinTu.Library.Controls
             item.ActualAreaUI = list.Sum(o => o.ActualArea).AreaFormat(2);
             item.AwareAreaUI = list.Sum(o => o.AwareArea).AreaFormat(2);
             item.TableAreaUI = list.Sum(o => o.TableArea).AreaFormat(2);
+            item.ContractDelayAreaUI = list.Sum(o => o.ContractDelayArea).AreaFormat(2);
             item.Img = item.Tag.Status == eVirtualPersonStatus.Lock ? 3 : 0;
             return item;
         }

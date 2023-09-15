@@ -19,13 +19,15 @@ namespace YuLinTu.Library.Entity
     public class Person : NotifyInfoCDObject//CommonPerson, INotifyPropertyChanged
     {
         #region Fields
-       
+
         private string _icn;
         private string birthdayStr;
         private DateTime? birthday;
-        #endregion
+
+        #endregion Fields
 
         #region Properties
+
         [DataColumn("Error", Enabled = false)]
         public override string Error
         {
@@ -50,6 +52,7 @@ namespace YuLinTu.Library.Entity
             get;
             set;
         }
+
         [Windows.Wpf.Metro.Components.PropertyDescriptor(Gallery = "基本信息", Catalog = "基本信息",
          UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/HeaderInsertGallery.png")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "姓名不能为空")]
@@ -120,8 +123,8 @@ namespace YuLinTu.Library.Entity
         [DataColumn("Nation", ColumnType = eDataType.Int32)]
         public eNation Nation { get; set; }
 
-
         private string _relationship;
+
         [DataColumn("Relationship", ColumnType = eDataType.String)]
         public string Relationship
         {
@@ -133,21 +136,31 @@ namespace YuLinTu.Library.Entity
             }
         }
 
+        private string _opinion;
+
+        [XmlElement(ElementName = "Opinion")]
+        [DataColumn("Opinion", ColumnType = eDataType.String)]
+        public string Opinion
+        {
+            get { return _opinion; }
+            set
+            {
+                _opinion = value;
+                NotifyPropertyChanged("Opinion");
+            }
+        }
+
         [DataColumn("ZoneID", ColumnType = eDataType.String)]
         public string ZoneCode { get; set; }
 
         [DataColumn("IsFarmer", ColumnType = eDataType.Boolean)]
         public bool? IsFarmer { get; set; }
 
-
-
         [DataColumn("QGS", ColumnType = eDataType.Int32)]
         public double StockQuantity { get; set; }
 
-
         [DataColumn("QGMJ", ColumnType = eDataType.Int32)]
         public double StockArea { get; set; }
-
 
         /// <summary>
         /// 延包土地份数
@@ -291,7 +304,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public bool AutoIdentify { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -314,7 +327,7 @@ namespace YuLinTu.Library.Entity
             IsSharedLand = "是";
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -356,8 +369,6 @@ namespace YuLinTu.Library.Entity
             return nowMonth > month || (nowMonth == month && nowDay >= day) ? age : --age;
             //if (nowYear >= year)
             //{
-
-
             //    if (month > nowMonth)
             //        return (year - 1) < 200 ? (year - 1) : -1;
             //    if (month < nowMonth)
@@ -430,6 +441,6 @@ namespace YuLinTu.Library.Entity
             return isEqual;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

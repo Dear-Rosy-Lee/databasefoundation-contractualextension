@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("鱼鳞图数字技术有限公司")]
 [assembly: AssemblyProduct("鱼鳞图本地应用程序框架组件库")]
-[assembly: AssemblyCopyright("(C) 2011-2015 鱼鳞图数字技术有限公司版权所有,保留所有权利。")]
+[assembly: AssemblyCopyright("(C) 2011-2023 鱼鳞图数字技术有限公司版权所有,保留所有权利。")]
 [assembly: AssemblyTrademark("YuLinTu")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
@@ -19,9 +19,9 @@ using System.Runtime.InteropServices;
 // 程序集的版本信息由下面四个值组成:
 //
 //      主版本
-//      次版本 
+//      次版本
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("8.0.15.0602")]
-[assembly: AssemblyFileVersion("8.0.15.0602")]
+[assembly: AssemblyVersion("8.1.15.0602")]
+[assembly: AssemblyFileVersion("8.1.15.0602")]

@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,15 +32,21 @@ namespace YuLinTu.Library.Business
         private string zoneCode;//地域代码
         private string templaePath;//模版文件
         private int index;//索引值
-        int high;//单元格合并数量
+        private int high;//单元格合并数量
         private ToolProgress toolProgress;//进度
+
         //private PublicityConfirmDefine PublicityConfirmDefine;//自定义地块导出
         private int columnIndex;//当前列名
+
         private bool exportByFamilyNumber;//是否根据户号导出表格
+
         //合计字段
         private int PersonCount;//人合计
+
         private double ActualAreaCount;//单个实测面积
         private double AwareAreaCount;//总确权面积
+        private double ContractDelayCount;//延包面积
+        private double TotalContractDelayCount;//延包总面积
         private double MotorizeLandAreaCount;//总机动地面积
         private double TotalTableAreaCount;//总二轮台账面积
         private double ActualAreaAllCount;//总实测面积
@@ -47,13 +54,15 @@ namespace YuLinTu.Library.Business
         private double onlyAwareAreaCount;//单个确权面积
         private double onlyMotorizeLandAreaCount;//单个机动地
         private double onlyTotalTableAreaCount;//单个二轮台账
+        private double onlyTotalContractDelayAreaCount;//单个二轮台账
         private int packageCount;//土地延包份数
         private double secondTableArea;//二轮面积之和
         private double secondTotalTableArea;//二轮总面积之和
         private int secondLandCount;//二轮地块合计
         private PublicityConfirmDefine contractLandOutputSurveyDefine = PublicityConfirmDefine.GetIntence();
         private SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
-        #endregion
+
+        #endregion Fields
 
         #region Ctor
 
@@ -73,7 +82,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 进度提示
-        /// </summary>    
+        /// </summary>
         private void toolProgress_OnPostProgress(int progress, string info = "")
         {
             PostProgress(progress, info);
@@ -97,10 +106,9 @@ namespace YuLinTu.Library.Business
             //{
             //    contractLandOutputSurveyDefine = new PublicityConfirmDefine();
             //}
-
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Properties
 
@@ -138,7 +146,6 @@ namespace YuLinTu.Library.Business
         /// 到镇的地域名称
         /// </summary>
         public string ExcelName { get; set; }
-
 
         /// <summary>
         /// 当前地域
@@ -215,7 +222,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double CurrentPercent { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -287,15 +294,19 @@ namespace YuLinTu.Library.Business
                         case 2:
                             fileName = "土地承包经营权公示表.xls";
                             break;
+
                         case 3:
                             fileName = "土地承包经营权签字表.xls";
                             break;
+
                         case 4:
                             fileName = "土地承包经营权村组公示表.xls";
                             break;
+
                         case 5:
                             fileName = "土地承包经营权单户确认表.xls";
                             break;
+
                         default:
                             break;
                     }
@@ -384,8 +395,6 @@ namespace YuLinTu.Library.Business
                         //}
 
                         familys.RemoveAll(c => c.FamilyExpand.ContractorType != eContractorType.Farmer);
-
-
                     }
                 }
                 //PostProgress(25);
@@ -402,7 +411,7 @@ namespace YuLinTu.Library.Business
             return true;
         }
 
-        #endregion
+        #endregion 开始生成Excel操作
 
         #region 开始往Excel中添加值
 
@@ -442,7 +451,7 @@ namespace YuLinTu.Library.Business
                     tablevp = null;
                 }
                 item.Name = InitalizeFamilyName(item.Name, SystemSet.KeepRepeatFlag);
-                List<Person> sharePersons = SortSharePerson(item.SharePersonList, item.Name);               
+                List<Person> sharePersons = SortSharePerson(item.SharePersonList, item.Name);
                 List<Person> tablePersons = tablevp != null ? SortSharePerson(tablevp.SharePersonList, tablevp.Name) : new PersonCollection();
                 if (SystemSet.PersonTable)
                 {
@@ -510,7 +519,7 @@ namespace YuLinTu.Library.Business
                 {
                     concord = (concords == null || concords.Count == 0) ? new ContractConcord() { ID = Guid.Empty } : concords[0];
                     regeditBook = (concords == null || concords.Count == 0) ? new ContractRegeditBook() { ID = Guid.Empty } : BookColletion.Find(t => t.ID == concords[0].ID);
-                    telephoneIndex = WriteContractLand(cs, high,index, item.Telephone);//填写地块信息
+                    telephoneIndex = WriteContractLand(cs, high, index, item.Telephone);//填写地块信息
                 }
                 if (contractLandOutputSurveyDefine.ConcordValue || contractLandOutputSurveyDefine.RegeditBookValue)
                 {
@@ -568,7 +577,8 @@ namespace YuLinTu.Library.Business
             ConcordCollection = null;
             familys.Clear();
             GC.Collect();
-            #endregion
+
+            #endregion 户信息
 
             if (TableType == 5)
             {
@@ -731,8 +741,9 @@ namespace YuLinTu.Library.Business
         {
             EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
         }
-        #endregion
 
-        #endregion
+        #endregion 开始往Excel中添加值
+
+        #endregion Methods
     }
 }

@@ -4,4 +4,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Appwork")]
 [assembly: AssemblyDescription("")]
-[assembly: Guid("3D7B2053-A073-4624-9904-CAF85E54B842")]
+[assembly: Guid("4A75153E-E8E3-4219-A3D3-3670CAB204E8")]

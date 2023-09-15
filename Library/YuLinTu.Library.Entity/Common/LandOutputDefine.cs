@@ -195,6 +195,16 @@ namespace YuLinTu.Library.Entity
         public bool TotalAwareAreaValue { get; set; }
 
         /// <summary>
+        /// 延包面积索引
+        /// </summary>
+        public bool ContractDelayValue { get; set; }
+
+        /// <summary>
+        /// 延包总面积索引
+        /// </summary>
+        public bool TotalContractDelayValue { get; set; }
+
+        /// <summary>
         /// 机动地面积索引
         /// </summary>
         public bool MotorizeAreaValue { get; set; }
@@ -318,6 +328,11 @@ namespace YuLinTu.Library.Entity
         /// 备注索引
         /// </summary>
         public bool CommentValue { get; set; }
+
+        /// <summary>
+        /// 意见索引
+        /// </summary>
+        public bool OpinionValue { get; set; }
 
         /// <summary>
         /// 二轮备注索引
@@ -659,6 +674,8 @@ namespace YuLinTu.Library.Entity
             TableAreaValue = true;
             SecondTableAreaValue = false;
             TotalTableAreaValue = false;
+            ContractDelayValue = true;
+            TotalContractDelayValue = true;
             SecondTotalTableAreaValue = false;
             LandTypeValue = true;
             SecondLandTypeValue = false;
@@ -667,6 +684,7 @@ namespace YuLinTu.Library.Entity
             SourceNameValue = false;
             LandLocationValue = false;
             CommentValue = true;
+            OpinionValue = true;
             SecondCommentValue = false;
             IsFarmerLandValue = true;
             ConstructModeValue = false;

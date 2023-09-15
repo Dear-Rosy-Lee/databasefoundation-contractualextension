@@ -43,7 +43,7 @@
                     RenderOptions.BitmapScalingMode="NearestNeighbor"
                     Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <TabControl
-                    Height="560"
+                    Height="600"
                     Margin="10,10,10,0"
                     Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}">
                     <TabItem Name="tiFoundationInfo" Header="基本信息">
@@ -68,7 +68,8 @@
                                 <RowDefinition Height="40" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="40" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
 
                             <Label Content="行政地域:" Style="{StaticResource LableStyle}" />
@@ -478,7 +479,7 @@
                             <cmps:MetroTextBox
                                 x:Name="txtComment"
                                 Grid.Row="12"
-                                Grid.RowSpan="2"
+                                Grid.RowSpan="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="4"
                                 Height="60"
@@ -488,6 +489,27 @@
                                 MaxLength="300"
                                 TabIndex="24"
                                 Text="{Binding CurrentLand.Comment, Mode=TwoWay}"
+                                TextWrapping="Wrap"
+                                VerticalScrollBarVisibility="Auto" />
+
+                            <Label
+                                Grid.Row="13"
+                                VerticalAlignment="Top"
+                                Content="修改意见:"
+                                Style="{StaticResource LableStyle}" />
+                            <cmps:MetroTextBox
+                                x:Name="txtOpiniont"
+                                Grid.Row="13"
+                                Grid.RowSpan="1"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="4"
+                                Height="60"
+                                Margin="0,5,0,0"
+                                VerticalContentAlignment="Stretch"
+                                AcceptsReturn="True"
+                                MaxLength="300"
+                                TabIndex="24"
+                                Text="{Binding CurrentLand.Opinion, Mode=TwoWay}"
                                 TextWrapping="Wrap"
                                 VerticalScrollBarVisibility="Auto" />
                         </Grid>

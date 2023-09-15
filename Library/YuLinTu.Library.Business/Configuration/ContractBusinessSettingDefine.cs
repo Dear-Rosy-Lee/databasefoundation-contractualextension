@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +21,24 @@ namespace YuLinTu.Library.Business
         private bool rightAreaMoreActualArea;
         private bool writeActualArea;
         private bool writeRightArea;
+        private bool contractDelayArea;
+        private bool unContractDelayArea;
         private bool unWriteActualArea;
         private bool unWriteRightArea;
         private bool unWriteConcordArea;
         private bool displayCollectUsingCBdata;
         private bool clearVirtualPersonData;
         private bool checkVirtualPersonSurveyTable;
-        private bool survyInfoTableLandDisplay;       
-        private bool surveyLimitFillWay; 
+        private bool survyInfoTableLandDisplay;
+        private bool surveyLimitFillWay;
         private bool exportCompatibleOldDataExchange;
         private bool exportLandTableUseUnitNumber;
         private bool _isCheckedRibbing;
         private bool _isCheckedBaulk;
 
         //private bool exportVPTableCountContainsDiedPerson;
-        #endregion
+
+        #endregion Fields
 
         #region Properties
 
@@ -65,6 +69,12 @@ namespace YuLinTu.Library.Business
             set { writeRightArea = value; NotifyPropertyChanged("writeRightArea"); }
         }
 
+        public bool ContractDelayArea
+        {
+            get { return contractDelayArea; }
+            set { contractDelayArea = value; NotifyPropertyChanged("contractDelayArea"); }
+        }
+
         /// <summary>
         /// 设置是否导出时调查表中不填写实测面积
         /// </summary>
@@ -72,6 +82,12 @@ namespace YuLinTu.Library.Business
         {
             get { return unWriteActualArea; }
             set { unWriteActualArea = value; NotifyPropertyChanged("UnWriteActualArea"); }
+        }
+
+        public bool UnContractDelayArea
+        {
+            get { return unContractDelayArea; }
+            set { unContractDelayArea = value; NotifyPropertyChanged("UnContractDelayArea"); }
         }
 
         /// <summary>
@@ -126,7 +142,7 @@ namespace YuLinTu.Library.Business
         {
             get { return survyInfoTableLandDisplay; }
             set { survyInfoTableLandDisplay = value; NotifyPropertyChanged("SurvyInfoTableLandDisplay"); }
-        }      
+        }
 
         /// <summary>
         /// 设置界址线说明的填充方式
@@ -145,10 +161,11 @@ namespace YuLinTu.Library.Business
             get { return exportCompatibleOldDataExchange; }
             set { exportCompatibleOldDataExchange = value; NotifyPropertyChanged("exportCompatibleOldDataExchange"); }
         }
+
         public bool ExportLandTableUseUnitNumber
         {
             get { return exportLandTableUseUnitNumber; }
-            set { exportLandTableUseUnitNumber = value;NotifyPropertyChanged("exportLandTableUseUnitNumber"); }
+            set { exportLandTableUseUnitNumber = value; NotifyPropertyChanged("exportLandTableUseUnitNumber"); }
         }
 
         /// <summary>
@@ -169,9 +186,7 @@ namespace YuLinTu.Library.Business
             set { _isCheckedBaulk = value; NotifyPropertyChanged("IsCheckedBaulk"); }
         }
 
-
-
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -180,20 +195,22 @@ namespace YuLinTu.Library.Business
             RightAreaMoreActualArea = true;
             WriteActualArea = true;
             WriteRightArea = true;
+            ContractDelayArea = true;
+            UnContractDelayArea = true;
             UnWriteActualArea = false;
             UnWriteRightArea = false;
             UnWriteConcordArea = false;
             DisplayCollectUsingCBdata = true;
             ClearVirtualPersonData = true;
             CheckVirtualPersonSurveyTable = false;
-            SurvyInfoTableLandDisplay = false;           
+            SurvyInfoTableLandDisplay = false;
             SurveyLimitFillWay = false;
             ExportLandTableUseUnitNumber = false;
             IsCheckedRibbing = true;
             IsCheckedBaulk = false;
         }
 
-        #endregion
+        #endregion Ctor
 
         /// <summary>
         /// 获取配置

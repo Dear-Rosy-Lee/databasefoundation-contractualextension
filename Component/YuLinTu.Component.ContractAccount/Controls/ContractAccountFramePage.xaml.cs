@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace YuLinTu.Component.ContractAccount
         /// </summary>
         private Zone currentZone;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -77,8 +78,10 @@ namespace YuLinTu.Component.ContractAccount
                 return true;
             }
         }
+
         public string LandType { get; set; }
-        #endregion
+
+        #endregion Properties
 
         #region Ctor
 
@@ -93,6 +96,7 @@ namespace YuLinTu.Component.ContractAccount
             NavigatorType = eNavigatorType.TreeView;
             InitializeLandControl();
         }
+
         private void InitializeLandControl()
         {
             IDbContext dbContext = DataBaseSource.GetDataBaseSource();
@@ -107,9 +111,9 @@ namespace YuLinTu.Component.ContractAccount
                 };
                 if (Workpage == null)
                 {
-                    Log.WriteError(this,"提示",DataBaseSource.ConnectionError);
+                    Log.WriteError(this, "提示", DataBaseSource.ConnectionError);
                     return;
-                } 
+                }
                 Workpage.Page.ShowMessageBox(message);
                 return;
             }
@@ -151,30 +155,37 @@ namespace YuLinTu.Component.ContractAccount
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地32.png"));
                     //SetCommandBinding(btnmetroButton, command.ContractLand, command.ContractLandBind);
                     break;
+
                 case "21":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/自留地32.png"));
-                    //SetCommandBinding(btnmetroButton, command.OwnerLand, command.OwnerLandBind);                    
+                    //SetCommandBinding(btnmetroButton, command.OwnerLand, command.OwnerLandBind);
                     break;
+
                 case "22":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/机动地32.png"));
                     //SetCommandBinding(btnmetroButton, command.MotorLand, command.MotorLandBind);
                     break;
+
                 case "23":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/集体农用地.png"));
                     //SetCommandBinding(btnmetroButton, command.CultivateLand, command.CultivateLandBind);
                     break;
+
                 case "3":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/经济地块.png"));
                     //SetCommandBinding(btnmetroButton, command.EconomyLand, command.EconomyLandBind);
                     break;
+
                 case "8":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/四荒地.png"));
                     //SetCommandBinding(btnmetroButton, command.WasteLand, command.WasteLandBind);
                     break;
+
                 case "99":
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/其它土地.png"));
                     //SetCommandBinding(btnmetroButton, command.OtherLand, command.OtherLandBind);
                     break;
+
                 default:
                     textItem.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/其它土地.png"));
                     //SetCommandBinding(btnmetroButton, command.OtherLand, command.OtherLandBind);
@@ -188,7 +199,6 @@ namespace YuLinTu.Component.ContractAccount
             btnmetroButton.Content = textItem;
             btnmetroButton.Click += BtnmetroButton_Click;
             return btnmetroButton;
-
         }
 
         private void BtnmetroButton_Click(object sender, RoutedEventArgs e)
@@ -199,8 +209,7 @@ namespace YuLinTu.Component.ContractAccount
             btnLandType.IsOpen = false;
         }
 
-
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -253,8 +262,8 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnExportPublishWord, command.ExportPublishWord, command.ExportPublishWordBind);
             SetCommandBinding(btnExportAccount, command.ExportAccount, command.ExportAccountBind);
             SetCommandBinding(btnExportSingle, command.ExportSingle, command.ExportSingleBind);
-            SetCommandBinding(btnExportPublish, command.ExportPublish, command.ExportPublishBind);
-            SetCommandBinding(btnExportSign, command.ExportSign, command.ExportSignBind);
+            //SetCommandBinding(btnExportPublish, command.ExportPublish, command.ExportPublishBind);
+            //SetCommandBinding(btnExportSign, command.ExportSign, command.ExportSignBind);
             SetCommandBinding(btnExportVillagesPub, command.ExportVillagesPub, command.ExportVillagesPubBind);
             SetCommandBinding(btnExportVillagesDeclare, command.ExportVillagesDeclare, command.ExportVillagesDeclareBind);
             SetCommandBinding(btnExportSingleAffirm, command.ExportSingleAffirm, command.ExportSingleAffirmBind);
@@ -350,128 +359,170 @@ namespace YuLinTu.Component.ContractAccount
                 case ContractAccountCommand.ContractLandAddName:
                     contractAccountPanel.ContractLandAdd();//添加承包地块
                     break;
+
                 case ContractAccountCommand.ContractLandEditName:
                     contractAccountPanel.ContractLandEdit();//编辑承包地块
                     break;
+
                 case ContractAccountCommand.ContractLandDelName:
                     contractAccountPanel.ContractLandDel();//删除承包地块
                     break;
+
                 case ContractAccountCommand.ImportLandExcelName:
                     contractAccountPanel.ImportLandExcel();//导入地块调查表
                     break;
+
                 case ContractAccountCommand.ImportBoundaryExcelName:
                     contractAccountPanel.ImportBoundaryData();//导入界址调查表
                     break;
+
                 case ContractAccountCommand.ImportVectorName:
                     contractAccountPanel.ImportVectorName();//导入地块图斑
                     break;
+
                 case ContractAccountCommand.ImportPointsName:
                     contractAccountPanel.ImportBoundaryAddressDot();//导入界址点图斑数据
                     break;
+
                 case ContractAccountCommand.ImportLinesName:
                     contractAccountPanel.ImportBoundaryAddressCoil();//导入界址线
                     break;
+
                 case ContractAccountCommand.ImportZipName:
                     contractAccountPanel.ImportZipData();//导入压缩包数据
                     break;
+
                 case ContractAccountCommand.ExportLandShapeDataName:
                     contractAccountPanel.ExportLandShapeData();//导出地域下地块图斑
                     break;
+
                 case ContractAccountCommand.ExportLandDotShapeDataName:
                     contractAccountPanel.ExportLandDotShapeData();//导出地域下地块界址点图斑
                     break;
+
                 case ContractAccountCommand.ExportLandCoilShapeDataName:
                     contractAccountPanel.ExportLandCoilShapeData();//导出地域下地块界址线图斑
                     break;
+
                 case ContractAccountCommand.SenderExcelTemplateName:
                     contractAccountPanel.ExportSenderSurveyExcelTemplate();//导出发包方
                     break;
+
                 case ContractAccountCommand.VPExcelTemplateName:
                     contractAccountPanel.ExportVirtualPersonSurveyExcelTemplate();
                     break;
+
                 case ContractAccountCommand.VPWordTemplateName:
                     contractAccountPanel.ExportVirtualPersonSurveyWordTemplate();
                     break;
+
                 case ContractAccountCommand.LandExcelTemplateName:
                     contractAccountPanel.ExportContractLandSurveyExcelTemplate();
                     break;
+
                 case ContractAccountCommand.BoundaryExcelTemplateName:
                     contractAccountPanel.ExportBoundarySurveyExcelTemplate();
                     break;
+
                 case ContractAccountCommand.SenderWordTemplateName:
                     contractAccountPanel.ExportSenderSurveyWordTemplate();
                     break;
+
                 case ContractAccountCommand.LandWordTemplateName:
                     contractAccountPanel.ExportContractLandSurveyWordTemplate();
                     break;
+
                 case ContractAccountCommand.ExportSenderExcelName:
                     contractAccountPanel.ExportSenderExcel();
                     break;
+
                 case ContractAccountCommand.ExportVPExcelName:
                     contractAccountPanel.ExportVPExcel();
                     break;
+
                 case ContractAccountCommand.ExportLandExceleName:
-                    contractAccountPanel.ExportAccountNameExcel(false);
+                    contractAccountPanel.ExportAccountLandNameExcel(false);
                     break;
+
                 case ContractAccountCommand.ExportBoundaryExcelName:   //界址信息调查表
                     contractAccountPanel.ExportBoundaryInfoExcel();
                     break;
+
                 case ContractAccountCommand.ExportPublishExcelName:
                     contractAccountPanel.ExportPublishExcel();
                     break;
+
                 case ContractAccountCommand.ExportSenderWordName:
                     contractAccountPanel.ExportSenderWord();
                     break;
+
                 case ContractAccountCommand.ExportVPWordName:
                     contractAccountPanel.ExportVPWord();
                     break;
+
                 case ContractAccountCommand.ExportLandWordName:
                     contractAccountPanel.ExportLandWord();
                     break;
+
                 case ContractAccountCommand.ExportPublishWordName:
                     contractAccountPanel.ExportPublishWord();
                     break;
+
                 case ContractAccountCommand.ExportAccountName:
                     contractAccountPanel.ExportAccountNameExcel();
                     break;
+
                 case ContractAccountCommand.ExportSingleName:
                     contractAccountPanel.ExportLandSingleSurveyTable();
                     break;
+
                 case ContractAccountCommand.ExportPublishName:
                     contractAccountPanel.ExportLandRegPubTable();
                     break;
+
                 case ContractAccountCommand.ExportSignName:
                     contractAccountPanel.ExportRegSignTable();
                     break;
+
                 case ContractAccountCommand.ExportVillagesPubName:
                     contractAccountPanel.ExportVillageGroupTable();
                     break;
+
                 case ContractAccountCommand.ExportVillagesDeclareName:
                     contractAccountPanel.ExportVillagesDeclare();
                     break;
+
                 case ContractAccountCommand.ExportSingleAffirmName:
                     contractAccountPanel.ExportFamilyConfirmTable();
                     break;
+
                 case ContractAccountCommand.ExportSummaryName:
                     contractAccountPanel.ExportSummaryExcel();//数据汇总表
                     break;
+
                 case ContractAccountCommand.ExportCategorySummary:
-                    contractAccountPanel.ExportCategorySummary();//地块类别汇总表                    
+                    contractAccountPanel.ExportCategorySummary();//地块类别汇总表
                     break;
+
                 case ContractAccountCommand.SearchNeighorName:
                     contractAccountPanel.SeekLandNeighbor();
                     break;
+
                 case ContractAccountCommand.ResultExcelExpotName:
                     contractAccountPanel.BoundaryAddressDotResultExport();  //导出界址点成果表
                     break;
+
                 case ContractAccountCommand.ParcelSettingName:
-                    break;                
+                    break;
+
                 case ContractAccountCommand.MultiParcelExportName:
                     contractAccountPanel.MultiParcelExport();    //导出地块示意图
                     break;
+
                 case ContractAccountCommand.MultiParcelStockExportName:
                     contractAccountPanel.MultiParcelStockExport();    // 导出确权确股地块示意图
                     break;
+
                 case ContractAccountCommand.AllLandName:
                     btnLandType.IsOpen = false;
                     contractAccountPanel.AllLandFilter();
@@ -504,69 +555,89 @@ namespace YuLinTu.Component.ContractAccount
                 case ContractAccountCommand.InitialName:
                     contractAccountPanel.InitialLandInfo();
                     break;
+
                 case ContractAccountCommand.BoundaryDataName:
                     contractAccountPanel.InitializeLandDotCoilInfo();
                     break;
+
                 case ContractAccountCommand.LandCoilName:
                     contractAccountPanel.InitializeLandCoilInfo();//根据有效界址点初始化界址线
                     break;
+
                 case ContractAccountCommand.MapNumberName:
                     contractAccountPanel.InitialMapNumber();  //初始化图幅编号
                     break;
+
                 case ContractAccountCommand.AreaMeasurementName:
                     contractAccountPanel.InitialArea();
                     break;
+
                 case ContractAccountCommand.AreaNumericFormatName:
                     contractAccountPanel.SetAreaNumericFormat();
                     break;
+
                 case ContractAccountCommand.FarmerLandName:
                     contractAccountPanel.InitialIsFarmer();
                     break;
+
                 case ContractAccountCommand.LandNameNullName:
                     contractAccountPanel.LandNameNullSearch();
                     break;
+
                 case ContractAccountCommand.ContractAreaNullName:
                     contractAccountPanel.ContractAreaNullSearch();
                     break;
+
                 case ContractAccountCommand.ActualAreaNullName:
                     contractAccountPanel.ActualAreaNullSearch();
                     break;
+
                 case ContractAccountCommand.AwareAreaNullName:
                     contractAccountPanel.AwareAreaNullSearch();
                     break;
+
                 case ContractAccountCommand.FarmerLandNullName:
                     contractAccountPanel.FarmerLandNullSearch();
                     break;
+
                 case ContractAccountCommand.LandLevelNullName:
                     contractAccountPanel.LandLevelNullSearch();
                     break;
+
                 case ContractAccountCommand.LandShapeNullName:
                     contractAccountPanel.LandShapeNullSearch();
                     break;
+
                 case ContractAccountCommand.FindName:
                     FindLand();    //空间查看
                     break;
+
                 case ContractAccountCommand.ClearName:
                     contractAccountPanel.Clear();
                     break;
+
                 case ContractAccountCommand.RefreshName:
                     contractAccountPanel.Refresh();
                     break;
+
                 case ContractAccountCommand.DownLoadName:
                     contractAccountPanel.DownLoadData();
                     break;
+
                 case ContractAccountCommand.UpdateDataName:
                     contractAccountPanel.UpLoadData();
                     break;
+
                 case ContractAccountCommand.ExportPackageName:
                     contractAccountPanel.ExportZipData();
                     break;
+
                 default:
                     break;
             }
         }
 
-        #endregion
+        #endregion Methods
 
         #region Method - 辅助方法
 
@@ -593,7 +664,6 @@ namespace YuLinTu.Component.ContractAccount
                 //btnParcelLand.IsEnabled = isEnable;
                 btnExportData.IsEnabled = isEnable;
                 btnTemplate.IsEnabled = isEnable;
-
             }));
         }
 
@@ -652,12 +722,12 @@ namespace YuLinTu.Component.ContractAccount
             Workpage.Page.ShowMessageBox(showDlg);
         }
 
-        #endregion
+        #endregion Method - 辅助方法
 
         #region Methods - 编辑地块示意图
 
         private EditLandParcelDialog dlg = null;
-        EditPersonLandParcelDialog pdlg = null;
+        private EditPersonLandParcelDialog pdlg = null;
 
         private bool isFirst = true;
         private bool isPersonFirst = true;
@@ -675,7 +745,6 @@ namespace YuLinTu.Component.ContractAccount
                         pdlg = new EditPersonLandParcelDialog(person.Children.Count);
 
                     pdlg.SelectedLand = person.Children[0].Tag;
-
 
                     if (!isPersonFirst)
                     {
@@ -699,11 +768,9 @@ namespace YuLinTu.Component.ContractAccount
                     Workpage.Page.ShowDialog(pdlg);
                     isPersonFirst = false;
                 }
-                
             }
             else
             {
-
                 //if (land == null || land.Tag == null)
                 //{
                 //    Workpage.Page.ShowDialog(new MessageDialog()
@@ -751,7 +818,6 @@ namespace YuLinTu.Component.ContractAccount
             //    dlg.Refresh();
 
             //Workpage.Page.ShowDialog(dlg);
-            
         }
 
         public override void Dispose()
@@ -761,6 +827,6 @@ namespace YuLinTu.Component.ContractAccount
                 dlg.Dispose();
         }
 
-        #endregion
+        #endregion Methods - 编辑地块示意图
     }
 }

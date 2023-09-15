@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,6 +47,7 @@ namespace YuLinTu.Library.Controls
             item.ActualAreaUI = SumActualArea(item);
             item.AwareAreaUI = SumAwareArea(item);
             item.TableAreaUI = SumTableArea(item);
+            item.ContractDelayAreaUI = SumContractDelayArea(item);
             item.Img = item.Tag.Status == eVirtualPersonStatus.Lock ? 3 : 0;
             return item;
         }
@@ -126,6 +128,20 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 单户延包总面积和
+        /// </summary>
+        public static string SumContractDelayArea(ContractLandPersonItem clpItem)
+        {
+            double sum = 0;
+            if (clpItem == null) return "";
+            foreach (var land in clpItem.Children)
+            {
+                sum += land.Tag.ContractDelayArea;
+            }
+            return sum == 0 ? "" : sum.ToString();
+        }
+
+        /// <summary>
         /// 单户确权总面积和
         /// </summary>
         public static string SumAwareArea(ContractLandPersonItem clpItem)
@@ -157,6 +173,6 @@ namespace YuLinTu.Library.Controls
             return sum == 0 ? "" : sum.ToString();
         }
 
-        #endregion
+        #endregion Method
     }
 }

@@ -26,6 +26,7 @@ namespace YuLinTu.Library.Business
             get { return nameValue; }
             set { nameValue = value; NotifyPropertyChanged("NameValue"); }
         }
+
         private bool nameValue;
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace YuLinTu.Library.Business
             get { return contractorTypeValue; }
             set { contractorTypeValue = value; NotifyPropertyChanged("ContractorTypeValue"); }
         }
+
         private bool contractorTypeValue;
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace YuLinTu.Library.Business
             get { return numberValue; }
             set { numberValue = value; NotifyPropertyChanged("NumberValue"); }
         }
+
         private bool numberValue;
 
         /// <summary>
@@ -68,6 +71,7 @@ namespace YuLinTu.Library.Business
             get { return numberNameValue; }
             set { numberNameValue = value; NotifyPropertyChanged("NumberNameValue"); }
         }
+
         private bool numberNameValue;
 
         /// <summary>
@@ -82,6 +86,7 @@ namespace YuLinTu.Library.Business
             get { return numberGenderValue; }
             set { numberGenderValue = value; NotifyPropertyChanged("NumberGenderValue"); }
         }
+
         private bool numberGenderValue;
 
         /// <summary>
@@ -96,6 +101,7 @@ namespace YuLinTu.Library.Business
             get { return numberAgeValue; }
             set { numberAgeValue = value; NotifyPropertyChanged("NumberAgeValue"); }
         }
+
         private bool numberAgeValue;
 
         /// <summary>
@@ -110,6 +116,7 @@ namespace YuLinTu.Library.Business
             get { return numberCartTypeValue; }
             set { numberCartTypeValue = value; NotifyPropertyChanged("numberCartTypeValue"); }
         }
+
         private bool numberCartTypeValue;
 
         /// <summary>
@@ -124,6 +131,7 @@ namespace YuLinTu.Library.Business
             get { return numberIcnValue; }
             set { numberIcnValue = value; NotifyPropertyChanged("NumberIcnValue"); }
         }
+
         private bool numberIcnValue;
 
         /// <summary>
@@ -138,6 +146,7 @@ namespace YuLinTu.Library.Business
             get { return numberRelatioinValue; }
             set { numberRelatioinValue = value; NotifyPropertyChanged("NumberRelatioinValue"); }
         }
+
         private bool numberRelatioinValue;
 
         /// <summary>
@@ -152,7 +161,23 @@ namespace YuLinTu.Library.Business
             get { return commentValue; }
             set { commentValue = value; NotifyPropertyChanged("CommentValue"); }
         }
+
         private bool commentValue;
+
+        /// <summary>
+        /// 共有人信息修改意见
+        /// </summary>
+        [DisplayLanguage("共有人信息修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("共有人信息修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Gallery = "承包方及家庭成员信息", Catalog = "",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool CommonOpinion
+        {
+            get { return commonOpinion; }
+            set { commonOpinion = value; NotifyPropertyChanged("CommonOpinion"); }
+        }
+
+        private bool commonOpinion;
 
         ///// <summary>
         ///// 承包地共有人
@@ -180,6 +205,7 @@ namespace YuLinTu.Library.Business
             get { return isSharedLandValue; }
             set { isSharedLandValue = value; NotifyPropertyChanged("IsSharedLandValue"); }
         }
+
         private bool isSharedLandValue;
 
         /// <summary>
@@ -194,6 +220,7 @@ namespace YuLinTu.Library.Business
             get { return allocationPersonValue; }
             set { allocationPersonValue = value; NotifyPropertyChanged("AllocationPersonValue"); }
         }
+
         private bool allocationPersonValue;
 
         /// <summary>
@@ -208,6 +235,7 @@ namespace YuLinTu.Library.Business
             get { return contractorAddressValue; }
             set { contractorAddressValue = value; NotifyPropertyChanged("ContractorAddressValue"); }
         }
+
         private bool contractorAddressValue;
 
         /// <summary>
@@ -222,6 +250,7 @@ namespace YuLinTu.Library.Business
             get { return postNumberValue; }
             set { postNumberValue = value; NotifyPropertyChanged("PostNumberValue"); }
         }
+
         private bool postNumberValue;
 
         /// <summary>
@@ -236,6 +265,7 @@ namespace YuLinTu.Library.Business
             get { return telephoneValue; }
             set { telephoneValue = value; NotifyPropertyChanged("TelephoneValue"); }
         }
+
         private bool telephoneValue;
 
         /// <summary>
@@ -250,6 +280,7 @@ namespace YuLinTu.Library.Business
             get { return nationValue; }
             set { nationValue = value; NotifyPropertyChanged("NationValue"); }
         }
+
         private bool nationValue;
 
         /// <summary>
@@ -264,6 +295,7 @@ namespace YuLinTu.Library.Business
             get { return surveyPersonValue; }
             set { surveyPersonValue = value; NotifyPropertyChanged("SurveyPersonValue"); }
         }
+
         private bool surveyPersonValue;
 
         /// <summary>
@@ -278,6 +310,7 @@ namespace YuLinTu.Library.Business
             get { return surveyDateValue; }
             set { surveyDateValue = value; NotifyPropertyChanged("SurveyDateValue"); }
         }
+
         private bool surveyDateValue;
 
         /// <summary>
@@ -292,6 +325,7 @@ namespace YuLinTu.Library.Business
             get { return surveyChronicleValue; }
             set { surveyChronicleValue = value; NotifyPropertyChanged("SurveyChronicleValue"); }
         }
+
         private bool surveyChronicleValue;
 
         /// <summary>
@@ -306,6 +340,7 @@ namespace YuLinTu.Library.Business
             get { return checkPersonValue; }
             set { checkPersonValue = value; NotifyPropertyChanged("CheckPersonValue"); }
         }
+
         private bool checkPersonValue;
 
         /// <summary>
@@ -320,6 +355,7 @@ namespace YuLinTu.Library.Business
             get { return checkDateValue; }
             set { checkDateValue = value; NotifyPropertyChanged("CheckDateValue"); }
         }
+
         private bool checkDateValue;
 
         /// <summary>
@@ -334,6 +370,7 @@ namespace YuLinTu.Library.Business
             get { return checkOpinionValue; }
             set { checkOpinionValue = value; NotifyPropertyChanged("CheckOpinionValue"); }
         }
+
         private bool checkOpinionValue;
 
         /// <summary>
@@ -348,6 +385,7 @@ namespace YuLinTu.Library.Business
             get { return accountNatureValue; }
             set { accountNatureValue = value; NotifyPropertyChanged("AccountNatureValue"); }
         }
+
         private bool accountNatureValue;
 
         /// <summary>
@@ -362,6 +400,7 @@ namespace YuLinTu.Library.Business
             get { return secondConcordNumberValue; }
             set { secondConcordNumberValue = value; NotifyPropertyChanged("SecondConcordNumberValue"); }
         }
+
         private bool secondConcordNumberValue;
 
         /// <summary>
@@ -376,6 +415,7 @@ namespace YuLinTu.Library.Business
             get { return secondWarrantNumberValue; }
             set { secondWarrantNumberValue = value; NotifyPropertyChanged("SecondWarrantNumberValue"); }
         }
+
         private bool secondWarrantNumberValue;
 
         /// <summary>
@@ -390,6 +430,7 @@ namespace YuLinTu.Library.Business
             get { return cencueCommentValue; }
             set { cencueCommentValue = value; NotifyPropertyChanged("CencueCommentValue"); }
         }
+
         private bool cencueCommentValue;
 
         /// <summary>
@@ -404,6 +445,7 @@ namespace YuLinTu.Library.Business
             get { return secondConcordTotalAreaValue; }
             set { secondConcordTotalAreaValue = value; NotifyPropertyChanged("SecondConcordTotalAreaValue"); }
         }
+
         private bool secondConcordTotalAreaValue;
 
         /// <summary>
@@ -418,6 +460,7 @@ namespace YuLinTu.Library.Business
             get { return secondConcordTotalLandCountValue; }
             set { secondConcordTotalLandCountValue = value; NotifyPropertyChanged("SecondConcordTotalLandCountValue"); }
         }
+
         private bool secondConcordTotalLandCountValue;
 
         /// <summary>
@@ -432,6 +475,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNameValue; }
             set { exPackageNameValue = value; NotifyPropertyChanged("ExPackageNameValue"); }
         }
+
         private bool exPackageNameValue;
 
         /// <summary>
@@ -446,6 +490,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNumberValue; }
             set { exPackageNumberValue = value; NotifyPropertyChanged("ExPackageNumberValue"); }
         }
+
         private bool exPackageNumberValue;
 
         /// <summary>
@@ -460,6 +505,7 @@ namespace YuLinTu.Library.Business
             get { return startTimeValue; }
             set { startTimeValue = value; NotifyPropertyChanged("StartTimeValue"); }
         }
+
         private bool startTimeValue;
 
         /// <summary>
@@ -474,6 +520,7 @@ namespace YuLinTu.Library.Business
             get { return endTimeValue; }
             set { endTimeValue = value; NotifyPropertyChanged("EndTimeValue"); }
         }
+
         private bool endTimeValue;
 
         /// <summary>
@@ -488,8 +535,8 @@ namespace YuLinTu.Library.Business
             get { return constructTypeValue; }
             set { constructTypeValue = value; NotifyPropertyChanged("ConstructTypeValue"); }
         }
-        private bool constructTypeValue;
 
+        private bool constructTypeValue;
 
         /// <summary>
         /// 已死亡人员
@@ -503,6 +550,7 @@ namespace YuLinTu.Library.Business
             get { return isDeadedValue; }
             set { isDeadedValue = value; NotifyPropertyChanged("isDeadedValue"); }
         }
+
         private bool isDeadedValue;
 
         /// <summary>
@@ -517,6 +565,7 @@ namespace YuLinTu.Library.Business
             get { return localMarriedRetreatLandValue; }
             set { localMarriedRetreatLandValue = value; NotifyPropertyChanged("LocalMarriedRetreatLandValue"); }
         }
+
         private bool localMarriedRetreatLandValue;
 
         /// <summary>
@@ -531,6 +580,7 @@ namespace YuLinTu.Library.Business
             get { return peasantsRetreatLandValue; }
             set { peasantsRetreatLandValue = value; NotifyPropertyChanged("PeasantsRetreatLandValue"); }
         }
+
         private bool peasantsRetreatLandValue;
 
         /// <summary>
@@ -545,6 +595,7 @@ namespace YuLinTu.Library.Business
             get { return foreignMarriedRetreatLandValue; }
             set { foreignMarriedRetreatLandValue = value; NotifyPropertyChanged("ForeignMarriedRetreatLandValue"); }
         }
+
         private bool foreignMarriedRetreatLandValue;
 
         /// <summary>
@@ -559,6 +610,7 @@ namespace YuLinTu.Library.Business
             get { return equityNumberValue; }
             set { equityNumberValue = value; NotifyPropertyChanged("EquityNumberValue"); }
         }
+
         private bool equityNumberValue;
 
         /// <summary>
@@ -573,6 +625,7 @@ namespace YuLinTu.Library.Business
             get { return equityAreaValue; }
             set { equityAreaValue = value; NotifyPropertyChanged("EquityAreaValue"); }
         }
+
         private bool equityAreaValue;
 
         /// <summary>
@@ -608,8 +661,7 @@ namespace YuLinTu.Library.Business
                     || LocalMarriedRetreatLandValue || PeasantsRetreatLandValue || ForeignMarriedRetreatLandValue;
             }
         }
-               
-        
+
         /// <summary>
         /// 列数
         /// </summary>
@@ -622,9 +674,10 @@ namespace YuLinTu.Library.Business
             get { return columnCount; }
             set { columnCount = getColumnCount(); NotifyPropertyChanged("ColumnCount"); }
         }
+
         private int columnCount;
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -670,6 +723,7 @@ namespace YuLinTu.Library.Business
             EquityNumberValue = false;
             EquityAreaValue = false;
             CencueCommentValue = false;
+            CommonOpinion = true;
             ColumnCount = 20;
         }
 
@@ -720,8 +774,8 @@ namespace YuLinTu.Library.Business
             count += SecondConcordTotalAreaValue ? 1 : 0;
             count += SecondConcordTotalLandCountValue ? 1 : 0;
             count += CencueCommentValue ? 1 : 0;
+            count += CommonOpinion ? 1 : 0;
             return count;
-
         }
 
         /// <summary>
@@ -736,6 +790,6 @@ namespace YuLinTu.Library.Business
             return section.Settings;
         }
 
-        #endregion
+        #endregion Ctor
     }
 }

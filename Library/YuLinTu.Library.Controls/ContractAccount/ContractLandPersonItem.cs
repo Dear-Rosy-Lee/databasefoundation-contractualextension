@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,10 +66,7 @@ namespace YuLinTu.Library.Controls
         private string _obligateArea;
         private string _landPurpose;
 
-
-       
-
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -164,6 +162,7 @@ namespace YuLinTu.Library.Controls
                 NotifyPropertyChanged("ContractDelayAreaUI");
             }
         }
+
         /// <summary>
         /// 量化面积
         /// </summary>
@@ -172,7 +171,7 @@ namespace YuLinTu.Library.Controls
             get { return _quantificitionArea; }
             set
             {
-                _quantificitionArea = value; 
+                _quantificitionArea = value;
                 NotifyPropertyChanged("QuantificitionArea");
             }
         }
@@ -185,7 +184,7 @@ namespace YuLinTu.Library.Controls
             get { return _obligateArea; }
             set
             {
-                _obligateArea = value; 
+                _obligateArea = value;
                 NotifyPropertyChanged("ObligateArea");
             }
         }
@@ -198,11 +197,10 @@ namespace YuLinTu.Library.Controls
             get { return _landPurpose; }
             set
             {
-                _landPurpose = value; 
+                _landPurpose = value;
                 NotifyPropertyChanged("LandPurpose");
             }
         }
-
 
         /// <summary>
         /// 可见性
@@ -240,12 +238,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public VirtualPerson Tag { get; set; }
 
-
-
-    
-
-
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -256,7 +249,7 @@ namespace YuLinTu.Library.Controls
             Children = new ObservableCollection<ContractLandBinding>();
         }
 
-        #endregion
+        #endregion Ctor
     }
 
     /// <summary>
@@ -266,12 +259,11 @@ namespace YuLinTu.Library.Controls
     {
         #region Fields
 
-
         /// <summary>
         /// 地块可见性
         /// </summary>
         private Visibility visibility;
-         
+
         /// <summary>
         /// 地块类别名称
         /// </summary>
@@ -297,6 +289,8 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private string tableAreaUI;
 
+        private string contractDelayAreaUI;
+
         /// <summary>
         /// 实测面积
         /// </summary>
@@ -307,7 +301,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private string awareAreaUI;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -338,6 +332,19 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 延包面积
+        /// </summary>
+        public string ContractDelayAreaUI
+        {
+            get { return contractDelayAreaUI; }
+            set
+            {
+                contractDelayAreaUI = value;
+                NotifyPropertyChanged("ContractDelayAreaUI");
+            }
+        }
+
+        /// <summary>
         /// 实测面积
         /// </summary>
         public string ActualAreaUI
@@ -362,6 +369,7 @@ namespace YuLinTu.Library.Controls
                 NotifyPropertyChanged("AwareAreaUI");
             }
         }
+
         /// <summary>
         /// 地块类别名称
         /// </summary>
@@ -414,8 +422,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -427,9 +434,10 @@ namespace YuLinTu.Library.Controls
             Tag = land;
             Name = land.Name;
             LandNumber = land.LandNumber;
-            TableAreaUI = (land.TableArea == 0 || land.TableArea == null) ? "0.00" : ToolMath.SetNumbericFormat(land.TableArea.ToString(), 2) ;//land.TableArea.Value.ToString("f2");
+            TableAreaUI = (land.TableArea == 0 || land.TableArea == null) ? "0.00" : ToolMath.SetNumbericFormat(land.TableArea.ToString(), 2);//land.TableArea.Value.ToString("f2");
             ActualAreaUI = land.ActualArea == 0 ? "0.00" : ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2);//land.ActualArea.ToString("f2");
             AwareAreaUI = land.AwareArea == 0 ? "0.00" : ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2);//land.AwareArea.ToString("f2");
+            ContractDelayAreaUI = land.ContractDelayArea == 0 ? "0.00" : ToolMath.SetNumbericFormat(land.ContractDelayArea.ToString(), 2);
             LandName = land.LandName;
             Comment = land.Comment;
             Img = land.Shape != null ? 1 : 2;
@@ -445,7 +453,6 @@ namespace YuLinTu.Library.Controls
             this.Visibility = Visibility.Visible;
         }
 
-        #endregion
-
+        #endregion Ctor
     }
 }

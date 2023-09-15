@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,9 @@ namespace YuLinTu.Library.Business
 
         private bool result = true;
         private int index;//索引值
-        int high;//单元格合并数量
+        private int high;//单元格合并数量
         private ToolProgress toolProgress;//进度条
-        private int columnIndex;//当前列名       
+        private int columnIndex;//当前列名
         private int PersonCount;//人合计
         private int packageCount;//土地延包份数
         private int familyCount;//总户数
@@ -34,7 +35,8 @@ namespace YuLinTu.Library.Business
         private double secCordTotolAreaCount;
         private int secCordLandCount;
         private SystemSetDefine systemseting = SystemSetDefine.GetIntence();
-        #endregion
+
+        #endregion Fields
 
         #region Property
 
@@ -69,18 +71,15 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public FamilyOutputDefine OutputDefine = FamilyOutputDefine.GetIntence();
 
-
         /// <summary>
         /// 承包方其它设置
         /// </summary>
         public FamilyOtherDefine OtherDefine = FamilyOtherDefine.GetIntence();
 
-
         /// <summary>
         /// 系统设置
         /// </summary>
         public SystemSetDefine SystemDefine = SystemSetDefine.GetIntence();
-
 
         /// <summary>
         /// 是否显示
@@ -127,7 +126,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string ZoneDesc { get; set; }
 
-        #endregion
+        #endregion Property
 
         #region Ctor
 
@@ -143,13 +142,13 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 进度提示
-        /// </summary>    
+        /// </summary>
         private void toolProgress_OnPostProgress(int progress, string info = "")
         {
             PostProgress(progress, info);
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -223,7 +222,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 开始生成Excel操作
 
         #region 开始往Excel中添加值
 
@@ -257,7 +256,6 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-
                 foreach (Person person in ps)
                 {
                     columnIndex = curIndex;
@@ -315,6 +313,11 @@ namespace YuLinTu.Library.Business
                     {
                         columnIndex++;
                         SetRange(LandOutputDefine.GetColumnValue(columnIndex) + pindex, LandOutputDefine.GetColumnValue(columnIndex) + pindex, 16.5, 11, false, person.Comment);//备注
+                    }
+                    if (OutputDefine.CommonOpinion)
+                    {
+                        columnIndex++;
+                        SetRange(LandOutputDefine.GetColumnValue(columnIndex) + pindex, LandOutputDefine.GetColumnValue(columnIndex) + pindex, 16.5, 11, false, person.Opinion);//共有人信息修改意见
                     }
                     if (OutputDefine.CencueCommentValue)
                     {
@@ -494,12 +497,10 @@ namespace YuLinTu.Library.Business
                     columnIndex++;
 
                     SetRange(LandOutputDefine.GetColumnValue(columnIndex) + index, LandOutputDefine.GetColumnValue(columnIndex) + (index + high - 1), 16.5, 11, false, Count);//家庭成员个数
-
                 }
             }
             catch
             {
-
             }
         }
 
@@ -972,10 +973,9 @@ namespace YuLinTu.Library.Business
                 sharePersons.Clear();
                 tablePersons.Clear();
                 GC.Collect();
-
             }
 
-            #endregion
+            #endregion 户信息
 
             WriteCount();
             FamilyList.Clear();
@@ -993,7 +993,7 @@ namespace YuLinTu.Library.Business
         {
             //string title = GetRangeToValue("A1", "T1").ToString();
             //string titleName = PersonType == eVirtualType.Land ? "承包方调查表" : "承包方信息表";
-            string titleName = "农村土地承包经营权承包方调查表";
+            string titleName = "第二轮土地承包到期后再延长三十年承包方调查表";
             SetRange("A1", LandOutputDefine.GetColumnValue(OutputDefine.ColumnCount) + "1", 32.25, 18, true, UnitName + titleName);
             InitalizeRangeValue("A3", "A5", PersonType == eVirtualType.Land ? "承包方编号" : "承包方编号");
             SetRange("A3", "A5", 16.50, 11, false, PersonType == eVirtualType.Land ? "承包方编号" : "承包方编号");
@@ -1074,6 +1074,12 @@ namespace YuLinTu.Library.Business
             {
                 columnIndex++;
                 SetRange(LandOutputDefine.GetColumnValue(columnIndex) + 4, LandOutputDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+                SetRangeFont(LandOutputDefine.GetColumnValue(columnIndex) + 4, LandOutputDefine.GetColumnValue(columnIndex) + 5, 11, 000, false, false);
+            }
+            if (OutputDefine.CommonOpinion)
+            {
+                columnIndex++;
+                SetRange(LandOutputDefine.GetColumnValue(columnIndex) + 4, LandOutputDefine.GetColumnValue(columnIndex) + 5, "共有人信息修改意见", true);
                 SetRangeFont(LandOutputDefine.GetColumnValue(columnIndex) + 4, LandOutputDefine.GetColumnValue(columnIndex) + 5, 11, 000, false, false);
             }
             if (OutputDefine.CencueCommentValue)
@@ -1261,8 +1267,9 @@ namespace YuLinTu.Library.Business
         {
             EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
         }
-        #endregion
 
-        #endregion
+        #endregion 开始往Excel中添加值
+
+        #endregion Methods
     }
 }

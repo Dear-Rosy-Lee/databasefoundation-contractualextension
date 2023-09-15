@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace YuLinTu.Library.Command
         /// <summary>
         /// 导入(批量)土地调查压缩包数据命令名称
         /// </summary>
-        public const string ImportZipName = "importZip";   
+        public const string ImportZipName = "importZip";
 
         /// <summary>
         /// 导出当前地域下地块Shape数据
@@ -197,6 +198,7 @@ namespace YuLinTu.Library.Command
         /// 导出(批量)数据汇总表命令名称
         /// </summary>
         public const string ExportSummaryName = "exportSummary";
+
         /// <summary>
         /// 导出（批量）地块类别汇总表命令名称
         /// </summary>
@@ -286,7 +288,7 @@ namespace YuLinTu.Library.Command
         /// 界址数据命令名称-初始化
         /// </summary>
         public const string BoundaryDataName = "boundaryData";
-        
+
         /// <summary>
         /// 界线数据命令名称-初始化
         /// </summary>
@@ -377,10 +379,9 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public const string ExportPackageName = "exportpackage";
 
-        #endregion
+        #endregion Files - Const
 
         #region Files - Command
-
 
         /// <summary>
         /// 导出数据压缩包
@@ -576,6 +577,7 @@ namespace YuLinTu.Library.Command
         /// 导出(批量)数据汇总表命令
         /// </summary>
         public RoutedCommand ExportSummary = new RoutedCommand(ExportSummaryName, typeof(Button));
+
         public RoutedCommand CategorySummary = new RoutedCommand(ExportCategorySummary, typeof(Button));
 
         /// <summary>
@@ -606,7 +608,7 @@ namespace YuLinTu.Library.Command
         /// <summary>
         /// 导出确权确股地块示意图命令
         /// </summary>
-        public RoutedCommand MultiParcelStockExport = new RoutedCommand(MultiParcelStockExportName, typeof(Button)); 
+        public RoutedCommand MultiParcelStockExport = new RoutedCommand(MultiParcelStockExportName, typeof(Button));
 
         /// <summary>
         /// 全部地块命令
@@ -738,7 +740,7 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public RoutedCommand Refresh = new RoutedCommand(RefreshName, typeof(Button));
 
-        #endregion
+        #endregion Files - Command
 
         #region Files - Binding
 
@@ -936,6 +938,7 @@ namespace YuLinTu.Library.Command
         /// 导出(批量)数据汇总表绑定
         /// </summary>
         public CommandBinding ExportSummaryBind = new CommandBinding();
+
         public CommandBinding ExportCategoryBind = new CommandBinding();
 
         /// <summary>
@@ -1022,7 +1025,7 @@ namespace YuLinTu.Library.Command
         /// 界址数据绑定
         /// </summary>
         public CommandBinding BoundaryDataBind = new CommandBinding();
-        
+
         /// <summary>
         /// 界线数据绑定
         /// </summary>
@@ -1098,11 +1101,11 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public CommandBinding RefreshBind = new CommandBinding();
 
-        #endregion
+        #endregion Files - Binding
 
         #region Properties
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -1114,7 +1117,7 @@ namespace YuLinTu.Library.Command
             InstallCommand();
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Install
 
@@ -1197,6 +1200,6 @@ namespace YuLinTu.Library.Command
             MultiParcelStockExportBind.Command = MultiParcelStockExport;
         }
 
-        #endregion
+        #endregion Install
     }
 }

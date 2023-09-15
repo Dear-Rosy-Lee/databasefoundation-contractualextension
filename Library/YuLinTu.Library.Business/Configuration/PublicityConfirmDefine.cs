@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace YuLinTu.Library.Business
             get { return nameValue; }
             set { nameValue = value; NotifyPropertyChanged("NameValue"); }
         }
+
         private bool nameValue;
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace YuLinTu.Library.Business
             get { return contractorTypeValue; }
             set { contractorTypeValue = value; NotifyPropertyChanged("ContractorTypeValue"); }
         }
+
         private bool contractorTypeValue;
 
         /// <summary>
@@ -57,6 +60,7 @@ namespace YuLinTu.Library.Business
             get { return numberValue; }
             set { numberValue = value; NotifyPropertyChanged("NumberValue"); }
         }
+
         private bool numberValue;
 
         /// <summary>
@@ -71,6 +75,7 @@ namespace YuLinTu.Library.Business
             get { return numberNameValue; }
             set { numberNameValue = value; NotifyPropertyChanged("NumberNameValue"); }
         }
+
         private bool numberNameValue;
 
         /// <summary>
@@ -85,6 +90,7 @@ namespace YuLinTu.Library.Business
             get { return numberGenderValue; }
             set { numberGenderValue = value; NotifyPropertyChanged("NumberGenderValue"); }
         }
+
         private bool numberGenderValue;
 
         /// <summary>
@@ -99,6 +105,7 @@ namespace YuLinTu.Library.Business
             get { return numberAgeValue; }
             set { numberAgeValue = value; NotifyPropertyChanged("NumberAgeValue"); }
         }
+
         private bool numberAgeValue;
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace YuLinTu.Library.Business
             get { return numberCartTypeValue; }
             set { numberCartTypeValue = value; NotifyPropertyChanged("NumberCartTypeValue"); }
         }
+
         private bool numberCartTypeValue;
 
         /// <summary>
@@ -127,6 +135,7 @@ namespace YuLinTu.Library.Business
             get { return numberIcnValue; }
             set { numberIcnValue = value; NotifyPropertyChanged("NumberIcnValue"); }
         }
+
         private bool numberIcnValue;
 
         /// <summary>
@@ -141,6 +150,7 @@ namespace YuLinTu.Library.Business
             get { return numberRelatioinValue; }
             set { numberRelatioinValue = value; NotifyPropertyChanged("NumberRelatioinValue"); }
         }
+
         private bool numberRelatioinValue;
 
         /// <summary>
@@ -155,6 +165,7 @@ namespace YuLinTu.Library.Business
             get { return isSharedLandValue; }
             set { isSharedLandValue = value; NotifyPropertyChanged("IsSharedLandValue"); }
         }
+
         private bool isSharedLandValue;
 
         /// <summary>
@@ -169,7 +180,24 @@ namespace YuLinTu.Library.Business
             get { return familyCommentValue; }
             set { familyCommentValue = value; NotifyPropertyChanged("FamilyCommentValue"); }
         }
+
         private bool familyCommentValue;
+
+
+        /// <summary>
+        /// 共有人修改意见
+        /// </summary>
+        [DisplayLanguage("共有人修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("共有人修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "承包方及家庭成员信息", Gallery = "调查信息",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool FamilyOpinionValue
+        {
+            get { return familyOpinionValue; }
+            set { familyOpinionValue = value; NotifyPropertyChanged("FamilyOpinionValue"); }
+        }
+
+        private bool familyOpinionValue;
 
         /// <summary>
         ///承包方地址
@@ -183,6 +211,7 @@ namespace YuLinTu.Library.Business
             get { return contractorAddressValue; }
             set { contractorAddressValue = value; NotifyPropertyChanged("ContractorAddressValue"); }
         }
+
         private bool contractorAddressValue;
 
         /// <summary>
@@ -197,6 +226,7 @@ namespace YuLinTu.Library.Business
             get { return landNameValue; }
             set { landNameValue = value; NotifyPropertyChanged("LandNameValue"); }
         }
+
         private bool landNameValue;
 
         /// <summary>
@@ -211,6 +241,7 @@ namespace YuLinTu.Library.Business
             get { return cadastralNumberValue; }
             set { cadastralNumberValue = value; NotifyPropertyChanged("CadastralNumberValue"); }
         }
+
         private bool cadastralNumberValue;
 
         /// <summary>
@@ -225,6 +256,7 @@ namespace YuLinTu.Library.Business
             get { return imageNumberValue; }
             set { imageNumberValue = value; NotifyPropertyChanged("ImageNumberValue"); }
         }
+
         private bool imageNumberValue;
 
         /// <summary>
@@ -239,6 +271,7 @@ namespace YuLinTu.Library.Business
             get { return tableAreaValue; }
             set { tableAreaValue = value; NotifyPropertyChanged("TableAreaValue"); }
         }
+
         private bool tableAreaValue;
 
         /// <summary>
@@ -253,6 +286,7 @@ namespace YuLinTu.Library.Business
             get { return totalTableAreaValue; }
             set { totalTableAreaValue = value; NotifyPropertyChanged("TotalTableAreaValue"); }
         }
+
         private bool totalTableAreaValue;
 
         /// <summary>
@@ -267,6 +301,7 @@ namespace YuLinTu.Library.Business
             get { return actualAreaValue; }
             set { actualAreaValue = value; NotifyPropertyChanged("ActualAreaValue"); }
         }
+
         private bool actualAreaValue;
 
         /// <summary>
@@ -281,6 +316,7 @@ namespace YuLinTu.Library.Business
             get { return totalActualAreaValue; }
             set { totalActualAreaValue = value; NotifyPropertyChanged("TotalActualAreaValue"); }
         }
+
         private bool totalActualAreaValue;
 
         /// <summary>
@@ -295,6 +331,7 @@ namespace YuLinTu.Library.Business
             get { return awareAreaValue; }
             set { awareAreaValue = value; NotifyPropertyChanged("AwareAreaValue"); }
         }
+
         private bool awareAreaValue;
 
         /// <summary>
@@ -309,6 +346,7 @@ namespace YuLinTu.Library.Business
             get { return totalAwareAreaValue; }
             set { totalAwareAreaValue = value; NotifyPropertyChanged("TotalAwareAreaValue"); }
         }
+
         private bool totalAwareAreaValue;
 
         /// <summary>
@@ -323,6 +361,7 @@ namespace YuLinTu.Library.Business
             get { return motorizeAreaValue; }
             set { motorizeAreaValue = value; NotifyPropertyChanged("MotorizeAreaValue"); }
         }
+
         private bool motorizeAreaValue;
 
         /// <summary>
@@ -337,7 +376,38 @@ namespace YuLinTu.Library.Business
             get { return totalMotorizeAreaValue; }
             set { totalMotorizeAreaValue = value; NotifyPropertyChanged("TotalMotorizeAreaValue"); }
         }
+
         private bool totalMotorizeAreaValue;
+
+        /// <summary>
+        ///延包面积
+        /// </summary>
+        [DisplayLanguage("延包面积", IsLanguageName = false)]
+        [DescriptionLanguage("延包面积", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "承包方地块信息", Gallery = "调查信息",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool ContractDelayAreaValue
+        {
+            get { return contractDelayAreaValue; }
+            set { contractDelayAreaValue = value; NotifyPropertyChanged("ContractDelayAreaValue"); }
+        }
+
+        private bool contractDelayAreaValue;
+
+        /// <summary>
+        ///延包总面积
+        /// </summary>
+        [DisplayLanguage("延包总面积", IsLanguageName = false)]
+        [DescriptionLanguage("延包总面积", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "承包方地块信息", Gallery = "调查信息",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool TotalContractDelayAreaValue
+        {
+            get { return totalContractDelayAreaValue; }
+            set { totalContractDelayAreaValue = value; NotifyPropertyChanged("TotalContractDelayAreaValue"); }
+        }
+
+        private bool totalContractDelayAreaValue;
 
         /// <summary>
         ///四至
@@ -351,6 +421,7 @@ namespace YuLinTu.Library.Business
             get { return landNeighborValue; }
             set { landNeighborValue = value; NotifyPropertyChanged("LandNeighborValue"); }
         }
+
         private bool landNeighborValue;
 
         /// <summary>
@@ -365,6 +436,7 @@ namespace YuLinTu.Library.Business
             get { return landPurposeValue; }
             set { landPurposeValue = value; NotifyPropertyChanged("LandPurposeValue"); }
         }
+
         private bool landPurposeValue;
 
         /// <summary>
@@ -379,6 +451,7 @@ namespace YuLinTu.Library.Business
             get { return landLevelValue; }
             set { landLevelValue = value; NotifyPropertyChanged("LandLevelValue"); }
         }
+
         private bool landLevelValue;
 
         /// <summary>
@@ -393,6 +466,7 @@ namespace YuLinTu.Library.Business
             get { return landTypeValue; }
             set { landTypeValue = value; NotifyPropertyChanged("LandTypeValue"); }
         }
+
         private bool landTypeValue;
 
         /// <summary>
@@ -407,6 +481,7 @@ namespace YuLinTu.Library.Business
             get { return isFarmerLandValue; }
             set { isFarmerLandValue = value; NotifyPropertyChanged("IsFarmerLandValue"); }
         }
+
         private bool isFarmerLandValue;
 
         /// <summary>
@@ -421,6 +496,7 @@ namespace YuLinTu.Library.Business
             get { return referPersonValue; }
             set { referPersonValue = value; NotifyPropertyChanged("ReferPersonValue"); }
         }
+
         private bool referPersonValue;
 
         /// <summary>
@@ -435,6 +511,7 @@ namespace YuLinTu.Library.Business
             get { return arableTypeValue; }
             set { arableTypeValue = value; NotifyPropertyChanged("ArableTypeValue"); }
         }
+
         private bool arableTypeValue;
 
         /// <summary>
@@ -449,6 +526,7 @@ namespace YuLinTu.Library.Business
             get { return constructModeValue; }
             set { constructModeValue = value; NotifyPropertyChanged("ConstructModeValue"); }
         }
+
         private bool constructModeValue;
 
         /// <summary>
@@ -463,6 +541,7 @@ namespace YuLinTu.Library.Business
             get { return plotNumberValue; }
             set { plotNumberValue = value; NotifyPropertyChanged("PlotNumberValue"); }
         }
+
         private bool plotNumberValue;
 
         /// <summary>
@@ -477,6 +556,7 @@ namespace YuLinTu.Library.Business
             get { return isTransterValue; }
             set { isTransterValue = value; NotifyPropertyChanged("IsTransterValue"); }
         }
+
         private bool isTransterValue;
 
         /// <summary>
@@ -491,6 +571,7 @@ namespace YuLinTu.Library.Business
             get { return transterModeValue; }
             set { transterModeValue = value; NotifyPropertyChanged("TransterModeValue"); }
         }
+
         private bool transterModeValue;
 
         /// <summary>
@@ -505,6 +586,7 @@ namespace YuLinTu.Library.Business
             get { return transterTermValue; }
             set { transterTermValue = value; NotifyPropertyChanged("TransterTermValue"); }
         }
+
         private bool transterTermValue;
 
         /// <summary>
@@ -519,6 +601,7 @@ namespace YuLinTu.Library.Business
             get { return transterAreaValue; }
             set { transterAreaValue = value; NotifyPropertyChanged("TransterTermValue"); }
         }
+
         private bool transterAreaValue;
 
         /// <summary>
@@ -533,6 +616,7 @@ namespace YuLinTu.Library.Business
             get { return platTypeValue; }
             set { platTypeValue = value; NotifyPropertyChanged("PlatTypeValue"); }
         }
+
         private bool platTypeValue;
 
         /// <summary>
@@ -547,6 +631,7 @@ namespace YuLinTu.Library.Business
             get { return managementTypeValue; }
             set { managementTypeValue = value; NotifyPropertyChanged("ManagementTypeValue"); }
         }
+
         private bool managementTypeValue;
 
         /// <summary>
@@ -561,6 +646,7 @@ namespace YuLinTu.Library.Business
             get { return landPlantValue; }
             set { landPlantValue = value; NotifyPropertyChanged("LandPlantValue"); }
         }
+
         private bool landPlantValue;
 
         /// <summary>
@@ -575,6 +661,7 @@ namespace YuLinTu.Library.Business
             get { return sourceNameValue; }
             set { sourceNameValue = value; NotifyPropertyChanged("SourceNameValue"); }
         }
+
         private bool sourceNameValue;
 
         /// <summary>
@@ -589,6 +676,7 @@ namespace YuLinTu.Library.Business
             get { return landLocationValue; }
             set { landLocationValue = value; NotifyPropertyChanged("LandLocationValue"); }
         }
+
         private bool landLocationValue;
 
         /// <summary>
@@ -603,6 +691,7 @@ namespace YuLinTu.Library.Business
             get { return concordValue; }
             set { concordValue = value; NotifyPropertyChanged("ConcordValue"); }
         }
+
         private bool concordValue;
 
         /// <summary>
@@ -617,6 +706,7 @@ namespace YuLinTu.Library.Business
             get { return regeditBookValue; }
             set { regeditBookValue = value; NotifyPropertyChanged("RegeditBookValue"); }
         }
+
         private bool regeditBookValue;
 
         /// <summary>
@@ -631,7 +721,23 @@ namespace YuLinTu.Library.Business
             get { return commentValue; }
             set { commentValue = value; NotifyPropertyChanged("CommentValue"); }
         }
+
         private bool commentValue;
+
+        /// <summary>
+        /// 地块信息修改意见
+        /// </summary>
+        [DisplayLanguage("地块信息修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("地块信息修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "承包方地块信息", Gallery = "调查信息",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool OpinionValue
+        {
+            get { return opinionValue; }
+            set { opinionValue = value; NotifyPropertyChanged("OpinionValue"); }
+        }
+
+        private bool opinionValue;
 
         /// <summary>
         ///承包方名称
@@ -645,6 +751,7 @@ namespace YuLinTu.Library.Business
             get { return secondNameValue; }
             set { secondNameValue = value; NotifyPropertyChanged("SecondNameValue"); }
         }
+
         private bool secondNameValue;
 
         /// <summary>
@@ -659,6 +766,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberValue; }
             set { secondNumberValue = value; NotifyPropertyChanged("SecondNumberValue"); }
         }
+
         private bool secondNumberValue;
 
         /// <summary>
@@ -673,6 +781,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberNameValue; }
             set { secondNumberNameValue = value; NotifyPropertyChanged("SecondNumberNameValue"); }
         }
+
         private bool secondNumberNameValue;
 
         /// <summary>
@@ -687,6 +796,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberGenderValue; }
             set { secondNumberGenderValue = value; NotifyPropertyChanged("SecondNumberGenderValue"); }
         }
+
         private bool secondNumberGenderValue;
 
         /// <summary>
@@ -701,6 +811,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberAgeValue; }
             set { secondNumberAgeValue = value; NotifyPropertyChanged("SecondNumberAgeValue"); }
         }
+
         private bool secondNumberAgeValue;
 
         /// <summary>
@@ -715,6 +826,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberIcnValue; }
             set { secondNumberIcnValue = value; NotifyPropertyChanged("SecondNumberIcnValue"); }
         }
+
         private bool secondNumberIcnValue;
 
         /// <summary>
@@ -729,6 +841,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberRelatioinValue; }
             set { secondNumberRelatioinValue = value; NotifyPropertyChanged("SecondNumberRelatioinValue"); }
         }
+
         private bool secondNumberRelatioinValue;
 
         /// <summary>
@@ -743,6 +856,7 @@ namespace YuLinTu.Library.Business
             get { return secondFamilyCommentValue; }
             set { secondFamilyCommentValue = value; NotifyPropertyChanged("SecondFamilyCommentValue"); }
         }
+
         private bool secondFamilyCommentValue;
 
         /// <summary>
@@ -757,6 +871,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNameValue; }
             set { exPackageNameValue = value; NotifyPropertyChanged("ExPackageNameValue"); }
         }
+
         private bool exPackageNameValue;
 
         /// <summary>
@@ -771,6 +886,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNumberValue; }
             set { exPackageNumberValue = value; NotifyPropertyChanged("ExPackageNumberValue"); }
         }
+
         private bool exPackageNumberValue;
 
         /// <summary>
@@ -785,6 +901,7 @@ namespace YuLinTu.Library.Business
             get { return isDeadedValue; }
             set { isDeadedValue = value; NotifyPropertyChanged("IsDeadedValue"); }
         }
+
         private bool isDeadedValue;
 
         /// <summary>
@@ -799,6 +916,7 @@ namespace YuLinTu.Library.Business
             get { return localMarriedRetreatLandValue; }
             set { localMarriedRetreatLandValue = value; NotifyPropertyChanged("LocalMarriedRetreatLandValue"); }
         }
+
         private bool localMarriedRetreatLandValue;
 
         /// <summary>
@@ -813,6 +931,7 @@ namespace YuLinTu.Library.Business
             get { return peasantsRetreatLandValue; }
             set { peasantsRetreatLandValue = value; NotifyPropertyChanged("PeasantsRetreatLandValue"); }
         }
+
         private bool peasantsRetreatLandValue;
 
         /// <summary>
@@ -827,8 +946,8 @@ namespace YuLinTu.Library.Business
             get { return foreignMarriedRetreatLandValue; }
             set { foreignMarriedRetreatLandValue = value; NotifyPropertyChanged("ForeignMarriedRetreatLandValue"); }
         }
-        private bool foreignMarriedRetreatLandValue;
 
+        private bool foreignMarriedRetreatLandValue;
 
         /// <summary>
         ///民族
@@ -842,6 +961,7 @@ namespace YuLinTu.Library.Business
             get { return secondNationValue; }
             set { secondNationValue = value; NotifyPropertyChanged("SecondNationValue"); }
         }
+
         private bool secondNationValue;
 
         /// <summary>
@@ -856,6 +976,7 @@ namespace YuLinTu.Library.Business
             get { return secondAgeValue; }
             set { secondAgeValue = value; NotifyPropertyChanged("SecondAgeValue"); }
         }
+
         private bool secondAgeValue;
 
         /// <summary>
@@ -870,6 +991,7 @@ namespace YuLinTu.Library.Business
             get { return firstContractorPersonNumberValue; }
             set { firstContractorPersonNumberValue = value; NotifyPropertyChanged("FirstContractorPersonNumberValue"); }
         }
+
         private bool firstContractorPersonNumberValue;
 
         /// <summary>
@@ -884,6 +1006,7 @@ namespace YuLinTu.Library.Business
             get { return firstContractAreaValue; }
             set { firstContractAreaValue = value; NotifyPropertyChanged("FirstContractAreaValue"); }
         }
+
         private bool firstContractAreaValue;
 
         /// <summary>
@@ -898,6 +1021,7 @@ namespace YuLinTu.Library.Business
             get { return secondContractorPersonNumberValue; }
             set { secondContractorPersonNumberValue = value; NotifyPropertyChanged("SecondContractorPersonNumberValue"); }
         }
+
         private bool secondContractorPersonNumberValue;
 
         /// <summary>
@@ -912,6 +1036,7 @@ namespace YuLinTu.Library.Business
             get { return secondExtensionPackAreaValue; }
             set { secondExtensionPackAreaValue = value; NotifyPropertyChanged("SecondExtensionPackAreaValue"); }
         }
+
         private bool secondExtensionPackAreaValue;
 
         /// <summary>
@@ -926,6 +1051,7 @@ namespace YuLinTu.Library.Business
             get { return foodCropAreaValue; }
             set { foodCropAreaValue = value; NotifyPropertyChanged("FoodCropAreaValue"); }
         }
+
         private bool foodCropAreaValue;
 
         /// <summary>
@@ -940,6 +1066,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandNumberValue; }
             set { secondLandNumberValue = value; NotifyPropertyChanged("SecondLandNumberValue"); }
         }
+
         private bool secondLandNumberValue;
 
         /// <summary>
@@ -954,6 +1081,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandNameValue; }
             set { secondLandNameValue = value; NotifyPropertyChanged("SecondLandNameValue"); }
         }
+
         private bool secondLandNameValue;
 
         /// <summary>
@@ -968,6 +1096,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandTypeValue; }
             set { secondLandTypeValue = value; NotifyPropertyChanged("SecondLandTypeValue"); }
         }
+
         private bool secondLandTypeValue;
 
         /// <summary>
@@ -982,6 +1111,7 @@ namespace YuLinTu.Library.Business
             get { return secondTableAreaValue; }
             set { secondTableAreaValue = value; NotifyPropertyChanged("SecondTableAreaValue"); }
         }
+
         private bool secondTableAreaValue;
 
         /// <summary>
@@ -996,6 +1126,7 @@ namespace YuLinTu.Library.Business
             get { return secondTotalTableAreaValue; }
             set { secondTotalTableAreaValue = value; NotifyPropertyChanged("SecondTotalTableAreaValue"); }
         }
+
         private bool secondTotalTableAreaValue;
 
         /// <summary>
@@ -1010,6 +1141,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandNeighborValue; }
             set { secondLandNeighborValue = value; NotifyPropertyChanged("SecondLandNeighborValue"); }
         }
+
         private bool secondLandNeighborValue;
 
         /// <summary>
@@ -1024,6 +1156,7 @@ namespace YuLinTu.Library.Business
             get { return secondArableTypeValue; }
             set { secondArableTypeValue = value; NotifyPropertyChanged("SecondArableTypeValue"); }
         }
+
         private bool secondArableTypeValue;
 
         /// <summary>
@@ -1038,6 +1171,7 @@ namespace YuLinTu.Library.Business
             get { return secondIsFarmerLandValue; }
             set { secondIsFarmerLandValue = value; NotifyPropertyChanged("SecondIsFarmerLandValue"); }
         }
+
         private bool secondIsFarmerLandValue;
 
         /// <summary>
@@ -1052,6 +1186,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandPurposeValue; }
             set { secondLandPurposeValue = value; NotifyPropertyChanged("SecondLandPurposeValue"); }
         }
+
         private bool secondLandPurposeValue;
 
         /// <summary>
@@ -1066,6 +1201,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandLevelValue; }
             set { secondLandLevelValue = value; NotifyPropertyChanged("SecondLandLevelValue"); }
         }
+
         private bool secondLandLevelValue;
 
         /// <summary>
@@ -1080,6 +1216,7 @@ namespace YuLinTu.Library.Business
             get { return secondCommentValue; }
             set { secondCommentValue = value; NotifyPropertyChanged("SecondCommentValue"); }
         }
+
         private bool secondCommentValue;
 
         /// <summary>
@@ -1094,6 +1231,7 @@ namespace YuLinTu.Library.Business
             get { return ageValue; }
             set { ageValue = value; NotifyPropertyChanged("AgeValue"); }
         }
+
         private bool ageValue;
 
         /// <summary>
@@ -1108,6 +1246,7 @@ namespace YuLinTu.Library.Business
             get { return nationValue; }
             set { nationValue = value; NotifyPropertyChanged("NationValue"); }
         }
+
         private bool nationValue;
 
         /// <summary>
@@ -1122,6 +1261,7 @@ namespace YuLinTu.Library.Business
             get { return accountNatureValue; }
             set { accountNatureValue = value; NotifyPropertyChanged("AccountNatureValue"); }
         }
+
         private bool accountNatureValue;
 
         /// <summary>
@@ -1136,6 +1276,7 @@ namespace YuLinTu.Library.Business
             get { return isSourceContractorValue; }
             set { isSourceContractorValue = value; NotifyPropertyChanged("IsSourceContractorValue"); }
         }
+
         private bool isSourceContractorValue;
 
         /// <summary>
@@ -1150,6 +1291,7 @@ namespace YuLinTu.Library.Business
             get { return contractorNumberValue; }
             set { contractorNumberValue = value; NotifyPropertyChanged("ContractorNumberValue"); }
         }
+
         private bool contractorNumberValue;
 
         /// <summary>
@@ -1164,6 +1306,7 @@ namespace YuLinTu.Library.Business
             get { return laborNumberValue; }
             set { laborNumberValue = value; NotifyPropertyChanged("LaborNumberValue"); }
         }
+
         private bool laborNumberValue;
 
         /// <summary>
@@ -1178,6 +1321,7 @@ namespace YuLinTu.Library.Business
             get { return cencueCommentValue; }
             set { cencueCommentValue = value; NotifyPropertyChanged("CencueCommentValue"); }
         }
+
         private bool cencueCommentValue;
 
         /// <summary>
@@ -1192,6 +1336,7 @@ namespace YuLinTu.Library.Business
             get { return farmerNatureValue; }
             set { farmerNatureValue = value; NotifyPropertyChanged("FarmerNatureValue"); }
         }
+
         private bool farmerNatureValue;
 
         /// <summary>
@@ -1206,6 +1351,7 @@ namespace YuLinTu.Library.Business
             get { return sourceMoveValue; }
             set { sourceMoveValue = value; NotifyPropertyChanged("SourceMoveValue"); }
         }
+
         private bool sourceMoveValue;
 
         /// <summary>
@@ -1220,6 +1366,7 @@ namespace YuLinTu.Library.Business
             get { return moveTimeValue; }
             set { moveTimeValue = value; NotifyPropertyChanged("MoveTimeValue"); }
         }
+
         private bool moveTimeValue;
 
         /// <summary>
@@ -1234,6 +1381,7 @@ namespace YuLinTu.Library.Business
             get { return moveFormerlyLandTypeValue; }
             set { moveFormerlyLandTypeValue = value; NotifyPropertyChanged("MoveFormerlyLandTypeValue"); }
         }
+
         private bool moveFormerlyLandTypeValue;
 
         /// <summary>
@@ -1248,6 +1396,7 @@ namespace YuLinTu.Library.Business
             get { return allocationPersonValue; }
             set { allocationPersonValue = value; NotifyPropertyChanged("AllocationPersonValue"); }
         }
+
         private bool allocationPersonValue;
 
         /// <summary>
@@ -1262,6 +1411,7 @@ namespace YuLinTu.Library.Business
             get { return moveFormerlyLandAreaValue; }
             set { moveFormerlyLandAreaValue = value; NotifyPropertyChanged("MoveFormerlyLandAreaValue"); }
         }
+
         private bool moveFormerlyLandAreaValue;
 
         /// <summary>
@@ -1276,6 +1426,7 @@ namespace YuLinTu.Library.Business
             get { return isNinetyNineSharePersonValue; }
             set { isNinetyNineSharePersonValue = value; NotifyPropertyChanged("IsNinetyNineSharePersonValue"); }
         }
+
         private bool isNinetyNineSharePersonValue;
 
         /// <summary>
@@ -1290,6 +1441,7 @@ namespace YuLinTu.Library.Business
             get { return postNumberValue; }
             set { postNumberValue = value; NotifyPropertyChanged("PostNumberValue"); }
         }
+
         private bool postNumberValue;
 
         /// <summary>
@@ -1304,6 +1456,7 @@ namespace YuLinTu.Library.Business
             get { return telephoneValue; }
             set { telephoneValue = value; NotifyPropertyChanged("TelephoneValue"); }
         }
+
         private bool telephoneValue;
 
         /// <summary>
@@ -1318,6 +1471,7 @@ namespace YuLinTu.Library.Business
             get { return secondConcordNumberValue; }
             set { secondConcordNumberValue = value; NotifyPropertyChanged("SecondConcordNumberValue"); }
         }
+
         private bool secondConcordNumberValue;
 
         /// <summary>
@@ -1332,6 +1486,7 @@ namespace YuLinTu.Library.Business
             get { return secondWarrantNumberValue; }
             set { secondWarrantNumberValue = value; NotifyPropertyChanged("SecondWarrantNumberValue"); }
         }
+
         private bool secondWarrantNumberValue;
 
         /// <summary>
@@ -1346,6 +1501,7 @@ namespace YuLinTu.Library.Business
             get { return startTimeValue; }
             set { startTimeValue = value; NotifyPropertyChanged("StartTimeValue"); }
         }
+
         private bool startTimeValue;
 
         /// <summary>
@@ -1360,6 +1516,7 @@ namespace YuLinTu.Library.Business
             get { return endTimeValue; }
             set { endTimeValue = value; NotifyPropertyChanged("EndTimeValue"); }
         }
+
         private bool endTimeValue;
 
         /// <summary>
@@ -1374,6 +1531,7 @@ namespace YuLinTu.Library.Business
             get { return constructTypeValue; }
             set { constructTypeValue = value; NotifyPropertyChanged("ConstructTypeValue"); }
         }
+
         private bool constructTypeValue;
 
         /// <summary>
@@ -1388,6 +1546,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyPersonValue; }
             set { familySurveyPersonValue = value; NotifyPropertyChanged("FamilySurveyPersonValue"); }
         }
+
         private bool familySurveyPersonValue;
 
         /// <summary>
@@ -1402,6 +1561,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyDateValue; }
             set { familySurveyDateValue = value; NotifyPropertyChanged("FamilySurveyDateValue"); }
         }
+
         private bool familySurveyDateValue;
 
         /// <summary>
@@ -1416,6 +1576,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyChronicleValue; }
             set { familySurveyChronicleValue = value; NotifyPropertyChanged("FamilySurveyChronicleValue"); }
         }
+
         private bool familySurveyChronicleValue;
 
         /// <summary>
@@ -1430,6 +1591,7 @@ namespace YuLinTu.Library.Business
             get { return familyCheckPersonValue; }
             set { familyCheckPersonValue = value; NotifyPropertyChanged("FamilyCheckPersonValue"); }
         }
+
         private bool familyCheckPersonValue;
 
         /// <summary>
@@ -1444,6 +1606,7 @@ namespace YuLinTu.Library.Business
             get { return familyCheckDateValue; }
             set { familyCheckDateValue = value; NotifyPropertyChanged("FamilyCheckDateValue"); }
         }
+
         private bool familyCheckDateValue;
 
         /// <summary>
@@ -1458,8 +1621,8 @@ namespace YuLinTu.Library.Business
             get { return familyCheckOpinionValue; }
             set { familyCheckOpinionValue = value; NotifyPropertyChanged("FamilyCheckOpinionValue"); }
         }
-        private bool familyCheckOpinionValue;
 
+        private bool familyCheckOpinionValue;
 
         /// <summary>
         ///利用情况
@@ -1473,6 +1636,7 @@ namespace YuLinTu.Library.Business
             get { return useSituationValue; }
             set { useSituationValue = value; NotifyPropertyChanged("UseSituationValue"); }
         }
+
         private bool useSituationValue;
 
         /// <summary>
@@ -1487,6 +1651,7 @@ namespace YuLinTu.Library.Business
             get { return yieldValue; }
             set { yieldValue = value; NotifyPropertyChanged("YieldValue"); }
         }
+
         private bool yieldValue;
 
         /// <summary>
@@ -1501,8 +1666,8 @@ namespace YuLinTu.Library.Business
             get { return outputValueValue; }
             set { outputValueValue = value; NotifyPropertyChanged("OutputValueValue"); }
         }
-        private bool outputValueValue;
 
+        private bool outputValueValue;
 
         /// <summary>
         ///收益情况
@@ -1516,6 +1681,7 @@ namespace YuLinTu.Library.Business
             get { return incomeSituationValue; }
             set { incomeSituationValue = value; NotifyPropertyChanged("IncomeSituationValue"); }
         }
+
         private bool incomeSituationValue;
 
         /// <summary>
@@ -1530,6 +1696,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyPersonValue; }
             set { landSurveyPersonValue = value; NotifyPropertyChanged("LandSurveyPersonValue"); }
         }
+
         private bool landSurveyPersonValue;
 
         /// <summary>
@@ -1544,6 +1711,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyDateValue; }
             set { landSurveyDateValue = value; NotifyPropertyChanged("LandSurveyDateValue"); }
         }
+
         private bool landSurveyDateValue;
 
         /// <summary>
@@ -1558,6 +1726,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyChronicleValue; }
             set { landSurveyChronicleValue = value; NotifyPropertyChanged("LandSurveyChronicleValue"); }
         }
+
         private bool landSurveyChronicleValue;
 
         /// <summary>
@@ -1572,6 +1741,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckPersonValue; }
             set { landCheckPersonValue = value; NotifyPropertyChanged("LandCheckPersonValue"); }
         }
+
         private bool landCheckPersonValue;
 
         /// <summary>
@@ -1586,6 +1756,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckDateValue; }
             set { landCheckDateValue = value; NotifyPropertyChanged("LandCheckDateValue"); }
         }
+
         private bool landCheckDateValue;
 
         /// <summary>
@@ -1600,6 +1771,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckOpinionValue; }
             set { landCheckOpinionValue = value; NotifyPropertyChanged("LandCheckOpinionValue"); }
         }
+
         private bool landCheckOpinionValue;
 
         /// <summary>
@@ -1637,9 +1809,10 @@ namespace YuLinTu.Library.Business
             get { return columnCount; }
             set { columnCount = getColumnCount(); }
         }
+
         private int columnCount;
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -1674,12 +1847,14 @@ namespace YuLinTu.Library.Business
             secondLandNameValue = false;
             plotNumberValue = false;
             actualAreaValue = true;
-            totalActualAreaValue = false;
+            totalActualAreaValue = true;
             awareAreaValue = false;
             totalAwareAreaValue = false;
             motorizeAreaValue = false;
             totalMotorizeAreaValue = false;
             tableAreaValue = true;
+            contractDelayAreaValue = true;
+            totalContractDelayAreaValue = true;
             secondTableAreaValue = false;
             totalTableAreaValue = false;
             secondTotalTableAreaValue = false;
@@ -1690,6 +1865,7 @@ namespace YuLinTu.Library.Business
             sourceNameValue = false;
             landLocationValue = false;
             commentValue = true;
+            OpinionValue = true;
             secondCommentValue = false;
             isFarmerLandValue = true;
             constructModeValue = false;
@@ -1700,6 +1876,7 @@ namespace YuLinTu.Library.Business
             platTypeValue = false;
             telephoneValue = true;
             familyCommentValue = true;
+            FamilyOpinionValue = true;
             secondFamilyCommentValue = false;
             landLevelValue = true;
             landPlantValue = false;
@@ -1761,7 +1938,8 @@ namespace YuLinTu.Library.Business
             yieldValue = false;
             ColumnCount = getColumnCount();
         }
-        #endregion
+
+        #endregion Ctor
 
         /// <summary>
         /// 根据配置初始化列表栏个数
@@ -1805,6 +1983,8 @@ namespace YuLinTu.Library.Business
             count += motorizeAreaValue ? 1 : 0;
             count += totalMotorizeAreaValue ? 1 : 0;
             count += tableAreaValue ? 1 : 0;
+            count += contractDelayAreaValue ? 1 : 0;
+            count += totalContractDelayAreaValue ? 1 : 0;
             count += secondTableAreaValue ? 1 : 0;
             count += totalTableAreaValue ? 1 : 0;
             count += secondTotalTableAreaValue ? 1 : 0;
@@ -1815,6 +1995,7 @@ namespace YuLinTu.Library.Business
             count += sourceNameValue ? 1 : 0;
             count += landLocationValue ? 1 : 0;
             count += commentValue ? 1 : 0;
+            count += opinionValue ? 1 : 0;
             count += secondCommentValue ? 1 : 0;
             count += isFarmerLandValue ? 1 : 0;
             count += constructModeValue ? 1 : 0;
@@ -1825,6 +2006,7 @@ namespace YuLinTu.Library.Business
             count += platTypeValue ? 1 : 0;
             count += telephoneValue ? 1 : 0;
             count += familyCommentValue ? 1 : 0;
+            count += familyOpinionValue ? 1 : 0;
             count += secondFamilyCommentValue ? 1 : 0;
             count += landLevelValue ? 1 : 0;
             count += landPlantValue ? 1 : 0;
@@ -1884,7 +2066,6 @@ namespace YuLinTu.Library.Business
             count += familyCheckOpinionValue ? 1 : 0;
             count += yieldValue ? 1 : 0;
             return count;
-
         }
 
         /// <summary>
@@ -1900,390 +2081,519 @@ namespace YuLinTu.Library.Business
                 case 1:
                     columnName = "A";
                     break;
+
                 case 2:
                     columnName = "B";
                     break;
+
                 case 3:
                     columnName = "C";
                     break;
+
                 case 4:
                     columnName = "D";
                     break;
+
                 case 5:
                     columnName = "E";
                     break;
+
                 case 6:
                     columnName = "F";
                     break;
+
                 case 7:
                     columnName = "G";
                     break;
+
                 case 8:
                     columnName = "H";
                     break;
+
                 case 9:
                     columnName = "I";
                     break;
+
                 case 10:
                     columnName = "J";
                     break;
+
                 case 11:
                     columnName = "K";
                     break;
+
                 case 12:
                     columnName = "L";
                     break;
+
                 case 13:
                     columnName = "M";
                     break;
+
                 case 14:
                     columnName = "N";
                     break;
+
                 case 15:
                     columnName = "O";
                     break;
+
                 case 16:
                     columnName = "P";
                     break;
+
                 case 17:
                     columnName = "Q";
                     break;
+
                 case 18:
                     columnName = "R";
                     break;
+
                 case 19:
                     columnName = "S";
                     break;
+
                 case 20:
                     columnName = "T";
                     break;
+
                 case 21:
                     columnName = "U";
                     break;
+
                 case 22:
                     columnName = "V";
                     break;
+
                 case 23:
                     columnName = "W";
                     break;
+
                 case 24:
                     columnName = "X";
                     break;
+
                 case 25:
                     columnName = "Y";
                     break;
+
                 case 26:
                     columnName = "Z";
                     break;
+
                 case 27:
                     columnName = "AA";
                     break;
+
                 case 28:
                     columnName = "AB";
                     break;
+
                 case 29:
                     columnName = "AC";
                     break;
+
                 case 30:
                     columnName = "AD";
                     break;
+
                 case 31:
                     columnName = "AE";
                     break;
+
                 case 32:
                     columnName = "AF";
                     break;
+
                 case 33:
                     columnName = "AG";
                     break;
+
                 case 34:
                     columnName = "AH";
                     break;
+
                 case 35:
                     columnName = "AI";
                     break;
+
                 case 36:
                     columnName = "AJ";
                     break;
+
                 case 37:
                     columnName = "AK";
                     break;
+
                 case 38:
                     columnName = "AL";
                     break;
+
                 case 39:
                     columnName = "AM";
                     break;
+
                 case 40:
                     columnName = "AN";
                     break;
+
                 case 41:
                     columnName = "AO";
                     break;
+
                 case 42:
                     columnName = "AP";
                     break;
+
                 case 43:
                     columnName = "AQ";
                     break;
+
                 case 44:
                     columnName = "AR";
                     break;
+
                 case 45:
                     columnName = "AS";
                     break;
+
                 case 46:
                     columnName = "AT";
                     break;
+
                 case 47:
                     columnName = "AU";
                     break;
+
                 case 48:
                     columnName = "AV";
                     break;
+
                 case 49:
                     columnName = "AW";
                     break;
+
                 case 50:
                     columnName = "AX";
                     break;
+
                 case 51:
                     columnName = "AY";
                     break;
+
                 case 52:
                     columnName = "AZ";
                     break;
+
                 case 53:
                     columnName = "BA";
                     break;
+
                 case 54:
                     columnName = "BB";
                     break;
+
                 case 55:
                     columnName = "BC";
                     break;
+
                 case 56:
                     columnName = "BD";
                     break;
+
                 case 57:
                     columnName = "BE";
                     break;
+
                 case 58:
                     columnName = "BF";
                     break;
+
                 case 59:
                     columnName = "BG";
                     break;
+
                 case 60:
                     columnName = "BH";
                     break;
+
                 case 61:
                     columnName = "BI";
                     break;
+
                 case 62:
                     columnName = "BJ";
                     break;
+
                 case 63:
                     columnName = "BK";
                     break;
+
                 case 64:
                     columnName = "BL";
                     break;
+
                 case 65:
                     columnName = "BM";
                     break;
+
                 case 66:
                     columnName = "BN";
                     break;
+
                 case 67:
                     columnName = "BO";
                     break;
+
                 case 68:
                     columnName = "BP";
                     break;
+
                 case 69:
                     columnName = "BQ";
                     break;
+
                 case 70:
                     columnName = "BR";
                     break;
+
                 case 71:
                     columnName = "BS";
                     break;
+
                 case 72:
                     columnName = "BT";
                     break;
+
                 case 73:
                     columnName = "BU";
                     break;
+
                 case 74:
                     columnName = "BV";
                     break;
+
                 case 75:
                     columnName = "BW";
                     break;
+
                 case 76:
                     columnName = "BX";
                     break;
+
                 case 77:
                     columnName = "BY";
                     break;
+
                 case 78:
                     columnName = "BZ";
                     break;
+
                 case 79:
                     columnName = "CA";
                     break;
+
                 case 80:
                     columnName = "CB";
                     break;
+
                 case 81:
                     columnName = "CC";
                     break;
+
                 case 82:
                     columnName = "CD";
                     break;
+
                 case 83:
                     columnName = "CE";
                     break;
+
                 case 84:
                     columnName = "CF";
                     break;
+
                 case 85:
                     columnName = "CG";
                     break;
+
                 case 86:
                     columnName = "CH";
                     break;
+
                 case 87:
                     columnName = "CI";
                     break;
+
                 case 88:
                     columnName = "CJ";
                     break;
+
                 case 89:
                     columnName = "CK";
                     break;
+
                 case 90:
                     columnName = "CL";
                     break;
+
                 case 91:
                     columnName = "CM";
                     break;
+
                 case 92:
                     columnName = "CN";
                     break;
+
                 case 93:
                     columnName = "CO";
                     break;
+
                 case 94:
                     columnName = "CP";
                     break;
+
                 case 95:
                     columnName = "CQ";
                     break;
+
                 case 96:
                     columnName = "CR";
                     break;
+
                 case 97:
                     columnName = "CS";
                     break;
+
                 case 98:
                     columnName = "CT";
                     break;
+
                 case 99:
                     columnName = "CU";
                     break;
+
                 case 100:
                     columnName = "CV";
                     break;
+
                 case 101:
                     columnName = "CW";
                     break;
+
                 case 102:
                     columnName = "CX";
                     break;
+
                 case 103:
                     columnName = "CY";
                     break;
+
                 case 104:
                     columnName = "CZ";
                     break;
+
                 case 105:
                     columnName = "DA";
                     break;
+
                 case 106:
                     columnName = "DB";
                     break;
+
                 case 107:
                     columnName = "DC";
                     break;
+
                 case 108:
                     columnName = "DD";
                     break;
+
                 case 109:
                     columnName = "DE";
                     break;
+
                 case 110:
                     columnName = "DF";
                     break;
+
                 case 111:
                     columnName = "DG";
                     break;
+
                 case 112:
                     columnName = "DH";
                     break;
+
                 case 113:
                     columnName = "DI";
                     break;
+
                 case 114:
                     columnName = "DJ";
                     break;
+
                 case 115:
                     columnName = "DK";
                     break;
+
                 case 116:
                     columnName = "DL";
                     break;
+
                 case 117:
                     columnName = "DM";
                     break;
+
                 case 118:
                     columnName = "DN";
                     break;
+
                 case 119:
                     columnName = "DO";
                     break;
+
                 case 120:
                     columnName = "DP";
                     break;
+
                 case 121:
                     columnName = "DQ";
                     break;
+
                 case 122:
                     columnName = "DR";
                     break;
+
                 case 123:
                     columnName = "DS";
                     break;
+
                 case 124:
                     columnName = "DT";
                     break;
+
                 case 125:
                     columnName = "DU";
                     break;
+
                 case 126:
                     columnName = "DV";
                     break;
+
                 case 127:
                     columnName = "DW";
                     break;
+
                 case 128:
                     columnName = "DX";
                     break;
+
                 case 129:
                     columnName = "DY";
                     break;
+
                 case 130:
                     columnName = "DZ";
                     break;
@@ -2338,7 +2648,7 @@ namespace YuLinTu.Library.Business
             var systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
             var profile = systemCenter.GetProfile<PublicityConfirmDefine>();
             var section = profile.GetSection<PublicityConfirmDefine>();
-            return  section.Settings;
+            return section.Settings;
         }
     }
 }

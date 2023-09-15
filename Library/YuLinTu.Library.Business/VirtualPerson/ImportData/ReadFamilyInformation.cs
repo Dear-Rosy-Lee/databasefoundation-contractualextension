@@ -607,6 +607,7 @@ namespace YuLinTu.Library.Business
             }
             person.AccountNature = familyDefine.AccountNatureIndex > 0 ? GetString(allItem[currentIndex, familyDefine.AccountNatureIndex]) : "";
             person.Comment = familyDefine.CommentIndex > 0 ? GetString(allItem[currentIndex, familyDefine.CommentIndex]) : "";
+            person.Opinion = familyDefine.OpinionIndex > 0 ? GetString(allItem[currentIndex, familyDefine.OpinionIndex]) : "";
             person.CencueComment = familyDefine.CencueCommentIndex > 0 ? GetString(allItem[currentIndex, familyDefine.CencueCommentIndex]) : "";
             if (familyDefine.IsSharedLandIndex > 0)
             {

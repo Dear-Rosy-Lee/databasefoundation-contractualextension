@@ -471,7 +471,7 @@ namespace YuLinTu.Library.Controls
                 double virtualPersonActualArea = 0;
                 double virtualPersonTableArea = 0;
                 double virtualPersonAwareArea = 0;
-                double? virtualPersonContractDelayArea = 0;
+                double virtualPersonContractDelayArea = 0;
                 i++;
                 if (!view.IsItemVisible(item))
                 {
@@ -490,14 +490,15 @@ namespace YuLinTu.Library.Controls
                     {
                         landCount++;
                         double tableArea = land.Tag.TableArea == null ? 0 : land.Tag.TableArea.Value;
+                        double contractDelayArea = land.Tag.ContractDelayArea;
                         summaryTableArea += tableArea;
                         summaryActualArea += land.Tag.ActualArea;
                         summaryAwareArea += land.Tag.AwareArea;
-                        summrayContractDelayArea += land.Tag.ContractDelayArea;
+                        summrayContractDelayArea += contractDelayArea;
                         virtualPersonActualArea += land.Tag.ActualArea;
                         virtualPersonTableArea += tableArea;
                         virtualPersonAwareArea += land.Tag.AwareArea;
-                        virtualPersonContractDelayArea += land.Tag.ContractDelayArea;
+                        virtualPersonContractDelayArea += contractDelayArea;
                     }
                 }
                 item.ActualAreaUI = virtualPersonActualArea.AreaFormat(2);
@@ -525,6 +526,7 @@ namespace YuLinTu.Library.Controls
                         summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
                         summaryActualArea = summaryActualArea + Convert.ToDouble(landStock.Sum(o => o.ActualArea));
                         summaryAwareArea = summaryAwareArea + Convert.ToDouble(landStock.Sum(o => o.AwareArea));
+                        summrayContractDelayArea = summrayContractDelayArea + Convert.ToDouble(landStock.Sum(o => o.ContractDelayArea));
                     }
                 }
             }
@@ -534,6 +536,7 @@ namespace YuLinTu.Library.Controls
             AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
             AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
             AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
+            AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(2);
         }
 
         #endregion 获取数据
@@ -874,6 +877,60 @@ namespace YuLinTu.Library.Controls
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
             TaskAccountFiveTableOperation import = new TaskAccountFiveTableOperation();
+            import.Argument = meta;
+            import.Description = taskDes;
+            import.Name = taskName;
+
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
+        }
+
+        private void TaskExportContractDelayAccountExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "",
+          List<VirtualPerson> listPerson = null, int TableType = 1)
+        {
+            DateTime? date = SetPublicyTableDate();
+            if (date == null)
+            {
+                return;
+            }
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
+            List<Zone> allZones = zoneStation.GetAllZones(currentZone);
+
+            TaskAccountFiveTableArgument meta = new TaskAccountFiveTableArgument();
+            meta.IsClear = false;
+            meta.FileName = filePath;
+            meta.ArgType = type;
+            meta.Database = DbContext;
+            meta.CurrentZone = currentZone;
+            meta.VirtualType = virtualType;
+            meta.UserName = "";
+            meta.Date = date;
+            meta.TableType = TableType;
+            meta.SelfAndSubsZones = SelfAndSubsZones;
+            meta.AllZones = allZones;
+            meta.SelectContractor = listPerson;
+            meta.IsShow = true;
+            //if (TableType == 4)
+            //{
+            //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
+            //    meta.ContractLandOutputSurveyDefine = publicityConfirmDefine.ConvertTo<PublicityConfirmDefine>();// (PublicityConfirmDefine)publicityConfirmDefine;
+            //}
+            //else
+            //{
+            //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
+            //}
+            meta.IsBatch = isbatch;
+            meta.DictList = DictList;
+            TaskContractDelayAccountOperation import = new TaskContractDelayAccountOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -1921,12 +1978,15 @@ namespace YuLinTu.Library.Controls
                         }
                         string familyName = ContractLandPersonItemHelper.CreateItemName(CurrentAccountItem.Tag, CurrentAccountItem.Children.Count());
                         string actualArea = ContractLandPersonItemHelper.SumActualArea(CurrentAccountItem);
+
                         string awareArea = ContractLandPersonItemHelper.SumAwareArea(CurrentAccountItem);
                         string tableArea = ContractLandPersonItemHelper.SumTableArea(CurrentAccountItem);
+                        string contractDelayArea = ContractLandPersonItemHelper.SumContractDelayArea(CurrentAccountItem);
                         CurrentAccountItem.Name = familyName;  //改变界面显示承包方名称信息(包含共有的地块数量)
                         CurrentAccountItem.ActualAreaUI = actualArea;   //改变界面显示承包方实测面积信息
                         CurrentAccountItem.AwareAreaUI = awareArea;      //改变界面显示承包方确权面积信息
                         CurrentAccountItem.TableAreaUI = tableArea;      //改变界面显示承包方二轮合同面积信息
+                        CurrentAccountItem.ContractDelayAreaUI = contractDelayArea;
                     }
                     else
                     {
@@ -1943,10 +2003,13 @@ namespace YuLinTu.Library.Controls
                         string acArea = ContractLandPersonItemHelper.SumActualArea(personItem);
                         string awArea = ContractLandPersonItemHelper.SumAwareArea(personItem);
                         string taArea = ContractLandPersonItemHelper.SumTableArea(personItem);
+                        string contractDelayArea = ContractLandPersonItemHelper.SumContractDelayArea(personItem);
+
                         personItem.Name = personName;  //改变界面显示承包方名称信息(包含共有的地块数量)
                         personItem.ActualAreaUI = acArea; //改变界面显示承包方实测面积信息
                         personItem.AwareAreaUI = awArea;  //改变界面显示承包方确权面积信息
                         personItem.TableAreaUI = taArea;  //改变界面显示承包方二轮合同面积信息
+                        personItem.ContractDelayAreaUI = contractDelayArea;
                     }
                 }));
 
@@ -2030,9 +2093,11 @@ namespace YuLinTu.Library.Controls
                     string actualArea = ContractLandPersonItemHelper.SumActualArea(CurrentAccountItem);
                     string awareArea = ContractLandPersonItemHelper.SumAwareArea(CurrentAccountItem);
                     string tableArea = ContractLandPersonItemHelper.SumTableArea(CurrentAccountItem);
+                    string contractDelayArea = ContractLandPersonItemHelper.SumContractDelayArea(CurrentAccountItem);
                     CurrentAccountItem.ActualAreaUI = actualArea;  //更改承包方实测面积显示信息
                     CurrentAccountItem.AwareAreaUI = awareArea;    //更改承包方确权面积显示信息
                     CurrentAccountItem.TableAreaUI = tableArea;    //更改承包方二轮合同面积显示信息
+                    CurrentAccountItem.ContractDelayAreaUI = contractDelayArea;
                     if (CurrentAccountItem.Tag.Name != editPage.CurrentPerson.Name)
                     {
                         //此时改变了当前编辑地块的承包人(要更改界面显示的承包方名称、实测面积和确权面积)
@@ -2050,6 +2115,7 @@ namespace YuLinTu.Library.Controls
                         personItem.ActualAreaUI = ContractLandPersonItemHelper.SumActualArea(personItem);  //实测面积
                         personItem.AwareAreaUI = ContractLandPersonItemHelper.SumAwareArea(personItem);    //确权面积
                         personItem.TableAreaUI = ContractLandPersonItemHelper.SumTableArea(personItem);   //二轮合同面积
+                        personItem.ContractDelayAreaUI = ContractLandPersonItemHelper.SumContractDelayArea(personItem);   //二轮合同面积
                         if (personItem.Children.Count > 0)
                             personItem.Visibility = Visibility.Visible;
 
@@ -2061,6 +2127,7 @@ namespace YuLinTu.Library.Controls
                         CurrentAccountItem.ActualAreaUI = ContractLandPersonItemHelper.SumActualArea(CurrentAccountItem);  //实测面积
                         CurrentAccountItem.AwareAreaUI = ContractLandPersonItemHelper.SumAwareArea(CurrentAccountItem);    //确权面积
                         CurrentAccountItem.TableAreaUI = ContractLandPersonItemHelper.SumTableArea(CurrentAccountItem);    //二轮合同面积
+                        CurrentAccountItem.ContractDelayAreaUI = ContractLandPersonItemHelper.SumContractDelayArea(CurrentAccountItem);    //二轮合同面积
                         if (CurrentAccountItem.Children.Count == 0)
                             CurrentAccountItem.Visibility = Visibility.Collapsed;
                     }
@@ -2208,6 +2275,7 @@ namespace YuLinTu.Library.Controls
                     CurrentAccountItem.AwareAreaUI = ContractLandPersonItemHelper.SumAwareArea(CurrentAccountItem);
                     CurrentAccountItem.ActualAreaUI = ContractLandPersonItemHelper.SumActualArea(CurrentAccountItem);
                     CurrentAccountItem.TableAreaUI = ContractLandPersonItemHelper.SumTableArea(CurrentAccountItem);
+                    CurrentAccountItem.ContractDelayAreaUI = ContractLandPersonItemHelper.SumContractDelayArea(CurrentAccountItem);
                     CurrentAccountItem.Name = ContractLandPersonItemHelper.CreateItemName(CurrentAccountItem.Tag, CurrentAccountItem.Children.Count());
                     if (CurrentAccountItem.Children.Count == 0)
                     {
@@ -3773,6 +3841,55 @@ namespace YuLinTu.Library.Controls
                     ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.CurrentZoneNoLand);
                     return;
                 }
+                TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+            else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
+            {
+                ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+        }
+
+        /// <summary>
+        /// 导出台账调查表-土地承包经营权台账调查表
+        /// </summary>
+        public void ExportAccountLandNameExcel(bool isAccountExcel)
+        {
+            //导出excel表业务类型，默认为承包方调查表
+            int TableType = 1;
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            //批量导出
+            if (currentZone.Level > eZoneLevel.Town)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.VolumnExportZoneError);
+                return;
+            }
+            string markDesc = string.Empty;
+            if (isAccountExcel)
+            {
+                markDesc = ContractAccountInfo.ExportContractAccountSurveyExcel;
+            }
+            else
+            {
+                markDesc = ContractAccountInfo.ExportContractLandSurveyExcel;
+            }
+
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
+
+            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+            {
+                //单个任务
+                if (accountLandItems == null || accountLandItems.Count == 0)
+                {
+                    ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.CurrentZoneNoLand);
+                    return;
+                }
                 TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
             }
@@ -3964,7 +4081,7 @@ namespace YuLinTu.Library.Controls
                 List<VirtualPerson> vps = new List<VirtualPerson>();
 
                 string reInfo = string.Format("从{0}下成功导出{1}条承包方数据!", excelName, 1);
-                string tempPath = TemplateHelper.ExcelTemplate(TemplateFile.ContractLandSurveyExceltemp);
+                string tempPath = TemplateHelper.ExcelTemplate(TemplateFile.SecondTableRealQueryExcel);
                 //string zoneName = GetUinitName(zone);
                 //if (SystemSetDefine.CountryTableHead)
                 //{

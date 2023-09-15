@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +17,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 承包地信息处理
     /// </summary>
-    partial class InitalizeLandSurveyInformation
+    public partial class InitalizeLandSurveyInformation
     {
         #region Methods-Land
 
@@ -56,10 +57,10 @@ namespace YuLinTu.Library.Business
             {
                 ReportErrorInfo(this.ExcelName + string.Format("序号为{0}的地块编码为空!", currentIndex + 1));
             }
-            
+
             land.CadastralNumber = value;
             //验证编号是否存在
-            if (!CheckCadastralNumber(land.CadastralNumber,isCheckLandNumberRepeat) || !CheckCadastralNumber(landFamily, land.CadastralNumber,isCheckLandNumberRepeat))
+            if (!CheckCadastralNumber(land.CadastralNumber, isCheckLandNumberRepeat) || !CheckCadastralNumber(landFamily, land.CadastralNumber, isCheckLandNumberRepeat))
                 return false;
 
             InitializeInnerLand(land, landFamily);
@@ -94,6 +95,7 @@ namespace YuLinTu.Library.Business
             //确权面积
             string awareAreaString = ContractLandImportSurveyDefine.AwareAreaIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.AwareAreaIndex]) : "";
             land.AwareArea = ContractLandImportSurveyDefine.AwareAreaIndex > 0 ? GetDouble(allItem[currentIndex, ContractLandImportSurveyDefine.AwareAreaIndex]) : 0.0;
+
             if (!allowNoWriteAwareArea && string.IsNullOrEmpty(awareAreaString))
             {
                 AddErrorMessage(this.ExcelName + land.OwnerName + "下地块编码为" + (ContractLandImportSurveyDefine.CadastralNumberIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.CadastralNumberIndex]) : "") + " 的承包地确权面积数据填写不完整!");
@@ -104,11 +106,12 @@ namespace YuLinTu.Library.Business
             }
             //机动地面积
             land.MotorizeLandArea = ContractLandImportSurveyDefine.MotorizeAreaIndex > 0 ? GetDouble(allItem[currentIndex, ContractLandImportSurveyDefine.MotorizeAreaIndex]) : 0.0;
+            land.ContractDelayArea = ContractLandImportSurveyDefine.ContractDelayAreaIndex > 0 ? GetDouble(allItem[currentIndex, ContractLandImportSurveyDefine.ContractDelayAreaIndex]) : 0.0;
             //二轮承包地台账
             land.TableArea = ContractLandImportSurveyDefine.TableAreaIndex > 0 ? GetDouble(allItem[currentIndex, ContractLandImportSurveyDefine.TableAreaIndex]) : 0.0;
-            if (allowNoWriteActualArea && land.ActualArea <0.0)
+            if (allowNoWriteActualArea && land.ActualArea < 0.0)
                 land.ActualArea = 0.0;
-            if(!allowNoWriteActualArea && land.ActualArea <= 0.0 && ContractLandImportSurveyDefine.ActualAreaIndex > 0)
+            if (!allowNoWriteActualArea && land.ActualArea <= 0.0 && ContractLandImportSurveyDefine.ActualAreaIndex > 0)
                 AddErrorMessage(this.ExcelName + land.OwnerName + "下地块实测面积填写错误!");
             if (allowNoWriteAwareArea && land.AwareArea < 0.0)
                 land.AwareArea = 0.0;
@@ -161,7 +164,7 @@ namespace YuLinTu.Library.Business
                 {
                     objValue = dictMode.Code;
                 }
-            }           
+            }
             if (!string.IsNullOrEmpty(constructMode) && string.IsNullOrEmpty(objValue))
             {
                 AddErrorMessage(this.ExcelName + land.OwnerName + "下地块承包方式" + constructMode + "填写错误!应是(" + InitalizeEnumDescription(typeof(eConstructMode), 3) + ")其中一种!");
@@ -207,7 +210,7 @@ namespace YuLinTu.Library.Business
             else
             {
                 land.PlatType = objValue != null ? objValue.ToString() :
-                    (listZZLX.Find(c => c.Name == "其它") == null ? ((int)ePlantingType.Other).ToString() : listZZLX.Find(c => c.Name == "其它").Code);  //ePlantingType.Other 
+                    (listZZLX.Find(c => c.Name == "其它") == null ? ((int)ePlantingType.Other).ToString() : listZZLX.Find(c => c.Name == "其它").Code);  //ePlantingType.Other
             }
             string landLevel = ContractLandImportSurveyDefine.LandLevelIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.LandLevelIndex]) : "";
             objValue = string.IsNullOrEmpty(landLevel) ? land.LandLevel :
@@ -217,7 +220,7 @@ namespace YuLinTu.Library.Business
                 AddErrorMessage(this.ExcelName + land.OwnerName + "下地力等级" + landLevel + "填写错误!应是(" + InitalizeEnumDescription(typeof(eContractLandLevel), 3) + ")其中一种!");
             }
             land.LandLevel = objValue != null ? objValue.ToString() : string.Empty;
-            //(listDLDJ.Find(c => c.Name == "未知") == null ? ((int)eContractLandLevel.UnKnow).ToString() : listDLDJ.Find(c => c.Name == "未知").Code);   //eContractLandLevel.UnKnow 
+            //(listDLDJ.Find(c => c.Name == "未知") == null ? ((int)eContractLandLevel.UnKnow).ToString() : listDLDJ.Find(c => c.Name == "未知").Code);   //eContractLandLevel.UnKnow
             string landPurpose = ContractLandImportSurveyDefine.LandPurposeIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.LandPurposeIndex]) : "";
             objValue = string.IsNullOrEmpty(landPurpose) ? land.Purpose :
                (listTDYT.Find(c => c.Name == landPurpose) == null ? null : listTDYT.Find(c => c.Name == landPurpose).Code);
@@ -229,6 +232,7 @@ namespace YuLinTu.Library.Business
                 (listTDYT.Find(c => c.Name == "种植业") == null ? ((int)eLandPurposeType.Planting).ToString() : listTDYT.Find(c => c.Name == "种植业").Code);
             //备注
             land.Comment = ContractLandImportSurveyDefine.CommentIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.CommentIndex]) : "";
+            land.Opinion = ContractLandImportSurveyDefine.OpinionIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.OpinionIndex]) : "";
             SetLandContractType(land);
             //SetFirmStock(land, isNotLand);
             if (TableType == 10)
@@ -276,11 +280,9 @@ namespace YuLinTu.Library.Business
         //    }
         //    catch (Exception)
         //    {
-
         //    }
 
         //}
-
 
         /// <summary>
         /// 初始化枚举类型字符串
@@ -318,8 +320,10 @@ namespace YuLinTu.Library.Business
                     land.ExtendC = string.IsNullOrEmpty(land.ExtendC) ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.IsSharedLandIndex + 8]) : land.ExtendC;//现状地类
                     land.PertainToArea = GetDouble(allItem[currentIndex, ContractLandImportSurveyDefine.IsSharedLandIndex + 9]);//现状面积
                     break;
+
                 case 20:
                     break;
+
                 default:
                     break;
             }
@@ -389,10 +393,13 @@ namespace YuLinTu.Library.Business
             {
                 case "自营":
                     return "1";
+
                 case "租赁":
                     return "2";
+
                 case "转让":
                     return "3";
+
                 case "互换":
                     return "4";
             }
@@ -416,7 +423,7 @@ namespace YuLinTu.Library.Business
             land.LandCategory = this.listDKLB.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "承包地块") == null ? ((int)eLandCategoryType.ContractLand).ToString() : this.listDKLB.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "承包地块").Code;   //eConstructType.ContractLand;
             land.LandScopeLevel = this.listGDPDJ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "未知") == null ? ((int)eLandSlopeLevel.UnKnown).ToString() :
                 this.listGDPDJ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "未知").Code;  //eLandSlopeLevel.UnKnown;
-            land.OwnRightType = this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权") == null ? ((int)eLandPropertyType.Collectived).ToString() : this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权").Code;//eLandPropertyType.Collectived;   
+            land.OwnRightType = this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权") == null ? ((int)eLandPropertyType.Collectived).ToString() : this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权").Code;//eLandPropertyType.Collectived;
             land.ConstructMode = this.listCBJYQQDFS.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "家庭承包") == null ? ((int)eConstructMode.Family).ToString() :
                 this.listCBJYQQDFS.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "家庭承包").Code;
             land.ZoneCode = currentZone.FullCode;
@@ -503,7 +510,7 @@ namespace YuLinTu.Library.Business
             return "3";
         }
 
-        #endregion
+        #endregion Methods-Land
 
         #region Methods-Extend
 
@@ -564,7 +571,7 @@ namespace YuLinTu.Library.Business
             landExpand = null;
         }
 
-        #endregion
+        #endregion Methods-Extend
 
         #region Methods - Concord
 
@@ -864,6 +871,6 @@ namespace YuLinTu.Library.Business
             return landFamily;
         }
 
-        #endregion
+        #endregion Methods - Concord
     }
 }

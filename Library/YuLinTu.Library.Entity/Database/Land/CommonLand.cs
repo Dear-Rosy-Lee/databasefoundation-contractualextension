@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,6 +96,8 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private double awareArea;
 
+        //private double contractDelayArea;
+
         /// <summary>
         /// 地块备注信息
         /// </summary>
@@ -125,7 +128,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         private string neighborNorth;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -235,7 +238,7 @@ namespace YuLinTu.Library.Entity
         {
             get { return zoneCode; }
             set
-            {              
+            {
                 zoneCode = value;
                 NotifyPropertyChanged("ZoneCode");
             }
@@ -339,6 +342,20 @@ namespace YuLinTu.Library.Entity
             }
         }
 
+        ///// <summary>
+        /////延包面积
+        ///// </summary>
+        //[DataColumn("YBMJ")]
+        //public double ContractDelayArea
+        //{
+        //    get { return contractDelayArea; }
+        //    set
+        //    {
+        //        contractDelayArea = value;
+        //        NotifyPropertyChanged("ContractDelayArea");
+        //    }
+        //}
+
         /// <summary>
         /// 备注
         /// </summary>
@@ -423,6 +440,6 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-        #endregion
+        #endregion Properties
     }
 }

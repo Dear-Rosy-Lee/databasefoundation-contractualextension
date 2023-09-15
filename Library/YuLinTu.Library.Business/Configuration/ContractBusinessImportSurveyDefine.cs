@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace YuLinTu.Library.Business
             get { return nameIndex; }
             set { nameIndex = value; NotifyPropertyChanged("NameIndex"); }
         }
+
         private int nameIndex;
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace YuLinTu.Library.Business
             get { return contractorTypeIndex; }
             set { contractorTypeIndex = value; NotifyPropertyChanged("ContractorTypeIndex"); }
         }
+
         private int contractorTypeIndex;
 
         /// <summary>
@@ -57,6 +60,7 @@ namespace YuLinTu.Library.Business
             get { return numberIndex; }
             set { numberIndex = value; NotifyPropertyChanged("NumberIndex"); }
         }
+
         private int numberIndex;
 
         /// <summary>
@@ -71,6 +75,7 @@ namespace YuLinTu.Library.Business
             get { return numberNameIndex; }
             set { numberNameIndex = value; NotifyPropertyChanged("NumberNameIndex"); }
         }
+
         private int numberNameIndex;
 
         /// <summary>
@@ -85,6 +90,7 @@ namespace YuLinTu.Library.Business
             get { return numberGenderIndex; }
             set { numberGenderIndex = value; NotifyPropertyChanged("NumberGenderIndex"); }
         }
+
         private int numberGenderIndex;
 
         /// <summary>
@@ -99,6 +105,7 @@ namespace YuLinTu.Library.Business
             get { return numberAgeIndex; }
             set { numberAgeIndex = value; NotifyPropertyChanged("NumberAgeIndex"); }
         }
+
         private int numberAgeIndex;
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace YuLinTu.Library.Business
             get { return numberCartTypeIndex; }
             set { numberCartTypeIndex = value; NotifyPropertyChanged("NumberCartTypeIndex"); }
         }
+
         private int numberCartTypeIndex;
 
         /// <summary>
@@ -127,6 +135,7 @@ namespace YuLinTu.Library.Business
             get { return numberIcnIndex; }
             set { numberIcnIndex = value; NotifyPropertyChanged("NumberIcnIndex"); }
         }
+
         private int numberIcnIndex;
 
         /// <summary>
@@ -141,6 +150,7 @@ namespace YuLinTu.Library.Business
             get { return numberRelatioinIndex; }
             set { numberRelatioinIndex = value; NotifyPropertyChanged("NumberRelatioinIndex"); }
         }
+
         private int numberRelatioinIndex;
 
         /// <summary>
@@ -155,6 +165,7 @@ namespace YuLinTu.Library.Business
             get { return isSharedLandIndex; }
             set { isSharedLandIndex = value; NotifyPropertyChanged("IsSharedLandIndex"); }
         }
+
         private int isSharedLandIndex;
 
         /// <summary>
@@ -169,7 +180,23 @@ namespace YuLinTu.Library.Business
             get { return familyCommentIndex; }
             set { familyCommentIndex = value; NotifyPropertyChanged("FamilyCommentIndex"); }
         }
+
         private int familyCommentIndex;
+
+        /// <summary>
+        ///共有人信息修改意见
+        /// </summary>
+        [DisplayLanguage("共有人信息修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("共有人信息修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "承包方及家庭成员信息", Gallery = "调查信息",
+           Builder = typeof(PropertyDescriptorBuilderSelector), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public int FamilyOpinionIndex
+        {
+            get { return familyOpinionIndex; }
+            set { familyOpinionIndex = value; NotifyPropertyChanged("FamilyOpinionIndex"); }
+        }
+
+        private int familyOpinionIndex;
 
         /// <summary>
         ///承包方地址
@@ -183,6 +210,7 @@ namespace YuLinTu.Library.Business
             get { return contractorAddressIndex; }
             set { contractorAddressIndex = value; NotifyPropertyChanged("ContractorAddressIndex"); }
         }
+
         private int contractorAddressIndex;
 
         /// <summary>
@@ -197,6 +225,7 @@ namespace YuLinTu.Library.Business
             get { return landNameIndex; }
             set { landNameIndex = value; NotifyPropertyChanged("LandNameIndex"); }
         }
+
         private int landNameIndex;
 
         /// <summary>
@@ -211,6 +240,7 @@ namespace YuLinTu.Library.Business
             get { return cadastralNumberIndex; }
             set { cadastralNumberIndex = value; NotifyPropertyChanged("CadastralNumberIndex"); }
         }
+
         private int cadastralNumberIndex;
 
         /// <summary>
@@ -225,6 +255,7 @@ namespace YuLinTu.Library.Business
             get { return imageNumberIndex; }
             set { imageNumberIndex = value; NotifyPropertyChanged("ImageNumberIndex"); }
         }
+
         private int imageNumberIndex;
 
         /// <summary>
@@ -239,6 +270,7 @@ namespace YuLinTu.Library.Business
             get { return tableAreaIndex; }
             set { tableAreaIndex = value; NotifyPropertyChanged("TableAreaIndex"); }
         }
+
         private int tableAreaIndex;
 
         /// <summary>
@@ -253,6 +285,7 @@ namespace YuLinTu.Library.Business
             get { return actualAreaIndex; }
             set { actualAreaIndex = value; NotifyPropertyChanged("ActualAreaIndex"); }
         }
+
         private int actualAreaIndex;
 
         /// <summary>
@@ -267,6 +300,7 @@ namespace YuLinTu.Library.Business
             get { return eastIndex; }
             set { eastIndex = value; NotifyPropertyChanged("EastIndex"); }
         }
+
         private int eastIndex;
 
         /// <summary>
@@ -281,6 +315,7 @@ namespace YuLinTu.Library.Business
             get { return sourthIndex; }
             set { sourthIndex = value; NotifyPropertyChanged("SourthIndex"); }
         }
+
         private int sourthIndex;
 
         /// <summary>
@@ -295,6 +330,7 @@ namespace YuLinTu.Library.Business
             get { return westIndex; }
             set { westIndex = value; NotifyPropertyChanged("WestIndex"); }
         }
+
         private int westIndex;
 
         /// <summary>
@@ -309,6 +345,7 @@ namespace YuLinTu.Library.Business
             get { return northIndex; }
             set { northIndex = value; NotifyPropertyChanged("NorthIndex"); }
         }
+
         private int northIndex;
 
         /// <summary>
@@ -323,6 +360,7 @@ namespace YuLinTu.Library.Business
             get { return landPurposeIndex; }
             set { landPurposeIndex = value; NotifyPropertyChanged("LandPurposeIndex"); }
         }
+
         private int landPurposeIndex;
 
         /// <summary>
@@ -337,6 +375,7 @@ namespace YuLinTu.Library.Business
             get { return landLevelIndex; }
             set { landLevelIndex = value; NotifyPropertyChanged("LandLevelIndex"); }
         }
+
         private int landLevelIndex;
 
         /// <summary>
@@ -351,6 +390,7 @@ namespace YuLinTu.Library.Business
             get { return landTypeIndex; }
             set { landTypeIndex = value; NotifyPropertyChanged("LandTypeIndex"); }
         }
+
         private int landTypeIndex;
 
         /// <summary>
@@ -365,6 +405,7 @@ namespace YuLinTu.Library.Business
             get { return isFarmerLandIndex; }
             set { isFarmerLandIndex = value; NotifyPropertyChanged("IsFarmerLandIndex"); }
         }
+
         private int isFarmerLandIndex;
 
         /// <summary>
@@ -379,6 +420,7 @@ namespace YuLinTu.Library.Business
             get { return referPersonIndex; }
             set { referPersonIndex = value; NotifyPropertyChanged("ReferPersonIndex"); }
         }
+
         private int referPersonIndex;
 
         /// <summary>
@@ -393,6 +435,7 @@ namespace YuLinTu.Library.Business
             get { return arableTypeIndex; }
             set { arableTypeIndex = value; NotifyPropertyChanged("ArableTypeIndex"); }
         }
+
         private int arableTypeIndex;
 
         /// <summary>
@@ -407,6 +450,7 @@ namespace YuLinTu.Library.Business
             get { return totalTableAreaIndex; }
             set { totalTableAreaIndex = value; NotifyPropertyChanged("TotalTableAreaIndex"); }
         }
+
         private int totalTableAreaIndex;
 
         /// <summary>
@@ -421,6 +465,7 @@ namespace YuLinTu.Library.Business
             get { return totalActualAreaIndex; }
             set { totalActualAreaIndex = value; NotifyPropertyChanged("TotalActualAreaIndex"); }
         }
+
         private int totalActualAreaIndex;
 
         /// <summary>
@@ -435,6 +480,7 @@ namespace YuLinTu.Library.Business
             get { return awareAreaIndex; }
             set { awareAreaIndex = value; NotifyPropertyChanged("AwareAreaIndex"); }
         }
+
         private int awareAreaIndex;
 
         /// <summary>
@@ -449,6 +495,7 @@ namespace YuLinTu.Library.Business
             get { return totalAwareAreaIndex; }
             set { totalAwareAreaIndex = value; NotifyPropertyChanged("TotalAwareAreaIndex"); }
         }
+
         private int totalAwareAreaIndex;
 
         /// <summary>
@@ -463,6 +510,7 @@ namespace YuLinTu.Library.Business
             get { return motorizeAreaIndex; }
             set { motorizeAreaIndex = value; NotifyPropertyChanged("MotorizeAreaIndex"); }
         }
+
         private int motorizeAreaIndex;
 
         /// <summary>
@@ -477,8 +525,38 @@ namespace YuLinTu.Library.Business
             get { return totalMotorizeAreaIndex; }
             set { totalMotorizeAreaIndex = value; NotifyPropertyChanged("TotalMotorizeAreaIndex"); }
         }
+
         private int totalMotorizeAreaIndex;
 
+        /// <summary>
+        ///延包面积
+        /// </summary>
+        [DisplayLanguage("延包面积", IsLanguageName = false)]
+        [DescriptionLanguage("延包面积", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "实测地块信息", Gallery = "调查信息",
+           Builder = typeof(PropertyDescriptorBuilderSelector), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public int ContractDelayAreaIndex
+        {
+            get { return contractDelayAreaIndex; }
+            set { contractDelayAreaIndex = value; NotifyPropertyChanged("ContractDelayAreaIndex"); }
+        }
+
+        private int contractDelayAreaIndex;
+
+        /// <summary>
+        ///延包总面积
+        /// </summary>
+        [DisplayLanguage("延包总面积", IsLanguageName = false)]
+        [DescriptionLanguage("延包总面积", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "实测地块信息", Gallery = "调查信息",
+           Builder = typeof(PropertyDescriptorBuilderSelector), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public int TotalContractDelayAreaIndex
+        {
+            get { return totalContractDelayAreaIndex; }
+            set { totalContractDelayAreaIndex = value; NotifyPropertyChanged("TotalContractDelayAreaIndex"); }
+        }
+
+        private int totalContractDelayAreaIndex;
 
         /// <summary>
         ///地块的承包方式
@@ -492,6 +570,7 @@ namespace YuLinTu.Library.Business
             get { return constructModeIndex; }
             set { constructModeIndex = value; NotifyPropertyChanged("ConstructModeIndex"); }
         }
+
         private int constructModeIndex;
 
         /// <summary>
@@ -506,6 +585,7 @@ namespace YuLinTu.Library.Business
             get { return plotNumberIndex; }
             set { plotNumberIndex = value; NotifyPropertyChanged("PlotNumberIndex"); }
         }
+
         private int plotNumberIndex;
 
         /// <summary>
@@ -520,6 +600,7 @@ namespace YuLinTu.Library.Business
             get { return platTypeIndex; }
             set { platTypeIndex = value; NotifyPropertyChanged("PlatTypeIndex"); }
         }
+
         private int platTypeIndex;
 
         /// <summary>
@@ -534,6 +615,7 @@ namespace YuLinTu.Library.Business
             get { return managementTypeIndex; }
             set { managementTypeIndex = value; NotifyPropertyChanged("ManagementTypeIndex"); }
         }
+
         private int managementTypeIndex;
 
         /// <summary>
@@ -548,6 +630,7 @@ namespace YuLinTu.Library.Business
             get { return landPlantIndex; }
             set { landPlantIndex = value; NotifyPropertyChanged("LandPlantIndex"); }
         }
+
         private int landPlantIndex;
 
         /// <summary>
@@ -562,6 +645,7 @@ namespace YuLinTu.Library.Business
             get { return sourceNameIndex; }
             set { sourceNameIndex = value; NotifyPropertyChanged("SourceNameIndex"); }
         }
+
         private int sourceNameIndex;
 
         /// <summary>
@@ -576,6 +660,7 @@ namespace YuLinTu.Library.Business
             get { return landLocationIndex; }
             set { landLocationIndex = value; NotifyPropertyChanged("LandLocationIndex"); }
         }
+
         private int landLocationIndex;
 
         /// <summary>
@@ -590,6 +675,7 @@ namespace YuLinTu.Library.Business
             get { return sharePersonIndex; }
             set { sharePersonIndex = value; NotifyPropertyChanged("SharePersonIndex"); }
         }
+
         private int sharePersonIndex;
 
         /// <summary>
@@ -604,6 +690,7 @@ namespace YuLinTu.Library.Business
             get { return concordIndex; }
             set { concordIndex = value; NotifyPropertyChanged("ConcordIndex"); }
         }
+
         private int concordIndex;
 
         /// <summary>
@@ -618,6 +705,7 @@ namespace YuLinTu.Library.Business
             get { return regeditBookIndex; }
             set { regeditBookIndex = value; NotifyPropertyChanged("RegeditBookIndex"); }
         }
+
         private int regeditBookIndex;
 
         /// <summary>
@@ -632,6 +720,7 @@ namespace YuLinTu.Library.Business
             get { return isTransterIndex; }
             set { isTransterIndex = value; NotifyPropertyChanged("IsTransterIndex"); }
         }
+
         private int isTransterIndex;
 
         /// <summary>
@@ -646,6 +735,7 @@ namespace YuLinTu.Library.Business
             get { return transterModeIndex; }
             set { transterModeIndex = value; NotifyPropertyChanged("TransterModeIndex"); }
         }
+
         private int transterModeIndex;
 
         /// <summary>
@@ -660,6 +750,7 @@ namespace YuLinTu.Library.Business
             get { return transterTermIndex; }
             set { transterTermIndex = value; NotifyPropertyChanged("TransterTermIndex"); }
         }
+
         private int transterTermIndex;
 
         /// <summary>
@@ -674,6 +765,7 @@ namespace YuLinTu.Library.Business
             get { return transterAreaIndex; }
             set { transterAreaIndex = value; NotifyPropertyChanged("TransterTermIndex"); }
         }
+
         private int transterAreaIndex;
 
         /// <summary>
@@ -688,7 +780,23 @@ namespace YuLinTu.Library.Business
             get { return commentIndex; }
             set { commentIndex = value; NotifyPropertyChanged("CommentIndex"); }
         }
+
         private int commentIndex;
+
+        /// <summary>
+        /// 地块信息修改意见
+        /// </summary>
+        [DisplayLanguage("地块信息修改意见", IsLanguageName = false)]
+        [DescriptionLanguage("地块信息修改意见", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "实测地块信息", Gallery = "调查信息",
+           Builder = typeof(PropertyDescriptorBuilderSelector), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public int OpinionIndex
+        {
+            get { return opinionIndex; }
+            set { opinionIndex = value; NotifyPropertyChanged("OpinionIndex"); }
+        }
+
+        private int opinionIndex;
 
         /// <summary>
         ///承包方名称
@@ -702,6 +810,7 @@ namespace YuLinTu.Library.Business
             get { return secondNameIndex; }
             set { secondNameIndex = value; NotifyPropertyChanged("SecondNameIndex"); }
         }
+
         private int secondNameIndex;
 
         /// <summary>
@@ -716,6 +825,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberIndex; }
             set { secondNumberIndex = value; NotifyPropertyChanged("SecondNumberIndex"); }
         }
+
         private int secondNumberIndex;
 
         /// <summary>
@@ -730,6 +840,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberNameIndex; }
             set { secondNumberNameIndex = value; NotifyPropertyChanged("SecondNumberNameIndex"); }
         }
+
         private int secondNumberNameIndex;
 
         /// <summary>
@@ -744,6 +855,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberGenderIndex; }
             set { secondNumberGenderIndex = value; NotifyPropertyChanged("SecondNumberGenderIndex"); }
         }
+
         private int secondNumberGenderIndex;
 
         /// <summary>
@@ -758,6 +870,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberAgeIndex; }
             set { secondNumberAgeIndex = value; NotifyPropertyChanged("SecondNumberAgeIndex"); }
         }
+
         private int secondNumberAgeIndex;
 
         /// <summary>
@@ -772,6 +885,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberIcnIndex; }
             set { secondNumberIcnIndex = value; NotifyPropertyChanged("SecondNumberIcnIndex"); }
         }
+
         private int secondNumberIcnIndex;
 
         /// <summary>
@@ -786,6 +900,7 @@ namespace YuLinTu.Library.Business
             get { return secondNumberRelatioinIndex; }
             set { secondNumberRelatioinIndex = value; NotifyPropertyChanged("SecondNumberRelatioinIndex"); }
         }
+
         private int secondNumberRelatioinIndex;
 
         /// <summary>
@@ -800,6 +915,7 @@ namespace YuLinTu.Library.Business
             get { return secondFamilyCommentIndex; }
             set { secondFamilyCommentIndex = value; NotifyPropertyChanged("SecondFamilyCommentIndex"); }
         }
+
         private int secondFamilyCommentIndex;
 
         /// <summary>
@@ -814,6 +930,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNameIndex; }
             set { exPackageNameIndex = value; NotifyPropertyChanged("ExPackageNameIndex"); }
         }
+
         private int exPackageNameIndex;
 
         /// <summary>
@@ -828,6 +945,7 @@ namespace YuLinTu.Library.Business
             get { return exPackageNumberIndex; }
             set { exPackageNumberIndex = value; NotifyPropertyChanged("ExPackageNumberIndex"); }
         }
+
         private int exPackageNumberIndex;
 
         /// <summary>
@@ -842,6 +960,7 @@ namespace YuLinTu.Library.Business
             get { return isDeadedIndex; }
             set { isDeadedIndex = value; NotifyPropertyChanged("IsDeadedIndex"); }
         }
+
         private int isDeadedIndex;
 
         /// <summary>
@@ -856,6 +975,7 @@ namespace YuLinTu.Library.Business
             get { return localMarriedRetreatLandIndex; }
             set { localMarriedRetreatLandIndex = value; NotifyPropertyChanged("LocalMarriedRetreatLandIndex"); }
         }
+
         private int localMarriedRetreatLandIndex;
 
         /// <summary>
@@ -870,6 +990,7 @@ namespace YuLinTu.Library.Business
             get { return peasantsRetreatLandIndex; }
             set { peasantsRetreatLandIndex = value; NotifyPropertyChanged("PeasantsRetreatLandIndex"); }
         }
+
         private int peasantsRetreatLandIndex;
 
         /// <summary>
@@ -884,8 +1005,8 @@ namespace YuLinTu.Library.Business
             get { return foreignMarriedRetreatLandIndex; }
             set { foreignMarriedRetreatLandIndex = value; NotifyPropertyChanged("ForeignMarriedRetreatLandIndex"); }
         }
-        private int foreignMarriedRetreatLandIndex;
 
+        private int foreignMarriedRetreatLandIndex;
 
         /// <summary>
         ///民族
@@ -899,6 +1020,7 @@ namespace YuLinTu.Library.Business
             get { return secondNationIndex; }
             set { secondNationIndex = value; NotifyPropertyChanged("SecondNationIndex"); }
         }
+
         private int secondNationIndex;
 
         /// <summary>
@@ -913,6 +1035,7 @@ namespace YuLinTu.Library.Business
             get { return secondAgeIndex; }
             set { secondAgeIndex = value; NotifyPropertyChanged("SecondAgeIndex"); }
         }
+
         private int secondAgeIndex;
 
         /// <summary>
@@ -927,6 +1050,7 @@ namespace YuLinTu.Library.Business
             get { return firstContractorPersonNumberIndex; }
             set { firstContractorPersonNumberIndex = value; NotifyPropertyChanged("FirstContractorPersonNumberIndex"); }
         }
+
         private int firstContractorPersonNumberIndex;
 
         /// <summary>
@@ -941,6 +1065,7 @@ namespace YuLinTu.Library.Business
             get { return firstContractAreaIndex; }
             set { firstContractAreaIndex = value; NotifyPropertyChanged("FirstContractAreaIndex"); }
         }
+
         private int firstContractAreaIndex;
 
         /// <summary>
@@ -955,6 +1080,7 @@ namespace YuLinTu.Library.Business
             get { return secondContractorPersonNumberIndex; }
             set { secondContractorPersonNumberIndex = value; NotifyPropertyChanged("SecondContractorPersonNumberIndex"); }
         }
+
         private int secondContractorPersonNumberIndex;
 
         /// <summary>
@@ -969,6 +1095,7 @@ namespace YuLinTu.Library.Business
             get { return secondExtensionPackAreaIndex; }
             set { secondExtensionPackAreaIndex = value; NotifyPropertyChanged("SecondExtensionPackAreaIndex"); }
         }
+
         private int secondExtensionPackAreaIndex;
 
         /// <summary>
@@ -983,6 +1110,7 @@ namespace YuLinTu.Library.Business
             get { return foodCropAreaIndex; }
             set { foodCropAreaIndex = value; NotifyPropertyChanged("FoodCropAreaIndex"); }
         }
+
         private int foodCropAreaIndex;
 
         /// <summary>
@@ -997,6 +1125,7 @@ namespace YuLinTu.Library.Business
             get { return secondConcordNumberIndex; }
             set { secondConcordNumberIndex = value; NotifyPropertyChanged("SecondConcordNumberIndex"); }
         }
+
         private int secondConcordNumberIndex;
 
         /// <summary>
@@ -1011,6 +1140,7 @@ namespace YuLinTu.Library.Business
             get { return secondWarrantNumberIndex; }
             set { secondWarrantNumberIndex = value; NotifyPropertyChanged("SecondWarrantNumberIndex"); }
         }
+
         private int secondWarrantNumberIndex;
 
         /// <summary>
@@ -1025,6 +1155,7 @@ namespace YuLinTu.Library.Business
             get { return startTimeIndex; }
             set { startTimeIndex = value; NotifyPropertyChanged("StartTimeIndex"); }
         }
+
         private int startTimeIndex;
 
         /// <summary>
@@ -1039,6 +1170,7 @@ namespace YuLinTu.Library.Business
             get { return endTimeIndex; }
             set { endTimeIndex = value; NotifyPropertyChanged("EndTimeIndex"); }
         }
+
         private int endTimeIndex;
 
         /// <summary>
@@ -1053,6 +1185,7 @@ namespace YuLinTu.Library.Business
             get { return constructTypeIndex; }
             set { constructTypeIndex = value; NotifyPropertyChanged("ConstructTypeIndex"); }
         }
+
         private int constructTypeIndex;
 
         /// <summary>
@@ -1067,6 +1200,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandNameIndex; }
             set { secondLandNameIndex = value; NotifyPropertyChanged("SecondLandNameIndex"); }
         }
+
         private int secondLandNameIndex;
 
         /// <summary>
@@ -1081,6 +1215,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandTypeIndex; }
             set { secondLandTypeIndex = value; NotifyPropertyChanged("SecondLandTypeIndex"); }
         }
+
         private int secondLandTypeIndex;
 
         /// <summary>
@@ -1095,6 +1230,7 @@ namespace YuLinTu.Library.Business
             get { return secondTableAreaIndex; }
             set { secondTableAreaIndex = value; NotifyPropertyChanged("SecondTableAreaIndex"); }
         }
+
         private int secondTableAreaIndex;
 
         /// <summary>
@@ -1109,6 +1245,7 @@ namespace YuLinTu.Library.Business
             get { return secondTotalTableAreaIndex; }
             set { secondTotalTableAreaIndex = value; NotifyPropertyChanged("SecondTotalTableAreaIndex"); }
         }
+
         private int secondTotalTableAreaIndex;
 
         /// <summary>
@@ -1123,6 +1260,7 @@ namespace YuLinTu.Library.Business
             get { return secondCommentIndex; }
             set { secondCommentIndex = value; NotifyPropertyChanged("SecondCommentIndex"); }
         }
+
         private int secondCommentIndex;
 
         /// <summary>
@@ -1137,6 +1275,7 @@ namespace YuLinTu.Library.Business
             get { return secondEastIndex; }
             set { secondEastIndex = value; NotifyPropertyChanged("SecondEastIndex"); }
         }
+
         private int secondEastIndex;
 
         /// <summary>
@@ -1151,6 +1290,7 @@ namespace YuLinTu.Library.Business
             get { return secondSourthIndex; }
             set { secondSourthIndex = value; NotifyPropertyChanged("SecondSourthIndex"); }
         }
+
         private int secondSourthIndex;
 
         /// <summary>
@@ -1165,6 +1305,7 @@ namespace YuLinTu.Library.Business
             get { return secondWestIndex; }
             set { secondWestIndex = value; NotifyPropertyChanged("SecondWestIndex"); }
         }
+
         private int secondWestIndex;
 
         /// <summary>
@@ -1179,8 +1320,8 @@ namespace YuLinTu.Library.Business
             get { return secondNorthIndex; }
             set { secondNorthIndex = value; NotifyPropertyChanged("SecondNorthIndex"); }
         }
-        private int secondNorthIndex;
 
+        private int secondNorthIndex;
 
         /// <summary>
         ///地块编码
@@ -1194,6 +1335,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandNumberIndex; }
             set { secondLandNumberIndex = value; NotifyPropertyChanged("SecondLandNumberIndex"); }
         }
+
         private int secondLandNumberIndex;
 
         /// <summary>
@@ -1208,6 +1350,7 @@ namespace YuLinTu.Library.Business
             get { return secondArableTypeIndex; }
             set { secondArableTypeIndex = value; NotifyPropertyChanged("SecondArableTypeIndex"); }
         }
+
         private int secondArableTypeIndex;
 
         /// <summary>
@@ -1222,6 +1365,7 @@ namespace YuLinTu.Library.Business
             get { return secondIsFarmerLandIndex; }
             set { secondIsFarmerLandIndex = value; NotifyPropertyChanged("SecondIsFarmerLandIndex"); }
         }
+
         private int secondIsFarmerLandIndex;
 
         /// <summary>
@@ -1236,6 +1380,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandPurposeIndex; }
             set { secondLandPurposeIndex = value; NotifyPropertyChanged("SecondLandPurposeIndex"); }
         }
+
         private int secondLandPurposeIndex;
 
         /// <summary>
@@ -1250,6 +1395,7 @@ namespace YuLinTu.Library.Business
             get { return secondLandLevelIndex; }
             set { secondLandLevelIndex = value; NotifyPropertyChanged("SecondLandLevelIndex"); }
         }
+
         private int secondLandLevelIndex;
 
         /// <summary>
@@ -1264,6 +1410,7 @@ namespace YuLinTu.Library.Business
             get { return ageIndex; }
             set { ageIndex = value; NotifyPropertyChanged("AgeIndex"); }
         }
+
         private int ageIndex;
 
         /// <summary>
@@ -1278,6 +1425,7 @@ namespace YuLinTu.Library.Business
             get { return nationIndex; }
             set { nationIndex = value; NotifyPropertyChanged("NationIndex"); }
         }
+
         private int nationIndex;
 
         /// <summary>
@@ -1292,6 +1440,7 @@ namespace YuLinTu.Library.Business
             get { return accountNatureIndex; }
             set { accountNatureIndex = value; NotifyPropertyChanged("AccountNatureIndex"); }
         }
+
         private int accountNatureIndex;
 
         /// <summary>
@@ -1306,6 +1455,7 @@ namespace YuLinTu.Library.Business
             get { return farmerNatureIndex; }
             set { farmerNatureIndex = value; NotifyPropertyChanged("FarmerNatureIndex"); }
         }
+
         private int farmerNatureIndex;
 
         /// <summary>
@@ -1320,6 +1470,7 @@ namespace YuLinTu.Library.Business
             get { return isSourceContractorIndex; }
             set { isSourceContractorIndex = value; NotifyPropertyChanged("IsSourceContractorIndex"); }
         }
+
         private int isSourceContractorIndex;
 
         /// <summary>
@@ -1334,6 +1485,7 @@ namespace YuLinTu.Library.Business
             get { return contractorNumberIndex; }
             set { contractorNumberIndex = value; NotifyPropertyChanged("ContractorNumberIndex"); }
         }
+
         private int contractorNumberIndex;
 
         /// <summary>
@@ -1348,6 +1500,7 @@ namespace YuLinTu.Library.Business
             get { return laborNumberIndex; }
             set { laborNumberIndex = value; NotifyPropertyChanged("LaborNumberIndex"); }
         }
+
         private int laborNumberIndex;
 
         /// <summary>
@@ -1362,9 +1515,8 @@ namespace YuLinTu.Library.Business
             get { return cencueCommentIndex; }
             set { cencueCommentIndex = value; NotifyPropertyChanged("CencueCommentIndex"); }
         }
+
         private int cencueCommentIndex;
-
-
 
         /// <summary>
         ///从何处迁入
@@ -1378,6 +1530,7 @@ namespace YuLinTu.Library.Business
             get { return sourceMoveIndex; }
             set { sourceMoveIndex = value; NotifyPropertyChanged("SourceMoveIndex"); }
         }
+
         private int sourceMoveIndex;
 
         /// <summary>
@@ -1392,6 +1545,7 @@ namespace YuLinTu.Library.Business
             get { return moveTimeIndex; }
             set { moveTimeIndex = value; NotifyPropertyChanged("MoveTimeIndex"); }
         }
+
         private int moveTimeIndex;
 
         /// <summary>
@@ -1406,6 +1560,7 @@ namespace YuLinTu.Library.Business
             get { return moveFormerlyLandTypeIndex; }
             set { moveFormerlyLandTypeIndex = value; NotifyPropertyChanged("MoveFormerlyLandTypeIndex"); }
         }
+
         private int moveFormerlyLandTypeIndex;
 
         /// <summary>
@@ -1420,6 +1575,7 @@ namespace YuLinTu.Library.Business
             get { return moveFormerlyLandAreaIndex; }
             set { moveFormerlyLandAreaIndex = value; NotifyPropertyChanged("MoveFormerlyLandAreaIndex"); }
         }
+
         private int moveFormerlyLandAreaIndex;
 
         /// <summary>
@@ -1434,6 +1590,7 @@ namespace YuLinTu.Library.Business
             get { return isNinetyNineSharePersonIndex; }
             set { isNinetyNineSharePersonIndex = value; NotifyPropertyChanged("IsNinetyNineSharePersonIndex"); }
         }
+
         private int isNinetyNineSharePersonIndex;
 
         /// <summary>
@@ -1448,6 +1605,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyPersonIndex; }
             set { familySurveyPersonIndex = value; NotifyPropertyChanged("FamilySurveyPersonIndex"); }
         }
+
         private int familySurveyPersonIndex;
 
         /// <summary>
@@ -1462,6 +1620,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyDateIndex; }
             set { familySurveyDateIndex = value; NotifyPropertyChanged("FamilySurveyDateIndex"); }
         }
+
         private int familySurveyDateIndex;
 
         /// <summary>
@@ -1476,6 +1635,7 @@ namespace YuLinTu.Library.Business
             get { return familySurveyChronicleIndex; }
             set { familySurveyChronicleIndex = value; NotifyPropertyChanged("FamilySurveyChronicleIndex"); }
         }
+
         private int familySurveyChronicleIndex;
 
         /// <summary>
@@ -1490,6 +1650,7 @@ namespace YuLinTu.Library.Business
             get { return familyCheckPersonIndex; }
             set { familyCheckPersonIndex = value; NotifyPropertyChanged("FamilyCheckPersonIndex"); }
         }
+
         private int familyCheckPersonIndex;
 
         /// <summary>
@@ -1504,6 +1665,7 @@ namespace YuLinTu.Library.Business
             get { return familyCheckDateIndex; }
             set { familyCheckDateIndex = value; NotifyPropertyChanged("FamilyCheckDateIndex"); }
         }
+
         private int familyCheckDateIndex;
 
         /// <summary>
@@ -1518,6 +1680,7 @@ namespace YuLinTu.Library.Business
             get { return familyCheckOpinionIndex; }
             set { familyCheckOpinionIndex = value; NotifyPropertyChanged("FamilyCheckOpinionIndex"); }
         }
+
         private int familyCheckOpinionIndex;
 
         /// <summary>
@@ -1532,6 +1695,7 @@ namespace YuLinTu.Library.Business
             get { return postNumberIndex; }
             set { postNumberIndex = value; NotifyPropertyChanged("PostNumberIndex"); }
         }
+
         private int postNumberIndex;
 
         /// <summary>
@@ -1546,6 +1710,7 @@ namespace YuLinTu.Library.Business
             get { return telephoneIndex; }
             set { telephoneIndex = value; NotifyPropertyChanged("TelephoneIndex"); }
         }
+
         private int telephoneIndex;
 
         /// <summary>
@@ -1560,6 +1725,7 @@ namespace YuLinTu.Library.Business
             get { return allocationPersonIndex; }
             set { allocationPersonIndex = value; NotifyPropertyChanged("AllocationPersonIndex"); }
         }
+
         private int allocationPersonIndex;
 
         /// <summary>
@@ -1574,8 +1740,9 @@ namespace YuLinTu.Library.Business
             get { return vPConstructModeIndex; }
             set { vPConstructModeIndex = value; NotifyPropertyChanged("VPConstructModeIndex"); }
         }
+
         private int vPConstructModeIndex;
-        
+
         /// <summary>
         ///利用情况
         /// </summary>
@@ -1588,6 +1755,7 @@ namespace YuLinTu.Library.Business
             get { return useSituationIndex; }
             set { useSituationIndex = value; NotifyPropertyChanged("UseSituationIndex"); }
         }
+
         private int useSituationIndex;
 
         /// <summary>
@@ -1602,6 +1770,7 @@ namespace YuLinTu.Library.Business
             get { return yieldIndex; }
             set { yieldIndex = value; NotifyPropertyChanged("YieldIndex"); }
         }
+
         private int yieldIndex;
 
         /// <summary>
@@ -1616,6 +1785,7 @@ namespace YuLinTu.Library.Business
             get { return outputValueIndex; }
             set { outputValueIndex = value; NotifyPropertyChanged("OutputValueIndex"); }
         }
+
         private int outputValueIndex;
 
         /// <summary>
@@ -1630,6 +1800,7 @@ namespace YuLinTu.Library.Business
             get { return incomeSituationIndex; }
             set { incomeSituationIndex = value; NotifyPropertyChanged("IncomeSituationIndex"); }
         }
+
         private int incomeSituationIndex;
 
         /// <summary>
@@ -1644,6 +1815,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyPersonIndex; }
             set { landSurveyPersonIndex = value; NotifyPropertyChanged("LandSurveyPersonIndex"); }
         }
+
         private int landSurveyPersonIndex;
 
         /// <summary>
@@ -1658,6 +1830,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyDateIndex; }
             set { landSurveyDateIndex = value; NotifyPropertyChanged("LandSurveyDateIndex"); }
         }
+
         private int landSurveyDateIndex;
 
         /// <summary>
@@ -1672,6 +1845,7 @@ namespace YuLinTu.Library.Business
             get { return landSurveyChronicleIndex; }
             set { landSurveyChronicleIndex = value; NotifyPropertyChanged("LandSurveyChronicleIndex"); }
         }
+
         private int landSurveyChronicleIndex;
 
         /// <summary>
@@ -1686,6 +1860,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckPersonIndex; }
             set { landCheckPersonIndex = value; NotifyPropertyChanged("LandCheckPersonIndex"); }
         }
+
         private int landCheckPersonIndex;
 
         /// <summary>
@@ -1700,6 +1875,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckDateIndex; }
             set { landCheckDateIndex = value; NotifyPropertyChanged("LandCheckDateIndex"); }
         }
+
         private int landCheckDateIndex;
 
         /// <summary>
@@ -1714,6 +1890,7 @@ namespace YuLinTu.Library.Business
             get { return landCheckOpinionIndex; }
             set { landCheckOpinionIndex = value; NotifyPropertyChanged("LandCheckOpinionIndex"); }
         }
+
         private int landCheckOpinionIndex;
 
         /// <summary>
@@ -1751,7 +1928,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -1775,38 +1952,41 @@ namespace YuLinTu.Library.Business
             SecondNumberRelatioinIndex = -1;
             IsSharedLandIndex = 9;
             FamilyCommentIndex = 10;
-            ContractorAddressIndex = 11;
-            PostNumberIndex = 12;
-            TelephoneIndex = 13;
-            FamilySurveyPersonIndex = 14;
-            FamilySurveyDateIndex = 15;
-            FamilySurveyChronicleIndex = 16;
-            FamilyCheckPersonIndex = 17;
-            FamilyCheckDateIndex = 18;
-            FamilyCheckOpinionIndex = 19;
-            LandNameIndex = 20;
-            CadastralNumberIndex = 21;
-            ImageNumberIndex = 22;
-            TableAreaIndex = 23;
-            ActualAreaIndex = 24;
+            FamilyOpinionIndex = 11;
+            ContractorAddressIndex = 12;
+            PostNumberIndex = 13;
+            TelephoneIndex = 14;
+            FamilySurveyPersonIndex = 15;
+            FamilySurveyDateIndex = 16;
+            FamilySurveyChronicleIndex = 17;
+            FamilyCheckPersonIndex = 18;
+            FamilyCheckDateIndex = 19;
+            FamilyCheckOpinionIndex = 120;
+            LandNameIndex = 21;
+            CadastralNumberIndex = 22;
+            ImageNumberIndex = 23;
+            TableAreaIndex = 24;
+            ActualAreaIndex = 25;
+            ContractDelayAreaIndex = 26;
             AwareAreaIndex = -1;   //确权面积
-            EastIndex = 25;
-            NorthIndex = 28;
-            WestIndex = 27;
-            SourthIndex = 26;
-            LandPurposeIndex = 29;
-            LandLevelIndex = 30;
-            LandTypeIndex = 31;
-            IsFarmerLandIndex = 32;
-            ReferPersonIndex = 33;
-            ArableTypeIndex = 34;//地块类别
-            CommentIndex = 35;           
-            LandSurveyPersonIndex = 36;
-            LandSurveyDateIndex = 37;
-            LandSurveyChronicleIndex = 38;
-            LandCheckPersonIndex = 39;
-            LandCheckDateIndex = 40;
-            LandCheckOpinionIndex = 41;
+            EastIndex = 27;
+            SourthIndex = 28;
+            WestIndex = 29;
+            NorthIndex = 30;
+            LandPurposeIndex = 31;
+            LandLevelIndex = 32;
+            LandTypeIndex = 33;
+            IsFarmerLandIndex = 34;
+            ReferPersonIndex = 35;
+            ArableTypeIndex = 36;//地块类别
+            CommentIndex = 37;
+            OpinionIndex = 38;
+            LandSurveyPersonIndex = 39;
+            LandSurveyDateIndex = 40;
+            LandSurveyChronicleIndex = 41;
+            LandCheckPersonIndex = 42;
+            LandCheckDateIndex = 43;
+            LandCheckOpinionIndex = 44;
             SecondFamilyCommentIndex = -1;
             ExPackageNameIndex = -1;
             ExPackageNumberIndex = -1;
@@ -1841,7 +2021,7 @@ namespace YuLinTu.Library.Business
             TransterAreaIndex = -1;
             PlatTypeIndex = -1;
             LandPlantIndex = -1;
-           
+
             SecondCommentIndex = -1;
             AllocationPersonIndex = -1;
             UseSituationIndex = -1;
@@ -1880,7 +2060,8 @@ namespace YuLinTu.Library.Business
             ConstructTypeIndex = -1;//地块的
             VPConstructModeIndex = -1;//人的承包方式
         }
-        #endregion
+
+        #endregion Ctor
 
         #region Methods
 
@@ -2362,6 +2543,6 @@ namespace YuLinTu.Library.Business
             return section.Settings;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

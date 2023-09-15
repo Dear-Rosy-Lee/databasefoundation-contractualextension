@@ -147,6 +147,7 @@ namespace YuLinTu.Library.Business
             person.Relationship = (ContractLandImportSurveyDefine.NumberRelatioinIndex > 0 && ContractLandImportSurveyDefine.NumberRelatioinIndex < columnCount) ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.NumberRelatioinIndex]) : "";
             //备注
             person.Comment = (ContractLandImportSurveyDefine.FamilyCommentIndex > 0 && ContractLandImportSurveyDefine.FamilyCommentIndex < columnCount) ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.FamilyCommentIndex]) : "";
+            person.Opinion = (ContractLandImportSurveyDefine.FamilyOpinionIndex > 0 && ContractLandImportSurveyDefine.FamilyOpinionIndex < columnCount) ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.FamilyOpinionIndex]) : "";
             //名称
             string name = (ContractLandImportSurveyDefine.NumberNameIndex > 0 && ContractLandImportSurveyDefine.NumberNameIndex < columnCount) ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.NumberNameIndex]) : "";
             if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || age != 0 || !string.IsNullOrEmpty(icn)))
