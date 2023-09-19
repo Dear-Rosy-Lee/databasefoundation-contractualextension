@@ -33,7 +33,7 @@ namespace YuLinTu.Library.Business
                     break;
 
                 case 4:
-                    titleName = "农村土地承包经营确权登记公示确认表(村组公示)";
+                    titleName = "第二轮土地承包到期后再延长三十年调查信息公示表";
                     break;
 
                 case 5:
@@ -44,13 +44,13 @@ namespace YuLinTu.Library.Business
             titleName = UnitName + titleName;
             if (!string.IsNullOrEmpty(titleName))
             {
-                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
+                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
             InitalizeRangeValue("A3", "A5", "承包方编号");
             SetRange("A3", "A5", "承包方编号");
             InitalizeRangeValue("B3", "B5", "承包方名称");
             SetRange("B3", "B5", "承包方名称");
-            SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+            SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
             SetRange("A2", "D2", "单位:  " + ExcelName);
             columnIndex = 2;
             columnIndex = WriteContractorTitle(columnIndex);//撰写承包方表头信息
@@ -61,7 +61,7 @@ namespace YuLinTu.Library.Business
             columnIndex = WriteAgricultureLandExpandTitle(columnIndex);//撰写承包地块扩展信息
             columnIndex = WriteSecondLandTitle(columnIndex);//撰写二轮承包地块信息
             columnIndex = WriteLandSurvyeTitle(columnIndex);//撰写地块调查表头
-            if (TableType == 3 || TableType == 5 || TableType==4)
+            if (TableType == 3 || TableType == 5 || TableType == 4)
             {
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "签字人(按印)", true);

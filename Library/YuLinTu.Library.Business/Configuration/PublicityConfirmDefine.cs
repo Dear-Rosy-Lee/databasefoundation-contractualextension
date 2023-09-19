@@ -1853,8 +1853,8 @@ namespace YuLinTu.Library.Business
             motorizeAreaValue = false;
             totalMotorizeAreaValue = false;
             tableAreaValue = true;
-            contractDelayAreaValue = true;
-            totalContractDelayAreaValue = true;
+            contractDelayAreaValue = false;
+            totalContractDelayAreaValue = false;
             secondTableAreaValue = false;
             totalTableAreaValue = false;
             secondTotalTableAreaValue = false;

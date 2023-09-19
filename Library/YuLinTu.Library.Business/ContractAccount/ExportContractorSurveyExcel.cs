@@ -520,6 +520,7 @@ namespace YuLinTu.Library.Business
                     concord = (concords == null || concords.Count == 0) ? new ContractConcord() { ID = Guid.Empty } : concords[0];
                     regeditBook = (concords == null || concords.Count == 0) ? new ContractRegeditBook() { ID = Guid.Empty } : BookColletion.Find(t => t.ID == concords[0].ID);
                     telephoneIndex = WriteContractLand(cs, high, index, item.Telephone);//填写地块信息
+                   
                 }
                 if (contractLandOutputSurveyDefine.ConcordValue || contractLandOutputSurveyDefine.RegeditBookValue)
                 {
@@ -547,6 +548,7 @@ namespace YuLinTu.Library.Business
                                     landArray.Add(land);
                                 }
                                 telephoneIndex = WriteContractLand(landArray, height, cindexx, item.Telephone);//填写地块信息
+                                
                                 landArray.Clear();
                             }
                             cindexx += height;
@@ -554,6 +556,7 @@ namespace YuLinTu.Library.Business
                         }
                         //high += cs.Count - countLand;
                     }
+                  
                     WriteContract(cs, concordHigh, concords);//书写合同信息
                 }
                 WriteLandExpandInformation(cs, cs.Count);
@@ -563,6 +566,10 @@ namespace YuLinTu.Library.Business
                     WriteSecondTableLand(tablelandList, high, tablevp == null ? "" : tablevp.TotalArea);
                 }
                 WriteLandSurveyInformation(cs, cs.Count);
+                if (TableType == 4)
+                {
+                    WriteSignInformation(high, index);
+                }
                 number++;
                 index += high;
                 toolProgress.DynamicProgress(ExcelName + item.Name);
@@ -589,11 +596,12 @@ namespace YuLinTu.Library.Business
                 }
             }
             WriteCount();
+
             if (TableType == 5)
             {
                 WriteLastInformation();
             }
-            SetLineType("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + index);
+            SetLineType("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + index);
         }
 
         /// <summary>
@@ -720,6 +728,12 @@ namespace YuLinTu.Library.Business
                 list.Add(bookNumber);
             }
             return list;
+        }
+
+        private void WriteSignInformation(int hight, int cindexx)
+        {
+            int tempIndex = cindexx;
+            SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex+1) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex+1) + (tempIndex + hight - 1), "");
         }
 
         /// <summary>
