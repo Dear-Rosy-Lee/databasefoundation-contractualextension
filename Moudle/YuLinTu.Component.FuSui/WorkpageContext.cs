@@ -245,7 +245,7 @@ namespace YuLinTu.Component.FuSui
             //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
             //}
             meta.DictList = DictList;
-            TaskContractAccountOperation import = new TaskContractAccountOperation();
+            TaskContractAccountOperationFuSui import = new TaskContractAccountOperationFuSui();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;

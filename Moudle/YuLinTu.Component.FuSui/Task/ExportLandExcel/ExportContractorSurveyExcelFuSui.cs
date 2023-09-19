@@ -7,13 +7,13 @@ using System.IO;
 using System.Collections;
 using YuLinTu.Library.Business;
 
-namespace YuLinTu.Component.NingMing
+namespace YuLinTu.Component.FuSui
 {
     /// <summary>
     /// 承包台账台账调查表
     /// </summary>
     [Serializable]
-    public partial class ExportContractorSurveyExcel : ExportExcelBase
+    public partial class ExportContractorSurveyExcelFuSui : ExportExcelBase
     {
         #region Fields
 
@@ -54,14 +54,14 @@ namespace YuLinTu.Component.NingMing
         private double secondTableArea;//二轮面积之和
         private double secondTotalTableArea;//二轮总面积之和
         private int secondLandCount;//二轮地块合计
-        private PublicityConfirmDefineNingMing contractLandOutputSurveyDefine = PublicityConfirmDefineNingMing.GetIntence();
+        private PublicityConfirmDefineFuSui contractLandOutputSurveyDefine = new PublicityConfirmDefineFuSui();
         private SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
         #endregion Fields
 
         #region Ctor
 
-        public ExportContractorSurveyExcel()
+        public ExportContractorSurveyExcelFuSui()
         {
             SaveFilePath = string.Empty;
             secondTotalTableArea = 0;

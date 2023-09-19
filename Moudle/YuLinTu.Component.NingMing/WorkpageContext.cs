@@ -240,7 +240,7 @@ namespace YuLinTu.Component.NingMing
             //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
             //}
             meta.DictList = DictList;
-            TaskContractAccountOperation import = new TaskContractAccountOperation();
+            TaskContractAccountOperationNingMing import = new TaskContractAccountOperationNingMing();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;

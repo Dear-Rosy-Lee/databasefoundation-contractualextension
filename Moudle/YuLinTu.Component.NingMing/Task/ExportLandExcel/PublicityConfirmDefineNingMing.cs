@@ -1821,7 +1821,7 @@ namespace YuLinTu.Component.NingMing
             secondNameValue = false;
             contractorTypeValue = false;
             numberValue = false;
-            numberNameValue = false;
+            numberNameValue = true;
             secondNumberNameValue = false;
             numberCartTypeValue = false;
             numberIcnValue = true;
@@ -1852,8 +1852,8 @@ namespace YuLinTu.Component.NingMing
             motorizeAreaValue = false;
             totalMotorizeAreaValue = false;
             tableAreaValue = false;
-            ContractDelayAreaValue = false;
-            TotalContractDelayAreaValue = false;
+            contractDelayAreaValue = false;
+            totalContractDelayAreaValue = false;
             secondTableAreaValue = false;
             totalTableAreaValue = false;
             secondTotalTableAreaValue = false;
@@ -1864,7 +1864,7 @@ namespace YuLinTu.Component.NingMing
             sourceNameValue = false;
             landLocationValue = false;
             commentValue = true;
-            OpinionValue = false;
+            opinionValue = false;
             secondCommentValue = false;
             isFarmerLandValue = false;
             constructModeValue = false;

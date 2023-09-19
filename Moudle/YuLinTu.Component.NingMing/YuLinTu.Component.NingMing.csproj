@@ -113,11 +113,11 @@
   <ItemGroup>
     <Compile Include="Entrance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcel.cs" />
-    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelTitle.cs" />
-    <Compile Include="Task\ExportLandExcel\InitalizeContractorSurveyExcel.cs" />
+    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelNingMing.cs" />
+    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelTitleNingMing.cs" />
+    <Compile Include="Task\ExportLandExcel\InitalizeContractorSurveyExcelNingMing.cs" />
     <Compile Include="Task\ExportLandExcel\PublicityConfirmDefineNingMing.cs" />
-    <Compile Include="Task\ExportLandExcel\TaskContractAccountOperation.cs" />
+    <Compile Include="Task\ExportLandExcel\TaskContractAccountOperationNingMing.cs" />
     <Compile Include="WorkpageContext.cs" />
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>

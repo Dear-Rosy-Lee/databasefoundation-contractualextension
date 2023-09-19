@@ -116,11 +116,11 @@
   <ItemGroup>
     <Compile Include="Entrance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcel.cs" />
-    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelTitle.cs" />
-    <Compile Include="Task\ExportLandExcel\InitalizeContractorSurveyExcel.cs" />
+    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelFuSui.cs" />
+    <Compile Include="Task\ExportLandExcel\ExportContractorSurveyExcelTitleFuSui.cs" />
+    <Compile Include="Task\ExportLandExcel\InitalizeContractorSurveyExcelFuSui.cs" />
     <Compile Include="Task\ExportLandExcel\PublicityConfirmDefineFuSui.cs" />
-    <Compile Include="Task\ExportLandExcel\TaskContractAccountOperation.cs" />
+    <Compile Include="Task\ExportLandExcel\TaskContractAccountOperationFuSui.cs" />
     <Compile Include="WorkpageContext.cs" />
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>

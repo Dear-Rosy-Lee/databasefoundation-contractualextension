@@ -27,7 +27,7 @@ namespace YuLinTu.Component.FuSui
     /// <summary>
     /// 土地承包经营权单户确认表/村组公示表/签字表/登记公示表/台账调查表
     /// </summary>
-    public class TaskContractAccountOperation : Task
+    public class TaskContractAccountOperationFuSui : Task
     {
         #region Fields
 
@@ -91,7 +91,7 @@ namespace YuLinTu.Component.FuSui
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TaskContractAccountOperation()
+        public TaskContractAccountOperationFuSui()
         {
         }
 
@@ -432,16 +432,16 @@ namespace YuLinTu.Component.FuSui
                 var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode);
                 var listBooks = bookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
                 string filePath = string.Empty;
-                ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
+                ExportContractorSurveyExcelFuSui export = new ExportContractorSurveyExcelFuSui();
 
                 #region 通过反射等机制定制化具体的业务处理类
 
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
-                    if (temp is ExportContractorSurveyExcel)
+                    if (temp is ExportContractorSurveyExcelFuSui)
                     {
-                        export = (ExportContractorSurveyExcel)temp;
+                        export = (ExportContractorSurveyExcelFuSui)temp;
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
@@ -520,7 +520,7 @@ namespace YuLinTu.Component.FuSui
                     Int32.TryParse(item.FamilyNumber, out familyNumber);
                     this.ReportProgress(10 + percent * percentIndex, item.Name);
                     ++percentIndex;
-                    using (ExportContractorSurveyExcel export = new ExportContractorSurveyExcel())
+                    using (ExportContractorSurveyExcelFuSui export = new ExportContractorSurveyExcelFuSui())
                     {
                         export.SaveFilePath = fileName + @"\" + familyNumber + "-" + item.Name + "-" + "单户确认表" + ".xls";
                         export.CurrentZone = zone;

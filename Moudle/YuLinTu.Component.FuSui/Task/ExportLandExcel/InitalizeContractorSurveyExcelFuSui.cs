@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 
-namespace YuLinTu.Component.NingMing
+namespace YuLinTu.Component.FuSui
 {
     /// <summary>
     /// 初始化导出数据
     /// </summary>
-    public partial class ExportContractorSurveyExcel
+    public partial class ExportContractorSurveyExcelFuSui
     {
         /// <summary>
         /// 开始书写数据
@@ -1234,11 +1234,6 @@ namespace YuLinTu.Component.NingMing
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), (item.FamilyExpand != null) ? EnumNameAttribute.GetDescription(item.FamilyExpand.ContractorType) : "");//承包方类型
                 }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//证书编号
-                }
                 if (contractLandOutputSurveyDefine.NumberValue)
                 {
                     columnIndex++;
@@ -1355,6 +1350,7 @@ namespace YuLinTu.Component.NingMing
                 familyIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(familyIndex) + index, PublicityConfirmDefine.GetColumnValue(familyIndex) + (index + high - 1), HouseholderName);//户主姓名
             }
+
             if (contractLandOutputSurveyDefine.SecondNumberValue)
             {
                 familyIndex++;
@@ -1376,11 +1372,7 @@ namespace YuLinTu.Component.NingMing
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//合同编号
                 }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//证书编号
-                }
+
                 return;
             }
             if (concords != null && concords.Count == 1)

@@ -18,7 +18,7 @@ namespace YuLinTu.Component.NingMing
     /// <summary>
     /// 土地承包经营权单户确认表/村组公示表/签字表/登记公示表/台账调查表
     /// </summary>
-    public class TaskContractAccountOperation : Task
+    public class TaskContractAccountOperationNingMing : Task
     {
         #region Fields
 
@@ -82,7 +82,7 @@ namespace YuLinTu.Component.NingMing
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TaskContractAccountOperation()
+        public TaskContractAccountOperationNingMing()
         {
         }
 
@@ -423,16 +423,16 @@ namespace YuLinTu.Component.NingMing
                 var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode);
                 var listBooks = bookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
                 string filePath = string.Empty;
-                ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
+                ExportContractorSurveyExcelNingMing export = new ExportContractorSurveyExcelNingMing();
 
                 #region 通过反射等机制定制化具体的业务处理类
 
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
-                    if (temp is ExportContractorSurveyExcel)
+                    if (temp is ExportContractorSurveyExcelNingMing)
                     {
-                        export = (ExportContractorSurveyExcel)temp;
+                        export = (ExportContractorSurveyExcelNingMing)temp;
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
@@ -511,7 +511,7 @@ namespace YuLinTu.Component.NingMing
                     Int32.TryParse(item.FamilyNumber, out familyNumber);
                     this.ReportProgress(10 + percent * percentIndex, item.Name);
                     ++percentIndex;
-                    using (ExportContractorSurveyExcel export = new ExportContractorSurveyExcel())
+                    using (ExportContractorSurveyExcelNingMing export = new ExportContractorSurveyExcelNingMing())
                     {
                         export.SaveFilePath = fileName + @"\" + familyNumber + "-" + item.Name + "-" + "单户确认表" + ".xls";
                         export.CurrentZone = zone;
