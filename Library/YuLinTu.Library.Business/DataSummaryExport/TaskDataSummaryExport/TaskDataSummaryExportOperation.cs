@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,20 +33,25 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private Zone currentZone = null;//当前地域
+
         //private List<Zone> allZones = null;//当前地域，村、镇
         private IDbContext dbContext = null;
+
         private ALLValidateArgument currentZoneExportArgs;//当前地域下需要导出的人地合同权证
         private string vpSavePath = null;//当前承包方保存路径
         private string descZone = null;//到镇的描述
         private ContractBusinessParcelWordSettingDefine ParcelWordSettingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
         private ContractConcordSettingDefine concordSet = ContractConcordSettingDefine.GetIntence();
+
         private SystemSetDefine SystemSet
         {
             get { return SystemSetDefine.GetIntence(); }
         }
-        #endregion
+
+        #endregion Fields
 
         #region Properties
+
         /// <summary>
         /// 数据字典
         /// </summary>
@@ -58,7 +64,8 @@ namespace YuLinTu.Library.Business
                 return dictList;
             }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Methods
 
@@ -111,14 +118,13 @@ namespace YuLinTu.Library.Business
             currentZoneExportArgs = null;
         }
 
-
-        #endregion
+        #endregion Methods - Override
 
         #region Methods - Private
 
         /// <summary>
         /// 验证参数
-        /// </summary>      
+        /// </summary>
         private bool ValidateArgument(TaskDataSummaryExportArgument args)
         {
             if (currentZone.Level > eZoneLevel.Town)
@@ -144,7 +150,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 获取当前地域下要导出的所有人、地、合同、等参数
-        /// </summary>      
+        /// </summary>
         private bool GetALLValidateArgument()
         {
             var VirtualPersonStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
@@ -171,7 +177,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 导出数据模式，分多个人，单个人或分地域组导出
-        /// </summary>       
+        /// </summary>
         private bool SelectExportMode(TaskDataSummaryExportArgument args)
         {
             List<VirtualPerson> exportVitualPersons = new List<VirtualPerson>();
@@ -208,7 +214,7 @@ namespace YuLinTu.Library.Business
                     return false;
                 }
             }
-            ALLValidateArgument vpExportArgs;//获取当前个人的信息   
+            ALLValidateArgument vpExportArgs;//获取当前个人的信息
             int oldper = 0;
             int percentIndex = 1;
             this.ReportInfomation(string.Format("导出{0}的详细汇总文件", currentZone.FullName));
@@ -236,7 +242,7 @@ namespace YuLinTu.Library.Business
                 if (!Directory.Exists(Path.GetDirectoryName(args.FileName + @"\" + selectvp.FamilyNumber + "-" + selectvp.Name)))
                     Directory.CreateDirectory(Path.GetDirectoryName(args.FileName + @"\" + selectvp.FamilyNumber + "-" + selectvp.Name));
                 vpSavePath = args.FileName + @"\" + selectvp.FamilyNumber + "-" + selectvp.Name;
-                bool res = ExportData(selectvp, vpExportArgs);//使用底层开始导出  
+                bool res = ExportData(selectvp, vpExportArgs);//使用底层开始导出
                 if (res == false) continue;
                 percentIndex++;
             }
@@ -255,10 +261,9 @@ namespace YuLinTu.Library.Business
             base.OpenResult();
         }
 
-
         /// <summary>
         /// 导出数据，单个人及其信息
-        /// </summary>       
+        /// </summary>
         private bool ExportData(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             bool result = true;
@@ -266,6 +271,7 @@ namespace YuLinTu.Library.Business
             //根据选择的参数导出表格
 
             #region 导出个人表格集合
+
             try
             {
                 if (args.ExportDataSummaryTableTypes.ExportContractConcord)
@@ -346,15 +352,15 @@ namespace YuLinTu.Library.Business
                 }
             }
             return result;
-            #endregion
 
+            #endregion 导出个人表格集合
         }
 
         #region Methods - exportHelper-单个文件导出底层
 
         /// <summary>
         /// 导出承包合同
-        /// </summary>       
+        /// </summary>
         private bool ExportContractConcord(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             var args = Argument as TaskDataSummaryExportArgument;
@@ -382,6 +388,7 @@ namespace YuLinTu.Library.Business
                     ExportContractConcord exportConcord = new ExportContractConcord(dbContext);
 
                     #region 通过反射等机制定制化具体的业务处理类
+
                     var temp = WorksheetConfigHelper.GetInstance(exportConcord);
                     if (temp != null && temp.TemplatePath != null)
                     {
@@ -391,7 +398,8 @@ namespace YuLinTu.Library.Business
                         }
                         templatePath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
-                    #endregion
+
+                    #endregion 通过反射等机制定制化具体的业务处理类
 
                     exportConcord.CurrentZone = currentZone;
                     exportConcord.AreaType = concordSet.ChooseArea;
@@ -441,14 +449,17 @@ namespace YuLinTu.Library.Business
                 var otherConcord = concords.Find(c => c.ArableLandType != ((int)eConstructMode.Family).ToString());
                 var otherBook = otherConcord == null ? null : vpExportArgs.zoneContractRegeditBooks.Find(c => c.ID == otherConcord.ID);
                 ContractWarrantPrinter printContract = new ContractWarrantPrinter();
+
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(printContract);
                 if (temp != null && temp is ContractWarrantPrinter)
                 {
                     printContract = (ContractWarrantPrinter)temp;
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 printContract.dbContext = args.Database;
                 printContract.CurrentZone = currentZone;
@@ -482,12 +493,13 @@ namespace YuLinTu.Library.Business
                 return result;
             }
             return result;
-            #endregion
+
+            #endregion Methods - exportHelper-单个文件导出底层
         }
 
         /// <summary>
         /// 导出登记薄
-        /// </summary>       
+        /// </summary>
         private bool ExportRegeditBook(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             var args = Argument as TaskDataSummaryExportArgument;
@@ -517,6 +529,7 @@ namespace YuLinTu.Library.Business
                     ContractRegeditBookWork regeditBookWord = new ContractRegeditBookWork();
 
                     #region 通过反射等机制定制化具体的业务处理类
+
                     var temp = WorksheetConfigHelper.GetInstance(regeditBookWord);
                     if (temp != null && temp.TemplatePath != null)
                     {
@@ -526,7 +539,8 @@ namespace YuLinTu.Library.Business
                         }
                         tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
-                    #endregion
+
+                    #endregion 通过反射等机制定制化具体的业务处理类
 
                     regeditBookWord.DictList = args.DictList;
                     regeditBookWord.ZoneList = zonelist;
@@ -553,7 +567,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         ///按组导出地块调查表word
-        /// </summary>       
+        /// </summary>
         private bool ExportLandSurvyTable(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             bool result = true;
@@ -570,7 +584,6 @@ namespace YuLinTu.Library.Business
                         this.ReportInfomation(string.Format("根据系统设置，不显示导出{0}{1}的地块调查表", descZone, exportVp.Name));
                         return result;
                     }
-
                 }
 
                 string zoneName = GetUinitName(currentZone);
@@ -640,6 +653,7 @@ namespace YuLinTu.Library.Business
                         }
 
                         #region 通过反射等机制定制化具体的业务处理类
+
                         var temp = WorksheetConfigHelper.GetInstance(export);
                         if (temp != null && temp.TemplatePath != null)
                         {
@@ -649,7 +663,8 @@ namespace YuLinTu.Library.Business
                             }
                             tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                         }
-                        #endregion
+
+                        #endregion 通过反射等机制定制化具体的业务处理类
 
                         export.Contractor = exportVp;
                         export.DictList = args.DictList == null ? new List<Dictionary>() : args.DictList;
@@ -730,6 +745,7 @@ namespace YuLinTu.Library.Business
             special = new ExportLandSurveyWordTable();
 
             #region 通过反射等机制定制化具体的业务处理类
+
             var temp = WorksheetConfigHelper.GetInstance(special);
             if (temp != null && temp.TemplatePath != null)
             {
@@ -740,13 +756,15 @@ namespace YuLinTu.Library.Business
                 result = true;
                 //tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
             }
-            #endregion
+
+            #endregion 通过反射等机制定制化具体的业务处理类
+
             return result;
         }
 
         /// <summary>
         /// 导出地块示意图
-        /// </summary>       
+        /// </summary>
         private bool ExportLandWordParcel(List<VirtualPerson> exportVps)
         {
             bool result = false;
@@ -860,6 +878,7 @@ namespace YuLinTu.Library.Business
                     var parcelWord = new ExportContractLandParcelWord(dbContext);
 
                     #region 通过反射等机制定制化具体的业务处理类
+
                     var temp = WorksheetConfigHelper.GetInstance(parcelWord);
                     if (temp != null && temp.TemplatePath != null)
                     {
@@ -869,7 +888,8 @@ namespace YuLinTu.Library.Business
                         }
                         templatePath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
-                    #endregion
+
+                    #endregion 通过反射等机制定制化具体的业务处理类
 
                     parcelWord.ViewOfAllMultiParcel = viewOfAllMultiParcel;
                     parcelWord.ViewOfNeighorParcels = viewOfNeighorParcels;
@@ -917,7 +937,6 @@ namespace YuLinTu.Library.Business
             }
             finally
             {
-
                 listLine.Clear();
                 listLine = null;
                 dictDKLB.Clear();
@@ -941,7 +960,6 @@ namespace YuLinTu.Library.Business
                 GC.WaitForPendingFinalizers();
                 GC.Collect();
             }
-
 
             return result;
         }
@@ -987,10 +1005,9 @@ namespace YuLinTu.Library.Business
             return geoLandCollection;
         }
 
-
         /// <summary>
         /// 导出公示结果归户表
-        /// </summary>       
+        /// </summary>
         private bool ExportPublicDataWord(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             var args = Argument as TaskDataSummaryExportArgument;
@@ -1003,6 +1020,7 @@ namespace YuLinTu.Library.Business
                 ExportPublicityWordTable export = new ExportPublicityWordTable();
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -1012,7 +1030,8 @@ namespace YuLinTu.Library.Business
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 export.CurrentZone = currentZone;
                 export.Contractor = exportVp;
@@ -1037,12 +1056,11 @@ namespace YuLinTu.Library.Business
                 return result;
             }
             return result;
-
         }
 
         /// <summary>
         /// 导出单户申请书
-        /// </summary>       
+        /// </summary>
         private bool ExportSingleRequireBook(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             var args = Argument as TaskDataSummaryExportArgument;
@@ -1090,6 +1108,7 @@ namespace YuLinTu.Library.Business
                 ExportLandRequireBook printBook = new ExportLandRequireBook(vp);
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(printBook);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -1099,7 +1118,9 @@ namespace YuLinTu.Library.Business
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
+
                 printBook.DbContext = dbContext;
                 printBook.CurrentZone = zone;
                 printBook.ConstructMode = typeMode;
@@ -1169,6 +1190,7 @@ namespace YuLinTu.Library.Business
                 return result;
             }
         }
+
         /// <summary>
         /// 获取地域集合
         /// </summary>
@@ -1184,7 +1206,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 导出户主声明书
-        /// </summary>       
+        /// </summary>
         private bool ExportVPApplyBook(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             string templatePath = TemplateHelper.WordTemplate(TemplateFile.VirtualPersonApplyBook);
@@ -1203,6 +1225,7 @@ namespace YuLinTu.Library.Business
                 ExportApplyBook exportFamily = new ExportApplyBook(exportVp);
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(exportFamily);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -1212,7 +1235,8 @@ namespace YuLinTu.Library.Business
                     }
                     templatePath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 exportFamily.Date = args.Date;       //获取日期
                 exportFamily.ZoneName = zoneName;
@@ -1239,7 +1263,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 导出承包方调查表word
-        /// </summary>       
+        /// </summary>
         private bool ExportVPSurvyTable(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             bool result = false;
@@ -1261,8 +1285,8 @@ namespace YuLinTu.Library.Business
 
                 ExportContractorTable export = new ExportContractorTable();
 
-
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -1272,7 +1296,8 @@ namespace YuLinTu.Library.Business
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 export.DictList = args.DictList;
                 export.MarkDesc = descZone;
@@ -1304,7 +1329,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 导出户主委托书
-        /// </summary>       
+        /// </summary>
         private bool ExportVPDelegateBook(VirtualPerson exportVp, ALLValidateArgument vpExportArgs)
         {
             bool result = true;
@@ -1343,13 +1368,15 @@ namespace YuLinTu.Library.Business
             return result;
         }
 
-        #endregion        
+        #endregion Methods - Private
+
+
 
         #region Methods - exportHelper-单个文件组级导出底层
 
         /// <summary>
         ///按组导出地块调查表excel
-        /// </summary>       
+        /// </summary>
         private bool ExportZoneLandSurvyTable()
         {
             bool result = true;
@@ -1368,7 +1395,6 @@ namespace YuLinTu.Library.Business
                     //}
                     //vpList.Clear();
                     vps.RemoveAll(c => c.FamilyExpand.ContractorType != eContractorType.Farmer);
-
                 }
                 string fileType = descZone + "承包地块调查表.xls";
                 string tempPath = TemplateHelper.ExcelTemplate(TemplateFile.ContractLandSurveyExceltemp);
@@ -1388,6 +1414,7 @@ namespace YuLinTu.Library.Business
                 ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -1395,7 +1422,8 @@ namespace YuLinTu.Library.Business
                         export = (ExportContractorSurveyExcel)temp;
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 export.SaveFilePath = args.FileName + @"\" + fileType;
                 export.CurrentZone = currentZone;
@@ -1407,7 +1435,7 @@ namespace YuLinTu.Library.Business
                 export.LandArrays = landArrays;
                 export.ConcordCollection = listConcords;
                 export.BookColletion = listBooks;
-                result = export.BeginExcel(currentZone.FullCode.ToString(), tempPath);
+                result = export.BeginExcel(null, null, currentZone.FullCode.ToString(), tempPath);
                 filePath = export.SaveFilePath;
             }
             catch (Exception ex)
@@ -1426,7 +1454,7 @@ namespace YuLinTu.Library.Business
             return result;
         }
 
-        #endregion
+        #endregion Methods - exportHelper-单个文件组级导出底层
 
         #region Methods-Helper
 
@@ -1441,15 +1469,19 @@ namespace YuLinTu.Library.Business
                 case eVirtualType.Land:
                     templateName = "农村土地承包经营权";
                     break;
+
                 case eVirtualType.Yard:
                     templateName = "集体建设用地使用权";
                     break;
+
                 case eVirtualType.House:
                     templateName = "房屋所有权";
                     break;
+
                 case eVirtualType.Wood:
                     templateName = "林权";
                     break;
+
                 default:
                     break;
             }
@@ -1486,7 +1518,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 进度提示用，导出时获取当前地域的上级地域名称路径到镇级
-        /// </summary>       
+        /// </summary>
         private string ExportZoneListDir(Zone zone, List<Zone> allZones)
         {
             string exportzonedir = string.Empty;
@@ -1543,7 +1575,7 @@ namespace YuLinTu.Library.Business
             return arg.ReturnValue.ToString();
         }
 
-        /// <summary>    
+        /// <summary>
         /// 获取地域集合
         /// </summary>
         public List<Zone> GetParentZone(Zone zone, IDbContext dbContext)
@@ -1556,18 +1588,15 @@ namespace YuLinTu.Library.Business
             return (arg.ReturnValue as List<Zone>);
         }
 
+        #endregion Methods-Helper
 
-        #endregion
-
-        #endregion
-
-
+        #endregion Methods
     }
 
     /// <summary>
     /// 当前地域下导出类需要的所有参数，包括人、地块、权证、合同四类数据
     /// </summary>
-    class ALLValidateArgument
+    internal class ALLValidateArgument
     {
         public List<VirtualPerson> zonevps { set; get; }
         public List<ContractConcord> zoneConcords { set; get; }
@@ -1575,6 +1604,4 @@ namespace YuLinTu.Library.Business
         public List<ContractLand> zoneContractLands { set; get; }
         public CollectivityTissue tissue { set; get; }
     }
-
-
 }

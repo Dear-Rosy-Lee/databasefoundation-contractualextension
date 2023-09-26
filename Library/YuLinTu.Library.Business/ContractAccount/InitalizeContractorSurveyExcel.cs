@@ -18,11 +18,11 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 开始书写数据
         /// </summary>
-        private void BeginWrite()
+        private void BeginWrite(DateTime? time, DateTime? pubTime)
         {
             try
             {
-                WriteTitle();//写标题信息
+                WriteTitle(time, pubTime);//写标题信息
                 WriteContent();//开始写内容
             }
             catch (SystemException ex)
@@ -706,8 +706,6 @@ namespace YuLinTu.Library.Business
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.ActualArea > 0.0 ? ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2) : SystemSet.InitalizeAreaString());//实测面积
                 }
                 ActualAreaCount += land.ActualArea;
-
-                
 
                 //3.25新需求  对于导图之后 没有合同 没有机动地的情况需要手动导出总面积及算出机动地面积
                 if (contractLandOutputSurveyDefine.TotalActualAreaValue)

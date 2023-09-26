@@ -1852,7 +1852,7 @@ namespace YuLinTu.Library.Business
                 export.BookColletion = listBooks;
                 export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                bool result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                bool result = export.BeginExcel(null, null, zone.FullCode.ToString(), tempPath);
                 filePath = export.SaveFilePath;
             }
             catch (Exception ex)
@@ -1908,7 +1908,7 @@ namespace YuLinTu.Library.Business
                         export.Contractor = item;
                         //export.PostProgressEvent +=export_PostProgressEvent;
                         export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                        bool result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                        bool result = export.BeginExcel(null, null, zone.FullCode.ToString(), tempPath);
                         //filePath = export.SaveFilePath;
                         //if (result && selectVirtualPerson.Count == 1)
                         //{
@@ -1967,7 +1967,7 @@ namespace YuLinTu.Library.Business
                     export.NotShow = true;
                     //export.PostProgressEvent +=export_PostProgressEvent;
                     export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                    bool result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                    bool result = export.BeginExcel(null, null, zone.FullCode.ToString(), tempPath);
                     filePath = export.SaveFilePath;
                 }
             }

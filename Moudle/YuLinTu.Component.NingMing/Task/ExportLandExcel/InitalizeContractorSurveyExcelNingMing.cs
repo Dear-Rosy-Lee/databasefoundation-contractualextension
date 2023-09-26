@@ -958,7 +958,7 @@ namespace YuLinTu.Component.NingMing
                 if (contractLandOutputSurveyDefine.CommentValue)
                 {
                     columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.Comment);//备注
+                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.Comment);//备注1
                 }
                 if (contractLandOutputSurveyDefine.OpinionValue)
                 {
@@ -1222,7 +1222,7 @@ namespace YuLinTu.Component.NingMing
         /// <param name="number"></param>
         /// <param name="HouseholderName"></param>
         /// <param name="Count"></param>
-        private void InitalizeContractorInformation(int high, string number, string HouseholderName, string Count, VirtualPerson item)
+        private void InitalizeContractorInformation(int high, string number, string HouseholderName, string Count, VirtualPerson item, List<ContractLand> cs, List<ContractConcord> concords)
         {
             try
             {
@@ -1234,10 +1234,36 @@ namespace YuLinTu.Component.NingMing
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), (item.FamilyExpand != null) ? EnumNameAttribute.GetDescription(item.FamilyExpand.ContractorType) : "");//承包方类型
                 }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
+                if (concords == null || concords.Count == 0)
                 {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//证书编号
+                    if (contractLandOutputSurveyDefine.ConcordValue)
+                    {
+                        columnIndex++;
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//合同编号
+                    }
+                    if (contractLandOutputSurveyDefine.RegeditBookValue)
+                    {
+                        columnIndex++;
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//证书编号
+                    }
+                    return;
+                }
+                if (concords != null && concords.Count == 1)
+                {
+                    if (contractLandOutputSurveyDefine.ConcordValue)
+                    {
+                        columnIndex++;
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), concords[0].ConcordNumber);//合同编号
+                    }
+                    if (contractLandOutputSurveyDefine.RegeditBookValue)
+                    {
+                        columnIndex++;
+                        if (BookColletion != null)
+                        {
+                            Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == concords[0].ID);
+                            SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), book == null ? "" : book.RegeditNumber);//证书编号
+                        }
+                    }
                 }
                 if (contractLandOutputSurveyDefine.NumberValue)
                 {
@@ -1367,72 +1393,9 @@ namespace YuLinTu.Component.NingMing
         /// </summary>
         /// <param name="cs"></param>
         /// <param name="high"></param>
-        private void WriteContract(List<ContractLand> cs, int high, List<ContractConcord> concords)
+        private void WriteContract( int high)
         {
-            if (concords == null || concords.Count == 0)
-            {
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//合同编号
-                }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//证书编号
-                }
-                return;
-            }
-            if (concords != null && concords.Count == 1)
-            {
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), concords[0].ConcordNumber);//合同编号
-                }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    if (BookColletion != null)
-                    {
-                        Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == concords[0].ID);
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), book == null ? "" : book.RegeditNumber);//证书编号
-                    }
-                }
-
-                ActualAreaAllCount += concords[0].CountActualArea;
-                AwareAreaCount += concords[0].CountAwareArea;
-                MotorizeLandAreaCount += concords[0].CountMotorizeLandArea;
-                TotalTableAreaCount += (concords[0].TotalTableArea != null && concords[0].TotalTableArea.HasValue) ? concords[0].TotalTableArea.Value : 0.0;
-                return;
-            }
-            int curCloumnDex = columnIndex;
-            int curIndex = index;
-            foreach (ContractConcord conrd in concords)
-            {
-                columnIndex = curCloumnDex;
-                List<ContractLand> conds = cs.FindAll(ld => (ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == conrd.ID));
-                int height = conds != null ? conds.Count : 0;
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + curIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (curIndex + height - 1), conrd.ConcordNumber);//合同编号
-                }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    if (BookColletion != null)
-                    {
-                        Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == conrd.ID);
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + curIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (curIndex + height - 1), book == null ? "" : book.RegeditNumber);//证书编号
-                    }
-                }
-                curIndex += height;
-                ActualAreaAllCount += conrd.CountActualArea;
-                AwareAreaCount += conrd.CountAwareArea;
-                MotorizeLandAreaCount += conrd.CountMotorizeLandArea;
-                TotalTableAreaCount += (conrd.TotalTableArea != null && conrd.TotalTableArea.HasValue) ? conrd.TotalTableArea.Value : 0.0;
-            }
+           
         }
 
         /// <summary>

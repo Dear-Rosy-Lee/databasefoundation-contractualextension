@@ -1833,7 +1833,7 @@ namespace YuLinTu.Library.Business
             numberRelatioinValue = true;
             secondNumberRelatioinValue = false;
             exPackageNameValue = false;
-            exPackageNumberValue = false;
+            exPackageNumberValue = true;
             isDeadedValue = false;
             localMarriedRetreatLandValue = false;
             peasantsRetreatLandValue = false;
@@ -1844,7 +1844,7 @@ namespace YuLinTu.Library.Business
             cadastralNumberValue = false;
             landNameValue = false;
             secondLandNameValue = false;
-            plotNumberValue = true;
+            plotNumberValue = false;
             actualAreaValue = false;
             totalActualAreaValue = true;
             awareAreaValue = false;
@@ -1852,7 +1852,7 @@ namespace YuLinTu.Library.Business
             motorizeAreaValue = false;
             totalMotorizeAreaValue = false;
             tableAreaValue = false;
-            ContractDelayAreaValue = false;
+            contractDelayAreaValue = false;
             totalContractDelayAreaValue = true;
             secondTableAreaValue = false;
             totalTableAreaValue = false;
@@ -1875,7 +1875,7 @@ namespace YuLinTu.Library.Business
             platTypeValue = false;
             telephoneValue = false;
             familyCommentValue = true;
-            FamilyOpinionValue = false;
+            familyOpinionValue = false;
             secondFamilyCommentValue = false;
             landLevelValue = false;
             landPlantValue = false;

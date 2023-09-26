@@ -288,7 +288,7 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + pindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + pindex, person.Name);//成员姓名
             }
-           
+
             if (contractLandOutputSurveyDefine.IsDeadedValue)
             {
                 columnIndex++;
@@ -607,7 +607,7 @@ namespace YuLinTu.Library.Business
         /// <param name="cs"></param>
         /// <param name="hight"></param>
         /// <param name="telephone"></param>
-        private int WriteContractLand(List<ContractLand> cs, int hight, int cindexx, string telephone)
+        private int WriteContractLand(List<ContractLand> cs, int hight, int cindexx, string telephone, List<ContractConcord> concords)
         {
             if (cs == null || cs.Count < 0)
             {
@@ -624,6 +624,7 @@ namespace YuLinTu.Library.Business
             double tempTotalTableAreaCount = 0.0;//3.25使用 最后需要再次打印
             double tempContractDelayCount = 0.0;
             int curIndex = columnIndex;
+
             foreach (ContractLand land in cs)
             {
                 columnIndex = curIndex;
@@ -634,7 +635,6 @@ namespace YuLinTu.Library.Business
                     AwareAreaCount += land.AwareArea;
                     MotorizeLandAreaCount += land.MotorizeLandArea == null ? land.ActualArea - land.AwareArea : land.MotorizeLandArea.Value;
                     TotalTableAreaCount += land.TableArea == null ? 0.0 : land.TableArea.Value;
-                
                 }
                 //单户的各种总面积
                 tempContractDelayCount += land.ContractDelayArea;
@@ -695,6 +695,32 @@ namespace YuLinTu.Library.Business
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.PlotNumber);//畦数
                 }
+
+                if (concords == null || concords.Count == 0)
+                {
+                    if (contractLandOutputSurveyDefine.ConcordValue)
+                    {
+                        columnIndex++;
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 1) + index, PublicityConfirmDefine.GetColumnValue(columnIndex - 1) + (index + high - 1), "");//合同编号
+                    }
+                }
+                if (concords != null && concords.Count == 1)
+                {
+                    if (contractLandOutputSurveyDefine.ConcordValue)
+                    {
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), concords[0].ConcordNumber);//合同编号
+                    }
+                    if (contractLandOutputSurveyDefine.RegeditBookValue)
+                    {
+                        columnIndex++;
+                        if (BookColletion != null)
+                        {
+                            Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == concords[0].ID);
+                            SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), book == null ? "" : book.RegeditNumber);//证书编号
+                        }
+                    }
+                }
+
                 if (contractLandOutputSurveyDefine.ExPackageNumberValue)
                 {
                     columnIndex++;
@@ -725,8 +751,6 @@ namespace YuLinTu.Library.Business
                 }
                 ActualAreaCount += land.ActualArea;
 
-
-
                 //3.25新需求  对于导图之后 没有合同 没有机动地的情况需要手动导出总面积及算出机动地面积
                 if (contractLandOutputSurveyDefine.TotalActualAreaValue)
                 {
@@ -751,7 +775,7 @@ namespace YuLinTu.Library.Business
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), tempContractDelayCount > 0.0 ? ToolMath.SetNumbericFormat(tempContractDelayCount.ToString(), 2) : SystemSet.InitalizeAreaString());//延包总面积
                 }
-               
+
                 if (contractLandOutputSurveyDefine.MotorizeAreaValue)
                 {
                     columnIndex++;
@@ -884,7 +908,7 @@ namespace YuLinTu.Library.Business
                     }
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, constructMode);//承包方式
                 }
-               
+
                 if (contractLandOutputSurveyDefine.PlatTypeValue)
                 {
                     columnIndex++;
@@ -1369,66 +1393,6 @@ namespace YuLinTu.Library.Business
         /// <param name="high"></param>
         private void WriteContract(List<ContractLand> cs, int high, List<ContractConcord> concords)
         {
-            if (concords == null || concords.Count == 0)
-            {
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//合同编号
-                }
-
-                return;
-            }
-            if (concords != null && concords.Count == 1)
-            {
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), concords[0].ConcordNumber);//合同编号
-                }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    if (BookColletion != null)
-                    {
-                        Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == concords[0].ID);
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), book == null ? "" : book.RegeditNumber);//证书编号
-                    }
-                }
-
-                ActualAreaAllCount += concords[0].CountActualArea;
-                AwareAreaCount += concords[0].CountAwareArea;
-                MotorizeLandAreaCount += concords[0].CountMotorizeLandArea;
-                TotalTableAreaCount += (concords[0].TotalTableArea != null && concords[0].TotalTableArea.HasValue) ? concords[0].TotalTableArea.Value : 0.0;
-                return;
-            }
-            int curCloumnDex = columnIndex;
-            int curIndex = index;
-            foreach (ContractConcord conrd in concords)
-            {
-                columnIndex = curCloumnDex;
-                List<ContractLand> conds = cs.FindAll(ld => (ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == conrd.ID));
-                int height = conds != null ? conds.Count : 0;
-                if (contractLandOutputSurveyDefine.ConcordValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + curIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (curIndex + height - 1), conrd.ConcordNumber);//合同编号
-                }
-                if (contractLandOutputSurveyDefine.RegeditBookValue)
-                {
-                    columnIndex++;
-                    if (BookColletion != null)
-                    {
-                        Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == conrd.ID);
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + curIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (curIndex + height - 1), book == null ? "" : book.RegeditNumber);//证书编号
-                    }
-                }
-                curIndex += height;
-                ActualAreaAllCount += conrd.CountActualArea;
-                AwareAreaCount += conrd.CountAwareArea;
-                MotorizeLandAreaCount += conrd.CountMotorizeLandArea;
-                TotalTableAreaCount += (conrd.TotalTableArea != null && conrd.TotalTableArea.HasValue) ? conrd.TotalTableArea.Value : 0.0;
-            }
         }
 
         /// <summary>

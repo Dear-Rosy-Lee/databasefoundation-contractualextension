@@ -210,26 +210,20 @@ namespace YuLinTu.Library.Business
         {
             List<Person> persons = virtualPerson.SharePersonList;    //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name); //排序共有人，并返回人口集合
-            int index = 1;
+            int rowCount = ListLand.Count - 1;
+            if (rowCount > 0)
+            {
+                InsertTableRow(0, 1, rowCount);
+            }
+            int tableIndex = 1;
+            int startRow = 1;
             foreach (Person person in sharePersons)
             {
-                string name = "bmSharePersonName" + index.ToString();
-                SetBookmarkValue(name, person.Name == virtualPerson.Name ? InitalizeFamilyName(person.Name) : person.Name);//姓名
-                string gender = "bmSharePersonGender" + index.ToString();
-                string sex = person.Gender == eGender.Female ? "女" : (person.Gender == eGender.Male ? "男" : "");
-                SetBookmarkValue(gender, sex);//性别
-                string ageString = "bmSharePersonAge" + index.ToString();
-                SetBookmarkValue(ageString, GetPersonBirthday(person, true));//年龄
-                string relationString = "bmSharePersonRelation" + index.ToString();
-                SetBookmarkValue(relationString, person.Relationship);//家庭关系
-                string icnNumber = "bmSharePersonNumber" + index.ToString();
-                SetBookmarkValue(icnNumber, person.ICN);//身份证号码
-                string comment = "bmSharePersonComment" + index.ToString();
-                if (!string.IsNullOrEmpty(person.Comment))
-                {
-                    SetBookmarkValue(comment, person.Comment);//备注
-                }
-                index++;
+                SetTableCellValue(tableIndex, startRow, 0, person.Name);
+                SetTableCellValue(tableIndex, startRow, 1, person.Relationship);
+                SetTableCellValue(tableIndex, startRow, 2, person.ICN);
+                SetTableCellValue(tableIndex, startRow, 3, person.Comment);
+                startRow++;
             }
         }
 
@@ -550,6 +544,7 @@ namespace YuLinTu.Library.Business
         protected virtual void WriteConcordInfo()
         {
             //WitePersonInformaion();
+            WriteSharePersonValue();
 
             WriteLandInfo();
 

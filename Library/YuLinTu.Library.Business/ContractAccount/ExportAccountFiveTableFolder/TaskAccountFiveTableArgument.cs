@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 台账承包地块参数信息
     /// </summary>
-   public class TaskAccountFiveTableArgument:TaskArgument
+    public class TaskAccountFiveTableArgument : TaskArgument
     {
-       #region Fields
+        #region Fields
 
         private Dictionary landName;
         private Dictionary landLevel;
@@ -48,7 +49,7 @@ namespace YuLinTu.Library.Business
         private bool initialReferPerson;   //是否初始化指界人
         private bool initialReferPersonByOwner;//以地块当前承包方为指界人
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -100,7 +101,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 是否批量
         /// </summary>
-        public bool IsBatch { get; set; }       
+        public bool IsBatch { get; set; }
 
         #region Properties - 导入地块图斑
 
@@ -119,7 +120,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<KeyValue<int, string>> shapeAllcolNameList { get; set; }
 
-        #endregion
+        #endregion Properties - 导入地块图斑
 
         #region Properties - 导入地块图斑
 
@@ -128,7 +129,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<KeyValue<int, string>> DotAllcolNameList { get; set; }
 
-        #endregion
+        #endregion Properties - 导入地块图斑
 
         #region Properties - 初始地块属性信息
 
@@ -339,7 +340,6 @@ namespace YuLinTu.Library.Business
             set { initialReferPerson = value; }
         }
 
-
         /// <summary>
         /// 以地块当前承包方为指界人
         /// </summary>
@@ -349,8 +349,7 @@ namespace YuLinTu.Library.Business
             set { initialReferPersonByOwner = value; }
         }
 
-
-        #endregion
+        #endregion Properties - 初始地块属性信息
 
         #region Properties - 初始地块实测面积和确权面积
 
@@ -364,7 +363,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool ToAwareArea { get; set; }
 
-        #endregion
+        #endregion Properties - 初始地块实测面积和确权面积
 
         #region Properties - 截取承包地块面积小数位
 
@@ -383,16 +382,16 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public int ToAreaSelect { get; set; }
 
-        #endregion
+        #endregion Properties - 截取承包地块面积小数位
 
-        #region  Properties - 初始地块是否为基本农田
+        #region Properties - 初始地块是否为基本农田
 
         /// <summary>
         /// Shape文件路径
         /// </summary>
         public string ShapeFileName { get; set; }
 
-        #endregion
+        #endregion Properties - 初始地块是否为基本农田
 
         /// <summary>
         /// 表格类型
@@ -405,10 +404,19 @@ namespace YuLinTu.Library.Business
         public DateTime? Date { get; set; }
 
         /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? DelcTime { get; set; }
+
+        /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? PubTime { get; set; }
+
+        /// <summary>
         /// 当前选择的承包方
         /// </summary>
         public List<VirtualPerson> SelectContractor { get; set; }
-
 
         /// <summary>
         /// 数据字典
@@ -425,8 +433,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<Zone> AllZones { get; set; }
 
-
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -437,13 +444,12 @@ namespace YuLinTu.Library.Business
         {
             VirtualType = eVirtualType.Land;
         }
+
         /// <summary>
         /// 是否预览
         /// </summary>
         public bool IsShow { get; set; }
-        #endregion
 
-
-
+        #endregion Ctor
     }
 }

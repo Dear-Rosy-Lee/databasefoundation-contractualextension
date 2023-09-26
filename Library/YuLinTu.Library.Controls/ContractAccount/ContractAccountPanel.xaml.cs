@@ -797,7 +797,7 @@ namespace YuLinTu.Library.Controls
                     //    TaskExportContractAccountExcel(type, taskDes, taskName, saveFilePath, null, TableType);
                     //    break;
                     case eContractAccountType.ExportSingleFamilyConfirmExcel:
-                        TaskExportContractAccountExcel(type, taskDes, taskName, saveFilePath, listPerson, TableType);
+                        TaskExportContractAccountExcel(type, null, null, taskDes, taskName, saveFilePath, listPerson, TableType);
                         break;
 
                     case eContractAccountType.ExportSendTableExcel:   //发包方调查表Excel
@@ -838,7 +838,7 @@ namespace YuLinTu.Library.Controls
         /// <param name="filePath"></param>
         /// <param name="listPerson"></param>
         /// <param name="TableType"></param>
-        private void TaskExportContractAccountExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "",
+        private void TaskExportContractAccountExcel(eContractAccountType type, DateTime? time, DateTime? pubTime, string taskDes, string taskName, string filePath = "",
             List<VirtualPerson> listPerson = null, int TableType = 1)
         {
             DateTime? date = SetPublicyTableDate();
@@ -874,8 +874,11 @@ namespace YuLinTu.Library.Controls
             //{
             //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
             //}
+            meta.DelcTime = time;
+            meta.PubTime = pubTime;
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
+
             TaskAccountFiveTableOperation import = new TaskAccountFiveTableOperation();
             import.Argument = meta;
             import.Description = taskDes;
@@ -3890,7 +3893,7 @@ namespace YuLinTu.Library.Controls
                     ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.CurrentZoneNoLand);
                     return;
                 }
-                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, null, null, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
             }
             else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
@@ -3923,7 +3926,7 @@ namespace YuLinTu.Library.Controls
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
-                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportLandRegPubTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, null, null, ContractAccountInfo.ExportLandRegPubTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportLandRegPubTable, ContractAccountInfo.ExportTable, TableType, null);
             }
             else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
@@ -3956,7 +3959,7 @@ namespace YuLinTu.Library.Controls
 
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
-                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportRegSignTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, null, null, ContractAccountInfo.ExportRegSignTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportRegSignTable, ContractAccountInfo.ExportTable, TableType, null);
             }
             else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
@@ -3983,20 +3986,33 @@ namespace YuLinTu.Library.Controls
                 ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.VolumnExportZoneError);
                 return;
             }
-            List<Zone> SelfAndSubsZones = new List<Zone>();
-            var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
-
-            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+            DateTime? delcTime = DateTime.Now;
+            DateTime? pubTime = DateTime.Now;
+            DoubleDateSettingPage page = new DoubleDateSettingPage();
+            page.Workpage = TheWorkPage;
+            TheWorkPage.Page.ShowMessageBox(page, (b, r) =>
             {
-                TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                if (!(bool)b)
+                {
+                    return;
+                }
+                delcTime = page.SetDecTime;
+                pubTime = page.SetPubTime;
+                List<Zone> SelfAndSubsZones = new List<Zone>();
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
-                //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
-            }
-            else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
-            {
-                ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
-            }
+                if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+                {
+                    TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, delcTime, pubTime, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+
+                    //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
+                }
+                else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
+                {
+                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
+                }
+            });
         }
 
         /// <summary>
@@ -4124,7 +4140,7 @@ namespace YuLinTu.Library.Controls
                 export.BookColletion = listBooks;
                 export.LandArrays = landArrays;
                 export.Contractor = selectVirtualPerson;
-                bool result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                bool result = export.BeginExcel(null, null, zone.FullCode.ToString(), tempPath);
                 export.PrintView(savePath);
             }
             catch (Exception ex)

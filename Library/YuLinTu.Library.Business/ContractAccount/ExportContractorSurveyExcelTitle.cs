@@ -19,7 +19,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写标题
         /// </summary>
-        private void WriteTitle()
+        private void WriteTitle(DateTime? time, DateTime? pubTime)
         {
             string titleName = "农村土地承包经营权调查信息表";
             switch (TableType)
@@ -46,11 +46,22 @@ namespace YuLinTu.Library.Business
             {
                 SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
+
+            string delctime = time?.ToString("yyyy年M月dd日");
+            string pubtime = pubTime?.ToString("yyyy年M月d日");
+
             InitalizeRangeValue("A3", "A5", "承包方编号");
             SetRange("A3", "A5", "承包方编号");
             InitalizeRangeValue("B3", "B5", "承包方名称");
             SetRange("B3", "B5", "承包方名称");
-            SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+            if (TableType == 4)
+            {
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, $"日期：{pubtime}-{delctime}");
+            }
+            else
+            {
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+            }
             SetRange("A2", "D2", "单位:  " + ExcelName);
             columnIndex = 2;
             columnIndex = WriteContractorTitle(columnIndex);//撰写承包方表头信息
@@ -78,82 +89,82 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.ContractorTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方类型", true);
             }
             if (contractLandOutputSurveyDefine.NumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭成员数(个)", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭成员数(个)", true);
             }
             if (contractLandOutputSurveyDefine.NumberNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "姓名", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "姓名", true);
             }
             if (contractLandOutputSurveyDefine.NumberGenderValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "性别", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "性别", true);
             }
             if (contractLandOutputSurveyDefine.NumberAgeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "年龄", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "年龄", true);
             }
             if (contractLandOutputSurveyDefine.NumberCartTypeValue)
             {
                 columnIndex++;
-                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证件类型", 15, true);
+                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证件类型", 15, true);
             }
             if (contractLandOutputSurveyDefine.NumberIcnValue)
             {
                 columnIndex++;
-                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证件号码", 20, true);
+                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证件号码", 20, true);
             }
             if (contractLandOutputSurveyDefine.NumberRelatioinValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭关系", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭关系", true);
             }
             if (contractLandOutputSurveyDefine.AgeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出生日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出生日期", true);
             }
             if (contractLandOutputSurveyDefine.NationValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "民族", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "民族", true);
             }
             if (contractLandOutputSurveyDefine.AccountNatureValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户口性质", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户口性质", true);
             }
             if (contractLandOutputSurveyDefine.IsSharedLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否共有人", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否共有人", true);
             }
             if (contractLandOutputSurveyDefine.FamilyCommentValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             if (contractLandOutputSurveyDefine.FamilyOpinionValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "共有人修改意见", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "共有人修改意见", true);
             }
             if (contractLandOutputSurveyDefine.CencueCommentValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户籍备注", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户籍备注", true);
             }
-            if (columnIndex > 2)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(3) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "家庭成员情况（含户主）", true);
-            }
+            //if (columnIndex > 2)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(3) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "家庭成员情况（含户主）", true);
+            //}
             return columnIndex;
         }
 
@@ -168,52 +179,52 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.IsSourceContractorValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否是原承包户", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否是原承包户", true);
             }
             if (contractLandOutputSurveyDefine.ContractorNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "现承包人数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "现承包人数", true);
             }
             if (contractLandOutputSurveyDefine.LaborNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "总劳力数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "总劳力数", true);
             }
             //if (contractLandOutputSurveyDefine.CencueCommentValue)
             //{
             //    columnIndex++;
-            //    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户籍备注", true);
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户籍备注", true);
             //}
             if (contractLandOutputSurveyDefine.FarmerNatureValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "农户性质", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "农户性质", true);
             }
             if (contractLandOutputSurveyDefine.SourceMoveValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "从何处迁入", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "从何处迁入", true);
             }
             if (contractLandOutputSurveyDefine.MoveTimeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入时间", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入时间", true);
             }
             if (contractLandOutputSurveyDefine.MoveFormerlyLandTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入前土地类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入前土地类型", true);
             }
             if (contractLandOutputSurveyDefine.MoveFormerlyLandAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入前土地面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "迁入前土地面积", true);
             }
             if (contractLandOutputSurveyDefine.IsNinetyNineSharePersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否为99年共有人", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否为99年共有人", true);
             }
 
             if ((columnIndex - startIndex) >= 0)
@@ -234,107 +245,107 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.SecondNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主姓名", true);//PersonCount
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主姓名", true);//PersonCount
             }
             if (contractLandOutputSurveyDefine.SecondNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭成员数（个）", true);//PersonCount
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭成员数（个）", true);//PersonCount
             }
             if (contractLandOutputSurveyDefine.SecondNumberNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "姓名", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "姓名", true);
             }
             if (contractLandOutputSurveyDefine.SecondNumberGenderValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "性别", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "性别", true);
             }
             if (contractLandOutputSurveyDefine.SecondNumberAgeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "年龄", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "年龄", true);
             }
             if (contractLandOutputSurveyDefine.SecondNumberIcnValue)
             {
                 columnIndex++;
-                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "身份证号码", 20, true);
+                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "身份证号码", 20, true);
             }
             if (contractLandOutputSurveyDefine.SecondNumberRelatioinValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭关系", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "家庭关系", true);
             }
             if (contractLandOutputSurveyDefine.SecondNationValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "民族", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "民族", true);
             }
             if (contractLandOutputSurveyDefine.SecondAgeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出生日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出生日期", true);
             }
             if (contractLandOutputSurveyDefine.FirstContractorPersonNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "一轮承包人数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "一轮承包人数", true);
             }
             if (contractLandOutputSurveyDefine.FirstContractAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "一轮承包面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "一轮承包面积", true);
             }
             if (contractLandOutputSurveyDefine.SecondContractorPersonNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮承包人数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮承包人数", true);
             }
             if (contractLandOutputSurveyDefine.SecondExtensionPackAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮延包面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮延包面积", true);
             }
             if (contractLandOutputSurveyDefine.FoodCropAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "粮食种植面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "粮食种植面积", true);
             }
             if (contractLandOutputSurveyDefine.ExPackageNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮土地延包姓名", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮土地延包姓名", true);
             }
             if (contractLandOutputSurveyDefine.ExPackageNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包土地份数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包土地份数", true);
             }
             if (contractLandOutputSurveyDefine.IsDeadedValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "已死亡人员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "已死亡人员", true);
             }
             if (contractLandOutputSurveyDefine.LocalMarriedRetreatLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出嫁后未退承包地人员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "出嫁后未退承包地人员", true);
             }
             if (contractLandOutputSurveyDefine.PeasantsRetreatLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "农转非后未退承包地人员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "农转非后未退承包地人员", true);
             }
             if (contractLandOutputSurveyDefine.ForeignMarriedRetreatLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "婚进在婚出地未退承包地人员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "婚进在婚出地未退承包地人员", true);
             }
             if (contractLandOutputSurveyDefine.SecondFamilyCommentValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             //if (contractLandOutputSurveyDefine.IsContainTableValue)
             if ((columnIndex - startIndex) >= 0)
@@ -356,82 +367,82 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.AllocationPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实际分配人数(人)", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实际分配人数(人)", true);
             }
             if (contractLandOutputSurveyDefine.ContractorAddressValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方地址", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方地址", true);
             }
             if (contractLandOutputSurveyDefine.PostNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "邮政编码", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "邮政编码", true);
             }
             if (contractLandOutputSurveyDefine.TelephoneValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "电话号码", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "电话号码", true);
             }
             if (contractLandOutputSurveyDefine.SecondConcordNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包合同编号", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包合同编号", true);
             }
             if (contractLandOutputSurveyDefine.SecondWarrantNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "经营权证编号", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "经营权证编号", true);
             }
             if (contractLandOutputSurveyDefine.StartTimeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包起始日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包起始日期", true);
             }
             if (contractLandOutputSurveyDefine.EndTimeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包结束日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包结束日期", true);
             }
             if (contractLandOutputSurveyDefine.ConstructTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "取得承包方式", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "取得承包方式", true);
             }
             if (contractLandOutputSurveyDefine.FamilySurveyPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查员", true);
             }
             if (contractLandOutputSurveyDefine.FamilySurveyDateValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查日期", true);
             }
             if (contractLandOutputSurveyDefine.FamilySurveyChronicleValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查记事", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查记事", true);
             }
             if (contractLandOutputSurveyDefine.FamilyCheckPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核人", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核人", true);
             }
             if (contractLandOutputSurveyDefine.FamilyCheckDateValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核日期", true);
             }
             if (contractLandOutputSurveyDefine.FamilyCheckOpinionValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
             }
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包方调查信息", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包方调查信息", true);
+            //}
             return columnIndex;
         }
 
@@ -446,169 +457,169 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.LandNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块名称", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块名称", true);
             }
             if (contractLandOutputSurveyDefine.CadastralNumberValue)
             {
                 columnIndex++;
-                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块编码", 23.25, true);
+                SetRangeWidth(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块编码", 23.25, true);
             }
             if (contractLandOutputSurveyDefine.ImageNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "图幅编号", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "图幅编号", true);
             }
             if (contractLandOutputSurveyDefine.TableAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮合同面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮合同面积", true);
             }
             if (contractLandOutputSurveyDefine.TotalTableAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮合同总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "二轮合同总面积", true);
             }
             if (contractLandOutputSurveyDefine.ActualAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实测面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实测面积", true);
             }
             if (contractLandOutputSurveyDefine.TotalActualAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实测总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "实测总面积", true);
             }
             if (contractLandOutputSurveyDefine.ContractDelayAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包面积", true);
             }
             if (contractLandOutputSurveyDefine.TotalContractDelayAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "延包总面积", true);
             }
             if (contractLandOutputSurveyDefine.AwareAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "确权面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "确权面积", true);
             }
             if (contractLandOutputSurveyDefine.TotalAwareAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "确权总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "确权总面积", true);
             }
             if (contractLandOutputSurveyDefine.MotorizeAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "机动地面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "机动地面积", true);
             }
             if (contractLandOutputSurveyDefine.TotalMotorizeAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "机动地总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "机动地总面积", true);
             }
             if (contractLandOutputSurveyDefine.LandNeighborValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "东", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "东", true);
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "南", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "南", true);
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "西", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "西", true);
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "北", true);
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 3) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, "四至", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "北", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 3) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "四至", true);
             }
             if (contractLandOutputSurveyDefine.LandPurposeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地用途", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地用途", true);
             }
             if (contractLandOutputSurveyDefine.LandLevelValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "等级", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "等级", true);
             }
             if (contractLandOutputSurveyDefine.LandTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地利用类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地利用类型", true);
             }
             if (contractLandOutputSurveyDefine.IsFarmerLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否基本农田", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否基本农田", true);
             }
             if (contractLandOutputSurveyDefine.ReferPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "指界人", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "指界人", true);
             }
             if (contractLandOutputSurveyDefine.ArableTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块类别", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块类别", true);
             }
             if (contractLandOutputSurveyDefine.ConstructModeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方式", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "承包方式", true);
             }
             if (contractLandOutputSurveyDefine.PlotNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "畦数", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "畦数", true);
             }
             if (contractLandOutputSurveyDefine.PlatTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "种植类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "种植类型", true);
             }
             if (contractLandOutputSurveyDefine.ManagementTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "经营方式", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "经营方式", true);
             }
             if (contractLandOutputSurveyDefine.LandPlantValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "耕保类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "耕保类型", true);
             }
             if (contractLandOutputSurveyDefine.SourceNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "原户主姓名（曾经耕种）", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "原户主姓名（曾经耕种）", true);
             }
             if (contractLandOutputSurveyDefine.LandLocationValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "宗地座落方位描述", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "宗地座落方位描述", true);
             }
             if (contractLandOutputSurveyDefine.ConcordValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "合同编号", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "合同编号", true);
             }
             if (contractLandOutputSurveyDefine.RegeditBookValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证书编号", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "证书编号", true);
             }
             if (contractLandOutputSurveyDefine.CommentValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             if (contractLandOutputSurveyDefine.OpinionValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块修改意见", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块修改意见", true);
             }
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "农村土地承包经营权承包地块详细信息", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "农村土地承包经营权承包地块详细信息", true);
+            //}
             return columnIndex;
         }
 
@@ -623,22 +634,22 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.IsTransterValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否流转", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否流转", true);
             }
             if (contractLandOutputSurveyDefine.TransterModeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转方式", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转方式", true);
             }
             if (contractLandOutputSurveyDefine.TransterTermValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转期限", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转期限", true);
             }
             if (contractLandOutputSurveyDefine.TransterAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "流转面积", true);
             }
             if (contractLandOutputSurveyDefine.IsTransterValue || contractLandOutputSurveyDefine.TransterModeValue || contractLandOutputSurveyDefine.TransterTermValue)
             {
@@ -648,22 +659,22 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.UseSituationValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "利用情况", true); ;//利用情况
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "利用情况", true); ;//利用情况
             }
             if (contractLandOutputSurveyDefine.YieldValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "产量情况", true);//产量情况
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "产量情况", true);//产量情况
             }
             if (contractLandOutputSurveyDefine.OutputValueValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "产值情况", true);//产值情况
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "产值情况", true);//产值情况
             }
             if (contractLandOutputSurveyDefine.IncomeSituationValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "收益情况", true);//收益情况
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "收益情况", true);//收益情况
             }
             if ((columnIndex - startIndex) >= 0)
             {
@@ -683,37 +694,37 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.SecondLandNumberValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块编码", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块编码", true);
             }
             if (contractLandOutputSurveyDefine.SecondLandNameValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块名称", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块名称", true);
             }
             if (contractLandOutputSurveyDefine.SecondLandTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地类", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地类", true);
             }
             if (contractLandOutputSurveyDefine.SecondArableTypeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地类型", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地类型", true);
             }
             if (contractLandOutputSurveyDefine.SecondLandLevelValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块等级", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "地块等级", true);
             }
             if (contractLandOutputSurveyDefine.SecondTableAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "台账面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "台账面积", true);
             }
             if (contractLandOutputSurveyDefine.SecondTotalTableAreaValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "台账总面积", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "台账总面积", true);
             }
             if (contractLandOutputSurveyDefine.SecondLandNeighborValue)
             {
@@ -725,22 +736,22 @@ namespace YuLinTu.Library.Business
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "西", true);
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "北", true);
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 3) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, "四至", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex - 3) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "四至", true);
             }
             if (contractLandOutputSurveyDefine.SecondIsFarmerLandValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否基本农田", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否基本农田", true);
             }
             if (contractLandOutputSurveyDefine.SecondLandPurposeValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地用途", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "土地用途", true);
             }
             if (contractLandOutputSurveyDefine.SecondCommentValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             //if (contractLandOutputSurveyDefine.IsContainTablelandValue)
             if ((columnIndex - startIndex) >= 0)
@@ -761,32 +772,32 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.LandSurveyPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查员", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查员", true);
             }
             if (contractLandOutputSurveyDefine.LandSurveyDateValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查日期", true);
             }
             if (contractLandOutputSurveyDefine.LandSurveyChronicleValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查记事", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "调查记事", true);
             }
             if (contractLandOutputSurveyDefine.LandCheckPersonValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核人", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核人", true);
             }
             if (contractLandOutputSurveyDefine.LandCheckDateValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核日期", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核日期", true);
             }
             if (contractLandOutputSurveyDefine.LandCheckOpinionValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 4, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
             }
             if ((columnIndex - startIndex) >= 0)
             {

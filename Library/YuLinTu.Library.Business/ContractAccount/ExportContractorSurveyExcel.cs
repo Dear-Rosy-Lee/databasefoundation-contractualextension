@@ -233,7 +233,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="zoneCode"></param>
         /// <param name="templaePath"></param>
-        public virtual bool BeginExcel(string zoneCode, string templaePath)
+        public virtual bool BeginExcel(DateTime? time, DateTime? pubTime, string zoneCode, string templaePath)
         {
             result = true;
             // PostProgress(1);
@@ -251,7 +251,7 @@ namespace YuLinTu.Library.Business
             this.zoneCode = zoneCode;
             this.templaePath = templaePath;
             index = 6;
-            Write();//写数据
+            Write(time, pubTime);//写数据
             return result;
         }
 
@@ -265,7 +265,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 写数据
         /// </summary>
-        public override void Write()
+        public void Write(DateTime? time, DateTime? pubTime)
         {
             try
             {
@@ -277,7 +277,7 @@ namespace YuLinTu.Library.Business
                     return;
                 }
                 // PostProgress(30);
-                BeginWrite();
+                BeginWrite(time, pubTime);
                 if (!string.IsNullOrEmpty(SaveFilePath))
                 {
                     SaveFilePath = WordOperator.InitalizeValideFileName(SaveFilePath);
@@ -520,7 +520,6 @@ namespace YuLinTu.Library.Business
                     concord = (concords == null || concords.Count == 0) ? new ContractConcord() { ID = Guid.Empty } : concords[0];
                     regeditBook = (concords == null || concords.Count == 0) ? new ContractRegeditBook() { ID = Guid.Empty } : BookColletion.Find(t => t.ID == concords[0].ID);
                     telephoneIndex = WriteContractLand(cs, high, index, item.Telephone);//填写地块信息
-                   
                 }
                 if (contractLandOutputSurveyDefine.ConcordValue || contractLandOutputSurveyDefine.RegeditBookValue)
                 {
@@ -548,7 +547,7 @@ namespace YuLinTu.Library.Business
                                     landArray.Add(land);
                                 }
                                 telephoneIndex = WriteContractLand(landArray, height, cindexx, item.Telephone);//填写地块信息
-                                
+
                                 landArray.Clear();
                             }
                             cindexx += height;
@@ -556,7 +555,7 @@ namespace YuLinTu.Library.Business
                         }
                         //high += cs.Count - countLand;
                     }
-                  
+
                     WriteContract(cs, concordHigh, concords);//书写合同信息
                 }
                 WriteLandExpandInformation(cs, cs.Count);
@@ -733,7 +732,7 @@ namespace YuLinTu.Library.Business
         private void WriteSignInformation(int hight, int cindexx)
         {
             int tempIndex = cindexx;
-            SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex+1) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex+1) + (tempIndex + hight - 1), "");
+            SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex + 1) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex + 1) + (tempIndex + hight - 1), "");
         }
 
         /// <summary>

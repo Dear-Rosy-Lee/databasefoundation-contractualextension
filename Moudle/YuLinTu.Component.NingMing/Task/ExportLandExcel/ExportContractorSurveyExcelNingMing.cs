@@ -498,7 +498,7 @@ namespace YuLinTu.Component.NingMing
                     Int32.TryParse(item.FamilyNumber, out number);
                 }
 
-                InitalizeContractorInformation(high, number.ToString(), item.Name, sharePersons.Count.ToString(), item);
+                InitalizeContractorInformation(high, number.ToString(), item.Name, sharePersons.Count.ToString(), item, cs, concords);
                 //输出人口数据
                 int familyIndex = WritePerson(sharePersons, tablePersons.Clone() as PersonCollection, item, tablevp, high);
                 //输出二轮承包方信息
@@ -549,7 +549,7 @@ namespace YuLinTu.Component.NingMing
                         }
                         //high += cs.Count - countLand;
                     }
-                    WriteContract(cs, concordHigh, concords);//书写合同信息
+                    WriteContract(concordHigh);//书写合同信息
                 }
                 WriteLandExpandInformation(cs, cs.Count);
                 if (contractLandOutputSurveyDefine.IsContainTablelandValue)

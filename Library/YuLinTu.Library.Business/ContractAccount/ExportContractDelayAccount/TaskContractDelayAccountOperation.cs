@@ -122,14 +122,15 @@ namespace YuLinTu.Library.Business
             landBusiness.TableType = metadata.TableType;
             landBusiness.ArgType = metadata.ArgType;
             landBusiness.IsBatch = metadata.IsBatch;
-
+            var delcTime = metadata.DelcTime;
+            var pubTime = metadata.PubTime;
             List<Zone> childrenZone = metadata.SelfAndSubsZones;   //子级地域集合
             Zone parent = landBusiness.GetParent(zone);
             switch (metadata.ArgType)
             {
                 case eContractAccountType.ExportContractAccountExcel:
                     //导出4个表数据
-                    ExportFourKindTable(zone, childrenZone, parent, fileName, landBusiness);
+                    ExportFourKindTable(zone, childrenZone, parent, delcTime, pubTime, fileName, landBusiness);
                     break;
 
                 case eContractAccountType.ExportSingleFamilyConfirmExcel:
@@ -272,7 +273,7 @@ namespace YuLinTu.Library.Business
         /// <param name="parentZone">父级地域</param>
         /// <param name="savePath">保存文件路径</param>
         /// <param name="business">台账业务</param>
-        private void ExportFourKindTable(Zone currentZone, List<Zone> childrenZone, Zone parentZone, string savePath, AccountLandBusiness business)
+        private void ExportFourKindTable(Zone currentZone, List<Zone> childrenZone, Zone parentZone, DateTime? time, DateTime? pubTime, string savePath, AccountLandBusiness business)
         {
             if (currentZone == null)
             {

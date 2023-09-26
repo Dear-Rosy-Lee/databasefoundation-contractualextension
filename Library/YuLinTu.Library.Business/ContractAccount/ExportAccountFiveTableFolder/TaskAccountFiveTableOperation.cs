@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,12 @@ namespace YuLinTu.Library.Business
     public class TaskAccountFiveTableOperation : Task
     {
         #region Fields
+
         private bool returnValue;
         private string openFilePath;
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();//打开文件路径
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -59,13 +61,10 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public ContractBusinessSettingDefine SettingDefine = ContractBusinessSettingDefine.GetIntence();
 
-
         /// <summary>
         /// 导出公示调查表日期设置
         /// </summary>
         public DateSetting PublishDateSetting { get; set; }
-
-
 
         /// <summary>
         /// 是否批量
@@ -81,9 +80,10 @@ namespace YuLinTu.Library.Business
         /// 数据库服务上下文
         /// </summary>
         public IDbContext dbContext { get; set; }
+
         public SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -94,7 +94,7 @@ namespace YuLinTu.Library.Business
         {
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods - Override
 
@@ -122,15 +122,18 @@ namespace YuLinTu.Library.Business
             landBusiness.TableType = metadata.TableType;
             landBusiness.ArgType = metadata.ArgType;
             landBusiness.IsBatch = metadata.IsBatch;
-
+            var delcTime = metadata.DelcTime;
+            var pubTime = metadata.PubTime;
             List<Zone> childrenZone = metadata.SelfAndSubsZones;   //子级地域集合
             Zone parent = landBusiness.GetParent(zone);
+
             switch (metadata.ArgType)
             {
                 case eContractAccountType.ExportContractAccountExcel:
                     //导出4个表数据
                     ExportFourKindTable(zone, childrenZone, parent, fileName, landBusiness);
                     break;
+
                 case eContractAccountType.ExportSingleFamilyConfirmExcel:
                     if (zone.Level >= eZoneLevel.Group && (SelectContractor == null || SelectContractor.Count == 0))
                     {
@@ -150,7 +153,6 @@ namespace YuLinTu.Library.Business
             }
             GC.Collect();
         }
-
 
         /// <summary>
         /// 打开文件
@@ -173,7 +175,7 @@ namespace YuLinTu.Library.Business
             GC.Collect();
         }
 
-        #endregion
+        #endregion Methods - Override
 
         #region 公用之获取全部地域及创建文件目录
 
@@ -260,7 +262,7 @@ namespace YuLinTu.Library.Business
             return folderString;
         }
 
-        #endregion
+        #endregion 公用之获取全部地域及创建文件目录
 
         #region Methods - Privates-承包台账导出
 
@@ -280,7 +282,7 @@ namespace YuLinTu.Library.Business
                 return;
             }
             TaskAccountFiveTableArgument metadata = Argument as TaskAccountFiveTableArgument;
-            //List<Zone> allZones = GetAllZones(currentZone, childrenZone, parentZone, business); 
+            //List<Zone> allZones = GetAllZones(currentZone, childrenZone, parentZone, business);
             List<Zone> allZones = metadata.AllZones;
             this.ReportProgress(1, "开始");
             this.ReportProgress(5, "正在获取表");
@@ -330,8 +332,8 @@ namespace YuLinTu.Library.Business
         /// <param name="childrenZone">子级地域</param>
         /// <param name="parentZone">父级地域</param>
         /// <param name="savePath">保存文件路径</param>
-        /// <param name="business">台账业务</param>  
-        /// <param name="exportType">导出类型</param>         
+        /// <param name="business">台账业务</param>
+        /// <param name="exportType">导出类型</param>
         private void ExportSingleFamilyExcelByZone(Zone currentZone, List<Zone> childrenZone, Zone parentZone, string savePath, AccountLandBusiness business)
         {
             if (currentZone == null)
@@ -348,7 +350,7 @@ namespace YuLinTu.Library.Business
             percent = 99.0 / (double)metadata.SelfAndSubsZones.Count;
             double subpercent = 0.0;
             int zoneCount = 0;
-            int tableCount = 0;      //统计可导出表的个数      
+            int tableCount = 0;      //统计可导出表的个数
             business.VirtualType = eVirtualType.Land;
 
             string desc = ExportZoneListDir(currentZone, metadata.AllZones);// 优化
@@ -383,8 +385,7 @@ namespace YuLinTu.Library.Business
             allZones = null;
         }
 
-
-        #endregion
+        #endregion Methods - Privates-承包台账导出
 
         /// <summary>
         /// 导出数据到Excel表-承包台账五个报表导出
@@ -399,6 +400,8 @@ namespace YuLinTu.Library.Business
                     this.ReportError("未选择导出数据的地域!");
                     return;
                 }
+                var time = metadata.DelcTime;
+                var pubtime = metadata.PubTime;
                 string excelName = GetMarkDesc(zone);
                 var vpStation = metadata.Database.CreateVirtualPersonStation<LandVirtualPerson>();
                 List<VirtualPerson> vps = vpStation.GetByZoneCode(zone.FullCode);
@@ -421,15 +424,19 @@ namespace YuLinTu.Library.Business
                     case 2:
                         fileType = "土地承包经营权公示表.xls";
                         break;
+
                     case 3:
                         fileType = "土地承包经营权签字表.xls";
                         break;
+
                     case 4:
                         fileType = "土地承包经营权村组公示表.xls";
                         break;
+
                     case 5:
                         fileType = "土地承包经营权单户确认表.xls";
                         break;
+
                     default:
                         break;
                 }
@@ -452,6 +459,7 @@ namespace YuLinTu.Library.Business
                 ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
 
                 #region 通过反射等机制定制化具体的业务处理类
+
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
@@ -461,7 +469,8 @@ namespace YuLinTu.Library.Business
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
-                #endregion
+
+                #endregion 通过反射等机制定制化具体的业务处理类
 
                 string savePath = fileName + @"\" + excelName + fileType;
                 export.SaveFilePath = savePath;
@@ -476,9 +485,9 @@ namespace YuLinTu.Library.Business
                 export.CurrentPercent = currentPercent;
                 export.ConcordCollection = listConcords;
                 export.BookColletion = listBooks;
-                export.PostProgressEvent +=export_PostProgressEvent;
+                export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                returnValue = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                returnValue = export.BeginExcel(time, pubtime, zone.FullCode.ToString(), tempPath);
                 if (metadata.IsShow)
                     export.PrintView(savePath);
             }
@@ -550,7 +559,7 @@ namespace YuLinTu.Library.Business
                         export.BookColletion = listBooks;
                         export.Contractor = item;
                         export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                        returnValue = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                        returnValue = export.BeginExcel(null, null, zone.FullCode.ToString(), tempPath);
                     }
                 }
                 this.ReportProgress(100, "完成");
@@ -562,7 +571,6 @@ namespace YuLinTu.Library.Business
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportDataExcel(导出数据到Excel表)", ex.Message + ex.StackTrace);
             }
         }
-
 
         #region 辅助功能
 
@@ -580,7 +588,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 进度提示用，导出时获取当前地域的上级地域名称路径到镇级
-        /// </summary>       
+        /// </summary>
         private string ExportZoneListDir(Zone zone, List<Zone> allZones)
         {
             string exportzonedir = string.Empty;
@@ -638,7 +646,6 @@ namespace YuLinTu.Library.Business
             return excelName;
         }
 
-
         /// <summary>
         /// 获取上级地域
         /// </summary>
@@ -653,9 +660,10 @@ namespace YuLinTu.Library.Business
             TheBns.Current.Message.Send(this, arg);
             return (arg.ReturnValue as Zone);
         }
-        #endregion
 
-        #region  提示信息
+        #endregion 辅助功能
+
+        #region 提示信息
 
         /// <summary>
         /// 判断当前地域下有没有承包方信息
@@ -672,7 +680,6 @@ namespace YuLinTu.Library.Business
             }
             return exsit;
         }
-
 
         /// <summary>
         /// 错误信息报告
@@ -717,7 +724,6 @@ namespace YuLinTu.Library.Business
             this.ReportProgress(progress, userState);
         }
 
-        #endregion
-
+        #endregion 提示信息
     }
 }

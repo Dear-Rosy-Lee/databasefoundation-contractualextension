@@ -54,7 +54,7 @@ namespace YuLinTu.Library.Business
         private double secondTableArea;//二轮面积之和
         private double secondTotalTableArea;//二轮总面积之和
         private int secondLandCount;//二轮地块合计
-        private PublicityConfirmDelayDefine contractLandOutputSurveyDefine = PublicityConfirmDelayDefine.GetIntence();
+        private PublicityConfirmDelayDefine contractLandOutputSurveyDefine = new PublicityConfirmDelayDefine();
         private SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
         #endregion Fields
@@ -501,10 +501,10 @@ namespace YuLinTu.Library.Business
                 InitalizeContractorInformation(high, number.ToString(), item.Name, sharePersons.Count.ToString(), item);
                 //输出人口数据
                 int familyIndex = WritePerson(sharePersons, tablePersons.Clone() as PersonCollection, item, tablevp, high);
-                //输出二轮承包方信息
-                WriteTableNumber(high, number.ToString(), tablevp != null ? tablevp.Name : item.Name, tablePersons.Count == 0 ? "1" : tablePersons.Count.ToString(), familyIndex);
-                //书写调查信息
-                WriteFamilyExpandInformation(high, item, item.FamilyExpand);
+                ////输出二轮承包方信息
+                //WriteTableNumber(high, number.ToString(), tablevp != null ? tablevp.Name : item.Name, tablePersons.Count == 0 ? "1" : tablePersons.Count.ToString(), familyIndex);
+                ////书写调查信息
+                //WriteFamilyExpandInformation(high, item, item.FamilyExpand);
                 //输出承包地信息
                 cs = SortLandCollection(cs);//对承包地块排序
                 concordHigh = high;
@@ -514,7 +514,7 @@ namespace YuLinTu.Library.Business
                 {
                     concord = (concords == null || concords.Count == 0) ? new ContractConcord() { ID = Guid.Empty } : concords[0];
                     regeditBook = (concords == null || concords.Count == 0) ? new Library.Entity.ContractRegeditBook() { ID = Guid.Empty } : BookColletion.Find(t => t.ID == concords[0].ID);
-                    telephoneIndex = WriteContractLand(cs, high, index, item.Telephone);//填写地块信息
+                    telephoneIndex = WriteContractLand(cs, high, index, item.Telephone, concords);//填写地块信息
                 }
                 if (contractLandOutputSurveyDefine.ConcordValue || contractLandOutputSurveyDefine.RegeditBookValue)
                 {
@@ -541,7 +541,7 @@ namespace YuLinTu.Library.Business
                                 {
                                     landArray.Add(land);
                                 }
-                                telephoneIndex = WriteContractLand(landArray, height, cindexx, item.Telephone);//填写地块信息
+                                telephoneIndex = WriteContractLand(landArray, height, cindexx, item.Telephone, concords);//填写地块信息
                                 landArray.Clear();
                             }
                             cindexx += height;
