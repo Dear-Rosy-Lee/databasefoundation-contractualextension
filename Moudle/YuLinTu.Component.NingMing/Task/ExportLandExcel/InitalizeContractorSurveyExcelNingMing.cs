@@ -714,11 +714,13 @@ namespace YuLinTu.Component.NingMing
                     columnIndex++;
                     if (concord.ID != Guid.Empty && concord.IsValid)
                     {
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), concord.CountActualArea > 0.0 ? ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2) : SystemSet.InitalizeAreaString());//实测总面积
+                        var temp = concord.CountActualArea > 0.0 ? ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2) : SystemSet.InitalizeAreaString();
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), $"合计：{landCount}块{temp}亩");//实测总面积
                     }
                     else
                     {
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), tempActualAreaAllCount > 0.0 ? ToolMath.SetNumbericFormat(tempActualAreaAllCount.ToString(), 2) : SystemSet.InitalizeAreaString());//实测总面积
+                        var temp = tempActualAreaAllCount > 0.0 ? ToolMath.SetNumbericFormat(tempActualAreaAllCount.ToString(), 2) : SystemSet.InitalizeAreaString();
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), $"合计：{landCount}块{temp}亩");//实测总面积
                     }
                 }
                 if (contractLandOutputSurveyDefine.TotalContractDelayAreaValue)
@@ -936,6 +938,11 @@ namespace YuLinTu.Component.NingMing
                     columnIndex++;
                     SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.ExtendA);//宗地座落方位描述
                 }
+                if (contractLandOutputSurveyDefine.CommentValue)
+                {
+                    columnIndex++;
+                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), "");//备注1
+                }
                 cindex++;
             }
             return telephoneIndex;
@@ -950,16 +957,14 @@ namespace YuLinTu.Component.NingMing
             {
                 return;
             }
+            
             int cindex = index;
+            
             int curIndex = columnIndex;
             foreach (ContractLand land in cs)
             {
                 columnIndex = curIndex;
-                if (contractLandOutputSurveyDefine.CommentValue)
-                {
-                    columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, PublicityConfirmDefine.GetColumnValue(columnIndex) + cindex, land.Comment);//备注1
-                }
+                
                 if (contractLandOutputSurveyDefine.OpinionValue)
                 {
                     columnIndex++;

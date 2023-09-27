@@ -414,6 +414,7 @@ namespace YuLinTu.Component.NingMing
                 {
                     var zoneStation = dbContext.CreateZoneWorkStation();
                     zoneName = zoneStation.GetVillageName(zone);
+
                 }
                 var landStation = dbContext.CreateContractLandWorkstation();
                 List<ContractLand> landArrays = landStation.GetCollection(zone.FullCode);

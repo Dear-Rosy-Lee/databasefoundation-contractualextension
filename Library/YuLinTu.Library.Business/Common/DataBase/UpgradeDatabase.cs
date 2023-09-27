@@ -7,6 +7,7 @@ using YuLinTu;
 using System.Xml.Linq;
 using System.IO;
 using System.Linq;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -1219,6 +1220,16 @@ namespace YuLinTu.Library.Business
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
                 string commandStrUpdate = string.Empty;
+                //var result= dbContext.CreateQuery<ContractLand>() ;
+                //foreach(var item in result)
+                //{
+                //    if (item.ContractDelayArea.ToString() == null)
+                //    {
+
+                //    }
+                //}
+
+
                 ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
                 ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
                 foreach (var table in tableList)

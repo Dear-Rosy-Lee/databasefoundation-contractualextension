@@ -1,6 +1,7 @@
 ﻿using YuLinTu.Library.Entity;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
+using System.Collections.Generic;
 
 namespace YuLinTu.Component.NingMing
 {
@@ -14,7 +15,7 @@ namespace YuLinTu.Component.NingMing
         /// </summary>
         private void WriteTitle()
         {
-            string titleName = "宁明县第二轮土地承包到期后再延长三十年农户共有人信息和耕作地块摸底表";
+            string titleName = $"{ExcelName}第二轮土地承包到期后再延长三十年农户共有人信息和耕作地块摸底表";
 
             if (!string.IsNullOrEmpty(titleName))
             {
