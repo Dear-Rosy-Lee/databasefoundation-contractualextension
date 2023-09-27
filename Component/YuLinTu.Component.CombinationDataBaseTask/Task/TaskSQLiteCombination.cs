@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             isBatchCombination = false;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Fields
 
@@ -49,7 +50,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
         private double currentPercent;  //当前百分比
         //private bool isBatch;  //标记是否批量
 
-        #endregion
+        #endregion Fields
 
         #region Methods
 
@@ -68,7 +69,6 @@ namespace YuLinTu.Component.CombinationDataBaseTask
                 this.ReportProgress(100);
                 return;
             }
-               
 
             if (!isBatchCombination)
             {
@@ -129,7 +129,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             }
         }
 
-        #endregion
+        #endregion Method - Override
 
         #region Method - Private - Validate
 
@@ -199,7 +199,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             return true;
         }
 
-        #endregion
+        #endregion Method - Private - Validate
 
         #region Method - Private - Pro
 
@@ -370,7 +370,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
         {
             UpdateDatabase upDatabase = new UpdateDatabase();
             List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContextTarget, tableList);
+            return upDatabase.UpgradeDatabase(dbContextTarget, tableList, dbContextTarget);
         }
 
         /// <summary>
@@ -395,10 +395,10 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             {
                 return false;
             }
-        }     
+        }
 
-        #endregion
+        #endregion Method - Private - Pro
 
-        #endregion
+        #endregion Methods
     }
 }

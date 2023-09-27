@@ -210,10 +210,10 @@ namespace YuLinTu.Library.Business
         {
             List<Person> persons = virtualPerson.SharePersonList;    //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name); //排序共有人，并返回人口集合
-            int rowCount = ListLand.Count - 1;
-            if (rowCount > 0)
+            int rowCount = persons.Count;
+            if (rowCount > 1)
             {
-                InsertTableRow(0, 1, rowCount);
+                InsertTableRow(1, 1, rowCount-1);
             }
             int tableIndex = 1;
             int startRow = 1;
@@ -225,6 +225,37 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 3, person.Comment);
                 startRow++;
             }
+    
+        }
+
+        /// <summary>
+        /// 填写承包地块信息
+        /// </summary>
+        protected virtual void WriteLandInfo()
+        {
+            int rowCount = ListLand.Count;
+            if (rowCount > 1)
+            {
+                InsertTableRow(0, 2, rowCount-1);
+            }
+            var totleActualArea = 0.00;
+            int tableIndex = 0;
+            int startRow = 2;
+            foreach (var item in ListLand)
+            {
+                SetTableCellValue(tableIndex, startRow, 0, item.Name);
+                SetTableCellValue(tableIndex, startRow, 1, item.CadastralNumber);
+                SetTableCellValue(tableIndex, startRow, 2, item.NeighborEast.IsNullOrEmpty() ? "" : item.NeighborEast);
+                SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
+                SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);
+                SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
+                SetTableCellValue(tableIndex, startRow, 6, item.ActualArea.ToString());
+                totleActualArea += item.ActualArea;
+                SetTableCellValue(tableIndex, startRow, 7, item.LandLevel);
+                SetTableCellValue(tableIndex, startRow, 8, item.Comment);
+                startRow++;
+            }
+            SetTableCellValue(tableIndex, startRow, 6, totleActualArea.ToString());
         }
 
         /// <summary>
@@ -333,167 +364,6 @@ namespace YuLinTu.Library.Business
             }
             landCollection.Clear();
             landArray.Clear();
-        }
-
-        /// <summary>
-        /// 填写承包地块信息
-        /// </summary>
-        protected virtual void WriteLandInfo()
-        {
-            if (ListLand == null || ListLand.Count < 1)
-            {
-                return;
-            }
-            ListLand.Sort("IsStockLand", eOrder.Ascending);
-            //int i = 1;
-            //List<Dictionary> landTypeDicts = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);  //土地利用类型
-            List<Dictionary> landLevelDicts = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DLDJ);   //地力等级
-            List<Dictionary> landDKLBDicts = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB);   //地块类别
-
-            #region 以前的屏蔽 陈泽林 20161018
-
-            //foreach (var item in ListLand)
-            //{
-            //    SetBookmarkValue("LandName" + i, item.Name);//地块名称
-            //    // string landNumber = ContractLand.GetLandNumber(item.CadastralNumber);
-            //    string landNumber = item.LandNumber;
-            //    if (SystemSetDefine.LandNumericFormatSet)
-            //    {
-            //        int getlandnumcount = SystemSetDefine.LandNumericFormatValueSet;
-            //        int length = landNumber.Length;
-            //        if (length > getlandnumcount)
-            //        {
-            //            landNumber = landNumber.Substring(getlandnumcount, length - getlandnumcount);
-            //        }
-            //    }
-            //    //if (landNumber.Length > AgricultureSetting.AgricultureLandNumberMedian)
-            //    //{
-            //    //    landNumber = landNumber.Substring(AgricultureSetting.AgricultureLandNumberMedian);
-            //    //}
-            //    SetBookmarkValue("LandCode" + i, landNumber);//地块编码s
-            //    Dictionary landType = landTypeDicts.Find(c => c.Code == item.LandCode);
-            //    string str = landType == null ? "" : landType.Name;
-            //    str = str == "未知" ? "" : str;
-            //    SetBookmarkValue("LandType" + i, !string.IsNullOrEmpty(item.LandName) ? item.LandName : str);//地类
-            //    //string concordArea = useActualArea ? (item.ActualArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(item.ActualArea.ToString(), 2))
-            //    //: (item.AwareArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(item.AwareArea.ToString(), 2));
-            //    string concordArea = item.AwareArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(item.AwareArea.ToString(), 2);
-            //    SetBookmarkValue("Area" + i, concordArea);//面积
-            //    SetBookmarkValue("TableArea" + i, (item.TableArea != null && item.TableArea.HasValue) ? (item.TableArea.Value > 0.0 ? ToolMath.SetNumbericFormat(item.TableArea.Value.ToString(), 2) : AgricultureSetting.InitalizeAreaString()) : AgricultureSetting.InitalizeAreaString());//台帐面积
-            //    SetBookmarkValue("ActualArea" + i, item.ActualArea > 0.0 ? ToolMath.SetNumbericFormat(item.ActualArea.ToString(), 2) : AgricultureSetting.InitalizeAreaString());//实测面积
-            //    SetBookmarkValue("AwareArea" + i, item.AwareArea > 0.0 ? ToolMath.SetNumbericFormat(item.AwareArea.ToString(), 2) : AgricultureSetting.InitalizeAreaString());//确权面积
-            //    string levelString = ToolMath.MatchEntiretyNumber(item.LandLevel.ToString()) ? "" : EnumNameAttribute.GetDescription(item.LandLevel);
-            //    levelString = levelString == "未知" ? "" : levelString;
-            //    levelString = AgricultureSetting.UseSystemLandLevelDescription ? levelString : landLevelDicts.Find(c => c.Code == item.LandLevel).Name;
-            //    SetBookmarkValue("LandLevel" + i, levelString);//等级
-            //    SetBookmarkValue("IsFarmerLand" + i, (item.IsFarmerLand == null || !item.IsFarmerLand.HasValue) ? "" : (item.IsFarmerLand.Value ? "是" : "否"));//是否基本农田
-            //    SetBookmarkValue("West" + i, item.NeighborWest);//西
-            //    SetBookmarkValue("North" + i, item.NeighborNorth);//北
-            //    SetBookmarkValue("East" + i, item.NeighborEast);//东
-            //    SetBookmarkValue("South" + i, item.NeighborSouth);//南
-            //    SetBookmarkValue("bmWest" + i, "西:" + item.NeighborWest);//西
-            //    SetBookmarkValue("bmNorth" + i, "北:" + item.NeighborNorth);//北
-            //    SetBookmarkValue("bmEast" + i, "东:" + item.NeighborEast);//东
-            //    SetBookmarkValue("bmSouth" + i, "南:" + item.NeighborSouth);//南
-            //    SetBookmarkValue("bmLandNeighbor" + i, "见附图");//四至
-            //    SetBookmarkValue("LandComment" + i, item.Comment);//地块备注
-            //    i++;
-            //}
-            //for (int j = 0; j < 6; j++)
-            //{
-            //    SetBookmarkValue("LandCount" + (j == 0 ? "" : j.ToString()), ListLand.Count < 1 ? "  " : ListLand.Count.ToString());//地块数
-            //    SetBookmarkValue("AreaCount" + (j == 0 ? "" : j.ToString()), concord.CountActualArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2));//实测面积
-            //    SetBookmarkValue("CountActualArea" + (j == 0 ? "" : j.ToString()), concord.CountActualArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2));//实测面积
-            //    SetBookmarkValue("CountTableArea" + (j == 0 ? "" : j.ToString()), concord.TotalTableArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.TotalTableArea.ToString(), 2));//台帐面积
-            //    SetBookmarkValue("CountAwareArea" + (j == 0 ? "" : j.ToString()), concord.CountAwareArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2));//确权面积
-            //    SetBookmarkValue("CountMotorizeLandArea" + (j == 0 ? "" : j.ToString()), concord.CountMotorizeLandArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountMotorizeLandArea.ToString(), 2));//机动地
-            //    //string cordArea = useActualArea ? (concord.CountActualArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2))
-            //    //    : (concord.CountAwareArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2));
-            //    string cordArea = concord.CountAwareArea <= 0.0 ? AgricultureSetting.InitalizeAreaString() : ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2);
-            //    SetBookmarkValue("bmLandArea" + (j == 0 ? "" : j.ToString()), cordArea);//确权
-            //}
-
-            #endregion 以前的屏蔽 陈泽林 20161018
-
-            int rowCount = ListLand.Count - 2;
-            if (rowCount > 0)
-            {
-                InsertTableRow(0, 2, rowCount);
-            }
-            int tableIndex = 0;
-            int startRow = 2;
-            double allArea = 0.0;
-            foreach (var item in ListLand)
-            {
-                SetTableCellValue(tableIndex, startRow, 0, item.Name);
-                string landNumber = item.LandNumber;
-                if (SystemSetDefine.LandNumericFormatSet)
-                {
-                    int getlandnumcount = SystemSetDefine.LandNumericFormatValueSet;
-                    int length = landNumber.Length;
-                    if (length > getlandnumcount)
-                    {
-                        landNumber = landNumber.Substring(getlandnumcount, length - getlandnumcount);
-                    }
-                }
-                SetTableCellValue(tableIndex, startRow, 1, landNumber);
-                SetTableCellValue(tableIndex, startRow, 2, item.NeighborEast.IsNullOrEmpty() ? "" : item.NeighborEast);
-                SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
-                SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);
-                SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
-
-                //allArea += true ? item.ActualArea : item.AwareArea;
-                if (item.IsStockLand)//如果是确股地，输出量化户面积
-                {
-                    var relation = DataBaseSource.GetDataBaseSource().CreateBelongRelationWorkStation().Get(o => o.VirtualPersonID == Contractor.ID && o.LandID == item.ID).FirstOrDefault();
-                    SetTableCellValue(tableIndex, startRow, 6, relation?.QuanficationArea.AreaFormat());
-                    allArea += relation?.QuanficationArea ?? 0d;
-                }
-                else
-                {
-                    if (AreaType == 0)
-                    {
-                        SetTableCellValue(tableIndex, startRow, 6, item.TableArea.AreaFormat());
-                        if (item.TableArea != null)
-                            allArea += item.TableArea.Value;
-                    }
-                    if (AreaType == 1)
-                    {
-                        SetTableCellValue(tableIndex, startRow, 6, item.ActualArea.AreaFormat());
-                        allArea += item.ActualArea;
-                    }
-                    if (AreaType == 2)
-                    {
-                        SetTableCellValue(tableIndex, startRow, 6, item.AwareArea.AreaFormat());
-                        allArea += item.AwareArea;
-                    }
-                }
-                try
-                {
-                    var dldj = landLevelDicts.Find(l => l.Code == item.LandLevel);
-                    var levelString = dldj == null ? "" : (dldj.Code == ((int)eLandLevel.UnKnow).ToString()) ? "" : dldj.Name;
-                    SetTableCellValue(tableIndex, startRow, 7, levelString);
-                }
-                catch (SystemException ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
-                }
-                var landComment = item.Comment;
-                var landtdytdic = landDKLBDicts.Find(d => d.Code == item.LandCategory && item.LandCategory != ((int)eLandCategoryType.ContractLand).ToString());
-                if (landtdytdic != null && item.Comment.IsNullOrEmpty())
-                {
-                    landComment = "(" + landtdytdic.Name + ")";
-                }
-                var settingComment = concordSetting.LandCommentReplacement;
-                landComment = settingComment.IsNullOrEmpty() ? landComment : settingComment;
-                SetTableCellValue(tableIndex, startRow, 8, landComment);
-                startRow++;
-            }
-            if (startRow < 4)
-            {
-                startRow = 4;
-            }
-            SetTableCellValue(tableIndex, startRow, 6, allArea.AreaFormat());
         }
 
         /// <summary>

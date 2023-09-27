@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +38,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             Description = "分离数据库数据";
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Fields
 
@@ -48,7 +49,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
         private double currentPercent;  //当前百分比
         private string newDatabaseSavePath;  //分离数据库保存路径
 
-        #endregion
+        #endregion Fields
 
         #region Methods
 
@@ -85,7 +86,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             this.ReportInfomation("分离完成。");
         }
 
-        #endregion
+        #endregion Method - Override
 
         #region Method - Private - Validate
 
@@ -137,7 +138,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             return true;
         }
 
-        #endregion
+        #endregion Method - Private - Validate
 
         #region Method - Private - Pro
 
@@ -250,7 +251,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
         {
             UpdateDatabase upDatabase = new UpdateDatabase();
             List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContext, tableList);
+            return upDatabase.UpgradeDatabase(dbContext, tableList, dbContext);
         }
 
         /// <summary>
@@ -298,7 +299,6 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             schema.Export(typeof(StockConcord), sr.WKID);
             schema.Export(typeof(StockWarrant), sr.WKID);
 
-
             schema.Export(typeof(Dictionary), sr.WKID);
             schema.Export(typeof(TopologyErrorPoint), sr.WKID);
             schema.Export(typeof(TopologyErrorPolygon), sr.WKID);
@@ -313,7 +313,6 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressDot)).TableName, "ID", null, true);
             schema.CreateIndex(null, ObjectContext.Create(typeof(StockConcord)).TableName, "ID", null, true);
             schema.CreateIndex(null, ObjectContext.Create(typeof(StockWarrant)).TableName, "ID", null, true);
-
 
             schema.CreateIndex(null, ObjectContext.Create(typeof(Zone)).TableName, "DYQBM", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "DKLB", null);
@@ -339,7 +338,6 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ZoneBoundary)).TableName, "Shape");
             schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(FarmLandConserve)).TableName, "Shape");
 
-
             try
             {
                 dbContextTarget.BeginTransaction();
@@ -364,8 +362,8 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             }
             catch (Exception ex)
             {
-                dbContextTarget.RollbackTransaction();                
-                Log.WriteException(this, "创建新数据库", ex.Message + ex.StackTrace);               
+                dbContextTarget.RollbackTransaction();
+                Log.WriteException(this, "创建新数据库", ex.Message + ex.StackTrace);
                 return false;
             }
         }
@@ -394,8 +392,8 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             }
         }
 
-        #endregion
+        #endregion Method - Private - Pro
 
-        #endregion
+        #endregion Methods
     }
 }

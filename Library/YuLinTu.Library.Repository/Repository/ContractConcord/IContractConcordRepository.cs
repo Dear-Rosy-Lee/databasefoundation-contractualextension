@@ -6,6 +6,7 @@ using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu;
+using System.Linq.Expressions;
 
 namespace YuLinTu.Library.Repository
 {
@@ -33,7 +34,7 @@ namespace YuLinTu.Library.Repository
         /// <summary>
         /// 根据承包方Id更新对象的承包方姓名
         /// </summary>
-        ///<param name="houseHolderID">承包方Id</param> 
+        ///<param name="houseHolderID">承包方Id</param>
         ///<param name="houseHolderName">承包方姓名</param>
         ///<returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(Guid houseHolderID, string houseHolderName);
@@ -43,6 +44,13 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(ContractConcord entity);
+
+        /// <summary>
+        /// 批量更新实体集合
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        int UpdateRange(Expression<Func<ContractConcord, bool>> predicate, KeyValueList<string, object> values);
 
         /// <summary>
         /// 根据承包合同唯一标识获取农村土地承包合同
@@ -232,13 +240,13 @@ namespace YuLinTu.Library.Repository
         /// 通过合同编号查看是否存在有此合同
         /// </summary>
         /// <param name="concordNumber">合同编号</param>
-        /// <returns></returns> 
+        /// <returns></returns>
         bool Exists(string concordNumber);
 
         /// <summary>
         /// 删除当前地域下所有合同
         /// </summary>
-        /// <param name="zoneCode">地域代码</param> 
+        /// <param name="zoneCode">地域代码</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int DeleteByZoneCode(string zoneCode);
 
@@ -283,7 +291,7 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="zoneCode">地域编码</param>
         /// <returns>已颁证的数量。</returns>
-        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns> 
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int CountAwareRegeditBooks(string zoneCode);
 
         /// <summary>
@@ -294,7 +302,6 @@ namespace YuLinTu.Library.Repository
         /// <returns>合同</returns>
         List<ContractConcord> SearchByConcordNumber(string number, eSearchOption searchOption);
 
-
         /// <summary>
         /// 根据承包方姓名及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
         /// </summary>
@@ -303,7 +310,6 @@ namespace YuLinTu.Library.Repository
         /// <param name="zoneCode">目标区域代码</param>
         /// <returns>合同</returns>
         List<ContractConcord> SearchByVirtualPersonName(string name, eSearchOption searchOption);
-
 
         /// <summary>
         /// 根据农村土地承包合同编号及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
@@ -323,6 +329,6 @@ namespace YuLinTu.Library.Repository
         /// <returns>合同</returns>
         List<ContractConcord> SearchByVirtualPersonName(string name, eSearchOption searchOption, string zoneCode);
 
-        #endregion
+        #endregion Methods
     }
 }

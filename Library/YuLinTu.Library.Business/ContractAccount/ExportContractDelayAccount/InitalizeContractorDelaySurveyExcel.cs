@@ -724,7 +724,7 @@ namespace YuLinTu.Library.Business
                 if (contractLandOutputSurveyDefine.ExPackageNumberValue)
                 {
                     columnIndex++;
-                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), hight.ToString());
+                    SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), cs.Count.ToString());
                 }
                 if (contractLandOutputSurveyDefine.AwareAreaValue)
                 {

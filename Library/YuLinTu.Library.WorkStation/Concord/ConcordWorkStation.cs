@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace YuLinTu.Library.WorkStation
             set { base.DefaultRepository = value; }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -33,7 +34,7 @@ namespace YuLinTu.Library.WorkStation
             DefaultRepository = rep;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -74,7 +75,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 根据承包方Id更新对象的承包方姓名
         /// </summary>
-        ///<param name="houseHolderID">承包方Id</param> 
+        ///<param name="houseHolderID">承包方Id</param>
         ///<param name="houseHolderName">承包方姓名</param>
         ///<returns>-1（参数错误）/0（失败）/1（成功）</returns>
         public int Update(Guid houseHolderID, string houseHolderName)
@@ -485,6 +486,6 @@ namespace YuLinTu.Library.WorkStation
             return addCount;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

@@ -470,24 +470,8 @@ namespace YuLinTu.Library.Business
                 landCount += cs.Count;
                 List<SecondTableLand> tablelandList = contractLandOutputSurveyDefine.IsContainTablelandValue ? (TableLandArrays == null ? new List<SecondTableLand>() : TableLandArrays).FindAll(t => t.OwnerId == (tablevp == null ? item.ID : tablevp.ID)) : new List<SecondTableLand>();
                 secondLandCount += tablelandList.Count;
-                if (contractLandOutputSurveyDefine.NumberAgeValue || contractLandOutputSurveyDefine.NumberGenderValue || contractLandOutputSurveyDefine.IsSharedLandValue
-                    || contractLandOutputSurveyDefine.NumberNameValue || contractLandOutputSurveyDefine.NumberIcnValue || contractLandOutputSurveyDefine.NumberRelatioinValue || contractLandOutputSurveyDefine.FamilyCommentValue)
-                {
-                    high = sharePersons.Count > cs.Count ? sharePersons.Count : cs.Count;
-                }
-                else
-                {
-                    high = cs.Count;
-                }
-                if (contractLandOutputSurveyDefine.IsContainTableValue)
-                {
-                    int personCount = ComparePersonValue(sharePersons, tablePersons);
-                    high = high > personCount ? high : personCount;//获取单户最大值
-                }
-                if (contractLandOutputSurveyDefine.IsContainTablelandValue)
-                {
-                    high = high > tablelandList.Count ? high : tablelandList.Count;
-                }
+
+                high = sharePersons.Count;
                 if (high == 0)
                 {
                     high = 1;

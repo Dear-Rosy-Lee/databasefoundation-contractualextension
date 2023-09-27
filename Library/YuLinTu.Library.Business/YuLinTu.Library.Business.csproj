@@ -631,6 +631,8 @@
     <Compile Include="Enum\eContractConcordArgType.cs" />
     <Compile Include="Enum\eContractRegeditBookType.cs" />
     <Compile Include="Enum\eImportLandClipType.cs" />
+    <Compile Include="Model\DataColumn.cs" />
+    <Compile Include="Model\DataColumnExtensions.cs" />
     <Compile Include="SecondTableLand\ExportBoundarySettleExcel.cs" />
     <Compile Include="SecondTableLand\ExportSingleFamilyExcel.cs" />
     <Compile Include="SecondTableLand\ImportSecondSurveryTable.cs" />

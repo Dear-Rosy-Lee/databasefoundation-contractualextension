@@ -227,10 +227,10 @@ namespace YuLinTu.Library.Business
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "是否为99年共有人", true);
             }
 
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "户籍籍贯信息", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "户籍籍贯信息", true);
+            //}
             return columnIndex;
         }
 
@@ -348,10 +348,10 @@ namespace YuLinTu.Library.Business
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             //if (contractLandOutputSurveyDefine.IsContainTableValue)
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, contractLandOutputSurveyDefine.ExPackageNameValue ? "二轮土地延包人口和现有家庭人口变动情况" : "二轮承包家庭成员情况（含户主）", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, contractLandOutputSurveyDefine.ExPackageNameValue ? "二轮土地延包人口和现有家庭人口变动情况" : "二轮承包家庭成员情况（含户主）", true);
+            //}
             startIndex = 0;
             return columnIndex;
         }
@@ -676,10 +676,10 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "收益情况", true);//收益情况
             }
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地收益情况", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地收益情况", true);
+            //}
             return columnIndex;
         }
 
@@ -754,10 +754,10 @@ namespace YuLinTu.Library.Business
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "备注", true);
             }
             //if (contractLandOutputSurveyDefine.IsContainTablelandValue)
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "二轮农村土地承包情况", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "二轮农村土地承包情况", true);
+            //}
             return columnIndex;
         }
 
@@ -799,10 +799,10 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
             }
-            if ((columnIndex - startIndex) >= 0)
-            {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地块调查情况", true);
-            }
+            //if ((columnIndex - startIndex) >= 0)
+            //{
+            //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地块调查情况", true);
+            //}
             return columnIndex;
         }
 

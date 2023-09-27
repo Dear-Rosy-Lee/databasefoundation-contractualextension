@@ -1,9 +1,11 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
@@ -42,7 +44,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 根据承包方Id更新对象的承包方姓名
         /// </summary>
-        ///<param name="houseHolderID">承包方Id</param> 
+        ///<param name="houseHolderID">承包方Id</param>
         ///<param name="houseHolderName">承包方姓名</param>
         ///<returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(Guid houseHolderID, string houseHolderName);
@@ -236,13 +238,13 @@ namespace YuLinTu.Library.WorkStation
         /// 通过合同编号查看是否存在有此合同
         /// </summary>
         /// <param name="concordNumber">合同编号</param>
-        /// <returns></returns> 
+        /// <returns></returns>
         bool Exists(string concordNumber);
 
         /// <summary>
         /// 删除当前地域下所有合同
         /// </summary>
-        /// <param name="zoneCode">地域代码</param> 
+        /// <param name="zoneCode">地域代码</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int DeleteByZoneCode(string zoneCode);
 
@@ -280,7 +282,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         /// <param name="zoneCode">地域编码</param>
         /// <returns>已颁证的数量。</returns>
-        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns> 
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int CountAwareRegeditBooks(string zoneCode);
 
         /// <summary>
@@ -291,7 +293,6 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>合同</returns>
         List<ContractConcord> SearchByConcordNumber(string number, eSearchOption searchOption);
 
-
         /// <summary>
         /// 根据承包方姓名及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
         /// </summary>
@@ -300,7 +301,6 @@ namespace YuLinTu.Library.WorkStation
         /// <param name="zoneCode">目标区域代码</param>
         /// <returns>合同</returns>
         List<ContractConcord> SearchByVirtualPersonName(string name, eSearchOption searchOption);
-
 
         /// <summary>
         /// 根据农村土地承包合同编号及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
@@ -332,6 +332,6 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>-1（参数错误）/int 添加对象数量</returns>
         int AddRange(List<ContractConcord> listConcord);
 
-        #endregion
+        #endregion Methods
     }
 }

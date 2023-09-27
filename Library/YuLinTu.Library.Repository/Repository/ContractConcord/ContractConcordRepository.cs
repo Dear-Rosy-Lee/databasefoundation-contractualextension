@@ -7,6 +7,7 @@ using YuLinTu.Library.Entity;
 using System.Data;
 using YuLinTu.Data;
 using YuLinTu;
+using System.Linq.Expressions;
 
 namespace YuLinTu.Library.Repository
 {
@@ -24,9 +25,18 @@ namespace YuLinTu.Library.Repository
         {
             m_DSSchema = ds.CreateSchema();
         }
-        #endregion
+
+        #endregion Ctor
 
         #region Methods
+
+        public int UpdateRange(Expression<Func<ContractConcord, bool>> predicate, KeyValueList<string, object> values)
+        {
+            //UpdateAudit()
+            return DataSource.CreateQuery<ContractConcord>()
+                .Where(predicate)
+                .Update(values).Save();
+        }
 
         /// <summary>
         /// 检查表是否存在
@@ -44,7 +54,6 @@ namespace YuLinTu.Library.Repository
             //}
             return true;
         }
-
 
         //public int DeleteByXXXX(string codeZone, eVirtualPersonStatus state)
         //{
@@ -107,7 +116,6 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return -1;
 
-
             var q = from qc in DataSource.CreateQuery<ContractConcord>()
                     where qc.ZoneCode.Equals(zoneCode)
                     select qc;
@@ -124,7 +132,7 @@ namespace YuLinTu.Library.Repository
         /// <summary>
         /// 根据承包方Id更新对象的承包方姓名
         /// </summary>
-        ///<param name="houseHolderID">承包方Id</param> 
+        ///<param name="houseHolderID">承包方Id</param>
         ///<param name="houseHolderName">承包方姓名</param>
         ///<returns>-1（参数错误）/0（失败）/1（成功）</returns>
         public int Update(Guid houseHolderID, string houseHolderName)
@@ -230,7 +238,7 @@ namespace YuLinTu.Library.Repository
             return Count(c => c.ID.Equals(guid)) > 0 ? true : false;
         }
 
-        #endregion
+        #endregion Methods
 
         #region ExtendMethod
 
@@ -248,7 +256,6 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return null;
-
 
             object entity = (from q in DataSource.CreateQuery<ContractConcord>()
                              where q.ZoneCode.Equals(zoneCode)
@@ -272,7 +279,6 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return null;
-
 
             object entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.IsValid.Equals(isValid));
             return entity as List<ContractConcord>;
@@ -327,8 +333,6 @@ namespace YuLinTu.Library.Repository
             object contractConcord = Get(c => c.RequireBookId.Equals(requireBookId));
             return contractConcord as ContractConcord;
         }
-
-
 
         public List<ContractConcord> GetContractsByZoneCode(string zoneCode)
         {
@@ -707,7 +711,6 @@ namespace YuLinTu.Library.Repository
             return entity as List<ContractConcord>;
         }
 
-
         public bool Exists(string concordNumber)
         {
             if (!CheckTableExist())
@@ -801,7 +804,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return -1;
-            return Count(c => c.ZoneCode.StartsWith(zoneCode) && c.Status.Equals(eStatus.Checked));// 
+            return Count(c => c.ZoneCode.StartsWith(zoneCode) && c.Status.Equals(eStatus.Checked));//
         }
 
         /// <summary>
@@ -1011,7 +1014,6 @@ namespace YuLinTu.Library.Repository
             return cnt;
         }
 
-
         /// <summary>
         /// 根据承包方删除合同数据
         /// </summary>
@@ -1188,8 +1190,6 @@ namespace YuLinTu.Library.Repository
             return (List<ContractConcord>)data;
         }
 
-
-
         /// <summary>
         /// 根据农村土地承包合同编号及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
         /// </summary>
@@ -1221,7 +1221,6 @@ namespace YuLinTu.Library.Repository
                         select q).ToList(); Get(c => c.ConcordNumber.Contains(concordNumber) && c.ZoneCode.StartsWith(zoneCode));
             return (List<ContractConcord>)data;
         }
-
 
         /// <summary>
         /// 根据承包方姓名及其不同的查找类型来获得以目标区域代码开始的以承包方姓名排序的合同
@@ -1258,7 +1257,7 @@ namespace YuLinTu.Library.Repository
         /// <summary>
         /// 存在合同数据的地域集合
         /// </summary>
-        /// <param name="zoneCode">地域集合</param>  
+        /// <param name="zoneCode">地域集合</param>
         public List<Zone> ExistZones(List<Zone> zoneList)
         {
             if (!CheckTableExist())
@@ -1281,9 +1280,6 @@ namespace YuLinTu.Library.Repository
             return q2;
         }
 
-        #endregion
-
-
-
+        #endregion ExtendMethod
     }
 }

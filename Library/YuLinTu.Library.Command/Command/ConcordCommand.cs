@@ -144,6 +144,13 @@ namespace YuLinTu.Library.Command
 
         #endregion
 
+        #region 批量编辑
+
+        public const string BatchRegionModel = "BatchRegionEdit";
+
+        public const string BatchMultipleModel = "BatchMultipleEdit";
+
+        #endregion 批量编辑
         #endregion
 
         #region Files - Command
@@ -272,8 +279,16 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public RoutedCommand ConcordInformation = new RoutedCommand(ConcordInformationName, typeof(Button));
 
-        #endregion
+        /// <summary>
+        /// 区域模式
+        /// </summary>
+        public RoutedCommand BatchRegionEdit = new RoutedCommand(BatchRegionModel, typeof(Button));
 
+        /// <summary>
+        /// 多选模式
+        /// </summary>
+        public RoutedCommand BatchMultipleEdit = new RoutedCommand(BatchMultipleModel, typeof(Button));
+        #endregion
         #endregion
 
         #region Files - Binding
@@ -401,6 +416,10 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public CommandBinding ConcordInformationBind = new CommandBinding();
 
+        public CommandBinding BatchRegionBind = new CommandBinding();
+
+        public CommandBinding BatchMultipleBind = new CommandBinding();
+
         #endregion
 
         #endregion
@@ -453,7 +472,8 @@ namespace YuLinTu.Library.Command
             SenderBind.Command = Sender;
             PublicityResultTableBind.Command = PublicityResultTable;
             ConcordInformationBind.Command = ConcordInformation;
-
+            BatchMultipleBind.Command = BatchMultipleEdit;
+            BatchRegionBind.Command = BatchRegionEdit;
         }
 
         #endregion

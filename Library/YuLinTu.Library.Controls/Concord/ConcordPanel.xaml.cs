@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,17 @@ using YuLinTu.Windows;
 using YuLinTu.Library.Business;
 using YuLinTu.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using System.Linq.Expressions;
+using System.Data;
+using DataColumn = YuLinTu.Library.Business.DataColumn;
+using YuLinTu.Library.Entity.Model;
+using System.Reflection;
+using YuLinTu.Library.Repository;
+using System.Windows.Input;
+using YuLinTu.Library.WorkStation;
+using ToolMath = YuLinTu.Library.WorkStation.ToolMath;
+using ToolConfiguration = YuLinTu.Library.WorkStation.ToolConfiguration;
+using Microsoft.Practices.Unity;
 
 namespace YuLinTu.Library.Controls
 {
@@ -32,6 +44,7 @@ namespace YuLinTu.Library.Controls
 
         //private int index = 0;//序号
         private bool isbatch;//是否批量
+
         private string zoneName;
         private TaskQueue queueQuery;//获取数据
         private TaskQueue queueFilter;//过滤数据
@@ -41,8 +54,8 @@ namespace YuLinTu.Library.Controls
         private BindConcord currentConcord;//当前选择合同
         private eVirtualType virtualType;
         private List<object> list = new List<object>();
-        List<Dictionary> wayList;   //承包方式
-        List<Dictionary> purposeList; //土地用途
+        private List<Dictionary> wayList;   //承包方式
+        private List<Dictionary> purposeList; //土地用途
 
         /// <summary>
         /// 合同绑定集合
@@ -64,7 +77,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public delegate void PanelZoneChanged(Zone zone);
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -207,7 +220,6 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-
         /// <summary>
         /// 数据字典
         /// </summary>
@@ -236,7 +248,6 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-
         /// <summary>
         /// 设置控件可用性委托
         /// </summary>
@@ -247,7 +258,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public MenueEnableControl MenueEnableMethod { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -264,7 +275,7 @@ namespace YuLinTu.Library.Controls
             queueFilter = new TaskQueueDispatcher(Dispatcher);
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -399,7 +410,7 @@ namespace YuLinTu.Library.Controls
                 summaryAwareArea += (child.Visibility == Visibility.Visible) ? double.Parse(child.AwareArea) : 0;
             }
             summaryConcordArea += double.Parse(Summary.ConcordAreaCount);
-            Summary.ActualAreaCount = ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//summaryConcordArea.ToString("f2");
+            Summary.ActualAreaCount = WorkStation.ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//summaryConcordArea.ToString("f2");
             Summary.AwareAreaCount += Math.Round(summaryAwareArea, 4);
             Summary.ConcordAreaCount += Math.Round(summaryConcordArea, 4);
         }
@@ -440,7 +451,7 @@ namespace YuLinTu.Library.Controls
             Summary.ConcordAreaCount = ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//Math.Round(summaryConcordArea, 4);
         }
 
-        #endregion
+        #endregion Methods - 初始数据
 
         #region Methods - 承包合同基本操作
 
@@ -481,7 +492,6 @@ namespace YuLinTu.Library.Controls
                     {
                         tempLands.Add(land);
                     }
-
                 }
             }
             landList = tempLands;
@@ -513,7 +523,7 @@ namespace YuLinTu.Library.Controls
                     {
                         var person = page.CurrentFamily;
                         List<ContractConcord> listConcord = new List<ContractConcord>();
-                        listConcord.Add(page.Concord);    //添加合同  
+                        listConcord.Add(page.Concord);    //添加合同
                         currentItem = ConcordItemHelper.ConvertToItem(person, listConcord, wayList, purposeList);
                         var item = Items.FirstOrDefault(c => c.Tag.ID == currentItem.Tag.ID);
                         if (item == null)
@@ -559,19 +569,19 @@ namespace YuLinTu.Library.Controls
                     continue;
                 }
                 vpc.Add(vp);
-            }           
+            }
             foreach (VirtualPerson vp in vpc)
             {
                 if (vp.Name.Contains("集体"))
                 {
                     //排除集体
                     continue;
-                }                
+                }
                 List<ContractLand> landCollection = lands.FindAll(ld => ld.OwnerId != null && ld.OwnerId.HasValue && ld.OwnerId.Value == vp.ID);
                 landCollection.RemoveAll(c => string.IsNullOrEmpty(c.ConstructMode));
                 if (landCollection == null || landCollection.Count == 0)
                 {
-                    Log.Log.WriteException(vp,"错误",currentZone.FullName+vp.Name+"在库中的地承包方式为空。");
+                    Log.Log.WriteException(vp, "错误", currentZone.FullName + vp.Name + "在库中的地承包方式为空。");
                     continue;
                 }
                 List<ContractConcord> concords = concordList.FindAll(cd => cd.ContracterId != null && cd.ContracterId.HasValue && cd.ContracterId.Value == vp.ID);
@@ -621,7 +631,7 @@ namespace YuLinTu.Library.Controls
             //}
             List<VirtualPerson> listPerosn = new List<VirtualPerson>();
             listPerosn.Add(currentItem.Tag);
-            List<ContractLand> landList = LandBusiness.GetLandCollection(currentZone.FullCode); 
+            List<ContractLand> landList = LandBusiness.GetLandCollection(currentZone.FullCode);
             List<ContractConcord> listConcord = ConcordBusiness.GetCollection(currentZone.FullCode);
             ConcordInfoPage editPage = new ConcordInfoPage();
             editPage.Workpage = ThePage;
@@ -714,7 +724,7 @@ namespace YuLinTu.Library.Controls
             //    MessageGrade = eMessageGrade.Warn
             //};
             //ThePage.Page.ShowMessageBox(message, (b, e) =>
-            //{ 
+            //{
             //    if (!(bool)b)
             //    {
             //        return;
@@ -741,7 +751,7 @@ namespace YuLinTu.Library.Controls
             //});
         }
 
-        #endregion
+        #endregion Methods - 承包合同基本操作
 
         #region Methods - 合同数据处理
 
@@ -801,7 +811,6 @@ namespace YuLinTu.Library.Controls
                             {
                                 tempLands.Add(land);
                             }
-
                         }
                     }
                     lands = tempLands;
@@ -849,7 +858,6 @@ namespace YuLinTu.Library.Controls
                             {
                                 tempLands.Add(land);
                             }
-
                         }
                     }
                     concords = cordStation.GetContractsByZoneCode(currentZone.FullCode, eLevelOption.SelfAndSubs);
@@ -1003,7 +1011,7 @@ namespace YuLinTu.Library.Controls
                     {
                         return;
                     }
-                    //批量导出(选择地域大于组级并且当前地域下有子级地域)              
+                    //批量导出(选择地域大于组级并且当前地域下有子级地域)
                     TaskGroupExportConcordDataArgument meta = new TaskGroupExportConcordDataArgument();
                     meta.FileName = savePage.FileName;
                     meta.Database = DbContext;
@@ -1029,7 +1037,7 @@ namespace YuLinTu.Library.Controls
             }
             else if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && childrenZone.Count == 0))
             {
-                //仅导出当前选择地域下的数据(选择地域为组级地域或者当为大于组级地域同时没有子级地域) 
+                //仅导出当前选择地域下的数据(选择地域为组级地域或者当为大于组级地域同时没有子级地域)
                 if (Items == null || Items.Count == 0)
                 {
                     ShowBox(ContractConcordInfo.ExportConcord, ContractConcordInfo.CurrentZoneNoPersons);
@@ -1047,7 +1055,6 @@ namespace YuLinTu.Library.Controls
                     {
                         ShowBox(ContractConcordInfo.ExportConcord, ContractConcordInfo.ExportConcordNoSelected);
                         return;
-
                     }
                     if (currentItem != null && currentConcord == null)
                     {
@@ -1080,7 +1087,6 @@ namespace YuLinTu.Library.Controls
                             taskConcord.Description = "导出" + currentZone.FullName + "的合同";
                             taskConcord.Completed += new TaskCompletedEventHandler((o, t) =>
                             {
-
                             });
                             ThePage.TaskCenter.Add(taskConcord);
                             if (ShowTaskViewer != null)
@@ -1089,7 +1095,6 @@ namespace YuLinTu.Library.Controls
                             }
                             taskConcord.StartAsync();
                         });
-
                     }
                     else if (currentItem != null && currentConcord != null)
                     {
@@ -1167,7 +1172,6 @@ namespace YuLinTu.Library.Controls
                             taskConcord.Description = "导出" + currentZone.FullName + "合同";
                             taskConcord.Completed += new TaskCompletedEventHandler((o, t) =>
                             {
-
                             });
                             ThePage.TaskCenter.Add(taskConcord);
                             if (ShowTaskViewer != null)
@@ -1189,7 +1193,93 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Methods - 合同数据处理
+
+        public void OnUpdate(object sender, ExecutedRoutedEventArgs e)
+        {
+            OnUpdate(e.Parameter);
+        }
+
+        private void OnUpdate(object args)
+        {
+            BatchUpdateConcord updateModel;
+            try
+            {
+                updateModel = OnGetBatchUpdateModel();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            var pgd = new PropertyGridDialog
+            {
+                Header = $"批量编辑",
+                Object = updateModel,
+                IsGroupingEnabled = true
+            };
+            pgd.PropertyGrid.Properties["Workpage"] = ThePage;
+            pgd.PropertyGrid.Properties["CurrentZone"] = CurrentZone;
+            pgd.Confirm += (s, e) =>
+            {
+                BatchUpdateConcord updateInput = null;
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    updateInput = pgd.Object as BatchUpdateConcord;
+                }));
+                if (updateInput == null)
+                {
+                    return;
+                }
+
+                OnBatchUpdateCore(updateInput);
+
+                OnBatchUpdated(updateInput);
+            };
+            pgd.ShowDialog(ThePage.Page);
+        }
+
+        protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput)
+        {
+            ContainerFactory factory = new ContainerFactory(DbContext);
+            var concordRep = factory.CreateRepository<IContractConcordRepository>();
+            Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate();
+            var kvs = new KeyValueList<string, object>();
+            var entityColDic = typeof(ContractConcord).GetDataColumns().ToDictionary(k => k.PropertyName, v => v.ColumnName);
+            updateInput.TraversalPropertiesInfo((PropertyInfo pi, object val) =>
+            {
+                if (val == null)
+                    return true;
+
+                if (!entityColDic.ContainsKey(pi.Name))
+                    return true;
+
+                kvs.Add(entityColDic[pi.Name], val);
+
+                return true;
+            });
+          
+            var updateCount = concordRep.UpdateRange(predicate, kvs);
+            concordRep.SaveChanges();
+            return updateCount;
+        }
+
+        protected virtual void OnBatchUpdated(BatchUpdateConcord value)
+        {
+            Refresh();
+        }
+
+        protected virtual BatchUpdateConcord OnGetBatchUpdateModel()
+        {
+            return new BatchUpdateConcord();
+        }
+
+        protected virtual Expression<Func<ContractConcord, bool>> ResolveBatchPredicate()
+        {
+            Expression<Func<ContractConcord, bool>> predicate = null;
+            predicate = x => x.ZoneCode.StartsWith(CurrentZone.FullCode);
+            return predicate;
+        }
 
         #region Methods - 数据过滤
 
@@ -1333,10 +1423,8 @@ namespace YuLinTu.Library.Controls
                         return true;
                 }
 
-
                 return has;
             }, true);
-
         }
 
         /// <summary>
@@ -1378,9 +1466,9 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Methods - 数据过滤
 
-        #region  Methods - 合同清空、刷新
+        #region Methods - 合同清空、刷新
 
         /// <summary>
         /// 清空当前地域合同
@@ -1441,7 +1529,6 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
             });
-
         }
 
         /// <summary>
@@ -1456,7 +1543,7 @@ namespace YuLinTu.Library.Controls
             InlitialControl(currentZone.FullCode);
         }
 
-        #endregion
+        #endregion Methods - 合同清空、刷新
 
         #region 家庭承包方式申请书
 
@@ -1515,7 +1602,6 @@ namespace YuLinTu.Library.Controls
                 {
                     ShowBox("预览申请书", message);
                 }
-
             }
         }
 
@@ -1571,8 +1657,8 @@ namespace YuLinTu.Library.Controls
                                 PublishDateSetting = dateSetting.DateTimeSetting;
                                 List<VirtualPerson> listPerson = new List<VirtualPerson>();
                                 listPerson.Add(currentItem.Tag);
-                                //ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表                        
-                                TaskRequireBookByFamilyOperation(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表                        
+                                //ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表
+                                TaskRequireBookByFamilyOperation(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表
                             });
                         });
                     }
@@ -1592,8 +1678,8 @@ namespace YuLinTu.Library.Controls
                             PublishDateSetting.PublishEndDate = null;
                             List<VirtualPerson> listPerson = new List<VirtualPerson>();
                             listPerson.Add(currentItem.Tag);
-                            // ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表                        
-                            TaskRequireBookByFamilyOperation(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表        
+                            // ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表
+                            TaskRequireBookByFamilyOperation(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, listPerson); //导出单户申请表
                         });
                     }
                 }
@@ -1637,7 +1723,7 @@ namespace YuLinTu.Library.Controls
                                 }
                                 string fileDir = extPage.FileName;
                                 PublishDateSetting = dateSetting.DateTimeSetting;
-                                ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, caplp.selectVirtualPersons); //导出单户申请表 
+                                ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, caplp.selectVirtualPersons); //导出单户申请表
                             });
                         });
                     }
@@ -1655,7 +1741,7 @@ namespace YuLinTu.Library.Controls
                             PublishDateSetting = new DateSetting();
                             PublishDateSetting.PublishStartDate = null;
                             PublishDateSetting.PublishEndDate = null;
-                            ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, caplp.selectVirtualPersons); //导出单户申请表 
+                            ExportCommonOperate(eContractConcordArgType.SingleExportRequireBook, "导出单户申请书", "单户申请书导出", fileDir, null, null, null, caplp.selectVirtualPersons); //导出单户申请表
                         });
                     }
                 });
@@ -1685,7 +1771,6 @@ namespace YuLinTu.Library.Controls
                     ExportCommonOperate(CurrentZone.FullName, "导出单户申请书", eContractConcordArgType.BatchSingleExportRequireBook, "导出单户申请书", "单户申请书导出"); //导出单户申请表
                 }
             }
-
         }
 
         /// <summary>
@@ -1772,13 +1857,13 @@ namespace YuLinTu.Library.Controls
             }
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的          
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
             if ((CurrentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.Village) && allChildrenZonesCount >= 1)
             {
                 ExportCommonOperate(CurrentZone.FullName, "导出集体申请书", eContractConcordArgType.BatchExportApplicationBook, "导出集体申请书", "导出集体申请书");
             }
-            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))     //在组下并且选择了某个承包方数据 
+            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))     //在组下并且选择了某个承包方数据
             {
                 List<CollectivityTissue> tissues = ConcordBusiness.GetTissuesByConcord(CurrentZone);
                 if (tissues == null || tissues.Count == 0)
@@ -1840,7 +1925,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion 家庭承包方式申请书
 
         #region 其他承包方式申请书
 
@@ -2022,7 +2107,6 @@ namespace YuLinTu.Library.Controls
                                 ShowBox("导出申请书", message, eMessageGrade.Infomation);
                             }
                         });
-
                     }
                 }
                 else
@@ -2065,14 +2149,14 @@ namespace YuLinTu.Library.Controls
                             PublishDateSetting.PublishStartDate = null;
                             PublishDateSetting.PublishEndDate = null;
 
-                            ExportCommonOperate(CurrentZone.FullName, "导出单户申请表", eContractConcordArgType.ExportApplicationByOther, "导出单户申请表", "单户申请表导出", null, caplp.selectVirtualPersons);  //导出单户申请表                   
+                            ExportCommonOperate(CurrentZone.FullName, "导出单户申请表", eContractConcordArgType.ExportApplicationByOther, "导出单户申请表", "单户申请表导出", null, caplp.selectVirtualPersons);  //导出单户申请表
                         }
                     });
                 }
             }
         }
 
-        #endregion
+        #endregion 其他承包方式申请书
 
         #region 合同明细表
 
@@ -2119,7 +2203,7 @@ namespace YuLinTu.Library.Controls
             GC.Collect();
         }
 
-        #endregion
+        #endregion 合同明细表
 
         #region Methods - Private
 
@@ -2149,18 +2233,23 @@ namespace YuLinTu.Library.Controls
                     case eContractConcordArgType.SingleExportRequireBook:
                         TaskRequireBookByFamilyOperation(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
+
                     case eContractConcordArgType.BatchSingleExportRequireBook:
                         TaskGroupRequireBookByFamilyOperation(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractConcordArgType.ExportApplicationByOther:
                         TaskRequireBookByOtherOperation(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
                         break;
+
                     case eContractConcordArgType.BatchExportApplicationByOther:
                         TaskGroupRequireBookByOtherOperation(type, taskDes, taskName, extPage.FileName, messageName);
                         break;
+
                     case eContractConcordArgType.BatchExportApplicationBook://批量导出集体申请书
                         TaskGroupExportApplicationBook(type, taskDes, taskName, extPage.FileName);
                         break;
+
                     case eContractConcordArgType.ExportConcordData:
                         //导出合同
                         ExportCommonOperate(type, taskDes, taskName, extPage.FileName, messageName, null, null, listPerson);
@@ -2189,7 +2278,6 @@ namespace YuLinTu.Library.Controls
         private void TaskRequireBookByFamilyOperation(eContractConcordArgType type, string taskDes, string taskName,
             string filePath = "", string messageName = "", DateTime? time = null, DateTime? pubTime = null, List<VirtualPerson> listPerson = null)
         {
-
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
@@ -2224,7 +2312,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2272,7 +2359,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2287,7 +2373,6 @@ namespace YuLinTu.Library.Controls
         private void TaskRequireBookByOtherOperation(eContractConcordArgType type, string taskDes, string taskName,
             string filePath = "", string messageName = "", DateTime? time = null, DateTime? pubTime = null, List<VirtualPerson> listPerson = null)
         {
-
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
@@ -2321,7 +2406,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2369,7 +2453,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2384,7 +2467,6 @@ namespace YuLinTu.Library.Controls
         private void TaskExportConcordInformationTable(eContractConcordArgType type, string taskDes, string taskName,
             string filePath = "", string messageName = "", DateTime? time = null, DateTime? pubTime = null, List<VirtualPerson> listPerson = null)
         {
-
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
@@ -2420,7 +2502,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2435,7 +2516,6 @@ namespace YuLinTu.Library.Controls
         private void TaskGroupExportConcordInformationTable(eContractConcordArgType type, string taskDes, string taskName,
             string filePath = "", string messageName = "", DateTime? time = null, DateTime? pubTime = null, List<VirtualPerson> listPerson = null)
         {
-
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
@@ -2469,7 +2549,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2484,7 +2563,6 @@ namespace YuLinTu.Library.Controls
         private void TaskGroupExportApplicationBook(eContractConcordArgType type, string taskDes, string taskName,
             string filePath = "", string messageName = "", DateTime? time = null, DateTime? pubTime = null, List<VirtualPerson> listPerson = null)
         {
-
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
@@ -2516,7 +2594,6 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             taskConcord.StartAsync();
-
         }
 
         /// <summary>
@@ -2586,7 +2663,7 @@ namespace YuLinTu.Library.Controls
             ThePage.Workspace.Message.Send(this, args);
         }
 
-        #endregion
+        #endregion Methods - Private
 
         #region Methods - Events
 
@@ -2653,7 +2730,7 @@ namespace YuLinTu.Library.Controls
             e.HasItems = item.Children.Count > 0;
         }
 
-        #endregion
+        #endregion 按键功能
 
         #region 右键菜单
 
@@ -2691,7 +2768,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 签订合同
-        /// </summary>   
+        /// </summary>
         private void miInitialConcord_Click(object sender, RoutedEventArgs e)
         {
             InitialContractConcord();
@@ -2707,13 +2784,13 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 导出合同
-        /// </summary>  
+        /// </summary>
         private void miExportConcord_Click(object sender, RoutedEventArgs e)
         {
             ExportConcord();
         }
 
-        #endregion
+        #endregion 右键菜单
 
         #region 辅助功能
 
@@ -2728,14 +2805,17 @@ namespace YuLinTu.Library.Controls
             switch (type)
             {
                 case 1:
-                    value = ToolConfiguration.GetAppSettingValue(AgricultureSetting.SetHouselderStatementDate);
+                    value = WorkStation.ToolConfiguration.GetAppSettingValue(AgricultureSetting.SetHouselderStatementDate);
                     break;
+
                 case 2:
                     value = ToolConfiguration.GetAppSettingValue(AgricultureSetting.SetProxyStatementDate);
                     break;
+
                 case 3:
                     value = ToolConfiguration.GetAppSettingValue(AgricultureSetting.SetPulicliyStatementDate);
                     break;
+
                 case 4:
                     value = ToolConfiguration.GetAppSettingValue(AgricultureSetting.SetMeasureRequireDate);
                     break;
@@ -2829,11 +2909,11 @@ namespace YuLinTu.Library.Controls
             view.ContextMenu.IsOpen = true;
         }
 
-        #endregion
+        #endregion 辅助功能
 
-        #endregion
+        #endregion Methods - Events
 
-        #endregion
+        #endregion Methods
 
         private void view_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

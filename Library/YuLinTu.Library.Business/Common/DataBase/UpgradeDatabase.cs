@@ -22,7 +22,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public static List<UpgradeDatabase> TableList { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region 升级数据库
 
@@ -104,7 +104,7 @@ namespace YuLinTu.Library.Business
             upKZD.TableName = "KZD";
             List<UpdateField> upJZdFields = new List<UpdateField>();
             UpdateField sfkyField = new UpdateField();
-            sfkyField.FieldName = "Shape";          
+            sfkyField.FieldName = "Shape";
             sfkyField.IsNull = true;
             sfkyField.IsAdd = true;
             upJZdFields.Add(sfkyField);
@@ -233,8 +233,8 @@ namespace YuLinTu.Library.Business
             //jzsfshField.IsNull = true;
             //jzsfshField.IsAdd = true;
             //upQZFields.Add(jzsfshField);
-            
-            upQZ.FieldList = upQZFields;   
+
+            upQZ.FieldList = upQZFields;
             return upQZ;
         }
 
@@ -293,9 +293,6 @@ namespace YuLinTu.Library.Business
             upQZ.FieldList = upQZFields;
 
             return upQZ;
-
-
-
         }
 
         /// <summary>
@@ -354,14 +351,12 @@ namespace YuLinTu.Library.Business
             CBQXQField.IsAdd = true;
             upQZFields.Add(CBQXQField);
 
-
             UpdateField CBQXZField = new UpdateField();
             CBQXZField.FieldName = "CBQXZ";
             CBQXZField.FieldType = "DATETIME";
             CBQXZField.IsNull = true;
             CBQXZField.IsAdd = true;
             upQZFields.Add(CBQXZField);
-
 
             UpdateField SHDCBFSField = new UpdateField();
             SHDCBFSField.FieldName = "SHDCBFS";
@@ -377,14 +372,12 @@ namespace YuLinTu.Library.Business
             SHDCBQXQField.IsAdd = true;
             upQZFields.Add(SHDCBQXQField);
 
-
             UpdateField SHDCBQXZField = new UpdateField();
             SHDCBQXZField.FieldName = "SHDCBQXZ";
             SHDCBQXZField.FieldType = "DATETIME";
             SHDCBQXZField.IsNull = true;
             SHDCBQXZField.IsAdd = true;
             upQZFields.Add(SHDCBQXZField);
-
 
             UpdateField CBYTField = new UpdateField();
             CBYTField.FieldName = "CBYT";
@@ -400,7 +393,6 @@ namespace YuLinTu.Library.Business
             SHDCBYTField.IsAdd = true;
             upQZFields.Add(SHDCBYTField);
 
-
             UpdateField ELCBTZMJField = new UpdateField();
             ELCBTZMJField.FieldName = "ELCBTZMJ";
             ELCBTZMJField.FieldType = "NUMERIC";
@@ -414,7 +406,6 @@ namespace YuLinTu.Library.Business
             JYQXField.IsNull = true;
             JYQXField.IsAdd = true;
             upQZFields.Add(JYQXField);
-
 
             UpdateField FBFQDSJField = new UpdateField();
             FBFQDSJField.FieldName = "FBFQDSJ";
@@ -437,7 +428,6 @@ namespace YuLinTu.Library.Business
             JZJGRQField.IsAdd = true;
             upQZFields.Add(JZJGRQField);
 
-
             UpdateField CBHTFJField = new UpdateField();
             CBHTFJField.FieldName = "CBHTFJ";
             CBHTFJField.FieldType = "TEXT";
@@ -445,9 +435,7 @@ namespace YuLinTu.Library.Business
             CBHTFJField.IsAdd = true;
             upQZFields.Add(CBHTFJField);
 
-
-
-            UpdateField  ZTField = new UpdateField();
+            UpdateField ZTField = new UpdateField();
             ZTField.FieldName = "ZT";
             ZTField.FieldType = "TEXT";
             ZTField.IsNull = true;
@@ -474,7 +462,6 @@ namespace YuLinTu.Library.Business
             CBFMCField.IsNull = true;
             CBFMCField.IsAdd = true;
             upQZFields.Add(CBFMCField);
-            
 
             UpdateField DECBFMCField = new UpdateField();
             DECBFMCField.FieldName = "DECBFMC";
@@ -483,21 +470,19 @@ namespace YuLinTu.Library.Business
             DECBFMCField.IsAdd = true;
             upQZFields.Add(DECBFMCField);
 
-
             UpdateField DECBFZZField = new UpdateField();
             DECBFZZField.FieldName = "DECBFZZ";
             DECBFZZField.FieldType = "TEXT";
             DECBFZZField.IsNull = true;
             DECBFZZField.IsAdd = true;
             upQZFields.Add(DECBFZZField);
-            
+
             UpdateField RJMJField = new UpdateField();
             RJMJField.FieldName = "RJMJ";
             RJMJField.FieldType = "NUMERIC";
             RJMJField.IsNull = true;
             RJMJField.IsAdd = true;
             upQZFields.Add(RJMJField);
-            
 
             UpdateField CBFZJHMField = new UpdateField();
             CBFZJHMField.FieldName = "CBFZJHM";
@@ -513,7 +498,6 @@ namespace YuLinTu.Library.Business
             CBFFRDBXMField.IsAdd = true;
             upQZFields.Add(CBFFRDBXMField);
 
-
             UpdateField CBFFRDBZJLXField = new UpdateField();
             CBFFRDBZJLXField.FieldName = "CBFFRDBZJLX";
             CBFFRDBZJLXField.FieldType = "TEXT";
@@ -528,14 +512,12 @@ namespace YuLinTu.Library.Business
             CBFFRDBZJHMField.IsAdd = true;
             upQZFields.Add(CBFFRDBZJHMField);
 
-
             UpdateField CBFFRDBDHHMField = new UpdateField();
             CBFFRDBDHHMField.FieldName = "CBFFRDBDHHM";
             CBFFRDBDHHMField.FieldType = "TEXT";
             CBFFRDBDHHMField.IsNull = true;
             CBFFRDBDHHMField.IsAdd = true;
             upQZFields.Add(CBFFRDBDHHMField);
-
 
             UpdateField DLRXMField = new UpdateField();
             DLRXMField.FieldName = "DLRXM";
@@ -565,7 +547,6 @@ namespace YuLinTu.Library.Business
             DLRDHHMField.IsAdd = true;
             upQZFields.Add(DLRDHHMField);
 
-
             UpdateField CBFLXField = new UpdateField();
             CBFLXField.FieldName = "CBFLX";
             CBFLXField.FieldType = "TEXT";
@@ -594,7 +575,6 @@ namespace YuLinTu.Library.Business
             CBJEField.IsAdd = true;
             upQZFields.Add(CBJEField);
 
-
             UpdateField QZSQSBZField = new UpdateField();
             QZSQSBZField.FieldName = "QZSQSBZ";
             QZSQSBZField.FieldType = "TEXT";
@@ -608,7 +588,6 @@ namespace YuLinTu.Library.Business
             CJZField.IsNull = true;
             CJZField.IsAdd = true;
             upQZFields.Add(CJZField);
-
 
             UpdateField CJSJField = new UpdateField();
             CJSJField.FieldName = "CJSJ";
@@ -644,14 +623,14 @@ namespace YuLinTu.Library.Business
             SCZMJField.IsNull = true;
             SCZMJField.IsAdd = true;
             upQZFields.Add(SCZMJField);
-            
+
             UpdateField QQZMJField = new UpdateField();
             QQZMJField.FieldName = "QQZMJ";
             QQZMJField.FieldType = "NUMERIC";
             QQZMJField.IsNull = true;
             QQZMJField.IsAdd = true;
             upQZFields.Add(QQZMJField);
-            
+
             UpdateField JDDZMJField = new UpdateField();
             JDDZMJField.FieldName = "JDDZMJ";
             JDDZMJField.FieldType = "NUMERIC";
@@ -659,14 +638,12 @@ namespace YuLinTu.Library.Business
             JDDZMJField.IsAdd = true;
             upQZFields.Add(JDDZMJField);
 
-
             UpdateField HTSFKYField = new UpdateField();
             HTSFKYField.FieldName = "HTSFKY";
             HTSFKYField.FieldType = "BOOL";
             HTSFKYField.IsNull = true;
             HTSFKYField.IsAdd = true;
             upQZFields.Add(HTSFKYField);
-
 
             UpdateField GSJSField = new UpdateField();
             GSJSField.FieldName = "GSJS";
@@ -681,7 +658,6 @@ namespace YuLinTu.Library.Business
             GSJSRField.IsNull = true;
             GSJSRField.IsAdd = true;
             upQZFields.Add(GSJSRField);
-
 
             UpdateField GSRQField = new UpdateField();
             GSRQField.FieldName = "GSRQ";
@@ -704,14 +680,12 @@ namespace YuLinTu.Library.Business
             CBFDBField.IsAdd = true;
             upQZFields.Add(CBFDBField);
 
-
             UpdateField GSJGRQField = new UpdateField();
             GSJGRQField.FieldName = "GSJGRQ";
             GSJGRQField.FieldType = "DATETIME";
             GSJGRQField.IsNull = true;
             GSJGRQField.IsAdd = true;
             upQZFields.Add(GSJGRQField);
-
 
             UpdateField GSSHYJField = new UpdateField();
             GSSHYJField.FieldName = "GSSHYJ";
@@ -726,7 +700,6 @@ namespace YuLinTu.Library.Business
             GSSHRField.IsNull = true;
             GSSHRField.IsAdd = true;
             upQZFields.Add(GSSHRField);
-            
 
             UpdateField GSSHRQField = new UpdateField();
             GSSHRQField.FieldName = "GSSHRQ";
@@ -734,7 +707,6 @@ namespace YuLinTu.Library.Business
             GSSHRQField.IsNull = true;
             GSSHRQField.IsAdd = true;
             upQZFields.Add(GSSHRQField);
-
 
             UpdateField YLAField = new UpdateField();
             YLAField.FieldName = "YLA";
@@ -750,7 +722,6 @@ namespace YuLinTu.Library.Business
             YLBField.IsAdd = true;
             upQZFields.Add(YLBField);
 
-
             UpdateField YLCField = new UpdateField();
             YLCField.FieldName = "YLC";
             YLCField.FieldType = "TEXT";
@@ -758,16 +729,10 @@ namespace YuLinTu.Library.Business
             YLCField.IsAdd = true;
             upQZFields.Add(YLCField);
 
-
-
             upQZ.FieldList = upQZFields;
 
             return upQZ;
-
-
-
         }
-
 
         /// <summary>
         /// 添加承包地字段
@@ -875,7 +840,22 @@ namespace YuLinTu.Library.Business
             qsxz.IsAdd = true;
             qsxz.FieldLength = "100";
             upCBDFields.Add(qsxz);
-            
+
+            UpdateField xkxxxgyj = new UpdateField(); // 权属性质
+            qsxz.FieldName = "DKXXXGYJ";
+            qsxz.FieldType = "TEXT";
+            qsxz.IsNull = true;
+            qsxz.IsAdd = true;
+            qsxz.FieldLength = "999";
+            upCBDFields.Add(xkxxxgyj);
+
+            UpdateField ybmj = new UpdateField(); // 权属性质
+            qsxz.FieldName = "YBMJ";
+            qsxz.FieldType = "DECIMAL";
+            qsxz.IsNull = true;
+            qsxz.IsAdd = true;
+            qsxz.FieldLength = "13";
+            upCBDFields.Add(ybmj);
             upCBD.FieldList = upCBDFields;
 
             return upCBD;
@@ -1128,7 +1108,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 升级数据库
     }
 
     /// <summary>
@@ -1138,7 +1118,7 @@ namespace YuLinTu.Library.Business
     {
         #region Filds
 
-        #endregion
+        #endregion Filds
 
         #region Property
 
@@ -1152,7 +1132,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<UpdateField> FieldList { get; set; }
 
-        #endregion
+        #endregion Property
 
         #region Ctor
 
@@ -1162,7 +1142,7 @@ namespace YuLinTu.Library.Business
         public UpgradeDatabase()
         { }
 
-        #endregion
+        #endregion Ctor
     }
 
     /// <summary>
@@ -1197,7 +1177,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool IsAdd { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -1210,7 +1190,7 @@ namespace YuLinTu.Library.Business
             IsAdd = true;
         }
 
-        #endregion
+        #endregion Ctor
     }
 
     /// <summary>
@@ -1220,14 +1200,14 @@ namespace YuLinTu.Library.Business
     {
         #region Ctor
 
-        #endregion
+        #endregion Ctor
 
         #region Method
 
         /// <summary>
         /// 升级数据库
         /// </summary>
-        public bool UpgradeDatabase(IDbContext dbContext, List<UpgradeDatabase> tableList)
+        public bool UpgradeDatabase(IDbContext dbContext, List<UpgradeDatabase> tableList, IDataSource dataSource)
         {
             try
             {
@@ -1239,11 +1219,13 @@ namespace YuLinTu.Library.Business
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
                 string commandStrUpdate = string.Empty;
+                ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
+                ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
                 foreach (var table in tableList)
                 {
                     if (!elements.Any(c => !string.IsNullOrEmpty(c.TableName) && c.TableName == table.TableName))
                     {
-                        //新增表 Create table JJ(ID TEXT PRIMARY KEY ,name char);                       
+                        //新增表 Create table JJ(ID TEXT PRIMARY KEY ,name char);
                         if (table.FieldList.Count > 0)
                         {
                             commandStrTableAdd = string.Format("Create table {0}({1} {2} {3},", table.TableName, "ID", "TEXT", "PRIMARY KEY");
@@ -1296,7 +1278,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var dd = e.Message;
                 return false;
@@ -1304,6 +1286,6 @@ namespace YuLinTu.Library.Business
             return true;
         }
 
-        #endregion
+        #endregion Method
     }
 }

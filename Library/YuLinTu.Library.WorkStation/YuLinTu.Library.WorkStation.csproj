@@ -225,6 +225,8 @@
     <Compile Include="DZDW\IDZDWWorkStation.cs" />
     <Compile Include="FarmLandConserve\FarmLandConserveWorkStation.cs" />
     <Compile Include="FarmLandConserve\IFarmLandConserveWorkStation.cs" />
+    <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\Model.cs" />
     <Compile Include="MZDW\IMZDWWorkStation.cs" />
     <Compile Include="MZDW\MZDWWorkStation.cs" />
     <Compile Include="SecondTableLand\ISecondTableLandWorkStation.cs" />

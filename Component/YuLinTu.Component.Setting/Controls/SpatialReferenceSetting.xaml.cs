@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,7 +38,8 @@ namespace YuLinTu.Component.Setting
         private IProviderDbCSQLite provider;
         private SystemSetDefine systemSet = SystemSetDefine.GetIntence();
         //private SystemSetDefine SystemSettingDefine = SystemSetDefine.GetIntence();
-        #endregion
+
+        #endregion Fields
 
         #region Properties
 
@@ -46,6 +48,7 @@ namespace YuLinTu.Component.Setting
             get { return _SystemSettingDefine; }
             set { _SystemSettingDefine = value; NotifyPropertyChanged(() => SystemSettingDefine); }
         }
+
         private SystemSetDefine _SystemSettingDefine = SystemSetDefine.GetIntence();
 
         //public SystemSetDefine SystemSettingDefine
@@ -57,27 +60,24 @@ namespace YuLinTu.Component.Setting
         //public static readonly DependencyProperty SystemSettingDefineProperty =
         //    DependencyProperty.Register("SystemSettingDefine", typeof(SystemSetDefine), typeof(SpatialReferenceSetting));
 
-        #endregion
+        #endregion Properties
 
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
+        #endregion Events
 
         #region Ctor
 
         public SpatialReferenceSetting(IWorkspace workspace)
             : base(workspace)
         {
-
             InitializeComponent();
             DataContext = this;
-
-
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods - Protected
 
@@ -96,7 +96,7 @@ namespace YuLinTu.Component.Setting
                 lambda, name => NotifyPropertyChanged(name));
         }
 
-        #endregion
+        #endregion Methods - Protected
 
         #region Methods - Override
 
@@ -107,8 +107,6 @@ namespace YuLinTu.Component.Setting
 
         protected override void OnUninstall()
         {
-
-
         }
 
         protected override void OnLoad()
@@ -150,7 +148,7 @@ namespace YuLinTu.Component.Setting
             }));
         }
 
-        #endregion
+        #endregion Methods - Override
 
         private string FormatSpatialReference(SpatialReference spatialReference)
         {
@@ -179,7 +177,7 @@ namespace YuLinTu.Component.Setting
             Scale_Factor: 1.00000000
             Latitude_Of_Origin: 0.00000000
             线性单位: Meter
-            
+
             地理坐标系: GCS_China_Geodetic_Coordinate_System_2000
             基准面:  D_China_2000
             本初子午线:  Greenwich
@@ -260,6 +258,7 @@ namespace YuLinTu.Component.Setting
 
             return sb.ToString();
         }
+
         //新建代码-新建数据库
         public void mtbCreatNewSqlLitedb_Click(object sender, RoutedEventArgs e)
         {
@@ -313,7 +312,7 @@ namespace YuLinTu.Component.Setting
                             {
                                 Profile = new SettingsProfile() { Name = TheBns.stringDataSourceNameChangedMessageKey }
                             });
-                            //设置版本号                           
+                            //设置版本号
                             provider = ds.DataSource as IProviderDbCSQLite;
                             SetBBH();
                             RaiseRequestRefresh();//刷新整个配置界面
@@ -334,7 +333,7 @@ namespace YuLinTu.Component.Setting
 
         /// <summary>
         /// 建库
-        /// </summary>     
+        /// </summary>
         private bool TryCreateDatabase(IDbContext ds, string fileName, Spatial.SpatialReference sr)
         {
             bool creatsucess = true;
@@ -410,7 +409,7 @@ namespace YuLinTu.Component.Setting
             schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(MZDW)).TableName, "Shape");
             schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ZoneBoundary)).TableName, "Shape");
             schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(FarmLandConserve)).TableName, "Shape");
-            
+
             try
             {
                 ds.BeginTransaction();
@@ -448,12 +447,11 @@ namespace YuLinTu.Component.Setting
                   }));
                 return false;
             }
-
         }
 
         /// <summary>
         /// 更改配置显示
-        /// </summary>        
+        /// </summary>
         private void TrySetDefaultDatabasePath(string fileName, bool bForce)
         {
             try
@@ -479,13 +477,13 @@ namespace YuLinTu.Component.Setting
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
                 ConfigurationManager.RefreshSection("connectionStrings");
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
         }
+
         /// <summary>
         /// 数据库升级
         /// </summary>
@@ -532,7 +530,7 @@ namespace YuLinTu.Component.Setting
                     return;
                 }
                 UpdateDatabase upDatabase = new UpdateDatabase();
-                var result = upDatabase.UpgradeDatabase(dbContext, tableList);
+                var result = upDatabase.UpgradeDatabase(dbContext, tableList, dbContext);
                 if (result)
                 {
                     var successPage = new TabMessageBoxDialog
@@ -609,7 +607,6 @@ namespace YuLinTu.Component.Setting
                     ConfirmButtonVisibility = Visibility.Collapsed,
                 };
                 Workspace.Window.ShowDialog(successPage);
-
             }
             catch (Exception ex)
             {
@@ -627,6 +624,7 @@ namespace YuLinTu.Component.Setting
         }
 
         #region 版本号
+
         //陈泽林 20161024  版本号控制
         private string GetBBH()
         {
@@ -651,6 +649,7 @@ namespace YuLinTu.Component.Setting
                 return "版本号：无";
             }
         }
+
         private bool SetBBH()
         {
             try
@@ -664,6 +663,7 @@ namespace YuLinTu.Component.Setting
                 return false;
             }
         }
-        #endregion
+
+        #endregion 版本号
     }
 }
