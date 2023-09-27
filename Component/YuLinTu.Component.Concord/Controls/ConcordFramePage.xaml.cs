@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -47,7 +48,7 @@ namespace YuLinTu.Component.Concord
 
         /// <summary>
         /// 承包合同命令
-        /// </summary>        
+        /// </summary>
         private ConcordCommand command = new ConcordCommand();
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace YuLinTu.Component.Concord
         /// </summary>
         private Zone currentZone;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -83,7 +84,7 @@ namespace YuLinTu.Component.Concord
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -95,7 +96,7 @@ namespace YuLinTu.Component.Concord
             NavigatorType = eNavigatorType.TreeView;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -144,6 +145,8 @@ namespace YuLinTu.Component.Concord
             //SetCommandBinding(mbtnSender, command.Sender, command.SenderBind);
             //SetCommandBinding(mbtnPublicityResultTable, command.PublicityResultTable, command.PublicityResultTableBind);
             SetCommandBinding(mbtnConcordInformation, command.ConcordInformation, command.ConcordInformationBind);
+            //SetCommandBinding(mbtnRegionModel, command.BatchRegionEdit, command.BatchRegionBind);
+            //SetCommandBinding(mbtnMultipleModel, command.BatchMultipleEdit, command.BatchMultipleBind);
         }
 
         /// <summary>
@@ -187,55 +190,73 @@ namespace YuLinTu.Component.Concord
                 case ConcordCommand.AddName:
                     concordPanel.AddConcord();
                     break;
+
                 case ConcordCommand.RefreshName:
                     concordPanel.Refresh();
                     break;
+
                 case ConcordCommand.DelName:
                     concordPanel.DelConcord();
                     break;
+
                 case ConcordCommand.EditName:
                     concordPanel.EditConcord();
                     break;
+
                 case ConcordCommand.ClearName:
                     concordPanel.Clear();
                     break;
+
                 case ConcordCommand.ContactConcordName:
                     concordPanel.InitialContractConcord();
                     break;
+
                 case ConcordCommand.PreviewConcordName:
                     //预览合同
                     concordPanel.PrintViewConcord();
                     break;
+
                 case ConcordCommand.ExportConcordName:
                     //导出合同
                     concordPanel.ExportConcord();
                     break;
+
                 case ConcordCommand.PrintRequireBookName:
                     //单户申请书预览
                     concordPanel.PrintRequireBook();
                     break;
+
                 case ConcordCommand.ExportApplicationByFamilyName:
                     //单户申请书导出
                     concordPanel.ExportApplicationByFamily();
                     break;
+
                 case ConcordCommand.PrintViewOtherApplicationName:
                     //单户申请书预览(其他)
                     concordPanel.PrintViewOtherApplication();
                     break;
+
                 case ConcordCommand.ExportApplicationByOtherName:
                     //单户申请书导出(其他)
                     concordPanel.ExportApplicationByOther();
                     break;
+
                 case ConcordCommand.PrintViewApplicationName:
                     //集体申请书预览
                     concordPanel.PrintViewApplication();
                     break;
+
                 case ConcordCommand.ExportApplicationBookName:
                     //集体申请书导出
                     concordPanel.ExportApplicationBook();
                     break;
+
                 case ConcordCommand.ConcordInformationName:
                     concordPanel.ConcordInformationTable();
+                    break;
+
+                case ConcordCommand.BatchRegionModel:
+                    concordPanel.OnUpdate(sender, e);
                     break;
             }
         }
@@ -259,10 +280,11 @@ namespace YuLinTu.Component.Concord
                mbtnOtherSingleBook.IsEnabled = isEnable;
                mbtnSingleBook.IsEnabled = isEnable;
                mbtnConcordInformation.IsEnabled = isEnable;
-
+               //mbtnRegionModel.IsEnabled = isEnable;
+               //mbtnMultipleModel.IsEnabled = isEnable;
            }));
         }
 
-        #endregion
+        #endregion Methods
     }
 }
