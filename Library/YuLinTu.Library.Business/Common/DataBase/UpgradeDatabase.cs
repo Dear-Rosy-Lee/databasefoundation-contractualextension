@@ -1220,18 +1220,24 @@ namespace YuLinTu.Library.Business
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
                 string commandStrUpdate = string.Empty;
-                //var result= dbContext.CreateQuery<ContractLand>() ;
-                //foreach(var item in result)
-                //{
-                //    if (item.ContractDelayArea.ToString() == null)
-                //    {
+                var str = $"PRAGMA  table_info(ZD_CBD);";
+                var schema = dbContext.DataSource.CreateSchema();
+                var result = schema.GetElementProperties(null, "ZD_CBD");
+                List<string> tempList = new List<string>();
+                result.ForEach(x =>
+                {
+                    tempList.Add(x.AliasName);
+                });
+                if (tempList.Contains("YBMJ")||tempList.Contains("DKXXXGYJ"))
+                {
 
-                //    }
-                //}
+                }
+                else
+                {
+                    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
+                    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
+                }
 
-
-                ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
-                ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
                 foreach (var table in tableList)
                 {
                     if (!elements.Any(c => !string.IsNullOrEmpty(c.TableName) && c.TableName == table.TableName))
