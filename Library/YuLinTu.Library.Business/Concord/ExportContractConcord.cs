@@ -243,6 +243,17 @@ namespace YuLinTu.Library.Business
             int startRow = 2;
             foreach (var item in ListLand)
             {
+                var Landlevel1 = "一等地";
+                var Landlevel2 = "二等地";
+                var Landlevel3 = "三等地";
+                var Landlevel4 = "四等地";
+                var Landlevel5 = "五等地";
+                var Landlevel6 = "六等地";
+                var Landlevel7 = "七等地";
+                var Landlevel8 = "八等地";
+                var Landlevel9 = "九等地";
+                var Landlevel10 = "十等地";
+                var Landlevel999 = "";
                 SetTableCellValue(tableIndex, startRow, 0, item.Name);
                 SetTableCellValue(tableIndex, startRow, 1, item.CadastralNumber);
                 SetTableCellValue(tableIndex, startRow, 2, item.NeighborEast.IsNullOrEmpty() ? "" : item.NeighborEast);
@@ -251,7 +262,50 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
                 SetTableCellValue(tableIndex, startRow, 6, item.ActualArea.ToString());
                 totleActualArea += item.ActualArea;
-                SetTableCellValue(tableIndex, startRow, 7, item.LandLevel);
+                if (item.LandLevel == "01")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel1);
+                }
+                if (item.LandLevel == "02")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel2);
+                }
+                if (item.LandLevel == "03")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel3);
+                }
+                if (item.LandLevel == "04")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel4);
+                }
+                if (item.LandLevel == "05")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel5);
+                }
+                if (item.LandLevel == "06")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel6);
+                }
+                if (item.LandLevel == "07")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel7);
+                }
+                if (item.LandLevel == "08")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel8);
+                }
+                if (item.LandLevel == "09")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel9);
+                }
+                if (item.LandLevel == "10")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel10);
+                }
+                if (item.LandLevel == "")
+                {
+                    SetTableCellValue(tableIndex, startRow, 7, Landlevel999);
+                }
                 SetTableCellValue(tableIndex, startRow, 8, item.Comment);
                 startRow++;
             }
