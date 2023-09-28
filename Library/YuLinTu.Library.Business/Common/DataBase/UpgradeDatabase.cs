@@ -1220,23 +1220,23 @@ namespace YuLinTu.Library.Business
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
                 string commandStrUpdate = string.Empty;
-                var str = $"PRAGMA  table_info(ZD_CBD);";
-                var schema = dbContext.DataSource.CreateSchema();
-                var result = schema.GetElementProperties(null, "ZD_CBD");
-                List<string> tempList = new List<string>();
-                result.ForEach(x =>
-                {
-                    tempList.Add(x.AliasName);
-                });
-                if (tempList.Contains("YBMJ")||tempList.Contains("DKXXXGYJ"))
-                {
+                //var str = $"PRAGMA  table_info(ZD_CBD);";
+                //var schema = dbContext.DataSource.CreateSchema();
+                //var result = schema.GetElementProperties(null, "ZD_CBD");
+                //List<string> tempList = new List<string>();
+                //result.ForEach(x =>
+                //{
+                //    tempList.Add(x.AliasName);
+                //});
+                //if (tempList.Contains("YBMJ")||tempList.Contains("DKXXXGYJ"))
+                //{
 
-                }
-                else
-                {
-                    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
-                    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
-                }
+                //}
+                //else
+                //{
+                //    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD DKXXXGYJ TEXT;");
+                //    ((IDbContext)dataSource).ExecuteBySQL($"ALTER TABLE ZD_CBD ADD YBMJ DECIMAL;");
+                //}
 
                 foreach (var table in tableList)
                 {

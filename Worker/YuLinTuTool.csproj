@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Product.YuLinTuTool</RootNamespace>
-    <AssemblyName>YuLinTuLandTool</AssemblyName>
+    <AssemblyName>YuLinTuLandDelayTool</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
