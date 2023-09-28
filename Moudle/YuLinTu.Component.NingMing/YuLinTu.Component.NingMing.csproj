@@ -152,10 +152,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Template\宁明延包调查摸底表.xlt" />
+    <Content Include="Xml\Config.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Xml\Config.xml" />
+    <None Include="Template\宁明延包调查摸底表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

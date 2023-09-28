@@ -255,7 +255,7 @@ namespace YuLinTu.Library.Business
                 var Landlevel10 = "十等地";
                 var Landlevel999 = "";
                 SetTableCellValue(tableIndex, startRow, 0, item.Name);
-                SetTableCellValue(tableIndex, startRow, 1, item.CadastralNumber);
+                SetTableCellValue(tableIndex, startRow, 1, item.LandNumber);
                 SetTableCellValue(tableIndex, startRow, 2, item.NeighborEast.IsNullOrEmpty() ? "" : item.NeighborEast);
                 SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
                 SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);

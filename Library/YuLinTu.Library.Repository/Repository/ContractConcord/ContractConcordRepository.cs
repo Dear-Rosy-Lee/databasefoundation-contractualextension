@@ -34,7 +34,7 @@ namespace YuLinTu.Library.Repository
         {
             //UpdateAudit()
             return DataSource.CreateQuery<ContractConcord>()
-                .Where(predicate)
+                //.Where(predicate)
                 .Update(values).Save();
         }
 

@@ -1254,7 +1254,7 @@ namespace YuLinTu.Library.Controls
                 if (!entityColDic.ContainsKey(pi.Name))
                     return true;
 
-                kvs.Add(entityColDic[pi.Name], val);
+                kvs.Add(pi.Name, val);
 
                 return true;
             });
