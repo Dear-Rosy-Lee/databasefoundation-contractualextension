@@ -30,6 +30,11 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public DateTime? SetFinishTime { get; set; }
 
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string SetComment { get; set; }
+
         #endregion
 
         #region Ctor
@@ -37,21 +42,24 @@ namespace YuLinTu.Library.Controls
         public BatchUpdatePage()
         {
             InitializeComponent();
-            txt_BirthdayStart.Value = DateTime.Now;
-            txt_BirthdayFinish.Value = DateTime.Now;
+            txt_BirthdayStart.Value = null;
+            txt_BirthdayFinish.Value = null;
+            txt_SetComment.Text = string.Empty;
         }
 
         #endregion
 
         private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
         {
-            if (txt_BirthdayStart.Value < txt_BirthdayFinish.Value)
+            if (txt_BirthdayStart.Value > txt_BirthdayFinish.Value)
             {
                 ShowBox("批量编辑", "结束日期不能小于开始日期!");
                 return;
             }
             SetStartTime = txt_BirthdayStart.Value;
             SetFinishTime = txt_BirthdayFinish.Value;
+            SetComment = txt_SetComment.Text;
+           
             Workpage.Page.CloseMessageBox(true);
         }
         private void ShowBox(string title, string msg, eMessageGrade type = eMessageGrade.Error)

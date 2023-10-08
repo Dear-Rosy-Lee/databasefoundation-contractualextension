@@ -9,10 +9,6 @@ namespace YuLinTu.Library.Entity.Model
 {
     public class BatchUpdateConcord
     {
-      
-
-
-
         /// <summary>
         /// 耕地承包起始时间
         /// </summary>

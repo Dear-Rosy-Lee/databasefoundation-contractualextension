@@ -13,7 +13,7 @@
     Width="380"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Header="批量编辑设置"
+    Header="批量编辑"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
     mc:Ignorable="d">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}" >
@@ -40,7 +40,7 @@
             <wpftoolkit:DateTimeUpDown Grid.Row="1" Grid.Column="1" Name="txt_BirthdayFinish" IsEnabled="True" Format="ShortDate" VerticalAlignment="Center"/>
 
             <Label Content="备注:" Name="cbSetComment" Grid.Row="2" VerticalAlignment="Center"  HorizontalContentAlignment="Left"/>
-            <wpftoolkit:RichTextBox Grid.Row="2" Grid.Column="1" Name="txt_SetComment" IsEnabled="True" VerticalAlignment="Center" Height="25"/>
+            <ylt:MetroTextBox Grid.Row="2" Grid.Column="1" Name="txt_SetComment" IsEnabled="True" VerticalAlignment="Center" Height="25"/>
 
         </Grid>
         <Border BorderThickness="0,1,0,0" Grid.Row="1" BorderBrush="LightGray" Margin="10,0,10,0" SnapsToDevicePixels="True">

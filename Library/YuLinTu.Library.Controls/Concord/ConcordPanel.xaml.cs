@@ -1197,7 +1197,7 @@ namespace YuLinTu.Library.Controls
 
         public void OnUpdateRegion(object sender, ExecutedRoutedEventArgs e)
         {
-            OnUpdate(e.Parameter,BatchModel.Zone);
+            OnUpdate(e.Parameter,BatchModel.Zone,null);
         }
 
         public void OnUpdateMultiple(object sender, ExecutedRoutedEventArgs e)
@@ -1225,125 +1225,116 @@ namespace YuLinTu.Library.Controls
                     ShowBox("批量编辑", "请至少选择一条数据编辑");
                     return;
                 }
-                OnUpdateMultiple(e.Parameter, BatchModel.Selection, selectedPersons);
+                OnUpdate(e.Parameter, BatchModel.Selection, selectedPersons);
             });
         }
 
-        private void OnUpdate(object args,BatchModel batchModel)
+        private void OnUpdate(object args,BatchModel batchModel,List<VirtualPerson> selectedPersons)
         {
-            BatchUpdateConcord updateModel;
-            try
+            DateTime? startTime = DateTime.Now;
+            DateTime? finishiTime = DateTime.Now;
+            string comment = "";
+            BatchUpdatePage page = new BatchUpdatePage();
+            page.Workpage = ThePage;
+            ThePage.Page.ShowMessageBox(page, (b, r)=>
             {
-                updateModel = OnGetBatchUpdateModel();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            var pgd = new PropertyGridDialog
-            {
-                Header = $"批量编辑",
-                Object = updateModel,
-                IsGroupingEnabled = true
-            };
-            pgd.PropertyGrid.Properties["Workpage"] = ThePage;
-            pgd.PropertyGrid.Properties["CurrentZone"] = CurrentZone;
-            pgd.Confirm += (s, e) =>
-            {
-                BatchUpdateConcord updateInput = null;
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    updateInput = pgd.Object as BatchUpdateConcord;
-                }));
-                if (updateInput == null)
+                if (!(bool)b)
                 {
                     return;
                 }
+                startTime = page.SetStartTime;
+                finishiTime = page.SetFinishTime;
+                comment = page.SetComment;
 
-                OnBatchUpdateCore(updateInput, batchModel,null);
+                OnBatchUpdateCore(startTime, finishiTime,comment, batchModel, selectedPersons);
+                OnBatchUpdated();
+            });
+         
 
-                OnBatchUpdated(updateInput);
-            };
-            pgd.ShowDialog(ThePage.Page);
+            //var pgd = new PropertyGridDialog
+            //{
+            //    Header = $"批量编辑",
+            //    Object = updateModel,
+            //    IsGroupingEnabled = true
+            //};
+            //pgd.PropertyGrid.Properties["Workpage"] = ThePage;
+            //pgd.PropertyGrid.Properties["CurrentZone"] = CurrentZone;
+            //pgd.Confirm += (s, e) =>
+            //{
+            //    BatchUpdateConcord updateInput = null;
+            //    Application.Current.Dispatcher.Invoke(new Action(() =>
+            //    {
+            //        updateInput = pgd.Object as BatchUpdateConcord;
+            //    }));
+            //    if (updateInput == null)
+            //    {
+            //        return;
+            //    }
+
+            //    OnBatchUpdateCore(updateInput, batchModel,null);
+
+            //    OnBatchUpdated(updateInput);
+            //};
+            //pgd.ShowDialog(ThePage.Page);
         }
 
-        private void OnUpdateMultiple(object args, BatchModel batchModel,List<VirtualPerson> selectedPersons)
-        {
-            BatchUpdateConcord updateModel;
-            try
-            {
-                updateModel = OnGetBatchUpdateModel();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            var pgd = new PropertyGridDialog
-            {
-                Header = $"批量编辑",
-                Object = updateModel,
-                IsGroupingEnabled = true
-            };
-            pgd.PropertyGrid.Properties["Workpage"] = ThePage;
-            pgd.PropertyGrid.Properties["CurrentZone"] = CurrentZone;
-            pgd.Confirm += (s, e) =>
-            {
-                BatchUpdateConcord updateInput = null;
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    updateInput = pgd.Object as BatchUpdateConcord;
-                }));
-                if (updateInput == null)
-                {
-                    return;
-                }
-
-                OnBatchUpdateCore(updateInput, batchModel, selectedPersons);
-
-                OnBatchUpdated(updateInput);
-            };
-            pgd.ShowDialog(ThePage.Page);
-        }
-        protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput,BatchModel batchModel, List<VirtualPerson> selectedPersons)
+        protected virtual int OnBatchUpdateCore(DateTime? startTime,DateTime? finishTime,string comment,BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             ContainerFactory factory = new ContainerFactory(DbContext);
             var concordRep = factory.CreateRepository<IContractConcordRepository>();
-            Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate(batchModel,selectedPersons);
+            Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate(batchModel, selectedPersons);
             var kvs = new KeyValueList<string, object>();
-            var entityColDic = typeof(ContractConcord).GetDataColumns().ToDictionary(k => k.PropertyName, v => v.ColumnName);
-            updateInput.TraversalPropertiesInfo((PropertyInfo pi, object val) =>
+
+            kvs.Add("ArableLandStartTime", startTime);
+            kvs.Add("ArableLandEndTime", finishTime);
+            if (startTime != null && finishTime != null)
             {
-                if(pi.Name == "ManagementTime")
-                {
-                    val = Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value);
-                }
-                if (val == null)
-                    return true;
+                kvs.Add("ManagementTime", Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value));
+            }
+            kvs.Add("Comment", comment);
 
-                if (!entityColDic.ContainsKey(pi.Name))
-                    return true;
-
-                kvs.Add(pi.Name, val);
-
-                return true;
-            });
-          
             var updateCount = concordRep.UpdateRange(predicate, kvs);
             concordRep.SaveChanges();
             return updateCount;
         }
-       
-        protected virtual void OnBatchUpdated(BatchUpdateConcord value)
+        //protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput,BatchModel batchModel, List<VirtualPerson> selectedPersons)
+        //{
+        //    ContainerFactory factory = new ContainerFactory(DbContext);
+        //    var concordRep = factory.CreateRepository<IContractConcordRepository>();
+        //    Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate(batchModel,selectedPersons);
+        //    var kvs = new KeyValueList<string, object>();
+        //    var entityColDic = typeof(ContractConcord).GetDataColumns().ToDictionary(k => k.PropertyName, v => v.ColumnName);
+        //    updateInput.TraversalPropertiesInfo((PropertyInfo pi, object val) =>
+        //    {
+        //        if(pi.Name == "ManagementTime")
+        //        {
+        //            val = Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value);
+        //        }
+        //        if (val == null)
+        //            return true;
+
+        //        if (!entityColDic.ContainsKey(pi.Name))
+        //            return true;
+
+        //        kvs.Add(pi.Name, val);
+
+        //        return true;
+        //    });
+
+        //    var updateCount = concordRep.UpdateRange(predicate, kvs);
+        //    concordRep.SaveChanges();
+        //    return updateCount;
+        //}
+
+        protected virtual void OnBatchUpdated()
         {
             Refresh();
         }
 
-        protected virtual BatchUpdateConcord OnGetBatchUpdateModel()
-        {
-            return new BatchUpdateConcord();
-        }
+        //protected virtual void OnBatchUpdated(BatchUpdateConcord value)
+        //{
+        //    Refresh();
+        //}
 
         protected virtual Expression<Func<ContractConcord, bool>> ResolveBatchPredicate(BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
