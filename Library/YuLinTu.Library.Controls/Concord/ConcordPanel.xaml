@@ -107,6 +107,7 @@
             <cmps:MetroTreeGrid.Columns>
                 <DataGridTemplateColumn Header="承包方"
                                         SortMemberPath="Name"
+                                        
                                         Width="148"  cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

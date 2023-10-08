@@ -330,7 +330,8 @@
                         ToolTip="刷新" />
                 </metro:MetroButton>
             </cmps:TabControlItemRibbonContainer>
-            <!--<cmps:TabControlItemRibbonContainer
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer
                 Name="BatchEditContainer"
                 x:FieldModifier="public"
                 Text="批量编辑">
@@ -356,8 +357,8 @@
                         Text="多选模式"
                         ToolTip="批量操作选择的数据" />
                 </metro:MetroButton>
-            </cmps:TabControlItemRibbonContainer>-->
-
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
             <cmps:TabControlItemRibbonContainer
                 Name="OtherContainer"
                 x:FieldModifier="public"

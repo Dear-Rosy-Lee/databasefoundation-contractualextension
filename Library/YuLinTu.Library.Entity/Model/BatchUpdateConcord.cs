@@ -9,19 +9,9 @@ namespace YuLinTu.Library.Entity.Model
 {
     public class BatchUpdateConcord
     {
-        /// <summary>
-        /// 备注
-        /// </summary>
-        [DisplayName("备注")]
-        [DataColumn("BZXX")]
-        public string Comment { get; set; }
+      
 
-        /// <summary>
-        ///承包期限
-        /// </summary>
-        [DisplayName("承包期限设置")]
-        [DataColumn("JYQX")]
-        public string ManagementTime { get; set; }
+
 
         /// <summary>
         /// 耕地承包起始时间
@@ -37,5 +27,19 @@ namespace YuLinTu.Library.Entity.Model
         [DataColumn("CBQXZ")]
         public DateTime? ArableLandEndTime { get; set; }
 
+        /// <summary>
+        ///承包期限
+        /// </summary>
+        [DisplayName("承包期限设置")]
+        [DataColumn("JYQX")]
+        [Enabled(false)]
+        public string ManagementTime { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [DisplayName("备注")]
+        [DataColumn("BZXX")]
+        public string Comment { get; set; }
     }
 }

@@ -145,8 +145,8 @@ namespace YuLinTu.Component.Concord
             //SetCommandBinding(mbtnSender, command.Sender, command.SenderBind);
             //SetCommandBinding(mbtnPublicityResultTable, command.PublicityResultTable, command.PublicityResultTableBind);
             SetCommandBinding(mbtnConcordInformation, command.ConcordInformation, command.ConcordInformationBind);
-            //SetCommandBinding(mbtnRegionModel, command.BatchRegionEdit, command.BatchRegionBind);
-            //SetCommandBinding(mbtnMultipleModel, command.BatchMultipleEdit, command.BatchMultipleBind);
+            SetCommandBinding(mbtnRegionModel, command.BatchRegionEdit, command.BatchRegionBind);
+            SetCommandBinding(mbtnMultipleModel, command.BatchMultipleEdit, command.BatchMultipleBind);
         }
 
         /// <summary>
@@ -256,8 +256,13 @@ namespace YuLinTu.Component.Concord
                     break;
 
                 case ConcordCommand.BatchRegionModel:
-                    concordPanel.OnUpdate(sender, e);
+                    concordPanel.OnUpdateRegion(sender, e);
                     break;
+
+                case ConcordCommand.BatchMultipleModel:
+                    concordPanel.OnUpdateMultiple(sender, e);
+                    break;
+
             }
         }
 
@@ -280,8 +285,8 @@ namespace YuLinTu.Component.Concord
                mbtnOtherSingleBook.IsEnabled = isEnable;
                mbtnSingleBook.IsEnabled = isEnable;
                mbtnConcordInformation.IsEnabled = isEnable;
-               //mbtnRegionModel.IsEnabled = isEnable;
-               //mbtnMultipleModel.IsEnabled = isEnable;
+               mbtnRegionModel.IsEnabled = isEnable;
+               mbtnMultipleModel.IsEnabled = isEnable;
            }));
         }
 

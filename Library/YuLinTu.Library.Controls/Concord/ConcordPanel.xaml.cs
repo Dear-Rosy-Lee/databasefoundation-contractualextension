@@ -1195,12 +1195,41 @@ namespace YuLinTu.Library.Controls
 
         #endregion Methods - 合同数据处理
 
-        public void OnUpdate(object sender, ExecutedRoutedEventArgs e)
+        public void OnUpdateRegion(object sender, ExecutedRoutedEventArgs e)
         {
-            OnUpdate(e.Parameter);
+            OnUpdate(e.Parameter,BatchModel.Zone);
         }
 
-        private void OnUpdate(object args)
+        public void OnUpdateMultiple(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            List<VirtualPerson> listPerson = new List<VirtualPerson>();
+            //界面上没有选中项(此时弹出承包方选择界面)
+            foreach (var item in Items)
+            {
+                listPerson.Add(item.Tag);
+            }
+            ContractRegeditBookPersonLockPage selectPage = new ContractRegeditBookPersonLockPage();
+            selectPage.Workpage = ThePage;
+            selectPage.PersonItems = listPerson;
+            selectPage.Business = PersonBusiness;
+            ThePage.Page.ShowMessageBox(selectPage, (b, r) =>
+            {
+                if (!(bool)b)
+                {
+                    return;
+                }
+                List<VirtualPerson> selectedPersons = selectPage.SelectedPersons;
+                if (selectedPersons == null || selectedPersons.Count == 0)
+                {
+                    ShowBox("批量编辑", "请至少选择一条数据编辑");
+                    return;
+                }
+                OnUpdateMultiple(e.Parameter, BatchModel.Selection, selectedPersons);
+            });
+        }
+
+        private void OnUpdate(object args,BatchModel batchModel)
         {
             BatchUpdateConcord updateModel;
             try
@@ -1232,22 +1261,64 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
 
-                OnBatchUpdateCore(updateInput);
+                OnBatchUpdateCore(updateInput, batchModel,null);
 
                 OnBatchUpdated(updateInput);
             };
             pgd.ShowDialog(ThePage.Page);
         }
 
-        protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput)
+        private void OnUpdateMultiple(object args, BatchModel batchModel,List<VirtualPerson> selectedPersons)
+        {
+            BatchUpdateConcord updateModel;
+            try
+            {
+                updateModel = OnGetBatchUpdateModel();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            var pgd = new PropertyGridDialog
+            {
+                Header = $"批量编辑",
+                Object = updateModel,
+                IsGroupingEnabled = true
+            };
+            pgd.PropertyGrid.Properties["Workpage"] = ThePage;
+            pgd.PropertyGrid.Properties["CurrentZone"] = CurrentZone;
+            pgd.Confirm += (s, e) =>
+            {
+                BatchUpdateConcord updateInput = null;
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    updateInput = pgd.Object as BatchUpdateConcord;
+                }));
+                if (updateInput == null)
+                {
+                    return;
+                }
+
+                OnBatchUpdateCore(updateInput, batchModel, selectedPersons);
+
+                OnBatchUpdated(updateInput);
+            };
+            pgd.ShowDialog(ThePage.Page);
+        }
+        protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput,BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             ContainerFactory factory = new ContainerFactory(DbContext);
             var concordRep = factory.CreateRepository<IContractConcordRepository>();
-            Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate();
+            Expression<Func<ContractConcord, bool>> predicate = ResolveBatchPredicate(batchModel,selectedPersons);
             var kvs = new KeyValueList<string, object>();
             var entityColDic = typeof(ContractConcord).GetDataColumns().ToDictionary(k => k.PropertyName, v => v.ColumnName);
             updateInput.TraversalPropertiesInfo((PropertyInfo pi, object val) =>
             {
+                if(pi.Name == "ManagementTime")
+                {
+                    val = Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value);
+                }
                 if (val == null)
                     return true;
 
@@ -1263,7 +1334,7 @@ namespace YuLinTu.Library.Controls
             concordRep.SaveChanges();
             return updateCount;
         }
-
+       
         protected virtual void OnBatchUpdated(BatchUpdateConcord value)
         {
             Refresh();
@@ -1274,10 +1345,26 @@ namespace YuLinTu.Library.Controls
             return new BatchUpdateConcord();
         }
 
-        protected virtual Expression<Func<ContractConcord, bool>> ResolveBatchPredicate()
+        protected virtual Expression<Func<ContractConcord, bool>> ResolveBatchPredicate(BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             Expression<Func<ContractConcord, bool>> predicate = null;
-            predicate = x => x.ZoneCode.StartsWith(CurrentZone.FullCode);
+            switch (batchModel)
+            {
+                case BatchModel.Zone:
+                predicate = x => x.ZoneCode.StartsWith(CurrentZone.FullCode);
+                break;
+
+                case BatchModel.Selection:
+                    var ids = new List<string>();
+                    foreach (var item in selectedPersons)
+                    {
+                        ids.Add(item.Name);
+                    }
+                    predicate = x => ids.ToArray().Contains(x.ContracterName);
+                    break;
+            }
+                
+          
             return predicate;
         }
 
@@ -1541,6 +1628,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             InlitialControl(currentZone.FullCode);
+
         }
 
         #endregion Methods - 合同清空、刷新
