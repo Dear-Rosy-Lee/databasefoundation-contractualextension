@@ -32,7 +32,7 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
@@ -69,7 +69,6 @@
                 Name="cbSetDec"
                 Grid.Row="2"
                 Grid.Column="0"
-                Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 Content="承包结束日期: " />
             <wpftoolkit:DateTimeUpDown
