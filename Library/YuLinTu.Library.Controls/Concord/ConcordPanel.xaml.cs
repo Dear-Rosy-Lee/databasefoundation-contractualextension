@@ -1291,10 +1291,12 @@ namespace YuLinTu.Library.Controls
             if (longTime)
             {
                 kvs.Add("ManagementTime", "长久");
+                kvs.Add("Flag",1);
             }
             if (startTime != null && finishTime != null)
             {
                 kvs.Add("ManagementTime", Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value));
+                kvs.Add("Flag", 0);
             }
             kvs.Add("Comment", comment);
 
