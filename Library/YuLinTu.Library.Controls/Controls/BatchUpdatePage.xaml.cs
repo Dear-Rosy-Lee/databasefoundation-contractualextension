@@ -35,6 +35,10 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public string SetComment { get; set; }
 
+        /// <summary>
+        /// 长期
+        /// </summary>
+        public bool SetLongTime { get; set; }
         #endregion
 
         #region Ctor
@@ -45,6 +49,7 @@ namespace YuLinTu.Library.Controls
             txt_BirthdayStart.Value = null;
             txt_BirthdayFinish.Value = null;
             txt_SetComment.Text = string.Empty;
+            cbLongtime.IsChecked = false;
         }
 
         #endregion

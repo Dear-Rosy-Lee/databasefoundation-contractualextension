@@ -1234,6 +1234,7 @@ namespace YuLinTu.Library.Controls
             DateTime? startTime = DateTime.Now;
             DateTime? finishiTime = DateTime.Now;
             string comment = "";
+            bool longTime = false;
             BatchUpdatePage page = new BatchUpdatePage();
             page.Workpage = ThePage;
             ThePage.Page.ShowMessageBox(page, (b, r)=>
@@ -1245,8 +1246,8 @@ namespace YuLinTu.Library.Controls
                 startTime = page.SetStartTime;
                 finishiTime = page.SetFinishTime;
                 comment = page.SetComment;
-
-                OnBatchUpdateCore(startTime, finishiTime,comment, batchModel, selectedPersons);
+                longTime = page.SetLongTime;
+                OnBatchUpdateCore(startTime, finishiTime,comment, longTime, batchModel, selectedPersons);
                 OnBatchUpdated();
             });
          
@@ -1278,7 +1279,7 @@ namespace YuLinTu.Library.Controls
             //pgd.ShowDialog(ThePage.Page);
         }
 
-        protected virtual int OnBatchUpdateCore(DateTime? startTime,DateTime? finishTime,string comment,BatchModel batchModel, List<VirtualPerson> selectedPersons)
+        protected virtual int OnBatchUpdateCore(DateTime? startTime,DateTime? finishTime,string comment,bool longTime,BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             ContainerFactory factory = new ContainerFactory(DbContext);
             var concordRep = factory.CreateRepository<IContractConcordRepository>();
@@ -1287,6 +1288,10 @@ namespace YuLinTu.Library.Controls
 
             kvs.Add("ArableLandStartTime", startTime);
             kvs.Add("ArableLandEndTime", finishTime);
+            if (!longTime)
+            {
+                kvs.Add("ManagementTime", "长久");
+            }
             if (startTime != null && finishTime != null)
             {
                 kvs.Add("ManagementTime", Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value));

@@ -16,60 +16,136 @@
     Header="批量编辑"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
     mc:Ignorable="d">
-    <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}" >
+    <am:InfoPageBase.Resources>
+        <am:ConcordCheckValueConvert x:Key="ConcordCheckValueConvert" />
+    </am:InfoPageBase.Resources>
+    <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Margin="20,10,20,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-         
-            <Label Content="承包起始日期:" Name="cbSetPub" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left"/>
-            <wpftoolkit:DateTimeUpDown Grid.Row="0" Grid.Column="1" Name="txt_BirthdayStart" IsEnabled="True" Format="ShortDate" VerticalAlignment="Center"/>
+            <Label
+                Grid.Row="0"
+                VerticalAlignment="Center"
+                Content="承包期限设置:" />
+            <CheckBox
+                Name="cbLongtime"
+                Grid.Row="0"
+                Grid.Column="1"
+                Padding="7,0,0,0"
+                VerticalAlignment="Center"
+                Content="设置承包期限为长久"
+                TabIndex="3" />
 
-            <Label Content="承包结束日期:" Name="cbSetDec" Grid.Row="1" VerticalAlignment="Center"  HorizontalContentAlignment="Left"/>
-            <wpftoolkit:DateTimeUpDown Grid.Row="1" Grid.Column="1" Name="txt_BirthdayFinish" IsEnabled="True" Format="ShortDate" VerticalAlignment="Center"/>
+            <Label
+                Name="cbSetPub"
+                Grid.Row="1"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Content="承包起始日期:" />
+            <wpftoolkit:DateTimeUpDown
+                Name="txt_BirthdayStart"
+                Grid.Row="1"
+                Grid.Column="1"
+                Height="30"
+                VerticalAlignment="Center"
+                Format="ShortDate"
+                FormatString="yyyy年MM月dd日"
+                IsEnabled="{Binding ElementName=cbLongtime, Path=IsChecked, Converter={StaticResource ConcordCheckValueConvert}}" />
 
-            <Label Content="备注:" Name="cbSetComment" Grid.Row="2" VerticalAlignment="Center"  HorizontalContentAlignment="Left"/>
-            <ylt:MetroTextBox Grid.Row="2" Grid.Column="1" Name="txt_SetComment" IsEnabled="True" VerticalAlignment="Center" Height="25"/>
+            <Label
+                Name="cbSetDec"
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Content="承包结束日期: " />
+            <wpftoolkit:DateTimeUpDown
+                Name="txt_BirthdayFinish"
+                Grid.Row="2"
+                Grid.Column="1"
+                Height="30"
+                VerticalAlignment="Center"
+                Format="ShortDate"
+                FormatString="yyyy年MM月dd日"
+                IsEnabled="{Binding ElementName=cbLongtime, Path=IsChecked, Converter={StaticResource ConcordCheckValueConvert}}" />
+
+            <Label
+                Name="cbSetComment"
+                Grid.Row="3"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Left"
+                Content="备注:" />
+            <ylt:MetroTextBox
+                Name="txt_SetComment"
+                Grid.Row="3"
+                Grid.Column="1"
+                Height="25"
+                VerticalAlignment="Center"
+                IsEnabled="True" />
 
         </Grid>
-        <Border BorderThickness="0,1,0,0" Grid.Row="1" BorderBrush="LightGray" Margin="10,0,10,0" SnapsToDevicePixels="True">
-            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Bottom" Margin="0,5,0,5" DockPanel.Dock="Bottom">
-                <metro:MetroButton Height="30" DockPanel.Dock="Right"
-                               Padding="5" Margin="5,0,0,0"
-                               Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
-                               Style="{StaticResource Metro_Button_Paneled_Style}">
+        <Border
+            Grid.Row="1"
+            Margin="10,0,10,0"
+            BorderBrush="LightGray"
+            BorderThickness="0,1,0,0"
+            SnapsToDevicePixels="True">
+            <DockPanel
+                Margin="0,5,0,5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                DockPanel.Dock="Bottom"
+                LastChildFill="True">
+                <metro:MetroButton
+                    Height="30"
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource Metro_Button_Paneled_Style}">
                     <StackPanel Orientation="Horizontal">
-                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-                    Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"></Image>
-                        <TextBlock Margin="3,0,0,0"
-                           VerticalAlignment="Center"
-                         Text="取消"></TextBlock>
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png" />
+                        <TextBlock
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="取消" />
                     </StackPanel>
                 </metro:MetroButton>
-                <metro:MetroButton DockPanel.Dock="Right"
-                               Padding="5" x:Name="btnExcuteImport"
-                               Height="30" Click="btnExcuteImport_Click"
-                               Style="{StaticResource Metro_Button_Paneled_Style}">
+                <metro:MetroButton
+                    x:Name="btnExcuteImport"
+                    Height="30"
+                    Padding="5"
+                    Click="btnExcuteImport_Click"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource Metro_Button_Paneled_Style}">
                     <StackPanel Orientation="Horizontal">
-                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"
-                       Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"></Image>
-                        <TextBlock Margin="3,0,0,0"
-                           VerticalAlignment="Center"
-                           Text="确定"></TextBlock>
+                        <Image
+                            RenderOptions.BitmapScalingMode="NearestNeighbor"
+                            Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
+                            Stretch="None" />
+                        <TextBlock
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="确定" />
                     </StackPanel>
                 </metro:MetroButton>
-                <Label Name="lbInfo" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <Label
+                    Name="lbInfo"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left" />
             </DockPanel>
         </Border>
     </Grid>
