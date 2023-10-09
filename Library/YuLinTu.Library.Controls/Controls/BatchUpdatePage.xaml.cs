@@ -64,7 +64,7 @@ namespace YuLinTu.Library.Controls
             SetStartTime = txt_BirthdayStart.Value;
             SetFinishTime = txt_BirthdayFinish.Value;
             SetComment = txt_SetComment.Text;
-           
+            SetLongTime = (bool)cbLongtime.IsChecked;
             Workpage.Page.CloseMessageBox(true);
         }
         private void ShowBox(string title, string msg, eMessageGrade type = eMessageGrade.Error)

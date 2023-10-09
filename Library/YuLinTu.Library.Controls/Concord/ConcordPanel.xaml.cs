@@ -1288,7 +1288,7 @@ namespace YuLinTu.Library.Controls
 
             kvs.Add("ArableLandStartTime", startTime);
             kvs.Add("ArableLandEndTime", finishTime);
-            if (!longTime)
+            if (longTime)
             {
                 kvs.Add("ManagementTime", "长久");
             }
