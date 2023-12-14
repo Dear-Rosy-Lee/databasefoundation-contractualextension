@@ -127,7 +127,7 @@ namespace YuLinTu.Library.Business
         private void WriteFamilyInformation()
         {
             //写标题信息
-            SetRange("A1", "R1", UnitName + "地块类别统计表");
+            SetRange("A1", "S1", UnitName + "地块类别统计表");
             //先按照村统计，再按照大的行政单位统计
             //开始写内容
             List<Zone> SelfAndSubsZones = new List<Zone>();
@@ -178,7 +178,7 @@ namespace YuLinTu.Library.Business
                 int Ccount = 0, Pcount = 0, Wcount = 0, Mcount = 0;
                 double CTarea = 0.0, PTarea = 0.0, WTarea = 0.0, MTarea = 0.0;
                 double CAarea = 0.0, PAarea = 0.0, WAarea = 0.0, MAarea = 0.0;
-
+                double CAwarearea = 0.0;
                 lands.ForEach(c =>
                 {
                     tablearea += (c.TableArea == null ? 0 : c.TableArea.Value);
@@ -190,6 +190,7 @@ namespace YuLinTu.Library.Business
                         Ccount++;
                         CTarea += (c.TableArea == null ? 0 : c.TableArea.Value);
                         CAarea += c.ActualArea;
+                        CAwarearea += c.AwareArea;
                     }
                     if (c.LandCategory == ((int)eLandCategoryType.PrivateLand).ToString())
                     {
@@ -214,6 +215,7 @@ namespace YuLinTu.Library.Business
                 actularea = ToolMath.SetNumericFormat(actularea, 4, 1);
                 CTarea = ToolMath.SetNumericFormat(CTarea, 4, 1);
                 CAarea = ToolMath.SetNumericFormat(CAarea, 4, 1);
+                CAwarearea = ToolMath.SetNumericFormat(CAwarearea, 4, 1);
                 PTarea = ToolMath.SetNumericFormat(PTarea, 4, 1);
                 PAarea = ToolMath.SetNumericFormat(PAarea, 4, 1);
                 WTarea = ToolMath.SetNumericFormat(WTarea, 4, 1);
@@ -228,6 +230,8 @@ namespace YuLinTu.Library.Business
                 staticinfo.Ccount = Ccount;
                 staticinfo.CTarea = CTarea;
                 staticinfo.CAarea = CAarea;
+                staticinfo.CAwarearea = CAwarearea;
+                
 
                 staticinfo.Pcount = Pcount;
                 staticinfo.PTarea = PTarea;
@@ -272,6 +276,7 @@ namespace YuLinTu.Library.Business
                 item.Ccount = szzonetjs.Sum(sz => sz.Ccount);
                 item.CTarea = szzonetjs.Sum(sz => sz.CTarea);
                 item.CAarea = szzonetjs.Sum(sz => sz.CAarea);
+                item.CAwarearea = szzonetjs.Sum(sz => sz.CAwarearea);
 
                 item.Pcount = szzonetjs.Sum(sz => sz.Pcount);
                 item.PTarea = szzonetjs.Sum(sz => sz.PTarea);
@@ -305,7 +310,7 @@ namespace YuLinTu.Library.Business
             int Ccount = 0, Pcount = 0, Wcount = 0, Mcount = 0;
             double CTarea = 0.0, PTarea = 0.0, WTarea = 0.0, MTarea = 0.0;
             double CAarea = 0.0, PAarea = 0.0, WAarea = 0.0, MAarea = 0.0;
-
+            double CAwarearea = 0.0;
             lands.ForEach(c =>
             {
                 if (c.LandCategory == ((int)eLandCategoryType.ContractLand).ToString())
@@ -313,6 +318,7 @@ namespace YuLinTu.Library.Business
                     Ccount++;
                     CTarea += (c.TableArea == null ? 0 : c.TableArea.Value);
                     CAarea += c.ActualArea;
+                    CAwarearea += c.AwareArea;
                 }
                 if (c.LandCategory == ((int)eLandCategoryType.PrivateLand).ToString())
                 {
@@ -344,19 +350,21 @@ namespace YuLinTu.Library.Business
 
             SetRange("G" + index, "G" + index, Ccount.ToString());//地块数
             SetRange("H" + index, "H" + index, ToolMath.SetNumbericFormat(CTarea.ToString(), 2));//二轮合同面积
-            SetRange("I" + index, "I" + index, ToolMath.SetNumbericFormat(CAarea.ToString(), 2));//实测面积
+            SetRange("I" + index, "I" + index, ToolMath.SetNumbericFormat(CTarea.ToString(), 2));//确权面积
+            SetRange("J" + index, "J" + index, ToolMath.SetNumbericFormat(CAarea.ToString(), 2));//实测面积
 
-            SetRange("J" + index, "J" + index, Pcount.ToString());//地块数
-            SetRange("K" + index, "K" + index, ToolMath.SetNumbericFormat(PTarea.ToString(), 2));//二轮合同面积
-            SetRange("L" + index, "L" + index, ToolMath.SetNumbericFormat(PAarea.ToString(), 2));//实测面积
+            SetRange("K" + index, "K" + index, Pcount.ToString());//地块数
+            SetRange("L" + index, "L" + index, ToolMath.SetNumbericFormat(PTarea.ToString(), 2));//二轮合同面积
+            SetRange("M" + index, "M" + index, ToolMath.SetNumbericFormat(PAarea.ToString(), 2));//实测面积
 
-            SetRange("M" + index, "M" + index, Mcount.ToString());//地块数
-            SetRange("N" + index, "N" + index, ToolMath.SetNumbericFormat(MTarea.ToString(), 2));//二轮合同面积
-            SetRange("O" + index, "O" + index, ToolMath.SetNumbericFormat(MAarea.ToString(), 2));//实测面积
+            SetRange("N" + index, "N" + index, Mcount.ToString());//地块数
+            SetRange("O" + index, "O" + index, ToolMath.SetNumbericFormat(MTarea.ToString(), 2));//二轮合同面积
 
-            SetRange("P" + index, "P" + index, Wcount.ToString());//地块数
-            SetRange("Q" + index, "Q" + index, ToolMath.SetNumbericFormat(WTarea.ToString(), 2));//二轮合同面积
-            SetRange("R" + index, "R" + index, ToolMath.SetNumbericFormat(WAarea.ToString(), 2));//实测面积
+            SetRange("P" + index, "P" + index, ToolMath.SetNumbericFormat(MAarea.ToString(), 2));//实测面积
+
+            SetRange("Q" + index, "Q" + index, Wcount.ToString());//地块数
+            SetRange("R" + index, "R" + index, ToolMath.SetNumbericFormat(WTarea.ToString(), 2));//二轮合同面积
+            SetRange("S" + index, "S" + index, ToolMath.SetNumbericFormat(WAarea.ToString(), 2));//实测面积
         }
 
         private void PrintValue(List<StaticClass> allStaticinfo)
@@ -376,6 +384,7 @@ namespace YuLinTu.Library.Business
 
                 var CTarea = ToolMath.SetNumericFormat(item.CTarea, 4, 1);
                 var CAarea = ToolMath.SetNumericFormat(item.CAarea, 4, 1);
+                var CAwarearea = ToolMath.SetNumericFormat(item.CAwarearea, 4, 1);
                 var PTarea = ToolMath.SetNumericFormat(item.PTarea, 4, 1);
                 var PAarea = ToolMath.SetNumericFormat(item.PAarea, 4, 1);
                 var WTarea = ToolMath.SetNumericFormat(item.WTarea, 4, 1);
@@ -385,19 +394,20 @@ namespace YuLinTu.Library.Business
 
                 SetRange("G" + index, "G" + index, item.Ccount.ToString());//地块数
                 SetRange("H" + index, "H" + index, ToolMath.SetNumbericFormat(CTarea.ToString(), 2));//二轮合同面积
-                SetRange("I" + index, "I" + index, ToolMath.SetNumbericFormat(CAarea.ToString(), 2));//实测面积
+                SetRange("I" + index, "I" + index, ToolMath.SetNumbericFormat(CAwarearea.ToString(), 2));//确权面积
+                SetRange("J" + index, "J" + index, ToolMath.SetNumbericFormat(CAarea.ToString(), 2));//实测面积
 
-                SetRange("J" + index, "J" + index, item.Pcount.ToString());//地块数
-                SetRange("K" + index, "K" + index, ToolMath.SetNumbericFormat(PTarea.ToString(), 2));//二轮合同面积
-                SetRange("L" + index, "L" + index, ToolMath.SetNumbericFormat(PAarea.ToString(), 2));//实测面积
+                SetRange("K" + index, "K" + index, item.Pcount.ToString());//地块数
+                SetRange("L" + index, "L" + index, ToolMath.SetNumbericFormat(PTarea.ToString(), 2));//二轮合同面积
+                SetRange("M" + index, "M" + index, ToolMath.SetNumbericFormat(PAarea.ToString(), 2));//实测面积
 
-                SetRange("M" + index, "M" + index, item.Mcount.ToString());//地块数
-                SetRange("N" + index, "N" + index, ToolMath.SetNumbericFormat(MTarea.ToString(), 2));//二轮合同面积
-                SetRange("O" + index, "O" + index, ToolMath.SetNumbericFormat(MAarea.ToString(), 2));//实测面积
+                SetRange("N" + index, "N" + index, item.Mcount.ToString());//地块数
+                SetRange("O" + index, "O" + index, ToolMath.SetNumbericFormat(MTarea.ToString(), 2));//二轮合同面积
+                SetRange("P" + index, "P" + index, ToolMath.SetNumbericFormat(MAarea.ToString(), 2));//实测面积
 
-                SetRange("P" + index, "P" + index, item.Wcount.ToString());//地块数
-                SetRange("Q" + index, "Q" + index, ToolMath.SetNumbericFormat(WTarea.ToString(), 2));//二轮合同面积
-                SetRange("R" + index, "R" + index, ToolMath.SetNumbericFormat(WAarea.ToString(), 2));//实测面积
+                SetRange("Q" + index, "Q" + index, item.Wcount.ToString());//地块数
+                SetRange("R" + index, "R" + index, ToolMath.SetNumbericFormat(WTarea.ToString(), 2));//二轮合同面积
+                SetRange("S" + index, "S" + index, ToolMath.SetNumbericFormat(WAarea.ToString(), 2));//实测面积
 
                 index++;
             }
@@ -425,7 +435,7 @@ namespace YuLinTu.Library.Business
         public int Ccount = 0, Pcount = 0, Wcount = 0, Mcount = 0;
         public double CTarea = 0.0, PTarea = 0.0, WTarea = 0.0, MTarea = 0.0;
         public double CAarea = 0.0, PAarea = 0.0, WAarea = 0.0, MAarea = 0.0;
-
+        public double CAwarearea = 0.0;
         public int AllvpCount;
         public int AllpersonsCount;
         public int AlllandCount = 0;
