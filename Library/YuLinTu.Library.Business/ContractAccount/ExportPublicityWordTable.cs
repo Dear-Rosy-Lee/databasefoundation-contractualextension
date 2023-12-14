@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,6 @@ namespace YuLinTu.Library.Business
     [Serializable]
     public class ExportPublicityWordTable : AgricultureWordBook
     {
-        #region Fields
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -39,7 +36,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string Day { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -48,7 +45,7 @@ namespace YuLinTu.Library.Business
             base.TemplateName = "公示结果归户表";
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -92,7 +89,7 @@ namespace YuLinTu.Library.Business
             GC.Collect();
         }
 
-        #endregion
+        #endregion Override
 
         #region Family
 
@@ -165,7 +162,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion Family
 
         #region Contractland
 
@@ -209,7 +206,7 @@ namespace YuLinTu.Library.Business
             return landCollection;
         }
 
-        #endregion
+        #endregion Contractland
 
         #region Concord
 
@@ -286,7 +283,7 @@ namespace YuLinTu.Library.Business
             SetBookmarkValue("PublicityCheckOpinion", Concord.PublicityCheckOpinion.GetSettingEmptyReplacement());//地块审核意见
         }
 
-        #endregion
+        #endregion Concord
 
         #region OtherInformation
 
@@ -445,7 +442,6 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-
                 string mode = Concord != null ? GetConstructMode(Concord.ArableLandType) : "";
                 //if (Contractor.FamilyExpand == null || string.IsNullOrEmpty(mode) || Contractor.FamilyExpand.ConstructMode == eConstructMode.Family)
                 if (Concord == null || string.IsNullOrEmpty(mode) || Concord.ArableLandType == ((int)eConstructMode.Family).ToString())
@@ -537,6 +533,7 @@ namespace YuLinTu.Library.Business
                 dklb = dklb == "未知" ? "" : dklb;
 
                 int colBase = 0;
+                string sfcbd = (dklb == "承包地块") ? "是" : "否";
                 SetTableCellValue(0, row, colBase, name);
                 SetTableCellValue(0, row, colBase + 1, canumber);
 
@@ -562,11 +559,13 @@ namespace YuLinTu.Library.Business
                 {
                     comment = landCollection[i].Comment;
                 }
-                SetTableCellValue(0, row, colBase + 7, comment);
+                SetTableCellValue(0, row, colBase + 7, sfcbd);
+                SetTableCellValue(0, row, colBase + 8, comment);
                 row++;
             }
             return addrow > 0 ? addrow : 0;
         }
+
         /// <summary>
         /// 初始化四至
         /// </summary>
@@ -581,6 +580,7 @@ namespace YuLinTu.Library.Business
             }
             return neighbor;
         }
+
         /// <summary>
         /// 插入表头
         /// </summary>
@@ -595,7 +595,8 @@ namespace YuLinTu.Library.Business
             SetTableCellValue(tableIndex, row, column + 4, "实测\r\n面积");
             SetTableCellValue(tableIndex, row, column + 5, "土地\r\n用途");
             SetTableCellValue(tableIndex, row, column + 6, "地力\r\n等级");
-            SetTableCellValue(tableIndex, row, column + 7, "    地块备注");
+            SetTableCellValue(tableIndex, row, column + 7, "是否\r\n承包地");
+            SetTableCellValue(tableIndex, row, column + 8, "    地块备注");
         }
 
         /// <summary>
@@ -675,7 +676,6 @@ namespace YuLinTu.Library.Business
                 }
                 else if (concords.Count == 1)
                     Concord = concords[0];
-
             }
             if (Contractor == null)
             {
@@ -697,7 +697,7 @@ namespace YuLinTu.Library.Business
             return true;
         }
 
-        #endregion
+        #endregion OtherInformation
 
         #region Helper
 
@@ -764,7 +764,8 @@ namespace YuLinTu.Library.Business
             return mode;
         }
 
-        #endregion
-        #endregion
+        #endregion Helper
+
+        #endregion Methods
     }
 }
