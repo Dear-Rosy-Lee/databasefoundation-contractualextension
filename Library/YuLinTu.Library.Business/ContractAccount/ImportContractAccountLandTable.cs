@@ -360,7 +360,7 @@ namespace YuLinTu.Library.Business
             {
                 //if (!string.IsNullOrEmpty(land.LandNumber) && land.LandNumber.Length >= 5)
                 //{
-                land.SurveyNumber = land.LandNumber; //.Substring(land.LandNumber.Length - 5);
+                land.SurveyNumber = land.CadastralNumber; //.Substring(land.LandNumber.Length - 5);
                 //}//InitalizeAgricultureLandShare(land);
                 EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
                 for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
@@ -808,6 +808,7 @@ namespace YuLinTu.Library.Business
                 //}
 
                 land.Name = land.Name.Replace("\0", "");
+                land.LandNumber = $"{land.LocationCode}{land.LandNumber}"; 
                 landBusiness.AddLand(land);
                 landCount++;
             }

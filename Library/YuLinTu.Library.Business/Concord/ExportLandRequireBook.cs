@@ -24,6 +24,7 @@ namespace YuLinTu.Library.Business
         private List<Person> persons;
         private List<ContractLand> lands;
         private List<ContractConcord> concords;
+
         private bool useActualArea;
 
         #endregion
@@ -290,6 +291,10 @@ namespace YuLinTu.Library.Business
                 landArea += useActualArea ? land.ActualArea : land.AwareArea;
             }
             SetBookmarkValue(AgricultureBookMark.SenderName, concord != null ? concord.SenderName : "");
+            CollectivityTissue tissue = GetSenderById(concord.SenderId);
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerName, tissue != null ? tissue.LawyerName : "");
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone, tissue != null ? tissue.LawyerTelephone : "");
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, tissue != null ? tissue.LawyerCartNumber : "");
             for (int i = 0; i < 6; i++)
             {
                 //string villageName = zone != null ? zone.Name.Substring(0, zone.Name.Length) : "";
@@ -320,7 +325,20 @@ namespace YuLinTu.Library.Business
             GC.Collect();
             return true;
         }
-
+        public CollectivityTissue GetSenderById(Guid id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            ModuleMsgArgs arg = new ModuleMsgArgs();
+            arg.Datasource = DbContext;
+            arg.Parameter = id;
+            arg.Name = SenderMessage.SENDER_GET_ID;
+            TheBns.Current.Message.Send(this, arg);
+            CollectivityTissue tissue = arg.ReturnValue as CollectivityTissue;
+            return tissue;
+        }
         /// <summary>
         /// 初始化数据
         /// </summary>
