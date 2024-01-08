@@ -3804,6 +3804,41 @@ namespace YuLinTu.Library.Controls
 
         #region Method-台账导出
 
+        public void ExportContractInformationExcel(bool isAccountExcel = true)
+        {
+            int TableType = 6;
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            string markDesc;
+            if (isAccountExcel)
+            {
+                markDesc = ContractAccountInfo.ExportContractInformationExcel;
+            }
+            else
+            {
+                markDesc = ContractAccountInfo.ExportContractLandSurveyExcel;
+            }
+
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
+
+            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+            {
+                //单个任务
+                if (accountLandItems == null || accountLandItems.Count == 0)
+                {
+                    ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.CurrentZoneNoLand);
+                    return;
+                }
+                TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+        }
+
         /// <summary>
         /// 导出台账调查表-土地承包经营权台账调查表
         /// </summary>

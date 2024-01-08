@@ -1,14 +1,15 @@
-﻿<UserControl x:Class="YuLinTu.Library.Controls.SenderPageContent"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
-             xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
-             xmlns:local="clr-namespace:YuLinTu.Library.Controls">
+﻿<UserControl
+    x:Class="YuLinTu.Library.Controls.SenderPageContent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:YuLinTu.Library.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+    xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit">
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="LeftStyle">
+        <Style x:Key="LeftStyle" TargetType="Label">
             <Style.Setters>
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -19,10 +20,10 @@
     </UserControl.Resources>
     <Grid Name="spInfo">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="36" />
@@ -35,29 +36,135 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="60" />
             <RowDefinition Height="60" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Label Content="发包方名称:"  Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Name="mtbName" TabIndex="1" MaxLength="40" Grid.Column="1" Grid.ColumnSpan="3" Height="30" BorderThickness="1" Text="{Binding Path=Name,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-        <Label Content="发包方编码:" Grid.Row="1"  Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Name="mtbCode" TabIndex="2" IsEnabled="False" PreviewKeyDown="mtbCode_PreviewKeyDown" Grid.Row="1" Grid.Column="1" Height="30" Text="{Binding Path=Code,Mode=TwoWay}" MaxLength="19" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_CodeChanged" PreviewTextInput="mtbCode_PreviewTextInput"/>
+        <Label Content="发包方名称:" Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="mtbName"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="40"
+            TabIndex="1"
+            Text="{Binding Path=Name, Mode=TwoWay}" />
+        <Label
+            Grid.Row="1"
+            Content="发包方编码:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="mtbCode"
+            Grid.Row="1"
+            Grid.Column="1"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            IsEnabled="False"
+            MaxLength="19"
+            PreviewKeyDown="mtbCode_PreviewKeyDown"
+            PreviewTextInput="mtbCode_PreviewTextInput"
+            TabIndex="2"
+            Text="{Binding Path=Code, Mode=TwoWay}"
+            TextChanged="MetroTextBox_CodeChanged" />
 
-        <Label Content="发包方邮政编码:" Grid.Row="1" Grid.Column="2" Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Column="3" TabIndex="3" MaxLength="6" Height="30"  Name="tbPostNum" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Text="{Binding LawyerPosterNumber,Mode=TwoWay}" PreviewKeyDown="mtbCode_PreviewKeyDown" PreviewTextInput="mtbCode_PreviewTextInput"/>
+        <Label
+            Grid.Row="1"
+            Grid.Column="2"
+            Content="发包方邮政编码:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="tbPostNum"
+            Grid.Row="1"
+            Grid.Column="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            MaxLength="6"
+            PreviewKeyDown="mtbCode_PreviewKeyDown"
+            PreviewTextInput="mtbCode_PreviewTextInput"
+            TabIndex="3"
+            Text="{Binding LawyerPosterNumber, Mode=TwoWay}" />
 
-        <Label Content="负责人证件类型:" Grid.Row="2" Grid.Column="2" Style="{StaticResource LeftStyle}" />
-        <cmps:MetroComboBox Grid.Row="2" TabIndex="5" Grid.Column="3" Height="30" BorderThickness="1" x:Name="cbCredtype" SelectionChanged="cbCredtype_SelectionChanged" HorizontalAlignment="Stretch" Padding="7,0,0,0" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="2"
+            Grid.Column="2"
+            Content="负责人证件类型:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroComboBox
+            x:Name="cbCredtype"
+            Grid.Row="2"
+            Grid.Column="3"
+            Height="30"
+            Padding="7,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            SelectionChanged="cbCredtype_SelectionChanged"
+            TabIndex="5" />
 
-        <Label Content="负责人姓名:" Grid.Row="2"  Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Row="2" TabIndex="4" Grid.Column="1"  BorderThickness="1" Text="{Binding Path=LawyerName,Mode=TwoWay}" MaxLength="25" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="2"
+            Content="负责人姓名:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="25"
+            TabIndex="4"
+            Text="{Binding Path=LawyerName, Mode=TwoWay}" />
 
-        <Label Content="负责人电话:" Grid.Row="3"  Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Row="3" TabIndex="6" Height="30" Grid.Column="1"  BorderThickness="1"  Text="{Binding Path=LawyerTelephone,Mode=TwoWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxLength="20"/>
+        <Label
+            Grid.Row="3"
+            Content="负责人电话:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="3"
+            Grid.Column="1"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="20"
+            TabIndex="6"
+            Text="{Binding Path=LawyerTelephone, Mode=TwoWay}" />
 
-        <Label Content="负责人证件号码:" Grid.Row="3" Grid.Column="2"  Style="{StaticResource LeftStyle}" />
-        <cmps:MetroTextBox Grid.Row="3" TabIndex="7" Height="30" Grid.Column="3"  BorderThickness="1"  Text="{Binding Path=LawyerCartNumber,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="3"
+            Grid.Column="2"
+            Content="负责人证件号码:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="3"
+            Grid.Column="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="50"
+            TabIndex="7"
+            Text="{Binding Path=LawyerCartNumber, Mode=TwoWay}" />
 
-        <Label Content="负责人地址:" Grid.Row="4" Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Row="4" TabIndex="8" Height="30" Grid.Column="1" Grid.ColumnSpan="3"  BorderThickness="1" Text="{Binding Path=LawyerAddress,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="4"
+            Content="负责人地址:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="4"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="50"
+            TabIndex="8"
+            Text="{Binding Path=LawyerAddress, Mode=TwoWay}" />
 
         <!--<Label Content="发包方类型:" Grid.Row="5" Style="{StaticResource LeftStyle}"  />
         <cmps:MetroComboBox Grid.Row="5" Grid.Column="1" Height="30"  Padding="7,0,0,0" x:Name="cbSenderKind" SelectionChanged="cbSenderKind_SelectionChanged"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
@@ -65,29 +172,144 @@
         <Label Content="发包方状态:" Grid.Row="5" Grid.Column="2"  Style="{StaticResource LeftStyle}" HorizontalAlignment="Right"/>
         <cmps:MetroComboBox Padding="7,0,0,0" Height="30" Grid.Column="3" BorderThickness="1" Name="cbStatus" SelectionChanged="cbStatus_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5"/>-->
 
-        <Label Content="调查员:" Grid.Row="5" Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Row="5" Height="30" TabIndex="9" Grid.Column="1" BorderThickness="1" Text="{Binding Path=SurveyPerson,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="5"
+            Content="调查员:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="5"
+            Grid.Column="1"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="50"
+            TabIndex="9"
+            Text="{Binding Path=SurveyPerson, Mode=TwoWay}" />
 
-        <Label Content="调查日期:" Grid.Row="5" Grid.Column="2" Style="{StaticResource LeftStyle}"  HorizontalAlignment="Right"/>
-        <wpftoolkit:DateTimeUpDown Grid.Row="5" TabIndex="10" Height="30" Grid.Column="3" BorderThickness="1" Value="{Binding Path=SurveyDate,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Format="ShortDate"/>
-        <Label Content="调查记事:" Grid.Row="6"  Style="{StaticResource LeftStyle}"  VerticalAlignment="Top"/>
-        <cmps:MetroTextBox Grid.Row="6" TabIndex="11" Name="mtbSurveyINfo" AcceptsReturn="True" MinLines="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=SurveyChronicle,Mode=TwoWay}" 
-                           Margin="0,5,0,0" BorderThickness="1" MaxLength="200" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
+        <Label
+            Grid.Row="5"
+            Grid.Column="2"
+            HorizontalAlignment="Right"
+            Content="调查日期:"
+            Style="{StaticResource LeftStyle}" />
+        <wpftoolkit:DateTimeUpDown
+            Grid.Row="5"
+            Grid.Column="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            Format="ShortDate"
+            TabIndex="10"
+            Value="{Binding Path=SurveyDate, Mode=TwoWay}" />
+        <Label
+            Grid.Row="6"
+            VerticalAlignment="Top"
+            Content="调查记事:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="mtbSurveyINfo"
+            Grid.Row="6"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Margin="0,5,0,0"
+            VerticalContentAlignment="Top"
+            AcceptsReturn="True"
+            BorderThickness="1"
+            MaxLength="200"
+            MinLines="2"
+            TabIndex="11"
+            Text="{Binding Path=SurveyChronicle, Mode=TwoWay}"
+            TextWrapping="Wrap" />
 
-        <Label Content="审核员:" Grid.Row="7" Style="{StaticResource LeftStyle}"  />
-        <cmps:MetroTextBox Grid.Row="7" TabIndex="12" Height="30" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CheckPerson,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+        <Label
+            Grid.Row="7"
+            Content="审核员:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="7"
+            Grid.Column="1"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="50"
+            TabIndex="12"
+            Text="{Binding Path=CheckPerson, Mode=TwoWay}" />
 
-        <Label Content="审核日期:" Grid.Row="7" Grid.Column="2" Style="{StaticResource LeftStyle}"  HorizontalAlignment="Right"/>
-        <wpftoolkit:DateTimeUpDown Grid.Row="7" TabIndex="13" Height="30" Grid.Column="3" BorderThickness="1" Value="{Binding Path=CheckDate,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Format="ShortDate"/>
+        <Label
+            Grid.Row="7"
+            Grid.Column="2"
+            HorizontalAlignment="Right"
+            Content="审核日期:"
+            Style="{StaticResource LeftStyle}" />
+        <wpftoolkit:DateTimeUpDown
+            Grid.Row="7"
+            Grid.Column="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            Format="ShortDate"
+            TabIndex="13"
+            Value="{Binding Path=CheckDate, Mode=TwoWay}" />
 
-      
-        <Label Content="审核意见:" Grid.Row="8"  Style="{StaticResource LeftStyle}"   VerticalAlignment="Top"/>
-        <cmps:MetroTextBox Grid.Row="8" TabIndex="14" Name="mtbChenkInfo" AcceptsReturn="True" MinLines="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=CheckOpinion,Mode=TwoWay}" 
-                                       Margin="0,5,0,0" BorderThickness="1" MaxLength="200" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
 
-        <Label Content="备注:" Grid.Row="9"  Style="{StaticResource LeftStyle}"   VerticalAlignment="Top"/>
-        <cmps:MetroTextBox Grid.Row="9"  TabIndex="15" Name="mtbComment" AcceptsReturn="True" MinLines="2" Grid.Column="1" 
-                                         Margin="0,5" Grid.ColumnSpan="3" Text="{Binding Path=Comment,Mode=TwoWay}" 
-                                         BorderThickness="1" MaxLength="200" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
+        <Label
+            Grid.Row="8"
+            VerticalAlignment="Top"
+            Content="审核意见:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="mtbChenkInfo"
+            Grid.Row="8"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Margin="0,5,0,0"
+            VerticalContentAlignment="Top"
+            AcceptsReturn="True"
+            BorderThickness="1"
+            MaxLength="200"
+            MinLines="2"
+            TabIndex="14"
+            Text="{Binding Path=CheckOpinion, Mode=TwoWay}"
+            TextWrapping="Wrap" />
+
+        <Label
+            Grid.Row="9"
+            VerticalAlignment="Top"
+            Content="备注:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Name="mtbComment"
+            Grid.Row="9"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Margin="0,5"
+            VerticalContentAlignment="Top"
+            AcceptsReturn="True"
+            BorderThickness="1"
+            MaxLength="200"
+            MinLines="2"
+            TabIndex="15"
+            Text="{Binding Path=Comment, Mode=TwoWay}"
+            TextWrapping="Wrap" />
+        <Label
+            Grid.Row="10"
+            VerticalAlignment="Center"
+            Content="社会信号代码:"
+            Style="{StaticResource LeftStyle}" />
+        <cmps:MetroTextBox
+            Grid.Row="10"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Height="30"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            BorderThickness="1"
+            MaxLength="50"
+            TabIndex="8"
+            Text="{Binding Path=SocialCode, Mode=TwoWay}" />
     </Grid>
 </UserControl>

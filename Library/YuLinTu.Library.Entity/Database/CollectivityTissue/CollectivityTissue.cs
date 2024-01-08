@@ -45,6 +45,7 @@ namespace YuLinTu.Library.Entity
 
         private string zoneCode = string.Empty;
         private Guid id;
+        private string socialCode;
         private string name;
         private string lawyerName;
         private string lawyerTelephone;
@@ -83,6 +84,18 @@ namespace YuLinTu.Library.Entity
             set
             {
                 id = value; NotifyPropertyChanged("ID");
+            }
+        }
+        /// <summary>
+        ///社会信用代码
+        /// </summary>
+        [DataColumn("SHXYDM", Nullable = false, PrimaryKey = true)]
+        public string SocialCode
+        {
+            get { return socialCode; }
+            set
+            {
+                socialCode = value.TrimSafe(); NotifyPropertyChanged("SocialCode");
             }
         }
 

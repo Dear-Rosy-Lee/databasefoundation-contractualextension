@@ -128,6 +128,10 @@ namespace YuLinTu.Component.FuSui
             Zone parent = landBusiness.GetParent(zone);
             switch (metadata.ArgType)
             {
+                case eContractAccountType.ExportContractInformationExcel:
+                    ExportContractInformationExcel(zone, fileName);
+                    break;
+
                 case eContractAccountType.ExportContractAccountExcel:
                     //导出4个表数据
                     ExportFourKindTable(zone, childrenZone, parent, fileName, landBusiness);
@@ -385,6 +389,80 @@ namespace YuLinTu.Component.FuSui
         }
 
         #endregion Methods - Privates-承包台账导出
+
+        public void ExportContractInformationExcel(Zone currentZone, string savePath)
+        {
+            try
+            {
+                TaskAccountFiveTableArgument metadata = Argument as TaskAccountFiveTableArgument;
+                string fileName = metadata.FileName;
+                if (currentZone == null)
+                {
+                    this.ReportError("未选择导出数据的地域!");
+                    return;
+                }
+                string excelName = GetMarkDesc(currentZone);
+                var vpStation = metadata.Database.CreateVirtualPersonStation<LandVirtualPerson>();
+                List<VirtualPerson> vps = vpStation.GetByZoneCode(currentZone.FullCode);
+
+                string tempPath = TemplateHelper.ExcelTemplate(TemplateFile.ContractInformationExcelFuSui);
+                string zoneName = GetUinitName(currentZone);
+                if (SystemSetDefine.CountryTableHead)
+                {
+                    var zoneStation = dbContext.CreateZoneWorkStation();
+                    zoneName = zoneStation.GetVillageName(currentZone);
+                }
+                var landStation = dbContext.CreateContractLandWorkstation();
+                List<ContractLand> landArrays = landStation.GetCollection(currentZone.FullCode);
+                landArrays.LandNumberFormat(SystemSetDefine);
+                var concordStation = dbContext.CreateConcordStation();
+                var bookStation = dbContext.CreateRegeditBookStation();
+                var listConcords = concordStation.GetContractsByZoneCode(currentZone.FullCode);
+                var listBooks = bookStation.GetByZoneCode(currentZone.FullCode, eSearchOption.Precision);
+                string filePath = string.Empty;
+                ExportContractInformationExcelFuSui export = new ExportContractInformationExcelFuSui(dbContext);
+
+                #region 通过反射等机制定制化具体的业务处理类
+
+                var temp = WorksheetConfigHelper.GetInstance(export);
+                if (temp != null && temp.TemplatePath != null)
+                {
+                    if (temp is ExportContractInformationExcelFuSui)
+                    {
+                        export = (ExportContractInformationExcelFuSui)temp;
+                    }
+                    tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+                }
+
+                #endregion 通过反射等机制定制化具体的业务处理类
+
+                double percent = 95 / (double)metadata.SelfAndSubsZones.Count;
+                string savePath1 = fileName + "扶绥土地承包经营权合同信息表.xls";
+                export.SaveFilePath = savePath1;
+                export.CurrentZone = currentZone;
+                export.Familys = vps;
+                export.ExcelName = SystemSet.GetTBDWStr(currentZone);
+                export.UnitName = SystemSet.GetTableHeaderStr(currentZone);
+                export.TableType = metadata.TableType;
+                export.DictionList = metadata.DictList;
+                export.LandArrays = landArrays;
+                export.Percent = percent;
+                export.CurrentPercent = percent;
+                export.ConcordCollection = listConcords;
+                export.BookColletion = listBooks;
+                export.PostProgressEvent += export_PostProgressEvent;
+                export.PostErrorInfoEvent += export_PostErrorInfoEvent;
+                returnValue = export.BeginExcel(currentZone.FullCode.ToString(), tempPath);
+                if (metadata.IsShow)
+                    export.PrintView(savePath1);
+                this.ReportProgress(100, "完成");
+            }
+            catch (Exception ex)
+            {
+                this.ReportError(ex.Message);
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportDataExcel(导出数据到Excel表)", ex.Message + ex.StackTrace);
+            }
+        }
 
         /// <summary>
         /// 导出数据到Excel表-承包台账五个报表导出

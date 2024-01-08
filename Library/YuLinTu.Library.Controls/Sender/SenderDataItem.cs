@@ -64,9 +64,11 @@ namespace YuLinTu.Library.Controls
             item.Code = tissue.Code;
             item.Comment = tissue.Comment;
             item.CreationTime = tissue.CreationTime;
+            item.SocialCode = tissue.SocialCode;
             item.Founder = tissue.Founder;
             item.ID = tissue.ID;
             item.LawyerAddress = tissue.LawyerAddress;
+            item.SocialCode = tissue.SocialCode;
             item.LawyerCartNumber = tissue.LawyerCartNumber;
             item.LawyerCredentType = tissue.LawyerCredentType;
             item.LawyerName = tissue.LawyerName;
@@ -101,6 +103,7 @@ namespace YuLinTu.Library.Controls
             item.LawyerCartNumber = tissue.LawyerCartNumber;
             item.LawyerCredentType = tissue.LawyerCredentType;
             item.LawyerName = tissue.LawyerName;
+            item.SocialCode = tissue.SocialCode;
             item.LawyerPosterNumber = tissue.LawyerPosterNumber;
             item.LawyerTelephone = tissue.LawyerTelephone;
             item.ModifiedTime = tissue.ModifiedTime;

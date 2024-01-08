@@ -428,6 +428,7 @@
     <Compile Include="ContractAccount\ExportContractDelayAccount\InitalizeContractorDelaySurveyExcel.cs" />
     <Compile Include="ContractAccount\ExportContractDelayAccount\PublicityConfirmDelayDefine.cs" />
     <Compile Include="ContractAccount\ExportContractDelayAccount\TaskContractDelayAccountOperation.cs" />
+    <Compile Include="ContractAccount\ExportContractInformation\ExportContractInformationExcel.cs" />
     <Compile Include="ContractAccount\ExportLandParcel\ExportContractLandParcelWord.cs" />
     <Compile Include="ContractAccount\ExportContractorLandSingleSurveyTable.cs" />
     <Compile Include="ContractAccount\ExportContractorSurveyExcel.cs" />

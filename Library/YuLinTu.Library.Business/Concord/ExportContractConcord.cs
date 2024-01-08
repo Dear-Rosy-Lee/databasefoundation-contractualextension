@@ -213,7 +213,7 @@ namespace YuLinTu.Library.Business
             int rowCount = persons.Count;
             if (rowCount > 1)
             {
-                InsertTableRow(1, 1, rowCount-1);
+                InsertTableRow(1, 1, rowCount - 1);
             }
             int tableIndex = 1;
             int startRow = 1;
@@ -225,7 +225,6 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 3, person.Comment);
                 startRow++;
             }
-    
         }
 
         /// <summary>
@@ -236,7 +235,7 @@ namespace YuLinTu.Library.Business
             int rowCount = ListLand.Count;
             if (rowCount > 1)
             {
-                InsertTableRow(0, 2, rowCount-1);
+                InsertTableRow(0, 2, rowCount - 1);
             }
             var totleActualArea = 0.00;
             int tableIndex = 0;
@@ -478,6 +477,7 @@ namespace YuLinTu.Library.Business
 
             //WritePrintDate();
             var date = "";
+
             if (Concord.ArableLandType == "110")
                 SetBookmarkValue("LandType", "家庭承包方式");
             else
@@ -487,6 +487,7 @@ namespace YuLinTu.Library.Business
                 date = ((DateTime)Concord.ArableLandStartTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "至"
                     + ((DateTime)Concord.ArableLandEndTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "。";
             }
+            SetBookmarkValue("SocialCode", Tissue.SocialCode);
             SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
             SetBookmarkValue(AgricultureBookMark.ConcordDate, Concord.Flag ? "" : date);                                // 承包时间
             SetBookmarkValue(AgricultureBookMark.ConcordNumber, concord.ConcordNumber.IsNullOrEmpty() ? string.Empty : concord.ConcordNumber);  // 合同编码

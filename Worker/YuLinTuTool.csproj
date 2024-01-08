@@ -2115,6 +2115,9 @@
     <None Include="Template\农村土地承包经营权发包方调查表.xlt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Template\农村土地承包经营权合同信息表.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Template\农村土地承包经营权承包合同.dot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

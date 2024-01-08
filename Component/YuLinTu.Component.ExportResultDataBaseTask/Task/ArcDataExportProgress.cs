@@ -785,6 +785,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<ContractConcord> concordCollection = concordStation.GetByZoneCode(zone.FullCode);
             List<ContractRegeditBook> bookCollection = contractRegeditBookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
             List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(zone.FullCode);
+            if(familyCollection.Any(x=>x.Name == "集体"))
+            {
+                familyCollection.RemoveAt(familyCollection.Count - 1);
+            }
             List<ContractLand> AllLandCollection = contractLandWorkStation.GetCollection(zone.FullCode, eLevelOption.Self);
             // CollectivityTissue tissue = senderStation.Get(zone.FullCode, zone.FullName);
 

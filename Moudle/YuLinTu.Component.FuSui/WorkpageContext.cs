@@ -43,7 +43,19 @@ namespace YuLinTu.Component.FuSui
         /// <summary>
         /// 当前地域
         /// </summary>
-        private Zone currentZone = new Zone();
+        private Zone CurrentZone { get; set; }
+
+        public IDbContext DbContext { get; set; }
+
+        public List<Dictionary> DictList
+        {
+            get
+            {
+                DictionaryBusiness dictBusiness = new DictionaryBusiness(DbContext);
+                List<Dictionary> dictList = dictBusiness.GetAll();
+                return dictList;
+            }
+        }
 
         /// <summary>
         /// 权证主界面
@@ -121,6 +133,11 @@ namespace YuLinTu.Component.FuSui
                 spSurveyTable.Children.Insert(5, CreateExportLandWordBtn());
 
                 btnSurveyTable = contractAccountPage.btnSurveyTable;
+
+                contractAccountPage.btnExportContractInformation.Command = null;
+                contractAccountPage.btnExportContractInformation.CommandBindings.Clear();
+                contractAccountPage.btnExportContractInformation.CommandParameter = "";
+                contractAccountPage.btnExportContractInformation.Click += BtnExportContractInformation_Click;
             }
         }
 
@@ -146,6 +163,39 @@ namespace YuLinTu.Component.FuSui
         #endregion 创建按钮
 
         #region 承包地块调查表
+
+        private void BtnExportContractInformation_Click(object sender, RoutedEventArgs e)
+        {
+            int TableType = 6;
+            var currentZone = contractAccountPanel.CurrentZone;
+            bool isAccountExcel = true;
+            IDbContext DbContext = DataBaseSource.GetDataBaseSource();
+            this.DbContext = DbContext;
+            if (currentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            string markDesc;
+            if (isAccountExcel)
+            {
+                markDesc = ContractAccountInfo.ExportContractInformationExcel;
+            }
+            else
+            {
+                markDesc = ContractAccountInfo.ExportContractLandSurveyExcel;
+            }
+
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
+
+            if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+            {
+                TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
+                //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+        }
 
         private void btnAgriLandTable_Click(object sender, RoutedEventArgs e)
         {
@@ -325,6 +375,60 @@ namespace YuLinTu.Component.FuSui
                 YuLinTu.Library.Log.Log.WriteException(this, "GetParent(获取父级地域失败!)", ex.Message + ex.StackTrace);
             }
             return parentZone;
+        }
+
+        private void TaskExportContractDelayAccountExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "",
+          List<VirtualPerson> listPerson = null, int TableType = 1)
+        {
+            DateTime? date = SetPublicyTableDate();
+            IDbContext DbContext = DataBaseSource.GetDataBaseSource();
+            if (date == null)
+            {
+                return;
+            }
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            CurrentZone = contractAccountPanel.CurrentZone;
+            SelfAndSubsZones = zoneStation.GetChildren(CurrentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
+            List<Zone> allZones = zoneStation.GetAllZones(CurrentZone);
+
+            TaskAccountFiveTableArgument meta = new TaskAccountFiveTableArgument();
+            meta.IsClear = false;
+            meta.FileName = filePath;
+            meta.ArgType = type;
+            meta.Database = DbContext;
+            meta.CurrentZone = CurrentZone;
+            meta.UserName = "";
+            meta.Date = date;
+            meta.TableType = TableType;
+            meta.SelfAndSubsZones = SelfAndSubsZones;
+            meta.AllZones = allZones;
+            meta.SelectContractor = listPerson;
+            meta.IsShow = true;
+            //if (TableType == 4)
+            //{
+            //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
+            //    meta.ContractLandOutputSurveyDefine = publicityConfirmDefine.ConvertTo<PublicityConfirmDefine>();// (PublicityConfirmDefine)publicityConfirmDefine;
+            //}
+            //else
+            //{
+            //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
+            //}
+            meta.DictList = DictList;
+            TaskContractAccountOperationFuSui import = new TaskContractAccountOperationFuSui();
+            import.Argument = meta;
+            import.Description = taskDes;
+            import.Name = taskName;
+
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            Workpage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
         }
 
         #endregion Methods

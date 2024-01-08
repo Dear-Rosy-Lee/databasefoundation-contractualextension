@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         VolumnExportLandSurveyTable = 4,
 
-        /// <summary>       
+        /// <summary>
         /// 台账报表-导出4个同样表的excel数据
         /// </summary>
         ExportLandSurveyTable = 5,
@@ -57,8 +58,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 界址调查表
         /// </summary>
-        ExportBoundaryInfoExcel=53,
-        
+        ExportBoundaryInfoExcel = 53,
+
         /// <summary>
         /// 批量界址调查表
         /// </summary>
@@ -114,14 +115,14 @@ namespace YuLinTu.Library.Business
         /// </summary>
         ExportContractAccountExcel = 10,
 
-        /// <summary>      
+        /// <summary>
         /// 台账报表-导出单户确认表的excel数据
-        /// </summary>      
+        /// </summary>
         ExportSingleFamilyConfirmExcel = 11,
 
-        /// <summary>      
+        /// <summary>
         /// 台账报表-批量导出单户确认表的excel数据
-        /// </summary>      
+        /// </summary>
         VolumnExportSingleFamilyConfirmExcel = 17,
 
         /// <summary>
@@ -149,14 +150,14 @@ namespace YuLinTu.Library.Business
         /// </summary>
         VolumnExportVillageDeclare = 43,
 
-        /// <summary>      
+        /// <summary>
         /// 台账报表-导出单户调查表的excel数据
-        /// </summary>      
+        /// </summary>
         ExportSingleFamilySurveyExcel = 14,
 
-        /// <summary>      
+        /// <summary>
         /// 台账报表-批量导出单户调查表的excel数据
-        /// </summary>      
+        /// </summary>
         VolumnExportSingleFamilySurveyExcel = 20,
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         ImportDotShapeData = 16,
 
-        #endregion
+        #endregion Fields - 导入导出
 
         #region Fields - 初始化工具
 
@@ -213,7 +214,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         InitialIsFarmerTool = 103,
 
-        #endregion
+        #endregion Fields - 初始化工具
 
         #region Fields - 检索工具
 
@@ -252,7 +253,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         SearchLandShapeNull = 109,
 
-        #endregion
+        #endregion Fields - 检索工具
 
         #region 承包合同或承包权证
 
@@ -266,11 +267,16 @@ namespace YuLinTu.Library.Business
         /// </summary>
         ExportWarrentSummaryTable = 23,
 
-        #endregion
+        #endregion 承包合同或承包权证
 
         /// <summary>
         /// 查找四至
         /// </summary>
         SeekLandNeighbor = 24,
+
+        /// <summary>
+        /// 导出合同信息表
+        /// </summary>
+        ExportContractInformationExcel = 110
     }
 }

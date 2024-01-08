@@ -452,6 +452,8 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public const string ExportContractAccountSurveyExcel = "承包台账调查表";
 
+        public const string ExportContractInformationExcel = "农村土地承包经营权合同信息表";
+
         /// <summary>
         /// 导出台账调查表-土地承包经营权调查公示表
         /// </summary>

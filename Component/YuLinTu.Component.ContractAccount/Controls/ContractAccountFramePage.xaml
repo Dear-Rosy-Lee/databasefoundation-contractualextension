@@ -573,6 +573,18 @@
                                     Text="类别汇总表"
                                     ToolTip="导出类别汇总表Excel" />
                             </metro:MetroButton>
+                            <metro:MetroButton
+                                x:Name="btnExportContractInformation"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
+                                    ImagePosition="Left"
+                                    Text="合同信息表"
+                                    ToolTip="导出合同信息表Excel" />
+                            </metro:MetroButton>
                         </StackPanel>
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>
@@ -1151,7 +1163,6 @@
                                                     ToolTip="自动查找宗地四至"
                                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/查找数据_32.png" />
                             </metro:MetroButton>
-
                         </StackPanel>
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>-->

@@ -808,7 +808,9 @@ namespace YuLinTu.Library.Business
                 //}
 
                 land.Name = land.Name.Replace("\0", "");
-                land.LandNumber = $"{land.LocationCode}{land.LandNumber}"; 
+                land.LandNumber = $"{land.LocationCode}{land.LandNumber}";
+                if (land.Comment.Contains("自留地"))
+                    land.LandCategory = "21";
                 landBusiness.AddLand(land);
                 landCount++;
             }

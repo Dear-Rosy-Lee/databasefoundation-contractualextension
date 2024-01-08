@@ -164,6 +164,8 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public const string ExportAccountName = "exportAccount";
 
+        public const string ExportContractInformationName = "exportContractInformation";
+
         /// <summary>
         /// 导出(批量)单户调查表命令名称
         /// </summary>
@@ -544,6 +546,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand ExportAccount = new RoutedCommand(ExportAccountName, typeof(Button));
 
         /// <summary>
+        /// 导出合同信息表命令
+        /// </summary>
+        public RoutedCommand ExportContractInformation = new RoutedCommand(ExportContractInformationName, typeof(Button));
+
+        /// <summary>
         /// 导出(批量)单户调查表命令
         /// </summary>
         public RoutedCommand ExportSingle = new RoutedCommand(ExportSingleName, typeof(Button));
@@ -904,6 +911,8 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public CommandBinding ExportAccountBind = new CommandBinding();
 
+        public CommandBinding ExportContractInformationBind = new CommandBinding();
+
         /// <summary>
         /// 导出(批量)单户调查表绑定
         /// </summary>
@@ -1103,10 +1112,6 @@ namespace YuLinTu.Library.Command
 
         #endregion Files - Binding
 
-        #region Properties
-
-        #endregion Properties
-
         #region Ctor
 
         /// <summary>
@@ -1148,6 +1153,7 @@ namespace YuLinTu.Library.Command
             VPWordTemplateBind.Command = VPWordTemplate;
             LandWordTemplateBind.Command = LandWordTemplate;
             ExportSenderExcelBind.Command = ExportSenderExcel;
+            ExportContractInformationBind.Command = ExportContractInformation;
             ExportVPExcelBind.Command = ExportVPExcel;
             ExportLandExcelBind.Command = ExportLandExcel;
             ExportBoundaryExcelBind.Command = ExportBoundaryExcel;

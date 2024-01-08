@@ -139,6 +139,7 @@ namespace YuLinTu.Library.Business
                 tissue.CheckDate = GetDateTime(allItem[currentIndex, 12]);
                 tissue.CheckOpinion = GetString(allItem[currentIndex, 13]);
                 tissue.Comment = GetString(allItem[currentIndex, 14]);
+                tissue.SocialCode = GetString(allItem[currentIndex, 15]);
                 tissue.Status = eStatus.Register;//状态
                 tissue.Type = eTissueType.General;//集体经济组织类型
             }

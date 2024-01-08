@@ -68,6 +68,10 @@ namespace YuLinTu.Library.Business
 
         #region 二轮台账
 
+        public const string ContractInformationExcel = "农村土地承包经营权合同信息表";
+
+        public const string ContractInformationExcelFuSui = "扶绥土地承包经营权合同信息表";
+
         /// <summary>
         /// 二轮台账模拟调查表
         /// </summary>

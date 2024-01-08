@@ -261,6 +261,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnExportLandWord, command.ExportLandWord, command.ExportLandWordBind);
             SetCommandBinding(btnExportPublishWord, command.ExportPublishWord, command.ExportPublishWordBind);
             SetCommandBinding(btnExportAccount, command.ExportAccount, command.ExportAccountBind);
+            SetCommandBinding(btnExportContractInformation, command.ExportContractInformation, command.ExportContractInformationBind);
             SetCommandBinding(btnExportSingle, command.ExportSingle, command.ExportSingleBind);
             //SetCommandBinding(btnExportPublish, command.ExportPublish, command.ExportPublishBind);
             //SetCommandBinding(btnExportSign, command.ExportSign, command.ExportSignBind);
@@ -472,6 +473,10 @@ namespace YuLinTu.Component.ContractAccount
                     contractAccountPanel.ExportAccountNameExcel();
                     break;
 
+                case ContractAccountCommand.ExportContractInformationName:
+                    contractAccountPanel.ExportContractInformationExcel();
+                    break;
+
                 case ContractAccountCommand.ExportSingleName:
                     contractAccountPanel.ExportLandSingleSurveyTable();
                     break;
@@ -664,6 +669,7 @@ namespace YuLinTu.Component.ContractAccount
                 //btnParcelLand.IsEnabled = isEnable;
                 btnExportData.IsEnabled = isEnable;
                 btnTemplate.IsEnabled = isEnable;
+                btnExportContractInformation.IsEnabled = isEnable;
             }));
         }
 
