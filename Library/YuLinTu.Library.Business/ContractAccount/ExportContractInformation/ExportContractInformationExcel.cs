@@ -21,7 +21,6 @@ namespace YuLinTu.Library.Business
         private int cindex;
         private int familyIndex;
         private List<VirtualPerson> familys;//承包方集合
-        private List<VirtualPerson> tablefamilys;//承包方集合
         private string templaePath;//模版文件
         private int index;//索引值
         private int high;//单元格合并数量
@@ -237,7 +236,7 @@ namespace YuLinTu.Library.Business
                 List<Person> tablePersons = tablevp != null ? SortSharePerson(tablevp.SharePersonList, tablevp.Name) : new PersonCollection();
 
                 //判断是否存在合同
-                List<ContractConcord> concords =   ConcordCollection.FindAll(cd => (cd.ContracterId != null && cd.ContracterId.HasValue) ? cd.ContracterId.Value == item.ID : false);
+                List<ContractConcord> concords = ConcordCollection.FindAll(cd => (cd.ContracterId != null && cd.ContracterId.HasValue) ? cd.ContracterId.Value == item.ID : false);
                 if (concords.Any(cd => string.IsNullOrEmpty(cd.ConcordNumber)))
                 {
                     concords = new List<ContractConcord>();
