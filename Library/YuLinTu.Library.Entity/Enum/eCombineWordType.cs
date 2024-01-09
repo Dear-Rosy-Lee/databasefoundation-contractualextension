@@ -24,6 +24,12 @@ namespace YuLinTu.Library.Entity
         /// 权证与地块示意图扩展页合并
         /// </summary>
         [EnumName("权证与地块示意图扩展页合并")]
-        ExtendWarrantAndParcel = 3
+        ExtendWarrantAndParcel = 3,
+
+        /// <summary>
+        /// 合同与地块示意图扩展页合并
+        /// </summary>
+        [EnumName("合同与地块示意图扩展页合并")]
+        ContractsAndParcel = 4
     }
 }

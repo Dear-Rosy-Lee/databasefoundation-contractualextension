@@ -1525,7 +1525,7 @@ namespace YuLinTu.Library.Business
                 string typeString = "其他方式";
                 if (mode != null)
                     typeString = mode.Name;
-                string fullPath = savePath + @"\" + curVp.FamilyNumber + "-" + curVp.Name + "-" + TemplateFile.ContractConcordWord + "(" + typeString + ")";
+                string fullPath = savePath + @"\" + curVp.FamilyNumber + "-" + curVp.Name + "-" + TemplateFile.ContractConcordWord /*+ "(" + typeString + ")"*/;
 
                 var exportConcord = new ExportContractConcord(dbContext);
 

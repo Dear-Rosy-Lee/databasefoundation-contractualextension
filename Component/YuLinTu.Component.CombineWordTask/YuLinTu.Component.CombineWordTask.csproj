@@ -103,6 +103,7 @@
     <Compile Include="Business\WordTool.cs" />
     <Compile Include="Entrance.cs" />
     <Compile Include="Business\ICombineWord.cs" />
+    <Compile Include="Task\TaskCombineContractingContractsWord.cs" />
     <Compile Include="Task\TaskCombineRegisterBookAndParcelWord.cs" />
     <Compile Include="Task\TaskCombineExtendWarrantAndParcelWord.cs" />
     <Compile Include="Task\TaskCombineWarrantAndParcelWord.cs" />

@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Windows;
 using YuLinTu.Data;
+using YuLinTu.Diagrams;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 
@@ -32,6 +35,7 @@ namespace YuLinTu.Library.Business
             db = dbContext;
             concordSetting = ContractConcordSettingDefine.GetIntence();
             senderStation = dbContext.CreateSenderWorkStation();
+            landStation = dbContext.CreateContractLandWorkstation();
             zoneBusiness = new ZoneDataBusiness();
             zoneBusiness.DbContext = dbContext;
             zoneBusiness.Station = dbContext.CreateZoneWorkStation();
@@ -43,12 +47,15 @@ namespace YuLinTu.Library.Business
 
         protected readonly IDbContext db;
         protected readonly ISenderWorkStation senderStation;
+        protected readonly IContractLandWorkStation landStation;
+
         protected readonly ZoneDataBusiness zoneBusiness; //行政地域业务
         protected readonly ContractConcordSettingDefine concordSetting;
 
         protected VirtualPerson virtualPerson;//承包方
         protected ContractConcord concord; //承包合同
         protected SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
+
         //private ContractRegeditBookBusiness bookBusiness;   //权证业务
 
         #endregion Fields
@@ -487,6 +494,60 @@ namespace YuLinTu.Library.Business
                 date = ((DateTime)Concord.ArableLandStartTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "至"
                     + ((DateTime)Concord.ArableLandEndTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "。";
             }
+            DiagramsView ViewOfAllMultiParcel = null;
+            DiagramsView ViewOfNeighorParcels = null;
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                ViewOfAllMultiParcel = new DiagramsView();
+                ViewOfNeighorParcels = new DiagramsView();
+            }));
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                ViewOfAllMultiParcel.Paper.Model.Width = 236;
+                ViewOfAllMultiParcel.Paper.Model.Height = 217;
+                ViewOfAllMultiParcel.Paper.Model.BorderWidth = 0;
+                ViewOfAllMultiParcel.Paper.Model.X = 0;
+                ViewOfAllMultiParcel.Paper.Model.Y = 0;
+            }));
+
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                ViewOfNeighorParcels.Paper.Model.Width = 160;
+                ViewOfNeighorParcels.Paper.Model.Height = 160;
+                ViewOfNeighorParcels.Paper.Model.BorderWidth = 0;
+                ViewOfNeighorParcels.Paper.Model.X = 0;
+                ViewOfNeighorParcels.Paper.Model.Y = 0;
+            }));
+            List<ContractLand> listLand = new List<ContractLand>();
+            listLand = landStation.GetCollection(CurrentZone.FullCode);
+            List<ContractLand> listGeoLand = new List<ContractLand>(1000);
+            listGeoLand = listLand.FindAll(c => c.Shape != null);
+            var VillageZone = GetParent(CurrentZone);
+            string savePathOfImage = SystemSet.DefaultPath;
+
+
+            Type type = typeof(ExportContractLandParcelWord);
+            ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(IDbContext) }); // 根据参数类型获取构造函数
+            PropertyInfo propertyInfo1 = type.GetProperty("ViewOfAllMultiParcel");
+            PropertyInfo propertyInfo2 = type.GetProperty("ListGeoLand");
+            PropertyInfo propertyInfo3 = type.GetProperty("CurrentZone");
+            PropertyInfo propertyInfo4 = type.GetProperty("VillageZone");
+            PropertyInfo propertyInfo5 = type.GetProperty("SavePathOfImage");
+            PropertyInfo propertyInfo6 = type.GetProperty("Contractor");
+            FieldInfo fieldInfo = type.GetField("geoLandCollection");
+            object instance = constructor.Invoke(new object[] { db }); // 创建对象实例并传递参数
+            MethodInfo methodInfo = type.GetMethod("GetAllMultiParcel");
+            propertyInfo1.SetValue(instance, ViewOfAllMultiParcel); // 设置属性值
+            propertyInfo2.SetValue(instance, listGeoLand); // 设置属性值
+            propertyInfo3.SetValue(instance, CurrentZone); // 设置属性值
+            propertyInfo4.SetValue(instance, VillageZone); // 设置属性值
+            propertyInfo5.SetValue(instance, savePathOfImage); // 设置属性值
+            propertyInfo6.SetValue(instance, Contractor); // 设置属性值
+            fieldInfo.SetValue(instance, listGeoLand);
+            object result = methodInfo.Invoke(instance, null);
+
+
+            //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.ZoneCode + "-" + Contractor.Name + ".jpg", 180, 250);
             SetBookmarkValue("SocialCode", Tissue.SocialCode);
             SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
             SetBookmarkValue(AgricultureBookMark.ConcordDate, Concord.Flag ? "" : date);                                // 承包时间
@@ -512,6 +573,15 @@ namespace YuLinTu.Library.Business
             //SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, Tissue.LawyerCartNumber.IsNullOrEmpty() ? string.Empty : Tissue.LawyerCartNumber);    // 发包方法人证件号码
         }
 
+        public Zone GetParent(Zone zone)
+        {
+            ModuleMsgArgs arg = new ModuleMsgArgs();
+            arg.Datasource = db;
+            arg.Parameter = zone;
+            arg.Name = ZoneMessage.ZONE_PARENT_ZONE;
+            TheBns.Current.Message.Send(this, arg);
+            return (arg.ReturnValue as Zone);
+        }
         #endregion Methods - Concord
 
         #region Methods - OtherInfomation

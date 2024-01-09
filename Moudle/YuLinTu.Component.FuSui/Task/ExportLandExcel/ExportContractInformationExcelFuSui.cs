@@ -275,21 +275,19 @@ namespace YuLinTu.Component.FuSui
                 concordHigh = high;
                 int curIndex = index;
 
-                if (cs.Count >= sharePersons.Count)
-                {
-                    WriteContractLand(cs);//填写地块信息
-                    WriteSharePerson(sharePersons);
-                }
+                WriteContractLand(cs, cs.Count, sharePersons.Count);//填写地块信息
+                WriteSharePerson(sharePersons, cs.Count, sharePersons.Count);
             }
+            SetLineType("X" + (cindex-1).ToString());
+
         }
 
-        public void WriteSharePerson(List<Person> vp)
+        public void WriteSharePerson(List<Person> vp, int csCount, int spCount)
         {
             for (int i = 0; i < vp.Count; i++)
             {
                 if (i == vp.Count - 1)
                 {
-                    var index = high - vp.Count;
                     SetRange("R" + familyIndex, "R" + familyIndex, vp[i].Name);
                     SetRange("S" + familyIndex, "S" + familyIndex, vp[i].Relationship);
                     SetRange("T" + familyIndex, "T" + familyIndex, vp[i].ICN);
@@ -307,7 +305,7 @@ namespace YuLinTu.Component.FuSui
             }
         }
 
-        public void WriteContractLand(List<ContractLand> cs)
+        public void WriteContractLand(List<ContractLand> cs, int csCount, int spCount)
         {
             foreach (ContractLand land in cs)
             {
@@ -329,26 +327,26 @@ namespace YuLinTu.Component.FuSui
                 var countyName = address[2].Name;
                 var townName = address[1].Name;
                 var villageName = address[0].Name;
-                SetRange("A" + index, "A" + (index + high - 1), serial.ToString());//行政区域
+                SetRange("A" + index, "A" + index, serial.ToString());//行政区域
                 serial++;
-                SetRange("B" + index, "B" + (index + high - 1), provinceName);//行政区域
-                SetRange("C" + index, "C" + (index + high - 1), cityName);//行政区域
-                SetRange("D" + index, "D" + (index + high - 1), countyName);//行政区域
-                SetRange("E" + index, "E" + (index + high - 1), townName);//行政区域
-                SetRange("F" + index, "F" + (index + high - 1), villageName);//行政区域
-                SetRange("G" + index, "G" + (index + high - 1), contractCode);
-                SetRange("H" + index, "H" + (index + high - 1), tissue.Code);
-                SetRange("I" + index, "I" + (index + high - 1), tissue.Name);
-                SetRange("J" + index, "J" + (index + high - 1), item.ID.ToString());
-                SetRange("K" + index, "K" + (index + high - 1), item.Name);
-                SetRange("L" + index, "L" + (index + high - 1), item.Number);
-                SetRange("M" + index, "M" + (index + high - 1), item.Telephone);
+                SetRange("B" + index, "B" + index, provinceName);//行政区域
+                SetRange("C" + index, "C" + index, cityName);//行政区域
+                SetRange("D" + index, "D" + index, countyName);//行政区域
+                SetRange("E" + index, "E" + index, townName);//行政区域
+                SetRange("F" + index, "F" + index, villageName);//行政区域
+                SetRange("G" + index, "G" + index, contractCode);
+                SetRange("H" + index, "H" + index, tissue.Code);
+                SetRange("I" + index, "I" + index, tissue.Name);
+                SetRange("J" + index, "J" + index, item.ID.ToString());
+                SetRange("K" + index, "K" + index, item.Name);
+                SetRange("L" + index, "L" + index, item.Number);
+                SetRange("M" + index, "M" + index, item.Telephone);
                 var arableLandStartTime = (DateTime)concord.ArableLandStartTime;
-                SetRange("V" + index, "V" + (index + high - 1), arableLandStartTime.ToString("yyyy-MM-dd"));
+                SetRange("V" + index, "V" + index, arableLandStartTime.ToString("yyyy-MM-dd"));
                 var arableLandEndTime = (DateTime)concord.ArableLandEndTime;
-                SetRange("W" + index, "W" + (index + high - 1), arableLandEndTime.ToString("yyyy-MM-dd"));
+                SetRange("W" + index, "W" + index, arableLandEndTime.ToString("yyyy-MM-dd"));
                 var senderDate = (DateTime)concord.SenderDate;
-                SetRange("X" + index, "X" + (index + high - 1), senderDate.ToString("yyyy-MM-dd"));
+                SetRange("X" + index, "X" + index, senderDate.ToString("yyyy-MM-dd"));
                 index = index + high;
             }
             catch (SystemException ex)

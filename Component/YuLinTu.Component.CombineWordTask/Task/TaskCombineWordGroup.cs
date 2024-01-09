@@ -113,6 +113,10 @@ namespace YuLinTu.Component.CombineWordTask
                         task = new TaskCombineExtendWarrantAndParcelWord();
                         break;
 
+                    case eCombineWordType.ContractsAndParcel:
+                        task = new TaskCombineContractingContractsWord();
+                        break;
+
                     default:
                         break;
                 }
