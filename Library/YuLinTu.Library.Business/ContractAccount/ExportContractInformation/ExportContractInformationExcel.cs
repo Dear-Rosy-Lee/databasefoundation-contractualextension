@@ -321,7 +321,9 @@ namespace YuLinTu.Library.Business
                 SetRange("B" + index, "B" + (index + high - 1), contractCode);
                 SetRange("C" + index, "C" + (index + high - 1), tissue.Code);
                 SetRange("D" + index, "D" + (index + high - 1), tissue.Name);
-                SetRange("E" + index, "E" + (index + high - 1), item.ID.ToString());
+                int familyNumber = int.Parse(item.FamilyNumber);
+                string number = string.Format("{0:D4}", familyNumber);
+                SetRange("E" + index, "E" + (index + high - 1), $"{item.ZoneCode}{number}");
                 SetRange("F" + index, "F" + (index + high - 1), item.Name);
                 SetRange("G" + index, "G" + (index + high - 1), item.Number);
                 SetRange("H" + index, "H" + (index + high - 1), item.Telephone);

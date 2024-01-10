@@ -29,6 +29,8 @@ namespace YuLinTu.Component.FuSui
         private ContractRegeditBookItem currentRegiditItem;
         private BindContractRegeditBook currentRegeditBook;
         private DropDownButton btnSurveyTable;
+        private DropDownButton btnAccountTable;
+
         private ContractLandBinding currentLandBinding;
         private ContractLandPersonItem currentAccountItem;
         private SuperButton issueSuperButton;
@@ -129,15 +131,11 @@ namespace YuLinTu.Component.FuSui
                 this.contractAccountPanel = contractAccountPage.contractAccountPanel;
 
                 var spSurveyTable = contractAccountPage.btnSurveyTable.DropDownContent as StackPanel;
-
+                var spAccountTable = contractAccountPage.btnAccountTable.DropDownContent as StackPanel;
                 spSurveyTable.Children.Insert(5, CreateExportLandWordBtn());
-
+                spAccountTable.Children.Insert(9, CreateExportContractInformationBtn());
                 btnSurveyTable = contractAccountPage.btnSurveyTable;
-
-                contractAccountPage.btnExportContractInformation.Command = null;
-                contractAccountPage.btnExportContractInformation.CommandBindings.Clear();
-                contractAccountPage.btnExportContractInformation.CommandParameter = "";
-                contractAccountPage.btnExportContractInformation.Click += BtnExportContractInformation_Click;
+                btnAccountTable = contractAccountPage.btnAccountTable;
             }
         }
 
@@ -157,6 +155,17 @@ namespace YuLinTu.Component.FuSui
             familyAccountBtn.Content = "扶绥延包摸底表";
             familyAccountBtn.ToolTip = "导出摸底调查表";
             familyAccountBtn.Click += btnAgriLandTable_Click;
+            return familyAccountBtn;
+        }
+
+        private SuperButton CreateExportContractInformationBtn()
+        {
+            SuperButton familyAccountBtn = new SuperButton();
+            familyAccountBtn.Padding = new Thickness(8, 4, 8, 4);
+            familyAccountBtn.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"));
+            familyAccountBtn.Content = "合同信息表（扶绥）";
+            familyAccountBtn.ToolTip = "导出合同信息表（扶绥）";
+            familyAccountBtn.Click += BtnExportContractInformation_Click;
             return familyAccountBtn;
         }
 

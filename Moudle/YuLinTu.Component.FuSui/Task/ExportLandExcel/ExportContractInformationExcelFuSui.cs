@@ -322,6 +322,7 @@ namespace YuLinTu.Component.FuSui
         {
             try
             {
+              
                 var provinceName = address[4].Name;
                 var cityName = address[3].Name;
                 var countyName = address[2].Name;
@@ -337,7 +338,9 @@ namespace YuLinTu.Component.FuSui
                 SetRange("G" + index, "G" + index, contractCode);
                 SetRange("H" + index, "H" + index, tissue.Code);
                 SetRange("I" + index, "I" + index, tissue.Name);
-                SetRange("J" + index, "J" + index, item.ID.ToString());
+                int familyNumber = int.Parse(item.FamilyNumber);
+                string number = string.Format("{0:D4}", familyNumber);
+                SetRange("J" + index, "J" + index, $"{item.ZoneCode}{number}");
                 SetRange("K" + index, "K" + index, item.Name);
                 SetRange("L" + index, "L" + index, item.Number);
                 SetRange("M" + index, "M" + index, item.Telephone);
