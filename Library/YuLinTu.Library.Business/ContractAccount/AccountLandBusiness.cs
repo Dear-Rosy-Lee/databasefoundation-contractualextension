@@ -21,6 +21,7 @@ using System.Reflection;
 using YuLinTu.Diagrams;
 using System.Threading.Tasks;
 using YuLinTu.NetAux;
+using System.Text.RegularExpressions;
 
 namespace YuLinTu.Library.Business
 {
@@ -1256,16 +1257,26 @@ namespace YuLinTu.Library.Business
             if ((string)infoList[12].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = (GetproertValue(shapeData, selectColNameList[12]));
-                var dictTDYT = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.TDYT);
-                if (dictTDYT == null)
+                bool isNumeric = Regex.IsMatch(s, @"^\d+$");
+                if (isNumeric)
                 {
-                    this.ReportError(string.Format("第" + i + "条Shape数据土地用途名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
-                    falg = false;
+                    targetLand.Purpose = s;
                 }
                 else
                 {
-                    targetLand.Purpose = dictTDYT.Code;
+                    var dictTDYT = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.TDYT);
+                    if (dictTDYT == null)
+                    {
+                        this.ReportError(string.Format("第" + i + "条Shape数据土地用途名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
+                        falg = false;
+                    }
+                    else
+                    {
+                        targetLand.Purpose = dictTDYT.Code;
+                    }
+
                 }
+               
             }
             if ((string)infoList[13].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -1287,19 +1298,28 @@ namespace YuLinTu.Library.Business
             if ((string)infoList[14].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[14]);
-                var dictTDLYLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.TDLYLX);
-                if (dictTDLYLX == null)
+                bool isNumeric = Regex.IsMatch(s, @"^\d+$");
+                if (isNumeric)
                 {
-                    //targetLand.LandCode = "";
-                    //targetLand.LandName = "";
-                    this.ReportError(string.Format("第" + i + "条Shape数据土地利用类型名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
-                    falg = false;
+                    targetLand.LandCode = s;
                 }
                 else
                 {
-                    targetLand.LandCode = dictTDLYLX.Code;
-                    targetLand.LandName = dictTDLYLX.Name;
+                    var dictTDLYLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.TDLYLX);
+                    if (dictTDLYLX == null)
+                    {
+                        //targetLand.LandCode = "";
+                        //targetLand.LandName = "";
+                        this.ReportError(string.Format("第" + i + "条Shape数据土地利用类型名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
+                        falg = false;
+                    }
+                    else
+                    {
+                        targetLand.LandCode = dictTDLYLX.Code;
+                        targetLand.LandName = dictTDLYLX.Name;
+                    }
                 }
+                
             }
             if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -1323,23 +1343,33 @@ namespace YuLinTu.Library.Business
             if ((string)infoList[17].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[17]);
-                if (s == "承包地")
+                bool isNumeric = Regex.IsMatch(s, @"^\d+$");
+                if (isNumeric)
                 {
-                    targetLand.LandCategory = "10";
+                    targetLand.LandCategory = s;
                 }
                 else
                 {
-                    var dictDKLB = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.DKLB);
-                    if (dictDKLB == null)
+                    if (s == "承包地")
                     {
-                        this.ReportError(string.Format("第" + i + "条Shape数据地块类别名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
-                        falg = false;
+                        targetLand.LandCategory = "10";
                     }
                     else
                     {
-                        targetLand.LandCategory = dictDKLB.Code;
+
+                        var dictDKLB = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.DKLB);
+                        if (dictDKLB == null)
+                        {
+                            this.ReportError(string.Format("第" + i + "条Shape数据地块类别名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
+                            falg = false;
+                        }
+                        else
+                        {
+                            targetLand.LandCategory = dictDKLB.Code;
+                        }
                     }
                 }
+                
             }
             if ((string)infoList[18].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {

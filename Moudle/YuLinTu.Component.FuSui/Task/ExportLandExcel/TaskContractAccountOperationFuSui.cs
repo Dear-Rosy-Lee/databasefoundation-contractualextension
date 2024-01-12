@@ -420,7 +420,7 @@ namespace YuLinTu.Component.FuSui
                 var listConcords = concordStation.GetContractsByZoneCode(currentZone.FullCode);
                 var listBooks = bookStation.GetByZoneCode(currentZone.FullCode, eSearchOption.Precision);
                 string filePath = string.Empty;
-                ExportContractInformationExcelFuSui export = new ExportContractInformationExcelFuSui(dbContext);
+                ExportContractInformationExcelFuSui export = new ExportContractInformationExcelFuSui(dbContext, fileName);
 
                 #region 通过反射等机制定制化具体的业务处理类
 

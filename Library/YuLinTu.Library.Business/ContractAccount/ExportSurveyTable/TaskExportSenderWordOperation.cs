@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,17 +27,15 @@ namespace YuLinTu.Library.Business
         public TaskExportSenderWordOperation()
         { }
 
-        #endregion
+        #endregion Ctor
 
         #region Field
 
         private string openFilePath;  //打开文件路径
 
-        #endregion
+        #endregion Field
 
-        #region Property
 
-        #endregion
 
         #region Method—Override
 
@@ -82,7 +81,7 @@ namespace YuLinTu.Library.Business
             base.OpenResult();
         }
 
-        #endregion
+        #endregion Method—Override
 
         #region Method—ExportBusiness
 
@@ -110,6 +109,7 @@ namespace YuLinTu.Library.Business
                     ExportSenderWord senderTable = new ExportSenderWord();
 
                     #region 通过反射等机制定制化具体的业务处理类
+
                     var temp = WorksheetConfigHelper.GetInstance(senderTable);
                     if (temp != null && temp.TemplatePath != null)
                     {
@@ -119,10 +119,11 @@ namespace YuLinTu.Library.Business
                         }
                         tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
-                    #endregion
+
+                    #endregion 通过反射等机制定制化具体的业务处理类
 
                     senderTable.OpenTemplate(tempPath);
-                    senderTable.SaveAs(tissue, openFilePath + @"\" + tissue.Name + "(" + tissue.Code + ")" + TemplateFile.SenderSurveyWord);
+                    senderTable.SaveAs(tissue, openFilePath + @"\" + tissue.Name + "(" + tissue.Code + ")" + TemplateFile.ContractInformationExcel);
                     this.ReportProgress((int)(1 + vpPercent * index), tissue.Name);
                     index++;
                 }
@@ -140,7 +141,7 @@ namespace YuLinTu.Library.Business
             return result;
         }
 
-        #endregion
+        #endregion Method—ExportBusiness
 
         #region Method—Private
 
@@ -198,10 +199,6 @@ namespace YuLinTu.Library.Business
             return excelName;
         }
 
-        #endregion
-
-        #region Method—Helper
-
-        #endregion
+        #endregion Method—Private
     }
 }

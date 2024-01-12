@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -452,8 +453,6 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public const string ExportContractAccountSurveyExcel = "承包台账调查表";
 
-        public const string ExportContractInformationExcel = "农村土地承包经营权合同信息表";
-
         /// <summary>
         /// 导出台账调查表-土地承包经营权调查公示表
         /// </summary>
@@ -534,7 +533,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public const string ExportZoneError = "请选择在镇级以下(包括镇)地域导出!";
 
-        #endregion
+        #endregion 导出
 
         /// <summary>
         /// 编码详情
@@ -562,6 +561,8 @@ namespace YuLinTu.Library.Controls
         /// 导出发包方Excel调查表数据
         /// </summary>
         public const string ExportSenderDataExcel = "导出发包方调查表数据";
+
+        public const string ExportContractInformationExcel = "导出农村土地承包经营权合同信息表";
 
         /// <summary>
         /// 导出承包方Excel调查表数据
@@ -593,20 +594,17 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public const string VolumnExportBoundaryInfoExcel = "批量导出界址调查表数据";
 
-
-        #endregion
+        #endregion 导出 - 地块
 
         /// <summary>
         /// 查找四至
         /// </summary>
         public const string SeekLandNeighbor = "查找四至";
 
-
         /// <summary>
         /// 查找四至的地域级别大于镇
         /// </summary>
         public const string SeekLandNeighborErrorZone = "请在镇级地域下查找四至!";
-
 
         /// <summary>
         /// 导出地块示意图
@@ -712,6 +710,7 @@ namespace YuLinTu.Library.Controls
         /// 未输入邻宗地距离值
         /// </summary>
         public const string NeighborDistanceValueError = "请输入邻宗地距离值!";
+
         /// <summary>
         /// 预览时未选择数据
         /// </summary>

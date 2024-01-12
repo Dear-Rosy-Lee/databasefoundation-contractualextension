@@ -40,8 +40,6 @@ namespace YuLinTu.Component.FuSui
         /// </summary>
         public TaskViewerShowDelegate ShowTaskViewer { get; set; }
 
-        public IWorkpage TheWorkPage { get; set; }
-
         /// <summary>
         /// 当前地域
         /// </summary>
@@ -175,12 +173,11 @@ namespace YuLinTu.Component.FuSui
 
         private void BtnExportContractInformation_Click(object sender, RoutedEventArgs e)
         {
-            int TableType = 6;
-            var currentZone = contractAccountPanel.CurrentZone;
+            CurrentZone = contractAccountPanel.CurrentZone;
             bool isAccountExcel = true;
             IDbContext DbContext = DataBaseSource.GetDataBaseSource();
             this.DbContext = DbContext;
-            if (currentZone == null)
+            if (CurrentZone == null)
             {
                 ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
                 return;
@@ -197,12 +194,18 @@ namespace YuLinTu.Component.FuSui
 
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
-            int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
+            int allChildrenZonesCount = zoneStation.Count(CurrentZone.FullCode, eLevelOption.Subs);  //当前地域下的
 
-            if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
+            if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
-                TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
-                //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+                ExportDataCommonOperate(CurrentZone.FullName, ContractAccountInfo.ExportContractInformationExcel, eContractAccountType.ExportContractInformationExcel,
+                    ContractAccountInfo.ExportContractInformationExcel, ContractAccountInfo.ExportSurveyTableData);
+            }
+            else if (CurrentZone.Level == eZoneLevel.Village || CurrentZone.Level == eZoneLevel.Town)
+            {
+                //组任务
+                ExportDataCommonOperate(CurrentZone.FullName, ContractAccountInfo.ExportContractInformationExcel, eContractAccountType.VolumnExportContractInformationExcel,
+                    ContractAccountInfo.ExportContractInformationExcel, ContractAccountInfo.ExportSurveyTableData);
             }
         }
 
@@ -251,6 +254,79 @@ namespace YuLinTu.Component.FuSui
             {
                 TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
             }
+        }
+
+        public void ExportDataCommonOperate(string zoneName, string header, eContractAccountType type, string taskDes, string taskName,
+           List<VirtualPerson> listPerson = null, bool? isStockLand = false)
+        {
+            ExportDataPage extPage = new ExportDataPage(zoneName, Workpage, header);
+            extPage.Workpage = Workpage;
+            Workpage.Page.ShowMessageBox(extPage, (b, r) =>
+            {
+                string saveFilePath = extPage.FileName;
+                if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                {
+                    return;
+                }
+                switch (type)
+                {
+                    case eContractAccountType.ExportContractInformationExcel:
+                        TaskExportContractDelayAccountExcel(saveFilePath, taskDes, taskName);
+                        break;
+
+                    case eContractAccountType.VolumnExportContractInformationExcel:
+                        TaskGroupExportContractDelayAccountExcel(saveFilePath, taskDes, taskName);
+                        break;
+                }
+            });
+        }
+
+        public void TaskExportContractDelayAccountExcel(string fileName, string taskDes, string taskName)
+        {
+            TaskAccountFiveTableArgument argument = new TaskAccountFiveTableArgument();
+            argument.Database = DbContext;
+            argument.CurrentZone = contractAccountPanel.CurrentZone;
+            argument.FileName = fileName;
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            argument.SelfAndSubsZones = zoneStation.GetChildren(CurrentZone.FullCode, eLevelOption.SelfAndSubs);
+            TaskExportContractInformationOperationFusui operation = new TaskExportContractInformationOperationFusui();
+            operation.Argument = argument;
+            operation.Description = taskDes;
+            operation.Name = taskName;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            Workpage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+
+        /// <summary>
+        /// 批量导出合同表(组任务)
+        /// </summary>
+        public void TaskGroupExportContractDelayAccountExcel(string fileName, string taskDes, string taskName)
+        {
+            TaskAccountFiveTableArgument groupArgument = new TaskAccountFiveTableArgument();
+            groupArgument.Database = DbContext;
+            groupArgument.CurrentZone = CurrentZone;
+            groupArgument.FileName = fileName;
+
+            TaskGroupExportContractInformationOperationFusui groupOperation = new TaskGroupExportContractInformationOperationFusui();
+            groupOperation.Argument = groupArgument;
+            groupOperation.Description = taskDes;
+            groupOperation.Name = taskName;
+            groupOperation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            Workpage.TaskCenter.Add(groupOperation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            groupOperation.StartAsync();
         }
 
         #endregion 承包地块调查表

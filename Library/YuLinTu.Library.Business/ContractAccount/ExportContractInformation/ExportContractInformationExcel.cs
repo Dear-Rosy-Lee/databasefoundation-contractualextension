@@ -20,6 +20,7 @@ namespace YuLinTu.Library.Business
         private Zone currentZone;//当前地域
         private int cindex;
         private int familyIndex;
+        private int serial;
         private List<VirtualPerson> familys;//承包方集合
         private string templaePath;//模版文件
         private int index;//索引值
@@ -216,10 +217,11 @@ namespace YuLinTu.Library.Business
 
         private void WriteContent()
         {
+            serial = 4;
             index = 4;
             toolProgress.InitializationPercent(familys.Count, Percent, CurrentPercent);
             high = 0;//得到每个户中的最大条数
-            int concordHigh = 0;//合同高度
+
             cindex = 4;
             familyIndex = 4;
 
@@ -260,36 +262,56 @@ namespace YuLinTu.Library.Business
                 }
                 //输出户信息
                 var address = currentZone.FullName;
-                var contractCode = concords.FirstOrDefault().ConcordNumber;
+                string contractCode = "";
+                if (concords.Count != 0)
+                {
+                    contractCode = concords.FirstOrDefault().ConcordNumber;
+                }
+             
                 var listTissue = LandStation.GetTissuesByConcord(currentZone);
-                CollectivityTissue tissue = listTissue.Find(tu => tu.ID == concords.FirstOrDefault().SenderId);
+                CollectivityTissue tissue = new CollectivityTissue();
+                if (listTissue.Count != 0 && concords.Count != 0)
+                {
+                    tissue = listTissue.Find(tu => tu.ID == concords.FirstOrDefault().SenderId);
+                }
+                
                 InitalizeZoneInformation(high, address, contractCode, sharePersons.Count.ToString(), item, tissue, concords.FirstOrDefault());
                 cs = SortLandCollection(cs);//对承包地块排序
-                concordHigh = high;
                 int curIndex = index;
-
-                if (cs.Count >= sharePersons.Count)
-                {
-                    WriteContractLand(cs);//填写地块信息
-                    WriteSharePerson(sharePersons);
-                }
+                serial = serial + high;
+                WriteContractLand(cs, cs.Count, sharePersons.Count);//填写地块信息
+                WriteSharePerson(sharePersons, cs.Count, sharePersons.Count);
             }
+            SetLineType("S" + (serial - 1).ToString());
         }
 
-        public void WriteSharePerson(List<Person> vp)
+        public void WriteSharePerson(List<Person> vp, int csCount, int spCount)
         {
-            for (int i = 0; i < vp.Count; i++)
+            if (csCount >= spCount)
             {
-                if (i == vp.Count - 1)
+                for (int i = 0; i < vp.Count; i++)
                 {
-                    var index = high - vp.Count;
-                    SetRange("M" + familyIndex, "M" + familyIndex, vp[i].Name);
-                    SetRange("N" + familyIndex, "N" + familyIndex, vp[i].Relationship);
-                    SetRange("O" + familyIndex, "O" + familyIndex, vp[i].ICN);
-                    SetRange("P" + familyIndex, "P" + familyIndex, vp[i].Comment);
-                    familyIndex = familyIndex + high - vp.Count + 1;
+                    if (i == vp.Count - 1)
+                    {
+                        SetRange("M" + familyIndex, "M" + familyIndex, vp[i].Name);
+                        SetRange("N" + familyIndex, "N" + familyIndex, vp[i].Relationship);
+                        SetRange("O" + familyIndex, "O" + familyIndex, vp[i].ICN);
+                        SetRange("P" + familyIndex, "P" + familyIndex, vp[i].Comment);
+                        familyIndex = familyIndex + high - vp.Count + 1;
+                    }
+                    else
+                    {
+                        SetRange("M" + familyIndex, "M" + familyIndex, vp[i].Name);
+                        SetRange("N" + familyIndex, "N" + familyIndex, vp[i].Relationship);
+                        SetRange("O" + familyIndex, "O" + familyIndex, vp[i].ICN);
+                        SetRange("P" + familyIndex, "P" + familyIndex, vp[i].Comment);
+                        familyIndex++;
+                    }
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < vp.Count; i++)
                 {
                     SetRange("M" + familyIndex, "M" + familyIndex, vp[i].Name);
                     SetRange("N" + familyIndex, "N" + familyIndex, vp[i].Relationship);
@@ -300,15 +322,40 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        public void WriteContractLand(List<ContractLand> cs)
+        public void WriteContractLand(List<ContractLand> cs, int csCount, int spCount)
         {
-            foreach (ContractLand land in cs)
+            if (csCount < spCount)
             {
-                SetRange("I" + cindex, "I" + cindex, land.Name);
-                SetRange("J" + cindex, "J" + cindex, land.LandNumber);
-                SetRange("K" + cindex, "K" + cindex, land.AwareArea.ToString());
-                SetRange("L" + cindex, "L" + cindex, land.Comment);
-                cindex++;
+                for (int i = 0; i < cs.Count; i++)
+                {
+                    if (i == cs.Count - 1)
+                    {
+                        SetRange("I" + cindex, "I" + cindex, cs[i].Name);
+                        SetRange("J" + cindex, "J" + cindex, cs[i].LandNumber);
+                        SetRange("K" + cindex, "K" + cindex, cs[i].AwareArea.ToString());
+                        SetRange("L" + cindex, "L" + cindex, cs[i].Comment);
+                        cindex = cindex + high - cs.Count + 1;
+                    }
+                    else
+                    {
+                        SetRange("I" + cindex, "I" + cindex, cs[i].Name);
+                        SetRange("J" + cindex, "J" + cindex, cs[i].LandNumber);
+                        SetRange("K" + cindex, "K" + cindex, cs[i].AwareArea.ToString());
+                        SetRange("L" + cindex, "L" + cindex, cs[i].Comment);
+                        cindex++;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cs.Count; i++)
+                {
+                    SetRange("I" + cindex, "I" + cindex, cs[i].Name);
+                    SetRange("J" + cindex, "J" + cindex, cs[i].LandNumber);
+                    SetRange("K" + cindex, "K" + cindex, cs[i].AwareArea.ToString());
+                    SetRange("L" + cindex, "L" + cindex, cs[i].Comment);
+                    cindex++;
+                }
             }
         }
 
@@ -317,6 +364,10 @@ namespace YuLinTu.Library.Business
         {
             try
             {
+                if (concord == null)
+                {
+                    concord = new ContractConcord();
+                }
                 SetRange("A" + index, "A" + (index + high - 1), address);//行政区域
                 SetRange("B" + index, "B" + (index + high - 1), contractCode);
                 SetRange("C" + index, "C" + (index + high - 1), tissue.Code);
