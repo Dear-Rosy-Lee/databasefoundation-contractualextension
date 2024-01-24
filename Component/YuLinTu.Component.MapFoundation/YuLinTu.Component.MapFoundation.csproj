@@ -340,6 +340,8 @@
     <Compile Include="Task\SQLiteHelper.cs" />
     <Compile Include="Task\TaskBuildPyramid.cs" />
     <Compile Include="Task\TaskBuildPyramidArgument.cs" />
+    <Compile Include="Task\TaskExportSelectedLandShapeArgument.cs" />
+    <Compile Include="Task\TaskExportSelectedLandShapeOperation.cs" />
     <Compile Include="Task\TaskInitializeLandArgument.cs" />
     <Compile Include="Task\TaskGenerateQYJXShapeArgument.cs" />
     <Compile Include="Task\TaskInitializeLandOperation.cs" />
@@ -568,6 +570,10 @@
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
       <Name>YuLinTu.Library.WorkStation</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Component.BatchDataBaseTask\YuLinTu.Component.BatchDataBaseTask.csproj">
+      <Project>{A3C7CEAB-E53A-4637-884A-8970541F4006}</Project>
+      <Name>YuLinTu.Component.BatchDataBaseTask</Name>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj">
       <Project>{5d529712-2c25-409c-a865-f832cf5324cc}</Project>

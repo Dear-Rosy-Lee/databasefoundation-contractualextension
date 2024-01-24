@@ -21,6 +21,7 @@ namespace YuLinTu.Library.Business
         private bool intiallData;
         private bool shapeToBase;
         private bool exportExcel;
+        private bool syncCode;
 
         #endregion
 
@@ -62,6 +63,15 @@ namespace YuLinTu.Library.Business
             set { exportExcel = value; NotifyPropertyChanged("UseStandCode"); }
         }
 
+        /// <summary>
+        /// 同步修改业务编码
+        /// </summary>
+        public bool SyncCode
+        {
+            get { return syncCode; }
+            set { syncCode = value; NotifyPropertyChanged("SyncCode"); }
+        }
+
         #endregion
 
         #region Ctor
@@ -72,6 +82,7 @@ namespace YuLinTu.Library.Business
             intiallData = true;
             shapeToBase = true;
             exportExcel = true;
+            syncCode = false;
         }
 
         ///private static ZoneDefine _configDefine;

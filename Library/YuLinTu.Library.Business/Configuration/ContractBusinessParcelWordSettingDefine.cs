@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace YuLinTu.Library.Business
     /// </summary>
     public partial class ContractBusinessParcelWordSettingDefine : NotifyCDObject
     {
-
         #region Fields
+
         private bool showdxmzdwHandle;
         private bool showlandneighborLabel;
         private bool showAlllandneighborLabel;
@@ -30,7 +31,8 @@ namespace YuLinTu.Library.Business
         private DateTime? checkDate;
         private bool isVacuateDotRing;
         private double vacuateDotRingSetIndex;
-        #endregion
+
+        #endregion Fields
 
         #region Properties
 
@@ -61,7 +63,6 @@ namespace YuLinTu.Library.Business
             set { showAlllandneighborLabel = value; NotifyPropertyChanged("ShowAlllandneighborLabel"); }
         }
 
-
         /// <summary>
         /// 导出图片时另存为PDF
         /// </summary>
@@ -72,7 +73,7 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
-        /// 
+        ///
         /// 设置临宗地块查找缓冲
         /// </summary>
         public double Neighborlandbufferdistence
@@ -134,6 +135,7 @@ namespace YuLinTu.Library.Business
             get { return cartographer; }
             set { cartographer = value; NotifyPropertyChanged("Cartographer"); }
         }
+
         /// <summary>
         /// 地块示意图制图时间
         /// </summary>
@@ -142,6 +144,7 @@ namespace YuLinTu.Library.Business
             get { return cartographyDate; }
             set { cartographyDate = value; NotifyPropertyChanged("CartographyDate"); }
         }
+
         /// <summary>
         /// 地块示意图制图公司
         /// </summary>
@@ -150,6 +153,7 @@ namespace YuLinTu.Library.Business
             get { return cartographyUnit; }
             set { cartographyUnit = value; NotifyPropertyChanged("CartographyUnit"); }
         }
+
         /// <summary>
         /// 地块示意图审核者
         /// </summary>
@@ -158,6 +162,7 @@ namespace YuLinTu.Library.Business
             get { return checkPerson; }
             set { checkPerson = value; NotifyPropertyChanged("CheckPerson"); }
         }
+
         /// <summary>
         /// 地块示意图审核日期
         /// </summary>
@@ -167,7 +172,7 @@ namespace YuLinTu.Library.Business
             set { checkDate = value; NotifyPropertyChanged("CheckDate"); }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -257,9 +262,23 @@ namespace YuLinTu.Library.Business
             NeighborlandSearchUseUserAlgorithm = false;
 
             SetNeighborLandWestEastLabelVertical = false;
+
+            //模板设置
+            HorizontalVersion = false;
+            RowCount1 = 2;
+            ColCount1 = 4;
+            RowCount2 = 2;
+            ColCount2 = 5;
+
+            MaxLandNum = 54;
+            ExtendRowCount = 2;
+            ExtendColCount = 5;
+            IsFixedExtendLandGeoWord = true;
+            ExtendLandGeoWordWidth = 115;
+            ExtendLandGeoWordHeight = 180;
         }
 
-        #endregion
+        #endregion Ctor
 
         /// <summary>
         /// 获取配置
@@ -272,9 +291,5 @@ namespace YuLinTu.Library.Business
             var section = profile.GetSection<ContractBusinessParcelWordSettingDefine>();
             return section.Settings;
         }
-
-
-
-
     }
 }

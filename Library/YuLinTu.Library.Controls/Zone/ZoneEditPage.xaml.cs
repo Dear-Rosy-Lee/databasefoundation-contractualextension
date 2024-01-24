@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +59,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private ZoneDataBusiness business;
 
-        #endregion
+        #endregion Fields
 
         #region Propertys
 
@@ -94,12 +95,22 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public ZoneDataItem CurrentItem { get; private set; }
 
+        public ZoneDefine ZoneDefine { get; set; }
+
         /// <summary>
         /// 操作结果
         /// </summary>
         public bool Result { get; private set; }
 
-        #endregion
+        #endregion Propertys
+
+        #region Fields
+
+        private ZoneDefine config;
+
+        private SettingsProfileCenter systemCenter;
+
+        #endregion Fields
 
         #region ctor
 
@@ -111,6 +122,7 @@ namespace YuLinTu.Library.Controls
             spInfo.Visibility = Visibility.Hidden;
             loadIcon.Visibility = Visibility.Visible;
             business = new ZoneDataBusiness();
+
             this.isAdd = isAdd;
             if (isAdd)
             {
@@ -135,12 +147,12 @@ namespace YuLinTu.Library.Controls
                 if (business.IsZoneCodeExist(currentZone))
                 {
                     Dispatcher.Invoke(new Action(() => Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
-                     {
-                         Header = isAdd ? ZoneInfo.ZoneAdd : ZoneInfo.ZoneEdit,
-                         Message = ZoneInfo.ZoneCodeExist,
-                         MessageGrade = eMessageGrade.Error,
-                         CancelButtonText = "取消",
-                     })));
+                    {
+                        Header = isAdd ? ZoneInfo.ZoneAdd : ZoneInfo.ZoneEdit,
+                        Message = ZoneInfo.ZoneCodeExist,
+                        MessageGrade = eMessageGrade.Error,
+                        CancelButtonText = "取消",
+                    })));
                     e.Parameter = false;
                     return;
                 }
@@ -177,7 +189,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion ctor
 
         #region Methods
 
@@ -193,7 +205,7 @@ namespace YuLinTu.Library.Controls
             loadIcon.Visibility = Visibility.Collapsed;
         }
 
-        #endregion
+        #endregion Override
 
         #region Private
 
@@ -211,32 +223,39 @@ namespace YuLinTu.Library.Controls
                     list.Add(LanguageAttribute.GetLanguage("key41411"));
                     mtbCode.MaxLength = 2;
                     break;
+
                 case eZoneLevel.Village:
                     list.Add(LanguageAttribute.GetLanguage("key41412"));
                     mtbCode.MaxLength = 3;
                     mtbCode.ToolTip = "3位编码";
                     break;
+
                 case eZoneLevel.Town:
                     list.Add(LanguageAttribute.GetLanguage("key41413"));
                     mtbCode.MaxLength = 3;
                     mtbCode.ToolTip = "3位编码";
                     break;
+
                 case eZoneLevel.County:
                     list.Add(LanguageAttribute.GetLanguage("key41414"));
                     mtbCode.MaxLength = 2;
                     break;
+
                 case eZoneLevel.City:
                     list.Add(LanguageAttribute.GetLanguage("key41415"));
                     mtbCode.MaxLength = 2;
                     break;
+
                 case eZoneLevel.Province:
                     list.Add(LanguageAttribute.GetLanguage("key41416"));
                     mtbCode.MaxLength = 2;
                     break;
+
                 case eZoneLevel.State:
                     list.Add(LanguageAttribute.GetLanguage("key41417"));
                     mtbCode.MaxLength = 2;
                     break;
+
                 default:
                     list.Add(LanguageAttribute.GetLanguage("key41411"));
                     mtbCode.MaxLength = 4;
@@ -247,7 +266,7 @@ namespace YuLinTu.Library.Controls
             cbLevel.SelectedIndex = 0;
         }
 
-        #endregion
+        #endregion Private
 
         #region Events
 
@@ -475,6 +494,20 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        private void MetroTextBox_UpCodeChanged(object sender, TextChangedEventArgs e)
+        {
+            currentZone.UpLevelCode = mtbUpCode.Text.Trim();
+            currentZone.FullCode = (currentZone.Level == eZoneLevel.Province) ? currentZone.Code : currentZone.UpLevelCode + currentZone.Code;
+            if (!isAdd)
+            {
+                btnSubmit.IsEnabled = EditChanged();
+            }
+            else
+            {
+                btnSubmit.IsEnabled = CanSubmit();
+            }
+        }
+
         /// <summary>
         /// 备注变化
         /// </summary>
@@ -498,6 +531,10 @@ namespace YuLinTu.Library.Controls
         {
             bool change = false;
             if (tempZone.Name != currentZone.Name)
+            {
+                change = true;
+            }
+            if (tempZone.UpLevelCode != currentZone.UpLevelCode)
             {
                 change = true;
             }
@@ -547,6 +584,18 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        private void mtbUpCode_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!isNumberic(e.Text))
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+        }
+
         /// <summary>
         /// 按键盘判断
         /// </summary>
@@ -556,8 +605,14 @@ namespace YuLinTu.Library.Controls
                 e.Handled = true;
         }
 
+        private void mtbUpCode_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+                e.Handled = true;
+        }
+
         /// <summary>
-        /// isDigit是否是数字 
+        /// isDigit是否是数字
         /// </summary>
         public bool isNumberic(string _string)
         {
@@ -573,8 +628,8 @@ namespace YuLinTu.Library.Controls
             return true;
         }
 
-        #endregion
+        #endregion Events
 
-        #endregion
+        #endregion Methods
     }
 }

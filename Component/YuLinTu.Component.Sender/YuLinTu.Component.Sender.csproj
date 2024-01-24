@@ -75,6 +75,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\Dependencies\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -130,6 +133,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Resources.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="YuLinTu.Unity">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.Windows.Core">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>

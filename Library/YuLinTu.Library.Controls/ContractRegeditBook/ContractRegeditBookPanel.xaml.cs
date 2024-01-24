@@ -64,7 +64,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 证书地块数设置-证书数据处理分页设置
         /// </summary>
-        public int? BookLandNum = 11;
+        public int? BookLandNum = 73;
 
         /// <summary>
         /// 证书编码设置-证书编码样式设置

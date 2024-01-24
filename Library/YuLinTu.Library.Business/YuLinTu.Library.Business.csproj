@@ -326,6 +326,7 @@
     <Compile Include="Configuration\ContractBusinessParcelWordAllExtendSettingDefine.cs" />
     <Compile Include="Configuration\ContractBusinessParcelWordLandSettingDefine.cs" />
     <Compile Include="Configuration\ContractBusinessParcelWordSettingDefine.cs" />
+    <Compile Include="Configuration\ContractBusinessParcelWordTemplateSettingDefine.cs" />
     <Compile Include="Configuration\ContractBusinessSettingDefine.cs" />
     <Compile Include="Configuration\ContractConcordSettingDefine.cs" />
     <Compile Include="Configuration\ContractRegeditBookDataSummaryDefine.cs" />
@@ -338,6 +339,7 @@
     <Compile Include="Configuration\ImportBoundaryAddressCoilDefine.cs" />
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
+    <Compile Include="Configuration\LandParcelExpressProgress.cs" />
     <Compile Include="Configuration\PublicityConfirmDefine.cs" />
     <Compile Include="Configuration\SingleFamilySurveyDefine.cs" />
     <Compile Include="Configuration\TaskExportLandDotCoilSettingDefine.cs" />

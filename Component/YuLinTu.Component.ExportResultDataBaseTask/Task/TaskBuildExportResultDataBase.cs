@@ -64,7 +64,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
         }
 
-        #endregion
+        #endregion Fields
 
         #region Ctor
 
@@ -74,7 +74,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             Description = "导出数据库成果";
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -95,6 +95,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var args = Argument as TaskBuildExportResultDataBaseArgument;
 
             #region 新版本入口
+
             ArcDataExportProgress dataProgress = new ArcDataExportProgress(dbContext);
             dataProgress.ProgressChanged += ReportPercent;
             dataProgress.Alert += ReportInfo;
@@ -122,11 +123,13 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             dataProgress.UseUniteNumberExport = args.UseUniteNumberExport;
             dataProgress.OnlyExportLandResult = args.OnlyExportLandResult;
             dataProgress.ContainDotLine = args.ContainDotLine;
+            dataProgress.ExportLandCode = args.ExportLandCode;
             dataProgress.Export();
-            #endregion            
+            #endregion 新版本入口
+
         }
 
-        #endregion
+        #endregion Methods - Override
 
         #region Methods - Validate
 
@@ -246,9 +249,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             return canContinue;
         }
 
-        #endregion
+        #endregion Methods - Validate
 
-        #region  提示信息
+        #region 提示信息
 
         /// <summary>
         /// 错误信息报告
@@ -274,8 +277,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
         }
 
-        #endregion
+        #endregion 提示信息
 
-        #endregion
+        #endregion Methods
     }
 }

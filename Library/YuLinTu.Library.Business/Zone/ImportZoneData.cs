@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace YuLinTu.Library.Business
         private List<Zone> zones;//地域集合
         private SortedList parentZoneList;//父级集合
         private List<Zone> zoneList;//地域列表
+        private List<CollectivityTissue> Tissues;
         private ArrayList errorList;//错误列表
         private int addCount;//添加数
         private int updateCount;//更新数
@@ -52,9 +54,9 @@ namespace YuLinTu.Library.Business
         private string ZoneFullCodeError = "{0}的地域全编码错误!";
         private string ZoneLevelError = "{0}与父级{1}的地域级别不匹配!";
 
-        #endregion
+        #endregion ErrorMessage
 
-        #endregion
+        #endregion Fields
 
         #region Propertys
 
@@ -66,19 +68,21 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 获取的地域数据
         /// </summary>
-        public List<Zone> ZoneList { get { return zones; } }
+        public List<Zone> ZoneList
+        { get { return zones; } }
 
         /// <summary>
         /// 导入完成参数
         /// </summary>
-        public MultiObjectArg MultiArg { get { return multiArg; } }
+        public MultiObjectArg MultiArg
+        { get { return multiArg; } }
 
         /// <summary>
         /// 工作站(执行数据插入修改)
         /// </summary>
         public IZoneWorkStation Station { get; set; }
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -89,7 +93,7 @@ namespace YuLinTu.Library.Business
             toolProgress = new ToolProgress();
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods - ReadInformation
 
@@ -106,7 +110,8 @@ namespace YuLinTu.Library.Business
             try
             {
                 readerZone.Open(fileName);
-                zoneList = readerZone.GetValue();
+                zoneList = readerZone.GetZoneValue();
+                Tissues = readerZone.GetTissuesValue();
                 errorList = readerZone.ErrorList;
             }
             catch (Exception e)
@@ -125,7 +130,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion Methods - ReadInformation
 
         #region Methods - Initalzie
 
@@ -206,37 +211,55 @@ namespace YuLinTu.Library.Business
                     zone.FullName = zone.Name;
                     parentZoneList.Add(zone.FullCode, zone.FullName);
                     return zone;
+
                 case 4:
                     zone.Level = eZoneLevel.City;
                     zone.Code = zone.FullCode.Substring(2, 2);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 2);
                     break;
+
                 case 6:
                     zone.Level = eZoneLevel.County;
                     zone.Code = zone.FullCode.Substring(4, 2);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 4);
                     break;
+
                 case 9:
                     zone.Level = eZoneLevel.Town;
                     zone.Code = zone.FullCode.Substring(6, 3);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 6);
                     break;
+
                 case 12:
                     zone.Level = eZoneLevel.Village;
                     zone.Code = zone.FullCode.Substring(9, 3);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 9);
                     break;
+
                 case 14:
                     zone.Level = eZoneLevel.Group;
                     zone.Code = zone.FullCode.Substring(12, 2);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 12);
+                    zone.Name = zone.Name.Remove(0, zone.Name.IndexOf("镇") + 1);
                     break;
+
                 case 16:
                     zone.Level = eZoneLevel.Group;
                     zone.Code = zone.FullCode.Substring(14, 2);
                     zone.FullCode = ZoneHelper.ChangeCodeShort(zone.FullCode);
                     zone.UpLevelCode = zone.FullCode.Substring(0, 12);
+                    var count1 = zone.Name.IndexOf("村") + 1;
+                    var count2 = zone.Name.IndexOf("区") + 1;
+                    if (count1 > 0)
+                    {
+                        zone.Name = zone.Name.Remove(0, count1);
+                    }
+                    else
+                    {
+                        zone.Name = zone.Name.Remove(0, count2);
+                    }
                     break;
+
                 default:
                     zone.Level = eZoneLevel.Group;
                     break;
@@ -343,7 +366,7 @@ namespace YuLinTu.Library.Business
             return name.ToString();
         }
 
-        #endregion
+        #endregion Methods - Initalzie
 
         #region Methods - Check
 
@@ -453,7 +476,7 @@ namespace YuLinTu.Library.Business
                     }
                     break;
 
-                #endregion
+                #endregion 国家级、省级验证
 
                 #region 市级验证
 
@@ -469,7 +492,7 @@ namespace YuLinTu.Library.Business
 
                     break;
 
-                #endregion
+                #endregion 市级验证
 
                 #region 区县级验证
 
@@ -485,7 +508,7 @@ namespace YuLinTu.Library.Business
 
                     break;
 
-                #endregion
+                #endregion 区县级验证
 
                 #region 乡镇级验证
 
@@ -501,7 +524,7 @@ namespace YuLinTu.Library.Business
 
                     break;
 
-                #endregion
+                #endregion 乡镇级验证
 
                 #region 村级验证
 
@@ -517,7 +540,7 @@ namespace YuLinTu.Library.Business
 
                     break;
 
-                #endregion
+                #endregion 村级验证
 
                 #region 组级验证
 
@@ -533,19 +556,19 @@ namespace YuLinTu.Library.Business
 
                     break;
 
-                #endregion
+                #endregion 组级验证
 
                 #region 默认错误
 
                 default:
                     return this.ReportError(zone.FullName + "的地域编码不符合行政区域编码规则");
 
-                    #endregion
+                    #endregion 默认错误
             }
             return true;
         }
 
-        #endregion
+        #endregion Methods - Check
 
         #region Methods - Import
 
@@ -679,6 +702,6 @@ namespace YuLinTu.Library.Business
             return true;
         }
 
-        #endregion
+        #endregion Methods - Import
     }
 }

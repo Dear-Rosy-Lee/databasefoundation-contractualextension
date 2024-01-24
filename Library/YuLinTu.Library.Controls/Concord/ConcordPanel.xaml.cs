@@ -1197,12 +1197,11 @@ namespace YuLinTu.Library.Controls
 
         public void OnUpdateRegion(object sender, ExecutedRoutedEventArgs e)
         {
-            OnUpdate(e.Parameter,BatchModel.Zone,null);
+            OnUpdate(e.Parameter, BatchModel.Zone, null);
         }
 
         public void OnUpdateMultiple(object sender, ExecutedRoutedEventArgs e)
         {
-
             List<VirtualPerson> listPerson = new List<VirtualPerson>();
             //界面上没有选中项(此时弹出承包方选择界面)
             foreach (var item in Items)
@@ -1229,7 +1228,7 @@ namespace YuLinTu.Library.Controls
             });
         }
 
-        private void OnUpdate(object args,BatchModel batchModel,List<VirtualPerson> selectedPersons)
+        private void OnUpdate(object args, BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             DateTime? startTime = DateTime.Now;
             DateTime? finishiTime = DateTime.Now;
@@ -1237,7 +1236,7 @@ namespace YuLinTu.Library.Controls
             bool longTime = false;
             BatchUpdatePage page = new BatchUpdatePage();
             page.Workpage = ThePage;
-            ThePage.Page.ShowMessageBox(page, (b, r)=>
+            ThePage.Page.ShowMessageBox(page, (b, r) =>
             {
                 if (!(bool)b)
                 {
@@ -1247,10 +1246,9 @@ namespace YuLinTu.Library.Controls
                 finishiTime = page.SetFinishTime;
                 comment = page.SetComment;
                 longTime = page.SetLongTime;
-                OnBatchUpdateCore(startTime, finishiTime,comment, longTime, batchModel, selectedPersons);
+                OnBatchUpdateCore(startTime, finishiTime, comment, longTime, batchModel, selectedPersons);
                 OnBatchUpdated();
             });
-         
 
             //var pgd = new PropertyGridDialog
             //{
@@ -1279,7 +1277,7 @@ namespace YuLinTu.Library.Controls
             //pgd.ShowDialog(ThePage.Page);
         }
 
-        protected virtual int OnBatchUpdateCore(DateTime? startTime,DateTime? finishTime,string comment,bool longTime,BatchModel batchModel, List<VirtualPerson> selectedPersons)
+        protected virtual int OnBatchUpdateCore(DateTime? startTime, DateTime? finishTime, string comment, bool longTime, BatchModel batchModel, List<VirtualPerson> selectedPersons)
         {
             ContainerFactory factory = new ContainerFactory(DbContext);
             var concordRep = factory.CreateRepository<IContractConcordRepository>();
@@ -1291,7 +1289,7 @@ namespace YuLinTu.Library.Controls
             if (longTime)
             {
                 kvs.Add("ManagementTime", "长久");
-                kvs.Add("Flag",1);
+                kvs.Add("Flag", 1);
             }
             if (startTime != null && finishTime != null)
             {
@@ -1304,6 +1302,7 @@ namespace YuLinTu.Library.Controls
             concordRep.SaveChanges();
             return updateCount;
         }
+
         //protected virtual int OnBatchUpdateCore(BatchUpdateConcord updateInput,BatchModel batchModel, List<VirtualPerson> selectedPersons)
         //{
         //    ContainerFactory factory = new ContainerFactory(DbContext);
@@ -1349,8 +1348,8 @@ namespace YuLinTu.Library.Controls
             switch (batchModel)
             {
                 case BatchModel.Zone:
-                predicate = x => x.ZoneCode.StartsWith(CurrentZone.FullCode);
-                break;
+                    predicate = x => x.ZoneCode.StartsWith(CurrentZone.FullCode);
+                    break;
 
                 case BatchModel.Selection:
                     var ids = new List<string>();
@@ -1361,8 +1360,7 @@ namespace YuLinTu.Library.Controls
                     predicate = x => ids.ToArray().Contains(x.ContracterName);
                     break;
             }
-                
-          
+
             return predicate;
         }
 
@@ -1626,7 +1624,6 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             InlitialControl(currentZone.FullCode);
-
         }
 
         #endregion Methods - 合同清空、刷新

@@ -486,24 +486,34 @@ namespace YuLinTu.Library.Business
         /// </summary>
         protected virtual void WriteLandInfo()
         {
-            ROW1 = 2;
-            COL1 = 4;
+            ROW1 = SettingDefine.RowCount1;
+            COL1 = SettingDefine.ColCount1;
+            ROW2 = SettingDefine.RowCount2;
+            COL2 = SettingDefine.ColCount2;
             PAGECOUNT1 = ROW1 * COL1;
+            PAGECOUNT2 = ROW2 * COL2;
 
             // 示意图页数
             var landCount = geoLandCollection.Count;
-            int pageSize = landCount > PAGECOUNT1 ?
-                landCount % PAGECOUNT1 == 0 ?
-                    landCount / PAGECOUNT1 :
-                    landCount / PAGECOUNT1 + 1 :
-                1;
+            int pageSize = landCount <= PAGECOUNT1 ? 1 : ((landCount - PAGECOUNT1) % PAGECOUNT2 == 0 ? (landCount - PAGECOUNT1) / PAGECOUNT2 : (landCount - PAGECOUNT1) / PAGECOUNT2 + 1) + 1;
 
             // 扩展页页数
 
             // 总页数
             var totalPageSize = pageSize;
 
-            WriteLandInfoVertical(pageSize, totalPageSize);
+            string placeholder = "    ";
+            string cartographer = SettingDefine.Cartographer.IsNullOrEmpty() ? placeholder : SettingDefine.Cartographer;
+            string checkPerson = SettingDefine.CheckPerson.IsNullOrEmpty() ? placeholder : SettingDefine.CheckPerson;
+            string cartographyDate = (SettingDefine.CartographyDate == null) ? placeholder : SettingDefine.CartographyDate.Value.ToString("yyyy年MM月dd日");
+            string checkDate = (SettingDefine.CheckDate == null) ? placeholder : SettingDefine.CheckDate.Value.ToString("yyyy年MM月dd日");
+            string otherInfo = $"制图者：{cartographer} " +
+                               $"制图日期：{cartographyDate} " +
+                               $"审核者：{checkPerson} " +
+                               $"审核日期：{checkDate} " +
+                               $"制图单位：{SettingDefine.CartographyUnit}";
+
+            WriteLandInfoVertical(pageSize, totalPageSize, otherInfo);
         }
 
         /// <summary>
@@ -511,19 +521,39 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="pageSize"></param>
         /// <param name="otherInfo"></param>
-        protected virtual void WriteLandInfoVertical(int pageSize, int totalPageSize)
+        protected virtual void WriteLandInfoVertical(int pageSize, int totalPageSize, string otherInfo)
         {
             // 复制页
-            for (int i = 1; i < pageSize; i++)
+            for (int i = 1; i < pageSize-1; i++)
             {
                 AddSection();
             }
 
-            for (int i = 0; i < pageSize; i++)
+            // 插入第一页地块图片
+            InitalizeLandImageInformation(geoLandCollection.Take(PAGECOUNT1).ToList(), 0, 0, ROW1, COL1, 2, 1);
+            // 写入第一页制图者、页码信息
+            SetTableCellValue(0, 0, 8, 0, otherInfo);
+            SetTableCellValue(0, 0, 8, 1, "1-" + totalPageSize.ToString());
+
+            // 插入后续页地块图片
+            for (int i = 1; i < pageSize; i++)
             {
-                SetTableCellValue(i, 0, 8, 1, (i + 1).ToString() + "-" + totalPageSize.ToString());
                 InitalizeLandImageInformation(
-                    geoLandCollection.Skip(PAGECOUNT1 * i).Take(PAGECOUNT1).ToList(), i, 0, ROW1, COL1, 2, 1);
+                    geoLandCollection.Skip(PAGECOUNT1 + (i - 1) * PAGECOUNT2).Take(PAGECOUNT2).ToList(), i, 0, ROW2, COL2, 1, 0);
+            }
+
+            // 写入制图者、页码信息
+            for (int i = 1; i < pageSize; i++)
+            {
+                SetTableCellValue(i, 0, 3, 0, otherInfo);
+                SetTableCellValue(i, 0, 3, 1, (i + 1).ToString() + "-" + totalPageSize.ToString());
+            }
+
+            // 删除多余页
+            if (pageSize == 1)
+            {
+                DeleteSection();
+                DeleteParagraph();
             }
         }
 

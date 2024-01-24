@@ -23,44 +23,49 @@
     </local:InfoPageBase.Resources>
     <Grid x:Name="gridContent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollViewer MinHeight="165" Margin="10" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <Grid Width="600">
                 <Grid Name="spInfo">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="88" />
+                        <ColumnDefinition Width="30*" />
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="30*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Content="地域名称:"  Style="{StaticResource LeftStyle}"  />
-                    <cmps:MetroTextBox Name="mtbName" MaxLength="40" Height="30" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CurrentZone.Name,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_NameChanged"/>
+                    <Label Content="地域名称:"  Style="{StaticResource LeftStyle}" />
+                    <cmps:MetroTextBox Name="mtbName" MaxLength="40" Height="30" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CurrentZone.Name,Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_NameChanged" />
 
-                    <Label Content="地域级别:" Grid.Column="2"  Style="{StaticResource LeftStyle}"/>
-                    <cmps:MetroComboBox MaxDropDownHeight="110" Height="30" Padding="7,0" Grid.Column="3" BorderThickness="1" Name="cbLevel" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <Label Content="地域级别:" Grid.Column="2"  Style="{StaticResource LeftStyle}" />
+                    <cmps:MetroComboBox MaxDropDownHeight="110" Height="30" Padding="7,0" Grid.Column="3" BorderThickness="1" Name="cbLevel" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-                    <Label Content="地域编码:" Grid.Row="2"  VerticalAlignment="Center"/>
-                    <cmps:MetroTextBox Name="mtbCode"  InputMethod.IsInputMethodEnabled="False" Height="30" PreviewKeyDown="mtbCode_PreviewKeyDown" Grid.Row="2" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CurrentZone.Code,Mode=TwoWay}" MaxLength="19" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_CodeChanged" PreviewTextInput="mtbCode_PreviewTextInput"/>
+                    <Label Content="上级地域编码:" Width="150" Grid.Row="2"  VerticalAlignment="Center" />
+                    <cmps:MetroTextBox Name="mtbUpCode"   InputMethod.IsInputMethodEnabled="False" Height="30" PreviewKeyDown="mtbUpCode_PreviewKeyDown" Grid.Row="2" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CurrentZone.UpLevelCode,Mode=TwoWay}" MaxLength="19" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_UpCodeChanged" PreviewTextInput="mtbUpCode_PreviewTextInput" />
 
-                    <Label Content="地域全编码:" Grid.Row="2" Grid.Column="2"  Style="{StaticResource LeftStyle}"/>
-                    <cmps:MetroTextBox Grid.Row="2" Height="30" IsEnabled="True" IsReadOnly="True" Grid.Column="3" BorderThickness="1" Text="{Binding Path=CurrentZone.FullCode,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <Label Content="地域编码:" Grid.Row="4"  VerticalAlignment="Center" />
+                    <cmps:MetroTextBox Name="mtbCode"  InputMethod.IsInputMethodEnabled="False" Height="30" PreviewKeyDown="mtbCode_PreviewKeyDown" Grid.Row="4" Grid.Column="1" BorderThickness="1" Text="{Binding Path=CurrentZone.Code,Mode=TwoWay}" MaxLength="19" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="MetroTextBox_CodeChanged" PreviewTextInput="mtbCode_PreviewTextInput" />
 
-                    <Label Content="地域全称:" Grid.Row="4"  Style="{StaticResource LeftStyle}"  />
-                    <cmps:MetroTextBox Grid.Row="4" Height="30" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="1" IsReadOnly="True" Text="{Binding Path=CurrentZone.FullName,Mode=TwoWay}" MaxLength="50" IsEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <Label Content="地域全编码:" Grid.Row="4" Grid.Column="2"  Style="{StaticResource LeftStyle}" />
+                    <cmps:MetroTextBox Grid.Row="4" Height="30" IsEnabled="True" IsReadOnly="True" Grid.Column="3" BorderThickness="1" Text="{Binding Path=CurrentZone.FullCode,Mode=TwoWay}" MaxLength="50" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
 
-                    <Label Content="备注:" Grid.Row="6"  Style="{StaticResource LeftStyle}" VerticalAlignment="Top"  />
-                    <cmps:MetroTextBox Grid.Row="6" Name="mtbComment" AcceptsReturn="True" MinLines="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=CurrentZone.Comment,Mode=TwoWay}" BorderThickness="1" MaxLength="200" TextWrapping="Wrap" TextChanged="MetroTextBox_TextChanged" Height="75" VerticalContentAlignment="Stretch"/>
+                    <Label Content="地域全称:" Grid.Row="6"  Style="{StaticResource LeftStyle}" />
+                    <cmps:MetroTextBox Grid.Row="6" Height="30" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="1" IsReadOnly="True" Text="{Binding Path=CurrentZone.FullName,Mode=TwoWay}" MaxLength="50" IsEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+
+                    <Label Content="备注:" Grid.Row="8"  Style="{StaticResource LeftStyle}" VerticalAlignment="Top" />
+                    <cmps:MetroTextBox Grid.Row="8" Name="mtbComment" AcceptsReturn="True" MinLines="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=CurrentZone.Comment,Mode=TwoWay}" BorderThickness="1" MaxLength="200" TextWrapping="Wrap" TextChanged="MetroTextBox_TextChanged" Height="75" VerticalContentAlignment="Stretch" />
                 </Grid>
                 <cmps:LoadingIcon Width="16" x:Name="loadIcon"
                           Height="16"
@@ -70,7 +75,7 @@
                 </cmps:LoadingIcon>
             </Grid>
         </ScrollViewer>
-        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Grid.Row="1" Margin="10,0,10,0" SnapsToDevicePixels="True" >
+        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Grid.Row="1" Margin="10,0,10,0" SnapsToDevicePixels="True">
             <DockPanel Margin="0,5,0,5" LastChildFill="True">
                 <metro:MetroButton DockPanel.Dock="Right" Margin="5,0,0,0"
                                        Padding="5" Height="30" x:Name="btnCancel"
@@ -79,22 +84,22 @@
                     <StackPanel Orientation="Horizontal">
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                                    Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"></Image>
-                        <TextBlock Margin="3,0,0,0" VerticalAlignment="Center"  Text="取消"/>
+                        <TextBlock Margin="3,0,0,0" VerticalAlignment="Center"  Text="取消" />
                     </StackPanel>
                 </metro:MetroButton>
 
-                <metro:MetroButton DockPanel.Dock="Right" Name="btnSubmit" 
+                <metro:MetroButton DockPanel.Dock="Right" Name="btnSubmit"
                                        Padding="5"
                                        Click="MetroButton_Click_1" Height="30"
                                        Style="{StaticResource Metro_Button_Paneled_Style}">
                     <StackPanel Orientation="Horizontal">
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"
                                    Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"></Image>
-                        <TextBlock Margin="3,0,0,0"  VerticalAlignment="Center" Text="确定"/>
+                        <TextBlock Margin="3,0,0,0"  VerticalAlignment="Center" Text="确定" />
                     </StackPanel>
                 </metro:MetroButton>
 
-                <TextBlock Name="lbTip" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                <TextBlock Name="lbTip" VerticalAlignment="Center" DockPanel.Dock="Left" />
             </DockPanel>
         </Border>
     </Grid>

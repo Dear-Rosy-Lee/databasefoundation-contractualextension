@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,14 +56,17 @@ namespace YuLinTu.Component.MapFoundation
         /// </summary>
         public TaskViewerShowDelegate ShowTaskViewer { get; set; }
 
-        #endregion
+        public List<VirtualPerson> VPS { get; set; }
+
+        #endregion Properties
 
         #region Fields
 
         /// <summary>
         /// 导航类
-        /// </summary>       
+        /// </summary>
         private ZoneNavigator pnav = new ZoneNavigator();
+
         private Zone currentZone;//当前地域
 
         //private MetroToggleButton btnMapQueryBusiness;
@@ -71,6 +75,7 @@ namespace YuLinTu.Component.MapFoundation
         //private MetroButton btnMapClipBySetBusiness;
         //private MetroToggleButton btnMapEditBusiness;
         private MetroToggleButton btnMapQueryPointBusiness;//节点查询
+
         private SuperButton sbMapTool;
         private SuperButton sbImportTool;
         private SuperButton usaualTool;//工具,包括查询、分割
@@ -86,6 +91,7 @@ namespace YuLinTu.Component.MapFoundation
         private UnunionButton unubUnion;//分解
 
         private TextBlock SRtb = null;//坐标系名称显示空间
+
         /// <summary>
         /// 空间参考系单位换算亩系数
         /// </summary>
@@ -97,7 +103,7 @@ namespace YuLinTu.Component.MapFoundation
         private MapToolsShell mapToolShell = null;
         private MapToolsShell mapEditToolShell = null;
 
-        //定义加载的图层     
+        //定义加载的图层
 
         //private VectorLayer topologyLayerPoint;
         //private VectorLayer topologyLayerPolyline;
@@ -130,8 +136,10 @@ namespace YuLinTu.Component.MapFoundation
         // private MultiVectorLayer foundationDataLayer;
 
         private MultiVectorLayer cbdmultlayer;//地块类别
+
         //private VectorLayer cbdBaselayer;
         private VectorLayer cbdlayer;
+
         private VectorLayer zldlayer;
         private VectorLayer jddlayer;
         private VectorLayer khdlayer;
@@ -140,7 +148,6 @@ namespace YuLinTu.Component.MapFoundation
         private MultiVectorLayer boundaryMultLayer; //界址信息图层层
         private VectorLayer dotLayer; //界址点图层
         private VectorLayer coilLayer; //界址线图层
-
 
         private DropDownButton ddbProperties;
         private MetroToggleButton mtbDot;
@@ -164,7 +171,7 @@ namespace YuLinTu.Component.MapFoundation
         private IDbContext dbcontext = null;
         private YuLinTu.Library.WorkStation.IZoneWorkStation zoneStation = null;
 
-        #endregion
+        #endregion Fields
 
         #region Ctor
 
@@ -184,7 +191,7 @@ namespace YuLinTu.Component.MapFoundation
             }
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -216,7 +223,7 @@ namespace YuLinTu.Component.MapFoundation
             sbMapTool.DropDownMenu = mapToolShell.menu;
             //e.Items.Add(sbMapTool); //TODO 优化代码
 
-            #endregion
+            #endregion 视图工具
 
             #region 编辑
 
@@ -236,7 +243,7 @@ namespace YuLinTu.Component.MapFoundation
             MapEditTool.DropDownMenu = mapEditToolShell.menu;
             //e.Items.Add(MapEditTool);  //TODO 优化代码
 
-            #endregion
+            #endregion 编辑
 
             #region 裁剪工具
 
@@ -291,7 +298,7 @@ namespace YuLinTu.Component.MapFoundation
             usaualTool.DropDownMenu = usaualToolMenu;
             //e.Items.Add(usaualTool);  //TODO 优化代码
 
-            #endregion
+            #endregion 裁剪工具
 
             #region 查询节点
 
@@ -308,7 +315,7 @@ namespace YuLinTu.Component.MapFoundation
             bind.Mode = BindingMode.TwoWay;
             btnMapQueryPointBusiness.SetBinding(MetroToggleButton.IsCheckedProperty, bind);
 
-            #endregion
+            #endregion 查询节点
 
             #region 导入文件
 
@@ -352,7 +359,7 @@ namespace YuLinTu.Component.MapFoundation
 
             sbImportTool.DropDownMenu = importMenu;
 
-            #endregion
+            #endregion 导入文件
         }
 
         #region 工具对应事件
@@ -424,10 +431,9 @@ namespace YuLinTu.Component.MapFoundation
                     Workpage.Page.ShowMessageBox(dlgMsg);
                 }
             }
-
         }
 
-        #endregion
+        #endregion 工具对应事件
 
         /// <summary>
         /// 加载左侧内容栏
@@ -633,7 +639,6 @@ namespace YuLinTu.Component.MapFoundation
                     return;
                 geo = geo.Envelope().Buffer(10);
                 MapControl.ZoomTo(geo);
-
             }
             if (e.Object.Object is VirtualPerson)
             {
@@ -781,11 +786,7 @@ namespace YuLinTu.Component.MapFoundation
             SRtb = null;
         }
 
-        #endregion
-
-        #region Methods - Events
-
-        #endregion
+        #endregion Methods - Override
 
         #region Methods - Message
 
@@ -798,7 +799,6 @@ namespace YuLinTu.Component.MapFoundation
         [MessageHandler(ID = EdCore.langInstallWorkpageToolbarViewLeft)]
         private void langInstallWorkpageToolbarViewLeft(object sender, InstallUIElementsEventArgs e)
         {
-
             ddbProperties = new DropDownButton();
             ddbProperties.Padding = new Thickness(4, 2, 4, 2);
             ddbProperties.VerticalContentAlignment = VerticalAlignment.Top;
@@ -971,7 +971,7 @@ namespace YuLinTu.Component.MapFoundation
             //sbImportTool.Padding = contentpadding;
             //命令.Items.Add(sbImportTool);
 
-            #endregion
+            #endregion 注释--整饰界面,整理代码
         }
 
         /// <summary>
@@ -994,7 +994,7 @@ namespace YuLinTu.Component.MapFoundation
             视图.Items.Remove(btnPan);
             基本操作.Items.Insert(0, btnPan);
 
-            #endregion
+            #endregion 漫游
 
             #region 全图
 
@@ -1010,10 +1010,9 @@ namespace YuLinTu.Component.MapFoundation
             stackPanelGlobal.Children.Remove(btnGlobalView);
             基本操作.Items.Insert(1, btnGlobalView);
 
-            #endregion
+            #endregion 全图
 
             #region 放大
-
 
             var stackPanelZoom = e.FindByName<StackPanel>("stackPanelZoom");
 
@@ -1035,7 +1034,7 @@ namespace YuLinTu.Component.MapFoundation
             stackPanelZoom.Children.Remove(btnZoomIn);
             基本操作.Items.Insert(2, btnZoomIn);
 
-            #endregion
+            #endregion 放大
 
             #region 缩小
 
@@ -1056,11 +1055,7 @@ namespace YuLinTu.Component.MapFoundation
             stackPanelZoom.Children.Remove(btnZoomOut);
             基本操作.Items.Insert(3, btnZoomOut);
 
-            #endregion
-
-            #region 选择
-
-            #endregion
+            #endregion 缩小
 
             #region 取消
 
@@ -1076,7 +1071,7 @@ namespace YuLinTu.Component.MapFoundation
             imageItem.Text = "取消";
             基本操作.Items.Insert(5, btnCancel);
 
-            #endregion
+            #endregion 取消
 
             #region 移除识别
 
@@ -1085,7 +1080,8 @@ namespace YuLinTu.Component.MapFoundation
             btnIdentifyTab.ToolTip = "识别地图中选中要素属性相关信息";
             基本操作.Items.Remove(btnIdentifyTab);
             toolPanel.wpOtherTool.Children.Add(btnIdentifyTab);
-            #endregion
+
+            #endregion 移除识别
 
             #region 拓扑处理
 
@@ -1103,9 +1099,10 @@ namespace YuLinTu.Component.MapFoundation
             btnTopo.Click += BtnTopo_Click;
             toolPanel.wpOtherTool.Children.Add(btnTopo);
 
-            #endregion
+            #endregion 拓扑处理
 
             #region 分解
+
             //var btnResolve = new MetroToggleButton();
             //btnResolve.ToolTip = "分解";
             //btnResolve.Padding = new Thickness(4, 2, 4, 2);
@@ -1138,8 +1135,7 @@ namespace YuLinTu.Component.MapFoundation
                 toolPanel.wpOtherTool.Children.Add(unubUnion);
             }
 
-
-            #endregion
+            #endregion 分解
 
             #region 移除删除
 
@@ -1153,12 +1149,8 @@ namespace YuLinTu.Component.MapFoundation
             stackPanelClipboard.Children.Remove(mbDelete);
             toolPanel.wpOtherTool.Children.Add(mbDelete);
 
-
-
-
-            #endregion
+            #endregion 移除删除
         }
-
 
         /// <summary>
         /// 装载数据操作工具栏
@@ -1183,7 +1175,7 @@ namespace YuLinTu.Component.MapFoundation
 
             sbImageImport.Click += SbImageImport_Click;
 
-            #endregion
+            #endregion 影像加载
 
             #region 图形编辑
 
@@ -1198,7 +1190,7 @@ namespace YuLinTu.Component.MapFoundation
             基本操作.Items.Remove(btnEditGeometry);
             数据操作.Items.Insert(1, btnEditGeometry);
 
-            #endregion
+            #endregion 图形编辑
 
             #region 属性编辑
 
@@ -1213,7 +1205,7 @@ namespace YuLinTu.Component.MapFoundation
             基本操作.Items.Remove(btnEditProperties);
             数据操作.Items.Insert(2, btnEditProperties);
 
-            #endregion
+            #endregion 属性编辑
 
             #region 宗地分割
 
@@ -1238,7 +1230,7 @@ namespace YuLinTu.Component.MapFoundation
 
             mtbLandDivision.Click += MapClipMenu_Click;
 
-            #endregion
+            #endregion 宗地分割
 
             #region 宗地合并
 
@@ -1274,7 +1266,7 @@ namespace YuLinTu.Component.MapFoundation
             //imageItem.ImagePosition = eDirection.Top;
             //imageItem.Text = "高级编辑";
 
-            #endregion
+            #endregion 宗地合并
 
             #region 拓扑检查
 
@@ -1284,9 +1276,37 @@ namespace YuLinTu.Component.MapFoundation
             imageItem.ImagePosition = eDirection.Top;
             imageItem.Text = "拓扑检查";
 
-            #endregion
+            #endregion 拓扑检查
+
+            #region 导出选中Shape
+
+            var LandAssignment = new MetroToggleButton();
+            LandAssignment.ToolTip = "导出所选中的地块的空间数据";
+            LandAssignment.Padding = new Thickness(4, 2, 4, 2);
+            LandAssignment.VerticalAlignment = VerticalAlignment.Stretch;
+            LandAssignment.VerticalContentAlignment = VerticalAlignment.Top;
+            LandAssignment.Content = new ImageTextItem()
+            {
+                ImagePosition = eDirection.Top,
+                Text = "导出Shape文件",
+                Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/blogpublish.png")),
+            };
+            数据操作.Items.Insert(8, LandAssignment);
+
+            binding = new Binding("Action");
+            binding.Source = MapControl;
+            MapControlActionMapZoneAssignmentConverter convert1 = new MapControlActionMapZoneAssignmentConverter();
+            convert1.map = MapControl;
+            convert1.TheWorkPage = Workpage;
+            binding.Converter = convert1;
+            binding.Mode = BindingMode.TwoWay;
+            LandAssignment.SetBinding(MetroToggleButton.IsCheckedProperty, binding);
+            LandAssignment.Click += ExportSelectedShape;
+
+            #endregion 导出选中Shape
 
             #region 区域赋值
+
             var sbZoneAssignment = new MetroToggleButton();
             sbZoneAssignment.ToolTip = "通过鼠标框选区域，然后给该区域中的地块进行统一属性赋值，主要包括：地块名称、地力等级、是否基本农田、土地利用类型、承包方式、地块类别";
             sbZoneAssignment.Padding = new Thickness(4, 2, 4, 2);
@@ -1311,7 +1331,6 @@ namespace YuLinTu.Component.MapFoundation
 
             sbZoneAssignment.Click += SbZoneAssignment_Click;
 
-
             //var sbZoneAssignment = new SuperButton();
             //sbZoneAssignment.ToolTip = "通过鼠标框选区域，然后给该区域中的地块进行统一属性赋值，主要包括：地块名称、地力等级、是否基本农田、土地利用类型、承包方式、地块类别";
             //sbZoneAssignment.IsSplit = false;
@@ -1334,7 +1353,7 @@ namespace YuLinTu.Component.MapFoundation
             //sbZoneAssignment.Click += SbZoneAssignment_Click;
             //数据操作.Items.Insert(6, sbZoneAssignment);
 
-            #endregion
+            #endregion 区域赋值
 
             #region 数据查找
 
@@ -1344,14 +1363,14 @@ namespace YuLinTu.Component.MapFoundation
             imageItem.ImagePosition = eDirection.Top;
             imageItem.Text = "数据查找";
 
-            #endregion
+            #endregion 数据查找
 
             #region 隐藏测量
 
             var ddbMesaure = e.FindByName<DropDownButton>("btnMeasureDropDown");
             ddbMesaure.Visibility = Visibility.Collapsed;
 
-            #endregion
+            #endregion 隐藏测量
 
             #region 隐藏图层属性
 
@@ -1369,7 +1388,7 @@ namespace YuLinTu.Component.MapFoundation
             layerHover = new GraphicsLayer();
             //数据操作.Items.Insert(5, btnProperties);
 
-            #endregion
+            #endregion 隐藏图层属性
 
             #region 注释--代码整理
 
@@ -1432,11 +1451,10 @@ namespace YuLinTu.Component.MapFoundation
             //sbImportTool.Padding = new Thickness(4, 2, 4, 2);
             //数据操作.Items.Add(sbImportTool);
 
-            #endregion
+            #endregion 注释--代码整理
         }
 
-
-        #endregion
+        #endregion 装载界面上方工具栏
 
         //添加坐标系显示的工具
         protected override void OnInstalStatusbar(object sender, InstallUIElementsEventArgs e)
@@ -1499,12 +1517,11 @@ namespace YuLinTu.Component.MapFoundation
 
             //tq.Cancel();
             //tq.Do(
-            //    go => { }, 
-            //    completed => { }, 
-            //    terminated => { }, null, 
-            //    started => { }, 
+            //    go => { },
+            //    completed => { },
+            //    terminated => { }, null,
+            //    started => { },
             //    ended => { });
-
         }
 
         //关闭时保存当前的文档yltmd，用于重新读取用
@@ -1554,7 +1571,7 @@ namespace YuLinTu.Component.MapFoundation
                             var key = g.Object.Object.GetPropertyValue("ID") as string;  //地块的ID
                             Guid id = new Guid(key);
                             Person p = (Person)obj;
-                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。 
+                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。
                             IDbContext dbContext = DataBaseSourceWork.GetDataBaseSource();
                             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
                             VirtualPersonBusiness virtualPersonBusiness = new VirtualPersonBusiness(dbContext);
@@ -1583,7 +1600,7 @@ namespace YuLinTu.Component.MapFoundation
                             var key = g.Object.Object.GetPropertyValue("ID") as string;  //地块的ID
                             Guid id = new Guid(key);
                             Person p = (Person)obj;
-                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。 
+                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。
                             IDbContext dbContext = DataBaseSourceWork.GetDataBaseSource();
                             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
                             VirtualPersonBusiness virtualPersonBusiness = new VirtualPersonBusiness(dbContext);
@@ -1645,13 +1662,13 @@ namespace YuLinTu.Component.MapFoundation
                             var key = g.Object.Object.GetPropertyValue("ID") as string;  //选择地块的ID
                             Guid id = new Guid(key);
                             ContractLandUI dragLandUI = (ContractLandUI)landObj;
-                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。 
+                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。
                             IDbContext dbContext = DataBaseSourceWork.GetDataBaseSource();
                             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
                             VirtualPersonBusiness virtualPersonBusiness = new VirtualPersonBusiness(dbContext);
                             ContractLand cl = landBusiness.GetLandById(id);//获取到选择的地块
                             ContractLand previousCl = cl.Clone() as ContractLand;
-                            ContractLand dragLand = landBusiness.GetLandById(dragLandUI.ID);//获取到拖拽的地块 
+                            ContractLand dragLand = landBusiness.GetLandById(dragLandUI.ID);//获取到拖拽的地块
                             VirtualPerson vp = virtualPersonBusiness.GetVirtualPersonByID(dragLand.OwnerId.Value);
                             if (vp.Status == eVirtualPersonStatus.Lock) return;
                             ContractLand previousdragLand = dragLand.Clone() as ContractLand;
@@ -1694,13 +1711,13 @@ namespace YuLinTu.Component.MapFoundation
                             var key = g.Object.Object.GetPropertyValue("ID") as string;  //选择地块的ID
                             Guid id = new Guid(key);
                             ContractLandUI dragLandUI = (ContractLandUI)landObj;
-                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。 
+                            // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。
                             IDbContext dbContext = DataBaseSourceWork.GetDataBaseSource();
                             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
                             VirtualPersonBusiness virtualPersonBusiness = new VirtualPersonBusiness(dbContext);
                             IDCZDWorkStation dczdstation = new ContainerFactory(dbContext).CreateWorkstation<IDCZDWorkStation, IDCZDRepository>();
-                            DCZD dczd = dczdstation.Get(id);     //获取到选择的地块   
-                            ContractLand dragLand = landBusiness.GetLandById(dragLandUI.ID);//获取到拖拽的地块 
+                            DCZD dczd = dczdstation.Get(id);     //获取到选择的地块
+                            ContractLand dragLand = landBusiness.GetLandById(dragLandUI.ID);//获取到拖拽的地块
                             VirtualPerson vp = virtualPersonBusiness.GetVirtualPersonByID(dragLand.OwnerId.Value);
                             if (vp.Status == eVirtualPersonStatus.Lock) return;
                             dragLand.Shape = dczd.Shape;
@@ -1886,7 +1903,7 @@ namespace YuLinTu.Component.MapFoundation
                 if (zoneBoundarylayer != null)
                     zoneBoundarylayer.DataSource = new SQLiteGeoSource(ds.ConnectionString, null, typeof(ZoneBoundary).GetAttribute<DataTableAttribute>().TableName) { UseSpatialIndex = true, GeometryType = eGeometryType.Polyline };
 
-                #endregion
+                #endregion 更改为当前数据源
 
                 #region 判断是否加载了图层
 
@@ -2413,7 +2430,8 @@ namespace YuLinTu.Component.MapFoundation
                     qtjttdlayer.MaximizeScale = 8000;
                     cbdmultlayer.Layers.Add(qtjttdlayer);
                 }
-                #endregion
+
+                #endregion 承包地图层
 
                 if (boundaryMultLayer == null)
                 {
@@ -2482,7 +2500,7 @@ namespace YuLinTu.Component.MapFoundation
                 //    MapControl.Layers.Add(topologymultlayer);
                 //}
 
-                #endregion
+                #endregion 判断是否加载了图层
 
                 var targetSpatialReference = ds.CreateSchema().GetElementSpatialReference(
                    ObjectContext.Create(typeof(ContractLand)).Schema,
@@ -2508,6 +2526,7 @@ namespace YuLinTu.Component.MapFoundation
         private void LoardAllLayers(IDbContext ds)
         {
             #region 添加栅格数据图层
+
             rasterDatamultLayer = new MultiVectorLayer();
             rasterDatamultLayer.InternalName = "rasterDatamult_Layer";
             rasterDatamultLayer.Drawable = false;
@@ -2517,7 +2536,8 @@ namespace YuLinTu.Component.MapFoundation
             rasterDatamultLayer.Name = "栅格数据";
 
             MapControl.Layers.Add(rasterDatamultLayer);
-            #endregion
+
+            #endregion 添加栅格数据图层
 
             #region 添加定位基础图层
 
@@ -2550,9 +2570,9 @@ namespace YuLinTu.Component.MapFoundation
 
             MapControl.Layers.Add(locationBasicmultLayer);
 
-            #endregion
+            #endregion 添加定位基础图层
 
-            #region 管辖区域 市 县 镇 村 组图层      
+            #region 管辖区域 市 县 镇 村 组图层
 
             zonexlayer = new VectorLayer(new SQLiteGeoSource(ds.ConnectionString, null, typeof(Zone).GetAttribute<DataTableAttribute>().TableName) { UseSpatialIndex = true, GeometryType = eGeometryType.Polygon });
             zonexlayer.Where = "DYJB = 4";
@@ -2672,7 +2692,8 @@ namespace YuLinTu.Component.MapFoundation
             zonemultlayer.Layers.Add(zoneZlayer);
 
             MapControl.Layers.Add(zonemultlayer);
-            #endregion
+
+            #endregion 管辖区域 市 县 镇 村 组图层
 
             #region 添加区域界线图层
 
@@ -2703,7 +2724,7 @@ namespace YuLinTu.Component.MapFoundation
             zoneBoundarymultLayer.Layers.Add(zoneBoundarylayer);
             MapControl.Layers.Add(zoneBoundarymultLayer);
 
-            #endregion
+            #endregion 添加区域界线图层
 
             #region 添加基本农田图层
 
@@ -2738,7 +2759,7 @@ namespace YuLinTu.Component.MapFoundation
             farmLandLayermultLayer.Layers.Add(farmLandLayer);
             MapControl.Layers.Add(farmLandLayermultLayer);
 
-            #endregion
+            #endregion 添加基本农田图层
 
             #region 添加点 线 面 调查表图层
 
@@ -2865,7 +2886,7 @@ namespace YuLinTu.Component.MapFoundation
 
             MapControl.Layers.Add(DCmultlayer);
 
-            #endregion
+            #endregion 添加点 线 面 调查表图层
 
             #region 承包地图层
 
@@ -2875,7 +2896,7 @@ namespace YuLinTu.Component.MapFoundation
             cbdmultlayer.SetIsManual(true);
             cbdmultlayer.InternalName = "cbdmult_Layer";
 
-            //默认添加承包地的地图          
+            //默认添加承包地的地图
             //cbdBaselayer = new VectorLayer(new SQLiteGeoSource(ds.ConnectionString, null, typeof(ContractLand).GetAttribute<DataTableAttribute>().TableName) { GeometryType = eGeometryType.Polygon });
             //传给其它弹出控件使用
             //panel.OwerShipPanel.LandLayer = cbdBaselayer;
@@ -3024,7 +3045,7 @@ namespace YuLinTu.Component.MapFoundation
             //cbdmultlayer.Layers.Add(cbdBaselayer);
             MapControl.Layers.Add(cbdmultlayer);
 
-            #endregion
+            #endregion 承包地图层
 
             #region 界址信息图层
 
@@ -3073,8 +3094,7 @@ namespace YuLinTu.Component.MapFoundation
             boundaryMultLayer.Layers.Add(coilLayer);
             boundaryMultLayer.Layers.Add(dotLayer);
 
-
-            #endregion
+            #endregion 界址信息图层
 
             #region 拓扑错误图层
 
@@ -3124,7 +3144,7 @@ namespace YuLinTu.Component.MapFoundation
             //});
             //topologymultlayer.Layers.Add(topologyLayerPoint);
 
-            #endregion
+            #endregion 拓扑错误图层
         }
 
         /// <summary>
@@ -3146,7 +3166,6 @@ namespace YuLinTu.Component.MapFoundation
         [MessageHandler(ID = IDMap.InstallUnionGeometryResult)]
         private void OnInstallUnionGeometryItems(object sender, InstallUnionGeometryResultEventArgs e)
         {
-
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 //不是承包地合并分离则不管
@@ -3183,7 +3202,6 @@ namespace YuLinTu.Component.MapFoundation
                     {
                         tableArea += double.Parse(unionGraTableArea.ToString());
                     }
-
                 }
                 targetgra.Object.Object.SetPropertyValue("SCMJ", actualArea);
                 targetgra.Object.Object.SetPropertyValue("TZMJ", tableArea);
@@ -3222,7 +3240,6 @@ namespace YuLinTu.Component.MapFoundation
                     var graitemActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(graitem.Geometry.Area() * projectionUnit, 2);
                     graitem.Object.Object.SetPropertyValue("SCMJ", graitemActualArea);
                     graitem.Object.Object.SetPropertyValue("TZMJ", graitemActualArea);
-
 
                     string unitCode = currentZone.FullCode;
                     if (unitCode.Length == 16)
@@ -3442,13 +3459,11 @@ namespace YuLinTu.Component.MapFoundation
                 GenerateDataItem.Visibility = Visibility.Visible;
             else
                 GenerateDataItem.Visibility = Visibility.Collapsed;
-
         }
 
         [MessageHandler(ID = IDMap.EditSaveGraphicPropertiesSuccess)]
         private void EditSaveGraphicPropertiesSuccess(object sender, MsgEventArgs e)
         {
-
         }
 
         /// <summary>
@@ -3581,10 +3596,8 @@ namespace YuLinTu.Component.MapFoundation
                     started => { },
                     ended =>
                     {
-
                     }).Start();
             }
-
         }
 
         /// <summary>
@@ -3668,7 +3681,7 @@ namespace YuLinTu.Component.MapFoundation
                     var elementname = locationlayer.DataSource.ElementName;
                     if (elementname != "ZD_CBD") continue;
 
-                    var concordkey = dgitem.Object.Object.GetPropertyValue("HTID") as string;  //合同的ID                   
+                    var concordkey = dgitem.Object.Object.GetPropertyValue("HTID") as string;  //合同的ID
                     if (concordkey.IsNullOrEmpty()) continue;
 
                     Guid concordid = new Guid(concordkey);
@@ -3808,7 +3821,7 @@ namespace YuLinTu.Component.MapFoundation
 
         /// <summary>
         /// 拓扑处理具体更新处理
-        /// </summary>       
+        /// </summary>
         private void NewDrawGeoTopologyUpdate(Dictionary<string, YuLinTu.Spatial.Geometry> intersectsinfo, string elementname, string internalName, IDbContext dbcontext, YuLinTu.Spatial.Geometry drawGeo, DrawFeatureInstallPropertiesEventArgs e)
         {
             if (yltuserseting.GraphicToPuSavebfData)//如果保留以前的数据
@@ -3878,6 +3891,7 @@ namespace YuLinTu.Component.MapFoundation
                 }
             }
         }
+
         /// <summary>
         /// 拓扑处理
         /// </summary>
@@ -3931,9 +3945,10 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         /// <summary>
         /// 默认绘制操作
-        /// </summary>       
+        /// </summary>
         private void normalDrawAction(string elementname, string internalName, IDbContext dbcontext, YuLinTu.Spatial.Geometry drawGeo, DrawFeatureInstallPropertiesEventArgs e, bool isUseTopu = true)
         {
             bool valid = true;
@@ -3950,6 +3965,7 @@ namespace YuLinTu.Component.MapFoundation
             }
 
             #region 不进行拓扑处理-就只进行原来的绘制操作
+
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 if (elementname != "ZD_CBD")
@@ -3965,9 +3981,11 @@ namespace YuLinTu.Component.MapFoundation
                             case "zonec_Layer":
                                 e.Object.Object.SetPropertyValue("DYJB", Convert.ToInt64(2));
                                 break;
+
                             case "zoneZ_Layer":
                                 e.Object.Object.SetPropertyValue("DYJB", Convert.ToInt64(1));
                                 break;
+
                             case "zoneBoundary_Layer":
                             case "controlPoint_Layer":
                             case "farmLand_Layer":
@@ -3982,6 +4000,7 @@ namespace YuLinTu.Component.MapFoundation
                                     e.Object.Object.SetPropertyValue("DYMC", currentZone.FullName);
                                 }
                                 break;
+
                             case "dzdw_Layer":
                             case "xzdw_Layer":
                             case "mzdw_Layer":
@@ -4081,9 +4100,9 @@ namespace YuLinTu.Component.MapFoundation
                     AddContractLandWithOutMark(selectPersonNow, currentZone, drawGeo, e, internalName, isUseTopu);
                 }
             }
-            #endregion            
-        }
 
+            #endregion 不进行拓扑处理-就只进行原来的绘制操作
+        }
 
         //检查当前绘制面要素时地图空间比例尺是否大于当前图层最大比例尺
         private bool NewDrawGeoTopologyCheckScale(string elementname, string internalName, double nowscale)
@@ -4188,7 +4207,6 @@ namespace YuLinTu.Component.MapFoundation
             }, null,
             terminated =>
             {
-
             }).StartAsync();
         }
 
@@ -4233,7 +4251,6 @@ namespace YuLinTu.Component.MapFoundation
             e.Items.Insert(17, importShapeItem);
             e.Items.Insert(18, ClearItem);
             e.Items.Insert(19, GenerateDataItem);
-
         }
 
         /// <summary>
@@ -4252,7 +4269,6 @@ namespace YuLinTu.Component.MapFoundation
                      MapControl.SelectedItems.Clear();
                  }, ended =>
                  {
-
                  }, comleted =>
                  {
                      Envelope en = null;
@@ -4271,7 +4287,6 @@ namespace YuLinTu.Component.MapFoundation
                      MapControl.ZoomTo(en);
                  }, null, terminated =>
                  {
-
                  }).StartAsync();
         }
 
@@ -4311,7 +4326,6 @@ namespace YuLinTu.Component.MapFoundation
                     return;
                 targetItem.ActualAreaUI = area.ToString() + "亩" + "(实)";
 
-
                 //陈泽林 20161209 更新合同面积
                 var targetLayer = e.Layer as VectorLayer;
                 if (targetLayer == null || targetLayer.DataSource == null) return;
@@ -4322,7 +4336,7 @@ namespace YuLinTu.Component.MapFoundation
                 var key = landOb.GetPropertyValue("ID") as string;  //地块的ID
                 Guid keyid = new Guid(key);
                 //Person p = (Person)landOb;
-                // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。 
+                // 根据 Key 从数据库中把数据取出来，修改后，再保存回去。
                 IDbContext dbContext = DataBaseSourceWork.GetDataBaseSource();
                 AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
                 VirtualPersonBusiness virtualPersonBusiness = new VirtualPersonBusiness(dbContext);
@@ -4332,8 +4346,6 @@ namespace YuLinTu.Component.MapFoundation
                 previousCl.Shape = geo;
                 ModuleMsgArgs argsEdit = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, previousCl, previousCl.LocationCode, previousCl);
                 SendMessasge(argsEdit);
-
-
             }
             catch (Exception ex)
             {
@@ -4378,6 +4390,7 @@ namespace YuLinTu.Component.MapFoundation
         private void InstallMapContextMenu(object sender, InstallMapContextMenuEventArgs e)
         {
             #region 工具
+
             var menuPan = new MenuItem() { Header = "漫游" };
             menuPan.IsCheckable = true;
             menuPan.Icon = new ImageTextItem()
@@ -4457,7 +4470,7 @@ namespace YuLinTu.Component.MapFoundation
             };
             e.Items.Add(selectCancel);
 
-            #endregion           
+            #endregion 工具
 
             var sp = new System.Windows.Controls.Separator();
             e.Items.Add(sp);
@@ -4474,7 +4487,7 @@ namespace YuLinTu.Component.MapFoundation
             sbImageImport.Click += SbImageImport_Click;
             e.Items.Add(sbImageImport);
 
-            #endregion
+            #endregion 影像加载
 
             #region 图形编辑
 
@@ -4492,7 +4505,7 @@ namespace YuLinTu.Component.MapFoundation
             btnEditGeometry.SetBinding(MenuItem.IsCheckedProperty, b);
             e.Items.Add(btnEditGeometry);
 
-            #endregion
+            #endregion 图形编辑
 
             #region 属性编辑
 
@@ -4509,9 +4522,11 @@ namespace YuLinTu.Component.MapFoundation
             b.Converter = new MapActionToEditPropertiesButtonIsCheckedConverter();
             btnEditProperties.SetBinding(MenuItem.IsCheckedProperty, b);
             e.Items.Add(btnEditProperties);
-            #endregion
+
+            #endregion 属性编辑
 
             #region 宗地分割
+
             var mtbLandDivision = new MenuItem() { Header = "宗地分割" };
             mtbLandDivision.IsCheckable = true;
             mtbLandDivision.Icon = new ImageTextItem
@@ -4526,7 +4541,8 @@ namespace YuLinTu.Component.MapFoundation
             mtbLandDivision.SetBinding(MenuItem.IsCheckedProperty, b);
             mtbLandDivision.Click += MapClipMenu_Click;
             e.Items.Add(mtbLandDivision);
-            #endregion
+
+            #endregion 宗地分割
 
             #region 宗地合并
 
@@ -4541,7 +4557,7 @@ namespace YuLinTu.Component.MapFoundation
 
             e.Items.Add(ddbSuperEdit);
 
-            #endregion
+            #endregion 宗地合并
 
             #region 区域赋值
 
@@ -4562,12 +4578,14 @@ namespace YuLinTu.Component.MapFoundation
             sbZoneAssignment.SetBinding(MenuItem.IsCheckedProperty, b);
             sbZoneAssignment.Click += SbZoneAssignment_Click;
             e.Items.Add(sbZoneAssignment);
-            #endregion
+
+            #endregion 区域赋值
 
             sp = new System.Windows.Controls.Separator();
             e.Items.Add(sp);
 
             #region 数据查找
+
             var mtbSearch = new MenuItem() { Header = "数据查找" };
             mtbSearch.IsCheckable = true;
             mtbSearch.Icon = new ImageTextItem
@@ -4579,7 +4597,8 @@ namespace YuLinTu.Component.MapFoundation
                  EdCore.langRequestSelectWorkpageLeftSidebarTabItem)
             { Parameter = "tabLayerSearch" });
             e.Items.Add(mtbSearch);
-            #endregion
+
+            #endregion 数据查找
 
             #region 拓扑处理
 
@@ -4595,8 +4614,8 @@ namespace YuLinTu.Component.MapFoundation
             { Parameter = "tabTopology" });
 
             e.Items.Add(mtbTopo);
-            #endregion
 
+            #endregion 拓扑处理
         }
 
         /// <summary>
@@ -4652,7 +4671,6 @@ namespace YuLinTu.Component.MapFoundation
                         layer.Refresh();
                         map.SelectedItems.Clear();
                         map.SelectedItems.Add(graphic);
-
                     }, error =>
                     {
                         Workpage.Page.ShowDialog(new MessageDialog()
@@ -4663,7 +4681,6 @@ namespace YuLinTu.Component.MapFoundation
                         });
                     });
                 }));
-
             }, null, null,
             started =>
             {
@@ -4675,7 +4692,6 @@ namespace YuLinTu.Component.MapFoundation
             },
             completed =>
             {
-
             }, null,
             terminated =>
             {
@@ -4685,15 +4701,15 @@ namespace YuLinTu.Component.MapFoundation
                     Message = string.Format(LanguageAttribute.GetLanguage("lang3070242"), terminated.Exception),
                     Header = LanguageAttribute.GetLanguage("lang3070240")
                 });
-
             }).Start();
         }
 
-        #endregion
+        #endregion Methods - Message
 
         #region Methods
 
         #region 区域赋值
+
         private void SbZoneAssignment_Click(object sender, RoutedEventArgs e)
         {
             var mamaa = new MapActionMeasureAreaAssignment(MapControl, Workpage);
@@ -4704,9 +4720,32 @@ namespace YuLinTu.Component.MapFoundation
             MapControl.Action = mamaa;
             return;
         }
-        #endregion
+
+        #endregion 区域赋值
+
+        #region 导出选中Shape
+
+        private void ExportSelectedShape(object sender, RoutedEventArgs e)
+        {
+            var map = MapControl;
+            var graphics = map.SelectedItems.ToList();
+            ExportDataPage extPage = new ExportDataPage(currentZone.Name, Workpage, "导出ShapeFile");
+            extPage.Workpage = Workpage;
+            Workpage.Page.ShowMessageBox(extPage, (b, r) =>
+            {
+                string saveFilePath = extPage.FileName;
+                if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                {
+                    return;
+                }
+                TaskExportSelectedLandShapeFile(saveFilePath, graphics);
+            });
+        }
+
+        #endregion 导出选中Shape
 
         #region 区域界线生成
+
         private void GenerateDataClick(object sender, RoutedEventArgs e)
         {
             if (currentSelectedLayer == null) return;
@@ -4743,9 +4782,11 @@ namespace YuLinTu.Component.MapFoundation
                 });
             }
         }
-        #endregion
+
+        #endregion 区域界线生成
 
         #region 清空数据
+
         /// <summary>
         /// 清空shape数据入口
         /// </summary>
@@ -4790,6 +4831,7 @@ namespace YuLinTu.Component.MapFoundation
                 TaskClearZDBZ();
             }
         }
+
         /// <summary>
         /// 清空控制点
         /// </summary>
@@ -4825,6 +4867,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         /// <summary>
         /// 清空区域界线
         /// </summary>
@@ -4861,6 +4904,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearFarmLandConserveShape()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, true);
@@ -4894,6 +4938,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearDCZDShape()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, false);
@@ -4927,6 +4972,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearDZDWShape()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, true);
@@ -4961,6 +5007,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearMZDWShape()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, true);
@@ -4995,6 +5042,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearXZDWShape()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, true);
@@ -5028,6 +5076,7 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
         private void TaskClearZDBZ()
         {
             ClearDataCommon clear = new ClearDataCommon(Workpage, currentZone, true);
@@ -5061,7 +5110,8 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
-        #endregion
+
+        #endregion 清空数据
 
         #region 导入Shape
 
@@ -5116,7 +5166,6 @@ namespace YuLinTu.Component.MapFoundation
             {
                 TaskImportZoneShape(fileName, nowSelectlayer);
             }
-
         }
 
         #region 右键导入shape数据
@@ -5181,11 +5230,11 @@ namespace YuLinTu.Component.MapFoundation
             import.StartAsync();
         }
 
-        #endregion
+        #endregion 右键导入shape数据
 
         /// <summary>
         /// 导入调查宗地任务
-        /// </summary>       
+        /// </summary>
         private void TaskImportDCZDShape(string fileName, VectorLayer nowSelectlayer)
         {
             ImportShapeField importcontrol = new ImportShapeField();
@@ -5227,7 +5276,7 @@ namespace YuLinTu.Component.MapFoundation
 
         /// <summary>
         /// 导入点状地物任务
-        /// </summary>       
+        /// </summary>
         private void TaskImportDZDWShape(string fileName, VectorLayer nowSelectlayer)
         {
             //ImportDZDWShape importcontrol = new ImportDZDWShape(Workpage,currentZone);
@@ -5274,7 +5323,7 @@ namespace YuLinTu.Component.MapFoundation
 
         /// <summary>
         /// 导入线状地物任务
-        /// </summary>       
+        /// </summary>
         private void TaskImportXZDWShape(string fileName, VectorLayer nowSelectlayer)
         {
             //ImportXZDWShape importcontrol = new ImportXZDWShape(Workpage,currentZone);
@@ -5321,7 +5370,7 @@ namespace YuLinTu.Component.MapFoundation
 
         /// <summary>
         /// 导入面状地物任务
-        /// </summary>       
+        /// </summary>
         private void TaskImportMZDWShape(string fileName, VectorLayer nowSelectlayer)
         {
             //ImportMZDWShape importcontrol = new ImportMZDWShape(Workpage,currentZone);
@@ -5459,7 +5508,6 @@ namespace YuLinTu.Component.MapFoundation
                     ShowTaskViewer();
                 }
                 operation.StartAsync();
-
             });
         }
 
@@ -5510,6 +5558,38 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
+
+        private void TaskExportSelectedLandShapeFile(string fileName, List<Graphic> graphics)
+        {
+            //var Lands = new List<ContractLand>();
+            //graphics.ForEach(x =>
+            //{
+            //    ContractLand land = new ContractLand();
+            //    land.CopyPropertiesFrom(x.Object.Object);
+            //    ContractLand entity = x.Object.Object.ConvertTo<ContractLand>();
+            //});
+
+            DictionaryBusiness dictBusiness = new DictionaryBusiness(dbcontext);
+            TaskExportSelectedLandShapeArgument argument = new TaskExportSelectedLandShapeArgument();
+            argument.DbContext = dbcontext;
+            argument.SaveFilePath = fileName;
+            argument.Lands = InitializeGeoLand(graphics);
+            argument.VPS = VPS;
+            argument.DictList = dictBusiness.GetAll();
+            argument.CurrentZone = currentZone;
+            TaskExportSelectedLandShapeOperation operation = new TaskExportSelectedLandShapeOperation(dbcontext);
+            operation.Argument = argument;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            Workpage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+
         /// <summary>
         /// 导入行政地域
         /// </summary>
@@ -5554,7 +5634,6 @@ namespace YuLinTu.Component.MapFoundation
                 import.StartAsync();
             });
 
-
             //ImportZoneShip importZone = new ImportZoneShip();
             //importZone.Header = "加载数据";
             //importZone.Workpage = Workpage;
@@ -5566,6 +5645,7 @@ namespace YuLinTu.Component.MapFoundation
             //    }
             //});
         }
+
         /// <summary>
         /// 导入宗地标注
         /// </summary>
@@ -5613,7 +5693,8 @@ namespace YuLinTu.Component.MapFoundation
                 operation.StartAsync();
             });
         }
-        #endregion
+
+        #endregion 导入Shape
 
         /// <summary>
         /// 添加地块-没有标注层或标注的情况下
@@ -5875,7 +5956,7 @@ namespace YuLinTu.Component.MapFoundation
                 var landStation = db.CreateContractLandWorkstation();
                 landStation.Add(newLand);
 
-                //向地块ListBox中添加地块信息  
+                //向地块ListBox中添加地块信息
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
                     var landUI = ContractLandUI.ContractLandUIConvert(newLand);
@@ -5895,6 +5976,89 @@ namespace YuLinTu.Component.MapFoundation
         }
 
         #region 其他方法
+
+        private List<ContractLand> InitializeGeoLand(List<Graphic> Graphics)
+        {
+            List<ContractLand> lands = new List<ContractLand>();
+            List<VirtualPerson> vps = new List<VirtualPerson>();
+            foreach (var entity in Graphics)
+            {
+                ContractLand land = new ContractLand();
+                VirtualPerson vp = new VirtualPerson();
+                KeyValueList<string, string> keyValues = new KeyValueList<string, string>();
+
+                var entities = entity.Object.Object.ToString().Split(',').ToList();
+                entities.ForEach(x =>
+                {
+                    x.Trim();
+                    string[] parts = x.Split('=');
+                    if (parts.Length == 2)
+                    {
+                        string leftSide = parts[0].Trim();
+                        string rightSide = parts[1].Trim();
+                        keyValues.Add(leftSide, rightSide);
+                    }
+                });
+                land = LandDataProcessing(entity, keyValues);
+                vp = VpDataProcessing(keyValues);
+                lands.Add(land);
+                vps.Add(vp);
+            }
+            VPS = vps;
+            return lands;
+        }
+
+        private VirtualPerson VpDataProcessing(KeyValueList<string, string> keyValues)
+        {
+            //var vpname = keyValues.FirstOrDefault(x => x.Key == "QLRMC").Value;
+            var vpid = Guid.Parse(keyValues.FirstOrDefault(x => x.Key == "QLRBS").Value);
+            IVirtualPersonWorkStation<LandVirtualPerson> vpStation = dbcontext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vp = vpStation.Get(vpid);
+            return vp;
+        }
+
+        private ContractLand LandDataProcessing(Graphic graphic, KeyValueList<string, string> keyValues)
+        {
+            ContractLand land = graphic.Object.Object.ConvertTo<ContractLand>();
+            land.LandCategory = keyValues.FirstOrDefault(x => x.Key.Contains("DKLB")).Value;
+            land.LandLevel = keyValues.FirstOrDefault(x => x.Key.Contains("DLDJ")).Value;
+            land.PlantType = keyValues.FirstOrDefault(x => x.Key.Contains("GBLX")).Value;
+            land.OwnRightType = keyValues.FirstOrDefault(x => x.Key.Contains("QSXZ")).Value;
+            land.TableArea = double.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("TZMJ")).Value);
+            land.IsFarmerLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("SFJBNT")).Value);
+            land.Purpose = keyValues.FirstOrDefault(x => x.Key.Contains("TDYT")).Value;
+            land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Contains("JYFS")).Value;
+            land.ConcordId = Guid.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("HTID")).Value);
+            land.Founder = keyValues.FirstOrDefault(x => x.Key.Contains("CJZ")).Value;
+            land.CreationTime = DateTime.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("CJSJ")).Value);
+            land.Modifier = keyValues.FirstOrDefault(x => x.Key.Contains("ZHXGZ")).Value;
+            land.ModifiedTime = DateTime.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("ZHXGSJ")).Value);
+            land.IsTransfer = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("SFLZ")).Value);
+            land.ConstructMode = keyValues.FirstOrDefault(x => x.Key.Contains("CBFS")).Value;
+            land.IsStockLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("SFQGDK")).Value);
+            land.Name = keyValues.FirstOrDefault(x => x.Key.Contains("DKMC")).Value;
+            land.ParcelNumber = keyValues.FirstOrDefault(x => x.Key.Contains("ZDBM")).Value;
+            land.SurveyNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DCBM")).Value;
+            land.LandNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DKBM")).Value;
+            land.CadastralNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DJBM")).Value;
+            land.LocationCode = keyValues.FirstOrDefault(x => x.Key.Contains("ZLDM")).Value;
+            land.LocationName = keyValues.FirstOrDefault(x => x.Key.Contains("ZLMC")).Value;
+            land.ZoneName = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWMC")).Value;
+            land.ZoneCode = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWDM")).Value;
+            land.OwnerName = keyValues.FirstOrDefault(x => x.Key.Contains("QLRMC")).Value;
+            land.OwnerId = Guid.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("QLRBS")).Value);
+            land.LandCode = keyValues.FirstOrDefault(x => x.Key.Contains("TDLYLX")).Value;
+            land.LandName = keyValues.FirstOrDefault(x => x.Key.Contains("TDLYLXMC")).Value;
+            land.ActualArea = double.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("SCMJ")).Value);
+            land.AwareArea = double.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("BZMJ")).Value);
+            land.Opinion = keyValues.FirstOrDefault(x => x.Key.Contains("DKXXXGYJ")).Value;
+            land.Comment = keyValues.FirstOrDefault(x => x.Key.Contains("DKBZXX")).Value;
+            land.NeighborEast = keyValues.FirstOrDefault(x => x.Key.Contains("DKDZ")).Value;
+            land.NeighborWest = keyValues.FirstOrDefault(x => x.Key.Contains("DKXZ")).Value;
+            land.NeighborSouth = keyValues.FirstOrDefault(x => x.Key.Contains("DKNZ")).Value;
+            land.NeighborNorth = keyValues.FirstOrDefault(x => x.Key.Contains("DKBZ")).Value;
+            return land;
+        }
 
         /// <summary>
         /// 检查提交数据
@@ -5924,7 +6088,7 @@ namespace YuLinTu.Component.MapFoundation
             //        MessageGrade = eMessageGrade.Error,
             //    });
             //    right = false;
-            //}           
+            //}
 
             landBusiness.AddLand(currentLand);
             //此处做输入值判断
@@ -5966,7 +6130,7 @@ namespace YuLinTu.Component.MapFoundation
 
         /// <summary>
         /// 坐标系发生改变时获取坐标单位
-        /// </summary>        
+        /// </summary>
         private void MapControl_SpatialReferenceChanged(object sender, EventArgs e)
         {
             RefreshMapControlSpatialUnit();
@@ -5997,30 +6161,39 @@ namespace YuLinTu.Component.MapFoundation
                         case "Kilometer":
                             projectionUnit = 1500;
                             break;
+
                         case "Meter":
                             projectionUnit = 0.0015;
                             break;
+
                         case "Decimeter":
                             projectionUnit = 0.000015;
                             break;
+
                         case "Centimeter":
                             projectionUnit = 1.5 * Math.Pow(Math.E, -7);
                             break;
+
                         case "Millimeter":
                             projectionUnit = 1.5 * Math.Pow(Math.E, -9);
                             break;
+
                         case "Mile":
                             projectionUnit = 3884.9821655;
                             break;
+
                         case "Foot":
                             projectionUnit = 0.0001394;
                             break;
+
                         case "Yard":
                             projectionUnit = 0.0012542;
                             break;
+
                         case "Inch":
                             projectionUnit = 9.6774 * Math.Pow(Math.E, -7);
                             break;
+
                         default:
                             projectionUnit = 0.0015;
                             break;
@@ -6048,10 +6221,10 @@ namespace YuLinTu.Component.MapFoundation
             Workpage.Workspace.Message.Send(this, args);
         }
 
-        #endregion
+        #endregion 其他方法
 
-        #endregion
+        #endregion Methods
 
-        #endregion
+        #endregion Methods
     }
 }

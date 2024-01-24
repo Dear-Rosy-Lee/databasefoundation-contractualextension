@@ -35,6 +35,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("SelectZoneName");
             }
         }
+
         private string _SelectZoneName;
 
         [DisplayLanguage("数据保存路径")]
@@ -53,8 +54,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("SaveFolderName");
             }
         }
-        private string _SaveFolderName;
 
+        private string _SaveFolderName;
 
         [DisplayLanguage("单位名称")]
         [DescriptionLanguage("单位名称")]
@@ -71,6 +72,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("UnitName");
             }
         }
+
         private string _UnitName;
 
         [DisplayLanguage("联系人")]
@@ -88,8 +90,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("ContactPerson");
             }
         }
-        private string _ContactPerson;
 
+        private string _ContactPerson;
 
         [DisplayLanguage("联系电话")]
         [DescriptionLanguage("联系电话")]
@@ -106,8 +108,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("ContactPhone");
             }
         }
-        private string _ContactPhone;
 
+        private string _ContactPhone;
 
         [DisplayLanguage("通信地址")]
         [DescriptionLanguage("通信地址")]
@@ -124,6 +126,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("MailingAddress");
             }
         }
+
         private string _MailingAddress;
 
         [DisplayLanguage("邮政编码")]
@@ -142,6 +145,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("PostCode");
             }
         }
+
         private string _PostCode;
 
         //[DisplayLanguage("包含界址线")]
@@ -159,7 +163,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         //        NotifyPropertyChanged("HasJZX");
         //    }
         //}
-        //private bool _HasJZX;        
+        //private bool _HasJZX;
 
         //[DisplayLanguage("导出错误证件号码")]
         //[DescriptionLanguage("是否导出错误证件号码")]
@@ -193,6 +197,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("IsReportNoConcordNoLandsFamily");
             }
         }
+
         private bool _IsReportNoConcordNoLandsFamily;
 
         [DisplayLanguage("导出无合同地块至矢量")]
@@ -210,6 +215,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("IsReportErrorICN");
             }
         }
+
         private bool _IsReportNoConcordLands;
 
         [DisplayLanguage("导出权属来源资料附件")]
@@ -227,6 +233,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("HasScanDataFolder");
             }
         }
+
         private bool _HasAffixData;
 
         [DisplayLanguage("检查数据")]
@@ -244,6 +251,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("InspectionData");
             }
         }
+
         private bool _InspectionData;
 
         [DisplayLanguage("检查证件号码重复")]
@@ -261,6 +269,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("InspectionDocNumRepeat");
             }
         }
+
         private bool _InspectionDocNumRepeat;
 
         [DisplayLanguage("导出示意图路径为PDF")]
@@ -278,6 +287,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("IsSaveParcelPathAsPDF");
             }
         }
+
         private bool _IsSaveParcelPathAsPDF;
 
         [DisplayLanguage("导出确权面积设置")]
@@ -294,8 +304,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("CBDKXXAwareAreaExportSet");
             }
         }
-        private CbdkxxAwareAreaExportEnum _CBDKXXAwareAreaExportSet;
 
+        private CbdkxxAwareAreaExportEnum _CBDKXXAwareAreaExportSet;
 
         [DisplayLanguage("只导出关键界址点")]
         [DescriptionLanguage("只导出关键界址点")]
@@ -312,6 +322,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("OnlyExportKey");
             }
         }
+
         private bool _OnlyExportKey;
 
         [DisplayLanguage("使用统编号导出")]
@@ -329,6 +340,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("UseUniteNumberExport");
             }
         }
+
         private bool _UseUniteNumberExport;
 
         [DisplayLanguage("只导出地块、界址点、线")]
@@ -346,6 +358,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("OnlyExportLandResult");
             }
         }
+
         private bool _OnlyExportLandResult;
 
         [DisplayLanguage("包含界址点、界址线")]
@@ -363,14 +376,33 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 NotifyPropertyChanged("ContainDotLine");
             }
         }
+
         private bool _ContainDotLine;
-        #endregion
+
+        [DisplayLanguage("导出地域编码、地域名称")]
+        [DescriptionLanguage("导出权属单位代码表新增地域编码、地域名称")]
+        [PropertyDescriptor(
+            Builder = typeof(YuLinTu.Library.Business.PropertyDescriptorBool),
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        public bool ExportLandCode
+        {
+            get { return _ExportLandCode; }
+            set
+            {
+                _ExportLandCode = value;
+                ExportLastResSettingDefine.ExportLandCode = _ExportLandCode.ToString();
+                NotifyPropertyChanged("ExportLandCode");
+            }
+        }
+
+        private bool _ExportLandCode;
+
+        #endregion Properties
 
         #region Ctor
 
         public TaskBuildExportResultDataBaseArgument()
         {
-
             //读出配置
             center = TheApp.Current.GetSystemSettingsProfileCenter();
             var profile = center.GetProfile<ExportLastResSetDefine>();
@@ -387,6 +419,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             UseUniteNumberExport = bool.Parse(ExportLastResSettingDefine.UseUniteNumberExport);
             OnlyExportLandResult = bool.Parse(ExportLastResSettingDefine.OnlyExportLandResult);
             ContainDotLine = bool.Parse(ExportLastResSettingDefine.ContainDotLine);
+            ExportLandCode = bool.Parse(ExportLastResSettingDefine.ExportLandCode);
             //HasJZDX = bool.Parse(ExportLastResSettingDefine.HasJZDX);
             // HasJZX = bool.Parse(ExportLastResSettingDefine.HasJZX);
             HasAffixData = bool.Parse(ExportLastResSettingDefine.HasScanDataFolder);
@@ -400,7 +433,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             OnlyExportKey = bool.Parse(ExportLastResSettingDefine.OnlyExportKey);
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -409,7 +442,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             center.Save<ExportLastResSetDefine>();
         }
 
-        #endregion
+        #endregion Methods
     }
 
     /// <summary>
@@ -426,6 +459,5 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 实测面积
         /// </summary>
         实测面积 = 1,
-
     }
 }

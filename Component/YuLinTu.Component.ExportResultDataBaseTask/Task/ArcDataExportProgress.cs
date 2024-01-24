@@ -116,6 +116,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         public bool ContainDotLine { get; set; }
 
         /// <summary>
+        /// 导出地域编码，地域名称
+        /// </summary>
+        public bool ExportLandCode { get; set; }
+
+        /// <summary>
         /// 重复点容差
         /// </summary>
         public double RepeatValue { get; set; }
@@ -785,7 +790,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<ContractConcord> concordCollection = concordStation.GetByZoneCode(zone.FullCode);
             List<ContractRegeditBook> bookCollection = contractRegeditBookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
             List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(zone.FullCode);
-            if(familyCollection.Any(x=>x.Name == "集体"))
+            if (familyCollection.Any(x => x.Name == "集体"))
             {
                 familyCollection.RemoveAt(familyCollection.Count - 1);
             }
@@ -3181,13 +3186,23 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             try
             {
                 var list = new List<YuLinTuQuality.Business.Entity.Zone>();
+                var tissues = new List<CollectivityTissue>();
+
                 if (currentZone.Level < YuLinTu.Library.Entity.eZoneLevel.County)
                 {
                     var partents = zoneStation.GetParentsToProvince(currentZone);
+                    var listzone = zoneStation.GetAllZonesToProvince(currentZone);
                     partents.RemoveAll(t => t.Level > Library.Entity.eZoneLevel.County);
-                    var entityZones = partents.OrderByDescending(t => t.Level).ToList();
+                    var entityParentsZones = partents.OrderByDescending(t => t.Level).ToList();
+                    var entityZones  =  listzone.OrderByDescending(t => t.Level).ToList();
+                    foreach (var item in entityZones)
+                    {
+                        var tissueStation = DbContext.CreateCollectivityTissueWorkStation();
+                        var res = tissueStation.GetTissues(item.FullCode);
+                        res.ForEach(x => { tissues.Add(x); });
+                    }
 
-                    foreach (var z in entityZones)
+                    foreach (var z in entityParentsZones)
                     {
                         YuLinTuQuality.Business.Entity.Zone exZone = new YuLinTuQuality.Business.Entity.Zone();
                         exZone.ID = z.ID;
@@ -3210,6 +3225,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     list = zones;
                 var table = new ExportUnitTable();
                 table.ZoneList = list;
+                table.Tissues = tissues;
+                table.Argument = Argument;
                 table.PreviewName = county.FullCode + DateTime.Now.Year.ToString();
                 table.FilePath = Folder + @"\" + county.FullCode + county.Name + @"\权属数据";
                 table.ExportData();
