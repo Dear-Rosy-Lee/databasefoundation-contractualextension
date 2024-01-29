@@ -13,7 +13,7 @@ using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
-
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -67,6 +67,7 @@ namespace YuLinTu.Component.Sender
             systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
             var profile = systemCenter.GetProfile<ZoneDefine>();
             var section = profile.GetSection<ZoneDefine>();
+            var tissueStation = dbContext.CreateCollectivityTissueWorkStation();
             config = (section.Settings);
             ZoneDefine = config.Clone() as ZoneDefine;
             IWorkpage page = sender as IWorkpage;
@@ -123,7 +124,13 @@ namespace YuLinTu.Component.Sender
                 ContractConcords = dbContext.CreateQuery<ContractConcord>().Where(x => x.ZoneCode == zdiOld.FullCode).ToList();
                 ContractConcords.ForEach(x => x.ZoneCode = zdiNew.FullCode);
                 ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.LocationCode == zdiOld.FullCode).ToList();
-                ContractLands.ForEach(x => x.LocationCode = zdiNew.FullCode);
+                ContractLands.ForEach(x =>
+                {
+                    x.LocationCode = zdiNew.FullCode;
+                    var Tissue = new CollectivityTissue();
+                    Tissue = tissueStation.Get(zdiNew.FullCode);
+                    x.ZoneCode = Tissue.Code;
+                });
                 ContractRegeditBooks = dbContext.CreateQuery<ContractRegeditBook>().Where(x => x.ZoneCode == zdiOld.FullCode).ToList();
                 ContractRegeditBooks.ForEach(x => x.ZoneCode = zdiNew.FullCode);
                 ListPerson = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode == zdiOld.FullCode).ToList();
@@ -136,19 +143,15 @@ namespace YuLinTu.Component.Sender
             }
             else
             {
-                Tissues = dbContext.CreateQuery<CollectivityTissue>().ToList();
-                Tissues.ForEach(x => x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiOld.FullCode.Length));
-                ContractConcords = dbContext.CreateQuery<ContractConcord>().ToList();
-                ContractConcords.ForEach(x => x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiOld.FullCode.Length));
-                ContractLands = dbContext.CreateQuery<ContractLand>().ToList();
-                ContractLands.ForEach(x => x.LocationCode = zdiNew.FullCode + x.LocationCode.Substring(zdiOld.FullCode.Length));
-                ContractRegeditBooks = dbContext.CreateQuery<ContractRegeditBook>().ToList();
-                ContractRegeditBooks.ForEach(x => x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiOld.FullCode.Length));
-                //UpTissues(dbContext);
-                //UpContractConcord(dbContext);
-                //UpRegeditBook(dbContext);
-                //UpContractLand(dbContext);
-                //UpVirtualPerson(dbContext);
+                dbContext.ExecuteBySQL($"UPDATE JCSJ_FBF SET XZDYBM = REPLACE(XZDYBM, '{zdiOld.FullCode}', '{zdiNew.FullCode}') WHERE XZDYBM LIKE '%{zdiOld.FullCode}%';");
+
+                dbContext.ExecuteBySQL($"UPDATE ZD_CBD SET ZLDM = REPLACE(ZLDM, '{zdiOld.FullCode}', '{zdiNew.FullCode}') WHERE ZLDM LIKE '%{zdiOld.FullCode}%';");
+
+                dbContext.ExecuteBySQL($"UPDATE CBJYQ_HT SET DYBM = REPLACE(DYBM, '{zdiOld.FullCode}', '{zdiNew.FullCode}') WHERE DYBM LIKE '%{zdiOld.FullCode}%';");
+
+                dbContext.ExecuteBySQL($"UPDATE CBJYQ_QZ SET DYDM = REPLACE(DYDM, '{zdiOld.FullCode}', '{zdiNew.FullCode}') WHERE DYDM LIKE '%{zdiOld.FullCode}%';");
+
+                dbContext.ExecuteBySQL($"UPDATE QLR_CBF SET DYBM = REPLACE(DYBM, '{zdiOld.FullCode}', '{zdiNew.FullCode}') WHERE DYBM LIKE '%{zdiOld.FullCode}%';");
             }
         }
 

@@ -119,6 +119,9 @@
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="YuLinTu.Data.Dynamic">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="YuLinTu.Data.Framework, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
