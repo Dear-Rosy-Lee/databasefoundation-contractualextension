@@ -136,10 +136,6 @@
     <Reference Include="YuLinTu.Common.Office">
       <HintPath>..\..\Workspace\Components\YuLinTu.Common.Office\Binary\YuLinTu.Common.Office.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Component.Common">
-      <HintPath>..\..\Workspace\Components\YuLinTu.Component.Common\Binary\YuLinTu.Component.Common.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="YuLinTu.Component.Concord">
       <HintPath>..\..\Workspace\Components\YuLinTu.Component.Concord\Binary\YuLinTu.Component.Concord.dll</HintPath>
       <Private>False</Private>
@@ -183,14 +179,6 @@
     </Reference>
     <Reference Include="YuLinTu.Diagrams">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagrams.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Business">
-      <HintPath>..\..\Library\YuLinTu.Library.Business\bin\YuLinTu.Library.Business.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Command">
-      <HintPath>..\..\Library\YuLinTu.Library.Command\bin\x86\Debug\YuLinTu.Library.Command.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="YuLinTu.Library.Office, Version=8.2.1.27594, Culture=neutral, processorArchitecture=x86">
@@ -431,6 +419,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Component\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj">
+      <Project>{5d529712-2c25-409c-a865-f832cf5324cc}</Project>
+      <Name>YuLinTu.Component.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
+      <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
+      <Name>YuLinTu.Library.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
+      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
+      <Name>YuLinTu.Library.Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
       <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
       <Name>YuLinTu.Library.Controls</Name>
