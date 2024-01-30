@@ -310,6 +310,7 @@
     <Compile Include="MapClip\MapControlActionQueryMapClipAngleByLine.cs" />
     <Compile Include="MapClip\MapControlActionQueryMapClipByLine.cs" />
     <Compile Include="MapClip\MapControlActionQueryMapClipBySetting.cs" />
+    <Compile Include="MapControl\EditGISClient.cs" />
     <Compile Include="MapCoordinate\MapCoordinateStatusbarShell.xaml.cs">
       <DependentUpon>MapCoordinateStatusbarShell.xaml</DependentUpon>
     </Compile>
@@ -349,6 +350,12 @@
     <Compile Include="Task\UIHelper.cs" />
     <Compile Include="Topology\LandTopologyDialog.xaml.cs">
       <DependentUpon>LandTopologyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\MapPageContextsTopology.cs" />
+    <Compile Include="Topology\MessageSplitLandInstallEventArgs.cs" />
+    <Compile Include="Topology\SplitItem.cs" />
+    <Compile Include="Topology\SplitLandEdit.xaml.cs">
+      <DependentUpon>SplitLandEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Topology\TopologyCommands.cs" />
     <Compile Include="Topology\TopologyTask\LandAreaTopologyTask.cs" />
@@ -501,6 +508,10 @@
     <Page Include="Topology\LandTopologyDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Topology\SplitLandEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Topology\TopologyMenuShell.xaml">
       <Generator>MSBuild:Compile</Generator>

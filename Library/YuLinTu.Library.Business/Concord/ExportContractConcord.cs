@@ -242,7 +242,7 @@ namespace YuLinTu.Library.Business
             int rowCount = ListLand.Count;
             if (rowCount > 1)
             {
-                InsertTableRow(0, 2, rowCount - 1);
+                InsertTableRow(0, 2, rowCount - 2);
             }
             var totleActualArea = 0.00;
             int tableIndex = 0;
@@ -315,6 +315,7 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 8, item.Comment);
                 startRow++;
             }
+         
             SetTableCellValue(tableIndex, startRow, 6, totleActualArea.ToString());
         }
 

@@ -369,11 +369,6 @@ namespace YuLinTu.Component.MapFoundation
             MapControl.Action = new MapControlActionQueryMapClipAngleByLine(MapControl);
         }
 
-        private void MapClipMenu_Click(object sender, RoutedEventArgs e)
-        {
-            MapControl.Action = new MapControlActionQueryMapClipByLine(MapControl);
-        }
-
         private void MapQueryMenu_Click(object sender, RoutedEventArgs e)
         {
             MapControl.Action = new MapControlActionQueryGeoPoint(MapControl);
@@ -1292,18 +1287,27 @@ namespace YuLinTu.Component.MapFoundation
                 Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/blogpublish.png")),
             };
             数据操作.Items.Insert(8, LandAssignment);
-
-            binding = new Binding("Action");
-            binding.Source = MapControl;
-            MapControlActionMapZoneAssignmentConverter convert1 = new MapControlActionMapZoneAssignmentConverter();
-            convert1.map = MapControl;
-            convert1.TheWorkPage = Workpage;
-            binding.Converter = convert1;
-            binding.Mode = BindingMode.TwoWay;
-            LandAssignment.SetBinding(MetroToggleButton.IsCheckedProperty, binding);
             LandAssignment.Click += ExportSelectedShape;
 
             #endregion 导出选中Shape
+
+            #region 编辑地块编码
+
+            //var SplitLand = new MetroToggleButton();
+            //SplitLand.ToolTip = "地块分割后，编辑地块编码";
+            //SplitLand.Padding = new Thickness(4, 2, 4, 2);
+            //SplitLand.VerticalAlignment = VerticalAlignment.Stretch;
+            //SplitLand.VerticalContentAlignment = VerticalAlignment.Top;
+            //SplitLand.Content = new ImageTextItem()
+            //{
+            //    ImagePosition = eDirection.Top,
+            //    Text = "地块编码",
+            //    Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/images/32/groupsharepointlists.png")),
+            //};
+            //数据操作.Items.Insert(9, SplitLand);
+            //SplitLand.Click += SplitLandCodeEdit;
+
+            #endregion 编辑地块编码
 
             #region 区域赋值
 
@@ -4618,6 +4622,74 @@ namespace YuLinTu.Component.MapFoundation
             #endregion 拓扑处理
         }
 
+        private void MapClipMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MapControl.Action = new MapControlActionQueryMapClipByLine(MapControl);
+        }
+
+        #region 编辑地块编码
+
+        private void SplitLandCodeEdit(object sender, RoutedEventArgs e)
+        {
+            var layers = MapControl.SelectedItems.Select(c => c.Layer).Distinct().ToList();
+            var map = MapControl;
+            var graphics = map.SelectedItems.ToList();
+            var layer = layers[0];
+            TaskThreadDispatcher.Create(MapControl.Dispatcher,
+            go =>
+            {
+                var args = new MessageSplitLandInstallEventArgs(layer, graphics);
+
+                map.Message.Send(this, args);
+                if (args.IsCancel)
+                    return;
+
+                var editor = new SplitLandEdit(map, layer, graphics);
+
+                //var listDeletes = graphics.Where(c => c != graphic).ToList();
+
+                map.Dispatcher.Invoke(new Action(() =>
+                {
+                    //map.SaveAsync(null, new Graphic[] { graphic }, listDeletes.ToArray(), () =>
+                    //{
+                    //    layer.Refresh();
+                    //    map.SelectedItems.Clear();
+                    //    map.SelectedItems.Add(graphic);
+                    //}, error =>
+                    //{
+                    //    Workpage.Page.ShowDialog(new MessageDialog()
+                    //    {
+                    //        MessageGrade = eMessageGrade.Error,
+                    //        Message = "分割图形的过程中发生了一个未知错误。",
+                    //        Header = "分割"
+                    //    });
+                    //});
+                }));
+            }, null, null,
+            started =>
+            {
+                map.BusyUp();
+            },
+            ended =>
+            {
+                map.BusyDown();
+            },
+            completed =>
+            {
+            }, null,
+            terminated =>
+            {
+                Workpage.Page.ShowDialog(new MessageDialog()
+                {
+                    MessageGrade = eMessageGrade.Error,
+                    Message = "分割图形的过程中发生了一个未知错误",
+                    Header = "分割"
+                }); ; ;
+            }).Start();
+        }
+
+        #endregion 编辑地块编码
+
         /// <summary>
         /// 宗地合并
         /// </summary>
@@ -4639,6 +4711,7 @@ namespace YuLinTu.Component.MapFoundation
 
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
+            string text = graphics[0].Object != null ? (graphics[0].Object.Object != null ? graphics[0].Object.Object.ToString() : null) : null;
             if (graphics.Count == 1)
             {
                 Workpage.Page.ShowDialog(new MessageDialog()

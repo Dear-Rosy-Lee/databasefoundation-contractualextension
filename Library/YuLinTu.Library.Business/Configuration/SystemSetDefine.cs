@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -54,11 +54,12 @@ namespace YuLinTu.Library.Business
         private string emptyReplacement;
         private bool statisticsDeadPersonInfo;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
         #region 表头设置
+
         /// <summary>
         /// 保持模板表头名称设置
         /// </summary>
@@ -113,7 +114,7 @@ namespace YuLinTu.Library.Business
             set { groupTableHead = value; NotifyPropertyChanged("GroupTableHead"); }
         }
 
-        #endregion
+        #endregion 表头设置
 
         #region 报表设置
 
@@ -144,7 +145,7 @@ namespace YuLinTu.Library.Business
             set { personTable = value; NotifyPropertyChanged("PersonTable"); }
         }
 
-        #endregion
+        #endregion 报表设置
 
         #region 地块设置
 
@@ -196,9 +197,9 @@ namespace YuLinTu.Library.Business
         {
             get { return exportAddressToTown; }
             set { exportAddressToTown = value; NotifyPropertyChanged("ExportAddressToTown"); }
-        }        
+        }
 
-        #endregion
+        #endregion 地块设置
 
         #region 其他设置
 
@@ -297,6 +298,7 @@ namespace YuLinTu.Library.Business
             get { return defaultPath; }
             set { defaultPath = value; NotifyPropertyChanged("DefaultPath"); }
         }
+
         /// <summary>
         /// 版本号
         /// </summary>
@@ -305,6 +307,7 @@ namespace YuLinTu.Library.Business
             get { return versionNumber; }
             set { versionNumber = value; NotifyPropertyChanged("VersionNumber"); }
         }
+
         /// <summary>
         /// 备份路径
         /// </summary>
@@ -313,6 +316,7 @@ namespace YuLinTu.Library.Business
             get { return backUpPath; }
             set { backUpPath = value; NotifyPropertyChanged("BackUpPath"); }
         }
+
         /// <summary>
         /// 备份时的间隔天数
         /// </summary>
@@ -321,6 +325,7 @@ namespace YuLinTu.Library.Business
             get { return backDay; }
             set { backDay = value; NotifyPropertyChanged("BackDay"); }
         }
+
         /// <summary>
         /// 上次备份时间
         /// </summary>
@@ -329,6 +334,7 @@ namespace YuLinTu.Library.Business
             get { return backUperDate; }
             set { backUperDate = value; NotifyPropertyChanged("BackUperDate"); }
         }
+
         /// <summary>
         /// 空数据的替代字符串
         /// </summary>
@@ -337,6 +343,7 @@ namespace YuLinTu.Library.Business
             get { return emptyReplacement; }
             set { emptyReplacement = value; NotifyPropertyChanged("EmptyReplacement"); }
         }
+
         /// <summary>
         /// 陈泽林 20161010 获取模板表头名称
         /// </summary>
@@ -380,6 +387,7 @@ namespace YuLinTu.Library.Business
             }
             return Name;
         }
+
         /// <summary>
         /// 陈泽林 20161011 获取填报单位名称取三级地域
         /// </summary>
@@ -400,15 +408,16 @@ namespace YuLinTu.Library.Business
             else
                 str = z2.Name + z1.Name + currentZone.Name;
             return str;
-
         }
+
         public string InitalizeAreaString()
         {
             return AreaIsZero ? " " : "0.00";
         }
-        #endregion
 
-        #endregion
+        #endregion 其他设置
+
+        #endregion Properties
 
         #region Ctor
 
@@ -437,8 +446,6 @@ namespace YuLinTu.Library.Business
             upDownSet = false;
             villageInlitialSet = false;
             keepRepeatFlag = false;
-            //陈泽林 20161010 更改为用户默认临时文件夹
-            //defaultPath = "E:/";
             defaultPath = System.IO.Path.GetTempPath();
             versionNumber = 820;
             backDay = 1;
@@ -449,6 +456,7 @@ namespace YuLinTu.Library.Business
         }
 
         private static SystemSetDefine _familyOtherDefine;
+
         /// <summary>
         /// 单例获取配置
         /// </summary>
@@ -461,10 +469,6 @@ namespace YuLinTu.Library.Business
             return _familyOtherDefine = section.Settings;
         }
 
-        #endregion
-
-
-
-
+        #endregion Ctor
     }
 }

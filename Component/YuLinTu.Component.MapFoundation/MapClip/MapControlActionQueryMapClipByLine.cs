@@ -2,6 +2,7 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  * 绘制线条来分裂面
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +23,13 @@ namespace YuLinTu.Component.MapFoundation
 {
     public class MapControlActionQueryMapClipByLine : MapControlAction, IUndoRedoable, ICancelable, IConfirmable
     {
-        #region Properties
-
-        #endregion
-
         #region Fields
+
         private GraphicsLayer layerLabel = new GraphicsLayer();
-        List<LabelObject> objectLabelList = new List<LabelObject>();
-        LabelObject objectLabel;
-        Graphic centerPoint;
-        List<YuLinTu.Spatial.Geometry> getGeoList = new List<Spatial.Geometry>();
+        private List<LabelObject> objectLabelList = new List<LabelObject>();
+        private LabelObject objectLabel;
+        private Graphic centerPoint;
+        private List<YuLinTu.Spatial.Geometry> getGeoList = new List<Spatial.Geometry>();
 
         private string currentZoneCode = "";
 
@@ -44,31 +42,23 @@ namespace YuLinTu.Component.MapFoundation
         /// 获取地图上选择到的要素集
         /// </summary>
         private List<YuLinTu.Spatial.Geometry> selectGeometryCollection = new List<Spatial.Geometry>();
+
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
 
-        #endregion
-
-        #region Events
-
-        #endregion
+        #endregion Fields
 
         #region Ctor
 
         public MapControlActionQueryMapClipByLine(MapControl map)
             : base(map)
         {
-
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
-
-        #region Methods - Public
-
-        #endregion
 
         #region Methods - Override
 
@@ -103,7 +93,6 @@ namespace YuLinTu.Component.MapFoundation
             {
                 MapControl.InternalLayers.Add(layerLabel);
             }
-
         }
 
         protected override void OnShutdown()
@@ -133,16 +122,15 @@ namespace YuLinTu.Component.MapFoundation
                 MapControl.InternalLayers.Remove(layerLabel);
 
             MapControl.SpatialReferenceChanged -= MapControl_SpatialReferenceChanged;
-
         }
 
-        #endregion
+        #endregion Methods - Override
 
         #region Methods - Events
 
         /// <summary>
         /// 坐标系发生改变时获取坐标单位
-        /// </summary>        
+        /// </summary>
         private void MapControl_SpatialReferenceChanged(object sender, EventArgs e)
         {
             RefreshMapControlSpatialUnit();
@@ -165,30 +153,39 @@ namespace YuLinTu.Component.MapFoundation
                         case "Kilometer":
                             projectionUnit = 1500;
                             break;
+
                         case "Meter":
                             projectionUnit = 0.0015;
                             break;
+
                         case "Decimeter":
                             projectionUnit = 0.000015;
                             break;
+
                         case "Centimeter":
                             projectionUnit = 1.5 * Math.Pow(Math.E, -7);
                             break;
+
                         case "Millimeter":
                             projectionUnit = 1.5 * Math.Pow(Math.E, -9);
                             break;
+
                         case "Mile":
                             projectionUnit = 3884.9821655;
                             break;
+
                         case "Foot":
                             projectionUnit = 0.0001394;
                             break;
+
                         case "Yard":
                             projectionUnit = 0.0012542;
                             break;
+
                         case "Inch":
                             projectionUnit = 9.6774 * Math.Pow(Math.E, -7);
                             break;
+
                         default:
                             projectionUnit = 0.0015;
                             break;
@@ -243,7 +240,6 @@ namespace YuLinTu.Component.MapFoundation
                 {
                     return null;
                 }
-
             }
             catch
             {
@@ -383,10 +379,11 @@ namespace YuLinTu.Component.MapFoundation
                         if (dotFeatureSet.Features.Count == 1 || dotFeatureSet.Features.Count == 0) return;
                         if (dotFeatureSet != null)
                         {
-                            ContractLand clipLanditem = null;//裁剪的获取的最新的地块                            
+                            ContractLand clipLanditem = null;//裁剪的获取的最新的地块
                             for (int i = 0; i < dotFeatureSet.Features.Count; i++)
                             {
                                 IFeature feature = dotFeatureSet.Features[i];
+                                Graphic graphic = new Graphic();
                                 //将获取裁剪好的转回
                                 YuLinTu.Spatial.Geometry returnClipGeo = YuLinTu.Spatial.Geometry.FromBytes(feature.ToBinary(), selectGeometryCollection[m].Srid);
 
@@ -414,6 +411,54 @@ namespace YuLinTu.Component.MapFoundation
                                     landbus.AddLand(clipLanditem);
                                 }
                             }
+
+                            var graphics = selectGeometryCollection;
+                            var map = MapControl;
+                            TaskThreadDispatcher.Create(MapControl.Dispatcher,
+                            go =>
+                            {
+                                //var editor = new SplitLandEdit();
+
+                                //var listDeletes = graphics.Where(c => c != graphic).ToList();
+
+                                map.Dispatcher.Invoke(new Action(() =>
+                                                {
+                                                    //map.SaveAsync(null, new Graphic[] { graphic }, listDeletes.ToArray(), () =>
+                                                    //{
+                                                    //    layer.Refresh();
+                                                    //    map.SelectedItems.Clear();
+                                                    //    map.SelectedItems.Add(graphic);
+                                                    //}, error =>
+                                                    //{
+                                                    //    Workpage.Page.ShowDialog(new MessageDialog()
+                                                    //    {
+                                                    //        MessageGrade = eMessageGrade.Error,
+                                                    //        Message = "分割图形的过程中发生了一个未知错误。",
+                                                    //        Header = "分割"
+                                                    //    });
+                                                    //});
+                                                }));
+                            }, null, null,
+                            started =>
+                            {
+                                map.BusyUp();
+                            },
+                            ended =>
+                            {
+                                map.BusyDown();
+                            },
+                            completed =>
+                            {
+                            }, null,
+                            terminated =>
+                            {
+                                //Workpage.Page.ShowDialog(new MessageDialog()
+                                //{
+                                //    MessageGrade = eMessageGrade.Error,
+                                //    Message = "分割图形的过程中发生了一个未知错误",
+                                //    Header = "分割"
+                                //}); ; ;
+                            }).Start();
                             //string survernumber = clipLanditem.LandNumber.Length >= 5 ? clipLanditem.LandNumber.Substring(clipLanditem.LandNumber.Length - 5) : clipLanditem.LandNumber.PadLeft(5, '0');
                             //clipLanditem.SurveyNumber = survernumber;
                             //landbus.ModifyLand(clipLanditem);
@@ -535,9 +580,11 @@ namespace YuLinTu.Component.MapFoundation
             if (CanUndoChanged != null)
                 CanUndoChanged(this, new EventArgs());
         }
-        #endregion
+
+        #endregion Methods - Events
 
         #region Methods - Private
+
         public bool CanRedo
         {
             get { return draw != null && draw.CanRedo; }
@@ -574,6 +621,7 @@ namespace YuLinTu.Component.MapFoundation
         {
             get { return isDrawing; }
         }
+
         //绘制取消
         public bool Cancel()
         {
@@ -604,9 +652,8 @@ namespace YuLinTu.Component.MapFoundation
             return val;
         }
 
-        #endregion
+        #endregion Methods - Private
 
-        #endregion
+        #endregion Methods
     }
-
 }
