@@ -193,37 +193,10 @@
       <HintPath>..\..\Library\YuLinTu.Library.Command\bin\x86\Debug\YuLinTu.Library.Command.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Library.Controls">
-      <HintPath>..\..\Library\YuLinTu.Library.Controls\bin\x86\Debug\YuLinTu.Library.Controls.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Entity">
-      <HintPath>..\..\Dependencies\Library\YuLinTu.Library.Entity.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Log">
-      <HintPath>..\..\Library\YuLinTu.Library.Log\bin\x86\Debug\YuLinTu.Library.Log.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Map">
-      <HintPath>..\..\Library\YuLinTu.Library.Map\bin\x86\Debug\YuLinTu.Library.Map.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="YuLinTu.Library.Office, Version=8.2.1.27594, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WorkSpace\YuLinTu.Library.Office.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Repository">
-      <HintPath>..\..\Library\YuLinTu.Library.Repository\bin\x86\Debug\YuLinTu.Library.Repository.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.Resources">
-      <HintPath>..\..\Library\YuLinTu.Library.Resources\bin\x86\Debug\YuLinTu.Library.Resources.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.WorkStation">
-      <HintPath>..\..\Library\YuLinTu.Library.WorkStation\bin\x86\Debug\YuLinTu.Library.WorkStation.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
@@ -456,6 +429,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
+      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
+      <Name>YuLinTu.Library.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
+      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
+      <Name>YuLinTu.Library.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
+      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
+      <Name>YuLinTu.Library.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Map\YuLinTu.Library.Map.csproj">
+      <Project>{d8d1be49-252f-4167-8245-53285e47e8a0}</Project>
+      <Name>YuLinTu.Library.Map</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
+      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
+      <Name>YuLinTu.Library.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
+      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
+      <Name>YuLinTu.Library.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
+      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
+      <Name>YuLinTu.Library.WorkStation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

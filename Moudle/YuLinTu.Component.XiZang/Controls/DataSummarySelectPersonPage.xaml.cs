@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace YuLinTu.Component.XiZangLZ
     /// <summary>
     /// DataSummarySelectPersonPage.xaml 的交互逻辑
     /// </summary>
-    public partial class DataSummarySelectPersonPage: InfoPageBase
+    public partial class DataSummarySelectPersonPage : InfoPageBase
     {
         #region Ctor
 
@@ -39,13 +40,13 @@ namespace YuLinTu.Component.XiZangLZ
             Confirm += InitializeConcordPersonPage_Confirm;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Fields
-        
+
         private List<SelectPerson> allPersons = new List<SelectPerson>();
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -59,7 +60,7 @@ namespace YuLinTu.Component.XiZangLZ
         /// </summary>
         public List<VirtualPerson> SelectPersonCollection { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Events
 
@@ -167,7 +168,7 @@ namespace YuLinTu.Component.XiZangLZ
             e.Parameter = true;   //等价于 Workpage.Page.CloseMessageBox(true);
         }
 
-        #endregion
+        #endregion Events
 
         #region Methods - Override
 
@@ -227,7 +228,6 @@ namespace YuLinTu.Component.XiZangLZ
             }
         }
 
-        #endregion      
-
+        #endregion Methods - Override
     }
 }
