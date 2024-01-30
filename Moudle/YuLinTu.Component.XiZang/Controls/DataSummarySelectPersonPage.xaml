@@ -11,20 +11,20 @@
                  Header="请选择承包方"
                  MinHeight="450" MinWidth="650">
     <am:InfoPageBase.Resources>
-        <am:LockValueConvert x:Key="LockValueConvert"/>
+        <am:LockValueConvert x:Key="LockValueConvert" />
     </am:InfoPageBase.Resources>
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style x:Key="LableStyle" TargetType="Label">
-                <Setter Property="Height" Value="25"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Height" Value="25" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
         </Grid.Resources>
         <Grid>
@@ -35,16 +35,16 @@
                               Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
                               RenderOptions.BitmapScalingMode="NearestNeighbor">
             </cmps:LoadingIcon>
-            <cmps:MetroListBox x:Name="lbItem" Width="630" Margin="10,5,10,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                               Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}" >
+            <cmps:MetroListBox x:Name="lbItem" Width="630" Margin="10,5,10,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                               Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}">
                 <cmps:MetroListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <WrapPanel />
                     </ItemsPanelTemplate>
                 </cmps:MetroListBox.ItemsPanel>
                 <cmps:MetroListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}" Tag="{Binding ID}" IsChecked="{Binding Status,Converter={StaticResource LockValueConvert},Mode=OneWay}" Width="80" BorderThickness="0" Click="vpItem_Click"/>
+                        <CheckBox Content="{Binding Name}" Tag="{Binding ID}" IsChecked="{Binding Status,Converter={StaticResource LockValueConvert},Mode=OneWay}" Width="80" BorderThickness="0" Click="vpItem_Click" />
                     </DataTemplate>
                 </cmps:MetroListBox.ItemTemplate>
             </cmps:MetroListBox>
@@ -52,7 +52,7 @@
         <Border BorderThickness="0,1,0,0" Grid.Row="1" BorderBrush="LightGray" Margin="10,0,10,0" SnapsToDevicePixels="True">
             <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" VerticalAlignment="Bottom" Margin="0,5,0,5" DockPanel.Dock="Bottom">
 
-                <CheckBox Content="全选" VerticalAlignment="Center" Name="cbAllSelect" Click="cbAllSelect_Click"  Margin="5,0,0,0"/>
+                <CheckBox Content="全选" VerticalAlignment="Center" Name="cbAllSelect" Click="cbAllSelect_Click"  Margin="5,0,0,0" />
 
                 <metro:MetroButton Height="30" DockPanel.Dock="Right"
                                Padding="5"
