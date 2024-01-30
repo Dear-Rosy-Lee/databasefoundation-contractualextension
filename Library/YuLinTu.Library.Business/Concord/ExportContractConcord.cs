@@ -244,7 +244,7 @@ namespace YuLinTu.Library.Business
             {
                 InsertTableRow(0, 2, rowCount - 2);
             }
-            var totleActualArea = 0.00;
+            var totleAwareArea = 0.00;
             int tableIndex = 0;
             int startRow = 2;
             foreach (var item in ListLand)
@@ -266,8 +266,8 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
                 SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);
                 SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
-                SetTableCellValue(tableIndex, startRow, 6, item.ActualArea.ToString());
-                totleActualArea += item.ActualArea;
+                SetTableCellValue(tableIndex, startRow, 6, item.AwareArea.ToString());
+                totleAwareArea += item.AwareArea;
                 if (item.LandLevel == "01")
                 {
                     SetTableCellValue(tableIndex, startRow, 7, Landlevel1);
@@ -315,8 +315,8 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 8, item.Comment);
                 startRow++;
             }
-         
-            SetTableCellValue(tableIndex, startRow, 6, totleActualArea.ToString());
+
+            SetTableCellValue(tableIndex, startRow, 6, totleAwareArea.ToString());
         }
 
         /// <summary>
@@ -526,7 +526,6 @@ namespace YuLinTu.Library.Business
             var VillageZone = GetParent(CurrentZone);
             string savePathOfImage = SystemSet.DefaultPath;
 
-
             Type type = typeof(ExportContractLandParcelWord);
             ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(IDbContext) }); // 根据参数类型获取构造函数
             PropertyInfo propertyInfo1 = type.GetProperty("ViewOfAllMultiParcel");
@@ -546,7 +545,6 @@ namespace YuLinTu.Library.Business
             propertyInfo6.SetValue(instance, Contractor); // 设置属性值
             fieldInfo.SetValue(instance, listGeoLand);
             object result = methodInfo.Invoke(instance, null);
-
 
             //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.ZoneCode + "-" + Contractor.Name + ".jpg", 180, 250);
             SetBookmarkValue("SocialCode", Tissue.SocialCode);
@@ -583,6 +581,7 @@ namespace YuLinTu.Library.Business
             TheBns.Current.Message.Send(this, arg);
             return (arg.ReturnValue as Zone);
         }
+
         #endregion Methods - Concord
 
         #region Methods - OtherInfomation
