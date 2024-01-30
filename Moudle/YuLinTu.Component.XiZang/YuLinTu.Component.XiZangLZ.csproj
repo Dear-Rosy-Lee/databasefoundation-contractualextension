@@ -195,7 +195,7 @@
     </Reference>
     <Reference Include="YuLinTu.Library.Controls">
       <HintPath>..\..\Library\YuLinTu.Library.Controls\bin\x86\Debug\YuLinTu.Library.Controls.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="YuLinTu.Library.Entity">
       <HintPath>..\..\Dependencies\Library\YuLinTu.Library.Entity.dll</HintPath>
@@ -206,12 +206,12 @@
     </Reference>
     <Reference Include="YuLinTu.Library.Map">
       <HintPath>..\..\Library\YuLinTu.Library.Map\bin\x86\Debug\YuLinTu.Library.Map.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="YuLinTu.Library.Office, Version=8.2.1.27594, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WorkSpace\YuLinTu.Library.Office.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="YuLinTu.Library.Repository">
       <HintPath>..\..\Library\YuLinTu.Library.Repository\bin\x86\Debug\YuLinTu.Library.Repository.dll</HintPath>
