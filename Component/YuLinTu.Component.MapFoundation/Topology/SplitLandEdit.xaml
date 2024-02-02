@@ -8,20 +8,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
     d:DesignHeight="450"
-    d:DesignWidth="800"
-    Header="分割"
+    d:DesignWidth="1000"
+    Header="地块编码修改"
     mc:Ignorable="d">
-    <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}" ClipToBounds="True">
+    <Grid
+        Width="500"
+        Background="{DynamicResource Metro_Window_Style_Background_Content}"
+        ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <Border Grid.Row="1" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
             <cmps:LoadingIcon
-                Width="16"
-                Height="16"
+                Width="50"
+                Height="50"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 RenderOptions.BitmapScalingMode="NearestNeighbor"
@@ -36,10 +39,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,0,0,5"
-                    Text="请选择一个需要保留原地块编码的图形:" />
+
                 <cmps:MetroListBox
                     Name="dg"
                     Grid.Row="1"
@@ -51,6 +51,11 @@
                     <cmps:MetroListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="200" />
+                                </Grid.ColumnDefinitions>
                                 <DockPanel Grid.Row="1" LastChildFill="False">
                                     <cmps:ImageTextItem
                                         Margin="5,2"
@@ -60,6 +65,25 @@
                                         ImageTextSpacing="8"
                                         Text="{Binding Text, Converter={StaticResource ObjectToSingleLineStringConverter}}"
                                         ToolTip="{Binding Text}" />
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    LastChildFill="False">
+                                    <TextBlock
+                                        Margin="0,6"
+                                        DockPanel.Dock="Left"
+                                        Text="地块编码：" />
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    LastChildFill="False">
+                                    <cmps:MetroTextBox
+                                        Margin="5,2"
+                                        DockPanel.Dock="Left"
+                                        Text="{Binding LandNumber, Converter={StaticResource ObjectToSingleLineStringConverter}}"
+                                        ToolTip="{Binding LandNumber}" />
                                 </DockPanel>
                             </Grid>
                         </DataTemplate>
@@ -96,7 +120,6 @@
                 Padding="10,0"
                 Click="MetroButton_Click"
                 DockPanel.Dock="Right"
-                IsEnabled="{Binding CanConfirm}"
                 Style="{StaticResource Metro_Button_Paneled_Style}">
                 <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png" Text="确定" />
             </metro:MetroButton>

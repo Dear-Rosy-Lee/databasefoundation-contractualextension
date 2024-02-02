@@ -69,7 +69,7 @@ namespace YuLinTu.Component.MapFoundation
 
                 if (item.Text.TrimSafe().IsNullOrBlank())
                     item.Text = GetDisplayText(c, dataSource);
-
+                item.LandNumber = c.Object.Object.GetPropertyValue("DKBM").ToString();
                 list.Add(item);
             });
 
@@ -94,6 +94,15 @@ namespace YuLinTu.Component.MapFoundation
 
         private void MetroButton_Click(object sender, RoutedEventArgs e)
         {
+            Owner.ShowDialog(new MessageDialog()
+            {
+                Message = "是否将原地块编码选择到指定的图形中？",
+                Header = "地块编码"
+            }, (b, r) =>
+            {
+                if (b.HasValue && b.Value)
+                    ConfirmAsync();
+            });
         }
 
         private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)

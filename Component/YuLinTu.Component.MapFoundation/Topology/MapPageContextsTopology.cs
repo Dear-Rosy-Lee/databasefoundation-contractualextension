@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using System.Windows;
-using YuLinTu.Appwork;
 using YuLinTu.tGIS.Client;
-using YuLinTu.Spatial;
-using System.Windows.Data;
 using System.Threading;
-using System.Collections.Specialized;
-using Xceed.Wpf.Toolkit;
 using YuLinTu.Components.tGIS;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -30,7 +18,7 @@ namespace YuLinTu.Component.MapFoundation
         }
 
         [MessageHandler(ID = EditGISClient.tGIS_LandCodeEdit_Geometry_Begin)]
-        private void tGIS_SplitLand_Geometry_Install(object sender, MessageUnionGeometryInstallEventArgs e)
+        private void tGIS_SplitLand_Geometry_Install(object sender, MessageSplitLandInstallEventArgs e)
         {
             e.IsCancel = true;
 
@@ -44,40 +32,24 @@ namespace YuLinTu.Component.MapFoundation
                     var are = new AutoResetEvent(false);
 
                     var index = 0;
-                    map.Dispatcher.Invoke(new Action(() => index = dlg.dg.SelectedIndex));
-
-                    var editor = new GeometryTopologyUnion(map, e.Layer, e.Graphics, index);
-                    var graphic = editor.Do() as Graphic;
-                    var listDeletes = e.Graphics.Where(c => c != graphic).ToList();
-
-                    var args = new InstallUnionGeometryResultEventArgs(e.Layer, listDeletes, graphic);
-                    Workpage.Message.Send(this, args);
-                    if (args.IsCancel)
-                        return;
-
                     map.Dispatcher.Invoke(new Action(() =>
                     {
-                        //map.SaveAsync(null, new Graphic[] { graphic }, listDeletes.ToArray(), () =>
-                        //{
-                        //    e.Layer.Refresh();
-                        //    map.SelectedItems.Clear();
-                        //    map.SelectedItems.Add(graphic);
-                        //    are.Set();
-                        //}, error =>
-                        //{
-                        //    e.Parameter = false;
-                        //    are.Set();
-
-                        //    Workpage.Page.ShowDialog(new MessageDialog()
-                        //    {
-                        //        MessageGrade = eMessageGrade.Error,
-                        //        Message = "分割图形的过程中发生了一个未知错误。",
-                        //        Header = "分割"
-                        //    });
-                        //});
+                        //var db = e.DbContext;
+                        //AccountLandBusiness landBus = new AccountLandBusiness(db);
+                        //var landStation = db.CreateContractLandWorkstation();
+                        //index = dlg.dg.SelectedIndex;
+                        //var editor = new GeometryTopologyUnion(map, e.Layer, e.Graphics, index);
+                        //var graphic1 = editor.Do() as Graphic;
+                        //var landid1 = graphic1.Object.Object.GetPropertyValue("ID");
+                        //Guid landId1 = Guid.Parse(landid1.ToString());
+                        //var graphic2 = e.Graphics.Where(c => c != graphic1).FirstOrDefault();
+                        //var land2 = graphic2.Object.Object.GetPropertyValue("ID");
+                        //Guid landId2 = Guid.Parse(landid1.ToString());
+                        //var entity1 = landBus.GetLandById(landId1);
+                        //var entity2 = landBus.GetLandById(landId2);
+                        //var landCode1 = graphic1.Object.Object.GetPropertyValue("DKBM");
+                        //var landCode2 = graphic1.Object.Object.GetPropertyValue("DKBM");
                     }));
-
-                    are.WaitOne();
                 };
 
                 Workpage.Page.ShowDialog(dlg, (b, r) => { dlg.Uninstall(); });

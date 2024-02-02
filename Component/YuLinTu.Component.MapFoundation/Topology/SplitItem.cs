@@ -12,7 +12,10 @@ namespace YuLinTu.Component.MapFoundation
         #region Properties
 
         public Graphic Graphic { get; set; }
+
         public string Text { get; set; }
+
+        public string LandNumber { get; set; }
 
         #endregion Properties
     }

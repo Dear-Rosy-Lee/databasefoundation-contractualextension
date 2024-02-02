@@ -22,6 +22,7 @@ namespace YuLinTu.Component.MapFoundation
         {
             Register<YuLinTuMapFoundation, MapPageContext>();
             Register<TaskPage, TaskPageContext>();
+            Register<YuLinTuMapFoundation, MapPageContextsTopology>();
         }
 
         /// <summary>

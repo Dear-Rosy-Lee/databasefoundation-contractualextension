@@ -840,7 +840,7 @@ namespace YuLinTu.Library.Business
             sfqgdkField.IsAdd = true;
             upCBDFields.Add(sfqgdkField);
 
-            UpdateField qsxz = new UpdateField(); // 权属性质
+            UpdateField qsxz = new UpdateField();
             qsxz.FieldName = "QSXZ";
             qsxz.FieldType = "TEXT";
             qsxz.IsNull = true;
@@ -848,20 +848,19 @@ namespace YuLinTu.Library.Business
             qsxz.FieldLength = "100";
             upCBDFields.Add(qsxz);
 
-            UpdateField xkxxxgyj = new UpdateField(); // 权属性质
-            qsxz.FieldName = "DKXXXGYJ";
-            qsxz.FieldType = "TEXT";
-            qsxz.IsNull = true;
-            qsxz.IsAdd = true;
-            qsxz.FieldLength = "999";
+            UpdateField xkxxxgyj = new UpdateField();
+            xkxxxgyj.FieldName = "DKXXXGYJ";
+            xkxxxgyj.FieldType = "TEXT";
+            xkxxxgyj.IsNull = true;
+            xkxxxgyj.IsAdd = true;
             upCBDFields.Add(xkxxxgyj);
 
             UpdateField ybmj = new UpdateField(); // 权属性质
-            qsxz.FieldName = "YBMJ";
-            qsxz.FieldType = "DECIMAL";
-            qsxz.IsNull = true;
-            qsxz.IsAdd = true;
-            qsxz.FieldLength = "13";
+            ybmj.FieldName = "YBMJ";
+            ybmj.FieldType = "DECIMAL";
+            ybmj.IsNull = true;
+            ybmj.IsAdd = true;
+            ybmj.FieldLength = "13";
             upCBDFields.Add(ybmj);
             upCBD.FieldList = upCBDFields;
 
@@ -1123,10 +1122,6 @@ namespace YuLinTu.Library.Business
     /// </summary>
     public class UpgradeDatabase
     {
-        #region Filds
-
-        #endregion Filds
-
         #region Property
 
         /// <summary>
@@ -1205,10 +1200,6 @@ namespace YuLinTu.Library.Business
     /// </summary>
     public class UpdateDatabase
     {
-        #region Ctor
-
-        #endregion Ctor
-
         #region Method
 
         /// <summary>
@@ -1236,7 +1227,6 @@ namespace YuLinTu.Library.Business
                 //});
                 //if (tempList.Contains("YBMJ")||tempList.Contains("DKXXXGYJ"))
                 //{
-
                 //}
                 //else
                 //{

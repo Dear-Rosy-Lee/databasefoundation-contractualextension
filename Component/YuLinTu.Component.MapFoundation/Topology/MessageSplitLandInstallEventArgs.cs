@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using YuLinTu.Data;
 using YuLinTu.tGIS.Client;
 
 namespace YuLinTu.Component.MapFoundation
@@ -12,6 +13,8 @@ namespace YuLinTu.Component.MapFoundation
     public class MessageSplitLandInstallEventArgs : MapMessageEventArgs
     {
         #region Properties
+
+        public IDbContext DbContext { get; set; }
 
         public Layer Layer { get; set; }
 
@@ -27,9 +30,10 @@ namespace YuLinTu.Component.MapFoundation
 
         #region Ctor
 
-        public MessageSplitLandInstallEventArgs(Layer layer, List<Graphic> gs)
+        public MessageSplitLandInstallEventArgs(Layer layer, List<Graphic> gs, IDbContext dbContext)
             : base(EditGISClient.tGIS_LandCodeEdit_Geometry_Begin)
         {
+            DbContext = dbContext;
             Layer = layer;
             AutoResetEvent = new AutoResetEvent(false);
             Graphics = new List<Graphic>();

@@ -524,7 +524,7 @@ namespace YuLinTu.Library.Business
         protected virtual void WriteLandInfoVertical(int pageSize, int totalPageSize, string otherInfo)
         {
             // 复制页
-            for (int i = 1; i < pageSize-1; i++)
+            for (int i = 1; i < pageSize - 1; i++)
             {
                 AddSection();
             }
@@ -549,12 +549,12 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(i, 0, 3, 1, (i + 1).ToString() + "-" + totalPageSize.ToString());
             }
 
-            // 删除多余页
-            if (pageSize == 1)
-            {
-                DeleteSection();
-                DeleteParagraph();
-            }
+            //// 删除多余页
+            //if (pageSize == 1)
+            //{
+            //    DeleteSection();
+            //    DeleteParagraph();
+            //}
         }
 
         /// <summary>
