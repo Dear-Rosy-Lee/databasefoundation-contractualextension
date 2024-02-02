@@ -315,7 +315,10 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 8, item.Comment);
                 startRow++;
             }
-
+            if (ListLand.Count == 1)
+            {
+                startRow = 4;
+            }
             SetTableCellValue(tableIndex, startRow, 6, totleAwareArea.ToString());
         }
 
