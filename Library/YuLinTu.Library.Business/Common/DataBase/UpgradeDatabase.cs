@@ -170,6 +170,12 @@ namespace YuLinTu.Library.Business
             qsxz.FieldLength = "100";
             fields.Add(qsxz);
 
+            UpdateField shxydm = new UpdateField(); //社会信用代码
+            shxydm.FieldName = "SHXYDM";
+            shxydm.FieldType = "TEXT";
+            shxydm.FieldLength = "100";
+            fields.Add(shxydm);
+
             fbf.FieldList = fields;
 
             return fbf;
