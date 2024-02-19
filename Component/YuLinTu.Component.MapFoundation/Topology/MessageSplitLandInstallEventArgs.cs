@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using YuLinTu.Data;
+using YuLinTu.Library.Entity;
 using YuLinTu.tGIS.Client;
 
 namespace YuLinTu.Component.MapFoundation
@@ -26,11 +27,15 @@ namespace YuLinTu.Component.MapFoundation
 
         public bool IsCancel { get; set; }
 
+        public Zone Zone { get; set; }
+
+        public ContractLand ContractLand { get; set; }
+
         #endregion Properties
 
         #region Ctor
 
-        public MessageSplitLandInstallEventArgs(Layer layer, List<Graphic> gs, IDbContext dbContext)
+        public MessageSplitLandInstallEventArgs(Layer layer, List<Graphic> gs, IDbContext dbContext, Zone zone)
             : base(EditGISClient.tGIS_LandCodeEdit_Geometry_Begin)
         {
             DbContext = dbContext;
@@ -38,6 +43,7 @@ namespace YuLinTu.Component.MapFoundation
             AutoResetEvent = new AutoResetEvent(false);
             Graphics = new List<Graphic>();
             Graphics.AddRange(gs);
+            Zone = zone;
         }
 
         #endregion Ctor

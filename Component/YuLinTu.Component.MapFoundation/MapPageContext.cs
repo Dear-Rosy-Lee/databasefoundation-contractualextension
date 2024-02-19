@@ -4638,11 +4638,11 @@ namespace YuLinTu.Component.MapFoundation
             TaskThreadDispatcher.Create(MapControl.Dispatcher,
             go =>
             {
-                var args = new MessageSplitLandInstallEventArgs(layer, graphics, dbcontext);
+                var args = new MessageSplitLandInstallEventArgs(layer, graphics, dbcontext, currentZone);
                 map.Message.Send(this, args);
                 if (args.IsCancel)
                     return;
-                var editor = new SplitLandEdit(map, layer, graphics);
+                var editor = new SplitLandEdit(map, layer, graphics, dbcontext, currentZone);
                 map.Dispatcher.Invoke(new Action(() =>
                 {
                 }));

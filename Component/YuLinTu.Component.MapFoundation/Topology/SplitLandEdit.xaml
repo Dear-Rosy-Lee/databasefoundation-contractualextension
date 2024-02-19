@@ -12,16 +12,31 @@
     Header="地块编码修改"
     mc:Ignorable="d">
     <Grid
-        Width="500"
+        Width="300"
         Background="{DynamicResource Metro_Window_Style_Background_Content}"
         ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <Border Grid.Row="1" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityHiddenConverter}}">
+        <Border Grid.Row="0">
+            <CheckBox
+                Name="CheckBox"
+                Margin="25,8,0,0"
+                Click="CheckBox_Click"
+                Content="是否重新生成地块编码"
+                IsChecked="True" />
+        </Border>
+        <Border Grid.Row="1">
+            <TextBlock
+                Name="TextBlock"
+                Margin="25,8,0,0"
+                Visibility="Collapsed" />
+        </Border>
+        <Border Grid.Row="2" Visibility="Collapsed">
             <cmps:LoadingIcon
                 Width="50"
                 Height="50"
@@ -31,7 +46,7 @@
                 Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityHiddenConverter}}" />
         </Border>
         <Border
-            Grid.Row="1"
+            Grid.Row="2"
             Padding="10"
             Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}">
             <Grid>
@@ -42,7 +57,7 @@
 
                 <cmps:MetroListBox
                     Name="dg"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     GridLineThickness="0,1,0,1"
                     GridLineVisibility="Visible"
                     ItemMargin="0,0,0,-1"
@@ -52,11 +67,11 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200" />
-                                    <ColumnDefinition Width="60" />
-                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <DockPanel Grid.Row="1" LastChildFill="False">
+                                <DockPanel Grid.Row="2" LastChildFill="False">
                                     <cmps:ImageTextItem
                                         Margin="5,2"
                                         DockPanel.Dock="Left"
@@ -67,23 +82,36 @@
                                         ToolTip="{Binding Text}" />
                                 </DockPanel>
                                 <DockPanel
-                                    Grid.Row="1"
+                                    Grid.Row="2"
                                     Grid.Column="1"
-                                    LastChildFill="False">
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
+
                                     <TextBlock
-                                        Margin="0,6"
+                                        Margin="0,9"
                                         DockPanel.Dock="Left"
                                         Text="地块编码：" />
                                 </DockPanel>
                                 <DockPanel
-                                    Grid.Row="1"
+                                    Grid.Row="2"
                                     Grid.Column="2"
-                                    LastChildFill="False">
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
                                     <cmps:MetroTextBox
                                         Margin="5,2"
                                         DockPanel.Dock="Left"
-                                        Text="{Binding LandNumber, Converter={StaticResource ObjectToSingleLineStringConverter}}"
-                                        ToolTip="{Binding LandNumber}" />
+                                        Text="{Binding SurveyNumber, Converter={StaticResource ObjectToSingleLineStringConverter}}"
+                                        ToolTip="{Binding SurveyNumber}">
+                                        <cmps:MetroTextBox.ContentRight>
+                                            <metro:ImageButton
+                                                BorderBrushHover="{DynamicResource Metro_Window_Style_Foreground_Highlight}"
+                                                BorderBrushPressed="{DynamicResource Metro_Window_Style_Foreground_Highlight}"
+                                                BorderThickness="1,0,0,0"
+                                                Click="mbtnGetLandCode_Click"
+                                                Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Falsh.png"
+                                                ToolTip="生成可用地块编码" />
+                                        </cmps:MetroTextBox.ContentRight>
+                                    </cmps:MetroTextBox>
                                 </DockPanel>
                             </Grid>
                         </DataTemplate>
@@ -92,17 +120,16 @@
             </Grid>
         </Border>
         <Border
-            Grid.Row="2"
-            Margin="10,0,10,0"
+            Grid.Row="3"
+            Margin="0,0,0,0"
             BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
             BorderThickness="0,1,0,0"
             SnapsToDevicePixels="True"
-            Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}" />
+            Visibility="Collapsed" />
         <DockPanel
-            Grid.Row="3"
+            Grid.Row="4"
             Margin="10,5,10,5"
-            LastChildFill="False"
-            Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}">
+            LastChildFill="False">
             <metro:MetroButton
                 Height="30"
                 Margin="5,0,0,0"

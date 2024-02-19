@@ -6,6 +6,9 @@ using System.Windows.Input;
 using YuLinTu.Spatial;
 using YuLinTu.tGIS.Client;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Data;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -23,13 +26,31 @@ namespace YuLinTu.Component.MapFoundation
 
         #endregion Fields
 
-        public SplitLandEdit(MapControl map, Layer layer, List<Graphic> graphics)
+        #region Property
+
+        public IDbContext DbContext { get; set; }
+
+        public Zone CurrentZone { get; set; }
+
+        public List<string> ListLandCode { get; set; }
+
+        public List<SplitItem> SplitItems { get; set; }
+
+        public bool Flag { get; set; }
+
+        public string LandCode { get; set; }
+
+        #endregion Property
+
+        public SplitLandEdit(MapControl map, Layer layer, List<Graphic> graphics, IDbContext dbContext, Zone zone)
         {
             this.graphics = graphics;
             this.map = map;
             this.layer = layer;
             InitializeComponent();
             DataContext = this;
+            DbContext = dbContext;
+            CurrentZone = zone;
         }
 
         #region Methods
@@ -59,8 +80,8 @@ namespace YuLinTu.Component.MapFoundation
             var vectorLayer = layer as VectorLayer;
             var labeler = vectorLayer != null ? vectorLayer.Labeler : null;
             var dataSource = vectorLayer != null ? vectorLayer.DataSource : null;
-
-            List<SplitItem> list = new List<SplitItem>();
+            LandCode = string.Empty;
+            SplitItems = new List<SplitItem>();
             graphics.ForEach(c =>
             {
                 var item = new SplitItem();
@@ -69,13 +90,15 @@ namespace YuLinTu.Component.MapFoundation
 
                 if (item.Text.TrimSafe().IsNullOrBlank())
                     item.Text = GetDisplayText(c, dataSource);
-                item.LandNumber = c.Object.Object.GetPropertyValue("DKBM").ToString();
-                list.Add(item);
+                var res = c.Object.Object.GetPropertyValue("DKBM").ToString();
+                item.SurveyNumber = res.Substring(res.Length - 5);
+                item.Flag = Visibility.Visible;
+                SplitItems.Add(item);
             });
-
-            CanConfirm = false;
-            dg.ItemsSource = list;
-
+            LandCode = SplitItems.Select(x => x.SurveyNumber).ToList().Min().ToString();
+            dg.ItemsSource = SplitItems;
+            TextBlock.Text = $"请选择一个地块,使其地块编码为:{LandCode}";
+            Flag = true;
             layerHover = new GraphicsLayer();
             map.InternalLayers.Add(layerHover);
         }
@@ -91,6 +114,32 @@ namespace YuLinTu.Component.MapFoundation
         #endregion Methods - Override
 
         #region Methods - Events
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            dg.ItemsSource = null;
+            if (CheckBox.IsChecked == false)
+            {
+                SplitItems.ForEach(c =>
+                {
+                    c.Flag = Visibility.Hidden;
+                    TextBlock.Text = $"请选择一个地块,使其地块编码为:{LandCode}";
+                    TextBlock.Visibility = Visibility.Visible;
+                });
+                Flag = false;
+            }
+            else
+            {
+                SplitItems.ForEach(c =>
+                {
+                    TextBlock.Visibility = Visibility.Collapsed;
+                    c.Flag = Visibility.Visible;
+                });
+                Flag = true;
+            }
+
+            dg.ItemsSource = SplitItems;
+        }
 
         private void MetroButton_Click(object sender, RoutedEventArgs e)
         {
@@ -141,6 +190,21 @@ namespace YuLinTu.Component.MapFoundation
             }
 
             layerHover.Graphics.Add(graphic);
+        }
+
+        private void mbtnGetLandCode_Click(object sender, RoutedEventArgs e)
+        {
+            var dc = e.Source.GetPropertyValue("DataContext").GetPropertyValue("SurveyNumber");
+            if (dc != null)
+            {
+                var landBusiness = new AccountLandBusiness(DbContext);
+                if (landBusiness == null)
+                    landBusiness = new AccountLandBusiness(DbContext);
+                string number = landBusiness.GetNewLandNumber(CurrentZone.FullCode);
+                SplitItems.Where(x => x.SurveyNumber == dc.ToString()).FirstOrDefault().SurveyNumber = number.Substring(number.Length - 5);
+                dg.ItemsSource = null;
+                dg.ItemsSource = SplitItems;
+            }
         }
 
         private void dg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
