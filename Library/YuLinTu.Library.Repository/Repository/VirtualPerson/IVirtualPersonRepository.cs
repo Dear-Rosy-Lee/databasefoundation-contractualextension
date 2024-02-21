@@ -31,6 +31,8 @@ namespace YuLinTu.Library.Repository
         /// <returns>“承包方”的信息</returns>
         VirtualPerson Get(string name, string code);
 
+        VirtualPerson GetByHH(string hh, string code);
+
         /// <summary>
         /// 根据“承包方”编号从指定的地域中获取“承包方”的信息
         /// </summary>
@@ -148,7 +150,7 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="ID">id</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        int Delete(string cardId,bool isDeleteLands=false);
+        int Delete(string cardId, bool isDeleteLands = false);
 
         /// <summary>
         /// 删除指定地域下的所有承包方对象
@@ -222,8 +224,8 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         int DeleteRelationDataByVps(List<Guid> vpIds);
 
-        BelongRelation GetRelationByID(Guid personId,Guid landId);
-        
+        BelongRelation GetRelationByID(Guid personId, Guid landId);
+
         List<BelongRelation> GetRelationsByVpID(Guid personID);
 
         List<BelongRelation> GetRelationByZone(string zoneCode);
@@ -238,6 +240,6 @@ namespace YuLinTu.Library.Repository
         ///// </history>
         //bool HasInitialized(string zoneCode);
 
-        #endregion
+        #endregion Methods
     }
 }

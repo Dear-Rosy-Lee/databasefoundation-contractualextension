@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace YuLinTu.Library.WorkStation
 
         public IBelongRelationRespository BelongRalationRespository { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -41,9 +42,9 @@ namespace YuLinTu.Library.WorkStation
             BelongRalationRespository = belongRep;
         }
 
-        #endregion
+        #endregion Ctor
 
-        #region   方法实现
+        #region 方法实现
 
         /// <summary>
         /// 根据Id获取承包方
@@ -85,6 +86,11 @@ namespace YuLinTu.Library.WorkStation
             return DefaultRepository.Get(familyNumber, code);
         }
 
+        public VirtualPerson GetByHH(string hh, string code)
+        {
+            return DefaultRepository.GetByHH(hh, code);
+        }
+
         /// <summary>
         /// 根据承包方名称，证件号，所在地域获取承包方
         /// </summary>
@@ -96,7 +102,6 @@ namespace YuLinTu.Library.WorkStation
         {
             return DefaultRepository.Get(name, number, code);
         }
-
 
         /// <summary>
         /// 根据承包方名称，所在地域获取指定类型的承包方
@@ -249,7 +254,6 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
-
         /// <summary>
         /// 根据承包方身份证号删除承包方信息
         /// </summary>
@@ -397,13 +401,13 @@ namespace YuLinTu.Library.WorkStation
         }
 
         /// <summary>
-        /// 根据地域删除下面承包方所有数据 
+        /// 根据地域删除下面承包方所有数据
         /// </summary>
         /// <param name="zoneCode"></param>
         /// <returns></returns>
         public void ClearZoneVirtualPersonALLData(string zoneCode)
         {
-            //删除包括子集地域信息及联动数据 江宇修改2016.8.30 
+            //删除包括子集地域信息及联动数据 江宇修改2016.8.30
             System.Threading.Tasks.Task.Factory.StartNew((() =>
             {
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractRequireTable>(c => c.ZoneCode.StartsWith(zoneCode));
@@ -453,12 +457,11 @@ namespace YuLinTu.Library.WorkStation
             return DefaultRepository.GetRelationsByVpID(personID);
         }
 
-
         public List<BelongRelation> GetRelationByZone(string zoneCode)
         {
             return DefaultRepository.GetRelationByZone(zoneCode);
         }
 
-        #endregion
+        #endregion 方法实现
     }
 }

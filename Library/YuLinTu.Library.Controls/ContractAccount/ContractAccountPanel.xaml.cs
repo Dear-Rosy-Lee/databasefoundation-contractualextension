@@ -2356,6 +2356,38 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 导入承包关系表数据
+        /// </summary>
+        public void ImportLandTiesExcel()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ImportZone, ContractAccountInfo.ImportZone);
+                return;
+            }
+            List<Zone> childrenZones = ContractAccountBusiness.GetChildrenZone(currentZone);
+            if ((currentZone.Level == eZoneLevel.Group) || (currentZone.Level == eZoneLevel.Village && childrenZones.Count == 0))
+            {
+                //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
+                ImportDataPage importLand = new ImportDataPage(TheWorkPage, "导入承包关系表");
+                TheWorkPage.Page.ShowMessageBox(importLand, (b, r) =>
+                {
+                    if (string.IsNullOrEmpty(importLand.FileName) || b == false)
+                    {
+                        return;
+                    }
+                    ImportLandTiesTask(importLand.FileName);
+                });
+            }
+            else
+            {
+                //此时选择地域大于村
+                ShowBox("导入承包关系表", ContractAccountInfo.ImportErrorZone);
+                return;
+            }
+        }
+
+        /// <summary>
         /// 导入地块调查表任务
         /// </summary>
         /// <param name="fileName">选择文件路径</param>
@@ -2418,6 +2450,34 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             groupOperation.StartAsync();
+        }
+
+        public void ImportLandTiesTask(string fileName)
+        {
+            TaskImportLandTiesTableArgument meta = new TaskImportLandTiesTableArgument();
+            meta.DbContext = DbContext;       //当前使用的数据库
+            meta.CurrentZone = currentZone;    //当前地域
+            meta.FileName = fileName;
+            TaskImportLandTiesTableOperation import = new TaskImportLandTiesTableOperation();
+            import.Argument = meta;
+            import.Description = "导入承包关系表中地块数据";
+            import.Name = "导入承包关系表";
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
+                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode);
+                SendMessasge(args);
+            });
+            import.Terminated += new TaskTerminatedEventHandler((o, t) =>
+            {
+                ShowBox(ContractAccountInfo.ImportData, ContractAccountInfo.ImportDataFail);
+            });
+            TheWorkPage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
         }
 
         /// <summary>

@@ -236,6 +236,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(mbtnEdit, command.ContractLandEdit, command.ContractLandEditBind);
             SetCommandBinding(mbtnDel, command.ContractLandDel, command.ContractLandDelBind);
             SetCommandBinding(mbtnImportLandExcel, command.ImportLandExcel, command.ImportLandExcelBind);
+            SetCommandBinding(mbtnImportLandTiesExcel, command.ImportLandTiesExcel, command.ImportLandTiesExcelBind);
             SetCommandBinding(mbtnImportBoundaryExcel, command.ImportBoundaryExcel, command.ImportBoundaryExcelBind);
             SetCommandBinding(mbtnImportVector, command.ImportVector, command.ImportVectorBind);
             SetCommandBinding(mbtnImportPoints, command.ImportPoints, command.ImportPointsBind);
@@ -371,6 +372,10 @@ namespace YuLinTu.Component.ContractAccount
 
                 case ContractAccountCommand.ImportLandExcelName:
                     contractAccountPanel.ImportLandExcel();//导入地块调查表
+                    break;
+
+                case ContractAccountCommand.ImportLandTiesExcelName:
+                    contractAccountPanel.ImportLandTiesExcel();//导入关系调查表
                     break;
 
                 case ContractAccountCommand.ImportBoundaryExcelName:

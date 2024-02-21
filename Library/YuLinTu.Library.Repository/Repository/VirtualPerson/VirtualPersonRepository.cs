@@ -23,13 +23,14 @@ namespace YuLinTu.Library.Repository
         {
             m_DSSchema = ds.CreateSchema();
         }
-        #endregion
+
+        #endregion Ctor
 
         #region Fields
 
         private const string ORDERFIELD_DEFAULT = "Name";
 
-        #endregion
+        #endregion Fields
 
         #region Methods
 
@@ -86,6 +87,20 @@ namespace YuLinTu.Library.Repository
                 return null;
 
             var data = Get(c => c.Name.Equals(name) && c.ZoneCode.Equals(code)).FirstOrDefault();
+            return data as VirtualPerson;
+        }
+
+        public VirtualPerson GetByHH(string hh, string code)
+        {
+            if (!CheckTableExist())
+            {
+                throw new ArgumentNullException("数据库不存在表："
+                    + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            }
+            if (!CheckRule.CheckStringNullOrEmpty(ref hh) || !CheckRule.CheckStringNullOrEmpty(ref code))
+                return null;
+
+            var data = Get(c => c.FamilyNumber.Equals(hh) && c.ZoneCode.Equals(code)).FirstOrDefault();
             return data as VirtualPerson;
         }
 
@@ -469,7 +484,7 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="ID">id</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        public int Delete(string cardId,bool isDeleteLands=false)
+        public int Delete(string cardId, bool isDeleteLands = false)
         {
             if (cardId.IsNullOrEmpty())
             {
@@ -675,7 +690,7 @@ namespace YuLinTu.Library.Repository
         /// <summary>
         /// 存在承包方数据的地域集合
         /// </summary>
-        /// <param name="zoneCode">地域集合</param>  
+        /// <param name="zoneCode">地域集合</param>
         public List<Zone> ExistZones(List<Zone> zoneList)
         {
             if (!CheckTableExist())
@@ -711,14 +726,12 @@ namespace YuLinTu.Library.Repository
             return q.ToList();
         }
 
-
         public int AddBelongRelation(BelongRelation belongRelation)
         {
             var qRelation = DataSource.CreateQuery<BelongRelation>();
             var q = qRelation.Add(belongRelation).Save();
             return q;
         }
-
 
         /// <summary>
         /// 根据承包方id集合删除承包方关联数据
@@ -781,9 +794,9 @@ namespace YuLinTu.Library.Repository
         public List<BelongRelation> GetRelationByZone(string zoneCode)
         {
             var qRelation = DataSource.CreateQuery<BelongRelation>();
-            return qRelation.Where(q => q.ZoneCode==zoneCode).ToList();
+            return qRelation.Where(q => q.ZoneCode == zoneCode).ToList();
         }
 
-        #endregion
+        #endregion Methods
     }
 }

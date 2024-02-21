@@ -40,6 +40,11 @@ namespace YuLinTu.Library.Command
         public const string ImportLandExcelName = "importLandExcel";
 
         /// <summary>
+        /// 导入(批量)承包关系表命令名称
+        /// </summary>
+        public const string ImportLandTiesExcelName = "importLandTiesExcel";
+
+        /// <summary>
         /// 导入(批量)界址调查表命令名称
         /// </summary>
         public const string ImportBoundaryExcelName = "importBoundaryExcel";
@@ -421,6 +426,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand ImportLandExcel = new RoutedCommand(ImportLandExcelName, typeof(Button));
 
         /// <summary>
+        /// 导入(批量)承包关系表命令
+        /// </summary>
+        public RoutedCommand ImportLandTiesExcel = new RoutedCommand(ImportLandTiesExcelName, typeof(Button));
+
+        /// <summary>
         /// 导入(批量)界址调查表命令
         /// </summary>
         public RoutedCommand ImportBoundaryExcel = new RoutedCommand(ImportBoundaryExcelName, typeof(Button));
@@ -787,6 +797,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding ImportLandExcelBind = new CommandBinding();
 
         /// <summary>
+        /// 导入(批量)承包关系表绑定
+        /// </summary>
+        public CommandBinding ImportLandTiesExcelBind = new CommandBinding();
+
+        /// <summary>
         /// 导入(批量)界址调查表绑定
         /// </summary>
         public CommandBinding ImportBoundaryExcelBind = new CommandBinding();
@@ -1137,6 +1152,7 @@ namespace YuLinTu.Library.Command
             ContractLandEditBind.Command = ContractLandEdit;
             ContractLandDelBind.Command = ContractLandDel;
             ImportLandExcelBind.Command = ImportLandExcel;
+            ImportLandTiesExcelBind.Command = ImportLandTiesExcel;
             ImportBoundaryExcelBind.Command = ImportBoundaryExcel;
             ImportVectorBind.Command = ImportVector;
             ImportPointsBind.Command = ImportPoints;

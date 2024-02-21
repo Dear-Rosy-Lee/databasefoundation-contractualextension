@@ -1,0 +1,578 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using YuLinTu.Data;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
+
+namespace YuLinTu.Library.Business
+{
+    [Serializable]
+    public class InitalizeLandTiesTable : ExcelBase
+    {
+        #region Fields
+
+        private const double PRECISION = 0.000001;//精度
+        private Zone currentZone;
+        private IDbContext dbContext;
+        private object[,] allItem;
+        private int rangeCount;//行数
+        private int columnCount;//列数
+        private bool isOk;
+        private bool allowNoWriteActualArea;//允许不填写实测面积
+        private bool allowNoWriteAwareArea;//允许不填写确权面积
+        private bool allowAwareAreaBigActualArea;//允许确权面积大于实测面积
+        private bool contractorClear;//是否清空承包方
+
+        private SortedList<string, string> existPersons;
+        private SortedList<string, string> existTablePersons;
+
+        private string lastRowText = "合计";//最后一行第一个单元格中文字
+        private string fileName = string.Empty;//文件名称
+        private int currentIndex = 0;//当前索引号
+        private int currentNumber = 0;//当前编号
+
+        //3.14需求
+        private string concordNumber = string.Empty;//合同编号
+
+        private string bookNumber = string.Empty;//证书编号
+
+        private double countActualArea = 0.0;//当前行实测总面积
+        private double countAwareArea = 0.0;//当前行确权总面积
+        private double countMotorizeLandArea = 0.0;//当前行机动地总面积
+        private double countTotalTableArea = 0.0;//二轮承包地总面积
+
+        private List<string> errorArray = new List<string>();//错误信息
+        private List<string> warnArray = new List<string>();//警告信息
+
+        #endregion Fields
+
+        #region Propertys
+
+        /// <summary>
+        /// 导入excel表的名称
+        /// </summary>
+        public string ExcelName { get; set; }
+
+        /// <summary>
+        /// 承包户集合
+        /// </summary>
+        public List<LandFamily> LandFamilyCollection
+        {
+            get { return _landFamilyCollection; }
+            set { _landFamilyCollection = value; }
+        }
+
+        /// <summary>
+        /// 文件名称
+        /// </summary>
+        public string FileName
+        {
+            set { fileName = value; }
+        }
+
+        /// <summary>
+        /// 当前行政区域
+        /// </summary>
+        public Zone CurrentZone
+        {
+            set { currentZone = value; }
+            get { return currentZone; }
+        }
+
+        /// <summary>
+        /// 数据库实例
+        /// </summary>
+        public IDbContext DbContext
+        {
+            set { dbContext = value; }
+            get { return dbContext; }
+        }
+
+        /// <summary>
+        /// 错误信息
+        /// </summary>
+        public List<string> ErrorInformation
+        {
+            get { return errorArray; }
+        }
+
+        /// <summary>
+        /// 警告信息
+        /// </summary>
+        public List<string> WarnInformation
+        {
+            get { return warnArray; }
+        }
+
+        /// <summary>
+        /// 表格类型
+        /// </summary>
+        public int TableType { get; set; }
+
+        private List<LandFamily> _landFamilyCollection = new List<LandFamily>();
+
+        #endregion Propertys
+
+        #region Ctor
+
+        public InitalizeLandTiesTable()
+        {
+            SetValue();
+        }
+
+        #endregion Ctor
+
+        #region Method
+
+        #region Method - public
+
+        public bool ReadTableInformation()
+        {
+            bool isAdd = false;
+            int concordIndex = 1;
+            if (!CheckValue())
+            {
+                return false;
+            }
+
+            LandFamily landFamily = new LandFamily();
+            string totalInfo = string.Empty;
+            try
+            {
+                int calIndex = GetStartRow();//获取数据开始行数
+                if (calIndex == -1)
+                {
+                    ReportErrorInfo(this.ExcelName + "表中无数据或数据未按要求制作!");
+                    return false;
+                }
+                existPersons = new SortedList<string, string>();
+                existTablePersons = new SortedList<string, string>();
+                isOk = true;
+                for (int index = calIndex; index < rangeCount; index++)
+                {
+                    currentIndex = index;//当前行数
+                    string rowValue = GetString(allItem[index, 0]);//编号栏数据
+                    if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                    {
+                        if (isAdd && !AddLandFamily(landFamily))
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+                    string familyName = GetString(allItem[currentIndex, 1]);
+                    if (!string.IsNullOrEmpty(rowValue) || !string.IsNullOrEmpty(familyName))
+                    {
+                        if (isAdd && !AddLandFamily(landFamily)) //添加户与承包地块
+                        {
+                            continue;
+                        }
+                        landFamily = NewFamily(landFamily, rowValue, currentIndex, concordIndex);//重新创建
+                        concordIndex++;
+                        isAdd = true;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
+                        {
+                            ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
+                            continue;
+                        }
+                    }
+
+                    GetExcelInformation(landFamily);//获取Excel表中信息
+                }
+            }
+            catch (Exception ex)
+            {
+                Dispose();
+                YuLinTu.Library.Log.Log.WriteException(this, "ReadTableInformation(读取表格信息失败)", ex.Message + ex.StackTrace);
+                return ReportErrorInfo(this.ExcelName + "转换过程中发生错误：" + ex.Message.ToString() + ",请确认导入数据是否完整匹配!");
+            }
+            return isOk;
+        }
+
+        #endregion Method - public
+
+        #region Method - private
+
+        private LandFamily NewFamily(LandFamily landFamily, string rowValue, int currentIndex, int concordIndex)
+        {
+            int.TryParse(rowValue, out currentNumber);//当前编号
+            landFamily = new LandFamily();
+            landFamily.Number = currentNumber;
+            return landFamily;
+        }
+
+        private bool AddLandFamily(LandFamily landFamily)
+        {
+            if (contractorClear)
+            {
+                if (landFamily.CurrentFamily.SourceID == null || landFamily.CurrentFamily.SourceID.Value == Guid.Empty)
+                {
+                    AddErrorMessage(this.ExcelName + string.Format("表中名称为{0}的承包方下家庭成员中不包含户主信息!", landFamily.CurrentFamily.Name));
+                }
+            }
+            existPersons = new SortedList<string, string>();
+            existTablePersons = new SortedList<string, string>();
+            LandFamilyCollection.Add(landFamily);
+            return true;
+        }
+
+        private int GetStartRow()
+        {
+            int startIndex = -1;
+            for (int i = 0; i < rangeCount; i++)
+            {
+                string rowValue = GetString(allItem[i, 0]);//编号栏数据
+                if (!string.IsNullOrEmpty(rowValue))
+                {
+                    int.TryParse(rowValue, out startIndex);
+                }
+                if (startIndex != 0)
+                {
+                    startIndex = i;
+                    break;
+                }
+            }
+            return startIndex == 0 ? -1 : startIndex;
+        }
+
+        private void GetExcelInformation(LandFamily landFamily)
+        {
+            try
+            {
+                InitalizeFamilyInformation(landFamily);
+
+                InitalizeLandInformation(landFamily);
+            }
+            catch (System.Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "GetExcelInformation(获取Excel表中信息失败)", ex.Message + ex.StackTrace);
+                ReportErrorInfo("读取表格信息失败，" + string.Format("请检查导入地块调查表配置是否与{0}表结构匹配", this.ExcelName));
+            }
+        }
+
+        private void InitalizeFamilyInformation(LandFamily landFamily)
+        {
+            if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
+            {
+                var vpCode = CurrentZone.FullCode;
+                var vpNumber = GetString(allItem[currentIndex, 2]).Remove(0, vpCode.Length);
+                vpNumber = vpNumber.Substring(0, vpNumber.Length - 1).TrimStart('0');
+                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var vp = vpStation.GetByHH(vpNumber, vpCode);
+                landFamily.CurrentFamily.ID = vp.ID;
+                landFamily.CurrentFamily.FamilyNumber = vpNumber;
+                if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
+                {
+                    string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", currentIndex + 1);
+                    RecordErrorInformation(errorInformation);
+                }
+                else
+                {
+                    if (!ToolMath.MatchEntiretyNumber(landFamily.CurrentFamily.FamilyNumber))
+                    {
+                        string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号{1}不符合数字类型要求!", currentIndex + 1, landFamily.CurrentFamily.FamilyNumber);
+                        RecordErrorInformation(errorInformation);
+                    }
+                }
+            }
+            string familyName = GetString(allItem[currentIndex, 1]);
+            if (!string.IsNullOrEmpty(familyName))
+            {
+                landFamily.CurrentFamily.Name = familyName;
+            }
+
+            AddPerson(landFamily);
+        }
+
+        private void RecordErrorInformation(string errorInfo)
+        {
+            isOk = false;
+            AddErrorMessage(errorInfo);
+        }
+
+        private void InitalizeLandInformation(LandFamily landFamily)
+        {
+            var landStation = DbContext.CreateContractLandWorkstation();
+            var landNumber = GetString(allItem[currentIndex, 13]);
+            if (landNumber != "")
+            {
+                var entity = landStation.GetByLandNumber(landNumber);
+                if (entity != null)
+                {
+                    entity.Name = GetString(allItem[currentIndex, 12]);
+                    entity.ConcordArea = GetString(allItem[currentIndex, 14]);
+                    entity.ActualArea = double.Parse(GetString(allItem[currentIndex, 16]));
+                    entity.NeighborEast = GetString(allItem[currentIndex, 18]);
+                    entity.NeighborSouth = GetString(allItem[currentIndex, 19]);
+                    entity.NeighborWest = GetString(allItem[currentIndex, 20]);
+                    entity.NeighborNorth = GetString(allItem[currentIndex, 21]);
+                    entity.Comment = GetString(allItem[currentIndex, 22]);
+                    landFamily.LandCollection.Add(entity);
+                }
+                else
+                {
+                    ContractLand land = new ContractLand();
+                    land.OwnerName = landFamily.CurrentFamily.Name;
+                    land.OwnerId = landFamily.CurrentFamily.ID;
+                    land.LocationCode = CurrentZone.FullCode;
+                    land.LocationName = CurrentZone.FullName;
+                    land.Name = GetString(allItem[currentIndex, 12]);
+                    land.LandNumber = GetString(allItem[currentIndex, 13]);
+                    land.ConcordArea = GetString(allItem[currentIndex, 14]);
+                    land.ActualArea = double.Parse(GetString(allItem[currentIndex, 16]));
+                    land.NeighborEast = GetString(allItem[currentIndex, 18]);
+                    land.NeighborSouth = GetString(allItem[currentIndex, 19]);
+                    land.NeighborWest = GetString(allItem[currentIndex, 20]);
+                    land.NeighborNorth = GetString(allItem[currentIndex, 21]);
+                    land.Comment = GetString(allItem[currentIndex, 22]);
+                    landFamily.LandCollection.Add(land);
+                }
+            }
+            
+        }
+
+        private bool AddPerson(LandFamily landFamily)
+        {
+            string value = string.Empty;
+            Person person = new Person();
+            person.FamilyID = landFamily.CurrentFamily.ID;
+            person.CreateTime = DateTime.Now;
+            person.LastModifyTime = DateTime.Now;
+            person.Nation = eNation.UnKnown;
+            person.ZoneCode = currentZone.FullCode;
+            //性别
+            value = GetString(allItem[currentIndex, 6]);
+            if (string.IsNullOrEmpty(value))
+            {
+                person.Gender = eGender.Unknow;
+            }
+            else
+            {
+                person.Gender = GetGender(value);
+            }
+
+            //身份证号
+            string icn = GetString(allItem[currentIndex, 9]);
+            //家庭关系
+            person.Relationship = GetString(allItem[currentIndex, 10]);
+            //备注
+            person.Comment = GetString(allItem[currentIndex, 11]);
+            //名称
+            string name = GetString(allItem[currentIndex, 5]);
+            if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || !string.IsNullOrEmpty(icn)))
+            {
+                AddWarnMessage(this.ExcelName + string.Format("表序号为{0}的家庭成员姓名为空!", currentIndex + 1));
+            }
+            person.Name = name;
+
+            if (string.IsNullOrEmpty(icn))
+            {
+                person.ICN = "";
+                if (!string.IsNullOrEmpty(person.Name))
+                {
+                    AddWarnMessage(this.ExcelName + "表中" + person.Name + "的身份证号码为空");
+                }
+            }
+            else
+            {
+                person.ICN = icn;
+                if (person.CardType == eCredentialsType.IdentifyCard)
+                {
+                    person = SetPersonValue(person);
+                    if (!string.IsNullOrEmpty(icn) && icn.Length != 15 && icn.Length != 18)
+                    {
+                        ReportErrorInfo(this.ExcelName + string.Format("表中{0}的身份证号码{1}共{2}位,不满足身份证号码15位或18位数字要求!", person.Name, icn, icn.Length));
+                    }
+                    if (!string.IsNullOrEmpty(icn) && (icn.Length == 15 || icn.Length == 18) && !ToolMath.MatchEntiretyNumber(icn.Replace("x", "").Replace("X", "")))
+                    {
+                        ReportErrorInfo(this.ExcelName + string.Format("表中{0}的身份证号码{1}共{2}位,但不满足身份证号码数字要求!", person.Name, icn, icn.Length));
+                    }
+                }
+            }
+            if (person.Gender == eGender.Unknow && !string.IsNullOrEmpty(person.Name))
+            {
+                AddWarnMessage(this.ExcelName + "表中" + person.Name + "的性别填写不正确!");
+            }
+
+            if (!string.IsNullOrEmpty(person.Name))
+            {
+                if (existPersons.ContainsKey(person.Name))
+                {
+                    AddWarnMessage(this.ExcelName + "表中" + landFamily.CurrentFamily.Name + "下存在同名的成员：" + person.Name);
+                }
+                else
+                {
+                    existPersons.Add(person.Name, person.Name);
+                }
+            }
+            if (!string.IsNullOrEmpty(person.Name))
+            {
+                landFamily.Persons.Add(person);
+            }
+            if (person.Name == landFamily.CurrentFamily.Name)
+            {
+                landFamily.CurrentFamily.SourceID = person.ID;
+                landFamily.CurrentFamily.Number = person.ICN;
+                landFamily.CurrentFamily.CardType = person.CardType;
+                person.Relationship = "户主";//string.IsNullOrEmpty(person.Relationship) ? "户主" : person.Relationship;
+                if (person.Name.Contains("集体"))
+                {
+                    person.Relationship = "本人";
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 设置共有人值
+        /// </summary>
+        private Person SetPersonValue(Person person)
+        {
+            if (string.IsNullOrEmpty(person.ICN))
+            {
+                return person;
+            }
+            if (ToolICN.Check(person.ICN))
+            {
+                switch (ToolICN.GetGender(person.ICN))
+                {
+                    case 1:
+                        person.Gender = eGender.Male;
+                        break;
+
+                    case 0:
+                        person.Gender = eGender.Female;
+                        break;
+
+                    default:
+                        person.Gender = eGender.Unknow;
+                        break;
+                }
+                person.Birthday = ToolICN.GetBirthday(person.ICN);
+            }
+            else
+            {
+                person.ICN = person.ICN.Trim();
+                if (person.ICN.Length == 18 || person.ICN.Length == 15)
+                {
+                    if (person.Gender == eGender.Unknow)
+                    {
+                        switch (ToolICN.GetGenderInNotCheck(person.ICN))
+                        {
+                            case 1:
+                                person.Gender = eGender.Male;
+                                break;
+
+                            case 0:
+                                person.Gender = eGender.Female;
+                                break;
+
+                            default:
+                                person.Gender = eGender.Unknow;
+                                break;
+                        }
+                    }
+                    person.Birthday = ToolICN.GetBirthdayInNotCheck(person.ICN);
+                    AddWarnMessage(this.ExcelName + "表中" + person.Name + "的身份证号码：" + person.ICN + "不符合身份证验证规则!");
+                }
+            }
+            return person;
+        }
+
+        private eGender GetGender(string value)
+        {
+            if (value == "男性")
+                return eGender.Male;
+
+            if (value == "女性")
+                return eGender.Female;
+            return eGender.Unknow;
+        }
+
+        private bool CheckValue()
+        {
+            if (!OpenExcel())
+                return false;
+            if (!SetValue())
+                return false;
+            return true;
+        }
+
+        private bool SetValue()
+        {
+            allItem = GetAllRangeValue();
+            rangeCount = GetRangeRowCount();
+            columnCount = GetRangeColumnCount();
+            if (allItem == null || allItem.Length < 1)
+                return ReportErrorInfo(this.ExcelName + "表中可能没有数据或数据可能已经损坏,如果表中有数据请重新建张新表,然后将原数据拷贝过去,再执行该操作!");
+            if (rangeCount < 1 || columnCount < 1)
+                return ReportErrorInfo(this.ExcelName + "表中可能没有数据或数据可能已经损坏,如果表中有数据请重新建张新表,然后将原数据拷贝过去,再执行该操作!");
+            return true;
+        }
+
+        private bool OpenExcel()
+        {
+            try
+            {
+                Open(fileName);
+            }
+            catch (Exception ex)
+            {
+                Dispose();
+                YuLinTu.Library.Log.Log.WriteException(this, "OpenExcel(打开表格失败)", ex.Message + ex.StackTrace);
+                return ReportErrorInfo("打开Excel文件时出错,错误信息：" + ex.Message.ToString());
+            }
+            return true;
+        }
+
+        private bool ReportErrorInfo(string message)
+        {
+            isOk = false;
+            AddErrorMessage(message);
+            return false;
+        }
+
+        private void AddErrorMessage(string message)
+        {
+            if (errorArray == null)
+                errorArray = new List<string>();
+            if (!errorArray.Contains(message))
+                errorArray.Add(message);
+        }
+
+        /// <summary>
+        /// 添加警告信息
+        /// </summary>
+        private void AddWarnMessage(string message)
+        {
+            if (warnArray == null)
+                warnArray = new List<string>();
+            if (!warnArray.Contains(message))
+                warnArray.Add(message);
+        }
+
+        #endregion Method - private
+
+        #region Method - override
+
+        public override void Read()
+
+        {
+        }
+
+        public override void Write()
+        {
+        }
+
+        #endregion Method - override
+
+        #endregion Method
+    }
+}

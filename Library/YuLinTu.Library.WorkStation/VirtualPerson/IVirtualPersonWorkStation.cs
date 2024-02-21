@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,8 @@ namespace YuLinTu.Library.WorkStation
         /// <param name="code">地域代码</param>
         /// <returns>“承包方”的信息</returns>
         VirtualPerson GetFamilyNumber(string familyNumber, string code);
+
+        VirtualPerson GetByHH(string familyNumber, string code);
 
         /// <summary>
         /// 根据“承包方”名称、户号从指定的地域中获取“承包方”的信息
@@ -243,7 +246,7 @@ namespace YuLinTu.Library.WorkStation
 
         /// <summary>
         /// 根据地域删除下面承包方所有数据
-        /// </summary> 
+        /// </summary>
         void ClearZoneVirtualPersonALLData(string zoneCode);
 
         /// <summary>
@@ -258,6 +261,7 @@ namespace YuLinTu.Library.WorkStation
         int DeleteRelationDataByZone(string zoneCode);
 
         BelongRelation GetRelationByID(Guid personId, Guid landId);
+
         /// <summary>
         /// 根据承包方ID获取确股数据
         /// </summary>
@@ -269,6 +273,6 @@ namespace YuLinTu.Library.WorkStation
 
         int UpdatePersonList(List<VirtualPerson> persons);
 
-        #endregion
+        #endregion Methods
     }
 }

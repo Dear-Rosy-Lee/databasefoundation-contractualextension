@@ -773,6 +773,55 @@ namespace YuLinTu.Library.Business
             this.ReportInfomation(string.Format("导入成功{0}个表格,失败{1}个表格", count, tableFiles.Count() - count));
         }
 
+        public bool ImportLandTies(Zone zone, string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                this.ReportProgress(100, null);
+                this.ReportWarn(zone.FullName + "未获取地块调查表,或选择表格路径不正确,请检查执行导入操作!");
+                return false;
+            }
+            bool isSuccess = false;
+            isErrorRecord = false;
+            try
+            {
+                using (ImportLandTiesTable landTableImport = new ImportLandTiesTable())
+                {
+                    //List<VirtualPerson> persons = GetByZone(zone.FullCode);
+                    string excelName = GetMarkDesc(zone);
+                    landTableImport.ProgressChanged += ReportPercent; //进度条
+                    landTableImport.Alert += ReportInfo;              //记录错误信息
+                    landTableImport.CurrentZone = zone;
+                    landTableImport.ExcelName = excelName;
+                    landTableImport.TableType = TableType;
+                    landTableImport.DbContext = this.dbContext;
+                    landTableImport.Percent = 95.0;
+                    landTableImport.CurrentPercent = 5.0;
+                    landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
+                    //landTableImport.ListPerson = persons;
+                    this.ReportProgress(1, "开始读取数据");
+                    bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
+                    //landTableImport.MergeHouseData();
+                    this.ReportProgress(3, "开始检查数据");
+                    //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
+                    bool canImport = true;
+                    if (isReadSuccess && canImport && !isErrorRecord)
+                    {
+                        this.ReportProgress(5, "开始处理数据");
+                        landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
+                        this.ReportProgress(100, "完成");
+                        isSuccess = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ReportError("导入承包台账地块调查表失败!");
+                YuLinTu.Library.Log.Log.WriteException(this, "ImportData(导入承包台账调查表地块数据)", ex.Message + ex.StackTrace);
+            }
+            return isSuccess;
+        }
+
         /// <summary>
         /// 导入地块图斑数据shape等信息-最小以组为单位
         /// </summary>
@@ -1274,9 +1323,7 @@ namespace YuLinTu.Library.Business
                     {
                         targetLand.Purpose = dictTDYT.Code;
                     }
-
                 }
-               
             }
             if ((string)infoList[13].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -1319,7 +1366,6 @@ namespace YuLinTu.Library.Business
                         targetLand.LandName = dictTDLYLX.Name;
                     }
                 }
-                
             }
             if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -1356,7 +1402,6 @@ namespace YuLinTu.Library.Business
                     }
                     else
                     {
-
                         var dictDKLB = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.DKLB);
                         if (dictDKLB == null)
                         {
@@ -1369,7 +1414,6 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
-                
             }
             if ((string)infoList[18].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
