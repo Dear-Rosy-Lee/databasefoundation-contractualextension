@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2015 鱼鳞图公司版权所有，保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace YuLinTu.Library.Entity
     /// </summary>
     public class DictionaryTypeInfo
     {
-        #region Field-Const
+        #region Field-Constc
 
         /// <summary>
         /// 控制点类型及等级
@@ -61,7 +62,7 @@ namespace YuLinTu.Library.Entity
         public const string TDYT = "C9";
 
         /// <summary>
-        /// 承包经营权取得方式   
+        /// 承包经营权取得方式
         /// </summary>
         public const string CBJYQQDFS = "C10";
 
@@ -192,7 +193,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string LHD = "8";
 
-        #endregion
+        #endregion 地块类别
 
         #region 承包方类型
 
@@ -211,7 +212,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string DW = "3";
 
-        #endregion
+        #endregion 承包方类型
 
         #region 土地权属类型
 
@@ -245,7 +246,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string QT = "20";
 
-        #endregion
+        #endregion 土地权属类型
 
         #region 是否
 
@@ -259,7 +260,7 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string F = "2";
 
-        #endregion
+        #endregion 是否
 
         #region 地力等级
 
@@ -314,11 +315,11 @@ namespace YuLinTu.Library.Entity
         public const string SHIDD = "10";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const string K = "900";
 
-        #endregion
+        #endregion 地力等级
 
         #region 所有权性质
 
@@ -352,8 +353,8 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string QTNNJTJJZZ = "34";
 
-        #endregion
+        #endregion 所有权性质
 
-        #endregion
+        #endregion Field-Constc
     }
 }

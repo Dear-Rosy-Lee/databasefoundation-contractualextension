@@ -282,6 +282,11 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 批量导出合同信息表
         /// </summary>
-        VolumnExportContractInformationExcel = 111
+        VolumnExportContractInformationExcel = 111,
+
+        /// <summary>
+        /// 批量导出摸底核实表
+        /// </summary>
+        VolumnExportLandVerifyExcel = 112
     }
 }

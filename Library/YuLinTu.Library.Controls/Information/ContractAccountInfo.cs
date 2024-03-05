@@ -585,6 +585,11 @@ namespace YuLinTu.Library.Controls
         public const string ExportLandSurveyInFoPubExcel = "导出调查信息公示表数据";
 
         /// <summary>
+        /// 导出摸底调查核实表Excel数据
+        /// </summary>
+        public const string ExportLandVerifyExcel = "导出摸底调查核实表";
+
+        /// <summary>
         /// 导出界址信息Excel数据
         /// </summary>
         public const string ExportBoundaryInfoExcel = "导出界址调查表数据";
