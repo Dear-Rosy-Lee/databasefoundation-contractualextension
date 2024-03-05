@@ -32,6 +32,8 @@ namespace YuLinTu.Library.Business
         private List<Dictionary> dictCBFLX;
         private List<Dictionary> dictXB;
         private List<Dictionary> dictZJLX;
+        private List<Dictionary> dictTDYT;
+        private List<Dictionary> dictDLDJ;
 
         #endregion Fields
 
@@ -240,6 +242,8 @@ namespace YuLinTu.Library.Business
                 dictCBFLX = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.CBFLX);
                 dictXB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.XB);
                 dictZJLX = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.ZJLX);
+                dictTDYT = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDYT);
+                dictDLDJ = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DLDJ);
             }
             if (CurrentZone == null)
             {
@@ -287,9 +291,10 @@ namespace YuLinTu.Library.Business
             int actualLandCount = 0;
             int aindex = index;
             int bindex = index;
-            peopleCount += int.Parse(landFamily.CurrentFamily.PersonCount);
+            
             List<ContractLand> lands = landFamily.LandCollection;
             List<Person> peoples = landFamily.Persons;
+            peopleCount += peoples.Count;
             contracteeName = SystemDefine.CountryTableHead ? (string.IsNullOrEmpty(SenderNameVillage) ? "" : SenderNameVillage) : (string.IsNullOrEmpty(SenderName) ? "" : SenderName);
             showContractee = !string.IsNullOrEmpty(contracteeName);
 
@@ -320,7 +325,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode}{result}");
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name.InitalizeFamilyName(SystemDefine.KeepRepeatFlag));
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), landFamily.CurrentFamily.PersonCount);
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), peoples.Count);
             InitalizeRangeValue("O" + index, "O" + (index + height - 1), landAwareCount);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), "");
             List<ContractConcord> concord = ConcordStation.GetContractsByFamilyID(landFamily.CurrentFamily.ID);
@@ -339,13 +344,15 @@ namespace YuLinTu.Library.Business
         {
             InitalizeRangeValue("L" + index, "L" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("M" + index, "M" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
-            InitalizeRangeValue("N" + index, "N" + index, (land.TableArea.Value > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("N" + index, "N" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("P" + index, "P" + index, land.NeighborEast != null ? land.NeighborEast : "/");
             InitalizeRangeValue("Q" + index, "Q" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("R" + index, "R" + index, land.NeighborWest != null ? land.NeighborWest : "/");
             InitalizeRangeValue("S" + index, "S" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
-            InitalizeRangeValue("T" + index, "T" + index, land.Purpose != null ? land.Purpose : "");
-            InitalizeRangeValue("U" + index, "U" + index, land.LandLevel != null ? land.LandLevel : "");
+            Dictionary tdyt = dictTDYT.Find(c => c.Code.Equals(land.Purpose));
+            Dictionary dldj = dictDLDJ.Find(c => c.Code.Equals(land.LandLevel));
+            InitalizeRangeValue("T" + index, "T" + index, tdyt.Name);
+            InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
             InitalizeRangeValue("W" + index, "W" + index, land.LandExpand.PublicityComment);
         }
 
@@ -376,21 +383,10 @@ namespace YuLinTu.Library.Business
             {
                 InitalizeRangeValue("A" + 2, "D" + 2, string.Format("发包方:{0}", contracteeName));
             }
-            if (StartDate != null && StartDate.HasValue && EndDate != null && EndDate.HasValue)
-            {
-                int days = ((TimeSpan)(EndDate - StartDate)).Days + 1;
-                //int year = EndDate.Value.Year - StartDate.Value.Year;
-                //int month = EndDate.Value.Month - StartDate.Value.Month;
-                //int day = EndDate.Value.Day - StartDate.Value.Day + 1;
-                string dateString = string.Format("公示日期:{0}  至  {1}", StartDate.Value.ToString("yyyy 年 MM 月 dd 日 "), EndDate.Value.ToString("yyyy 年 MM 月 dd 日 "));
-                //year = year * 365;
-                //month = month * 30;
-                //day = year + month + day;
-                dateString += "(共";
-                dateString += days.ToString();
-                dateString += "天)";
-                InitalizeRangeValue("E" + 2, "X" + 2, dateString);
-            }
+
+            var datatime = DateTime.Now.ToString("D");
+            InitalizeRangeValue("E" + 2, "X" + 2, $"日期：{datatime}");
+            
             WriteCount();
             index++;
             string information = "审核人";
