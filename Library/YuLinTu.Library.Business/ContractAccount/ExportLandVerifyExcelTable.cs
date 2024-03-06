@@ -319,7 +319,7 @@ namespace YuLinTu.Library.Business
                 index++;
             }
             AwareArea += landAwareCount;
-            int getcode = GetCBFLXNumber(landFamily.CurrentFamily.VirtualType);
+            int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(5, '0');
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode}{result}");
@@ -367,7 +367,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("H" + index, "H" + index, person.ICN);
             InitalizeRangeValue("I" + index, "I" + index, person.Relationship);
             InitalizeRangeValue("J" + index, "J" + index, person.IsSharedLand);
-            InitalizeRangeValue("K" + index, "K" + index, person.Comment);
+            InitalizeRangeValue("K" + index, "K" + index, "");
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace YuLinTu.Library.Business
         private void WriteTempLate()
         {
             string title = GetRangeToValue("A1", "X1").ToString();
-            var townName = GetParent(CurrentZone);
-            title = $"{townName.Name}{CurrentZone.Name}{title}";
+            //var townName = GetParent(CurrentZone);
+            title = $"{title}";
             InitalizeRangeValue("A" + 1, "X" + 1, title);
             if (showContractee)
             {
@@ -459,25 +459,18 @@ namespace YuLinTu.Library.Business
             }
             return 0;
         }
-        private int GetCBFLXNumber(eVirtualPersonType type)
+        private int GetCBFLXNumber(eContractorType type)
         {
             switch (type)
             {
-                case eVirtualPersonType.Family:
+                case eContractorType.Farmer:
                     return 1;
 
-                case eVirtualPersonType.CollectivityTissue:
-                    return 3;
-
-                case eVirtualPersonType.RealityPerson:
+                case eContractorType.Personal:
                     return 2;
 
-                case eVirtualPersonType.BusinessEntity:
+                case eContractorType.Unit:
                     return 3;
-
-                case eVirtualPersonType.Other:
-                    return 3;
-                
             }
             return 0;
         }
