@@ -376,8 +376,8 @@ namespace YuLinTu.Library.Business
         private void WriteTempLate()
         {
             string title = GetRangeToValue("A1", "X1").ToString();
-            var townName = GetParent(CurrentZone);
-            title = $"{townName.Name}{CurrentZone.Name}{title}";
+            //var townName = GetParent(CurrentZone);
+            title = $"{title}";
             InitalizeRangeValue("A" + 1, "X" + 1, title);
             if (showContractee)
             {
