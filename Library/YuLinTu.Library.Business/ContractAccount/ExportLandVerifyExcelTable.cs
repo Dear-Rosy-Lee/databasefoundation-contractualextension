@@ -7,6 +7,7 @@ using YuLinTu.Library.Entity;
 using System.IO;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Data;
+using System.Diagnostics;
 
 namespace YuLinTu.Library.Business
 {
@@ -25,10 +26,8 @@ namespace YuLinTu.Library.Business
         private bool showContractee;
         private int familyCount;//户数
         private int peopleCount;//家人数
-        private int tableCount;//总地块数
         private int landCount;//总地块数
         private double AwareArea;//颁证面积
-        private bool useTableArea;//使用台账面积
         private List<Dictionary> dictCBFLX;
         private List<Dictionary> dictXB;
         private List<Dictionary> dictZJLX;
@@ -69,7 +68,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public Zone CurrentZone { get; set; }
 
-        public IConcordWorkStation ConcordStation { get; set; }
+        public List<ContractConcord> concords { get; set; }
 
         /// <summary>
         /// 保存文件路径
@@ -286,12 +285,10 @@ namespace YuLinTu.Library.Business
                 return;
 
             int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count : landFamily.Persons.Count;
-            double landAwareCount = 0;
-            int tableLandCount = 0;
-            int actualLandCount = 0;
+            double TotallandAware = 0;
             int aindex = index;
             int bindex = index;
-            
+
             List<ContractLand> lands = landFamily.LandCollection;
             List<Person> peoples = landFamily.Persons;
             peopleCount += peoples.Count;
@@ -299,26 +296,26 @@ namespace YuLinTu.Library.Business
             showContractee = !string.IsNullOrEmpty(contracteeName);
 
             lands.Sort("IsStockLand", eOrder.Ascending);
+        
             foreach (Person person in peoples)
             {
                 WritePersonInformation(person, bindex);
                 bindex++;
             }
+
             foreach (ContractLand land in lands)
             {
-                landAwareCount += land.AwareArea;
+                TotallandAware += land.AwareArea;
                 WriteCurrentZoneInformation(land, aindex);
-                tableLandCount += (land.AwareArea > 0) ? 1 : 0;
-                actualLandCount += (land.ActualArea > 0) ? 1 : 0;
                 aindex++;
             }
-            landCount += useTableArea ? actualLandCount : lands.Count;
-            tableCount += useTableArea ? tableLandCount : lands.Count;
+         
+            landCount += lands.Count;
             if (lands.Count == 0)
             {
                 index++;
             }
-            AwareArea += landAwareCount;
+            AwareArea += TotallandAware;
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(5, '0');
@@ -326,12 +323,12 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name.InitalizeFamilyName(SystemDefine.KeepRepeatFlag));
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
             InitalizeRangeValue("D" + index, "D" + (index + height - 1), peoples.Count);
-            InitalizeRangeValue("O" + index, "O" + (index + height - 1), landAwareCount);
+            InitalizeRangeValue("O" + index, "O" + (index + height - 1), TotallandAware);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), "");
-            List<ContractConcord> concord = ConcordStation.GetContractsByFamilyID(landFamily.CurrentFamily.ID);
-            if (concord.Count != 0)
+            ContractConcord concord = concords.Where(x => x.ContracterId == landFamily.CurrentFamily.ID).FirstOrDefault();
+            if (concords.Count != 0)
             {
-                InitalizeRangeValue("V" + index, "V" + (index + height - 1), concord.FirstOrDefault().ConcordNumber);
+                InitalizeRangeValue("V" + index, "V" + (index + height - 1), concord.ConcordNumber);
             }
             index += height;
             lands.Clear();
@@ -386,7 +383,7 @@ namespace YuLinTu.Library.Business
 
             var datatime = DateTime.Now.ToString("D");
             InitalizeRangeValue("E" + 2, "X" + 2, $"日期：{datatime}");
-            
+
             WriteCount();
             index++;
             string information = "审核人";
@@ -401,7 +398,7 @@ namespace YuLinTu.Library.Business
         {
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "B" + index, familyCount > 0 ? familyCount.ToString() : "");
-            string areaString = string.Format("合计:\n   {0}块", tableCount);
+            string areaString = string.Format("合计:\n   {0}块", landCount);
             InitalizeRangeValue("C" + index, "C" + index, "\\");
             InitalizeRangeValue("D" + index, "D" + index, peopleCount);
             InitalizeRangeValue("E" + index, "E" + index, "\\");
@@ -423,16 +420,6 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("V" + index, "V" + index, "\\");
             InitalizeRangeValue("W" + index, "W" + index, "\\");
             InitalizeRangeValue("X" + index, "X" + index, "\\");
-        }
-
-        public Zone GetParent(Zone zone)
-        {
-            ModuleMsgArgs arg = new ModuleMsgArgs();
-            arg.Datasource = DbContext;
-            arg.Parameter = zone;
-            arg.Name = ZoneMessage.ZONE_PARENT_ZONE;
-            TheBns.Current.Message.Send(this, arg);
-            return (arg.ReturnValue as Zone);
         }
 
         private int GetCardTypeNumber(eCredentialsType type)
@@ -459,6 +446,7 @@ namespace YuLinTu.Library.Business
             }
             return 0;
         }
+
         private int GetCBFLXNumber(eContractorType type)
         {
             switch (type)
@@ -474,6 +462,7 @@ namespace YuLinTu.Library.Business
             }
             return 0;
         }
+
         #endregion 开始生成Excel
 
         #endregion Methods

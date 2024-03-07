@@ -167,7 +167,8 @@ namespace YuLinTu.Library.Business
                 }
                 export.SenderNameVillage = villageName;
                 export.ZoneDesc = excelName;
-                export.ConcordStation = ConcordStation;
+                var Concords = ConcordStation.GetByZoneCode(argument.CurrentZone.FullCode);
+                export.concords = Concords;
                 export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorEvent;
                 result = export.BeginToZone(tempPath);
