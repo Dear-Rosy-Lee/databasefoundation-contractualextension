@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,17 +32,19 @@ namespace YuLinTu.Library.Business
         private string recordInformation;//记录信息
         private string errorInformation;//错误信息
 
-        #endregion
+        #endregion Fields
 
         #region Delegate
 
         public delegate void InformationChangedEventHandler(string information);
+
         public event InformationChangedEventHandler InformationReportged;
 
         public delegate void ErrorInformationEventHandler(string information);
+
         public event ErrorInformationEventHandler ErrorReportged;
 
-        #endregion
+        #endregion Delegate
 
         #region Propertys
 
@@ -101,7 +104,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public int OperateType { get; set; }
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -109,7 +112,7 @@ namespace YuLinTu.Library.Business
         {
         }
 
-        #endregion
+        #endregion Ctor
 
         #region 数据映射
 
@@ -221,7 +224,6 @@ namespace YuLinTu.Library.Business
             {
                 var ds = ess.Message;
                 return null;
-
             }
         }
 
@@ -238,7 +240,7 @@ namespace YuLinTu.Library.Business
             }
             EX_CBJYQ_DJB djb = new EX_CBJYQ_DJB();
             djb.ID = Guid.NewGuid();
-            AgricultureUnLandMapping(djb, zone, vp, concords);//承包地块信息            
+            AgricultureUnLandMapping(djb, zone, vp, concords);//承包地块信息
             AgriContractorMapping(djb, vp);//承包方信息
             AgriSharePersonMapping(djb, vp);//共有人信息
             AgricultureUnConcordMapping(djb, null);//合同信息
@@ -422,8 +424,10 @@ namespace YuLinTu.Library.Business
             {
                 case 0:
                     return YuLinTu.PropertyRight.eGender.Female;
+
                 case 1:
                     return YuLinTu.PropertyRight.eGender.Male;
+
                 default:
                     return YuLinTu.PropertyRight.eGender.Unknow;
             }
@@ -496,7 +500,6 @@ namespace YuLinTu.Library.Business
             catch (Exception dd)
             {
                 var dsafedsa = dd.Message;
-
             }
         }
 
@@ -777,7 +780,6 @@ namespace YuLinTu.Library.Business
                 jzd.ID = dot.ID;
                 jzd.DJBID = regBook.ID;
                 jzd.DKID = dot.LandID;
-                //TODO 界址信息待修改
                 jzd.JBLX = dot.LandMarkType.ToString();
                 jzd.JZDH = dot.DotNumber;
                 jzd.JZDLX = dot.DotType.ToString();
@@ -907,8 +909,6 @@ namespace YuLinTu.Library.Business
             return lyxzCollection;
         }
 
-
-
         /// <summary>
         /// 初始化农业部编码
         /// </summary>
@@ -922,6 +922,7 @@ namespace YuLinTu.Library.Business
                 case Zone.ZONE_VILLAGE_LENGTH:
                     zoneCode = code + "00";
                     break;
+
                 case Zone.ZONE_GROUP_LENGTH:
                     zoneCode = code.Substring(0, 12) + code.Substring(14);
                     //if (!IsStandCode)
@@ -929,6 +930,7 @@ namespace YuLinTu.Library.Business
                     //    zoneCode = code.Substring(0, 12) +"00"+ code.Substring(14);
                     //}
                     break;
+
                 default:
                     break;
             }
@@ -977,12 +979,15 @@ namespace YuLinTu.Library.Business
                 case 1:
                     landNumber = "0000";
                     break;
+
                 case 2:
                     landNumber = "000";
                     break;
+
                 case 3:
                     landNumber = "00";
                     break;
+
                 case 4:
                     landNumber = "0";
                     break;
@@ -1004,7 +1009,6 @@ namespace YuLinTu.Library.Business
             CollectivityTissue tissue = null;//集体经济组织
             if (concord == null || concord.SenderId == null || string.IsNullOrEmpty(concord.SenderName))
             {
-
                 tissue = TissueCollection.Find(ts => ts.ID == ArgicultureEntity.CurrentZone.ID || ts.ZoneCode == ArgicultureEntity.CurrentZone.UpLevelCode);
                 if (tissue == null && DataInstance != null)
                 {
@@ -1230,9 +1234,11 @@ namespace YuLinTu.Library.Business
                 case Zone.ZONE_VILLAGE_LENGTH:
                     zoneCode = contractor.ZoneCode + "00";
                     break;
+
                 case Zone.ZONE_GROUP_LENGTH:
                     zoneCode = contractor.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH) + contractor.ZoneCode.Substring(Zone.ZONE_VILLAGE_LENGTH + 2);
                     break;
+
                 default:
                     break;
             }
@@ -1269,9 +1275,11 @@ namespace YuLinTu.Library.Business
                 case Zone.ZONE_VILLAGE_LENGTH:
                     zoneCode = vp.ZoneCode + "00";
                     break;
+
                 case Zone.ZONE_GROUP_LENGTH:
                     zoneCode = vp.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH) + vp.ZoneCode.Substring(Zone.ZONE_VILLAGE_LENGTH + 2);
                     break;
+
                 default:
                     break;
             }
@@ -1366,6 +1374,6 @@ namespace YuLinTu.Library.Business
             GC.Collect();
         }
 
-        #endregion
+        #endregion 数据映射
     }
 }

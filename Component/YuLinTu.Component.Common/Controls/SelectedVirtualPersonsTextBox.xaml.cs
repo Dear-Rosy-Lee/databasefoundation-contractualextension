@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Library.Business;
+
 namespace YuLinTu.Component.Common
 {
     /// <summary>
@@ -73,7 +75,7 @@ namespace YuLinTu.Component.Common
         ///// </summary>
         //private void ImageButton_Click_1(object sender, RoutedEventArgs e)
         //{
-        //    //TODO 此处弹出地域选择界面
+        //
         //    string[] nameAndCode = this.SelectZoneAndPersonInfo.ZoneNameAndCode.IsNullOrBlank() ? null : this.SelectZoneAndPersonInfo.ZoneNameAndCode.Split('#');
         //    var dbcontext = DataBaseSource.GetDataBaseSource();
         //    InitializeConcordPersonPage selectPersonPage = new InitializeConcordPersonPage();
@@ -102,7 +104,7 @@ namespace YuLinTu.Component.Common
 
         ///// <summary>
         ///// 创建承包方集合
-        ///// </summary>  
+        ///// </summary>
         //private List<VirtualPerson> CreateVirtualPersonCollection(IDbContext DbContext, string ZoneCode)
         //{
         //    var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
@@ -122,7 +124,6 @@ namespace YuLinTu.Component.Common
         //    vps.RemoveAll(c => c.Name.Contains("集体"));  //排除集体户
         //    return vps;
         //}
-
 
         //#endregion
     }

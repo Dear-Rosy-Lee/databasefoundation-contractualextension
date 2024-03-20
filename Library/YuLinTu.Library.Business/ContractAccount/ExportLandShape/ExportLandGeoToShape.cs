@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace YuLinTu.Library.Business
 
         private Zone currentZone;
 
-        #endregion
+        #endregion Fields
 
         #region Property
 
@@ -35,7 +36,6 @@ namespace YuLinTu.Library.Business
         /// 有空间数据的地块集合
         /// </summary>
         public List<ContractLand> ListGeoLand { get; set; }
-
 
         /// <summary>
         /// 是14位编码/否16位编码//默认为14位不改动
@@ -55,7 +55,6 @@ namespace YuLinTu.Library.Business
         /// 当前地域下所有承包方
         /// </summary>
         public List<VirtualPerson> ListVp { get; set; }
-
 
         /// <summary>
         /// 导出表头语言
@@ -77,19 +76,16 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<Dictionary> DictList { get; set; }
 
-        #endregion
+        #endregion Property
 
         #region Ctor
 
         public ExportLandGeoToShape(ExportContractLandShapeDefine exportSet)
             : base(exportSet)
         {
-
         }
 
-
-
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -104,7 +100,6 @@ namespace YuLinTu.Library.Business
                 return list;
             }
             toolProgress.InitializationPercent(geoLands.Count, 99, 1);
-            //TODO Sunjie 导出图斑时某个图斑异常，暂时跳过处理！以后考虑抛出警告
             foreach (var item in geoLands)
             {
                 try
@@ -159,7 +154,7 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 获取配置
-        /// </summary>  
+        /// </summary>
         public override object GetExportSetting(object exportSetting = null)
         {
             return exportContractLandShapeDefine as object;
@@ -336,7 +331,6 @@ namespace YuLinTu.Library.Business
                     {
                         attributes.AddAttribute("海拔高度", geoland.LandExpand.Elevation != null ? geoland.LandExpand.Elevation.Value.ToString() : null);
                     }
-
                 }
                 if (exportContractLandShapeDefine.ArableTypeIndex)
                 {
@@ -390,9 +384,6 @@ namespace YuLinTu.Library.Business
             return attributes;
         }
 
-        #endregion
-
-
-
+        #endregion Methods
     }
 }

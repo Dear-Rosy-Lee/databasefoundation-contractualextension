@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace YuLinTu.Library.Business
     /// 导入承包台账调查表地块数据
     /// </summary>
     [Serializable]
-    class ImportContractAccountLandTable : Task
+    internal class ImportContractAccountLandTable : Task
     {
         #region Fields
 
@@ -37,19 +38,17 @@ namespace YuLinTu.Library.Business
         private IBuildLandBoundaryAddressCoilWorkStation coilStation;
         private IBuildLandBoundaryAddressDotWorkStation dotStation;
 
-        List<VirtualPerson> remainVps = new List<VirtualPerson>();
-        List<ContractLand> remainLands = new List<ContractLand>();
-        List<ContractConcord> remainConcords = new List<ContractConcord>();
-        List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>();
+        private List<VirtualPerson> remainVps = new List<VirtualPerson>();
+        private List<ContractLand> remainLands = new List<ContractLand>();
+        private List<ContractConcord> remainConcords = new List<ContractConcord>();
+        private List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>();
 
         private List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
         private ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
 
-        #endregion
+        #endregion Fields
 
-        #region ConstName
 
-        #endregion
 
         #region Propertys
 
@@ -59,8 +58,6 @@ namespace YuLinTu.Library.Business
         /// 承包台账常规设置实体
         /// </summary>
         public ContractBusinessSettingDefine SettingDefin = ContractBusinessSettingDefine.GetIntence();
-
-
 
         ///// <summary>
         ///// 承包台账导入配置
@@ -78,7 +75,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 是否验证地块编码重复 不要删除此属性  安徽插件使用
         /// </summary>
-        public bool IsCheckLandNumberRepeat{ get; set; }
+        public bool IsCheckLandNumberRepeat { get; set; }
 
         /// <summary>
         /// 是否清空数据
@@ -117,7 +114,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public int TableType { get; set; }
 
-        #endregion
+        #endregion Propertys
 
         #region Ctor
 
@@ -130,13 +127,13 @@ namespace YuLinTu.Library.Business
 
         /// <summary>
         /// 进度提示
-        /// </summary>    
+        /// </summary>
         private void toolProgress_OnPostProgress(int progress, string info = "")
         {
             this.ReportProgress(progress, info);
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -161,7 +158,7 @@ namespace YuLinTu.Library.Business
             dotStation = DbContext.CreateBoundaryAddressDotWorkStation();
             dictBusiness = new DictionaryBusiness(DbContext);   //数据字典
             dictList = dictBusiness.GetAll();
-            if (dictList==null ||dictList.Count == 0)
+            if (dictList == null || dictList.Count == 0)
             {
                 this.ReportErrorInfo("数据字典为空，请检查");
                 return false;
@@ -174,11 +171,11 @@ namespace YuLinTu.Library.Business
             landInfo.ExcelName = ExcelName;
             landInfo.TableType = TableType;
             landInfo.InitalizeInnerData();
-            bool success = landInfo.ReadTableInformation(isNotLand,IsCheckLandNumberRepeat);
+            bool success = landInfo.ReadTableInformation(isNotLand, IsCheckLandNumberRepeat);
             return success;
         }
 
-        #endregion
+        #endregion Methods - ReadInformation
 
         #region Methods - VerifyInformtaion
 
@@ -191,7 +188,7 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
-            var isLandNumberRepeat =CheckLandNumberRepeat();
+            var isLandNumberRepeat = CheckLandNumberRepeat();
             bool success = landInfo.CheckImportData(landInfo.LandFamilyCollection);
             if (landInfo.IsContaionTableValue)
             {
@@ -199,7 +196,7 @@ namespace YuLinTu.Library.Business
             }
             ShowInformation(landInfo.WarnInformation);
             ShowErrowInformation(landInfo.ErrorInformation);
-            return success&& isLandNumberRepeat;
+            return success && isLandNumberRepeat;
         }
 
         /// <summary>
@@ -207,8 +204,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private bool CheckLandNumberRepeat()
         {
-            bool checkResult=true;
-            var stocklands= DbContext.CreateContractLandWorkstation().Get(o => o.IsStockLand == true);
+            bool checkResult = true;
+            var stocklands = DbContext.CreateContractLandWorkstation().Get(o => o.IsStockLand == true);
             foreach (var stockLand in stocklands)
             {
                 foreach (var landFamily in landInfo.LandFamilyCollection)
@@ -218,7 +215,7 @@ namespace YuLinTu.Library.Business
                         if (land.LandNumber == stockLand.LandNumber)
                         {
                             checkResult = false;
-                            landInfo.ErrorInformation.Add("表中地块编码" +land.LandNumber+"与确股地块编码重复");
+                            landInfo.ErrorInformation.Add("表中地块编码" + land.LandNumber + "与确股地块编码重复");
                         }
                     }
                 }
@@ -226,10 +223,9 @@ namespace YuLinTu.Library.Business
             return checkResult;
         }
 
-        #endregion
+        #endregion Methods - VerifyInformtaion
 
         #region Methods - ImportEntity
-
 
         /// <summary>
         /// 导入实体
@@ -311,7 +307,6 @@ namespace YuLinTu.Library.Business
         /// <param name="landFamily">人和地集合</param>
         private bool CheckConcordRegeditBook(LandFamily landFamily)
         {
-            //TODO 逻辑待考虑(2015/12/24)
             if (landFamily.Concord != null && !string.IsNullOrEmpty(landFamily.Concord.ConcordNumber) && concordBusiness.Exists(landFamily.Concord.ConcordNumber))
             {
                 ContractConcord cc = concordBusiness.Get(landFamily.Concord.ConcordNumber);
@@ -507,7 +502,7 @@ namespace YuLinTu.Library.Business
             return (result == -2 || result > 0) ? vp : null;
         }
 
-        #endregion
+        #endregion 导入承包方数据
 
         #region 导入合同与权证信息
 
@@ -564,7 +559,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 导入合同与权证信息
 
         #region 二轮台账
 
@@ -652,7 +647,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 二轮台账
 
         #region 导入地块数据
 
@@ -762,7 +757,6 @@ namespace YuLinTu.Library.Business
                 }
                 if (remainLands.Any(c => !string.IsNullOrEmpty(c.LandNumber) && c.LandNumber == land.LandNumber))
                 {
-                    //TODO 逻辑待考虑
                     var temp = remainLands.Find(c => c.ID == land.ID);
                     if (temp == null)
                     {
@@ -840,9 +834,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 导入地块数据
 
-        #endregion
+        #endregion Methods - ImportEntity
 
         #region Methods - Clear
 
@@ -1058,7 +1052,7 @@ namespace YuLinTu.Library.Business
         //    {
         //        familys.Remove(familys.Find(fam => fam.ID == vp.ID));
         //    }
-        //    IContractLandWorkStation contractLandWorkStation = this.DbContext.CreateContractLandWorkstation();//承包台账地块业务逻辑层         
+        //    IContractLandWorkStation contractLandWorkStation = this.DbContext.CreateContractLandWorkstation();//承包台账地块业务逻辑层
         //    IConcordWorkStation concordStation = this.DbContext.CreateConcordStation();
         //    IContractRegeditBookWorkStation contractRegeditBookStation = this.DbContext.CreateRegeditBookStation();
         //    IBuildLandBoundaryAddressCoilWorkStation jzxStation = this.DbContext.CreateBoundaryAddressCoilWorkStation();
@@ -1115,7 +1109,7 @@ namespace YuLinTu.Library.Business
             GC.Collect();
         }
 
-        #endregion
+        #endregion Methods - Clear
 
         #region Methods - Report
 
@@ -1167,7 +1161,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion Methods - Report
 
         #region Methods - Helper
 
@@ -1226,8 +1220,8 @@ namespace YuLinTu.Library.Business
             return (arg.ReturnValue as Zone);
         }
 
-        #endregion
+        #endregion Methods - Helper
 
-        #endregion
+        #endregion Methods
     }
 }

@@ -296,7 +296,7 @@ namespace YuLinTu.Library.Business
             showContractee = !string.IsNullOrEmpty(contracteeName);
 
             lands.Sort("IsStockLand", eOrder.Ascending);
-        
+
             foreach (Person person in peoples)
             {
                 WritePersonInformation(person, bindex);
@@ -309,12 +309,9 @@ namespace YuLinTu.Library.Business
                 WriteCurrentZoneInformation(land, aindex);
                 aindex++;
             }
-         
+
             landCount += lands.Count;
-            if (lands.Count == 0)
-            {
-                index++;
-            }
+
             AwareArea += TotallandAware;
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
@@ -326,10 +323,19 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("O" + index, "O" + (index + height - 1), TotallandAware);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), "");
             ContractConcord concord = concords.Where(x => x.ContracterId == landFamily.CurrentFamily.ID).FirstOrDefault();
-            if (concords.Count != 0)
+            try
             {
-                InitalizeRangeValue("V" + index, "V" + (index + height - 1), concord.ConcordNumber);
+                if (concords.Count != 0 && concord != null)
+                {
+                    InitalizeRangeValue("V" + index, "V" + (index + height - 1), concord.ConcordNumber);
+                }
             }
+            catch (Exception ex)
+            {
+                Log.Log.WriteException(this, "导出失败", $"{ex.Message}{ex.StackTrace} " +
+                                                        $"承包方为{landFamily.CurrentFamily.Name}缺少承包合同数据");
+            }
+
             index += height;
             lands.Clear();
         }

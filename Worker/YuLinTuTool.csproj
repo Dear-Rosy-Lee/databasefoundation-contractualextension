@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props" Condition="Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props')" />
+  <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props')" />
+  <Import Project="..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.props" Condition="Exists('..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.props')" />
+  <Import Project="..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props" Condition="Exists('..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" />
+  <Import Project="..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props" Condition="Exists('..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props')" />
+  <Import Project="..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props" Condition="Exists('..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" />
+  <Import Project="..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props" Condition="Exists('..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" />
+  <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
+  <Import Project="..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props" Condition="Exists('..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" />
+  <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -36,6 +46,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,6 +153,9 @@
       <HintPath>..\Dependencies\Aspose\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="DotSpatial.Data.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=53ab5a198378d4c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\DotSpatial\DotSpatial.Data.Forms.dll</HintPath>
@@ -171,113 +186,105 @@
       <HintPath>..\Dependencies\DotSpatial\DotSpatial.Topology.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\ZIP\Ionic.Zip.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Python\IronPython.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="IronPython">
+      <HintPath>..\packages\YuLinTu.SDK.6.8.8.1\x86\IronPython.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.ConnectionUI">
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Data.ConnectionUI.dll</HintPath>
+    <Reference Include="Microsoft.Data.ConnectionUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Dynamic.dll</HintPath>
+      <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Interception">
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft\Microsoft.Scripting.dll</HintPath>
+      <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.0.50506.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="NetTopologySuite, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NTS\NetTopologySuite.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.dll</HintPath>
     </Reference>
     <Reference Include="NetTopologySuite.IO, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.dll</HintPath>
     </Reference>
     <Reference Include="NetTopologySuite.IO.GeoTools, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.GeoTools.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.GeoTools.dll</HintPath>
     </Reference>
     <Reference Include="NetTopologySuite.IO.ShapeFile, Version=1.13.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NTS\NetTopologySuite.IO.ShapeFile.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.ShapeFile.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NPOI\NPOI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NPOI\NPOI.OOXML.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NPOI\NPOI.OpenXml4Net.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.5798.18368, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Activities" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\WpfToolKit\Xceed.Wpf.DataGrid.dll</HintPath>
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -1906,6 +1913,7 @@
     <None Include="Data\tGIS\Symbol\Polyline\Triple, Wide Center.yltsymbolstyle">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -2722,33 +2730,64 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Core\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Chart\*.dll" "$(SolutionDir)Workspace\"
+    <PostBuildEvent>md "$(TargetDir)Libraries\libs\" 
+copy /Y "$(SolutionDir)Workspace\Libraries\libs\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Workspace\Libraries\x86\GDAL\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Workspace\Libraries\x86\Oracle\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Workspace\Libraries\x86\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Workspace\Libraries\x86\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\DotSpatial\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Microsoft\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\NPOI\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\NTS\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Oracle\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Script\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\System\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\WpfToolKit\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\ZIP\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\Library\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\History\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\tGis\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
+
+
 
 rd /s /q "de" "en" "es" "fr" "hu" "it" "ja" "ko" "pr-br" "ro" "pt-br" "ru" "sv"
 del /f /s /q "$(SolutionDir)Workspace\*.tmp"
 del /f /s /q "$(SolutionDir)Workspace\*.pdb"
 del /f /s /q "$(SolutionDir)Workspace\*.application"
-del /f /s /q "$(SolutionDir)Workspace\*.manifest"</PostBuildEvent>
+del /f /s /q "$(SolutionDir)Workspace\*.manifest"
+</PostBuildEvent>
   </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets'))" />
+  </Target>
+  <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets" Condition="Exists('..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
+  <Import Project="..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
+  <Import Project="..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
+  <Import Project="..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets" Condition="Exists('..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" />
+  <Import Project="..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets" Condition="Exists('..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" />
+  <Import Project="..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets" Condition="Exists('..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" />
+  <Import Project="..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets" Condition="Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

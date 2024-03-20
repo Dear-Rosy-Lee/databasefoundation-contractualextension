@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace YuLinTu.Component.Common
             btSelectPersons.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Properties
 
@@ -52,11 +53,11 @@ namespace YuLinTu.Component.Common
         }
 
         public static readonly DependencyProperty SelectZoneAndPersonInfoProperty = DependencyProperty.Register("SelectZoneAndPersonInfo", typeof(string), typeof(SelectedSummaryExportZoneTB), new PropertyMetadata((s, a) =>
-        {
-            var nameAndCodeinfo = a.NewValue as string;
-            if (!nameAndCodeinfo.IsNullOrBlank())
-                (s as MetroTextBox).Text = (nameAndCodeinfo.Split('#'))[0];
-        }));
+           {
+               var nameAndCodeinfo = a.NewValue as string;
+               if (!nameAndCodeinfo.IsNullOrBlank())
+                   (s as MetroTextBox).Text = (nameAndCodeinfo.Split('#'))[0];
+           }));
 
         /// <summary>
         /// 工作空间属性
@@ -68,7 +69,7 @@ namespace YuLinTu.Component.Common
         /// </summary>
         public IDbContext DbContext { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Event
 
@@ -77,7 +78,6 @@ namespace YuLinTu.Component.Common
         /// </summary>
         private void ImageButton_Click_1(object sender, RoutedEventArgs e)
         {
-            //TODO 此处弹出地域选择界面
             string[] nameAndCode = this.SelectZoneAndPersonInfo.IsNullOrBlank() ? null : this.SelectZoneAndPersonInfo.Split('#');
             ZoneSelectorPanel zoneSelectPage = new ZoneSelectorPanel();
             zoneSelectPage.DbContext = DbContext;
@@ -89,7 +89,6 @@ namespace YuLinTu.Component.Common
                 {
                     return;
                 }
-                //TODO 地域传值
                 var currentZone = zoneSelectPage.RootZone;
                 if (currentZone == null)
                 {
@@ -104,17 +103,8 @@ namespace YuLinTu.Component.Common
 
         private void ImageButton_Click_2(object sender, RoutedEventArgs e)
         {
-
-
-
-
-
         }
 
-
-        #endregion
-
-      
-
+        #endregion Event
     }
 }

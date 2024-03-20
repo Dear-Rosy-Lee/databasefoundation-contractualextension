@@ -18,12 +18,15 @@ namespace YuLinTu.Component.XiZangLZ
     public class ExportSingleLandTable : ExportExcelBase
     {
         #region Fields
+
         private int currrentIndex;//下标
         private bool useUnitNumber;//是否使用统编号
         private GetDictionary dic;
-        #endregion
+
+        #endregion Fields
 
         #region Property
+
         public Zone CurrentZone { get; set; }//当前地域
 
         /// <summary>
@@ -46,21 +49,19 @@ namespace YuLinTu.Component.XiZangLZ
 
         public List<BuildLandBoundaryAddressDot> DotList { get; set; }//界址点
 
-
-        #endregion
+        #endregion Property
 
         #region Ctor
 
         public ExportSingleLandTable(string dictoryName)
         {
-            //TODO 是否使用统编号
             useUnitNumber = false;
             dic = new GetDictionary(dictoryName);
             dic.Read();
             currrentIndex = 11;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -110,7 +111,7 @@ namespace YuLinTu.Component.XiZangLZ
             }
         }
 
-        #endregion
+        #endregion 开始生成Excel之前的一系列操作
 
         #region 开始生成Excel
 
@@ -120,12 +121,10 @@ namespace YuLinTu.Component.XiZangLZ
         /// <returns></returns>
         private bool BeginWrite()
         {
-
             try
             {
                 var lines = LineList.OrderBy(le => le.OrderID).ToList();
-                //TODO 克隆的目的是什么？
-                //var lineCollection = lines.Clone() as List<BuildLandBoundaryAddressCoil>; 
+                //var lineCollection = lines.Clone() as List<BuildLandBoundaryAddressCoil>;
                 // var dotCollection = DotList;
                 InitalizeDotAngleInformation(lines, DotList);
                 //lineCollection = null;
@@ -140,9 +139,8 @@ namespace YuLinTu.Component.XiZangLZ
             return true;
         }
 
-
-
         #region 书写表头
+
         /// <summary>
         /// 书写表头
         /// </summary>
@@ -159,8 +157,8 @@ namespace YuLinTu.Component.XiZangLZ
             InitalizeRangeValue("B4", "C4", CurrentZone.Code);//承包方编码
             InitalizeRangeValue("B6", "C6", CurrentLand.LandNumber);//宗地编码
             InitalizeRangeValue("E6", "E6", CurrentLand.ActualArea.ToString("f2"));//宗地面积
-
         }
+
         /// <summary>
         /// 书写表头信息
         /// </summary>
@@ -274,18 +272,22 @@ namespace YuLinTu.Component.XiZangLZ
                 case Zone.ZONE_TOWN_LENGTH:
                     TissueCode = zoneCode + "00000";
                     break;
+
                 case Zone.ZONE_VILLAGE_LENGTH:
                     TissueCode = zoneCode + "00";
                     break;
+
                 case Zone.ZONE_GROUP_LENGTH:
                     TissueCode = zoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH) + zoneCode.Substring(Zone.ZONE_VILLAGE_LENGTH + 2);
                     break;
+
                 default:
                     TissueCode = zoneCode;
                     break;
             }
             return TissueCode;
         }
+
         /// <summary>
         /// 勾选选型
         /// </summary>
@@ -336,7 +338,8 @@ namespace YuLinTu.Component.XiZangLZ
             str.Add(z);
             return str;
         }
-        #endregion
+
+        #endregion 书写表头
 
         #region Angle界址点界址线
 
@@ -363,6 +366,7 @@ namespace YuLinTu.Component.XiZangLZ
             listIndex = null;
             GC.Collect();
         }
+
         /// <summary>
         /// 初始化环索引
         /// </summary>
@@ -542,6 +546,7 @@ namespace YuLinTu.Component.XiZangLZ
             //InitalizeCoilDescription(lineArray, dots, lines);
             return lineArray;
         }
+
         /// <summary>
         /// 初始化界址线描述
         /// </summary>
@@ -592,6 +597,7 @@ namespace YuLinTu.Component.XiZangLZ
                 line.Description = angleString + "\n" + ToolMath.SetNumbericFormat(lineLength.ToString(), 2);
             }
         }
+
         /// <summary>
         /// 初始化界址线角度
         /// </summary>
@@ -660,6 +666,7 @@ namespace YuLinTu.Component.XiZangLZ
             int second = (int)((angle - degree) * 60);
             return degree.ToString() + "°" + second.ToString() + "′";
         }
+
         /// <summary>
         /// 初始化界址线长度
         /// </summary>
@@ -677,6 +684,7 @@ namespace YuLinTu.Component.XiZangLZ
             length = Math.Round(length, 2);
             return length;
         }
+
         /// <summary>
         /// 初始化界址线描述获取角度
         /// </summary>
@@ -746,6 +754,7 @@ namespace YuLinTu.Component.XiZangLZ
             int degree = (int)angle;
             return degree;
         }
+
         /// <summary>
         /// 初始化界址线信息
         /// </summary>
@@ -811,6 +820,7 @@ namespace YuLinTu.Component.XiZangLZ
             //InitalizeCoilDescription(lineArray, dots, lines);
             return lineArray;
         }
+
         /// <summary>
         /// 判断是否是共用点
         /// </summary>
@@ -819,7 +829,6 @@ namespace YuLinTu.Component.XiZangLZ
         /// <returns></returns>
         private bool InitalizeSharePoint(BuildLandBoundaryAddressDot dot, List<IPoint> points)
         {
-            //TODO 图形处理
             //var sdx = (dot.Shape.Instance as IPoint).X;
             //var sdy = (dot.Shape.Instance as IPoint).Y;
             //IPoint point = new PointClass();
@@ -839,6 +848,7 @@ namespace YuLinTu.Component.XiZangLZ
 
             return true;
         }
+
         /// <summary>
         /// 书写界址点信息
         /// </summary>
@@ -864,12 +874,15 @@ namespace YuLinTu.Component.XiZangLZ
                 case eLandMarkType.Piling:
                     InitalizeRangeValue("B" + index, "B" + index1, "√");//木桩
                     break;
+
                 case eLandMarkType.BuriedStone:
                     InitalizeRangeValue("C" + index, "C" + index1, "√");//埋石
                     break;
+
                 case eLandMarkType.Other:
                     InitalizeRangeValue("E" + index, "E" + index1, "√");//其他
                     break;
+
                 default:
                     InitalizeRangeValue("E" + index, "E" + index1, "√");//其他
                     break;
@@ -914,6 +927,7 @@ namespace YuLinTu.Component.XiZangLZ
             //    SetBookmarkValue("DotNothing" + index.ToString(), "√");//其他
             //}
         }
+
         /// <summary>
         /// 书写界址线信息
         /// </summary>
@@ -945,27 +959,35 @@ namespace YuLinTu.Component.XiZangLZ
                 case eBoundaryLineCategory.Baulk:
                     InitalizeRangeValue("F" + index, "F" + index1, "√");//田垄
                     break;
+
                 case eBoundaryLineCategory.Kennel:
                     InitalizeRangeValue("G" + index, "G" + index1, "√");//沟渠
                     break;
+
                 case eBoundaryLineCategory.Road:
                     InitalizeRangeValue("H" + index, "H" + index1, "√");//道路
                     break;
+
                 case eBoundaryLineCategory.Linage:
                     InitalizeRangeValue("I" + index, "I" + index1, "√");//行树
                     break;
+
                 case eBoundaryLineCategory.Enclosure:
                     InitalizeRangeValue("J" + index, "J" + index1, "√");//围墙
                     break;
+
                 case eBoundaryLineCategory.Wall:
                     InitalizeRangeValue("K" + index, "K" + index1, "√");//墙壁
                     break;
+
                 case eBoundaryLineCategory.Raster:
                     InitalizeRangeValue("L" + index, "L" + index1, "√");//栅栏
                     break;
+
                 case eBoundaryLineCategory.LinkLine:
                     InitalizeRangeValue("M" + index, "M" + index1, "√");//两点连线
                     break;
+
                 default:
                     break;
             }
@@ -976,12 +998,15 @@ namespace YuLinTu.Component.XiZangLZ
                 case eBoundaryLinePosition.Left:
                     InitalizeRangeValue("N" + index, "N" + index1, "√");//内
                     break;
+
                 case eBoundaryLinePosition.Middle:
                     InitalizeRangeValue("O" + index, "O" + index1, "√");//中
                     break;
+
                 case eBoundaryLinePosition.Right:
                     InitalizeRangeValue("P" + index, "P" + index1, "√");//外
                     break;
+
                 default:
                     break;
             }
@@ -989,7 +1014,8 @@ namespace YuLinTu.Component.XiZangLZ
             InitalizeRangeValue("S" + index, "S" + index1, line.NeighborPerson);//毗邻地块权利人
             InitalizeRangeValue("T" + index, "T" + index1, line.NeighborFefer);//毗邻地块指界人
         }
-        #endregion
+
+        #endregion Angle界址点界址线
 
         #region Helper
 
@@ -1006,7 +1032,6 @@ namespace YuLinTu.Component.XiZangLZ
             try
             {
                 var landGeometry = geometry.Instance as NetTopologySuite.Geometries.Polygon;
-                //TODO 图形处理
                 //IGeometry landBuffer =//YuLinTu.Spatial.Geometry GeometryUtility.InitalizeBufferGeometry(land.Shape, 0.1);
                 //IQueryFilter filter = YuLinTu.ArcGIS.Common.ConstructQueryFilter.GetQueryFilter(landBuffer, esriSpatialRelEnum.esriSpatialRelIntersects);
                 // List<IFeature> features = FeatureUtility.GetFeatureCollection(FeatureClass, filter);
@@ -1041,7 +1066,7 @@ namespace YuLinTu.Component.XiZangLZ
             }
             return points;
         }
-        //TODO 图形处理
+
         /// <summary>
         /// 初始化邻宗地节点
         /// </summary>
@@ -1106,7 +1131,6 @@ namespace YuLinTu.Component.XiZangLZ
         //    return null;
         //}
 
-        //TODO 图形处理
         /// <summary>
         /// 初始化点索引值
         /// </summary>
@@ -1129,7 +1153,6 @@ namespace YuLinTu.Component.XiZangLZ
         //    return index;
         //}
 
-        //TODO 图形处理
         /// <summary>
         /// 点在面上
         /// </summary>
@@ -1152,7 +1175,8 @@ namespace YuLinTu.Component.XiZangLZ
         //    }
         //    return isVertex;
         //}
-        #endregion
+
+        #endregion Helper
 
         #region convert
 
@@ -1169,11 +1193,11 @@ namespace YuLinTu.Component.XiZangLZ
 
             return EnumNameAttribute.GetDescription(tEnum);
         }
-        #endregion
 
-        #endregion
+        #endregion convert
 
-        #endregion
+        #endregion 开始生成Excel
 
+        #endregion Methods
     }
 }

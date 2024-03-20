@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2012- 2014 鱼鳞图公司版权所有，保留所有权利
  */
+
 using System;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Business;
@@ -15,14 +16,13 @@ namespace YuLinTu.Component.XiZangLZ
     public class ExportSenderTable : AgricultureWordBook
     {
         #region Fields
+
         private GetDictionary dic;//字典
         private const string defaultEmptyBookmarkValue = "/";
 
-        #endregion
+        #endregion Fields
 
-        #region Propertys
 
-        #endregion
 
         #region Ctor
 
@@ -32,7 +32,7 @@ namespace YuLinTu.Component.XiZangLZ
             dic.Read();
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -45,7 +45,6 @@ namespace YuLinTu.Component.XiZangLZ
         {
             try
             {
-                //TODO 父类方面未起作用，暂时弃用
                 //base.OnSetParamValue(data);
                 if (data is CollectivityTissue)
                 {
@@ -106,27 +105,32 @@ namespace YuLinTu.Component.XiZangLZ
                     SetBookmarkValue(AgricultureBookMark.IdentifyCard + "1", "R");//藏文
                     CardTypeText = "居民身份证";//证件类型
                     break;
+
                 case eCredentialsType.OfficerCard:
                     SetBookmarkValue(AgricultureBookMark.OfficerCard, "R");//证件类型
                     SetBookmarkValue(AgricultureBookMark.OfficerCard + "1", "R");//藏文
                     CardTypeText = "军官证";//证件类型
                     break;
+
                 case eCredentialsType.Other:
                 case eCredentialsType.AgentCard:
                     SetBookmarkValue(AgricultureBookMark.CredentialOther, "R");//
                     SetBookmarkValue(AgricultureBookMark.CredentialOther + "1", "R");//藏文
                     CardTypeText = "其他";            // 因为没有“行政、企事业单位机构代码证或法人代码证”，所以归为其它
                     break;
+
                 case eCredentialsType.Passport:
                     SetBookmarkValue(AgricultureBookMark.Passport, "R");//证件类型
                     SetBookmarkValue(AgricultureBookMark.Passport + "1", "R");//藏文
                     CardTypeText = "护照";//证件类型
                     break;
+
                 case eCredentialsType.ResidenceBooklet:
                     SetBookmarkValue(AgricultureBookMark.ResidenceBooklet, "R");//证件类型
                     SetBookmarkValue(AgricultureBookMark.ResidenceBooklet + "1", "R");//藏文
                     CardTypeText = "户口簿";//证件类型
                     break;
+
                 default:
                     break;
             }
@@ -145,7 +149,6 @@ namespace YuLinTu.Component.XiZangLZ
             if (Tissue.CheckDate != null && Tissue.CheckDate.HasValue)
                 SetBookmarkValue(AgricultureBookMark.SenderCheckDate, ToolDateTime.GetLongDateString(Tissue.CheckDate.Value));//审核日期
             SetBookmarkValue(AgricultureBookMark.SenderChenkOpinion, ConvertParamValue(Tissue.CheckOpinion));//审核意见
-
         }
 
         private string ConvertParamValue(string oldParamValue)
@@ -190,6 +193,6 @@ namespace YuLinTu.Component.XiZangLZ
             return zoneName;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

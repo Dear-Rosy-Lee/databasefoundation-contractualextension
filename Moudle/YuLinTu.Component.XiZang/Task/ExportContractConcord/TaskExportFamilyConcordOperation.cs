@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,13 +29,13 @@ namespace YuLinTu.Component.XiZangLZ
         public TaskExportFamilyConcordOperation()
         { }
 
-        #endregion
+        #endregion Ctor
 
         #region Field
 
         private string openFilePath;  //打开文件路径
 
-        #endregion
+        #endregion Field
 
         #region Properties
 
@@ -43,7 +44,7 @@ namespace YuLinTu.Component.XiZangLZ
         /// </summary>
         public IWorkpage Workpage { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Method—Override
 
@@ -159,7 +160,6 @@ namespace YuLinTu.Component.XiZangLZ
                 {
                     //strInfo = string.Format("{0}未导出家庭承包方式合同", markDesc);
                     strInfo = string.Format("{0}未导出承包合同", markDesc);
-                    //TODO 删除路径的作用
                     //if (Directory.Exists(path) && Directory.GetFiles(path).Count() == 0)
                     //    Directory.Delete(path);
                     isOpen = false;
@@ -175,7 +175,7 @@ namespace YuLinTu.Component.XiZangLZ
             return isOpen;
         }
 
-        #endregion
+        #endregion Method—Override
 
         #region Method—Helper
 
@@ -208,7 +208,7 @@ namespace YuLinTu.Component.XiZangLZ
             return excelName;
         }
 
-        #endregion
+        #endregion 任务描述信息
 
         #region 处理消息
 
@@ -257,7 +257,7 @@ namespace YuLinTu.Component.XiZangLZ
             return (arg.ReturnValue as List<Zone>);
         }
 
-        #endregion
+        #endregion 处理消息
 
         #region 获取全部地域及创建文件目录
 
@@ -344,7 +344,7 @@ namespace YuLinTu.Component.XiZangLZ
             return folderString;
         }
 
-        #endregion
+        #endregion 获取全部地域及创建文件目录
 
         #region 其他
 
@@ -365,8 +365,8 @@ namespace YuLinTu.Component.XiZangLZ
             })); ;
         }
 
-        #endregion
+        #endregion 其他
 
-        #endregion
+        #endregion Method—Helper
     }
 }

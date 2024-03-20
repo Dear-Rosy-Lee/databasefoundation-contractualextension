@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{771C56F8-43E3-4FF0-9967-40AA34C58B3D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4A8B9B08-825C-4EFC-B1D8-F732F7BECF7D}"
 	ProjectSection(SolutionItems) = preProject
 		Shared\GlobalAssemblyInfo.cs = Shared\GlobalAssemblyInfo.cs
@@ -78,79 +76,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.ContractR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.Common", "Component\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj", "{5D529712-2C25-409C-A865-F832CF5324CC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spatialite", "Spatialite", "{275B9970-1D8E-4325-AD65-06E38F5B58F5}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Spatialite\libfreexl-1.dll = Dependencies\Spatialite\libfreexl-1.dll
-		Dependencies\Spatialite\libgcc_s_dw2-1.dll = Dependencies\Spatialite\libgcc_s_dw2-1.dll
-		Dependencies\Spatialite\libgeos-3-5-0.dll = Dependencies\Spatialite\libgeos-3-5-0.dll
-		Dependencies\Spatialite\libgeos_c-1.dll = Dependencies\Spatialite\libgeos_c-1.dll
-		Dependencies\Spatialite\libiconv-2.dll = Dependencies\Spatialite\libiconv-2.dll
-		Dependencies\Spatialite\liblzma-5.dll = Dependencies\Spatialite\liblzma-5.dll
-		Dependencies\Spatialite\libproj-9.dll = Dependencies\Spatialite\libproj-9.dll
-		Dependencies\Spatialite\libsqlite3-0.dll = Dependencies\Spatialite\libsqlite3-0.dll
-		Dependencies\Spatialite\libstdc++-6.dll = Dependencies\Spatialite\libstdc++-6.dll
-		Dependencies\Spatialite\libxml2-2.dll = Dependencies\Spatialite\libxml2-2.dll
-		Dependencies\Spatialite\mod_spatialite.dll = Dependencies\Spatialite\mod_spatialite.dll
-		Dependencies\Spatialite\sqlite3.exe = Dependencies\Spatialite\sqlite3.exe
-		Dependencies\Spatialite\zlib1.dll = Dependencies\Spatialite\zlib1.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GDAL", "GDAL", "{2E8A4297-F298-435E-A793-C599806AF81F}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\GDAL\cairo.dll = Dependencies\GDAL\cairo.dll
-		Dependencies\GDAL\cfitsio.dll = Dependencies\GDAL\cfitsio.dll
-		Dependencies\GDAL\freexl.dll = Dependencies\GDAL\freexl.dll
-		Dependencies\GDAL\fribidi.dll = Dependencies\GDAL\fribidi.dll
-		Dependencies\GDAL\ftgl.dll = Dependencies\GDAL\ftgl.dll
-		Dependencies\GDAL\gdal111.dll = Dependencies\GDAL\gdal111.dll
-		Dependencies\GDAL\gdal_csharp.dll = Dependencies\GDAL\gdal_csharp.dll
-		Dependencies\GDAL\gdal_wrap.dll = Dependencies\GDAL\gdal_wrap.dll
-		Dependencies\GDAL\gdalconst_csharp.dll = Dependencies\GDAL\gdalconst_csharp.dll
-		Dependencies\GDAL\gdalconst_wrap.dll = Dependencies\GDAL\gdalconst_wrap.dll
-		Dependencies\GDAL\geos.dll = Dependencies\GDAL\geos.dll
-		Dependencies\GDAL\geos_c.dll = Dependencies\GDAL\geos_c.dll
-		Dependencies\GDAL\hdf5.dll = Dependencies\GDAL\hdf5.dll
-		Dependencies\GDAL\hdf5_hl.dll = Dependencies\GDAL\hdf5_hl.dll
-		Dependencies\GDAL\hdf5dll.dll = Dependencies\GDAL\hdf5dll.dll
-		Dependencies\GDAL\hdfdll.dll = Dependencies\GDAL\hdfdll.dll
-		Dependencies\GDAL\iconv.dll = Dependencies\GDAL\iconv.dll
-		Dependencies\GDAL\libcurl.dll = Dependencies\GDAL\libcurl.dll
-		Dependencies\GDAL\libeay32.dll = Dependencies\GDAL\libeay32.dll
-		Dependencies\GDAL\libecwj2.dll = Dependencies\GDAL\libecwj2.dll
-		Dependencies\GDAL\libexpat.dll = Dependencies\GDAL\libexpat.dll
-		Dependencies\GDAL\libfcgi.dll = Dependencies\GDAL\libfcgi.dll
-		Dependencies\GDAL\libmysql.dll = Dependencies\GDAL\libmysql.dll
-		Dependencies\GDAL\libpq.dll = Dependencies\GDAL\libpq.dll
-		Dependencies\GDAL\libtiff.dll = Dependencies\GDAL\libtiff.dll
-		Dependencies\GDAL\libxml2.dll = Dependencies\GDAL\libxml2.dll
-		Dependencies\GDAL\lti_dsdk_9.0.dll = Dependencies\GDAL\lti_dsdk_9.0.dll
-		Dependencies\GDAL\lti_lidar_dsdk_1.1.dll = Dependencies\GDAL\lti_lidar_dsdk_1.1.dll
-		Dependencies\GDAL\mapserver.dll = Dependencies\GDAL\mapserver.dll
-		Dependencies\GDAL\mfhdfdll.dll = Dependencies\GDAL\mfhdfdll.dll
-		Dependencies\GDAL\msplugin_mssql2008.dll = Dependencies\GDAL\msplugin_mssql2008.dll
-		Dependencies\GDAL\msplugin_oracle.dll = Dependencies\GDAL\msplugin_oracle.dll
-		Dependencies\GDAL\msvcp100.dll = Dependencies\GDAL\msvcp100.dll
-		Dependencies\GDAL\msvcr100.dll = Dependencies\GDAL\msvcr100.dll
-		Dependencies\GDAL\NCSEcw.dll = Dependencies\GDAL\NCSEcw.dll
-		Dependencies\GDAL\netcdf.dll = Dependencies\GDAL\netcdf.dll
-		Dependencies\GDAL\ogr_csharp.dll = Dependencies\GDAL\ogr_csharp.dll
-		Dependencies\GDAL\ogr_wrap.dll = Dependencies\GDAL\ogr_wrap.dll
-		Dependencies\GDAL\openjp2.dll = Dependencies\GDAL\openjp2.dll
-		Dependencies\GDAL\openjpeg.dll = Dependencies\GDAL\openjpeg.dll
-		Dependencies\GDAL\osr_csharp.dll = Dependencies\GDAL\osr_csharp.dll
-		Dependencies\GDAL\osr_wrap.dll = Dependencies\GDAL\osr_wrap.dll
-		Dependencies\GDAL\pdflib.dll = Dependencies\GDAL\pdflib.dll
-		Dependencies\GDAL\proj.dll = Dependencies\GDAL\proj.dll
-		Dependencies\GDAL\spatialite.dll = Dependencies\GDAL\spatialite.dll
-		Dependencies\GDAL\sqlite3.dll = Dependencies\GDAL\sqlite3.dll
-		Dependencies\GDAL\ssleay32.dll = Dependencies\GDAL\ssleay32.dll
-		Dependencies\GDAL\szip.dll = Dependencies\GDAL\szip.dll
-		Dependencies\GDAL\tbb.dll = Dependencies\GDAL\tbb.dll
-		Dependencies\GDAL\xdrdll.dll = Dependencies\GDAL\xdrdll.dll
-		Dependencies\GDAL\xerces-c_2_8.dll = Dependencies\GDAL\xerces-c_2_8.dll
-		Dependencies\GDAL\zlib1.dll = Dependencies\GDAL\zlib1.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.DiagramFoundation", "Component\YuLinTu.Component.DiagramFoundation\YuLinTu.Component.DiagramFoundation.csproj", "{A85D8752-51CA-4EF2-B474-820A01A5DA20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.SeparateDataBaseTask", "Component\YuLinTu.Component.SeparateDataBaseTask\YuLinTu.Component.SeparateDataBaseTask.csproj", "{B7C00328-3B9E-449C-9F70-5832924AA201}"
@@ -169,301 +94,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.SecondAcc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.2016ResultDbToLocalDb", "Component\YuLinTu.Component.2016ResultDbToLocalDb\YuLinTu.Component.2016ResultDbToLocalDb.csproj", "{42514C10-FB49-42D7-9D21-C496F8FA47EC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspose", "Aspose", "{C5475CD4-5D45-48E3-9510-F3628872FA86}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Aspose\Aspose.Cells.dll = Dependencies\Aspose\Aspose.Cells.dll
-		Dependencies\Aspose\Aspose.Words.dll = Dependencies\Aspose\Aspose.Words.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CA", "CA", "{8844D271-DA82-453E-BADC-03773CDFA008}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\CA\YuLinTuClient.pfx = Dependencies\CA\YuLinTuClient.pfx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chart", "Chart", "{4DE5E333-6002-42F2-B267-E5B1F23BCB38}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Chart\WPFVisifire.Charts.dll = Dependencies\Chart\WPFVisifire.Charts.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tGis", "tGis", "{1A521532-F6CD-4610-BB7C-1D4AF9014A7A}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\tGis\gdal200.dll = Dependencies\tGis\gdal200.dll
-		Dependencies\tGis\tGISC.dll = Dependencies\tGis\tGISC.dll
-		Dependencies\tGis\tGISCLib.dll = Dependencies\tGis\tGISCLib.dll
-		Dependencies\tGis\tGISCNetConsolTest.dll = Dependencies\tGis\tGISCNetConsolTest.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotSpatial", "DotSpatial", "{7A3F68BE-9FD2-484C-88BE-B5CB4641634E}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\DotSpatial\DotSpatial.Data.dll = Dependencies\DotSpatial\DotSpatial.Data.dll
-		Dependencies\DotSpatial\DotSpatial.Data.Forms.dll = Dependencies\DotSpatial\DotSpatial.Data.Forms.dll
-		Dependencies\DotSpatial\DotSpatial.Extensions.dll = Dependencies\DotSpatial\DotSpatial.Extensions.dll
-		Dependencies\DotSpatial\DotSpatial.Modeling.Forms.dll = Dependencies\DotSpatial\DotSpatial.Modeling.Forms.dll
-		Dependencies\DotSpatial\DotSpatial.Mono.dll = Dependencies\DotSpatial\DotSpatial.Mono.dll
-		Dependencies\DotSpatial\DotSpatial.Projections.dll = Dependencies\DotSpatial\DotSpatial.Projections.dll
-		Dependencies\DotSpatial\DotSpatial.Projections.Forms.dll = Dependencies\DotSpatial\DotSpatial.Projections.Forms.dll
-		Dependencies\DotSpatial\DotSpatial.Serialization.dll = Dependencies\DotSpatial\DotSpatial.Serialization.dll
-		Dependencies\DotSpatial\DotSpatial.Symbology.dll = Dependencies\DotSpatial\DotSpatial.Symbology.dll
-		Dependencies\DotSpatial\DotSpatial.Symbology.Forms.dll = Dependencies\DotSpatial\DotSpatial.Symbology.Forms.dll
-		Dependencies\DotSpatial\DotSpatial.Tools.dll = Dependencies\DotSpatial\DotSpatial.Tools.dll
-		Dependencies\DotSpatial\DotSpatial.Topology.dll = Dependencies\DotSpatial\DotSpatial.Topology.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DwgDirect", "DwgDirect", "{D2933905-69BC-4801-A29C-46142C9B2744}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\DwgDirect\AcIdViewObj_3.02_8.drx = Dependencies\DwgDirect\AcIdViewObj_3.02_8.drx
-		Dependencies\DwgDirect\AutoSurfServices_3.02_8.drx = Dependencies\DwgDirect\AutoSurfServices_3.02_8.drx
-		Dependencies\DwgDirect\DbCommands_3.02_8.drx = Dependencies\DwgDirect\DbCommands_3.02_8.drx
-		Dependencies\DwgDirect\DD_AcisBuilder_3.02_8.dll = Dependencies\DwgDirect\DD_AcisBuilder_3.02_8.dll
-		Dependencies\DwgDirect\DD_Alloc_3.02_8.dll = Dependencies\DwgDirect\DD_Alloc_3.02_8.dll
-		Dependencies\DwgDirect\DD_Ave_3.02_8.drx = Dependencies\DwgDirect\DD_Ave_3.02_8.drx
-		Dependencies\DwgDirect\DD_BmpExport_3.02_8.dll = Dependencies\DwgDirect\DD_BmpExport_3.02_8.dll
-		Dependencies\DwgDirect\DD_Br_3.02_8.dll = Dependencies\DwgDirect\DD_Br_3.02_8.dll
-		Dependencies\DwgDirect\DD_BrepRenderer_3.02_8.dll = Dependencies\DwgDirect\DD_BrepRenderer_3.02_8.dll
-		Dependencies\DwgDirect\DD_Db_3.02_8.dll = Dependencies\DwgDirect\DD_Db_3.02_8.dll
-		Dependencies\DwgDirect\DD_DbRoot_3.02_8.dll = Dependencies\DwgDirect\DD_DbRoot_3.02_8.dll
-		Dependencies\DwgDirect\DD_Dwf7Export_3.02_8.dll = Dependencies\DwgDirect\DD_Dwf7Export_3.02_8.dll
-		Dependencies\DwgDirect\DD_Dwf7Import_3.02_8.drx = Dependencies\DwgDirect\DD_Dwf7Import_3.02_8.drx
-		Dependencies\DwgDirect\DD_DwfUnderlay_3.02_8.drx = Dependencies\DwgDirect\DD_DwfUnderlay_3.02_8.drx
-		Dependencies\DwgDirect\DD_DynBlocks_3.02_8.drx = Dependencies\DwgDirect\DD_DynBlocks_3.02_8.drx
-		Dependencies\DwgDirect\DD_FtFontEngine_3.02_8.drx = Dependencies\DwgDirect\DD_FtFontEngine_3.02_8.drx
-		Dependencies\DwgDirect\DD_Ge_3.02_8.dll = Dependencies\DwgDirect\DD_Ge_3.02_8.dll
-		Dependencies\DwgDirect\DD_Gi_3.02_8.dll = Dependencies\DwgDirect\DD_Gi_3.02_8.dll
-		Dependencies\DwgDirect\DD_Gs_3.02_8.dll = Dependencies\DwgDirect\DD_Gs_3.02_8.dll
-		Dependencies\DwgDirect\DD_Mgd_3.02_8.dll = Dependencies\DwgDirect\DD_Mgd_3.02_8.dll
-		Dependencies\DwgDirect\DD_Root_3.02_8.dll = Dependencies\DwgDirect\DD_Root_3.02_8.dll
-		Dependencies\DwgDirect\DD_Sm_3.02_8.drx = Dependencies\DwgDirect\DD_Sm_3.02_8.drx
-		Dependencies\DwgDirect\DD_STLExport_3.02_8.drx = Dependencies\DwgDirect\DD_STLExport_3.02_8.drx
-		Dependencies\DwgDirect\DD_SvgExport_3.02_8.drx = Dependencies\DwgDirect\DD_SvgExport_3.02_8.drx
-		Dependencies\DwgDirect\DWFCore.dll = Dependencies\DwgDirect\DWFCore.dll
-		Dependencies\DwgDirect\DWFToolkit.dll = Dependencies\DwgDirect\DWFToolkit.dll
-		Dependencies\DwgDirect\ExCustObjs_3.02_8.drx = Dependencies\DwgDirect\ExCustObjs_3.02_8.drx
-		Dependencies\DwgDirect\ExDeepCloning.drx = Dependencies\DwgDirect\ExDeepCloning.drx
-		Dependencies\DwgDirect\ExDynamicBlocks_3.02_8.drx = Dependencies\DwgDirect\ExDynamicBlocks_3.02_8.drx
-		Dependencies\DwgDirect\ExEvalWatchers_3.02_8.drx = Dependencies\DwgDirect\ExEvalWatchers_3.02_8.drx
-		Dependencies\DwgDirect\ExFieldEvaluator_3.02_8.drx = Dependencies\DwgDirect\ExFieldEvaluator_3.02_8.drx
-		Dependencies\DwgDirect\FileDlgExt_3.02_8.dll = Dependencies\DwgDirect\FileDlgExt_3.02_8.dll
-		Dependencies\DwgDirect\ModelerGeometry_3.02_8.drx = Dependencies\DwgDirect\ModelerGeometry_3.02_8.drx
-		Dependencies\DwgDirect\OdBagFiler_3.02_8.drx = Dependencies\DwgDirect\OdBagFiler_3.02_8.drx
-		Dependencies\DwgDirect\OdCurveFunctions_3.02_8.drx = Dependencies\DwgDirect\OdCurveFunctions_3.02_8.drx
-		Dependencies\DwgDirect\OdOleItemHandler_3.02_8.drx = Dependencies\DwgDirect\OdOleItemHandler_3.02_8.drx
-		Dependencies\DwgDirect\OdWriteEx.sat = Dependencies\DwgDirect\OdWriteEx.sat
-		Dependencies\DwgDirect\OpenCadDrx.drx = Dependencies\DwgDirect\OpenCadDrx.drx
-		Dependencies\DwgDirect\OverrulingSample.drx = Dependencies\DwgDirect\OverrulingSample.drx
-		Dependencies\DwgDirect\PDFToolkit_3.02_8.dll = Dependencies\DwgDirect\PDFToolkit_3.02_8.dll
-		Dependencies\DwgDirect\PlotSettingsValidator_3.02_8.drx = Dependencies\DwgDirect\PlotSettingsValidator_3.02_8.drx
-		Dependencies\DwgDirect\PlotStyleServices_3.02_8.drx = Dependencies\DwgDirect\PlotStyleServices_3.02_8.drx
-		Dependencies\DwgDirect\RasterProcessor_3.02_8.drx = Dependencies\DwgDirect\RasterProcessor_3.02_8.drx
-		Dependencies\DwgDirect\RecomputeDimBlock_3.02_8.drx = Dependencies\DwgDirect\RecomputeDimBlock_3.02_8.drx
-		Dependencies\DwgDirect\RxRasterServices_3.02_8.drx = Dependencies\DwgDirect\RxRasterServices_3.02_8.drx
-		Dependencies\DwgDirect\SpatialIndex_3.02_8.dll = Dependencies\DwgDirect\SpatialIndex_3.02_8.dll
-		Dependencies\DwgDirect\W3Dtk.dll = Dependencies\DwgDirect\W3Dtk.dll
-		Dependencies\DwgDirect\WhipTk.dll = Dependencies\DwgDirect\WhipTk.dll
-		Dependencies\DwgDirect\WinBitmap_3.02_8.gs = Dependencies\DwgDirect\WinBitmap_3.02_8.gs
-		Dependencies\DwgDirect\WinGDI_3.02_8.gs = Dependencies\DwgDirect\WinGDI_3.02_8.gs
-		Dependencies\DwgDirect\WinOpenGL_3.02_8.gs = Dependencies\DwgDirect\WinOpenGL_3.02_8.gs
-		Dependencies\DwgDirect\zlib.dll = Dependencies\DwgDirect\zlib.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{4809F431-211F-4FA1-8590-E2D2EA5B4BE3}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Exchange\AgricultureExchange.dll = Dependencies\Exchange\AgricultureExchange.dll
-		Dependencies\Exchange\ContractLand.Exchange2.dll = Dependencies\Exchange\ContractLand.Exchange2.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft", "Microsoft", "{305EBA1F-8932-48B5-9657-56DB9D8CFA34}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Microsoft\Microsoft.Data.ConnectionUI.Dialog.dll = Dependencies\Microsoft\Microsoft.Data.ConnectionUI.Dialog.dll
-		Dependencies\Microsoft\Microsoft.Data.ConnectionUI.dll = Dependencies\Microsoft\Microsoft.Data.ConnectionUI.dll
-		Dependencies\Microsoft\Microsoft.Dynamic.dll = Dependencies\Microsoft\Microsoft.Dynamic.dll
-		Dependencies\Microsoft\Microsoft.Practices.ServiceLocation.dll = Dependencies\Microsoft\Microsoft.Practices.ServiceLocation.dll
-		Dependencies\Microsoft\Microsoft.Practices.Unity.Configuration.dll = Dependencies\Microsoft\Microsoft.Practices.Unity.Configuration.dll
-		Dependencies\Microsoft\Microsoft.Practices.Unity.dll = Dependencies\Microsoft\Microsoft.Practices.Unity.dll
-		Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.Configuration.dll = Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.Configuration.dll
-		Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.dll = Dependencies\Microsoft\Microsoft.Practices.Unity.Interception.dll
-		Dependencies\Microsoft\Microsoft.Scripting.dll = Dependencies\Microsoft\Microsoft.Scripting.dll
-		Dependencies\Microsoft\Microsoft.SqlServer.Types.dll = Dependencies\Microsoft\Microsoft.SqlServer.Types.dll
-		Dependencies\Microsoft\Microsoft.Web.Infrastructure.dll = Dependencies\Microsoft\Microsoft.Web.Infrastructure.dll
-		Dependencies\Microsoft\Microsoft.Windows.Shell.dll = Dependencies\Microsoft\Microsoft.Windows.Shell.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NPOI", "NPOI", "{FA60250D-9AEA-4998-8B32-19E0EB56AD08}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\NPOI\NPOI.dll = Dependencies\NPOI\NPOI.dll
-		Dependencies\NPOI\NPOI.OOXML.dll = Dependencies\NPOI\NPOI.OOXML.dll
-		Dependencies\NPOI\NPOI.OpenXml4Net.dll = Dependencies\NPOI\NPOI.OpenXml4Net.dll
-		Dependencies\NPOI\NPOI.OpenXmlFormats.dll = Dependencies\NPOI\NPOI.OpenXmlFormats.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NTS", "NTS", "{402C97E7-C298-4EE6-A9D5-A34ED8D89A0D}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\NTS\GeoAPI.dll = Dependencies\NTS\GeoAPI.dll
-		Dependencies\NTS\NetTopologySuite.dll = Dependencies\NTS\NetTopologySuite.dll
-		Dependencies\NTS\NetTopologySuite.IO.dll = Dependencies\NTS\NetTopologySuite.IO.dll
-		Dependencies\NTS\NetTopologySuite.IO.GeoTools.dll = Dependencies\NTS\NetTopologySuite.IO.GeoTools.dll
-		Dependencies\NTS\NetTopologySuite.IO.ShapeFile.dll = Dependencies\NTS\NetTopologySuite.IO.ShapeFile.dll
-		Dependencies\NTS\PowerCollections.dll = Dependencies\NTS\PowerCollections.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Quality", "Quality", "{D9C59711-F83B-4F9D-9066-D5AEB727AE63}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Quality\Quality.Business.Achievement.dll = Dependencies\Quality\Quality.Business.Achievement.dll
-		Dependencies\Quality\Quality.Business.DataLogical.dll = Dependencies\Quality\Quality.Business.DataLogical.dll
-		Dependencies\Quality\Quality.Business.Entity.dll = Dependencies\Quality\Quality.Business.Entity.dll
-		Dependencies\Quality\Quality.Business.Import.dll = Dependencies\Quality\Quality.Business.Import.dll
-		Dependencies\Quality\Quality.Business.TaskBasic.dll = Dependencies\Quality\Quality.Business.TaskBasic.dll
-		Dependencies\Quality\Quality.Business.Topology.dll = Dependencies\Quality\Quality.Business.Topology.dll
-		Dependencies\Quality\YuLinTu.Business.Achievement.dll = Dependencies\Quality\YuLinTu.Business.Achievement.dll
-		Dependencies\Quality\YuLinTu.Business.DataLogical.dll = Dependencies\Quality\YuLinTu.Business.DataLogical.dll
-		Dependencies\Quality\YuLinTu.Business.TaskBasic.dll = Dependencies\Quality\YuLinTu.Business.TaskBasic.dll
-		Dependencies\Quality\YuLinTu.Business.Topology.dll = Dependencies\Quality\YuLinTu.Business.Topology.dll
-		Dependencies\Quality\YuLinTu.Component.ExportTask.dll = Dependencies\Quality\YuLinTu.Component.ExportTask.dll
-		..\WinFoundationShanXi\Dependencies\YuLinTu.Library.AgriExchange.dll = ..\WinFoundationShanXi\Dependencies\YuLinTu.Library.AgriExchange.dll
-		Dependencies\Quality\YuLinTu.Library.AgriExchange.dll = Dependencies\Quality\YuLinTu.Library.AgriExchange.dll
-		Dependencies\Quality\YuLinTuQuality.Business.Entity.dll = Dependencies\Quality\YuLinTuQuality.Business.Entity.dll
-		Dependencies\Quality\YuLinTuQuality.Business.TaskBasic.dll = Dependencies\Quality\YuLinTuQuality.Business.TaskBasic.dll
-		Dependencies\Quality\YuLinTuQuality.Component.ExportTask.dll = Dependencies\Quality\YuLinTuQuality.Component.ExportTask.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{5DF9A3A7-95BE-4AB4-B8D1-B3BC736F77BE}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Script\CSScriptLibrary.dll = Dependencies\Script\CSScriptLibrary.dll
-		Dependencies\Script\IronPython.dll = Dependencies\Script\IronPython.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{E005AAB0-84E0-4320-A7F5-0314FF43AA53}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\System\System.Web.Helpers.dll = Dependencies\System\System.Web.Helpers.dll
-		Dependencies\System\System.Web.Mvc.dll = Dependencies\System\System.Web.Mvc.dll
-		Dependencies\System\System.Web.Razor.dll = Dependencies\System\System.Web.Razor.dll
-		Dependencies\System\System.Web.WebPages.Deployment.dll = Dependencies\System\System.Web.WebPages.Deployment.dll
-		Dependencies\System\System.Web.WebPages.dll = Dependencies\System\System.Web.WebPages.dll
-		Dependencies\System\System.Web.WebPages.Razor.dll = Dependencies\System\System.Web.WebPages.Razor.dll
-		Dependencies\System\System.Windows.Interactivity.dll = Dependencies\System\System.Windows.Interactivity.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thought", "Thought", "{CF2AE2AD-5CD2-4368-B3BA-BEA14EB1C195}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Thought\ThoughtWorks.QRCode.dll = Dependencies\Thought\ThoughtWorks.QRCode.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WpfToolKit", "WpfToolKit", "{BD40C569-8210-421A-8AF0-A37CA5E4E81C}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\WpfToolKit\Xceed.Wpf.DataGrid.dll = Dependencies\WpfToolKit\Xceed.Wpf.DataGrid.dll
-		Dependencies\WpfToolKit\Xceed.Wpf.Toolkit.dll = Dependencies\WpfToolKit\Xceed.Wpf.Toolkit.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZIP", "ZIP", "{03B58544-D823-4CB3-86F4-F35A6BB06372}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\ZIP\ICSharpCode.SharpZipLib.dll = Dependencies\ZIP\ICSharpCode.SharpZipLib.dll
-		Dependencies\ZIP\Ionic.Zip.dll = Dependencies\ZIP\Ionic.Zip.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YuLinTu", "YuLinTu", "{25DF7718-AF6B-4FE3-B9AC-FAA7D1A8BB5D}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\YuLinTu\YuLinTu.Activities.dll = Dependencies\YuLinTu\YuLinTu.Activities.dll
-		Dependencies\YuLinTu\YuLinTu.ArcGIS.Client.dll = Dependencies\YuLinTu\YuLinTu.ArcGIS.Client.dll
-		Dependencies\YuLinTu\YuLinTu.ArcGIS.Client.WCF.dll = Dependencies\YuLinTu\YuLinTu.ArcGIS.Client.WCF.dll
-		Dependencies\YuLinTu\YuLinTu.ArcGIS.Server.dll = Dependencies\YuLinTu\YuLinTu.ArcGIS.Server.dll
-		Dependencies\YuLinTu\YuLinTu.Archives.dll = Dependencies\YuLinTu\YuLinTu.Archives.dll
-		Dependencies\YuLinTu\YuLinTu.Business.Activities.dll = Dependencies\YuLinTu\YuLinTu.Business.Activities.dll
-		Dependencies\YuLinTu\YuLinTu.Business.Core.dll = Dependencies\YuLinTu\YuLinTu.Business.Core.dll
-		Dependencies\YuLinTu\YuLinTu.Business.Diagnostics.dll = Dependencies\YuLinTu\YuLinTu.Business.Diagnostics.dll
-		Dependencies\YuLinTu\YuLinTu.Core.dll = Dependencies\YuLinTu\YuLinTu.Core.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Activities.dll = Dependencies\YuLinTu\YuLinTu.Data.Activities.dll
-		Dependencies\YuLinTu\YuLinTu.Data.ArcGIS.dll = Dependencies\YuLinTu\YuLinTu.Data.ArcGIS.dll
-		Dependencies\YuLinTu\YuLinTu.Data.dll = Dependencies\YuLinTu\YuLinTu.Data.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Dynamic.Activities.dll = Dependencies\YuLinTu\YuLinTu.Data.Dynamic.Activities.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll = Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Dynamic.WCF.dll = Dependencies\YuLinTu\YuLinTu.Data.Dynamic.WCF.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Dynamic.WCF.Security.dll = Dependencies\YuLinTu\YuLinTu.Data.Dynamic.WCF.Security.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Framework.dll = Dependencies\YuLinTu\YuLinTu.Data.Framework.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Framework.WCF.dll = Dependencies\YuLinTu\YuLinTu.Data.Framework.WCF.dll
-		Dependencies\YuLinTu\YuLinTu.Data.OleDb.dll = Dependencies\YuLinTu\YuLinTu.Data.OleDb.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Oracle.dll = Dependencies\YuLinTu\YuLinTu.Data.Oracle.dll
-		Dependencies\YuLinTu\YuLinTu.Data.PostgreSQL.dll = Dependencies\YuLinTu\YuLinTu.Data.PostgreSQL.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Shapefile.dll = Dependencies\YuLinTu\YuLinTu.Data.Shapefile.dll
-		Dependencies\YuLinTu\YuLinTu.Data.Shards.dll = Dependencies\YuLinTu\YuLinTu.Data.Shards.dll
-		Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll = Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll
-		Dependencies\YuLinTu\YuLinTu.Data.SqlServer.dll = Dependencies\YuLinTu\YuLinTu.Data.SqlServer.dll
-		Dependencies\YuLinTu\YuLinTu.Diagnostics.dll = Dependencies\YuLinTu\YuLinTu.Diagnostics.dll
-		Dependencies\YuLinTu\YuLinTu.Diagrams.dll = Dependencies\YuLinTu\YuLinTu.Diagrams.dll
-		Dependencies\YuLinTu\YuLinTu.Diagrams.Extensions.dll = Dependencies\YuLinTu\YuLinTu.Diagrams.Extensions.dll
-		Dependencies\YuLinTu\YuLinTu.dll = Dependencies\YuLinTu\YuLinTu.dll
-		Dependencies\YuLinTu\YuLinTu.Excel.dll = Dependencies\YuLinTu\YuLinTu.Excel.dll
-		Dependencies\YuLinTu\Yulintu.GeoData.dll = Dependencies\YuLinTu\Yulintu.GeoData.dll
-		Dependencies\YuLinTu\YuLinTu.GPS.dll = Dependencies\YuLinTu\YuLinTu.GPS.dll
-		Dependencies\YuLinTu\YuLinTu.Installer.dll = Dependencies\YuLinTu\YuLinTu.Installer.dll
-		Dependencies\YuLinTu\YuLinTu.Interception.dll = Dependencies\YuLinTu\YuLinTu.Interception.dll
-		Dependencies\YuLinTu\YuLinTu.IO.dll = Dependencies\YuLinTu\YuLinTu.IO.dll
-		Dependencies\YuLinTu\YuLinTu.Javascript.dll = Dependencies\YuLinTu\YuLinTu.Javascript.dll
-		Dependencies\YuLinTu\YuLinTu.Library.AgriExchange.dll = Dependencies\YuLinTu\YuLinTu.Library.AgriExchange.dll
-		Dependencies\YuLinTu\YuLinTu.Library.Basic.dll = Dependencies\YuLinTu\YuLinTu.Library.Basic.dll
-		Dependencies\YuLinTu\YuLinTu.Library.Data.dll = Dependencies\YuLinTu\YuLinTu.Library.Data.dll
-		Dependencies\YuLinTu\YuLinTu.Library.Data.Oracle.dll = Dependencies\YuLinTu\YuLinTu.Library.Data.Oracle.dll
-		Dependencies\YuLinTu\YuLinTu.Library.Database.dll = Dependencies\YuLinTu\YuLinTu.Library.Database.dll
-		Dependencies\YuLinTu\YuLinTu.Library.WinFoundationAux.dll = Dependencies\YuLinTu\YuLinTu.Library.WinFoundationAux.dll
-		Dependencies\YuLinTu\YuLinTu.Navigation.dll = Dependencies\YuLinTu\YuLinTu.Navigation.dll
-		Dependencies\YuLinTu\YuLinTu.NetAux.dll = Dependencies\YuLinTu\YuLinTu.NetAux.dll
-		Dependencies\YuLinTu\YuLinTu.PropertyRight.Common.dll = Dependencies\YuLinTu\YuLinTu.PropertyRight.Common.dll
-		Dependencies\YuLinTu\YuLinTu.PropertyRight.ContractLand.Common.dll = Dependencies\YuLinTu\YuLinTu.PropertyRight.ContractLand.Common.dll
-		Dependencies\YuLinTu\YuLinTu.PropertyRight.Services.SyncClient.dll = Dependencies\YuLinTu\YuLinTu.PropertyRight.Services.SyncClient.dll
-		Dependencies\YuLinTu\YuLinTu.Python.dll = Dependencies\YuLinTu\YuLinTu.Python.dll
-		Dependencies\YuLinTu\YuLinTu.Resources.dll = Dependencies\YuLinTu\YuLinTu.Resources.dll
-		Dependencies\YuLinTu\YuLinTu.Scheduler.dll = Dependencies\YuLinTu\YuLinTu.Scheduler.dll
-		Dependencies\YuLinTu\YuLinTu.Script.CSScript.dll = Dependencies\YuLinTu\YuLinTu.Script.CSScript.dll
-		Dependencies\YuLinTu\YuLinTu.Script.dll = Dependencies\YuLinTu\YuLinTu.Script.dll
-		Dependencies\YuLinTu\YuLinTu.Security.dll = Dependencies\YuLinTu\YuLinTu.Security.dll
-		Dependencies\YuLinTu\YuLinTu.Security.WCF.dll = Dependencies\YuLinTu\YuLinTu.Security.WCF.dll
-		Dependencies\YuLinTu\YuLinTu.ServiceModel.dll = Dependencies\YuLinTu\YuLinTu.ServiceModel.dll
-		Dependencies\YuLinTu\YuLinTu.Spatial.dll = Dependencies\YuLinTu\YuLinTu.Spatial.dll
-		Dependencies\YuLinTu\YuLinTu.Spatial.Raster.dll = Dependencies\YuLinTu\YuLinTu.Spatial.Raster.dll
-		Dependencies\YuLinTu\YuLinTu.Spatial.Topology.dll = Dependencies\YuLinTu\YuLinTu.Spatial.Topology.dll
-		Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll = Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll
-		Dependencies\YuLinTu\YuLinTu.tGIS.dll = Dependencies\YuLinTu\YuLinTu.tGIS.dll
-		Dependencies\YuLinTu\YuLinTu.tGISCNet.dll = Dependencies\YuLinTu\YuLinTu.tGISCNet.dll
-		Dependencies\YuLinTu\YuLinTu.Unity.dll = Dependencies\YuLinTu\YuLinTu.Unity.dll
-		Dependencies\YuLinTu\YuLinTu.Unity.Interception.dll = Dependencies\YuLinTu\YuLinTu.Unity.Interception.dll
-		Dependencies\YuLinTu\YuLinTu.Web.Core.dll = Dependencies\YuLinTu\YuLinTu.Web.Core.dll
-		Dependencies\YuLinTu\YuLinTu.Web.Mvc.Core.dll = Dependencies\YuLinTu\YuLinTu.Web.Mvc.Core.dll
-		Dependencies\YuLinTu\YuLinTu.Web.Razor.dll = Dependencies\YuLinTu\YuLinTu.Web.Razor.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Core.dll = Dependencies\YuLinTu\YuLinTu.Windows.Core.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Win32.dll = Dependencies\YuLinTu\YuLinTu.Windows.Win32.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.WinForm.Controls.dll = Dependencies\YuLinTu\YuLinTu.Windows.WinForm.Controls.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.WinForm.dll = Dependencies\YuLinTu\YuLinTu.Windows.WinForm.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.WinForm.DotNetBar.dll = Dependencies\YuLinTu\YuLinTu.Windows.WinForm.DotNetBar.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.WinForm.ObjectListView.dll = Dependencies\YuLinTu\YuLinTu.Windows.WinForm.ObjectListView.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.WinForm.RibbonForm.dll = Dependencies\YuLinTu\YuLinTu.Windows.WinForm.RibbonForm.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Chrome.dll = Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Chrome.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll = Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Wpf.DotNetBar.dll = Dependencies\YuLinTu\YuLinTu.Windows.Wpf.DotNetBar.dll
-		Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll = Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll
-		Dependencies\YuLinTu\YuLinTu.WinForm.Resources.dll = Dependencies\YuLinTu\YuLinTu.WinForm.Resources.dll
-		Dependencies\YuLinTu\YuLinTu.Word.Activities.dll = Dependencies\YuLinTu\YuLinTu.Word.Activities.dll
-		Dependencies\YuLinTu\YuLinTu.Word.dll = Dependencies\YuLinTu\YuLinTu.Word.dll
-		Dependencies\YuLinTu\YuLinTu.Zip.Activities.dll = Dependencies\YuLinTu\YuLinTu.Zip.Activities.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dev", "Dev", "{136CB756-71E8-4D42-B280-6FDC20611797}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Dev\DevComponents.DotNetBar2.dll = Dependencies\Dev\DevComponents.DotNetBar2.dll
-		Dependencies\Dev\DevComponents.WpfDock.dll = Dependencies\Dev\DevComponents.WpfDock.dll
-		Dependencies\Dev\DevComponents.WpfRibbon.dll = Dependencies\Dev\DevComponents.WpfRibbon.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tif", "Tif", "{AA48044D-9B27-4778-ACCC-FCE873A90F02}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Tif\BitMiracle.LibTiff.NET.dll = Dependencies\Tif\BitMiracle.LibTiff.NET.dll
-		Dependencies\Tif\InTheHand.Net.Personal.dll = Dependencies\Tif\InTheHand.Net.Personal.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.BatchDataBaseTask", "Component\YuLinTu.Component.BatchDataBaseTask\YuLinTu.Component.BatchDataBaseTask.csproj", "{A3C7CEAB-E53A-4637-884A-8970541F4006}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{9DD077BA-2625-4F3B-B9A3-897AF28EB209}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Python\IronPython.dll = Dependencies\Python\IronPython.dll
-		Dependencies\Python\Microsoft.Scripting.dll = Dependencies\Python\Microsoft.Scripting.dll
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualSlaveProcessTask", "Library\ManualSlaveProcessTask\ManualSlaveProcessTask.csproj", "{128C67D1-5D43-4BAF-BF6C-BA05CFBE07C0}"
 EndProject
@@ -530,6 +161,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.NingMing", "Moudle\YuLinTu.Component.NingMing\YuLinTu.Component.NingMing.csproj", "{29994811-B027-4CE7-9592-CFB692B071D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.XiZangLZ", "Moudle\YuLinTu.Component.XiZang\YuLinTu.Component.XiZangLZ.csproj", "{99E1A13B-5F2A-4129-A8A5-74909435D054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.QualityCompressionDataTask", "Component\YuLinTu.Component.QualityCompressionDataTask\YuLinTu.Component.QualityCompressionDataTask.csproj", "{D55B87E9-2B5B-4ABC-9A6A-92323069486C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1142,6 +775,22 @@ Global
 		{99E1A13B-5F2A-4129-A8A5-74909435D054}.Release|x64.Build.0 = Release|Any CPU
 		{99E1A13B-5F2A-4129-A8A5-74909435D054}.Release|x86.ActiveCfg = Release|x86
 		{99E1A13B-5F2A-4129-A8A5-74909435D054}.Release|x86.Build.0 = Release|x86
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|x64.Build.0 = Debug|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|x86.ActiveCfg = Debug|x86
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Debug|x86.Build.0 = Debug|x86
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|x64.ActiveCfg = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|x64.Build.0 = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|x86.ActiveCfg = Release|Any CPU
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1167,8 +816,6 @@ Global
 		{95BEDDA1-0FE8-4CE9-8D40-33CF9C540080} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{77467A39-77EF-40E3-99D5-2DF3CAD982B5} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{5D529712-2C25-409C-A865-F832CF5324CC} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
-		{275B9970-1D8E-4325-AD65-06E38F5B58F5} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{2E8A4297-F298-435E-A793-C599806AF81F} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
 		{A85D8752-51CA-4EF2-B474-820A01A5DA20} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{B7C00328-3B9E-449C-9F70-5832924AA201} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{F526F87E-8396-47F2-9B2B-922E8B09C4FD} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
@@ -1178,27 +825,7 @@ Global
 		{AEE68A3B-123F-4771-B80F-B2DA45C667A3} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{F7EAD3E8-80A0-4BE8-BB32-2C180D89551B} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{42514C10-FB49-42D7-9D21-C496F8FA47EC} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
-		{C5475CD4-5D45-48E3-9510-F3628872FA86} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{8844D271-DA82-453E-BADC-03773CDFA008} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{4DE5E333-6002-42F2-B267-E5B1F23BCB38} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{1A521532-F6CD-4610-BB7C-1D4AF9014A7A} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{7A3F68BE-9FD2-484C-88BE-B5CB4641634E} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{D2933905-69BC-4801-A29C-46142C9B2744} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{4809F431-211F-4FA1-8590-E2D2EA5B4BE3} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{305EBA1F-8932-48B5-9657-56DB9D8CFA34} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{FA60250D-9AEA-4998-8B32-19E0EB56AD08} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{402C97E7-C298-4EE6-A9D5-A34ED8D89A0D} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{D9C59711-F83B-4F9D-9066-D5AEB727AE63} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{5DF9A3A7-95BE-4AB4-B8D1-B3BC736F77BE} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{E005AAB0-84E0-4320-A7F5-0314FF43AA53} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{CF2AE2AD-5CD2-4368-B3BA-BEA14EB1C195} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{BD40C569-8210-421A-8AF0-A37CA5E4E81C} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{03B58544-D823-4CB3-86F4-F35A6BB06372} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{25DF7718-AF6B-4FE3-B9AC-FAA7D1A8BB5D} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{136CB756-71E8-4D42-B280-6FDC20611797} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
-		{AA48044D-9B27-4778-ACCC-FCE873A90F02} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
 		{A3C7CEAB-E53A-4637-884A-8970541F4006} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
-		{9DD077BA-2625-4F3B-B9A3-897AF28EB209} = {771C56F8-43E3-4FF0-9967-40AA34C58B3D}
 		{128C67D1-5D43-4BAF-BF6C-BA05CFBE07C0} = {5E8BEC2E-E812-453F-A292-FD91C9EC9E7E}
 		{87E62C5A-6EC3-4034-A2B7-96F0E0327DFF} = {5E8BEC2E-E812-453F-A292-FD91C9EC9E7E}
 		{E1E71531-E3AA-4D87-B697-349C8CC022AB} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
@@ -1208,6 +835,7 @@ Global
 		{1585B784-7A9D-48D5-930D-F4812F689735} = {2F321F8E-F041-450A-9591-966257F4D717}
 		{29994811-B027-4CE7-9592-CFB692B071D3} = {2F321F8E-F041-450A-9591-966257F4D717}
 		{99E1A13B-5F2A-4129-A8A5-74909435D054} = {2F321F8E-F041-450A-9591-966257F4D717}
+		{D55B87E9-2B5B-4ABC-9A6A-92323069486C} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD91C12-2BD4-444D-A690-F2AA0E7ABF34}

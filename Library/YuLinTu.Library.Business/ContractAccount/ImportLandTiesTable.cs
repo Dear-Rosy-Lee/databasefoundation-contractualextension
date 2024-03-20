@@ -173,7 +173,6 @@ namespace YuLinTu.Library.Business
 
                 if (remainLands.Any(c => !string.IsNullOrEmpty(c.LandNumber) && c.LandNumber == land.LandNumber))
                 {
-                    //TODO 逻辑待考虑
                     var temp = remainLands.Find(c => c.ID == land.ID);
                     if (temp == null)
                     {

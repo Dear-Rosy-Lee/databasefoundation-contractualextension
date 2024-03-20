@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace YuLinTu.Component
         {
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -46,7 +47,6 @@ namespace YuLinTu.Component
             }
             else if (e.Profile.Name == "CURRENTROOTCHANGE")
             {
-                // TODO：根级地域发生改变，使用根级地域更新界面显示。
                 Navigator.Reload();
             }
         }
@@ -112,16 +112,13 @@ namespace YuLinTu.Component
             Workpage.Workspace.Properties["CurrentZone"] = zone;
         }
 
-
         [MessageHandler(ID = EdCore.langNavigateTo)]
         protected virtual void OnNavigateTo(object sender, NavigateToMsgEventArgs e)
         {
-           
         }
 
-        #endregion
+        #endregion Methods - Message
 
-        #endregion
-
+        #endregion Methods
     }
 }

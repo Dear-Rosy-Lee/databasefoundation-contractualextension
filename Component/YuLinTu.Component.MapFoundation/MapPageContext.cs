@@ -817,7 +817,6 @@ namespace YuLinTu.Component.MapFoundation
             panel.Children.Add(mtbCoil);
             //panel.Children.Add(mtbPoint);
             ddbProperties.DropDownContent = panel;
-            ///TODO 暂时屏蔽
             e.Items.Add(ddbProperties); //加载属性
 
             e.Items.Add(mtbTool); //加载工具

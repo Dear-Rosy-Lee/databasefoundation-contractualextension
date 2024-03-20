@@ -19,21 +19,25 @@ namespace YuLinTu.Component.XiZangLZ
         private int index;//下标
         private bool useUnitNumber;//是否使用统编号
 
-        #endregion
+        #endregion Fields
 
         #region Property
+
         /// <summary>
         /// 当前地域
         /// </summary>
         public Zone CurrentZone { get; set; }
+
         /// <summary>
         /// 模版文件路径
         /// </summary>
         public string TempletePath { get; set; }
+
         /// <summary>
         /// 承包地块
         /// </summary>
         public ContractLand CurrentLand { get; set; }
+
         public string WritePerson { get; set; }//填表人
         public string CheckPerson { get; set; }//制表人
         public DateTime StartDate { get; set; }//制表日期
@@ -44,19 +48,18 @@ namespace YuLinTu.Component.XiZangLZ
 
         public VirtualPerson Contractor { get; set; }
 
-        #endregion
+        #endregion Property
 
         #region Ctor
 
         public ExportDotResultTable(string templetePath)
         {
             this.TempletePath = templetePath;
-            //TODO 使用参数未知
             //useUnitNumber = YuLinTu.Library.Business.AgricultureSetting.AgricultureLandTableUseUnitNumber;
             useUnitNumber = true;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -107,7 +110,7 @@ namespace YuLinTu.Component.XiZangLZ
             }
         }
 
-        #endregion
+        #endregion 开始生成Excel之前的一系列操作
 
         #region 开始生成Excel
 
@@ -189,7 +192,7 @@ namespace YuLinTu.Component.XiZangLZ
             index += 2;
         }
 
-        #endregion
+        #endregion 写数据
 
         /// <summary>
         /// 书写表头
@@ -204,8 +207,8 @@ namespace YuLinTu.Component.XiZangLZ
             InitalizeRangeValue("B4", "C4", CreatFamarNumber(Contractor.FamilyNumber));//承包方编码
             InitalizeRangeValue("B6", "C6", landNumber);//宗地编码
             InitalizeRangeValue("E6", "E6", CurrentLand.ActualArea.ToString("f2"));//宗地面积
-
         }
+
         /// <summary>
         /// 创建农户号
         /// </summary>
@@ -220,9 +223,9 @@ namespace YuLinTu.Component.XiZangLZ
             return zoneCode + farmerNumber;
         }
 
-        #endregion
+        #endregion 开始生成Excel
 
-        #endregion
+        #endregion Methods
 
         #region Business
 
@@ -235,7 +238,7 @@ namespace YuLinTu.Component.XiZangLZ
             List<BuildLandBoundaryAddressCoil> lines = lineCollection.ToList();
             dots = OrderByDotInformation(dots);
             lines = OrderByLineInformtion(lines);
-            if (dots.Count > 0 && lines.Count > 0 )
+            if (dots.Count > 0 && lines.Count > 0)
             {
                 InitalizeDotInformation(dots, lines);
             }
@@ -243,7 +246,7 @@ namespace YuLinTu.Component.XiZangLZ
             lines = null;
         }
 
-        #endregion
+        #endregion Business
 
         #region Helper
 
@@ -283,6 +286,7 @@ namespace YuLinTu.Component.XiZangLZ
             }
             return lineArray;
         }
-        #endregion
+
+        #endregion Helper
     }
 }

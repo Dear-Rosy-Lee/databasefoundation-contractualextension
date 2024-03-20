@@ -2726,7 +2726,6 @@ namespace YuLinTu.Component.XiZangLZ
             groupArgument.CurrentZone = currentZone;
             groupArgument.Database = dbContext;
             groupArgument.FileName = fileName;
-            //TODO 类型可能有误
             groupArgument.VirtualType = eVirtualType.Land;
             TaskGroupExportDotResultOperation groupOperation = new TaskGroupExportDotResultOperation();
             groupOperation.Argument = groupArgument;
@@ -3750,7 +3749,6 @@ namespace YuLinTu.Component.XiZangLZ
                 argument.CurrentZone = currentZone;
                 argument.FileName = extPage.FileName;
                 argument.DbContext = dbContext;
-                //TODO 参数是否有用
                 //argument.VirtualType = VirtualType;
                 argument.SelectedPersons = selectedPersons;
                 argument.DictList = dictList;

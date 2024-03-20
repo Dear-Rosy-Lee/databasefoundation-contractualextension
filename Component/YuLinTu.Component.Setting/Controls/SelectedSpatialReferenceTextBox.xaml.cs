@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace YuLinTu.Component.Setting
             this.DataContext = this;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Properties
 
@@ -51,46 +52,44 @@ namespace YuLinTu.Component.Setting
         }
 
         public static readonly DependencyProperty NowSpatialReferenceProperty = DependencyProperty.Register("NowSpatialReference", typeof(Spatial.SpatialReference), typeof(SelectedSpatialReferenceTextBox), new PropertyMetadata((s, a) =>
-        {
-            var sr = a.NewValue as Spatial.SpatialReference;
-            if (sr == null) (s as MetroTextBox).Text = "";
-            if (sr != null)
-            {
-                try
-                {
-                    DotSpatial.Projections.ProjectionInfo cpi = sr.CreateProjectionInfo();
-                    if (sr.WKID == 0) 
-                    { 
-                        (s as MetroTextBox).Text = "Unknown"; 
-                    }
-                    else
-                    {                        
-                        if (sr.IsGEOGCS())
-                        {
-                            (s as MetroTextBox).Text = cpi.GeographicInfo.Name;
-                        }
-                        else if (sr.IsPROJCS())
-                        {
+           {
+               var sr = a.NewValue as Spatial.SpatialReference;
+               if (sr == null) (s as MetroTextBox).Text = "";
+               if (sr != null)
+               {
+                   try
+                   {
+                       DotSpatial.Projections.ProjectionInfo cpi = sr.CreateProjectionInfo();
+                       if (sr.WKID == 0)
+                       {
+                           (s as MetroTextBox).Text = "Unknown";
+                       }
+                       else
+                       {
+                           if (sr.IsGEOGCS())
+                           {
+                               (s as MetroTextBox).Text = cpi.GeographicInfo.Name;
+                           }
+                           else if (sr.IsPROJCS())
+                           {
                             //大地坐标系
                             (s as MetroTextBox).Text = cpi.Name;
-                        }
-                        
-                    }
-                }
-                catch
-                {
-                    (s as MetroTextBox).Text = "";
-                }
-            }
-
-        }));
+                           }
+                       }
+                   }
+                   catch
+                   {
+                       (s as MetroTextBox).Text = "";
+                   }
+               }
+           }));
 
         /// <summary>
         /// 工作空间属性
         /// </summary>
         public IWorkspace WorkSpace { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Event
 
@@ -99,7 +98,6 @@ namespace YuLinTu.Component.Setting
         /// </summary>
         private void ImageButton_Click_1(object sender, RoutedEventArgs e)
         {
-            //TODO 此处弹出地域选择界面           
             SpatialReferenceSelectWindow SRSelectPage = new SpatialReferenceSelectWindow();
             SRSelectPage.RootDirectory = System.IO.Path.Combine(TheApp.Current.GetDataPath(), "SpatialReferences");
             SRSelectPage.WindowTitle = null;
@@ -111,7 +109,6 @@ namespace YuLinTu.Component.Setting
             SRSelectPage.SetTheme(new ResourceDictionary() { Source = new Uri(string.Format("pack://application:,,,/YuLinTu.Windows.Wpf.Metro;component/Themes/{0:D2}/WindowColor.xaml", index)) });
             SRSelectPage.ShowDialog();
 
-            //TODO 地域传值
             var currentSR = SRSelectPage.GetSelectedSpatialReference();
             if (currentSR == null)
             {
@@ -121,10 +118,8 @@ namespace YuLinTu.Component.Setting
             {
                 NowSpatialReference = currentSR;
             }
-       
         }
 
-        #endregion
-
+        #endregion Event
     }
 }

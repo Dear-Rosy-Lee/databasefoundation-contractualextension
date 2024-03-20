@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,18 +26,16 @@ namespace YuLinTu.Component.XiZangLZ
         public TaskExportLandSurveyOperation()
         { }
 
-        #endregion
+        #endregion Ctor
 
         #region Field
 
         private string openFilePath;  //打开文件路径
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
 
-        #endregion
+        #endregion Field
 
-        #region Property
 
-        #endregion
 
         #region Method—Override
 
@@ -109,7 +108,7 @@ namespace YuLinTu.Component.XiZangLZ
             base.OpenResult();
         }
 
-        #endregion
+        #endregion Method—Override
 
         #region Method—ExportBusiness
 
@@ -172,7 +171,6 @@ namespace YuLinTu.Component.XiZangLZ
                         export.TempletePath = tempPath;
                         export.CurrentLand = land;
 
-                        //TODO 参数待设置
                         //export.DictList = listDict == null ? new List<Dictionary>() : listDict;
                         export.LineList = listLandCoil;
                         export.DotList = listLandDot;
@@ -210,7 +208,7 @@ namespace YuLinTu.Component.XiZangLZ
             return result;
         }
 
-        #endregion
+        #endregion Method—ExportBusiness
 
         #region Method—Private
 
@@ -268,10 +266,6 @@ namespace YuLinTu.Component.XiZangLZ
             return excelName;
         }
 
-        #endregion
-
-        #region Method—Helper
-
-        #endregion
+        #endregion Method—Private
     }
 }
