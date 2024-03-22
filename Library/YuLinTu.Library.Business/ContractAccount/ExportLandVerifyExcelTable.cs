@@ -269,7 +269,7 @@ namespace YuLinTu.Library.Business
                 WriteInformation(landFamily);
             }
             WriteTempLate();
-            SetLineType("A6", "X" + index, false);
+            SetLineType("A6", "X" + (index-1), false);
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -392,9 +392,9 @@ namespace YuLinTu.Library.Business
 
             WriteCount();
             index++;
-            string information = "审核人";
-            InitalizeRangeValue("W" + index, "W" + index, information);
-            InitalizeRangeValue("X" + index, "X" + index, "");
+            string information = $"村民组长签字:{new string(' ', 390)}村集体经济组织负责人签字:";
+            SetRange("A" + index, "X" + index,"",true);
+            SetRange("A" + index, "X" + index,25, information);
         }
 
         /// <summary>
