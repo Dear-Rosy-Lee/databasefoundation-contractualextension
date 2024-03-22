@@ -177,10 +177,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\Dependencies\Spatialite\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
