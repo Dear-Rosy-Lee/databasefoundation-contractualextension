@@ -507,12 +507,11 @@ namespace YuLinTu.Component.Setting
                 }
                 bool serialSuccess = true;
                 string path = AppDomain.CurrentDomain.BaseDirectory + "Config";
-                if (!System.IO.File.Exists(path + @"\UpgradeDatabaseInformation20161031.xml"))
-                {
-                    //if (System.IO.Directory.Exists(path))
-                    //    System.IO.Directory.Delete(path, true);
-                    serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
-                }
+
+                //if (System.IO.Directory.Exists(path))
+                //    System.IO.Directory.Delete(path, true);
+                serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
+
                 List<UpgradeDatabase> tableList = null;
                 if (serialSuccess)
                     tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();

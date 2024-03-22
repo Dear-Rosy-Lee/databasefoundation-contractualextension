@@ -39,7 +39,7 @@ namespace YuLinTu.Library.Entity
             LawyerCredentType = eCredentialsType.IdentifyCard;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Field
 
@@ -70,7 +70,7 @@ namespace YuLinTu.Library.Entity
         private eLandPropertyType ownRightType = eLandPropertyType.Collectived;    // 所有权性质，湖南工单特有
         private eGender gender = eGender.Unknow;   // 性别，湖南工单特有
 
-        #endregion
+        #endregion Field
 
         #region Properties
 
@@ -86,10 +86,11 @@ namespace YuLinTu.Library.Entity
                 id = value; NotifyPropertyChanged("ID");
             }
         }
+
         /// <summary>
         ///社会信用代码
         /// </summary>
-        [DataColumn("SHXYDM", Nullable = false, PrimaryKey = true)]
+        [DataColumn("SHXYDM", Nullable = true, PrimaryKey = false)]
         public string SocialCode
         {
             get { return socialCode; }
@@ -423,7 +424,7 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -455,6 +456,6 @@ namespace YuLinTu.Library.Entity
             return code;
         }
 
-        #endregion
+        #endregion Methods
     }
 }
