@@ -270,35 +270,41 @@ namespace YuLinTu.Component.ContractAccount
         {
             Workpage.Workspace.Window.Dispatcher.Invoke(new Action(() =>
             {
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "常规",
-                    Editor = new ContractAccountConfigPage(Workpage),
-                });
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "常规",
+                Editor = new ContractAccountConfigPage(Workpage),
+            });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "导入调查表",
-                    Editor = new ContractAccountImportSurveyConfigPage(Workpage),
-                });
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "导入调查表",
+                Editor = new ContractAccountImportSurveyConfigPage(Workpage),
+            });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "导出调查表",
-                    Editor = new ContractAccountOutputSurveyConfigPage(Workpage),
-                });
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "导出调查表",
+                Editor = new ContractAccountOutputSurveyConfigPage(Workpage),
+            });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "公示确认表",
-                    Editor = new ContractAccountPublicityConfirmConfigPage(Workpage),
-                });
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "公示确认表",
+                Editor = new ContractAccountPublicityConfirmConfigPage(Workpage),
+            });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "单户调查表",
-                    Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
-                });
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "单户调查表",
+                Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
+            });
+
+            e.Editors.Add(new WorkpageOptionsEditorMetadata()
+            {
+                Name = "摸底核实表",
+                Editor = new ContractAccountLandVerifyConfigPage(Workpage),
+            });
 
                 e.Editors.Add(new WorkpageOptionsEditorMetadata()
                 {

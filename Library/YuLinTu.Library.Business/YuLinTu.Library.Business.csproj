@@ -299,6 +299,9 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTableTitle.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\InitalizeExportLandVerifyExcelTable.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\LandVerifyDefine.cs" />
     <Compile Include="Configuration\PublicityConfirmDefine.cs" />
     <Compile Include="Configuration\SingleFamilySurveyDefine.cs" />
     <Compile Include="Configuration\TaskExportLandDotCoilSettingDefine.cs" />
@@ -423,11 +426,11 @@
     <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportLandSingleSurveyTableArgument.cs" />
     <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportLandSingleSurveyTableOperation.cs" />
     <Compile Include="ContractAccount\ExportLandSurveyWordTable.cs" />
-    <Compile Include="ContractAccount\ExportLandVerifyExcelTable.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTable.cs" />
     <Compile Include="ContractAccount\ExportPublicityWordTable.cs" />
     <Compile Include="ContractAccount\ExportContractorSummaryExcel.cs" />
-    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandVerifyExcelArgument.cs" />
-    <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandVerifyExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\TaskExportLandVerifyExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\TaskExportLandVerifyExcelOperation.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandWordArgument.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportLandWordOperation.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportPublishWordArgument.cs" />
@@ -442,8 +445,8 @@
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPExcelArgument.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPWordArgument.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskExportVPWordOperation.cs" />
-    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandVerifyExcelArgument.cs" />
-    <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandVerifyExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\TaskGroupExportLandVerifyExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\TaskGroupExportLandVerifyExcelOperation.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandWordArgument.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportLandWordOperation.cs" />
     <Compile Include="ContractAccount\ExportSurveyTable\TaskGroupExportPublishWordArgument.cs" />

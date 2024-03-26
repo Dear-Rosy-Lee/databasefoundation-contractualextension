@@ -263,6 +263,9 @@
     <Compile Include="Controls\ContractAccountFramePage.xaml.cs">
       <DependentUpon>ContractAccountFramePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContractAccountLandVerifyConfigPage.xaml.cs">
+      <DependentUpon>ContractAccountLandVerifyConfigPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContractAccountOutputSurveyConfigPage.xaml.cs">
       <DependentUpon>ContractAccountOutputSurveyConfigPage.xaml</DependentUpon>
     </Compile>
@@ -359,6 +362,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ContractAccountFramePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContractAccountLandVerifyConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

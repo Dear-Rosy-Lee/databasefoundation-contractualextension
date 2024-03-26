@@ -1,8 +1,4 @@
-﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,24 +21,20 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 namespace YuLinTu.Component.ContractAccount
 {
     /// <summary>
-    /// 公示确认表设置
+    /// ContractAccountLandVerifyConfigPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ContractAccountPublicityConfirmConfigPage : WorkpageOptionsEditor
+    public partial class ContractAccountLandVerifyConfigPage : WorkpageOptionsEditor
     {
-        #region Ctor
-
-        public ContractAccountPublicityConfirmConfigPage(IWorkpage workpage)
+        public ContractAccountLandVerifyConfigPage(IWorkpage workpage)
             : base(workpage)
         {
             InitializeComponent();
         }
 
-        #endregion Ctor
-
         #region Fields
 
-        private PublicityConfirmDefine config;
-        private PublicityConfirmDefine otherDefine;
+        private LandVerifyDefine config;
+        private LandVerifyDefine otherDefine;
         private SettingsProfileCenter systemCenter;
 
         #endregion Fields
@@ -52,7 +44,7 @@ namespace YuLinTu.Component.ContractAccount
         /// <summary>
         /// 数据汇总设置实体属性
         /// </summary>
-        public PublicityConfirmDefine OtherDefine
+        public LandVerifyDefine OtherDefine
         {
             get { return otherDefine; }
             set
@@ -78,16 +70,16 @@ namespace YuLinTu.Component.ContractAccount
 
             Dispatcher.Invoke(new Action(() =>
             {
-                var propertyCount = typeof(PublicityConfirmDefine).GetProperties().Count();
+                var propertyCount = typeof(LandVerifyDefine).GetProperties().Count();
                 ProGrid.Properties["index"] = CommonConfigSelector.GetConfigColumnInfo(propertyCount); //获取定义的数据源
 
                 systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
-                var profile = systemCenter.GetProfile<PublicityConfirmDefine>();
-                var section = profile.GetSection<PublicityConfirmDefine>();  //得到section部分 此方法已经判断了section为空的情况，为空就用默认构造
-                config = (section.Settings as PublicityConfirmDefine);   //得到经反序列化后的对象
+                var profile = systemCenter.GetProfile<LandVerifyDefine>();
+                var section = profile.GetSection<LandVerifyDefine>();  //得到section部分 此方法已经判断了section为空的情况，为空就用默认构造
+                config = (section.Settings as LandVerifyDefine);   //得到经反序列化后的对象
 
                 ProGrid.InitializeEnd += (s, e) => { are.Set(); };
-                OtherDefine = config.Clone() as PublicityConfirmDefine;
+                OtherDefine = config.Clone() as LandVerifyDefine;
             }));
 
             are.WaitOne();
@@ -108,7 +100,7 @@ namespace YuLinTu.Component.ContractAccount
             Dispatcher.Invoke(new Action(() =>
             {
                 config.CopyPropertiesFrom(OtherDefine);
-                systemCenter.Save<PublicityConfirmDefine>();
+                systemCenter.Save<LandVerifyDefine>();
             }));
         }
 
