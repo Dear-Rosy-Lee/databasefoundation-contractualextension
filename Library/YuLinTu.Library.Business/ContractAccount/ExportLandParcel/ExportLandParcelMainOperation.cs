@@ -24,7 +24,7 @@ namespace YuLinTu.Library.Business
 
         private ContractBusinessParcelWordSettingDefine SettingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
 
-        #endregion
+        #endregion private
 
         public SpatialReference targetSpatialReference { set; get; }
 
@@ -53,13 +53,15 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double mapH { set; get; }
 
+        public double Scale { get; set; }
+
         /// <summary>
         /// 当前地块过滤好的界址点集合
         /// </summary>
         public List<YuLinTu.Spatial.Geometry> FilterjzdNodes { set; get; }
+
         public ExportLandParcelMainOperation()
         {
-
         }
 
         #region method
@@ -85,7 +87,6 @@ namespace YuLinTu.Library.Business
                         fo.Geometry = itemline;
                         fo.GeometryPropertyName = "Shape";
                         listFeature.Add(fo);
-
                     }
                 }
             }
@@ -255,7 +256,6 @@ namespace YuLinTu.Library.Business
             listFeature.Clear();
             layerCountIndex++;
 
-
             foreach (var mzdw in tempPolygons)
             {
                 FeatureObject fo = new FeatureObject();
@@ -290,11 +290,10 @@ namespace YuLinTu.Library.Business
                     mzdwGeos.Clear();
                     mzdwGeos.AddRange(listFeature.ToArray());
                 }
-
             }));
         }
 
-        #endregion
+        #endregion 常规添加图形
 
         #region 常规添加图形标注
 
@@ -309,7 +308,6 @@ namespace YuLinTu.Library.Business
                 var fo = new FeatureObject() { Geometry = c, Object = new { } };
                 fos.Add(fo);
             });
-
 
             DynamicGeoSource geoSource = null;
             VectorLayer pointLyer = null;
@@ -340,7 +338,6 @@ namespace YuLinTu.Library.Business
                     geoSource = pointLyer.DataSource as DynamicGeoSource;
                     geoSource.Clear();
                     geoSource.AddRange(fos.ToArray());
-
                 }
             }));
         }
@@ -411,7 +408,7 @@ namespace YuLinTu.Library.Business
                 diagram.FontSize = SettingDefine.UseLandLabelFontSize;
                 sz = calcTextSize(showCenterText, diagram);
                 diagram.Model.Width = sz.Width;// 100;
-                diagram.Model.Height = sz.Height;// 60;                
+                diagram.Model.Height = sz.Height;// 60;
             }
 
             (diagram.Model as TextShapeBase).Text = showCenterText;
@@ -469,7 +466,7 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点； 
+                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点；
             }
 
             var landOwnerName = tempLand.OwnerName;
@@ -561,7 +558,7 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点； 
+                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点；
             }
 
             var landOwnerName = tempDZDW.DWMC;
@@ -643,7 +640,7 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点； 
+                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点；
             }
 
             var landOwnerName = tempXZDW.DWMC;
@@ -724,7 +721,7 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点； 
+                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点；
             }
 
             var landOwnerName = tempMZDW.DWMC;
@@ -805,10 +802,10 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点； 
+                newDistancePtn = Deflection_Distance(useline, 0, Distance);//获取新距离下的坐标点；
             }
 
-            var landOwnerName = isUniteDotNumber ? jzdShowLabel.UniteDotNumber: jzdShowLabel.DotNumber;
+            var landOwnerName = isUniteDotNumber ? jzdShowLabel.UniteDotNumber : jzdShowLabel.DotNumber;
             double elementWidth = 100;
             double elementHeight = 60;
             if (view.Items.Count == index)
@@ -854,7 +851,7 @@ namespace YuLinTu.Library.Business
             return diagram;
         }
 
-        #endregion
+        #endregion 常规添加图形标注
 
         #region 辅助添加，如比例尺、标注线
 
@@ -963,7 +960,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 辅助添加，如比例尺、标注线
 
         #region 辅助方法，如获取位置，比例尺等
 
@@ -1171,7 +1168,7 @@ namespace YuLinTu.Library.Business
             Coordinate newextendNorthinterCdt = new Coordinate(targetlandCenterPoint.X, extendGeo.MaxY + bufferDistence);
             YuLinTu.Spatial.Geometry northtrianglegeo = YuLinTu.Spatial.Geometry.CreatePoint(newextendNorthinterCdt, geoSrid);//北边三角形
 
-            var northintersectlands = neiborlands.FindAll(a=>a.Shape.Intersects(northtrianglegeo));
+            var northintersectlands = neiborlands.FindAll(a => a.Shape.Intersects(northtrianglegeo));
             if (northintersectlands.Count == 0)
             {
                 landneighborhasland["北至"] = false;
@@ -1215,7 +1212,7 @@ namespace YuLinTu.Library.Business
             if (landneighborhasland["东至"] == false && geoLand.NeighborEast.IsNullOrEmpty() == false)//东
             {
                 var diagram = getdbBylandneibor(view, geoLand.NeighborEast, index);
-                var sz = calcTextSize(geoLand.NeighborEast, diagram);  
+                var sz = calcTextSize(geoLand.NeighborEast, diagram);
                 if (SettingDefine.SetNeighborLandWestEastLabelVertical)
                 {
                     diagram.Model.X = mapW - diagram.Width;
@@ -1395,23 +1392,26 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        #endregion
+        #endregion 辅助方法，如获取位置，比例尺等
 
-        #endregion
+        #endregion method
     }
 
     public class MyElements
     {
         private readonly List<DiagramBase> _lstElements = new List<DiagramBase>();
         private CglEnvelope _visibleBounds;
+
         public MyElements(CglEnvelope visibleBounds)
         {
             _visibleBounds = visibleBounds;
         }
+
         public void Clear()
         {
             _lstElements.Clear();
         }
+
         public void AddElement(DiagramBase element)
         {
             if (_lstElements.Count == 0)
@@ -1421,7 +1421,7 @@ namespace YuLinTu.Library.Business
                 return;
             }
             var m = element.Model;
-            //double wi = m.Width * 0.75;// -m.Width * 15.0 / 48;          
+            //double wi = m.Width * 0.75;// -m.Width * 15.0 / 48;
             double wi = m.Width;// -m.Width * 15.0 / 48;
             var maxX = _visibleBounds.MaxX;
             var maxY = _visibleBounds.MaxY;
@@ -1436,7 +1436,7 @@ namespace YuLinTu.Library.Business
                 var deltaDown = e.Model.Y + e.Model.Height - m.Y;
                 var deltaLeft = m.X - (e.Model.X - wi);// m.Width);
                 var deltaRight = e.Model.X + e.Model.Width - m.X;
-                if(m.X < (maxX * 0.2) || m.X > (maxX * 0.8))
+                if (m.X < (maxX * 0.2) || m.X > (maxX * 0.8))
                 {
                     deltaLeft *= 10;
                     deltaRight *= 10;
@@ -1485,7 +1485,7 @@ namespace YuLinTu.Library.Business
                         sa[i] = int.MaxValue;
                     }
                 }
-                
+
                 //if (m.X < 0)
                 //    m.X = 0;//0 - m.Width;
                 //if (m.Y < 0)
@@ -1508,10 +1508,10 @@ namespace YuLinTu.Library.Business
             //        else
             //        {
             //            isinter = true;
-            //        }                       
+            //        }
             //    }
             //}
-            //if (isinter == false) { _lstElements.Add(element); } 
+            //if (isinter == false) { _lstElements.Add(element); }
             _lstElements.Add(element);
         }
 
@@ -1555,7 +1555,5 @@ namespace YuLinTu.Library.Business
             double bottom = Math.Min(ae.MaxY, be.MaxY);
             return new CglEnvelope(left, top, right, bottom);
         }
-
     }
-
 }

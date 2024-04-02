@@ -429,7 +429,7 @@ namespace YuLinTu.Library.Business
                 List<SecondTableLand> tablelandList = landVerifyDefineDefine.IsContainTablelandValue ? (TableLandArrays == null ? new List<SecondTableLand>() : TableLandArrays).FindAll(t => t.OwnerId == (tablevp == null ? item.ID : tablevp.ID)) : new List<SecondTableLand>();
                 secondLandCount += tablelandList.Count;
 
-                high = sharePersons.Count;
+                high = (cs.Count > sharePersons.Count) ? cs.Count : sharePersons.Count;
                 if (high == 0)
                 {
                     high = 1;

@@ -153,6 +153,9 @@
       <HintPath>..\Dependencies\Aspose\Aspose.Words.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -230,6 +233,15 @@
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.50506.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -260,6 +272,7 @@
     <Reference Include="PowerCollections, Version=1.0.5798.18368, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
     </Reference>
@@ -267,6 +280,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activities" />
     <Reference Include="System.ServiceModel.Web" />
@@ -280,6 +295,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
@@ -2751,6 +2767,7 @@ del /f /s /q "$(SolutionDir)Workspace\*.tmp"
 del /f /s /q "$(SolutionDir)Workspace\*.pdb"
 del /f /s /q "$(SolutionDir)Workspace\*.application"
 del /f /s /q "$(SolutionDir)Workspace\*.manifest"
+editbin /largeaddressaware "$(TargetPath)"
 </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -2777,6 +2794,7 @@ del /f /s /q "$(SolutionDir)Workspace\*.manifest"
     <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets" Condition="Exists('..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" />
@@ -2788,6 +2806,7 @@ del /f /s /q "$(SolutionDir)Workspace\*.manifest"
   <Import Project="..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets" Condition="Exists('..\packages\YuLinTu.SDK.6.8.8.1\build\YuLinTu.SDK.targets')" />
   <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" />
   <Import Project="..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets" Condition="Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

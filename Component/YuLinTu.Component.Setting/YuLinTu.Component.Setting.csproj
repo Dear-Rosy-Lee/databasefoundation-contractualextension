@@ -85,6 +85,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -131,6 +134,15 @@
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.50506.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -156,6 +168,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -164,6 +179,7 @@
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
@@ -232,6 +248,7 @@
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AutoUpdaterXMLParser.cs" />
     <Compile Include="Controls\CommonBusinessSetting.xaml.cs">
       <DependentUpon>CommonBusinessSetting.xaml</DependentUpon>
     </Compile>
@@ -376,6 +393,7 @@ del /f /q "$(TargetDir)..\$(TargetFileName)"</PostBuildEvent>
     <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
@@ -389,6 +407,7 @@ del /f /q "$(TargetDir)..\$(TargetFileName)"</PostBuildEvent>
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
   <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" />
+  <Import Project="..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

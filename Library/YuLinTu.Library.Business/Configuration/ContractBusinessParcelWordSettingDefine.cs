@@ -92,6 +92,17 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 邻宗地分辨率倍率
+        /// </summary>
+        public double NeighborLandScale
+        {
+            get { return _NeighborLandScale; }
+            set { _NeighborLandScale = value; NotifyPropertyChanged(() => NeighborLandScale); }
+        }
+
+        private double _NeighborLandScale;
+
+        /// <summary>
         /// 是否从指定的地块索引开始显示地块示意图
         /// </summary>
         public bool IsLandNumberStart
@@ -260,7 +271,7 @@ namespace YuLinTu.Library.Business
             NeighborlandLabelisJTuseLandName = false;
             NeighborlandLabeluseDLTGGQname = false;
             NeighborlandSearchUseUserAlgorithm = false;
-
+            NeighborLandScale = 1.0;
             SetNeighborLandWestEastLabelVertical = false;
 
             //模板设置

@@ -30,7 +30,7 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private List<Dictionary> dictDKLB;    //地块类别数据字典集合
-        public List<ContractLand> geoLandCollection;  //空间地块集合-用户的地块集合
+        protected List<ContractLand> geoLandCollection;  //空间地块集合-用户的地块集合
         private SpatialReference spatialReference;
         protected int fromTwoPageTableCount;//从第二页开始的表个数，包括第二页
         private ExportLandParcelMainOperation exportLandParcelMainOperation;
@@ -456,7 +456,7 @@ namespace YuLinTu.Library.Business
             {
                 if (SettingDefine.IsFixedViewOfAllLandGeoWordExtend)
                 {
-                    InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, fileName, 180, 250);
+                    InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, fileName, 278, 280);
                 }
                 else
                 {
@@ -495,13 +495,16 @@ namespace YuLinTu.Library.Business
 
             // 示意图页数
             var landCount = geoLandCollection.Count;
-            int pageSize = landCount <= PAGECOUNT1 ? 1 : ((landCount - PAGECOUNT1) % PAGECOUNT2 == 0 ? (landCount - PAGECOUNT1) / PAGECOUNT2 : (landCount - PAGECOUNT1) / PAGECOUNT2 + 1) + 1;
+            int pageSize = landCount > PAGECOUNT1 ?
+                landCount % PAGECOUNT1 == 0 ?
+                    landCount / PAGECOUNT1 :
+                    landCount / PAGECOUNT1 + 1 :
+                1;
 
             // 扩展页页数
 
             // 总页数
             var totalPageSize = pageSize;
-
             string placeholder = "    ";
             string cartographer = SettingDefine.Cartographer.IsNullOrEmpty() ? placeholder : SettingDefine.Cartographer;
             string checkPerson = SettingDefine.CheckPerson.IsNullOrEmpty() ? placeholder : SettingDefine.CheckPerson;
@@ -512,7 +515,6 @@ namespace YuLinTu.Library.Business
                                $"审核者：{checkPerson} " +
                                $"审核日期：{checkDate} " +
                                $"制图单位：{SettingDefine.CartographyUnit}";
-
             WriteLandInfoVertical(pageSize, totalPageSize, otherInfo);
         }
 
@@ -524,7 +526,7 @@ namespace YuLinTu.Library.Business
         protected virtual void WriteLandInfoVertical(int pageSize, int totalPageSize, string otherInfo)
         {
             // 复制页
-            for (int i = 1; i < pageSize - 1; i++)
+            for (int i = 2; i < pageSize; i++)
             {
                 AddSection();
             }
@@ -549,12 +551,12 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(i, 0, 3, 1, (i + 1).ToString() + "-" + totalPageSize.ToString());
             }
 
-            //// 删除多余页
-            //if (pageSize == 1)
-            //{
-            //    DeleteSection();
-            //    DeleteParagraph();
-            //}
+            // 删除多余页
+            if (pageSize == 1)
+            {
+                DeleteSection();
+                DeleteParagraph();
+            }
         }
 
         /// <summary>
@@ -616,11 +618,17 @@ namespace YuLinTu.Library.Business
                 {
                     if (SettingDefine.IsFixedLandGeoWordExtend)
                     {
-                        SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, 130, 175, false);
+                        if (SettingDefine.HorizontalVersion)
+                            SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, 150, 85, -90, false);
+                        else
+                            SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, 123, 170, false);
                     }
                     else
                     {
-                        SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, SettingDefine.LandGeoWordWidth, SettingDefine.LandGeoWordHeight, false);
+                        if (SettingDefine.HorizontalVersion)
+                            SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, SettingDefine.LandGeoWordHeight, SettingDefine.LandGeoWordWidth, -90, false);
+                        else
+                            SetTableCellValue(sectionIndex, tableIndex, rowIndex, columnIndex, imagePath, SettingDefine.LandGeoWordWidth, SettingDefine.LandGeoWordHeight, false);
                     }
                 }
                 System.IO.File.Delete(imagePath);
@@ -798,8 +806,9 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public void GetNeighorParcels()
         {
-            mapW = 190;
-            mapH = 220;
+            exportLandParcelMainOperation.Scale = SettingDefine.NeighborLandScale;
+            mapW = 190 * exportLandParcelMainOperation.Scale;
+            mapH = 220 * exportLandParcelMainOperation.Scale;
 
             //if (SettingDefine.IsFixedLandGeoWordExtend)
             //{

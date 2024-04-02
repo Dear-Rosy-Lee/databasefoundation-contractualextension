@@ -61,8 +61,9 @@ namespace YuLinTu.Library.Business
             {
                 var personStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var landStation = dbContext.CreateContractLandWorkstation();
-                var listPerson = personStation.GetByZoneCode(zone.FullCode, eLevelOption.Self);
-                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                var listPerson = personStation.GetByZoneCode(zone.FullCode, eLevelOption.SelfAndSubs);
+                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.SelfAndSubs);
+
                 if (listPerson == null || listPerson.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -101,7 +102,7 @@ namespace YuLinTu.Library.Business
         #region Method—ExportBusiness
 
         /// <summary>
-        /// 导出调查信息公示表
+        /// 导出摸底核实表
         /// </summary>
         public bool ExportLandVerifyExcel(TaskExportLandVerifyExcelArgument argument, List<VirtualPerson> vps, List<ContractLand> lands)
         {
@@ -125,16 +126,14 @@ namespace YuLinTu.Library.Business
                     var zoneStation = dbContext.CreateZoneWorkStation();
                     zoneName = zoneStation.GetVillageName(currentZone);
                 }
-                var landStation = dbContext.CreateContractLandWorkstation();
-                List<ContractLand> landArrays = landStation.GetCollection(currentZone.FullCode);
-                landArrays.LandNumberFormat(SystemSetDefine);
+                lands.LandNumberFormat(SystemSetDefine);
                 var concordStation = dbContext.CreateConcordStation();
                 var bookStation = dbContext.CreateRegeditBookStation();
                 var listConcords = concordStation.GetContractsByZoneCode(currentZone.FullCode);
                 var listBooks = bookStation.GetByZoneCode(currentZone.FullCode, eSearchOption.Precision);
                 ExportLandVerifyExcelTable export = new ExportLandVerifyExcelTable();
-                string savePath = argument.FileName + excelName + "农村土地二轮承包到期后再延长三十年摸底核实表" + ".xls";
-                
+                string savePath = argument.FileName + @"\" +excelName  + "摸底核实表.xls";
+
                 #region 通过反射等机制定制化具体的业务处理类
 
                 var temp = WorksheetConfigHelper.GetInstance(export);
@@ -153,15 +152,18 @@ namespace YuLinTu.Library.Business
                 export.ExcelName = SystemSet.GetTBDWStr(zone);
                 export.UnitName = SystemSet.GetTableHeaderStr(zone);
                 export.DictionList = DictList;
-                export.LandArrays = landArrays;
+                export.LandArrays = lands;
                 export.ConcordCollection = listConcords;
+                export.SaveFilePath = savePath;
                 export.BookColletion = listBooks;
                 export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorInfoEvent;
                 result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
                 if (argument.IsShow)
-                    savePath = export.SaveFilePath;
+                {
                     export.PrintView(savePath);
+                }
+                    
 
                 this.ReportProgress(100, "完成");
                 this.ReportInfomation(string.Format("{0}导出{1}户调查信息数据", excelName, vps.Count));

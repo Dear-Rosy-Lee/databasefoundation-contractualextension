@@ -81,6 +81,7 @@ namespace YuLinTu.Library.Business
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.FileName = fileName + @"\" + savePath;
+                Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
                 TaskExportLandWordOperation operation = new TaskExportLandWordOperation();
                 operation.Argument = argument;

@@ -47,6 +47,8 @@ namespace YuLinTu.Library.Business
 
         private List<string> errorArray = new List<string>();//错误信息
         private List<string> warnArray = new List<string>();//警告信息
+        private int originalValue = 0;
+        private string originalHH = "";
 
         #endregion Fields
 
@@ -138,7 +140,8 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
-
+            AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
+            var contractLands = landBusiness.GetLandCollection(CurrentZone.FullCode);
             LandFamily landFamily = new LandFamily();
             string totalInfo = string.Empty;
             try
@@ -165,7 +168,19 @@ namespace YuLinTu.Library.Business
                         break;
                     }
                     string familyName = GetString(allItem[currentIndex, 1]);
-                    if (!string.IsNullOrEmpty(rowValue) || !string.IsNullOrEmpty(familyName))
+
+                    bool flag = true;
+                    if (rowValue != "") 
+                    {
+                        if (originalValue != int.Parse(rowValue))
+                        {
+                            flag = false;
+                            originalValue = int.Parse(rowValue);
+                        }
+                    }
+                   
+                    
+                    if (!flag)
                     {
                         if (isAdd && !AddLandFamily(landFamily)) //添加户与承包地块
                         {
@@ -184,7 +199,7 @@ namespace YuLinTu.Library.Business
                         }
                     }
 
-                    GetExcelInformation(landFamily);//获取Excel表中信息
+                    GetExcelInformation(landFamily, contractLands);//获取Excel表中信息
                 }
             }
             catch (Exception ex)
@@ -242,13 +257,13 @@ namespace YuLinTu.Library.Business
             return startIndex == 0 ? -1 : startIndex;
         }
 
-        private void GetExcelInformation(LandFamily landFamily)
+        private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands)
         {
             try
             {
                 InitalizeFamilyInformation(landFamily);
 
-                InitalizeLandInformation(landFamily);
+                InitalizeLandInformation(landFamily, contractLands);
             }
             catch (System.Exception ex)
             {
@@ -262,8 +277,13 @@ namespace YuLinTu.Library.Business
             if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
             {
                 var vpCode = CurrentZone.FullCode;
-                var vpNumber = GetString(allItem[currentIndex, 2]).Remove(0, vpCode.Length);
-                vpNumber = vpNumber.Substring(0, vpNumber.Length - 1).TrimStart('0');
+                var vpNumber = GetString(allItem[currentIndex, 2]);
+                vpNumber = vpNumber.Remove(0, vpCode.Length).TrimStart('0');
+                if (vpNumber == "")
+                {
+                    
+                }
+                
                 var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var vp = vpStation.GetByHH(vpNumber, vpCode);
                 landFamily.CurrentFamily.ID = vp.ID;
@@ -297,23 +317,25 @@ namespace YuLinTu.Library.Business
             AddErrorMessage(errorInfo);
         }
 
-        private void InitalizeLandInformation(LandFamily landFamily)
+        private void InitalizeLandInformation(LandFamily landFamily, List<ContractLand> contractLands)
         {
-            var landStation = DbContext.CreateContractLandWorkstation();
-            var landNumber = GetString(allItem[currentIndex, 13]);
+            var landNumber = GetString(allItem[currentIndex, 14]);
             if (landNumber != "")
             {
-                var entity = landStation.GetByLandNumber(landNumber);
+                var entity = contractLands.Where(x => x.LandNumber == landNumber).FirstOrDefault();
                 if (entity != null)
                 {
-                    entity.Name = GetString(allItem[currentIndex, 12]);
-                    entity.ConcordArea = GetString(allItem[currentIndex, 14]);
-                    entity.ActualArea = double.Parse(GetString(allItem[currentIndex, 16]));
-                    entity.NeighborEast = GetString(allItem[currentIndex, 18]);
-                    entity.NeighborSouth = GetString(allItem[currentIndex, 19]);
-                    entity.NeighborWest = GetString(allItem[currentIndex, 20]);
-                    entity.NeighborNorth = GetString(allItem[currentIndex, 21]);
-                    entity.Comment = GetString(allItem[currentIndex, 22]);
+                    entity.Name = GetString(allItem[currentIndex, 13]);
+                    entity.LocationName = GetString(allItem[currentIndex, 15]);
+                    entity.LandLevel = GetString(allItem[currentIndex, 16]);
+                    entity.Purpose = GetString(allItem[currentIndex, 17]);
+                    entity.ConcordArea = GetString(allItem[currentIndex, 18]);
+                    entity.ActualArea = double.Parse(GetString(allItem[currentIndex, 20]));
+                    entity.NeighborEast = GetString(allItem[currentIndex, 22]);
+                    entity.NeighborSouth = GetString(allItem[currentIndex, 23]);
+                    entity.NeighborWest = GetString(allItem[currentIndex, 24]);
+                    entity.NeighborNorth = GetString(allItem[currentIndex, 25]);
+                    entity.Comment = GetString(allItem[currentIndex, 26]);
                     landFamily.LandCollection.Add(entity);
                 }
                 else
@@ -323,19 +345,21 @@ namespace YuLinTu.Library.Business
                     land.OwnerId = landFamily.CurrentFamily.ID;
                     land.LocationCode = CurrentZone.FullCode;
                     land.LocationName = CurrentZone.FullName;
-                    land.Name = GetString(allItem[currentIndex, 12]);
-                    land.LandNumber = GetString(allItem[currentIndex, 13]);
-                    land.ConcordArea = GetString(allItem[currentIndex, 14]);
-                    land.ActualArea = double.Parse(GetString(allItem[currentIndex, 16]));
-                    land.NeighborEast = GetString(allItem[currentIndex, 18]);
-                    land.NeighborSouth = GetString(allItem[currentIndex, 19]);
-                    land.NeighborWest = GetString(allItem[currentIndex, 20]);
-                    land.NeighborNorth = GetString(allItem[currentIndex, 21]);
-                    land.Comment = GetString(allItem[currentIndex, 22]);
+                    land.Name = GetString(allItem[currentIndex, 13]);
+                    land.LandNumber = GetString(allItem[currentIndex, 14]);
+                    land.LocationName = GetString(allItem[currentIndex, 15]);
+                    land.LandLevel = GetString(allItem[currentIndex, 16]);
+                    land.Purpose = GetString(allItem[currentIndex, 17]);
+                    land.ConcordArea = GetString(allItem[currentIndex, 18]);
+                    land.ActualArea = double.Parse(GetString(allItem[currentIndex, 20]));
+                    land.NeighborEast = GetString(allItem[currentIndex, 22]);
+                    land.NeighborSouth = GetString(allItem[currentIndex, 23]);
+                    land.NeighborWest = GetString(allItem[currentIndex, 24]);
+                    land.NeighborNorth = GetString(allItem[currentIndex, 25]);
+                    land.Comment = GetString(allItem[currentIndex, 26]);
                     landFamily.LandCollection.Add(land);
                 }
             }
-            
         }
 
         private bool AddPerson(LandFamily landFamily)
@@ -347,8 +371,11 @@ namespace YuLinTu.Library.Business
             person.LastModifyTime = DateTime.Now;
             person.Nation = eNation.UnKnown;
             person.ZoneCode = currentZone.FullCode;
+            //名称
+            string name = GetString(allItem[currentIndex, 6]);
+            person.Name = name;
             //性别
-            value = GetString(allItem[currentIndex, 6]);
+            value = GetString(allItem[currentIndex, 7]);
             if (string.IsNullOrEmpty(value))
             {
                 person.Gender = eGender.Unknow;
@@ -359,13 +386,12 @@ namespace YuLinTu.Library.Business
             }
 
             //身份证号
-            string icn = GetString(allItem[currentIndex, 9]);
+            string icn = GetString(allItem[currentIndex, 10]);
             //家庭关系
-            person.Relationship = GetString(allItem[currentIndex, 10]);
+            person.Relationship = GetString(allItem[currentIndex, 11]);
             //备注
-            person.Comment = GetString(allItem[currentIndex, 11]);
+            person.Comment = GetString(allItem[currentIndex, 12]);
             //名称
-            string name = GetString(allItem[currentIndex, 5]);
             if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || !string.IsNullOrEmpty(icn)))
             {
                 AddWarnMessage(this.ExcelName + string.Format("表序号为{0}的家庭成员姓名为空!", currentIndex + 1));

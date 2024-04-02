@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,17 +70,20 @@ namespace YuLinTu.Library.Business
             }
             foreach (var zone in selfAndSubsZones)
             {
-                string savePath = CreateDirectoryHelper.CreateDirectoryByVilliage(allZones, zone);
+                string savePath = CreateDirectoryHelper.CreateDirectory(allZones, zone);
                 TaskExportLandVerifyExcelArgument argument = new TaskExportLandVerifyExcelArgument();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.FileName = fileName + @"\" + savePath;
+                argument.IsShow = false;
+                Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
                 TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
                 operation.Argument = argument;
                 operation.Name = "批量导出摸底核实表";
                 operation.Description = zone.FullName;
                 Add(operation);
+             
             }
             CanOpenResult = true;
             base.OnGo();
