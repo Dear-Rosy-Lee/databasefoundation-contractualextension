@@ -22,12 +22,12 @@ using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Appwork;
 
-using YuLinTu.Windows;
-
 using YuLinTu.Library.Business;
 using AutoUpdaterDotNET;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net;
+using System.Windows.Forms;
 
 namespace YuLinTu.Component.Setting
 {
@@ -111,6 +111,7 @@ namespace YuLinTu.Component.Setting
 
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
             string updateUrl = "http://192.168.20.16:8080/view/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E7%A1%AE%E6%9D%83%E5%B7%A5%E5%85%B7/job/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E5%BB%B6%E5%8C%85%E5%BB%BA%E5%BA%93%E5%B7%A5%E5%85%B7/ws/update.xml";
             await VerifyLink(updateUrl);
         }
@@ -127,12 +128,10 @@ namespace YuLinTu.Component.Setting
 
             if (response.IsSuccessStatusCode)
             {
-                string xmlContent = response.Content.ReadAsStringAsync().Result;
-
-                // 设置AutoUpdater的更新URL并启动
+                BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
+                AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
 
                 AutoUpdater.Start(updateUrl);
-                // Parse the XML response and handle update logic here
             }
         }
 
@@ -142,18 +141,20 @@ namespace YuLinTu.Component.Setting
             {
                 if (args.IsUpdateAvailable)
                 {
-                    Console.WriteLine("A new version is available!");
-                    Console.WriteLine($"New version number: {args.CurrentVersion}");
-                    Console.WriteLine($"Download URL: {args.DownloadURL}");
-                    // You can add more handling logic here, such as displaying a dialog to the user.
+                    DialogResult result = (DialogResult)System.Windows.MessageBox.Show("当前软件有更新，是否下载", "提示", MessageBoxButton.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        AutoUpdater.DownloadUpdate(args);
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("Your application is up to date.");
-                }
+           
+            }
+            else
+            {
+                Console.WriteLine("Your application is up to date.");
             }
         }
-
-        #endregion Methods - Override
     }
+
+    #endregion Methods - Override
 }

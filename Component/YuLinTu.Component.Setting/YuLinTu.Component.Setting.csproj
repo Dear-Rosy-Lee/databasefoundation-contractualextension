@@ -248,7 +248,6 @@
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AutoUpdaterXMLParser.cs" />
     <Compile Include="Controls\CommonBusinessSetting.xaml.cs">
       <DependentUpon>CommonBusinessSetting.xaml</DependentUpon>
     </Compile>

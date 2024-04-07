@@ -1,12 +1,14 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
 */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+
 //using System.ServiceModel;
 using System.Text;
 using System.Windows;
@@ -37,12 +39,15 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// 临时导出文件选择信息
         /// </summary>
         private ImportFileEntity exportConfig;
+
         private FileZoneEntity fileZoneConfig;
+
         //private bool isLoadComplate;
         private CheckBox cbshape;
+
         private CheckBox cbbase;
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -103,7 +108,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// </summary>
         public Guid? SessionCode { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -114,7 +119,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             InitiallControls();
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -174,7 +179,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             if (fileZoneConfig.IsImportBusinessData || fileZoneConfig.ImportFile.VictorZone.IsExport ||
               fileZoneConfig.ImportFile.VictorDZDW.IsExport || fileZoneConfig.ImportFile.VictorJBNTBHQ.IsExport ||
                 fileZoneConfig.ImportFile.VictorKZD.IsExport || fileZoneConfig.ImportFile.VictorMZDW.IsExport ||
-                fileZoneConfig.ImportFile.VictorQYJX.IsExport || fileZoneConfig.ImportFile.VictorXZDW.IsExport||
+                fileZoneConfig.ImportFile.VictorQYJX.IsExport || fileZoneConfig.ImportFile.VictorXZDW.IsExport ||
                 fileZoneConfig.ImportFile.VictorJZD.IsExport || fileZoneConfig.ImportFile.VictorJZX.IsExport)
             {
                 hasFileExport = true;
@@ -496,7 +501,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }
         }
 
-        #endregion
+        #endregion Methods
 
         #region EXCEL-READ
 
@@ -602,12 +607,15 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                     case 6:
                         countylist.Add(item);
                         break;
+
                     case 9:
                         townlist.Add(item);
                         break;
+
                     case 12:
                         villagelist.Add(item);
                         break;
+
                     case 14:
                         grouplist.Add(item);
                         break;
@@ -682,14 +690,14 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return sheet;
         }
 
-        #endregion
+        #endregion EXCEL-READ
 
         #region Class
 
         /// <summary>
         /// 名称代码
         /// </summary>
-        class NameCode
+        private class NameCode
         {
             /// <summary>
             /// 编码长度
@@ -712,6 +720,6 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             public string Name { get; set; }
         }
 
-        #endregion
+        #endregion Class
     }
 }
