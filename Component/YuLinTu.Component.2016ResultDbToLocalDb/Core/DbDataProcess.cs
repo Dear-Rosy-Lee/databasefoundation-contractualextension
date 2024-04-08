@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2016 鱼鳞图公司版权所有,保留所有权利
 */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using YuLinTuQuality.Business.TaskBasic;
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
     /// <summary>
-    /// 数据库数据获取 
+    /// 数据库数据获取
     /// </summary>
     public class DbDataProcess
     {
@@ -31,13 +32,11 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// </summary>
         public ReportInformation ReportInfo { get; set; }
 
-
         public delegate void ReportWarningInformation(string msg);
 
         public ReportWarningInformation ReportWarningInfo { get; set; }
 
-
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -50,7 +49,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             this.Dbcotext = db;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region 数据获取
 
@@ -228,7 +227,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return dic;
         }
 
-        #endregion
+        #endregion 数据获取
 
         #region 获取承包方中的行政地域编码
 
@@ -308,7 +307,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return list;
         }
 
-        #endregion
+        #endregion 获取承包方中的行政地域编码
 
         #region 构造交换数据实体
 
@@ -385,12 +384,11 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
         /// <summary>
         /// 过滤数据
-        /// </summary> 
+        /// </summary>
         public List<T> FilterData<T>(List<T> data, string zoneCode, Func<T, string> fuc)
         {
             return data.Where(t => fuc(t).StartsWith(zoneCode)).ToList();
         }
-
 
         /// <summary>
         /// 通过权证编码获取数据
@@ -519,6 +517,10 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                     YHTMJM = dkxx.YHTMJM,
                     LZHTBM = dkxx.LZHTBM
                 };
+                if (dkxx.YHTMJM == 0 && dkxx.YHTMJ != 0)
+                {
+                    cbd.YHTMJM = dkxx.YHTMJ;
+                }
                 if (spaceLandList.ContainsKey(dkxx.DKBM))
                 {
                     cbd.KJDK = spaceLandList[dkxx.DKBM];
@@ -526,7 +528,6 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 if (cbd.KJDK == null)
                     Report("地块编码" + cbd.DKBM + "的空间数据为空!");
                 dkCollection.Add(cbd);
-
             }
             if (lands != null)
             {
@@ -539,6 +540,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }
             return dkCollection;
         }
+
         /// <summary>
         /// 转换地块信息实体
         /// </summary>
@@ -559,7 +561,8 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }
             return dkCollection;
         }
-        #endregion
+
+        #endregion 构造交换数据实体
 
         #region 辅助方法
 
@@ -569,13 +572,12 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 ReportInfo(msg);
         }
 
-
         public void ReportWarnInfo(string msg)
         {
             if (ReportWarningInfo != null && !string.IsNullOrEmpty(msg))
                 ReportWarningInfo(msg);
         }
-        #endregion
 
+        #endregion 辅助方法
     }
 }

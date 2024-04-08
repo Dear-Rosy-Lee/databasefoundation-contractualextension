@@ -714,7 +714,7 @@ namespace YuLinTu.Library.Business
                     columnIndex++;
                     if (concord.ID != Guid.Empty && concord.IsValid)
                     {
-                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), concord.CountAwareArea > 0.0 ? ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2) : SystemSet.InitalizeAreaString());//确权总面积
+                        SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex) + (tempIndex + hight - 1), tempAwareAreaCount > 0.0 ? ToolMath.SetNumbericFormat(tempAwareAreaCount.ToString(), 2) : SystemSet.InitalizeAreaString());//确权总面积
                     }
                     else
                     {
