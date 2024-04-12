@@ -219,9 +219,6 @@
     <Reference Include="YuLinTu.PropertyRight.Services.SyncClient">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.PropertyRight.Services.SyncClient.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Word">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Word.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">

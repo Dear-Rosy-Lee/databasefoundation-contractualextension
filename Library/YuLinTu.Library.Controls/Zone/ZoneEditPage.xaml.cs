@@ -104,14 +104,6 @@ namespace YuLinTu.Library.Controls
 
         #endregion Propertys
 
-        #region Fields
-
-        private ZoneDefine config;
-
-        private SettingsProfileCenter systemCenter;
-
-        #endregion Fields
-
         #region ctor
 
         public ZoneEditPage(bool isAdd = false)

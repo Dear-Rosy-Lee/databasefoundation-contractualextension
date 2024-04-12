@@ -19,7 +19,7 @@ namespace YuLinTu.Component.MapFoundation
 
         private readonly IZoneWorkStation zoneStation;
 
-        private bool returnValue;
+        private bool returnValue = false;
 
         #endregion Fields
 

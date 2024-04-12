@@ -40,7 +40,7 @@ namespace YuLinTu.Library.Business
         private double ActualAreaCount;//单个实测面积
         private double AwareAreaCount;//总确权面积
         private double ContractDelayCount;//延包面积
-        private double TotalContractDelayCount;//延包总面积
+        private double TotalContractDelayCount = 0.0;//延包总面积
         private double MotorizeLandAreaCount;//总机动地面积
         private double TotalTableAreaCount;//总二轮台账面积
         private double ActualAreaAllCount;//总实测面积
@@ -48,7 +48,6 @@ namespace YuLinTu.Library.Business
         private double onlyAwareAreaCount;//单个确权面积
         private double onlyMotorizeLandAreaCount;//单个机动地
         private double onlyTotalTableAreaCount;//单个二轮台账
-        private double onlyTotalContractDelayAreaCount;//单个二轮台账
         private int packageCount;//土地延包份数
         private double secondTableArea;//二轮面积之和
         private double secondTotalTableArea;//二轮总面积之和

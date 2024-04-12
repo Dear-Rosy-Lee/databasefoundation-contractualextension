@@ -99,14 +99,7 @@
     <Reference Include="DotSpatial.Projections.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=52099474f11b7ff0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="gdalconst_csharp">
-      <HintPath>..\..\Dependencies\GDAL\gdalconst_csharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="gdal_csharp">
-      <HintPath>..\..\Dependencies\GDAL\gdal_csharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+   
     <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
     </Reference>
@@ -170,14 +163,7 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="ogr_csharp">
-      <HintPath>..\..\Dependencies\GDAL\ogr_csharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="osr_csharp">
-      <HintPath>..\..\Dependencies\GDAL\osr_csharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="PowerCollections, Version=1.0.5798.18368, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
@@ -190,10 +176,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\Dependencies\Spatialite\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -207,10 +190,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="tGISCNetConsolTest">
-      <HintPath>..\..\Dependencies\tGis\tGISCNetConsolTest.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
@@ -218,14 +197,7 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Activities">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Activities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="YuLinTu.Appwork.Core">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
@@ -241,75 +213,15 @@
     <Reference Include="YuLinTu.Core">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Core.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Data">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Dynamic">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Framework">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Shapefile">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Shapefile.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.SQLite">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Diagnostics">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Excel">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Excel.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Library.AgriExchange">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Library.AgriExchange.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\packages\YuLinTu.SDK.6.8.8.1\x86\YuLinTu.NetAux.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Resources">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Resources.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Security">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Security.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="YuLinTu.Spatial.Topology">
       <HintPath>..\..\packages\YuLinTu.SDK.6.8.8.1\x86\YuLinTu.Spatial.Topology.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.tGIS.Client">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.tGISCNet">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGISCNet.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Unity">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Core">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf.Metro">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+   
     <Reference Include="YuLinTuQuality.Business.Entity">
       <HintPath>..\..\Dependencies\Quality\YuLinTuQuality.Business.Entity.dll</HintPath>
       <Private>False</Private>

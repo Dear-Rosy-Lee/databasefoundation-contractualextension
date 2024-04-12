@@ -146,6 +146,8 @@ namespace YuLinTu.Library.Business
                     return a.MaxX < b.MaxX ? -1 : 1;
                 });
             }
+
+            [Obsolete]
             public string FindJzxlb(IGeometry jzx,double tolerance,out IGeometry jzxBuffer)
             {
                 jzxBuffer = null;
@@ -384,6 +386,8 @@ namespace YuLinTu.Library.Business
                     return a.MaxX < b.MaxX ? -1 : 1;
                 });
             }
+
+            [Obsolete]
             public string FindJzxlb(IGeometry jzx,IGeometry jzxBuffer, double tolerance)
             {
                 var e = jzx.EnvelopeInternal;
@@ -499,6 +503,7 @@ namespace YuLinTu.Library.Business
         /// <param name="db"></param>
         /// <param name="reportProgress"></param>
         /// <param name="sDydm">地域代码（若不为null，则表示只生成该地域下的数据）</param>
+        [Obsolete]
         public int Go(DBSpatialite db,double tolerance, Action<string, int> reportProgress,string sDydm=null)
         {
             string wh = null;

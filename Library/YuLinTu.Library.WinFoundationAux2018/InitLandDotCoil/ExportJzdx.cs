@@ -277,6 +277,7 @@ namespace YuLinTu.Library.Business
             /// <param name="x"></param>
             /// <param name="cache"></param>
             /// <returns></returns>
+            [Obsolete]
             public static int QueryDkEntities(DBSpatialite db, List<IndexItem> index, int iBegin, double minx
                 , List<ShapeDkEntity> cache, JzdEqualComparer cmp, string syqxz)
             {
@@ -703,6 +704,7 @@ namespace YuLinTu.Library.Business
 
             public byte[] wkb;
             public Coordinate[] coords;
+            [Obsolete]
             public IEnvelope env;
             public Dictionary<Coordinate, string> dicJzdh = null;// new Dictionary<Coordinate, string>();
         }
@@ -732,6 +734,7 @@ namespace YuLinTu.Library.Business
 
         private class ListShapeDkEntity : List<ShapeDkEntity>
         {
+            [Obsolete]
             public void AssignJzdh(IPoint pt, string jzdh, double tolerance, double tolerance2)
             {
                 var c = new Coordinate(pt.X, pt.Y);
@@ -801,6 +804,7 @@ namespace YuLinTu.Library.Business
                 return shp;
             }
 
+            [Obsolete]
             public void export(ShapeJzdEntity jzdEn, ListShapeJzxEntity jzxs, ListShapeDkEntity dks)
             {
                 var shp = _shp;
@@ -1194,6 +1198,7 @@ namespace YuLinTu.Library.Business
         /// <param name="shpFilePath">shape文件的输出路径</param>
         /// <param name="sDydm">当前地域的地域全编码</param>
         /// <param name="excludeDkbm">要排除的地块编码</param>
+        [Obsolete]
         public void DoExport(HashSet<string> excludeDkbm)// string shpFileName,string jzxShpFileName,string where=null)
         {
             ReportInfomation("开始时间：" + DateTime.Now);
@@ -1403,6 +1408,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出地块
         /// </summary>
+        [Obsolete]
         public void DoExportLandOnly(HashSet<string> excludeDkbm)// string shpFileName,string jzxShpFileName,string where=null)
         {
             ReportInfomation("开始时间：" + DateTime.Now);
@@ -1473,6 +1479,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        [Obsolete]
         private void tryExportDk(List<ShapeDkEntity> dks, IPoint lastExportJzd)//, ShapeFile shp)
         {
             var lstRemove = new List<ShapeDkEntity>();

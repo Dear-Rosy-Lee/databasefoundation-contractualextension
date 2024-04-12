@@ -114,7 +114,7 @@ namespace YuLinTu.Library.Business
             WriteSenderInformation();
             WriteDate();
             WriteZone();
-            WriteOtherInformation();
+            WriteOtherInformations();
             WriteZoneExpressBookMark();
             WriteDateInformation();
             return true;
@@ -197,7 +197,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 写其它信息
         /// </summary>
-        private void WriteOtherInformation()
+        private void WriteOtherInformations()
         {
 
             actualArea = Business.ToolMath.SetNumericFormat(actualArea, 4, 1);

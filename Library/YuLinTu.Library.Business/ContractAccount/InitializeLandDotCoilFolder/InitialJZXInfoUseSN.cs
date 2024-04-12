@@ -703,7 +703,7 @@ namespace YuLinTu.Library.Business
 
                 if (targetlandnumber == "3e71bc93-0317-41ee-a950-fd14c4fcbdfa")
                 {
-                    var dd = "fdsa";
+                    //var dd = "fdsa";
                 }
 
                 var targetlandid = landinfos[0].GetBetween("'", "'");

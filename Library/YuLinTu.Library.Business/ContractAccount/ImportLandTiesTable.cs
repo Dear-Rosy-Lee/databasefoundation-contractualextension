@@ -15,11 +15,10 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private ToolProgress toolProgress;
-        private List<string> concrdNumberList;
         private int familyCount;//承包方数
         private int personCount;//共有人数
         private int landCount;//地块数
-        private bool isOk;//导入地块时的验证
+        
         private CollectivityTissue tissue;//集体经济组织
         private CollectivityTissue sender;//集体经济组织
         private VirtualPersonBusiness personBusiness;
@@ -37,11 +36,6 @@ namespace YuLinTu.Library.Business
 
         private List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
         private ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
-        private int rangeCount;//行数
-        private int columnCount;//列数
-        private int currentIndex = 0;//当前索引号
-        private object[,] allItem;
-        private string lastRowText = "合计";//最后一行第一个单元格中文字
         private InitalizeLandTiesTable landInfo;//初始化承包台账调查表信息
 
         #endregion Fields
@@ -62,6 +56,9 @@ namespace YuLinTu.Library.Business
         /// 是否清空数据
         /// </summary>
         public bool IsClear { get; set; }
+
+        //导入地块时的验证
+        public bool isOk { get; set; }
 
         /// <summary>
         /// Excel文件名称

@@ -225,6 +225,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出数据成果
         /// </summary>
+        [Obsolete]
         public void Export()
         {
             this.ReportProgress(0, "开始");
@@ -277,6 +278,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="zoneYearCode">地域年份代码</param>
         /// <param name="prjString">坐标文件</param>
         /// <param name="excludeDkbm">编码集合</param>
+        [Obsolete]
         private void testExportJzd(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand, int numPoint, int numLine)
@@ -364,6 +366,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块
         /// </summary>
+        [Obsolete]
         private void ExportLand(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand)
@@ -491,6 +494,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据处理
         /// </summary>
+        [Obsolete]
         private void ArcDataProgress()
         {
             var zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
@@ -605,6 +609,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块、界址点、界址线
         /// </summary>
+        [Obsolete]
         private void ExportLandResultFile(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var pointquery = DbContext.CreateQuery<BuildLandBoundaryAddressDot>();
@@ -642,6 +647,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块
         /// </summary>
+        [Obsolete]
         private void ExportLandOnly(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var landquery = DbContext.CreateQuery<ContractLand>();

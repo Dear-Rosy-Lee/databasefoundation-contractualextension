@@ -85,7 +85,7 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    
     <CodeAnalysisRuleSetDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;E:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
@@ -225,10 +225,7 @@
     <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Microsoft.SqlServer.Types.dll</HintPath>
-    </Reference>
+    
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll</HintPath>
@@ -301,50 +298,6 @@
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Dynamic, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Framework, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Shards, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.Shards.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.SQLite, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Resources, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Resources.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Unity, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Core, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf.Metro, Version=6.8.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -2756,7 +2709,6 @@ copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\DotSpatial\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
 
@@ -2767,7 +2719,8 @@ del /f /s /q "$(SolutionDir)Workspace\*.tmp"
 del /f /s /q "$(SolutionDir)Workspace\*.pdb"
 del /f /s /q "$(SolutionDir)Workspace\*.application"
 del /f /s /q "$(SolutionDir)Workspace\*.manifest"
-editbin /largeaddressaware "$(TargetPath)"
+
+
 </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

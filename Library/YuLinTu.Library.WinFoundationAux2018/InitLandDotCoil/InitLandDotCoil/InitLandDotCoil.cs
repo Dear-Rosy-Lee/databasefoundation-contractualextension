@@ -169,10 +169,10 @@ namespace YuLinTu.Library.Business
             {
                 return _jzxTable.GetCreatedCount();
             }
-            public void Clear()
+            public void Clearing()
             {
                 base.Clear();
-                _jzxTable.Clear();
+                _jzxTable.Clearing();
             }
             public void SaveDeletedRowids()
             {
@@ -304,7 +304,7 @@ namespace YuLinTu.Library.Business
                 })
             { }
 
-            public void Clear()
+            public void Clearing()
             {
                 base.Clear();
                 _points.Clear();
@@ -1768,7 +1768,7 @@ namespace YuLinTu.Library.Business
             _nTestMaxCacheJzdCount = 0;
             _jzdCache.Clear();
             //_lstSaveCache.Clear();
-            _jzdTable.Clear();
+            _jzdTable.Clearing();
             _cbdCache.Clear();
             _saveCache.Clear();
             _param.cjsj = DateTime.Now;

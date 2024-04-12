@@ -99,7 +99,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
                 return obj;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 if (ErrorInfomation != null)
                 {

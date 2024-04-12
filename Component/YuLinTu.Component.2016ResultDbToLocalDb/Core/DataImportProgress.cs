@@ -711,7 +711,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 ImportContractLandDatas(LocalService, noContractLands, zone.FullName, zone.FullCode,
                     8000 + creList.Count + 1);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 sucess = false;
                 string errorMsg = string.Format("导入{0}数据失败", zone.FullName);

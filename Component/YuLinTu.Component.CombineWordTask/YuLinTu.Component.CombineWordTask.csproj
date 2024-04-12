@@ -141,9 +141,7 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-    </Reference>
+    
     <Reference Include="YuLinTu.Appwork.Core">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
     </Reference>
@@ -153,27 +151,7 @@
     <Reference Include="YuLinTu.Core">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Core.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Data">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Dynamic">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Framework">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Data.SQLite">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Diagnostics">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Core">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf.Metro">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
-    </Reference>
+   
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">

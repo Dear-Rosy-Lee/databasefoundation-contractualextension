@@ -22,10 +22,8 @@ namespace YuLinTu.Library.Business
         private int rangeCount;//行数
         private int columnCount;//列数
         private bool isOk;
-        private bool allowNoWriteActualArea;//允许不填写实测面积
-        private bool allowNoWriteAwareArea;//允许不填写确权面积
-        private bool allowAwareAreaBigActualArea;//允许确权面积大于实测面积
-        private bool contractorClear;//是否清空承包方
+     
+        private bool contractorClear = true;//是否清空承包方
 
         private SortedList<string, string> existPersons;
         private SortedList<string, string> existTablePersons;
@@ -40,15 +38,11 @@ namespace YuLinTu.Library.Business
 
         private string bookNumber = string.Empty;//证书编号
 
-        private double countActualArea = 0.0;//当前行实测总面积
-        private double countAwareArea = 0.0;//当前行确权总面积
-        private double countMotorizeLandArea = 0.0;//当前行机动地总面积
-        private double countTotalTableArea = 0.0;//二轮承包地总面积
+     
 
         private List<string> errorArray = new List<string>();//错误信息
         private List<string> warnArray = new List<string>();//警告信息
         private int originalValue = 0;
-        private string originalHH = "";
 
         #endregion Fields
 

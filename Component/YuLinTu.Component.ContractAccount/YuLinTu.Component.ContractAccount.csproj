@@ -173,10 +173,7 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    
     <Reference Include="YuLinTu.Appwork.Core">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
@@ -187,10 +184,6 @@
     </Reference>
     <Reference Include="YuLinTu.Appwork.Task">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Archives">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Archives.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="YuLinTu.Component.BusinessProcessWizard">
@@ -204,50 +197,11 @@
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Data">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Framework">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Diagnostics">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Diagrams">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagrams.dll</HintPath>
-    </Reference>
+    
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.Resources">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Resources.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.tGIS">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.tGIS.Client">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Unity">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Core">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf.Metro">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+  
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">

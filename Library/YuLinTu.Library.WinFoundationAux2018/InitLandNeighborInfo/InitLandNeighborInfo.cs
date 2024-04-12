@@ -272,7 +272,6 @@ namespace YuLinTu.Library.Business
         /// 承包地缓存
         /// </summary>
         private readonly ShortZd_cbdCache1 _cbdCache = new ShortZd_cbdCache1();
-        private readonly JzdCache _jzdCache;
 
         private readonly SaveCacheHelper _saveCache;
         private readonly XzdyUtil _xzdyUtil = new XzdyUtil();

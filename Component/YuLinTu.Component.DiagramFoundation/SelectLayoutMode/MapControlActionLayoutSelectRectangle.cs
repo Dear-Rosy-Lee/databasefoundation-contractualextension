@@ -34,11 +34,11 @@ namespace YuLinTu.Component.DiagramFoundation
         /// 清除按钮
         /// </summary>
         private MetroButton clearGraphicBtn = null;
-        
+
         /// <summary>
         /// 空间参考系单位
         /// </summary>
-        private string projectionUnit = "Unkown";
+        public string projectionUnit { get; set; }
 
         #endregion
 

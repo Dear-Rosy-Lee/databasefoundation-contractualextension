@@ -128,7 +128,6 @@ namespace YuLinTu.Library.WinFoundationAux.Util
         public String toAzimuthString()
         {
             var v = Value * 180 / Math.PI;
-            String s = "";
             if (v < 22.5 || v > 360 - 22.5)
             {
                 return "北";

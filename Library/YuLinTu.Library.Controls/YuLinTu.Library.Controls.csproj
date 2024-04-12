@@ -182,36 +182,10 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Dynamic, Version=5.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Dynamic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Framework, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Framework.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Data.Shapefile, Version=5.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Data.Shapefile.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Diagnostics, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+   
+    
+   
+   
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\packages\YuLinTu.SDK.6.8.8.1\x86\YuLinTu.NetAux.dll</HintPath>
     </Reference>
@@ -231,24 +205,8 @@
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.tGIS.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Unity, Version=5.2.0.1, Culture=neutral, PublicKeyToken=057b38ba9ab1b025, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Unity.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Core, Version=5.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Windows.Wpf.Metro">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Windows.Wpf.Metro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+   
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">

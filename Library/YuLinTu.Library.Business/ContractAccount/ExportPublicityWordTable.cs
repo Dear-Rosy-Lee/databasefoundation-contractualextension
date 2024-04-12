@@ -66,7 +66,7 @@ namespace YuLinTu.Library.Business
                     return false;
                 }
                 WriteTitleInformation();
-                WriteConcordInformation();
+                WriteConcordInformations();
                 WritePublicyInformation();
                 //Disponse();
             }
@@ -171,7 +171,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="lands"></param>
         /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
+        private List<ContractLand> SortLandCollections(List<ContractLand> lands)
         {
             if (lands == null || lands.Count == 0)
             {
@@ -213,7 +213,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写合同信息
         /// </summary>
-        private void WriteConcordInformation()
+        private void WriteConcordInformations()
         {
             WitePersonInformaion();
 
@@ -537,7 +537,7 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(0, row, colBase, name);
                 SetTableCellValue(0, row, colBase + 1, canumber);
 
-                SetTableCellValue(0, row, colBase + 2, InitalizeLandNeightor(LandCollection[i]));// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
+                SetTableCellValue(0, row, colBase + 2, InitalizeLandNeightors(LandCollection[i]));// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
                                                                                                  //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
                                                                                                  //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
                                                                                                  //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
@@ -571,7 +571,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="neighbor"></param>
         /// <returns></returns>
-        private string InitalizeLandNeightor(ContractLand land)
+        private string InitalizeLandNeightors(ContractLand land)
         {
             string neighbor = string.Format("东：{0}\n南：{1}\n西：{2} \n北：{3}", land.NeighborEast, land.NeighborSouth, land.NeighborWest, land.NeighborNorth);
             if (!SystemSet.NergionbourSortSet)
@@ -693,7 +693,7 @@ namespace YuLinTu.Library.Business
                 var landCollection = landStation.GetCollection(Contractor.ID);
                 LandCollection = Contractor != null ? landCollection : new List<ContractLand>();
             }
-            LandCollection = SortLandCollection(LandCollection);
+            LandCollection = SortLandCollections(LandCollection);
             return true;
         }
 

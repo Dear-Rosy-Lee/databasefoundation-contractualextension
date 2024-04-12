@@ -94,14 +94,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="YuLinTu">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Diagnostics">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Diagnostics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+   
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">

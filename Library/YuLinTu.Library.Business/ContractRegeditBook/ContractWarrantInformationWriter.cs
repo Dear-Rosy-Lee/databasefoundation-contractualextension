@@ -236,7 +236,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="lands"></param>
         /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
+        private List<ContractLand> SortLandCollections(List<ContractLand> lands)
         {
             if (lands == null || lands.Count == 0)
             {

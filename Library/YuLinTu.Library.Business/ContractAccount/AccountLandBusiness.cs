@@ -3201,10 +3201,7 @@ namespace YuLinTu.Library.Business
         /// <param name="currentZone">当前初始化地块集合所在的地域</param>
         public void ContractLandInitialTool(TaskInitialLandInfoArgument metadata, List<ContractLand> listLand, Zone currentZone)
         {
-            int index = 1;   //地块索引
-            int landIndex = 1;
-            int successCount = 0;
-            double landPercent = 0.0;  //百分比
+            
             string markDesc = GetMarkDesc(currentZone);
 
             //获取地域下所有人
@@ -3989,7 +3986,7 @@ namespace YuLinTu.Library.Business
                     {
                         imageNumber = GetImgeNumber(geoLand, scropeIndex, scalerIndex, isUseYX, isInitialAllnumber);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         throw;
                     }

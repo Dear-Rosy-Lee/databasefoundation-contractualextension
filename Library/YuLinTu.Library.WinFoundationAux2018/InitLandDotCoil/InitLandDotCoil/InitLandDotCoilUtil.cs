@@ -130,7 +130,7 @@ namespace YuLinTu.Library.Business
             });
         }
 
-
+        [Obsolete]
         public static void QueryShapeDkEntities(DBSpatialite db, string where, List<ExportJzdx.ShapeDkEntity> lst
             , Action<ExportJzdx.ShapeDkEntity> callback)
         {

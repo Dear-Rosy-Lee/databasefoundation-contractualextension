@@ -369,7 +369,7 @@ namespace YuLinTu.Library.Business
             try
             {
                 WriteZoneExpressBookMark();//设置其它书签
-                List<ContractLand> landCollection = SortLandCollection(LandCollection);//获取地块集合
+                List<ContractLand> landCollection = SortLandCollections(LandCollection);//获取地块集合
                 WriteSharePersonValue();//设置共有人信息
                 SetContractLandValue(landCollection);//设置地块值
                 DisposeQRContent();
@@ -643,7 +643,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         protected virtual void WriteZoneExpressBookMark()
         {
-            var simpleProvinceNamesDics = InitalizeSimpleProvice();
+            var simpleProvinceNamesDics = InitalizeToSimpleProvice();
             var simplenamedic = simpleProvinceNamesDics.Where(s => s.Key.Contains(proviceName)).FirstOrDefault();
             var simplename = simplenamedic.Value != null ? simplenamedic.Value : "";
             SetBookmarkValue(AgricultureBookMark.SimpleProviceName, simplename);
@@ -693,7 +693,7 @@ namespace YuLinTu.Library.Business
         /// 初始化省市简写
         /// </summary>
         /// <returns></returns>
-        private Dictionary<string, string> InitalizeSimpleProvice()
+        private Dictionary<string, string> InitalizeToSimpleProvice()
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             dic.Add("北京市", "京");

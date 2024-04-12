@@ -18,11 +18,8 @@ namespace YuLinTu.Library.CompareResult
         #region Fields
 
         public int srid;
-        private Dictionary<string, Dictionary<string, int>> landIndex;
-        private Dictionary<string, Dictionary<string, int>> pointIndex;
-        private Dictionary<string, Dictionary<string, int>> lineIndex;
+  
         private bool _containsShapes = true;
-        private bool _writeToFile = false;
         private List<string> jzdFile = new List<string>();
         private List<string> jzxFile = new List<string>();
         #endregion

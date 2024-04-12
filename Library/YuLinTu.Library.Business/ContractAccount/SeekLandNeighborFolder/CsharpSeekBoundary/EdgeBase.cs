@@ -736,7 +736,7 @@ namespace FoundOrientation
                             if (!boundary_orientation_list[0].Key.closest_result.ContainsKey(missing_field.Item1))
                                 boundary_orientation_list[0].Key.closest_result.Add(missing_field.Item1, 31);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         if (!missing_boundary_list[0].Key.closest_result.ContainsKey(missing_field.Item1))
                             missing_boundary_list[0].Key.closest_result.Add(missing_field.Item1, 31);

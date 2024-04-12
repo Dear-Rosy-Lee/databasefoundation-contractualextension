@@ -16,7 +16,6 @@ namespace YuLinTu.Library.CompareResult
     {
         public const string VictorName = "矢量数据";
 
-        private IDbContext db;
 
         #region Properties
 

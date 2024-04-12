@@ -49,7 +49,6 @@ namespace YuLinTu.Library.Business
         private double onlyAwareAreaCount;//单个确权面积
         private double onlyMotorizeLandAreaCount;//单个机动地
         private double onlyTotalTableAreaCount;//单个二轮台账
-        private double onlyTotalContractDelayAreaCount;//单个二轮台账
         private int packageCount;//土地延包份数
         private double secondTableArea;//二轮面积之和
         private double secondTotalTableArea;//二轮总面积之和
@@ -65,6 +64,7 @@ namespace YuLinTu.Library.Business
         {
             SaveFilePath = string.Empty;
             secondTotalTableArea = 0;
+            TotalContractDelayCount = 0.0;
             LandArrays = new List<ContractLand>();
             DictionList = new List<Dictionary>();
             TableLandArrays = new List<SecondTableLand>();

@@ -15,7 +15,6 @@ namespace YuLinTu.Library.Business
     {
         #region Property
 
-        private bool returnValue;
 
         public bool IsGroup { get; set; }
 
@@ -25,7 +24,7 @@ namespace YuLinTu.Library.Business
 
         #region Field
 
-        private string openFilePath;  //打开文件路径
+        private string openFilePath="";  //打开文件路径
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
