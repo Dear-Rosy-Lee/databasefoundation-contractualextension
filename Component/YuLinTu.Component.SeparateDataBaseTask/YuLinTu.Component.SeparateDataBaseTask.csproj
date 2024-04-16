@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
   <Import Project="..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props" Condition="Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props')" />
   <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" />
-  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
-  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" />
   <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -158,7 +158,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -179,7 +178,6 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
-    
     <Reference Include="YuLinTu.Appwork.Core">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
@@ -192,7 +190,6 @@
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
       <Private>False</Private>
     </Reference>
-   
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
@@ -279,8 +276,6 @@ del /f /q "$(TargetDir)..\$(TargetFileName)"</PostBuildEvent>
     <Error Condition="!Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props'))" />
@@ -289,8 +284,6 @@ del /f /q "$(TargetDir)..\$(TargetFileName)"</PostBuildEvent>
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props'))" />
@@ -301,20 +294,24 @@ del /f /q "$(TargetDir)..\$(TargetFileName)"</PostBuildEvent>
     <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
-  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
-  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.2\build\YuLinTu.Data.SQLite.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
   <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" />
   <Import Project="..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets" Condition="Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

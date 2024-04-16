@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -115,6 +115,7 @@
     <Compile Include="Result\ExportShapeTask.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -134,11 +135,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
-  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.2\build\YuLinTu.Data.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
