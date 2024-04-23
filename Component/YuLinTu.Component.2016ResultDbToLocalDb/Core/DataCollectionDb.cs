@@ -69,7 +69,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 承包地块信息
         /// </summary>
-        public List<CBDKXX> DKXXJH { get; set; }
+        public List<CBDKXXSC> DKXXJH { get; set; }
 
         /// <summary>
         /// 合同集合
@@ -108,5 +108,11 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         }
 
         #endregion
+    }
+
+    public class CBDKXXSC : CBDKXX
+    {
+        public const string TableName = "CBDKXX";
+        public string DKLB { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private List<Dictionary> dictDKLB;    //地块类别数据字典集合
-        protected List<ContractLand> geoLandCollection;  //空间地块集合-用户的地块集合
+        public List<ContractLand> geoLandCollection;//空间地块集合-用户的地块集合
         private SpatialReference spatialReference;
         protected int fromTwoPageTableCount;//从第二页开始的表个数，包括第二页
         private ExportLandParcelMainOperation exportLandParcelMainOperation;
@@ -1331,7 +1331,7 @@ namespace YuLinTu.Library.Business
         private bool isOnlyHaveOneFamily()
         {
             bool flag = true;
-            if (ListGeoLand.Count == geoLandCollection.Count)
+            if (geoLandCollection != null && ListGeoLand.Count == geoLandCollection.Count)
             {
                 foreach (var land in ListGeoLand)
                 {
@@ -1361,7 +1361,7 @@ namespace YuLinTu.Library.Business
                 fo.Object = land;
                 fo.Geometry = land.Shape;
                 fo.GeometryPropertyName = "Shape";
-                if (geoLandCollection.Contains(land) == false)
+                if (geoLandCollection != null && !geoLandCollection.Contains(land))
                     listAllFeature.Add(fo);
             }
             if (listAllFeature.Count == 0)
