@@ -83,7 +83,18 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 var entity = fileList.FindAll(s => s.FullName.ToLower().StartsWith(bs.Name.ToLower() + extentName));
                 if (entity != null && entity.Count > 0)
                 {
-                    entity.ForEach(t => fileList.Remove(t));
+                    entity.ForEach(t =>
+                    {
+                        fileList.Remove(t);
+                        if (t.Name.Contains("-"))
+                        {
+                            int idx = t.Name.IndexOf("-");
+                            if (idx > 0)
+                            {
+                                t.Name = t.Name.Substring(0, idx);
+                            }
+                        }
+                    });
                     rightList.AddRange(entity);
                 }
             }
