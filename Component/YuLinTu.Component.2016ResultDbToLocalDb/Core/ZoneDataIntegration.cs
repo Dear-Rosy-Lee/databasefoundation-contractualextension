@@ -3,15 +3,10 @@
 */
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
+using System;
+using System.Collections.Generic;
 using YuLinTuQuality.Business.Entity;
 using YuLinTuQuality.Business.TaskBasic;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using YuLinTu.tGISCNet;
-using System;
-using GeoAPI.Geometries;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {

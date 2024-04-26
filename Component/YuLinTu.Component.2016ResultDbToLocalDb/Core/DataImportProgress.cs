@@ -16,6 +16,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using YuLinTu.Library.Business;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
 using YuLinTuQuality.Business.TaskBasic;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -193,6 +194,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 this.ReportInfomation("开始导入数据...");
 
                 var shpProcess = new SpaceDataOperator(srid, currentPath.ShapeFileList);
+                shpProcess.InsertIndexToDataBase(currentPath.ShapeFileList, GenerateCoilDot);
                 bool resultData = ExcuteImportData(ginfo.ZoneCode, LocalService, shpProcess);
                 this.ReportProgress(95, "导入其它类型空间数据");
                 bool resultSpace = ImportSpaceData(ginfo.ZoneCode, LocalService, shpProcess);//空间
@@ -510,6 +512,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             {
                 var zoneSet = new HashSet<string>();
                 var zoneList = new List<ZoneDto>();
+                int importcount = 0;
                 foreach (var zone in zoneCollection)
                 {
                     GeoAPI.Geometries.IGeometry geo = zone.Shape as GeoAPI.Geometries.IGeometry;
@@ -530,15 +533,20 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                     };
                     if (!zoneSet.Contains(z.FullCode))
                         zones.Add(z);
-                    if (zones.Count == 30)
+                    if (zones.Count == 100)
                     {
                         localService.CreateZoneWorkStation().Add(zones, true, (s, index, cnt) => { });
+                        importcount += zones.Count;
                         zones.Clear();
+                        this.ReportProgress(1, $"({importcount}/{zoneCollection.Count})正在导入地域数据");
                     }
                 }
                 if (zones.Count > 0)
+                {
                     localService.CreateZoneWorkStation().Add(zones, true, (z, index, cnt) => { });
-                this.ReportInfomation("成功导入地域" + zones.Count + "条");
+                    importcount += zones.Count;
+                }
+                this.ReportInfomation("成功导入地域" + importcount + "条");
                 zoneSet.Clear();
             }
             catch (Exception ex)
@@ -603,19 +611,25 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             {
                 var townCodeList = town.ToList();
                 var groupList = townCodeList.GroupBy(t => t.Substring(0, 12)).ToList();
-
                 var fnps = currentPath.ShapeFileList.FindAll(t => t.FullName.ToLower().StartsWith(DK.TableName.ToLower() + extentName));
-
+                var towndataCollection = dbProcess.GetCollection(town.Key);//按乡镇获取属性数据
                 foreach (var group in groupList)
                 {
                     var keyCode = group.Key;
+                    var dataCollection = dbProcess.FileterDataCollection(towndataCollection, keyCode);
+                    if (dataCollection.CBFJH == null || dataCollection.CBFJH.Count == 0)
+                    {
+                        dataCollection = dbProcess.GetCollection(keyCode);//按村获取属性数据
+                    }
+                    //var valligelandList = shpProcess.InitiallLandList(fnps, keyCode);//按村组获取空间地块
+                    var valligelandList = shpProcess.GetLandFromDatabase(keyCode, GenerateCoilDot);
 
-                    var dataCollection = dbProcess.GetCollection(keyCode);//按村获取属性数据
                     foreach (var z in group)//按组处理导入
                     {
                         index++;
-                        var dkDic = new Dictionary<string, DKEX>();//FindAll(l => l.DKBM.StartsWith(z)).
-                        var landList = shpProcess.InitiallLandList(fnps, z);//按村组获取空间地块
+
+                        var landList = valligelandList.FindAll(l => l.DKBM.StartsWith(z));
+                        var dkDic = new Dictionary<string, DKEX>();
                         landList.ForEach(t =>
                         {
                             if (!dkDic.ContainsKey(t.DKBM))
@@ -661,13 +675,14 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             var zoneName = zone.FullName + "(" + zone.FullCode + ")";
 
             string zoneCode = zone.FullCode;
-            this.ReportInfomation(string.Format("正在导入{0}下的数据", zoneName));
-            this.ReportProgress(3 + (int)(index * percent), string.Format("导入{0}数据({1}/{2})", zone.FullName, index, zoneListCount));
+            //this.ReportInfomation(string.Format("正在导入{0}下的数据", zoneName));
+            this.ReportProgress(3 + (int)(index * percent), string.Format("({0}/{1})导入{2}数据", index, zoneListCount, zone.FullName));
 
             //执行数据导入
             var creList = new List<ComplexRightEntity>();//空户
             landCodeSet.Clear();
-            var entityList = dbProcess.GetRightCollectionByZone(searchCode, zoneCode, dkDic, townCollection, dicCodeName, creList, landCodeSet);
+            var entityList = dbProcess.GetRightCollectionByZone(searchCode, zoneCode, dkDic, townCollection, 
+                dicCodeName, creList, landCodeSet);
             var entityfbf = townCollection.FBFJH.Find(fbf => fbf.FBFBM == standCode.PadRight(14, '0'));
             var localfbf = LocalComplexRightEntity.InitalizeSenderData(entityfbf, zone.FullCode);
             if (localfbf != null)
@@ -699,7 +714,6 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 }
                 //提示信息，用总的
                 entityList.AddRange(creList);
-                ReportImportInfo(entityList, zoneName);
                 var noContractLands = new List<DKEX>();//无承包方编码的地-未签合同的地
                 foreach (var item in landCodeSet)
                 {
@@ -708,8 +722,9 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                         noContractLands.Add(dkDic[item]);
                     }
                 }
-                ImportContractLandDatas(LocalService, noContractLands, zone.FullName, zone.FullCode,
+                int nccount = ImportContractLandDatas(LocalService, noContractLands, zone.FullName, zone.FullCode,
                     8000 + creList.Count + 1);
+                ReportImportInfo(entityList, zoneName, nccount);
             }
             catch (Exception)
             {
@@ -729,7 +744,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 提示信息
         /// </summary>
-        private void ReportImportInfo(List<ComplexRightEntity> entityList, string name)
+        private void ReportImportInfo(List<ComplexRightEntity> entityList, string name, int nccount)
         {
             if (entityList == null || entityList.Count == 0)
                 return;
@@ -760,7 +775,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }
             this.ReportInfomation("成功导入" + name + "下发包方1个,承包方" + cbfNumber + "个,家庭成员" + cyNumber + "条,合同" +
                 htNumber + "条,登记簿" + djbNumber + "条,权证" + qzNumner + "条,地块" + dkNumber + "条,权证注销数据" + zxNumber +
-                "条,权证补发数据" + bfNumber + "条,权证换发数据" + hfNumber + "条,流转合同数据" + lzNumber + "条,附件数据" + fjNumber + "条");
+                "条,权证补发数据" + bfNumber + "条,权证换发数据" + hfNumber + "条,流转合同数据" + lzNumber + "条,附件数据" + fjNumber + "条,非承包地" + nccount + "块");
             entityList = null;
         }
 
@@ -873,7 +888,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                localService.CreateQuery<Library.Entity.StockWarrant>().
                AddRange(listSW.ToArray()));
 
-            if (isnormalexport)
+            if (isnormalexport && listCLBR.Count > 0)
             {
                 this.ReportInfomation("成功导入" + zoneName + "下确股数据" + listCLBR.Count.ToString() + "条");
             }
@@ -1020,10 +1035,10 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                         {
                             land.ConcordId = landcc.ID;
                         }
-                        else
-                        {
-                            this.ReportWarn(string.Format("承包地块{0}的合同不存在!", land.LandNumber));
-                        }
+                        //else
+                        //{
+                        //    this.ReportWarn(string.Format("承包地块{0}的合同不存在!", land.LandNumber));
+                        //}
                     }
                     land.OwnerName = family.Name;
                     land.LocationCode = obj.ZoneCode;
@@ -1200,11 +1215,11 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 处理未签合同的地
         /// </summary>
-        private void ImportContractLandDatas(IDbContext localService, List<DKEX> dkexList,
+        private int ImportContractLandDatas(IDbContext localService, List<DKEX> dkexList,
             string zoneName, string zoneCode, int fnum)
         {
             if (dkexList == null || dkexList.Count == 0)
-                return;
+                return 0;
             Library.Entity.LandVirtualPerson vp = null;
             if (CreatUnit)
             {
@@ -1370,8 +1385,13 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                     AddRange(zonelistSaveCoils.ToArray()));
                 jzdxInfo = ",界址点数据" + zonelistSaveDots.Count.ToString() + "条,界址线数据" + zonelistSaveCoils.Count.ToString() + "条";
             }
-            this.ReportInfomation("成功导入" + zoneName + "下未签合同地块" + listCL.Count.ToString() + "条" + jzdxInfo);
-            localService.Queries.Save();
+
+            if (listCL.Count > 0)
+            {
+                //this.ReportInfomation("成功导入" + zoneName + "下未签合同地块" + listCL.Count.ToString() + "条" + jzdxInfo);
+                localService.Queries.Save();
+            }
+            return listCL.Count;
         }
 
         private string GetPrefix(Library.Entity.BuildLandBoundaryAddressDot dot)

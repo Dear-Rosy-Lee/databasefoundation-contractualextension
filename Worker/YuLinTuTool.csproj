@@ -2022,6 +2022,9 @@
     <None Include="Template\MapToDiagramsView.yltdmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Template\Upload.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Template\Visio.A0.H.yltvd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

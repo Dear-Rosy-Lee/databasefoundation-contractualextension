@@ -8,6 +8,7 @@ using System.Linq;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
+using YuLinTu.Excel;
 using YuLinTuQuality.Business.Entity;
 using YuLinTuQuality.Business.TaskBasic;
 
@@ -196,7 +197,17 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             dataDb.LZHTJH = GetAllHash<LZHT>(LZHT.FCBHTBM, keyCode);
             dataDb.FBFJH = GetAllHash<FBF>(FBF.FFBFBM, keyCode);
             dataDb.CBFJH = GetAllHash<CBF>(CBF.FCBFBM, keyCode);
-            dataDb.DKXXJH = GetAllHash<CBDKXX>(CBDKXX.FDKBM, keyCode);
+            var dks = GetAllHash<CBDKXXSC>(CBDKXX.FDKBM, keyCode);
+            foreach (var item in dks)
+            {
+                if (!string.IsNullOrEmpty(item.DKLB) && item.DKLB != "10")
+                {
+                    item.CBHTBM = "";
+                    item.HTMJ = 0;
+                    item.HTMJM = 0;
+                }
+            }
+            dataDb.DKXXJH = dks;// dks.ConvertAll(c => c.ConvertTo<CBDKXX>());
             return dataDb;
         }
 
@@ -324,12 +335,74 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         {
             var cbfList = townCollection.CBFJH.FindAll(t => t.CBFBM.StartsWith(searchCode));
             var rightCollections = new List<ComplexRightEntity>();
-            if (cbfList == null || cbfList.Count == 0)
-            {
-                return rightCollections;
-            }
-            var fbf = townCollection.FBFJH.Find(t => t.FBFBM == searchCode.PadRight(14, '0'));
             var dataCollection = new DataCollectionDb();
+            if (cbfList != null && cbfList.Count > 0)
+            {
+                var fbf = townCollection.FBFJH.Find(t => t.FBFBM == searchCode.PadRight(14, '0'));
+                dataCollection.CBJYQZJH = FilterData(townCollection.CBJYQZJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.QZBFJH = FilterData(townCollection.QZBFJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.QZHFJH = FilterData(townCollection.QZHFJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.QZZXJH = FilterData(townCollection.QZZXJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.FJJH = FilterData(townCollection.FJJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.HTJH = FilterData(townCollection.HTJH, searchCode, (t) => { return t.CBHTBM; });
+                dataCollection.JTCYJH = FilterData(townCollection.JTCYJH, searchCode, (t) => { return t.CBFBM; });
+                dataCollection.DJBJH = FilterData(townCollection.DJBJH, searchCode, (t) => { return t.CBJYQZBM; });
+                dataCollection.LZHTJH = FilterData(townCollection.LZHTJH, searchCode, (t) => { return t.CBHTBM; });
+                dataCollection.DKXXJH = FilterData(townCollection.DKXXJH, searchCode, (t) => { return t.DKBM; });
+                if (dataCollection.HTJH.Count == 0)
+                {
+                    ReportWarnInfo("发包方编码为" + searchCode + "承包方合同为空,请检查成果库中合同编码是否对应发包方表中编码");
+                }
+                if (dataCollection.DKXXJH.Count == 0)
+                {
+                    ReportWarnInfo("发包方编码为" + searchCode + "地块信息为空,请检查签订对应地域地块编码等信息是否正确");
+                }
+                foreach (var cbf in cbfList)
+                {
+                    if (string.IsNullOrEmpty(cbf.CBFBM) || cbf.CBFBM.Length != QuantityValue.CBFBMLength)
+                        continue;
+                    var right = GetExchageEntity(fbf, cbf, zoneCode, spaceLandList, dataCollection, dicCodeName, creList);
+                    if (right != null && right.DJB != null && right.HT != null && right.DKXX != null && right.DKXX.Count > 0 && right.FBF != null)
+                    {
+                        rightCollections.Add(right);
+                    }
+                    else if (right != null && (right.DJB.Count == 0 || right.HT.Count == 0 || right.DKXX.Count == 0 || right.FBF == null))
+                    {
+                        Report("承包方编码为" + cbf.CBFBM + "信息不完整:登记簿" + (right.DJB != null ? right.DJB.Count : 0) +
+                            "个,合同" + (right.HT != null ? right.HT.Count : 0) + "个,地块信息" +
+                            (right.DKXX != null ? right.DKXX.Count : 0) + "个,发包方" + (right.FBF != null ? 1 : 0) + "个");
+                    }
+                    else if (right == null)
+                    {
+                        Report("承包方编码为" + cbf.CBFBM + "信息不完整,未签订合同及权证,或请检查签订合同的发包方");
+                    }
+                }
+            }
+            if (noPersonLand != null)
+            {
+                var hs = new HashSet<string>();
+                if (dataCollection.DKXXJH != null)
+                    dataCollection.DKXXJH.ForEach(t => hs.Add(t.DKBM));
+                foreach (var item in spaceLandList)
+                {
+                    if (!hs.Contains(item.Key))
+                        noPersonLand.Add(item.Key);
+                }
+            }
+            dataCollection.Clear();
+            return rightCollections;
+        }
+
+        /// <summary>
+        /// 筛选数据
+        /// </summary> 
+        public DataCollectionDb FileterDataCollection(DataCollectionDb townCollection, string searchCode)
+        {
+            var dataCollection = new DataCollectionDb();
+            if (townCollection == null)
+                return dataCollection;
+            dataCollection.FBFJH = FilterData(townCollection.FBFJH, searchCode, (t) => { return t.FBFBM; });
+            dataCollection.CBFJH = FilterData(townCollection.CBFJH, searchCode, (s) => { return s.CBFBM; });
             dataCollection.CBJYQZJH = FilterData(townCollection.CBJYQZJH, searchCode, (t) => { return t.CBJYQZBM; });
             dataCollection.QZBFJH = FilterData(townCollection.QZBFJH, searchCode, (t) => { return t.CBJYQZBM; });
             dataCollection.QZHFJH = FilterData(townCollection.QZHFJH, searchCode, (t) => { return t.CBJYQZBM; });
@@ -340,46 +413,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             dataCollection.DJBJH = FilterData(townCollection.DJBJH, searchCode, (t) => { return t.CBJYQZBM; });
             dataCollection.LZHTJH = FilterData(townCollection.LZHTJH, searchCode, (t) => { return t.CBHTBM; });
             dataCollection.DKXXJH = FilterData(townCollection.DKXXJH, searchCode, (t) => { return t.DKBM; });
-            if (dataCollection.HTJH.Count == 0)
-            {
-                ReportWarnInfo("发包方编码为" + searchCode + "承包方合同为空,请检查成果库中合同编码是否对应发包方表中编码");
-            }
-            if (dataCollection.DKXXJH.Count == 0)
-            {
-                ReportWarnInfo("发包方编码为" + searchCode + "地块信息为空,请检查签订对应地域地块编码等信息是否正确");
-            }
-            foreach (var cbf in cbfList)
-            {
-                if (string.IsNullOrEmpty(cbf.CBFBM) || cbf.CBFBM.Length != QuantityValue.CBFBMLength)
-                    continue;
-                var right = GetExchageEntity(fbf, cbf, zoneCode, spaceLandList, dataCollection, dicCodeName, creList);
-                if (right != null && right.DJB != null && right.HT != null && right.DKXX != null && right.DKXX.Count > 0 && right.FBF != null)
-                {
-                    rightCollections.Add(right);
-                }
-                else if (right != null && (right.DJB.Count == 0 || right.HT.Count == 0 || right.DKXX.Count == 0 || right.FBF == null))
-                {
-                    Report("承包方编码为" + cbf.CBFBM + "信息不完整:登记簿" + (right.DJB != null ? right.DJB.Count : 0) +
-                        "个,合同" + (right.HT != null ? right.HT.Count : 0) + "个,地块信息" +
-                        (right.DKXX != null ? right.DKXX.Count : 0) + "个,发包方" + (right.FBF != null ? 1 : 0) + "个");
-                }
-                else if (right == null)
-                {
-                    Report("承包方编码为" + cbf.CBFBM + "信息不完整,未签订合同及权证,或请检查签订合同的发包方");
-                }
-            }
-            if (noPersonLand != null)
-            {
-                var hs = new HashSet<string>();
-                dataCollection.DKXXJH.ForEach(t => hs.Add(t.DKBM));
-                foreach (var item in spaceLandList)
-                {
-                    if (!hs.Contains(item.Key))
-                        noPersonLand.Add(item.Key);
-                }
-            }
-            dataCollection.Clear();
-            return rightCollections;
+            return dataCollection;
         }
 
         /// <summary>
@@ -494,7 +528,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 转换地块信息实体
         /// </summary>
-        public List<CBDKXXEX> ChangeDKXX(List<CBDKXX> landList,
+        public List<CBDKXXEX> ChangeDKXX(List<CBDKXXSC> landList,
             Dictionary<string, DKEX> spaceLandList, List<DKEX> lands = null)
         {
             var dkCollection = new List<CBDKXXEX>();

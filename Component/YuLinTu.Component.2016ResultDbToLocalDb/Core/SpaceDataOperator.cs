@@ -11,6 +11,11 @@ using System.Linq;
 using System.Reflection;
 using YuLinTu.tGISCNet;
 using System;
+using System.IO;
+using YuLinTu.Data.SQLite;
+using YuLinTu.Data;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -32,6 +37,9 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// 矢量文件集合
         /// </summary>
         public List<FileCondition> ShapeFileList { get; set; }
+
+        private object _lock = new object();
+        private IDbContext sqliteDb;
 
         #endregion
 
@@ -295,6 +303,119 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }
             return dkList;
         }
+
+        /// <summary>
+        /// 从数据库中获取地块数据
+        /// </summary> 
+        public List<DKEX> GetLandFromDatabase(string keyCode, bool getjzdx = true)
+        {
+            return GetLandFromDatabase(keyCode, ShapeFileList, getjzdx);
+        }
+
+        /// <summary>
+        /// 根据地域获取地块
+        /// </summary>
+        /// <param name="keyCode"></param>
+        /// <param name="files"></param>
+        /// <param name="getJzdx">是否获取界址点线</param>
+        /// <returns></returns>
+        private List<DKEX> GetLandFromDatabase(string keyCode, List<FileCondition> files, bool getJzdx = true)
+        {
+            var dkquery = sqliteDb.CreateQuery<DKST>();
+            var jzdquery = sqliteDb.CreateQuery<JZDST>();
+            var jzxquery = sqliteDb.CreateQuery<JZXST>();
+
+            var bmList = dkquery.Where(t => t.DKBM.StartsWith(keyCode)).ToList();
+            var jzdbmList = jzdquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
+            var jzxbmList = jzxquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
+
+            List<DK> dkList = new List<DK>();
+
+            var group = bmList.GroupBy(t => t.TCBS).ToList();
+            foreach (var item in group)
+            {
+                var bs = item.Key == "0" ? "" : item.Key;
+                var file = files.Find(t => t.Name == "DK" && t.FullName.Contains((bs == "" ? "" : "-" + bs)));
+                var recodeList = item.ToList();
+                var list = InitiallDataList<DK, DKST>(file, recodeList);
+                dkList.AddRange(list);
+            }
+
+            var jzdList = new Dictionary<string, List<JZD>>();
+            var jzxList = new Dictionary<string, List<JZX>>();
+
+            if (getJzdx)
+            {
+                var jzdgroup = jzdbmList.GroupBy(t => t.TCBS).ToList();
+                foreach (var item in jzdgroup)
+                {
+                    var bs = item.Key == "0" ? "" : item.Key;
+                    var file = files.Find(t => t.Name == "JZD" && t.FullName.Contains((bs == "" ? "" : "-" + bs)));
+                    var recodeList = item.ToList();
+                    var list = InitiallDataEnum<JZD, JZDST>(file, recodeList);
+                    foreach (var jzd in list)
+                    {
+                        if (jzdList.ContainsKey(jzd.DKBM))
+                            jzdList[jzd.DKBM].Add(jzd);
+                        else
+                            jzdList.Add(jzd.DKBM, new List<JZD>() { jzd });
+                    }
+                }
+
+                var jzxgroup = jzxbmList.GroupBy(t => t.TCBS).ToList();
+                foreach (var item in jzxgroup)
+                {
+                    var bs = item.Key == "0" ? "" : item.Key;
+                    var file = files.Find(t => t.Name == "JZX" && t.FullName.Contains((bs == "" ? "" : "-" + bs)));
+                    var recodeList = item.ToList();
+                    var list = InitiallDataEnum<JZX, JZXST>(file, recodeList);
+                    foreach (var jzx in list)
+                    {
+                        if (jzxList.ContainsKey(jzx.DKBM))
+                            jzxList[jzx.DKBM].Add(jzx);
+                        else
+                            jzxList.Add(jzx.DKBM, new List<JZX>() { jzx });
+                    }
+                }
+            }
+            var dkexList = new ConcurrentBag<DKEX>();
+            Parallel.ForEach(dkList, land =>
+            {
+                lock (_lock)
+                {
+                    var dkex = ObjectExtension.ConvertTo<DKEX>(land);
+                    dkex.JZD = new List<JZD>();
+                    dkex.JZX = new List<JZX>();
+                    if (getJzdx)
+                    {
+                        var jzds = jzdList.Where(t => t.Key.Contains(land.DKBM)).Select(t => t.Value).ToList();
+                        var jzxs = jzxList.Where(t => t.Key.Contains(land.DKBM)).Select(t => t.Value).ToList();
+                        foreach (var jzd in jzds)
+                        {
+                            foreach (var j in jzd)
+                            {
+                                var newj = ObjectExtension.ConvertTo<JZD>(j);
+                                //newj.ID = Guid.NewGuid();
+                                dkex.JZD.Add(newj);
+                            }
+                        }
+                        foreach (var jzx in jzxs)
+                        {
+                            foreach (var j in jzx)
+                            {
+                                var newj = ObjectExtension.ConvertTo<JZX>(j);
+                                //newj.ID = Guid.NewGuid();
+                                dkex.JZX.Add(newj);
+                            }
+                        }
+                    }
+
+                    dkexList.Add(dkex);
+                }
+            });
+            return dkexList.ToList();
+        }
+
 
         /// <summary>
         /// 取shape文件中的地块
@@ -603,6 +724,185 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             value.SRID = srid;
             YuLinTu.Spatial.Geometry geo = YuLinTu.Spatial.Geometry.FromInstance(value);
             return value;
+        }
+
+        public void InsertIndexToDataBase(List<FileCondition> files, bool containsjzdx)
+        {
+            //bool isindexExists = false;
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Upload.sqlite");
+            var dbPath = dataBasePath(path);
+            var dataSource = ProviderDbCSQLite.CreateDataSourceByFileName(dbPath);//, false);
+            sqliteDb = DataSource.Create<IDbContext>(dataSource.ProviderName, dataSource.ConnectionString);
+            FileInfo info = new FileInfo(dbPath);
+            if (info.Length > 44490400)
+            {
+                //isindexExists = true;
+                return;
+            }
+            var query = sqliteDb.CreateQuery<DKST>();
+            var jzdquery = sqliteDb.CreateQuery<JZDST>();
+            var jzxquery = sqliteDb.CreateQuery<JZXST>();
+            var dks = files.FindAll(t => t.Name == DK.TableName);
+            foreach (var fnp in dks)
+            {
+                var layeIndex = "";
+                var index = -1;
+                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
+                if ((index = name.IndexOf("-")) > 0)
+                    layeIndex = name.Substring(index + 1);
+                DataToBase<DKST>(fnp, query, layeIndex);
+            }
+            if (!containsjzdx)
+                return;
+            var jzds = files.FindAll(t => t.Name == JZD.TableName);
+            foreach (var fnp in jzds)
+            {
+                var layeIndex = "";
+                var index = -1;
+                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
+                if ((index = name.IndexOf("-")) > 0)
+                    layeIndex = name.Substring(index + 1);
+                DataToBase<JZDST>(fnp, jzdquery, layeIndex);
+            }
+
+            var jzxs = files.FindAll(t => t.Name == JZX.TableName);
+            foreach (var fnp in jzxs)
+            {
+                var layeIndex = "";
+                var index = -1;
+                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
+                if ((index = name.IndexOf("-")) > 0)
+                    layeIndex = name.Substring(index + 1);
+                DataToBase<JZXST>(fnp, jzxquery, layeIndex);
+            }
+        }
+
+        private string dataBasePath(string tempPath)
+        {
+            var span = DateTime.Now.ToString("yyyyMMddHH").GetHashCode();
+            var name = Convert.ToInt64(Math.Abs(span)).ToString();
+            var newpath = Path.Combine(Path.GetTempPath(), name + ".sqlite");
+            if (!File.Exists(newpath))
+                File.Copy(tempPath, newpath, true);
+            return newpath;
+        }
+
+        /// <summary>
+        /// 数据入库
+        /// </summary>
+        private void DataToBase<T>(FileCondition fnp, IQueryContext query, string layerIndex) where T : BSST, new()
+        {
+            var list = new List<object>(100000);
+            try
+            {
+                using (var lineShp = new ShapeFile())
+                {
+                    var err = lineShp.Open(fnp.FilePath);
+                    if (err != null)
+                    {
+                        return;
+                    }
+                    var properties = typeof(T).GetProperties();
+                    int recordCount = lineShp.GetRecordCount();
+                    var nameIndex = new Dictionary<int, PropertyInfo>();
+                    for (int i = 0; i < properties.Length; i++)
+                    {
+                        var fieldName = properties[i].Name;
+                        var index = lineShp.FindField(fieldName);
+                        if (index > -1)
+                            nameIndex.Add(index, properties[i]);
+                    }
+
+                    for (int i = 0; i < recordCount; i++)
+                    {
+                        var en = new T();
+                        en.SJHH = i;
+                        en.TCBS = layerIndex;
+                        foreach (var naDic in nameIndex)
+                        {
+                            var strValue = lineShp.GetFieldString(i, naDic.Key);
+                            naDic.Value.SetValue(en, strValue, null);
+                        }
+                        list.Add(en);
+                        if (list.Count == 100000)
+                        {
+                            query.AddRange(list.ToArray()).Save();
+                            list.Clear();
+                        }
+                    }
+                    if (list.Count > 0)
+                    {
+                        query.AddRange(list.ToArray()).Save();
+                        list.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogWrite.WriteErrorLog(ex.ToString());
+                throw new Exception("获取矢量数据制作索引出错:" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 取shape文件中的地块
+        /// </summary>
+        public List<T> InitiallDataList<T, P>(FileCondition fnp, List<P> bsList)
+            where T : class, new() where P : BSST
+        {
+            var list = new List<T>();
+            var eumQuery = InitiallDataEnum<T, P>(fnp, bsList);
+            foreach (var en in eumQuery)
+            {
+                list.Add(en);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 取shape文件中的地块
+        /// </summary>
+        public IEnumerable<T> InitiallDataEnum<T, P>(FileCondition fnp, List<P> bsList)
+            where T : class, new() where P : BSST
+        {
+            //if(fnp==null)
+            //    yield break;
+            var dkList = new List<DKEX>();
+            var infoArray = typeof(T).GetProperties();
+            var fieldIndex = new Dictionary<string, int>();
+            using (var shp = new ShapeFile())
+            {
+                var err = shp.Open(fnp.FilePath);
+
+                if (!err.IsNullOrEmpty())
+                    yield break;//  return new List<T>();
+                for (int i = 0; i < infoArray.Length; i++)
+                {
+                    var info = infoArray[i];
+                    var index = shp.FindField(info.Name);
+                    if (index >= 0)
+                    {
+                        fieldIndex.Add(info.Name, index);
+                    }
+                }
+                foreach (var bs in bsList)
+                {
+                    var en = new T();
+                    for (int i = 0; i < infoArray.Length; i++)
+                    {
+                        var info = infoArray[i];
+                        if (!fieldIndex.ContainsKey(info.Name))
+                            continue;
+                        var obj = FieldValue(bs.SJHH, fieldIndex[info.Name], shp, info);
+                        info.SetValue(en, obj, null);
+                    }
+                    var geo = shp.GetGeometry(bs.SJHH, srid);
+                    ObjectExtension.SetPropertyValue(en, "Shape", geo);
+                    yield return en;
+
+                    //list.Add(en);
+                }
+            }
         }
 
         #endregion
