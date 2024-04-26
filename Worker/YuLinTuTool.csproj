@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
   <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
   <Import Project="..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props" Condition="Exists('..\packages\YuLinTu.Common.Services.6.8.8.1\build\YuLinTu.Common.Services.props')" />
@@ -2278,12 +2279,6 @@
     <None Include="Python\find_orientation.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Component.ExportResultDataBaseTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.BatchDataBaseTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Components\YuLinTu.Appwork.ProcessHandler\Binary\YuLinTu.Appwork.ProcessHandler.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2292,35 +2287,13 @@
     </None>
     <Content Include="Components\YuLinTu.Appwork.Task.Installer\Binary\YuLinTu.Appwork.Task.Installer.dll" />
     <Content Include="Components\YuLinTu.Appwork.Task.Installer\Config.xml" />
-    <None Include="Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Components\YuLinTu.Components.tGIS.Topology\Binary\YuLinTu.Components.tGIS.Topology.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Components\YuLinTu.Components.tGIS.Topology\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Component.BusinessProcessWizard\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Template\MeataTemplate.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.ExportDataSummaryTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Component.DataCheckerTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.CombinationDataBaseTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.SeparateDataBaseTask\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.DiagramFoundation\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Components\YuLinTu.Components.Diagrams\Binary\YuLinTu.Components.Diagrams.dll">
@@ -2359,23 +2332,6 @@
     <None Include="Template\DataBase.mdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Component.Common\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.ContractRegeditBook\Config.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.Concord\Config.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.ContractAccount\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.Setting\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Components\YuLinTu.Appwork.Task.Viewer\Binary\YuLinTu.Appwork.Task.Viewer.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2406,14 +2362,6 @@
     </None>
     <None Include="Components\YuLinTu.Appwork.Task.New\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.MapFoundation\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Component.Dictionary\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </None>
     <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Binary\YuLinTu.Appwork.ConnectionStrings.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2475,22 +2423,10 @@
     <None Include="Components\YuLinTu.Components.tGIS\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Component.Zone\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Components\YuLinTu.Appwork.TaskWatcher\Binary\YuLinTu.Appwork.TaskWatcher.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Components\YuLinTu.Appwork.TaskWatcher\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.Sender\Config.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Component.VirtualPerson\Config.xml">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Components\YuLinTu.Appwork.Authenticate\Binary\YuLinTu.Appwork.Authenticate.dll">
@@ -2623,25 +2559,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\YuLinTu.Component.BatchDataBaseTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.BusinessProcessWizard\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.CombinationDataBaseTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Common\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Concord\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.ContractAccount\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.ContractRegeditBook\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.DataCheckerTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.DiagramFoundation\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Dictionary\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.ExportDataSummaryTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.ExportResultDataBaseTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.MapFoundation\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Sender\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.SeparateDataBaseTask\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Setting\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.VirtualPerson\Binary\" />
-    <Folder Include="Components\YuLinTu.Component.Zone\Binary\" />
     <Folder Include="Data\Apps.Web.Extensions\" />
     <Folder Include="Data\ArcGIS\" />
   </ItemGroup>
@@ -2695,31 +2612,35 @@
       <Name>YuLinTu.Library.WorkStation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>md "$(TargetDir)Libraries\libs\" 
-copy /Y "$(SolutionDir)Workspace\Libraries\libs\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Workspace\Libraries\x86\GDAL\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Workspace\Libraries\x86\Oracle\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Workspace\Libraries\x86\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
-copy /Y "$(SolutionDir)Workspace\Libraries\x86\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+    <PostBuildEvent>md "$(SolutionDir)Workspace\Libraries\libs\"
+
+copy /Y "$(SolutionDir)Workspace\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
+
+del "$(TargetDir)*.dll" 
+del /f /s /q "$(TargetDir)*.pdb" 
+del "$(TargetDir)*.xml" 
+del "$(TargetDir)*.txt" 
+del "$(TargetDir)*.manifest" 
+del "$(TargetDir)*.vshost.*"
+del "$(TargetDir)*.dll.config"
+
 copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\DotSpatial\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Oracle\*.dll" "$(SolutionDir)Workspace\"
+copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
 
 
-
-rd /s /q "de" "en" "es" "fr" "hu" "it" "ja" "ko" "pr-br" "ro" "pt-br" "ru" "sv"
-del /f /s /q "$(SolutionDir)Workspace\*.tmp"
-del /f /s /q "$(SolutionDir)Workspace\*.pdb"
-del /f /s /q "$(SolutionDir)Workspace\*.application"
-del /f /s /q "$(SolutionDir)Workspace\*.manifest"
-
-
-</PostBuildEvent>
+editbin /largeaddressaware "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -2746,6 +2667,8 @@ del /f /s /q "$(SolutionDir)Workspace\*.manifest"
     <Error Condition="!Exists('..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -2758,6 +2681,11 @@ del /f /s /q "$(SolutionDir)Workspace\*.manifest"
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" />
   <Import Project="..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
