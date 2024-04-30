@@ -3919,7 +3919,7 @@ namespace YuLinTu.Library.Controls
             argument.FileName = fileName;
             argument.VirtualType = VirtualType;
             argument.IsShow = true;
-            TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+            TaskExportLandVerifyExcelOperation2 operation = new TaskExportLandVerifyExcelOperation2();
             operation.Argument = argument;
             operation.Description = taskDes;
             operation.Name = taskName;

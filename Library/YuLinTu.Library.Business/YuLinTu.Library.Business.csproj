@@ -296,6 +296,7 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTable2.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTableTitle.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\InitalizeExportLandVerifyExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\LandVerifyDefine.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="ContractAccount\ExportLandSingleSurveyTableFolder\ExportLandSingleSurveyTableOperation.cs" />
     <Compile Include="ContractAccount\ExportLandSurveyWordTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTable.cs" />
+    <Compile Include="ContractAccount\ExportLandVerify\TaskExportLandVerifyExcelOperation2.cs" />
     <Compile Include="ContractAccount\ExportPublicityWordTable.cs" />
     <Compile Include="ContractAccount\ExportContractorSummaryExcel.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\TaskExportLandVerifyExcelArgument.cs" />

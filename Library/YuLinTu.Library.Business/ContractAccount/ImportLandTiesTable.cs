@@ -160,10 +160,12 @@ namespace YuLinTu.Library.Business
                 var landStation = DbContext.CreateContractLandWorkstation();
                 var concordStation = DbContext.CreateConcordStation();
                 var bookStation = DbContext.CreateRegeditBookStation();
+                var senderStation = DbContext.CreateSenderWorkStation();
                 remainVps = personStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 remainLands = landStation.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
                 remainConcords = concordStation.GetContractsByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 remainBooks = bookStation.GetByZoneCode(CurrentZone.FullCode, eSearchOption.Fuzzy);
+                senderStation.Update(landInfo.Tissue);
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
                     ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
