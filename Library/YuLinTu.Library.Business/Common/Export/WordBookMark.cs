@@ -107,6 +107,7 @@ namespace YuLinTu.Library.Business
         public const string ZoneName = "ZoneName";//地域全名称
         public const string LocationName = "LocationName";//坐落地域
         public const string CountyUnitName = "CountyUnitName";//地域县、镇、村、组名称
+        public const string CountyVillageName = "CountyVillageName";//地域县、镇、村名称
         public const string TownUnitName = "TownUnitName";//地域镇、村、组名称
         public const string VillageUnitName = "VillageUnitName";//地域村、组名称
         public const string CountyCode = "CountyCode";//县级地域编码
