@@ -3,6 +3,8 @@
 */
 using System;
 using System.Collections.Generic;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTuQuality.Business.Entity;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
@@ -159,6 +161,71 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         }
 
         #endregion
+
+        public void Add(DataCollection data)
+        {
+            this.FBFJH.AddRange(data.FBFJH);
+            this.CBFJH.AddRange(data.CBFJH);
+            this.JTCYJH.AddRange(data.JTCYJH);
+            this.HTJH.AddRange(data.HTJH);
+            this.DJBJH.AddRange(data.DJBJH);
+            this.CBJYQZJH.AddRange(data.CBJYQZJH);
+            this.QZBFExJH.AddRange(data.QZBFExJH);
+            this.QZHFExJH.AddRange(data.QZHFExJH);
+            this.QZZXJH.AddRange(data.QZZXJH);
+            this.LZHTJH.AddRange(data.LZHTJH);
+            this.FJExJH.AddRange(data.FJExJH);
+            this.CBDKXXJH.AddRange(data.CBDKXXJH);
+            this.JZDJH.AddRange(data.JZDJH);
+            this.JZXJH.AddRange(data.JZXJH);
+            this.KJDKJH.AddRange(data.KJDKJH);
+        }
+
+    }
+
+    /// <summary>
+    /// 数据库集合
+    /// </summary>
+    public class DataBaseCollection
+    {
+        /// <summary>
+        /// 发包方集合
+        /// </summary>
+        public List<CollectivityTissue> TissueCollection { get; set; }
+
+        /// <summary>
+        /// 合同集合
+        /// </summary>
+        public List<ContractConcord> ConcordCollection { get; set; }
+
+        /// <summary>
+        /// 登记簿集合
+        /// </summary>
+        public List<ContractRegeditBook> BookCollection { get; set; }
+
+        /// <summary>
+        /// 承包方集合
+        /// </summary>
+        public List<VirtualPerson> FamilyCollection { get; set; }
+
+        /// <summary>
+        /// 地块集合
+        /// </summary>
+        public List<ContractLand> LandCollection { get; set; }
+
+        /// <summary>
+        /// 地域编码
+        /// </summary>
+        public string ZoneCode { get; set; }
+
+        public DataBaseCollection()
+        {
+            ConcordCollection = new List<ContractConcord>();
+            BookCollection = new List<ContractRegeditBook>();
+            FamilyCollection = new List<VirtualPerson>();
+            TissueCollection = new List<CollectivityTissue>();
+            LandCollection = new List<ContractLand>();
+        }
 
     }
 }

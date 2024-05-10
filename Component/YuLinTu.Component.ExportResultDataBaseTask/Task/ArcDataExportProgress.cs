@@ -1,22 +1,23 @@
 ﻿/*
- * (C) 2015 - 2016 鱼鳞图公司版权所有,保留所有权利
+ * (C) 2021 - 2024 鱼鳞图公司版权所有,保留所有权利
 */
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using YuLinTu.Data;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
+using YuLinTu.Library.Result;
 using YuLinTu.Library.WorkStation;
+using YuLinTu.NetAux;
+using YuLinTu.Spatial;
+using YuLinTu.Windows;
 using YuLinTuQuality.Business.Entity;
 using YuLinTuQuality.Business.TaskBasic;
-using YuLinTu.NetAux;
-using YuLinTu.Library.Result;
-using YuLinTu.Windows;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {
@@ -30,11 +31,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         private int currentIndex = 1;//当前索引号
         private string zoneName;//地域名称
         private List<string> relationList;//家庭关系列表
-        private bool canExport;//是否可以导出
         private YuLinTu.Library.Entity.Zone county;//区县地域
         private bool showInformation;//是否显示信息
         private List<Guid> filterLandIDs;//检查后筛选出来最终与界址点线挂钩的地块集合ID
-
+        private string serNumberTemp;
         //private int currentZoneJZDs;//当前地域下界址点线数量
         // private int currentZoneJZXs;
         //private int dkbsm = QuantityValue.Land;
@@ -189,6 +189,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public bool UseUniteNumberExport { get; set; }
 
+        private bool qghttable;
+        private bool qgqztable;
+
         #endregion Propertys
 
         #region Ctor
@@ -216,6 +219,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             jbntbhqStation = new ContainerFactory(DbContext).CreateWorkstation<IFarmLandConserveWorkStation, IFarmLandConserveRepository>();
             qyjxStation = new ContainerFactory(DbContext).CreateWorkstation<IZoneBoundaryWorkStation, IZoneBoundaryRepository>();
             RepeatValue = 0.05;
+
+            qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
+            qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
         }
 
         #endregion Ctor
@@ -480,7 +486,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             currentIndex = 1;
             relationList = InitalizeAllRelation();
-            canExport = true;
             showInformation = currentZone.Level == YuLinTu.Library.Entity.eZoneLevel.Group;
             if (!showInformation)
             {
@@ -540,9 +545,50 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var summerys = new List<DataSummary>();
             var dbReference = ReferenceHelper.GetDbReference<YuLinTu.Library.Entity.Zone>(DbContext, "JCSJ_XZQY", "Shape");
             currentZoneLandCount = contractLandWorkStation.Count(currentZone.FullCode, eLevelOption.SelfAndSubs);
+
+            serNumberTemp = GetFullSerialNumberTemp(currentZone);
+            var zonCount = zones.Count();
+            var cZone = zones.Find(t => t.FullCode == currentZone.FullCode);
+            if (CheckCardNumber)
+            {
+                ContractorNubmerProgress();
+            }
+            if (cZone.Level > Library.Entity.eZoneLevel.Village)
+            {
+                ExportXZLevel(cZone, zones, summerys, dataProgress, extendSet, dbReference);
+            }
+            else
+            {
+                ExportCZLevel(zones, summerys, zonCount, dataProgress, extendSet, dbReference);
+            }
+            if (!CanChecker)
+            {
+                ExportShapeExcel(summerys, spaceProgress, /*sqliteManager,*/ zones);
+                if (ContainDotLine)
+                {
+                    ExportLandResultFile(spaceProgress, extendSet);
+                }
+                else
+                {
+                    ExportLandOnly(spaceProgress, extendSet);
+                }
+            }
+            else
+                ShowChecker(dataProgress);
+            filterLandIDs = null;
+            summerys = null;
+            zones = null;
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// 导出村/组的数据
+        /// </summary>
+        private void ExportCZLevel(List<Library.Entity.Zone> zones, List<DataSummary> summerys, int zonCount,
+            DataExportProgress dataProgress, HashSet<string> extendSet, SpatialReference dbReference)
+        {
             int processIndex = 1;
             bool hasDx = false;
-            var zonCount = zones.Count();
             foreach (var zone in zones)
             {
                 zoneName = string.Format("({0}/{1})", processIndex, zonCount) + GetZoneName(zones, zone);
@@ -562,15 +608,16 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 var sqllandList = new List<SqliteDK>();
                 //数据检查
                 dataProgress.Srid = dbReference.WKID;
-                var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet,/* sqliteManager,*/ dbReference.WKID, sqllandList);
-                if ((!canExport || entityCollection == null || entityCollection.Count == 0) && sqllandList.Count == 0)
+                var qgcbfs = VirtualPersonStation.GetRelationByZone(zone.FullCode, eLevelOption.Self);
+                var qghts = stockconcordStation.Get(sv => sv.ZoneCode.Equals(zone.FullCode));
+                var qgqzs = stockwarrantStation.GetByZoneCode(zone.FullCode, eLevelOption.Self);
+                var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs);
+                if ((entityCollection == null || entityCollection.Count == 0) && sqllandList.Count == 0)
                 {
                     continue;
                 }
                 try
                 {
-                    List<YuLinTu.Library.Entity.Zone> zonesexport = new List<Library.Entity.Zone>();
-                    zonesexport.Add(county);
                     dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
                         county.Name, county.FullCode, 0, county.FullCode + county.Name, summery,
                         /*ContainDotLine,*/ CBDKXXAwareAreaExportSet, sqllandList);
@@ -582,29 +629,182 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 entityCollection.Clear();
             }
-            if (CheckCardNumber)
+        }
+
+        /// <summary>
+        /// 导出县/镇的数据
+        /// </summary>
+        private void ExportXZLevel(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys,
+            DataExportProgress dataProgress, HashSet<string> extendSet, SpatialReference dbReference)
+        {
+            int processIndex = 1;
+            var childzones = zones.FindAll(t => t.UpLevelCode == cZone.FullCode);
+            var valligeCount = zones.Count(t => t.Level == Library.Entity.eZoneLevel.Village);
+            double percent = 90.00 / valligeCount;
+            dataProgress.Srid = dbReference.WKID;
+            var dbs = new DataBaseCollection();
+            dbs = GetDatasByZone(cZone, dbs);
+            CreateUpSummary(cZone, zones, summerys);
+            var type = CanChecker ? "检查" : "导出";
+            foreach (var zone in childzones)
             {
-                ContractorNubmerProgress();
-            }
-            if (!CanChecker || canExport)
-            {
-                ExportShapeExcel(summerys, spaceProgress, /*sqliteManager,*/ zones, hasDx);
-                if (ContainDotLine)
+                CreateSummary(zone, summerys);
+                var dataBaseCollection = GetDatasByZone(zone, dbs);
+                if (zone.Level == Library.Entity.eZoneLevel.Town)
                 {
-                    ExportLandResultFile(spaceProgress, extendSet);
+                    var czones = zones.FindAll(t => t.UpLevelCode == zone.FullCode);
+                    foreach (var z in czones)//村
+                    {
+                        CreateSummary(z, summerys);
+                        var dataCollection = GetDatasByZone(z, dataBaseCollection);
+                        this.ReportProgress(5 + (int)(percent * (processIndex - 1)), $"({processIndex}/{valligeCount}){type}{GetZoneName(zones, z)}下的数据");
+                        ExportDataByVallige(dataCollection, z, dataProgress, summerys, zones, extendSet);
+                        processIndex++;
+                    }
                 }
                 else
                 {
-                    ExportLandOnly(spaceProgress, extendSet);
+                    this.ReportProgress(5 + (int)(percent * (processIndex - 1)), $"({processIndex}/{valligeCount}){type}{GetZoneName(zones, zone)}下的数据");
+                    ExportDataByVallige(dataBaseCollection, zone, dataProgress, summerys, zones, extendSet);
+                    processIndex++;
                 }
             }
-            else
-                ShowChecker(dataProgress);
-            filterLandIDs = null;
-            summerys = null;
-            zones = null;
-            GC.Collect();
         }
+
+        /// <summary>
+        /// 创建上级统计
+        /// </summary>
+        public void CreateUpSummary(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys, bool insert = false)
+        {
+            CreateSummary(cZone, summerys, insert);
+            if (cZone.Level < Library.Entity.eZoneLevel.County)
+            {
+                var z = zones.Find(f => f.FullCode == cZone.UpLevelCode);
+                if (z == null)
+                    z = zoneStation.Get(t => t.FullCode == cZone.UpLevelCode).FirstOrDefault();
+                if (z != null)
+                    CreateUpSummary(z, zones, summerys, true);
+            }
+        }
+
+
+        /// <summary>
+        /// 创建统计
+        /// </summary>
+        private void CreateSummary(Library.Entity.Zone zone, List<DataSummary> summerys, bool insert = false)
+        {
+            var summery = new DataSummary();
+            summery.UnitName = zone.FullName;
+            summery.UnitCode = InitalizeZoneCode(zone);
+            summery.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)zone.Level);
+            summery.ZoneCode = zone.FullCode;
+            if (insert)
+            {
+                summerys.Insert(0, summery);
+            }
+            else
+            {
+                summerys.Add(summery);
+            }
+        }
+
+        /// <summary>
+        /// 按村导出数据成果
+        /// </summary>
+        /// <param name="datas"></param>
+        /// <param name="zone"></param>
+        private void ExportDataByVallige(DataBaseCollection datas, Library.Entity.Zone zone, DataExportProgress dataProgress,
+        List<DataSummary> summerys, List<Library.Entity.Zone> zones, HashSet<string> extendSet)
+        {
+            bool hasDx = false;
+            var czones = zones.FindAll(t => t.UpLevelCode == zone.FullCode);
+            if (czones.Count > 0)
+            {
+                var qgcbfs = VirtualPersonStation.GetRelationByZone(zone.FullCode, eLevelOption.Subs);
+                var qghts = stockconcordStation.Get(sv => sv.ZoneCode.StartsWith(zone.FullCode));
+                var qgqzs = stockwarrantStation.GetByZoneCode(zone.FullCode, eLevelOption.SelfAndSubs);
+                DataCollection collection = new DataCollection();
+                foreach (var cz in czones)
+                {
+                    var summary = new DataSummary();
+                    summary.UnitName = cz.FullName;
+                    summary.UnitCode = InitalizeZoneCode(cz);
+                    summary.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)(cz.Level));
+                    summary.ZoneCode = cz.FullCode;
+                    summerys.Add(summary);
+                    var count = datas.FamilyCollection.Count(t => t.ZoneCode == cz.FullCode);
+                    if (count <= 0 && cz.Level == Library.Entity.eZoneLevel.Group)
+                    {
+                        this.ReportAlert(eMessageGrade.Warn, null, zoneName + "下没有数据可供操作!");
+                        continue;
+                    }
+                    var sqllandList = new List<SqliteDK>();
+
+
+                    var qgcbfdata = qgcbfs.FindAll(f => f.ZoneCode == cz.FullCode);
+                    var qghtdata = qghts.FindAll(f => f.ZoneCode == cz.FullCode);
+                    var qgqzdata = qgqzs.FindAll(f => f.ZoneCode == cz.FullCode);
+
+
+                    var entityCollection = DataCheckProgress(cz, ref hasDx, extendSet, sqllandList, qgcbfdata, qghts, qgqzs, datas);
+                    if ((entityCollection == null || entityCollection.Count == 0) && sqllandList.Count == 0)
+                    {
+                        continue;
+                    }
+                    ExportSummaryTable.SummaryData(collection, summary, CBDKXXAwareAreaExportSet, sqllandList);
+                    var pdata = dataProgress.SetDataToProgress(entityCollection);
+                    collection.Add(pdata);
+                    entityCollection.Clear();
+                }
+                try
+                {
+                    var info = dataProgress.ExportDataFile(collection, "", 1);
+                    //var info = dataProgress.ExportDataFile(entityCollection, county.Name, county.FullCode, 0, county.FullCode + county.Name,
+                    //    summery, CBDKXXAwareAreaExportSet, sqllandList);
+                    this.ReportAlert(eMessageGrade.Infomation, null, $"导出{zone.FullName}下数据:{info}");
+                }
+                catch (Exception ex)
+                {
+                    this.ReportAlert(eMessageGrade.Error, null, ex.Message + ",详细信息请查看日志");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 获取数据
+        /// </summary> 
+        private DataBaseCollection GetDatasByZone(Library.Entity.Zone zone, DataBaseCollection dbs)
+        {
+            var zoneCode = zone.FullCode;
+            DataBaseCollection dataBaseCollection = new DataBaseCollection();
+            dataBaseCollection.ZoneCode = zoneCode;
+            if (zone.Level == Library.Entity.eZoneLevel.County)
+                return dataBaseCollection;
+            if (zone.Level == Library.Entity.eZoneLevel.Town)
+            {
+                dataBaseCollection.ConcordCollection = concordStation.GetContractsByZoneCode(zoneCode, eLevelOption.SelfAndSubs);
+                dataBaseCollection.BookCollection = contractRegeditBookStation.GetContractsByZoneCode(zoneCode, eLevelOption.SelfAndSubs);
+                List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(zoneCode, eLevelOption.SelfAndSubs);
+                if (familyCollection.Any(x => x.Name == "集体"))
+                {
+                    familyCollection.RemoveAt(familyCollection.Count - 1);
+                }
+                dataBaseCollection.FamilyCollection = familyCollection;
+                dataBaseCollection.TissueCollection = senderStation.GetTissues(zoneCode, eLevelOption.SelfAndSubs);
+                //List<ContractLand> AllLandCollection = contractLandWorkStation.GetCollection(zoneCode, eLevelOption.Self);
+            }
+            else
+            {
+                dataBaseCollection.BookCollection = dbs.BookCollection.FindAll(t => t.ZoneCode.StartsWith(zoneCode));
+                dataBaseCollection.FamilyCollection = dbs.FamilyCollection.FindAll(t => t.ZoneCode.StartsWith(zoneCode));
+                dataBaseCollection.ConcordCollection = dbs.ConcordCollection.FindAll(t => t.ZoneCode.StartsWith(zoneCode));
+                dataBaseCollection.TissueCollection = dbs.TissueCollection.FindAll(t => t.ZoneCode.StartsWith(zoneCode));
+                dataBaseCollection.LandCollection = contractLandWorkStation.GetCollection(zoneCode, eLevelOption.SelfAndSubs);
+            }
+            return dataBaseCollection;
+        }
+
 
         /// <summary>
         /// 导出地块、界址点、界址线
@@ -721,7 +921,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出shape及Excel文件
         /// </summary>
         private void ExportShapeExcel(List<DataSummary> summerys, ArcSpaceDataProgress spaceProgress,
-           /*SqliteManager manager,*/ List<YuLinTu.Library.Entity.Zone> zones, bool hasDX)
+           /*SqliteManager manager,*/ List<YuLinTu.Library.Entity.Zone> zones)
         {
             if (!ContainMatrical)
             {
@@ -769,10 +969,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 string dataRecord = Application.StartupPath + @"\Error\DataChecker.txt";
                 if (CanChecker)
                 {
-                    if (!canExport)
-                    {
-                        this.ReportAlert(eMessageGrade.Error, null, "导出" + currentZone.FullName + "下数据存在问题,请在" + dataRecord + "中查看详细信息...");
-                    }
+                    this.ReportAlert(eMessageGrade.Error, null, "导出" + currentZone.FullName + "下数据存在问题,请在" + dataRecord + "中查看详细信息...");
                 }
                 if (System.IO.File.Exists(dataRecord))
                 {
@@ -785,191 +982,65 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据检查，包括获取当前地域下总的地块开始
         /// </summary>
-        private List<ExchangeRightEntity> DataCheckProgress(YuLinTu.Library.Entity.Zone zone,
-            ref bool hasDx, HashSet<string> extendset,/* SqliteManager manager, */int srid, List<SqliteDK> sqliteLand)
+        private List<ExchangeRightEntity> DataCheckProgress(YuLinTu.Library.Entity.Zone zone, ref bool hasDx, HashSet<string> extendset,
+         List<SqliteDK> sqliteLand, List<BelongRelation> realationList, List<StockConcord> qghts, List<StockWarrant> qgqzs, DataBaseCollection datas = null)
         {
             currentIndex = 1;
             filterLandIDs = new List<Guid>();
             // zoneName = zone.FullName;
-            var progressInfo = (zoneName + (CanChecker ? "开始检查" : "开始生成") + "数据");
-            this.ReportProgress(1, progressInfo);
-            List<ContractConcord> concordCollection = concordStation.GetByZoneCode(zone.FullCode);
-            List<ContractRegeditBook> bookCollection = contractRegeditBookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
-            List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(zone.FullCode);
-            if (familyCollection.Any(x => x.Name == "集体"))
+            if (datas == null)
+                datas = new DataBaseCollection();
+            List<ContractConcord> concordCollection = datas.ConcordCollection.FindAll(t => t.ZoneCode == zone.FullCode);
+            List<ContractRegeditBook> bookCollection = datas.BookCollection.FindAll(t => t.ZoneCode == zone.FullCode);
+            List<VirtualPerson> familyCollection = datas.FamilyCollection.FindAll(t => t.ZoneCode == zone.FullCode);
+            List<ContractLand> AllLandCollection = datas.LandCollection.FindAll(t => t.ZoneCode == zone.FullCode);
+            CollectivityTissue tissue = datas.TissueCollection.Find(t => t.Code == zone.FullCode.PadRight(14, '0'));
+            if (concordCollection == null || concordCollection.Count == 0)
             {
-                familyCollection.RemoveAt(familyCollection.Count - 1);
+                concordCollection = concordStation.GetByZoneCode(zone.FullCode);
             }
-            List<ContractLand> AllLandCollection = contractLandWorkStation.GetCollection(zone.FullCode, eLevelOption.Self);
-            // CollectivityTissue tissue = senderStation.Get(zone.FullCode, zone.FullName);
+            if (bookCollection == null || bookCollection.Count == 0)
+            {
+                bookCollection = contractRegeditBookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
+            }
+            if (familyCollection == null || familyCollection.Count == 0)
+            {
+                familyCollection = VirtualPersonStation.GetByZoneCode(zone.FullCode);
+                if (familyCollection.Any(x => x.Name == "集体"))
+                {
+                    familyCollection.RemoveAt(familyCollection.Count - 1);
+                }
+            }
+            if (AllLandCollection == null || AllLandCollection.Count == 0)
+            {
+                AllLandCollection = contractLandWorkStation.GetCollection(zone.FullCode, eLevelOption.Self);
+            }
+            if (tissue == null)
+            {
+                if (zone.Level == YuLinTu.Library.Entity.eZoneLevel.Group)
+                {
+                    tissue = senderStation.GetByCode(zone.FullCode.Substring(0, 14));
+                }
+                else
+                {
+                    tissue = senderStation.GetByCode(zone.FullCode.PadRight(14, '0'));
+                }
+            }
 
-            CollectivityTissue tissue = null;//应该以签订合同的发包方为准，这里只是初始化
-            if (zone.Level == YuLinTu.Library.Entity.eZoneLevel.Group)
-            {
-                tissue = senderStation.GetByCode(zone.FullCode.Substring(0, 14));
-            }
-            else
-            {
-                tissue = senderStation.GetByCode(zone.FullCode.PadRight(14, '0'));
-            }
             List<ContractLand> landCollection = FilterLandType(familyCollection, AllLandCollection);//根据设置筛选地块
-
             List<ContractLand> landSpaceCollection = landCollection.FindAll(l => l.Shape != null);
 
             bool showPersent = familyCollection.Count >= 100 ? false : true;
             string progressDescription = "(" + familyCollection.Count.ToString() + ")";
-            progressInfo = zoneName + (CanChecker ? "数据检查" : "数据生成");
-            this.ReportProgress(currentIndex, progressInfo);
             double vppercent = 90 / (double)familyCollection.Count;
-            foreach (VirtualPerson vp in familyCollection)
-            {
-                if (vp.Name.Contains("集体") || vp.Name.Contains("机动地"))
-                {
-                    continue;
-                }
-                List<ContractLand> lands = landCollection.FindAll(ld => ld.OwnerId != null && ld.OwnerId.HasValue && ld.OwnerId.Value == vp.ID);
-                var brqglands = VirtualPersonStation.GetRelationsByVpID(vp.ID);//确股的
-                if ((lands == null || lands.Count == 0) && brqglands.Count == 0)
-                {
-                    continue;
-                }
-                if (CanChecker)
-                {
-                    ContractorProgress(vp);
-                }
-                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
-                foreach (var land in lands)
-                {
-                    if (CanChecker)
-                    {
-                        ContractLandProgress(land);
-                    }
-                    var arcLand = landSpaceCollection.Find(ld => ld.ID == land.ID || ld.LandNumber == land.LandNumber);
-                    if (arcLand == null)
-                    {
-                        if (showInformation)
-                        {
-                            this.ReportWarn(description + "中地块编码为:" + land.LandNumber + "的地块无空间信息!");
-                        }
-                        else
-                        {
-                            WriteDataInformation("警告:" + description + "中地块编码为:" + land.LandNumber + "的地块无空间信息!");
-                        }
-                        canExport = CanChecker ? false : true;
-                    }
-                    if (land.LandNumber.IsNullOrEmpty() || land.LandNumber.Length < 19)
-                    {
-                        if (showInformation)
-                        {
-                            this.ReportWarn(description + "中地块编码为:" + land.LandNumber + "的不符合农业部规范!");
-                        }
-                        else
-                        {
-                            WriteDataInformation("警告:" + description + "中地块编码为:" + land.LandNumber + "的不符合农业部规范!");
-                        }
-                    }
-                }
-                lands = null;
-                currentIndex++;
-                this.ReportProgress((int)(currentIndex * vppercent), progressInfo);
-                bool concordExist = concordCollection.Exists(cd => !string.IsNullOrEmpty(cd.ConcordNumber) && cd.ContracterId != null && cd.ContracterId.HasValue && cd.ContracterId.Value == vp.ID);
-                var qgconcord = stockconcordStation.Get(sv => sv.ContracterId == vp.ID);
-                if (qgconcord.Count > 0) concordExist = true;
-                if (!concordExist)
-                {
-                    if (showInformation)
-                    {
-                        this.ReportWarn(description + "未签订承包合同!");
-                    }
-                    else
-                    {
-                        WriteDataInformation("警告:" + description + "未签订承包合同!");
-                    }
-                    canExport = CanChecker ? false : true;
-                }
-                List<ContractConcord> concords = concordCollection.FindAll(cd => !string.IsNullOrEmpty(cd.ConcordNumber) && cd.ContracterId != null && cd.ContracterId.HasValue && cd.ContracterId.Value == vp.ID);
-                if (concords.Count > 2)
-                {
-                    if (showInformation)
-                    {
-                        this.ReportWarn(description + "承包合同数据超过2个，请检查!");
-                    }
-                    else
-                    {
-                        WriteDataInformation("警告:" + "承包合同数据超过2个，请检查!");
-                    }
-                }
-                bool warrantExist = false;
-                foreach (ContractConcord concord in concords)
-                {
-                    if (concord.ArableLandStartTime == null)
-                    {
-                        WriteDataInformation(string.Format("警告:" + "承包合同{0}的承包起始时间为空!", concord.ConcordNumber));
-                    }
-                    if (concord.ConcordNumber.IsNullOrEmpty() == false)
-                    {
-                        tissue = senderStation.GetByCode(concord.ConcordNumber.Substring(0, 14));
-                    }
 
-                    ContractRegeditBook book = bookCollection.Find(bk => !string.IsNullOrEmpty(concord.ConcordNumber) && bk.ID == concord.ID);
-                    if (bookCollection.Count == 0 && !warrantExist)
-                    {
-                        book = contractRegeditBookStation.Get(concord.ID);
-                    }
-                    if (book != null && !string.IsNullOrEmpty(book.RegeditNumber))
-                    {
-                        warrantExist = true;
-                        // break;
-                    }
-                    else if (book == null)
-                    {
-                        warrantExist = false;
-                    }
-                }
-                concords = null;
-                foreach (var qgconcorditem in qgconcord)
-                {
-                    var books = stockwarrantStation.Get(bk => bk.ID == qgconcorditem.ID);
-                    if (books.Count == 0)
-                    {
-                        warrantExist = false;
-                    }
-                    else
-                    {
-                        warrantExist = true;
-                    }
-                }
-
-                if (!warrantExist)
-                {
-                    if (showInformation)
-                    {
-                        this.ReportWarn(description + "有承包权证未签订!");
-                    }
-                    else
-                    {
-                        WriteDataInformation("警告:" + description + "有承包权证未签订!");
-                    }
-                    canExport = CanChecker ? false : true;
-                }
-            }
-            if (CanChecker)
-            {
-                SenderProgress(tissue);
-            }
-            if (tissue == null)
-            {
-                this.ReportWarn(zone.FullName + "(" + zone.FullCode + ")" + "未获取到合同对应的发包方，请检查是否签订合同或发包方数据!");
-                return null;
-            }
             //if (canExport == false) return null;//如果发包方检查调查日期为空，直接返回
-
-            ReportProgress(new TaskProgressChangedEventArgs(1, zoneName + (CanChecker ? "数据检查完毕!" : "数据生成完毕!")));
+            bool canExport = Checkdata(familyCollection, landCollection, landSpaceCollection, concordCollection, bookCollection, realationList, qghts, qgqzs, tissue, zone);
             var entityCollection = new List<ExchangeRightEntity>();
             if (canExport)
             {
                 entityCollection = CreateExchangeEntity(familyCollection, concordCollection,
-                    landCollection, tissue, zone, bookCollection, ref hasDx);
+                    landCollection, tissue, zone, bookCollection, ref hasDx, realationList, qghts);
                 var extendColl = ExtentLandCode(AllLandCollection, entityCollection);
                 foreach (var item in extendColl)
                 {
@@ -1002,6 +1073,160 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             familyCollection = null;
             GC.Collect();
             return entityCollection;
+        }
+
+        /// <summary>
+        /// 数据检查
+        /// </summary>
+        private bool Checkdata(List<VirtualPerson> familyCollection, List<ContractLand> landCollection,
+          List<ContractLand> landSpaceCollection, List<ContractConcord> concordCollection, List<ContractRegeditBook> bookCollection,
+          List<BelongRelation> realationList, List<StockConcord> qghts, List<StockWarrant> qgqzs, CollectivityTissue tissue, Library.Entity.Zone zone)
+        {
+            bool canExport = true;//是否可以导出
+            foreach (VirtualPerson vp in familyCollection)
+            {
+                if (vp.Name.Contains("集体") || vp.Name.Contains("机动地"))
+                {
+                    continue;
+                }
+                List<ContractLand> lands = landCollection.FindAll(ld => ld.OwnerId != null && ld.OwnerId.HasValue && ld.OwnerId.Value == vp.ID);
+                var brqglandcount = realationList.Count(t => t.VirtualPersonID == vp.ID);//确股的
+                if ((lands == null || lands.Count == 0) && brqglandcount == 0)
+                {
+                    continue;
+                }
+                if (CanChecker)
+                {
+                    if (!ContractorProgress(vp))
+                        canExport = false;
+                }
+                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
+                foreach (var land in lands)
+                {
+                    if (CanChecker)
+                    {
+                        if (!ContractLandProgress(land))
+                            canExport = false;
+                    }
+                    var arcLand = landSpaceCollection.Find(ld => ld.ID == land.ID || ld.LandNumber == land.LandNumber);
+                    if (arcLand == null)
+                    {
+                        if (showInformation)
+                        {
+                            this.ReportWarn(description + "中地块编码为:" + land.LandNumber + "的地块无空间信息!");
+                        }
+                        else
+                        {
+                            WriteDataInformation("警告:" + description + "中地块编码为:" + land.LandNumber + "的地块无空间信息!");
+                        }
+                        canExport = CanChecker ? false : true;
+                    }
+                    if (land.LandNumber.IsNullOrEmpty() || land.LandNumber.Length < 19)
+                    {
+                        if (showInformation)
+                        {
+                            this.ReportWarn(description + "中地块编码为:" + land.LandNumber + "的不符合农业部规范!");
+                        }
+                        else
+                        {
+                            WriteDataInformation("警告:" + description + "中地块编码为:" + land.LandNumber + "的不符合农业部规范!");
+                        }
+                    }
+                }
+                lands = null;
+                currentIndex++;
+                bool concordExist = concordCollection.Exists(cd => !string.IsNullOrEmpty(cd.ConcordNumber) && cd.ContracterId != null && cd.ContracterId.HasValue && cd.ContracterId.Value == vp.ID);
+                var qgconcord = qghts.FindAll(t => t.ContracterId == vp.ID);
+                if (qgconcord.Count > 0)
+                    concordExist = true;
+                if (!concordExist)
+                {
+                    if (showInformation)
+                    {
+                        this.ReportWarn(description + "未签订承包合同!");
+                    }
+                    else
+                    {
+                        WriteDataInformation("警告:" + description + "未签订承包合同!");
+                    }
+                    canExport = CanChecker ? false : true;
+                }
+                List<ContractConcord> concords = concordCollection.FindAll(cd => !string.IsNullOrEmpty(cd.ConcordNumber) && cd.ContracterId != null && cd.ContracterId.HasValue && cd.ContracterId.Value == vp.ID);
+                if (concords.Count > 2)
+                {
+                    if (showInformation)
+                    {
+                        this.ReportWarn(description + "承包合同数据超过2个，请检查!");
+                    }
+                    else
+                    {
+                        WriteDataInformation("警告:" + "承包合同数据超过2个，请检查!");
+                    }
+                }
+                bool warrantExist = false;
+                foreach (ContractConcord concord in concords)
+                {
+                    if (concord.ArableLandStartTime == null)
+                    {
+                        WriteDataInformation(string.Format("警告:" + "承包合同{0}的承包起始时间为空!", concord.ConcordNumber));
+                    }
+                    //if (!string.IsNullOrEmpty(concord.ConcordNumber))
+                    //{
+                    //    tissue = senderStation.GetByCode(concord.ConcordNumber.Substring(0, 14));
+                    //}
+
+                    ContractRegeditBook book = bookCollection.Find(bk => !string.IsNullOrEmpty(concord.ConcordNumber) && bk.ID == concord.ID);
+                    if (bookCollection.Count == 0 && !warrantExist)
+                    {
+                        book = contractRegeditBookStation.Get(concord.ID);
+                    }
+                    if (book != null && !string.IsNullOrEmpty(book.RegeditNumber))
+                    {
+                        warrantExist = true;
+                        // break;
+                    }
+                    else if (book == null)
+                    {
+                        warrantExist = false;
+                    }
+                }
+                concords = null;
+                foreach (var qgconcorditem in qgconcord)
+                {
+                    var books = qgqzs.FindAll(bk => bk.ID == qgconcorditem.ID);
+                    if (books.Count == 0)
+                    {
+                        warrantExist = false;
+                    }
+                    else
+                    {
+                        warrantExist = true;
+                    }
+                }
+
+                if (!warrantExist)
+                {
+                    if (showInformation)
+                    {
+                        this.ReportWarn(description + "有承包权证未签订!");
+                    }
+                    else
+                    {
+                        WriteDataInformation("警告:" + description + "有承包权证未签订!");
+                    }
+                    canExport = CanChecker ? false : true;
+                }
+            }
+            if (CanChecker)
+            {
+                if (!SenderProgress(tissue))
+                    canExport = false;
+            }
+            if (tissue == null)
+            {
+                this.ReportWarn(zone.FullName + "(" + zone.FullCode + ")" + "未获取到合同对应的发包方，请检查是否签订合同或发包方数据!");
+            }
+            return canExport;
         }
 
         /// <summary>
@@ -1038,24 +1263,29 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 构建交换实体
         /// </summary>
         public List<ExchangeRightEntity> CreateExchangeEntity(List<VirtualPerson> familyCollection, List<ContractConcord> concordCollection,
-            List<ContractLand> landCollection, CollectivityTissue tissue, YuLinTu.Library.Entity.Zone zone, List<ContractRegeditBook> bookCollection, ref bool hasDx)
+            List<ContractLand> landCollection, CollectivityTissue tissue, YuLinTu.Library.Entity.Zone zone, List<ContractRegeditBook> bookCollection,
+            ref bool hasDx, List<BelongRelation> qglands, List<StockConcord> qghts)
         {
             var entityCollection = new List<ExchangeRightEntity>();
             var landArray = GetLandMapNumberSet();
-            this.ReportAlert(eMessageGrade.Infomation, null, string.Format("{0}成果数据导出...", zoneName));
             currentIndex = 1;
             var vppercent = 90 / (double)familyCollection.Count;
             var showPersent = concordCollection.Count >= 100 ? false : true;
             var progressDescription = "(" + concordCollection.Count.ToString() + ")";
             HashSet<string> spacecdbDKBMs = new HashSet<string>();
-            //新底层
+
+            //var qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
+            //var qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
+            //var qglands = VirtualPersonStation.GetRelationByZone(zone.FullCode);//确股的地块
+            //var qghts = stockconcordStation.Get(sv => sv.ZoneCode == zone.FullCode);//确股的合同
+            //var serNumberTemp = GetFullSerialNumberTemp(zone);
+
+            //ParallelThread.ForEach(familyCollection, (i, vp) =>
             foreach (var vp in familyCollection)
             {
-                this.ReportProgress(1 + (int)(currentIndex * vppercent), zoneName + "数据导出");
-                currentIndex++;
                 //处理空户
                 var vplands = landCollection.FindAll(ld => ld.OwnerId == vp.ID);
-                var brqglands = VirtualPersonStation.GetRelationsByVpID(vp.ID);//确股的
+                var brqglands = qglands.FindAll(t => t.VirtualPersonID == vp.ID);//确股的
 
                 if (vplands != null && vplands.Count == 0 && brqglands.Count == 0 && IsReportNoConcordNoLandsFamily == false)
                 {
@@ -1107,99 +1337,13 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 //签订了合同的-确权的
                 foreach (var concorditem in concords)
                 {
-                    List<ContractLand> lands = vplands.FindAll(ld => ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == concorditem.ID);
-                    concordlandsCount = lands.Count;
-                    foreach (ContractLand land in lands)
-                    {
-                        filterLandIDs.Add(land.ID);
-                        ContractLand arcLand = vplands.Find(ld => ld.ID == land.ID || ld.LandNumber == land.LandNumber);
-                        CBDKXX cbd = InitalizeAgricultureLandData(arcLand, tissue.Code, entity.VirtualPersonCode);
-                        DKEX dk = InitalizeSpaceLandData(arcLand);//, pointList, lineList);
-                        cbd.CBHTBM = concorditem.ConcordNumber;
-                        cbd.CBJYQZBM = concorditem.ConcordNumber;
-                        cbds.Add(cbd);
-                        spacecdbs.Add(dk);
-                        spacecdbDKBMs.Add(dk.DKBM);
-                    }
-
-                    var ht = InitalizeConcordData(concorditem, concordlandsCount);
-                    if (ht != null)
-                    {
-                        ht.YCBHTBM = vp.FamilyExpand.ConcordNumber;
-                        ht.FBFBM = tissue.Code;
-                        ht.CBFBM = entity.VirtualPersonCode;
-                        vphts.Add(ht);
-                    }
-                    if (ht.CBFS == "110")
-                    {
-                        //处理这个人下的确股地块
-                        ht.CBDKZS += brqglands.Count;
-                        foreach (var britem in brqglands)
-                        {
-                            var qgland = landCollection.Find(ll => ll.ID == britem.LandID);
-                            if (qgland != null)
-                            {
-                                if (filterLandIDs.Contains(qgland.ID) == false)
-                                {
-                                    filterLandIDs.Add(qgland.ID);
-                                }
-                                var relationland = VirtualPersonStation.GetRelationByID(vp.ID, qgland.ID);
-                                if (relationland != null)
-                                {
-                                    CBDKXX cbd = InitalizeQgAgricultureLandData(qgland, relationland, tissue.Code, entity.VirtualPersonCode);
-                                    DKEX dk = InitalizeSpaceLandData(qgland);//, pointList, lineList);
-                                    cbd.CBHTBM = concorditem.ConcordNumber;
-                                    cbd.CBJYQZBM = concorditem.ConcordNumber;
-                                    cbds.Add(cbd);
-                                    if (spacecdbDKBMs.Contains(dk.DKBM) == false)
-                                    {
-                                        spacecdbs.Add(dk);
-                                        spacecdbDKBMs.Add(dk.DKBM);
-                                    }
-                                    ht.HTZMJ = ht.HTZMJ + Math.Round(relationland.QuanficationArea / 0.0015, 2);
-                                    ht.HTZMJM = ht.HTZMJM + Math.Round(relationland.QuanficationArea, 2);
-                                }
-                            }
-                        }
-                    }
-                    ContractRegeditBook book = bookCollection.Find(bk => bk.ID == concorditem.ID);
-                    if (bookCollection.Count == 0 && book == null)
-                    {
-                        book = contractRegeditBookStation.Get(concorditem.ID);
-                    }
-                    entity.BookCode = book != null ? book.Number : "";
-                    var cbjyqz = InitalizeWarrantBook(book, vp);
-                    if (cbjyqz != null)
-                        vpcbjyqzs.Add(cbjyqz);
-                    var djb = InitalizeRegeditBook(concorditem, book);
-                    if (djb != null)
-                    {
-                        djb.YCBJYQZBH = vp.FamilyExpand.WarrantNumber;
-                        djb.CBFBM = entity.VirtualPersonCode;
-                        djb.FBFBM = tissue.Code;
-                        if (IsSaveParcelPathAsPDF)
-                        {
-                            djb.DKSYT = "图件" + "\\" + djb.FBFBM + "\\" + "DKSYT" + djb.CBJYQZBM + ".pdf";
-                        }
-                        else
-                        {
-                            djb.DKSYT = BuildLandMapString(djb.FBFBM, djb.CBJYQZBM, cbds, landArray);
-                        }
-                        djb.CBJYQZLSH = GetFullSerialNumberName(zone, book.Year, book.SerialNumber);
-
-                        vpcbjyqzdjbs.Add(djb);
-                    }
-                    if (ContainMatrical)
-                    {
-                        InitalizeAccessory(book, entity);
-                    }
+                    ProcessConcordData(entity, concorditem, vplands, cbds, spacecdbs, spacecdbDKBMs, brqglands,
+                        vp, landCollection, vphts, vpcbjyqzdjbs, bookCollection, vpcbjyqzs, landArray, serNumberTemp);
                 }
-                var qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
-                var qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
                 if (qghttable && qgqztable)
                 {
                     ///如果只有确股地块，就按照确股的流程来处理
-                    var qgconcord = stockconcordStation.Get(sv => sv.ContracterId == vp.ID);
+                    var qgconcord = qghts.FindAll(sv => sv.ContracterId == vp.ID);
 
                     //签订了合同的-确股的
                     foreach (var concorditem in qgconcord)
@@ -1263,7 +1407,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                                 {
                                     djb.DKSYT = BuildLandMapString(djb.FBFBM, djb.CBJYQZBM, cbds, landArray);
                                 }
-                                djb.CBJYQZLSH = GetFullSerialNumberName(zone, book.Year, book.SerialNumber);
+                                djb.CBJYQZLSH = SetFullSerialNumberName(serNumberTemp, book.Year, book.SerialNumber);
 
                                 vpcbjyqzdjbs.Add(djb);
                             }
@@ -1283,6 +1427,101 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 entityCollection.Add(entity);
             }
             return entityCollection;
+        }
+
+        /// <summary>
+        /// 处理合同数据
+        /// </summary> 
+        private void ProcessConcordData(ExchangeRightEntity entity, ContractConcord concorditem, List<ContractLand> vplands, List<CBDKXX> cbds,
+            List<DKEX> spacecdbs, HashSet<string> spacecdbDKBMs, List<BelongRelation> brqglands, VirtualPerson vp, List<ContractLand> landCollection,
+            List<CBHT> vphts, List<CBJYQZDJB> vpcbjyqzdjbs, List<ContractRegeditBook> bookCollection, List<CBJYQZ> vpcbjyqzs, int[] landArray, string serNumberTemp)
+        {
+            List<ContractLand> lands = vplands.FindAll(ld => ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == concorditem.ID);
+            var concordlandsCount = lands.Count;
+            foreach (ContractLand land in lands)
+            {
+                filterLandIDs.Add(land.ID);
+                ContractLand arcLand = vplands.Find(ld => ld.ID == land.ID || ld.LandNumber == land.LandNumber);
+                CBDKXX cbd = InitalizeAgricultureLandData(arcLand, entity.FBF.FBFBM, entity.VirtualPersonCode);
+                DKEX dk = InitalizeSpaceLandData(arcLand);//, pointList, lineList);
+                cbd.CBHTBM = concorditem.ConcordNumber;
+                cbd.CBJYQZBM = concorditem.ConcordNumber;
+                cbds.Add(cbd);
+                spacecdbs.Add(dk);
+                spacecdbDKBMs.Add(dk.DKBM);
+            }
+
+            var ht = InitalizeConcordData(concorditem, concordlandsCount);
+            if (ht != null)
+            {
+                ht.YCBHTBM = vp.FamilyExpand.ConcordNumber;
+                ht.FBFBM = entity.FBF.FBFBM;
+                ht.CBFBM = entity.VirtualPersonCode;
+                vphts.Add(ht);
+            }
+            if (ht.CBFS == "110")
+            {
+                //处理这个人下的确股地块
+                ht.CBDKZS += brqglands.Count;
+                foreach (var britem in brqglands)
+                {
+                    var qgland = landCollection.Find(ll => ll.ID == britem.LandID);
+                    if (qgland != null)
+                    {
+                        if (filterLandIDs.Contains(qgland.ID) == false)
+                        {
+                            filterLandIDs.Add(qgland.ID);
+                        }
+                        var relationland = VirtualPersonStation.GetRelationByID(vp.ID, qgland.ID);
+                        if (relationland != null)
+                        {
+                            CBDKXX cbd = InitalizeQgAgricultureLandData(qgland, relationland, entity.FBF.FBFBM, entity.VirtualPersonCode);
+                            DKEX dk = InitalizeSpaceLandData(qgland);//, pointList, lineList);
+                            cbd.CBHTBM = concorditem.ConcordNumber;
+                            cbd.CBJYQZBM = concorditem.ConcordNumber;
+                            cbds.Add(cbd);
+                            if (spacecdbDKBMs.Contains(dk.DKBM) == false)
+                            {
+                                spacecdbs.Add(dk);
+                                spacecdbDKBMs.Add(dk.DKBM);
+                            }
+                            ht.HTZMJ = ht.HTZMJ + Math.Round(relationland.QuanficationArea / 0.0015, 2);
+                            ht.HTZMJM = ht.HTZMJM + Math.Round(relationland.QuanficationArea, 2);
+                        }
+                    }
+                }
+            }
+            ContractRegeditBook book = bookCollection.Find(bk => bk.ID == concorditem.ID);
+            if (bookCollection.Count == 0 && book == null)
+            {
+                book = contractRegeditBookStation.Get(concorditem.ID);
+            }
+            entity.BookCode = book != null ? book.Number : "";
+            var cbjyqz = InitalizeWarrantBook(book, vp);
+            if (cbjyqz != null)
+                vpcbjyqzs.Add(cbjyqz);
+            var djb = InitalizeRegeditBook(concorditem, book);
+            if (djb != null)
+            {
+                djb.YCBJYQZBH = vp.FamilyExpand.WarrantNumber;
+                djb.CBFBM = entity.VirtualPersonCode;
+                djb.FBFBM = entity.FBF.FBFBM;
+                if (IsSaveParcelPathAsPDF)
+                {
+                    djb.DKSYT = "图件" + "\\" + djb.FBFBM + "\\" + "DKSYT" + djb.CBJYQZBM + ".pdf";
+                }
+                else
+                {
+                    djb.DKSYT = BuildLandMapString(djb.FBFBM, djb.CBJYQZBM, cbds, landArray);
+                }
+                djb.CBJYQZLSH = SetFullSerialNumberName(serNumberTemp, book.Year, book.SerialNumber);
+
+                vpcbjyqzdjbs.Add(djb);
+            }
+            if (ContainMatrical)
+            {
+                InitalizeAccessory(book, entity);
+            }
         }
 
         /// <summary>
@@ -1353,11 +1592,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 发包方处理-检查处理
         /// </summary>
-        private void SenderProgress(CollectivityTissue tissue)
+        private bool SenderProgress(CollectivityTissue tissue)
         {
+            bool canExport = true;
             if (tissue == null)
             {
-                return;
+                return false;
             }
             string description = string.Format("{0}下发包方:{1}中", zoneName, tissue.Name);
             if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerName)))
@@ -1501,13 +1741,15 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     WriteDataInformation("提示:" + description + "发包方调查记事未填写!");
                 }
             }
+            return canExport;
         }
 
         /// <summary>
         /// 承包方处理
         /// </summary>
-        private void ContractorProgress(VirtualPerson vp)
+        private bool ContractorProgress(VirtualPerson vp)
         {
+            bool canExport = true;
             VirtualPersonExpand expand = vp.FamilyExpand;
             string description = string.Format("{0}下承包方:{1}中", zoneName, vp.Name);
             if (expand != null)
@@ -1843,7 +2085,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                 }
             }
-            persons = null;
+            return canExport;
         }
 
         /// <summary>
@@ -1887,8 +2129,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 承包地块处理
         /// </summary>
-        private void ContractLandProgress(ContractLand land)
+        private bool ContractLandProgress(ContractLand land)
         {
+            var canExport = true;
             string description = string.Format("{0}下承包方:{1}下地块编码为:{2}的地块", zoneName, land.OwnerName, land.LandNumber);
             if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(land.Name)))
             {
@@ -2052,6 +2295,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     WriteDataInformation("错误:" + description + "指界人未填写!");
                 }
             }
+            return canExport;
         }
 
         /// <summary>
@@ -3200,7 +3444,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     var listzone = zoneStation.GetAllZonesToProvince(currentZone);
                     partents.RemoveAll(t => t.Level > Library.Entity.eZoneLevel.County);
                     var entityParentsZones = partents.OrderByDescending(t => t.Level).ToList();
-                    var entityZones  =  listzone.OrderByDescending(t => t.Level).ToList();
+                    var entityZones = listzone.OrderByDescending(t => t.Level).ToList();
                     foreach (var item in entityZones)
                     {
                         var tissueStation = DbContext.CreateCollectivityTissueWorkStation();
@@ -3338,6 +3582,44 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
             return fullSerialNumberName;
         }
+
+        /// <summary>
+        /// 设置流水号
+        /// </summary>
+        /// <returns></returns>
+        private string SetFullSerialNumberName(string serNumberTemp, string qznh, string serialNumber)
+        {
+            string useserialNumber = serialNumber != null ? serialNumber : "      ";
+            if (serialNumber != null && serialNumber.Length != 6)
+            {
+                useserialNumber = serialNumber.PadLeft(6, '0');
+            }
+            qznh = qznh.IsNullOrEmpty() ? "    " : qznh;
+            var fullSerialNumberName = string.Format(serNumberTemp, qznh, useserialNumber);
+            return fullSerialNumberName;
+        }
+
+        /// <summary>
+        /// 获取完整的流水编号模板，如  川(2016)通川区农村土地承包经营权证第000001号
+        /// </summary>
+        /// <returns></returns>
+        private string GetFullSerialNumberTemp(YuLinTu.Library.Entity.Zone CurrentZone)
+        {
+            string fullSerialNumberName = "";
+
+            var sqzoneName = InitalizeZoneName(CurrentZone, YuLinTu.Library.Entity.Zone.ZONE_COUNTY_LENGTH);
+            var zonename = InitalizeZoneName(CurrentZone, YuLinTu.Library.Entity.Zone.ZONE_PROVICE_LENGTH);
+            var simpleProvinceNamesDics = InitalizeSimpleProvice();
+            var simplenamedic = simpleProvinceNamesDics.Where(s => s.Key == zonename).FirstOrDefault();
+            var simplename = simplenamedic.Value != null ? simplenamedic.Value : "";
+            sqzoneName = sqzoneName.IsNullOrEmpty() ? " " : sqzoneName;
+            simplename = simplename.IsNullOrEmpty() ? " " : simplename;
+
+            fullSerialNumberName = simplename + "({0})" + sqzoneName + "农村土地承包经营权证第{1}号";
+
+            return fullSerialNumberName;
+        }
+
 
         /// <summary>
         /// 初始化省市简写

@@ -269,7 +269,7 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         List<BelongRelation> GetRelationsByVpID(Guid personID);
 
-        List<BelongRelation> GetRelationByZone(string zoneCode);
+        List<BelongRelation> GetRelationByZone(string zoneCode, eLevelOption option);
 
         int UpdatePersonList(List<VirtualPerson> persons);
 

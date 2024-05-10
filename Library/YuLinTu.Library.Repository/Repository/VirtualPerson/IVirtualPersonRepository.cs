@@ -228,7 +228,7 @@ namespace YuLinTu.Library.Repository
 
         List<BelongRelation> GetRelationsByVpID(Guid personID);
 
-        List<BelongRelation> GetRelationByZone(string zoneCode);
+        List<BelongRelation> GetRelationByZone(string zoneCode, eLevelOption option);
 
         ///// <summary>
         ///// 判断指定地域下的“承包方”是否已经初始化。

@@ -635,6 +635,18 @@ namespace YuLinTu.Library.WorkStation
         }
 
         /// <summary>
+        /// 按地域获取承包台账地块集合
+        /// </summary>
+        /// <param name="zoneCode">地域代码</param>
+        /// <param na承包台账me="searchOption">匹配等级</param>
+        /// <returns>承包台账地块集合</returns>
+        public List<ContractLand> GetCollectionNoShape(string zoneCode, eLevelOption searchOption)
+        {
+            return DefaultRepository.GetCollection(zoneCode, searchOption, true);
+        }
+
+
+        /// <summary>
         /// 获取指定地域下所有空间地块集合
         /// </summary>
         /// <param name="zoneCode">指定地域</param>
@@ -675,11 +687,11 @@ namespace YuLinTu.Library.WorkStation
                 }
                 var vpList = new List<VirtualPerson>();
                 var otherLandList = new List<ContractLand>();
-                vpIds.ForEach(vpid => 
+                vpIds.ForEach(vpid =>
                 {
                     var getvp = VirtualPersonWorkStation.Get(vpid);
                     if (getvp == null) return;
-                    vpList.Add(getvp);                    
+                    vpList.Add(getvp);
                 }
                 );
                 vpList.RemoveAll(vp => vp.Status != virtualStatus);
@@ -1203,7 +1215,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         public void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
             string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
-            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson,bool KeepRepeatFlag, Func<string> GetReplace = null)
+            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool KeepRepeatFlag, Func<string> GetReplace = null)
         {
             if (vp == null || zone == null)
                 return;

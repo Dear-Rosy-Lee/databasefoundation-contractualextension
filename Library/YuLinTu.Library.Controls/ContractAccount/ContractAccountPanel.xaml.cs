@@ -392,7 +392,7 @@ namespace YuLinTu.Library.Controls
             if (IsStockLand)
             {
                 landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.LocationCode == CurrentZone.FullCode);
-                ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode);
+                ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode, eLevelOption.Self);
             }
 
             dictList = DictBusiness.GetAll();
@@ -2072,7 +2072,8 @@ namespace YuLinTu.Library.Controls
         {
             if (IsStockLand)
             {
-                ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode);
+                ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().
+                    GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode, eLevelOption.Self);
             }
             ContractLandPage editPage = new ContractLandPage();
             editPage.Workpage = TheWorkPage;
