@@ -88,6 +88,9 @@ namespace YuLinTu.Library.Business
             get { return dbContext; }
         }
 
+
+        public CollectivityTissue Tissue { get; set; }
+
         /// <summary>
         /// 错误信息
         /// </summary>
@@ -149,6 +152,7 @@ namespace YuLinTu.Library.Business
                 existPersons = new SortedList<string, string>();
                 existTablePersons = new SortedList<string, string>();
                 isOk = true;
+                InitalizeSender();
                 for (int index = calIndex; index < rangeCount; index++)
                 {
                     currentIndex = index;//当前行数
@@ -271,7 +275,7 @@ namespace YuLinTu.Library.Business
             if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
             {
                 var vpCode = CurrentZone.FullCode;
-                var vpNumber = GetString(allItem[currentIndex, 2]);
+                var vpNumber = GetString(allItem[currentIndex, 3]);
                 vpNumber = vpNumber.Remove(0, vpCode.Length).TrimStart('0');
                 if (vpNumber == "")
                 {
@@ -313,23 +317,27 @@ namespace YuLinTu.Library.Business
 
         private void InitalizeLandInformation(LandFamily landFamily, List<ContractLand> contractLands)
         {
-            var landNumber = GetString(allItem[currentIndex, 14]);
+            var landNumber = GetString(allItem[currentIndex, 16]);
             if (landNumber != "")
             {
                 var entity = contractLands.Where(x => x.LandNumber == landNumber).FirstOrDefault();
                 if (entity != null)
                 {
-                    entity.Name = GetString(allItem[currentIndex, 13]);
-                    entity.LocationName = GetString(allItem[currentIndex, 15]);
-                    entity.LandLevel = GetString(allItem[currentIndex, 16]);
-                    entity.Purpose = GetString(allItem[currentIndex, 17]);
-                    entity.ConcordArea = GetString(allItem[currentIndex, 18]);
-                    entity.ActualArea = double.Parse(GetString(allItem[currentIndex, 20]));
-                    entity.NeighborEast = GetString(allItem[currentIndex, 22]);
-                    entity.NeighborSouth = GetString(allItem[currentIndex, 23]);
-                    entity.NeighborWest = GetString(allItem[currentIndex, 24]);
-                    entity.NeighborNorth = GetString(allItem[currentIndex, 25]);
-                    entity.Comment = GetString(allItem[currentIndex, 26]);
+                    entity.Name = GetString(allItem[currentIndex, 15]);
+                    entity.OwnRightType = GetString(allItem[currentIndex, 17]);
+                    entity.LandCategory = GetString(allItem[currentIndex, 18]);
+                    entity.LandCode = GetString(allItem[currentIndex, 19]);
+                    entity.LandLevel = GetString(allItem[currentIndex, 20]);
+                    entity.Purpose = GetString(allItem[currentIndex, 21]);
+                    entity.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
+                    entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
+                    entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
+                    entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+                    entity.NeighborEast = GetString(allItem[currentIndex, 28]);
+                    entity.NeighborSouth = GetString(allItem[currentIndex, 29]);
+                    entity.NeighborWest = GetString(allItem[currentIndex, 30]);
+                    entity.NeighborNorth = GetString(allItem[currentIndex, 31]);
+                    entity.Comment = GetString(allItem[currentIndex, 32]);
                     landFamily.LandCollection.Add(entity);
                 }
                 else
@@ -366,10 +374,10 @@ namespace YuLinTu.Library.Business
             person.Nation = eNation.UnKnown;
             person.ZoneCode = currentZone.FullCode;
             //名称
-            string name = GetString(allItem[currentIndex, 6]);
+            string name = GetString(allItem[currentIndex, 7]);
             person.Name = name;
             //性别
-            value = GetString(allItem[currentIndex, 7]);
+            value = GetString(allItem[currentIndex, 8]);
             if (string.IsNullOrEmpty(value))
             {
                 person.Gender = eGender.Unknow;
@@ -378,13 +386,18 @@ namespace YuLinTu.Library.Business
             {
                 person.Gender = GetGender(value);
             }
+            person.Telephone = GetString(allItem[currentIndex, 9]);
+            string CardType = GetString(allItem[currentIndex, 10]);
 
+            person.CardType = GetCardType(CardType);
             //身份证号
-            string icn = GetString(allItem[currentIndex, 10]);
+            string icn = GetString(allItem[currentIndex, 11]);
             //家庭关系
-            person.Relationship = GetString(allItem[currentIndex, 11]);
+            person.Relationship = GetString(allItem[currentIndex, 12]);
             //备注
-            person.Comment = GetString(allItem[currentIndex, 12]);
+            person.Comment = GetString(allItem[currentIndex, 13]);
+
+            person.Opinion = GetString(allItem[currentIndex, 14]);  
             //名称
             if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || !string.IsNullOrEmpty(icn)))
             {
@@ -576,6 +589,59 @@ namespace YuLinTu.Library.Business
                 warnArray = new List<string>();
             if (!warnArray.Contains(message))
                 warnArray.Add(message);
+        }
+
+        private eCredentialsType GetCardType(string cardType)
+        {
+            switch (cardType)
+            {
+                case "1":
+                    return eCredentialsType.IdentifyCard;
+
+                case "2":
+                    return eCredentialsType.OfficerCard;
+                case "3":
+                    return eCredentialsType.AgentCard;
+                case "4":
+                    return eCredentialsType.ResidenceBooklet;
+                case "5":
+                    return eCredentialsType.Passport;
+                case "9":
+                    return eCredentialsType.Other;
+
+            }
+            return eCredentialsType.IdentifyCard;
+        }
+
+        private void InitalizeSender()
+        {
+            var tissueWorkstation = dbContext.CreateSenderWorkStation();
+            Tissue = tissueWorkstation.Get(CurrentZone.ID);
+            if(Tissue == null)
+            {
+                Tissue = new CollectivityTissue();
+            }
+            Tissue.Name = GetString(allItem[2, 2]);
+            Tissue.Code = GetString(allItem[2, 6]);
+            Tissue.LawyerName = GetString(allItem[2, 9]);
+            eCredentialsType cardtype = GetCardType( GetString(allItem[2, 9]));
+            Tissue.LawyerCredentType = cardtype;
+            Tissue.LawyerCartNumber = GetString(allItem[2, 15]);
+            Tissue.LawyerTelephone = GetString(allItem[2, 20]);
+            Tissue.LawyerAddress = GetString(allItem[2, 25]);
+            Tissue.LawyerPosterNumber = GetString(allItem[2, 29]);
+            Tissue.SurveyPerson = GetString(allItem[2, 31]);
+            var res = GetString(allItem[2, 34]);
+            DateTime? date;
+            if(res == "")
+            {
+                date = null;
+            }
+            else
+            {
+                date = Convert.ToDateTime(GetString(allItem[2, 34]));
+            }
+            Tissue.SurveyDate = date;
         }
 
         #endregion Method - private

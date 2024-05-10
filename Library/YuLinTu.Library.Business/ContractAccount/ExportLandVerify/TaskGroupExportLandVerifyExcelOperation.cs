@@ -58,7 +58,8 @@ namespace YuLinTu.Library.Business
             try
             {
                 var zoneStation = dbContext.CreateZoneWorkStation();
-                selfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
+                selfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.Subs);
+                selfAndSubsZones = selfAndSubsZones.Where(x => x.Level == eZoneLevel.Group).ToList();
                 allZones = zoneStation.GetAllZones(currentZone);
             }
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace YuLinTu.Library.Business
                 argument.IsShow = false;
                 Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
-                TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+                TaskExportLandVerifyExcelOperation2 operation = new TaskExportLandVerifyExcelOperation2();
                 operation.Argument = argument;
                 operation.Name = "批量导出摸底核实表";
                 operation.Description = zone.FullName;

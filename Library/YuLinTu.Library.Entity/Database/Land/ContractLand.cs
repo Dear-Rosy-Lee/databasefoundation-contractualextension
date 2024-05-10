@@ -127,6 +127,11 @@ namespace YuLinTu.Library.Entity
         private string transferType;
 
         /// <summary>
+        /// 利用类型
+        /// </summary>
+        private string useType;
+
+        /// <summary>
         /// 流转期限
         /// </summary>
         private string transferTime;
@@ -293,6 +298,7 @@ namespace YuLinTu.Library.Entity
             get { return stockQuantity; }
             set { stockQuantity = value; NotifyPropertyChanged("StockQuantity"); }
         }
+
 
         /// <summary>
         /// 人均股权数量

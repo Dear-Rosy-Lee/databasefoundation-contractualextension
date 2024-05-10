@@ -12,7 +12,7 @@
     Header="地块编码修改"
     mc:Ignorable="d">
     <Grid
-        Width="300"
+        Width="700"
         Background="{DynamicResource Metro_Window_Style_Background_Content}"
         ClipToBounds="True">
         <Grid.RowDefinitions>
@@ -20,17 +20,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <Border Grid.Row="0">
-            <CheckBox
-                Name="CheckBox"
-                Margin="25,8,0,0"
-                Click="CheckBox_Click"
-                Content="是否重新生成地块编码"
-                IsChecked="True" />
-        </Border>
-        <Border Grid.Row="1">
             <TextBlock
                 Name="TextBlock"
                 Margin="25,8,0,0"
@@ -69,9 +61,16 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="0.25*" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
-                                <DockPanel Grid.Row="2" LastChildFill="False">
+                                <DockPanel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    LastChildFill="False">
                                     <cmps:ImageTextItem
                                         Margin="5,2"
                                         DockPanel.Dock="Left"
@@ -83,22 +82,22 @@
                                 </DockPanel>
                                 <DockPanel
                                     Grid.Row="2"
-                                    Grid.Column="1"
+                                    Grid.Column="3"
                                     LastChildFill="False"
                                     Visibility="{Binding Flag, Mode=TwoWay}">
 
                                     <TextBlock
-                                        Margin="0,9"
+                                        Margin="50,9"
                                         DockPanel.Dock="Left"
-                                        Text="地块编码：" />
+                                        Text="地块编码:" />
                                 </DockPanel>
                                 <DockPanel
                                     Grid.Row="2"
-                                    Grid.Column="2"
+                                    Grid.Column="4"
                                     LastChildFill="False"
                                     Visibility="{Binding Flag, Mode=TwoWay}">
                                     <cmps:MetroTextBox
-                                        Margin="5,2"
+                                        Margin="-45,2"
                                         DockPanel.Dock="Left"
                                         Text="{Binding SurveyNumber, Converter={StaticResource ObjectToSingleLineStringConverter}}"
                                         ToolTip="{Binding SurveyNumber}">
@@ -112,6 +111,52 @@
                                                 ToolTip="生成可用地块编码" />
                                         </cmps:MetroTextBox.ContentRight>
                                     </cmps:MetroTextBox>
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
+
+                                    <TextBlock
+                                        Margin="10,9"
+                                        DockPanel.Dock="Left"
+                                        Text="地块面积：" />
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
+
+                                    <TextBlock
+                                        Margin="-10,9"
+                                        DockPanel.Dock="Left"
+                                        Text="{Binding DKMJ}" />
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="2"
+                                    Grid.Column="5"
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
+
+                                    <TextBlock
+                                        Margin="10,9"
+                                        DockPanel.Dock="Left"
+                                        Text="是否保留原地块编码" />
+                                </DockPanel>
+                                <DockPanel
+                                    x:Name="checkBoxPanel"
+                                    Grid.Row="2"
+                                    Grid.Column="6"
+                                    LastChildFill="False"
+                                    Visibility="{Binding Flag, Mode=TwoWay}">
+
+                                    <CheckBox
+                                        Margin="-35,0,0,0"
+                                        Checked="CheckBox_Checked"
+                                        IsChecked="{Binding IsChecked}"
+                                        Unchecked="CheckBox_Unchecked" />
                                 </DockPanel>
                             </Grid>
                         </DataTemplate>

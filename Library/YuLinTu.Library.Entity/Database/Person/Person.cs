@@ -136,6 +136,18 @@ namespace YuLinTu.Library.Entity
             }
         }
 
+        private string _telephone;
+        [DataColumn("Telephone", ColumnType = eDataType.String)]
+        public string Telephone
+        {
+            get { return _telephone; }
+            set
+            {
+                _telephone = value;
+                NotifyPropertyChanged("Telephone");
+            }
+        }
+
         private string _opinion;
 
         [XmlElement(ElementName = "Opinion")]

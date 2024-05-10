@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,7 +64,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public delegate void TaskViewerShowDelegate();
 
-        #endregion
+        #endregion Fields
 
         #region Properties
 
@@ -128,7 +129,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -163,7 +164,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 任务完成
-        /// </summary> 
+        /// </summary>
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             try
@@ -209,7 +210,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -296,8 +297,14 @@ namespace YuLinTu.Library.Controls
                 }
                 if (editPage.Result)
                 {
-                    UpDataToItem(selectItem, editPage.CurrentItem);
-                    UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
+                    if (ZoneDefine.SyncCode == true)
+                    {
+                        UpDataToItem(selectItem, editPage.CurrentItem);
+                        UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
+                    }
+                    else
+                    {
+                    }
                 }
                 ModuleMsgArgs arg = MessageExtend.ZoneMsg(db, ZoneMessage.ZONE_UPDATE_COMPLETE, (editPage.Result ? new MultiObjectArg() { ParameterA = selectItem, ParameterB = srcItem } : null));
                 ThePage.Workspace.Message.Send(this, arg);
@@ -678,7 +685,6 @@ namespace YuLinTu.Library.Controls
 
                         var senderstation = dbContext.CreateSenderWorkStation();
                         senderstation.Clear();
-
                     }
                     result = (clearResult > 0 && addResult > 0) ? true : false;
                 }
@@ -864,7 +870,7 @@ namespace YuLinTu.Library.Controls
             //});
         }
 
-        #endregion
+        #endregion Method-public
 
         #region Methods - Private
 
@@ -919,7 +925,7 @@ namespace YuLinTu.Library.Controls
 
         /// <summary>
         /// 创建树
-        /// </summary> 
+        /// </summary>
         private void CreatTree(List<Zone> zones, ZoneDataItem node, List<Zone> allZone)
         {
             foreach (Zone z in zones)
@@ -1003,9 +1009,9 @@ namespace YuLinTu.Library.Controls
             return section.Settings;
         }
 
-        #endregion
+        #endregion Methods - Private
 
-        #endregion
+        #endregion Methods
 
         #region Event
 
@@ -1043,7 +1049,7 @@ namespace YuLinTu.Library.Controls
             e.HasItems = item.Children.Count > 0;
         }
 
-        #endregion
+        #endregion Event
 
         #region Helper
 
@@ -1059,24 +1065,31 @@ namespace YuLinTu.Library.Controls
                 case eZoneLevel.Group:
                     length = 2;
                     break;
+
                 case eZoneLevel.Village:
                     length = 3;
                     break;
+
                 case eZoneLevel.Town:
                     length = 3;
                     break;
+
                 case eZoneLevel.County:
                     length = 2;
                     break;
+
                 case eZoneLevel.City:
                     length = 2;
                     break;
+
                 case eZoneLevel.Province:
                     length = 2;
                     break;
+
                 case eZoneLevel.State:
                     length = 2;
                     break;
+
                 default:
                     length = 4;
                     break;
@@ -1119,7 +1132,7 @@ namespace YuLinTu.Library.Controls
             ThePage.Workspace.Message.Send(this, args);
         }
 
-        #endregion
+        #endregion Helper
 
         #region ContextMenue
 
@@ -1156,6 +1169,6 @@ namespace YuLinTu.Library.Controls
         //{
         //}
 
-        #endregion
+        #endregion ContextMenue
     }
 }

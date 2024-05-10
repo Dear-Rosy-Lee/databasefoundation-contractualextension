@@ -82,18 +82,49 @@ namespace YuLinTu.Component.MapFoundation
             var dataSource = vectorLayer != null ? vectorLayer.DataSource : null;
             LandCode = string.Empty;
             SplitItems = new List<SplitItem>();
+
+            string oldNumber;
+            var gettype = graphics[0].Object.Object.GetType().ToString();
+            if (gettype == "YuLinTu.Library.Entity.ContractLand")
+            {
+                oldNumber = graphics[0].Object.Object.GetPropertyValue("landNumber").ToString();
+            }
+            else
+            {
+                oldNumber = graphics[0].Object.Object.GetPropertyValue("DKBM").ToString();
+            }
             graphics.ForEach(c =>
             {
                 var item = new SplitItem();
                 item.Graphic = c;
-                item.Text = labeler != null ? string.Format("{0}", labeler.GetLabelText(c.Object.Object)) : null;
+                var tpye = c.Object.Object.GetType().ToString();
+                if (tpye == "YuLinTu.Library.Entity.ContractLand")
+                {
+                    var land = c.Object.Object as ContractLand;
+                    item.Text = land.OwnerName;
+                    item.OldNumber = oldNumber.Substring(land.LandNumber.Length - 5);
+                    var landNumber = int.Parse(land.LandNumber.Substring(land.LandNumber.Length - 5)) + 1;
+                    item.SurveyNumber = landNumber.ToString().PadLeft(5, '0');
+                    item.NewNumber = item.SurveyNumber;
+                    item.Flag = Visibility.Visible;
+                    item.DKMJ = land.AwareArea.ToString();
+                    SplitItems.Add(item);
+                }
+                else
+                {
+                    item.Text = labeler != null ? string.Format("{0}", labeler.GetLabelText(c.Object.Object)) : null;
 
-                if (item.Text.TrimSafe().IsNullOrBlank())
-                    item.Text = GetDisplayText(c, dataSource);
-                var res = c.Object.Object.GetPropertyValue("DKBM").ToString();
-                item.SurveyNumber = res.Substring(res.Length - 5);
-                item.Flag = Visibility.Visible;
-                SplitItems.Add(item);
+                    if (item.Text.TrimSafe().IsNullOrBlank())
+                        item.Text = GetDisplayText(c, dataSource);
+                    var res = c.Object.Object.GetPropertyValue("DKBM").ToString();
+                    item.OldNumber = oldNumber.Substring(res.Length - 5);
+                    var landNumber = int.Parse(res.Substring(res.Length - 5)) + 1;
+                    item.SurveyNumber = landNumber.ToString().PadLeft(5, '0');
+                    item.NewNumber = item.SurveyNumber;
+                    item.Flag = Visibility.Visible;
+                    item.DKMJ = c.Object.Object.GetPropertyValue("BZMJ").ToString();
+                    SplitItems.Add(item);
+                }
             });
             LandCode = SplitItems.Select(x => x.SurveyNumber).ToList().Min().ToString();
             dg.ItemsSource = SplitItems;
@@ -111,47 +142,50 @@ namespace YuLinTu.Component.MapFoundation
         {
         }
 
-        #endregion Methods - Override
-
-        #region Methods - Events
-
-        private void CheckBox_Click(object sender, RoutedEventArgs e)
-        {
-            dg.ItemsSource = null;
-            if (CheckBox.IsChecked == false)
-            {
-                SplitItems.ForEach(c =>
-                {
-                    c.Flag = Visibility.Hidden;
-                    TextBlock.Text = $"请选择一个地块,使其地块编码为:{LandCode}";
-                    TextBlock.Visibility = Visibility.Visible;
-                });
-                Flag = false;
-            }
-            else
-            {
-                SplitItems.ForEach(c =>
-                {
-                    TextBlock.Visibility = Visibility.Collapsed;
-                    c.Flag = Visibility.Visible;
-                });
-                Flag = true;
-            }
-
-            dg.ItemsSource = SplitItems;
-        }
-
         private void MetroButton_Click(object sender, RoutedEventArgs e)
         {
             Owner.ShowDialog(new MessageDialog()
             {
-                Message = "是否将原地块编码选择到指定的图形中？",
+                Message = "是否确定地块编码编辑完成并保存？",
                 Header = "地块编码"
             }, (b, r) =>
             {
                 if (b.HasValue && b.Value)
                     ConfirmAsync();
             });
+        }
+
+        #endregion Methods - Override
+
+        #region Methods - Events
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var data = sender.GetPropertyValue("DataContext") as SplitItem;
+            foreach (var item in SplitItems)
+            {
+                if (item.NewNumber == data.NewNumber)
+                {
+                    item.IsChecked = true;
+                    item.SurveyNumber = item.OldNumber;
+                }
+                else
+                {
+                    item.IsChecked = false;
+                    item.SurveyNumber = item.NewNumber;
+                }
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            {
+                foreach (var item in SplitItems)
+                {
+                    item.IsChecked = false;
+                    item.SurveyNumber = item.NewNumber;
+                }
+            }
         }
 
         private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -197,11 +231,16 @@ namespace YuLinTu.Component.MapFoundation
             var dc = e.Source.GetPropertyValue("DataContext").GetPropertyValue("SurveyNumber");
             if (dc != null)
             {
-                var landBusiness = new AccountLandBusiness(DbContext);
-                if (landBusiness == null)
-                    landBusiness = new AccountLandBusiness(DbContext);
-                string number = landBusiness.GetNewLandNumber(CurrentZone.FullCode);
-                SplitItems.Where(x => x.SurveyNumber == dc.ToString()).FirstOrDefault().SurveyNumber = number.Substring(number.Length - 5);
+                foreach (var item in SplitItems)
+                {
+                    if (item.SurveyNumber == dc.ToString())
+                    {
+                        var maxNumber = SplitItems.Select(x => x.SurveyNumber).Max();
+                        var number = int.Parse(maxNumber) + 1;
+                        item.SurveyNumber = number.ToString().PadLeft(5, '0');
+                    }
+                }
+
                 dg.ItemsSource = null;
                 dg.ItemsSource = SplitItems;
             }

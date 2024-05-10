@@ -380,6 +380,7 @@ namespace YuLinTu.Component.MapFoundation
                         if (dotFeatureSet != null)
                         {
                             ContractLand clipLanditem = null;//裁剪的获取的最新的地块
+                            List<ContractLand> lands = new List<ContractLand>();
                             for (int i = 0; i < dotFeatureSet.Features.Count; i++)
                             {
                                 IFeature feature = dotFeatureSet.Features[i];
@@ -394,6 +395,7 @@ namespace YuLinTu.Component.MapFoundation
                                     selectContractLandCollection[m].ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
                                     selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                                     selectContractLandCollection[m].TableArea = 0;
+                                    lands.Add(selectContractLandCollection[m]);
                                     landbus.ModifyLand(selectContractLandCollection[m]);
                                 }
                                 else
@@ -408,36 +410,37 @@ namespace YuLinTu.Component.MapFoundation
                                     clipLanditem.ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
                                     clipLanditem.AwareArea = clipLanditem.ActualArea;
                                     clipLanditem.TableArea = 0;
+                                    lands.Add(clipLanditem);
                                     landbus.AddLand(clipLanditem);
                                 }
                             }
-
-                            var graphics = selectGeometryCollection;
+                            List<Graphic> gs = new List<Graphic>();
+                            for (int i = 0; i < getGeoList.Count; i++)
+                            {
+                                var graphic1 = new Graphic() { Object = new FeatureObject() { Object = lands[i] } };
+                                graphic1.Symbol = Application.Current.TryFindResource("UISymbol_Mark_MeasureArea_Label") as MarkSymbol;
+                                graphic1.Geometry = getGeoList[i].Centroid();
+                                graphic1.Object.GeometryPropertyName = "Shape";
+                                gs.Add(graphic1);
+                            }
+                            var zoneCode = selectContractLandCollection.FirstOrDefault().LocationCode;
+                            var layers = MapControl.SelectedItems.Select(c => c.Layer).Distinct().ToList();
                             var map = MapControl;
                             TaskThreadDispatcher.Create(MapControl.Dispatcher,
                             go =>
                             {
-                                //var editor = new SplitLandEdit();
-
-                                //var listDeletes = graphics.Where(c => c != graphic).ToList();
-
+                                var dbcontext = DataBaseSource.GetDataBaseSource();
+                                var zoneStation = dbcontext.CreateZoneWorkStation();
+                                var currentZone = zoneStation.Get(zoneCode);
+                                var layer = layers[0];
                                 map.Dispatcher.Invoke(new Action(() =>
-                                                {
-                                                    //map.SaveAsync(null, new Graphic[] { graphic }, listDeletes.ToArray(), () =>
-                                                    //{
-                                                    //    layer.Refresh();
-                                                    //    map.SelectedItems.Clear();
-                                                    //    map.SelectedItems.Add(graphic);
-                                                    //}, error =>
-                                                    //{
-                                                    //    Workpage.Page.ShowDialog(new MessageDialog()
-                                                    //    {
-                                                    //        MessageGrade = eMessageGrade.Error,
-                                                    //        Message = "分割图形的过程中发生了一个未知错误。",
-                                                    //        Header = "分割"
-                                                    //    });
-                                                    //});
-                                                }));
+                                {
+                                    var args = new MessageSplitLandInstallEventArgs(layer, gs, dbcontext, currentZone);
+                                    map.Message.Send(this, args);
+                                    if (args.IsCancel)
+                                        return;
+                                    var editor = new SplitLandEdit(map, layer, gs, dbcontext, currentZone);
+                                }));
                             }, null, null,
                             started =>
                             {
@@ -452,16 +455,7 @@ namespace YuLinTu.Component.MapFoundation
                             }, null,
                             terminated =>
                             {
-                                //Workpage.Page.ShowDialog(new MessageDialog()
-                                //{
-                                //    MessageGrade = eMessageGrade.Error,
-                                //    Message = "分割图形的过程中发生了一个未知错误",
-                                //    Header = "分割"
-                                //}); ; ;
                             }).Start();
-                            //string survernumber = clipLanditem.LandNumber.Length >= 5 ? clipLanditem.LandNumber.Substring(clipLanditem.LandNumber.Length - 5) : clipLanditem.LandNumber.PadLeft(5, '0');
-                            //clipLanditem.SurveyNumber = survernumber;
-                            //landbus.ModifyLand(clipLanditem);
                         }
                     }
                 }

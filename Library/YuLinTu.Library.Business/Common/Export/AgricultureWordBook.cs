@@ -1292,9 +1292,13 @@ namespace YuLinTu.Library.Business
             }
 
             string countyCode = CurrentZone.FullCode.Substring(0, Zone.ZONE_COUNTY_LENGTH);
+            string townCode = CurrentZone.FullCode.Substring(0, Zone.ZONE_TOWN_LENGTH);
+            string viliiageCode = CurrentZone.FullCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH);
             //Zone county = CurrentZone;
             //陈泽林 20161123
             Zone county = ZoneList != null ? ZoneList.Find(t => t.FullCode == countyCode) : null;
+            Zone town = ZoneList != null ? ZoneList.Find(t => t.FullCode == townCode) : null;
+            Zone village = ZoneList != null ? ZoneList.Find(t => t.FullCode == viliiageCode) : null;
             string unitName = string.Empty;
             unitName = county != null ? (CurrentZone.FullName != null ? CurrentZone.FullName.Replace(county.FullName, "") : CurrentZone.FullName) : "";
             for (int i = 0; i < BookMarkCount; i++)
@@ -1303,6 +1307,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.LocationName + (i == 0 ? "" : i.ToString()), CurrentZone.FullName);
                 SetBookmarkValue(AgricultureBookMark.TownUnitName + (i == 0 ? "" : i.ToString()), unitName);
                 SetBookmarkValue(AgricultureBookMark.CountyUnitName + (i == 0 ? "" : i.ToString()), county != null ? (county.Name + unitName) : unitName);
+                SetBookmarkValue(AgricultureBookMark.CountyVillageName + (i == 0 ? "" : i.ToString()), $"{county.Name}{town.Name}{village.Name}");
             }
             string zoneName = InitalizeZoneName(CurrentZone.FullCode, Zone.ZONE_COUNTY_LENGTH);
             for (int i = 0; i < BookMarkCount; i++)

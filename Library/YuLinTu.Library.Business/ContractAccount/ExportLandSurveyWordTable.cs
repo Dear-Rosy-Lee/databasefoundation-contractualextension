@@ -421,7 +421,7 @@ namespace YuLinTu.Library.Business
                 levelString = ToolMath.MatchEntiretyNumber(land.LandLevel.ToString()) ? (Landlevelname == null ? "/" : Landlevelname.Name) : "";
             levelString = levelString == "未知" ? "/" : levelString;
 
-            string platting = string.Empty;
+            string platting = land.Purpose;
             if (land.Purpose.IsNullOrEmpty() == false)
             {
                 object obj = Enum.Parse(typeof(eLandPurposeType), land.Purpose.ToString());
