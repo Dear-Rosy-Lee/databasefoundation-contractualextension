@@ -883,7 +883,7 @@ namespace YuLinTu.Library.Controls
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
 
-            TaskAccountFiveTableOperation import = new TaskAccountFiveTableOperation();
+            var import = new TaskAccountFiveTableOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -3473,24 +3473,11 @@ namespace YuLinTu.Library.Controls
                 {
                     ShowBox(ContractAccountInfo.ExportSenderDataExcel, "未获取发包方数据!", showConfirm: false);
                 }
-                //if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && childrenZones.Count == 0))
-                //{
-                //    var landStation = dbContext.CreateAgriculturalLandWorkstation();
-                //    int cnt = landStation.ExportSenderSurveyExcelNew(currentZone.FullCode); //修改新方法（用于返回值进行提示）
-                //    if (cnt == -1)
-                //    {
-                //        ShowBox(ContractAccountInfo.ExportSenderDataExcel, "行政地域编码错误!", showConfirm: false);
-                //    }
-                //    else if (cnt == 0)
-                //    {
-                //        ShowBox(ContractAccountInfo.ExportSenderDataExcel, "未获取发包方数据!", showConfirm: false);
-                //    }
-                //}
-                //else
-                //{
-                //    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
-                //                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
-                //}
+                else
+                {
+                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
+                                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
+                }
             }
             catch (Exception ex)
             {

@@ -3,23 +3,15 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu;
 using YuLinTu.Data;
-using System.Collections.ObjectModel;
-using System.Collections;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
     /// <summary>
     /// 台账承包地块参数信息
     /// </summary>
-   public class TaskGroupAccountFiveTableArgument:TaskArgument
+    public class TaskGroupAccountFiveTableArgument:TaskArgument
     {
        #region Fields
 

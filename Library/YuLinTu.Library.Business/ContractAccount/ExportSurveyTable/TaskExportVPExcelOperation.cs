@@ -62,9 +62,10 @@ namespace YuLinTu.Library.Business
                     this.ReportWarn(string.Format("{0}未获取承包方数据!", zone.FullName));
                     return;
                 }
-                var ownerIds = new List<Guid>();
+                var ownerIds = new HashSet<Guid>();
                 listPerson.ForEach(c => ownerIds.Add(c.ID));
-                var listLand = landStation.GetCollection(ownerIds);
+                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                listLand = listLand.FindAll(f => f.OwnerId != null && ownerIds.Contains(f.OwnerId.Value));
                 bool canOpen = ExportVirtualPersonExcel(argument, listPerson, tablePersons, listLand);
                 if (canOpen)
                     CanOpenResult = true;

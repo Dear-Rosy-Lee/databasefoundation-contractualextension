@@ -13,6 +13,9 @@ using YuLinTu;
 using YuLinTu.Data;
 using System.Diagnostics;
 using System.IO;
+using NPOI.SS.Formula.Functions;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace YuLinTu.Library.Business
 {
@@ -40,6 +43,7 @@ namespace YuLinTu.Library.Business
             string fileName = groupMeta.FileName;
             List<Zone> selfAndSubsZones = groupMeta.SelfAndSubsZones;
 
+            var nationList = EnumStore<eContractAccountType>.GetListByType();
             foreach (var zone in selfAndSubsZones)
             {
                 if (groupMeta.TableType == 5)
@@ -50,7 +54,8 @@ namespace YuLinTu.Library.Business
                 {
                     openFilePath = Path.Combine(fileName, CreateDirectoryHelper.CreateDirectoryByVilliage(groupMeta.AllZones, zone));
                 }
-                TaskAccountFiveTableArgument meta = new TaskAccountFiveTableArgument();
+                var argtypeName = nationList.Find(t => t.Value == groupMeta.ArgType).DisplayName;
+                var meta = new TaskAccountFiveTableArgument();
                 meta.IsClear = false;
                 meta.FileName = openFilePath;
                 meta.ArgType = groupMeta.ArgType;
@@ -64,10 +69,10 @@ namespace YuLinTu.Library.Business
                 meta.SelfAndSubsZones = groupMeta.SelfAndSubsZones;
                 meta.IsBatch = groupMeta.IsBatch;
                 meta.DictList = groupMeta.DictList;
-                TaskAccountFiveTableOperation import = new TaskAccountFiveTableOperation();
+                var import = new TaskAccountFiveTableOperation();
                 import.Argument = meta;
                 import.Description = "导出" + zone.FullName;
-                import.Name = "导出台账报表";
+                import.Name = $"导出台账报表-{argtypeName}";
                 Add(import);   //添加子任务到任务组中
             }
             CanOpenResult = true;
@@ -83,5 +88,6 @@ namespace YuLinTu.Library.Business
             System.Diagnostics.Process.Start(groupMeta.FileName);
             base.OpenResult();
         }
+
     }
 }

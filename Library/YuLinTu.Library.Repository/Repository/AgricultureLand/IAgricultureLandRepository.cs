@@ -291,8 +291,8 @@ namespace YuLinTu.Library.Repository
         /// <param name="zoneCode">地域代码</param>
         /// <param name="searchOption">匹配等级</param>
         /// <returns>地块集合</returns>
-        List<T> GetCollection(string zoneCode, eLevelOption searchOption); 
-
+        List<T> GetCollection(string zoneCode, eLevelOption searchOption);
+         
         /// <summary>
         /// 获取指定地域下的所有空间地块集合
         /// </summary>

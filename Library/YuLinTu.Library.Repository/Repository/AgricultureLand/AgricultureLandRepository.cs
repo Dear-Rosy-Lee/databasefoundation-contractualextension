@@ -689,12 +689,12 @@ namespace YuLinTu.Library.Repository
         {
             int cnt = 0;
             StringBuilder b = new StringBuilder();
-         
+
             if (ids.Count > compare)
             {
                 int count = ids.Count / compare;
                 List<object> listObj = new List<object>();
-                int index = 0;              
+                int index = 0;
                 for (int i = 0; i < count; i++)
                 {
                     b.Append("(");
@@ -713,7 +713,7 @@ namespace YuLinTu.Library.Repository
                         j++;
                         index++;
                     }
-                    b.Append(")&&IsStockLand==false");                  
+                    b.Append(")&&IsStockLand==false");
                     cnt = AppendEdit(DataSource.CreateQuery<T>().Where(b.ToString(), listObj.Cast<object>().ToArray()).Delete());
                     b.Clear();
                     listObj.Clear();
@@ -880,7 +880,7 @@ namespace YuLinTu.Library.Repository
             {
                 int count = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode == zoneCode).Count();//.Select(c => c.ID)
                 if (count == 0)
-                    return Delete(c => c.LocationCode == zoneCode&&c.IsStockLand==false);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
+                    return Delete(c => c.LocationCode == zoneCode && c.IsStockLand == false);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
                 var idsSelf = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode == zoneCode).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByVitualPerson(compare, idsSelf);
             }
@@ -1087,7 +1087,7 @@ namespace YuLinTu.Library.Repository
                 cnt = Delete(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode);
 
             return cnt;
-        }
+        } 
 
         /// <summary>
         /// 按地域获取地块集合

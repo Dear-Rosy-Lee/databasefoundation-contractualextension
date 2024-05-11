@@ -3,6 +3,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using YuLinTu.Data;
@@ -101,11 +102,16 @@ namespace YuLinTu.Library.Business
                 {
                     string tempName = TemplateHelper.ExcelTemplate(TemplateFile.SenderSurveyExcel);
                     this.ReportProgress(15, string.Format("导出{0}", excelName));
+                    var diretory = argument.FileName;
+                    if (!Directory.Exists(diretory))
+                    {
+                        Directory.CreateDirectory(diretory);
+                    }
                     using (ExportSenderSurveyTable export = new ExportSenderSurveyTable())
                     {
                         export.TissueCollection = list;
                         export.ShowValue = false;
-                        export.SaveFileName = argument.FileName + @"\" + excelName + "发包方调查表";
+                        export.SaveFileName = Path.Combine(diretory, excelName + "发包方调查表");
                         export.BeginToZone(tempName);
                     }
                     result = true;

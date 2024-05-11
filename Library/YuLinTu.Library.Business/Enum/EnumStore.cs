@@ -3,19 +3,11 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using YuLinTu.Data;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Resources;
 
-namespace YuLinTu.Library.Controls
+namespace YuLinTu.Library.Business
 {
     /// <summary>
     /// 枚举值存储类
@@ -51,11 +43,25 @@ namespace YuLinTu.Library.Controls
                 for (int i = 0; i < attributeArray.Length; i++)
                 {
                     EnumNameAttribute attribute = attributeArray[i];
-                    list.Add(new EnumStore<T>()
+                    list.Add(new EnumStore<T>() { DisplayName = attribute.Description, Value = (T)attribute.Value });
+                }
+
+                Type type = typeof(T);
+                string[] names = Enum.GetNames(type);
+                string[] array = names;
+                foreach (string text in array)
+                {
+                    DisplayAttribute customAttribute = type.GetField(text).GetCustomAttribute<DisplayAttribute>();
+                    if (customAttribute != null)
                     {
-                        DisplayName = attribute.Description,
-                        Value = (T)attribute.Value
-                    });
+                        var cust = list.Find(t => t.Value.ToString() == text);
+                        if (cust == null)
+                            continue;
+                        if (!cust.Value.ToString().Equals(cust.DisplayName))
+                            continue;
+                        if (cust.DisplayName != customAttribute.Name)
+                            cust.DisplayName = customAttribute.Name;
+                    }
                 }
             }
             catch (Exception ex)

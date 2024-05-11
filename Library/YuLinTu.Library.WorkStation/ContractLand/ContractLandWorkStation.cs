@@ -635,18 +635,6 @@ namespace YuLinTu.Library.WorkStation
         }
 
         /// <summary>
-        /// 按地域获取承包台账地块集合
-        /// </summary>
-        /// <param name="zoneCode">地域代码</param>
-        /// <param na承包台账me="searchOption">匹配等级</param>
-        /// <returns>承包台账地块集合</returns>
-        public List<ContractLand> GetCollectionNoShape(string zoneCode, eLevelOption searchOption)
-        {
-            return DefaultRepository.GetCollection(zoneCode, searchOption, true);
-        }
-
-
-        /// <summary>
         /// 获取指定地域下所有空间地块集合
         /// </summary>
         /// <param name="zoneCode">指定地域</param>

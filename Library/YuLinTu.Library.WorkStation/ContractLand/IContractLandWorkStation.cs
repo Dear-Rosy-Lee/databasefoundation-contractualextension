@@ -324,8 +324,6 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>承包台账地块集合</returns>
         List<ContractLand> GetCollection(string zoneCode, eLevelOption searchOption);
 
-        List<ContractLand> GetCollectionNoShape(string zoneCode, eLevelOption searchOption);
-
         /// <summary>
         /// 获取指定地域下的所有空间地块集合
         /// </summary>
@@ -483,7 +481,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
             string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
-            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson,bool keepName, Func<string> GetReplace = null);
+            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool keepName, Func<string> GetReplace = null);
 
         /// <summary>
         /// 导出地块调查表(Word)
