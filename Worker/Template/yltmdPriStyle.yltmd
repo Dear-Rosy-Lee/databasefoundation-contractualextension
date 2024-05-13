@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Map>
     <Extent>
-        <MinX>501807.70019351161</MinX>
-        <MaxX>508725.45294239372</MaxX>
-        <MinY>3347082.10876994</MinY>
-        <MaxY>3350642.3002633806</MaxY>
+        <MinX>505259.26709101588</MinX>
+        <MaxX>505671.96479444654</MaxX>
+        <MinY>3351387.9241406471</MinY>
+        <MaxY>3351600.3172264439</MaxY>
         <SpatialReference>
             <WKID>4544</WKID>
             <WKT />
@@ -198,7 +198,7 @@
                     <InternalName>zonez_Layer</InternalName>
                     <Description></Description>
                     <Visible>True</Visible>
-                    <MinimizeScale>30000</MinimizeScale>
+                    <MinimizeScale>20000</MinimizeScale>
                     <MaximizeScale>450000</MaximizeScale>
                     <Selectable>False</Selectable>
                     <Editable>False</Editable>
@@ -232,17 +232,17 @@
                         <LabelProperty>DYMC</LabelProperty>
                         <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
                             <AllowOverlapping>False</AllowOverlapping>
-                            <ForegroundColor>#FF202020</ForegroundColor>
+                            <ForegroundColor>#FF4B0082</ForegroundColor>
                             <BackgroundColor>#00FFFFFF</BackgroundColor>
                             <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
                             <BorderThickness>0</BorderThickness>
-                            <FontSize>13</FontSize>
+                            <FontSize>12</FontSize>
                             <FontFamily>微软雅黑</FontFamily>
                             <FontStyle>Bold</FontStyle>
                             <OffsetX>0</OffsetX>
                             <OffsetY>0</OffsetY>
                             <GlowEffect>True</GlowEffect>
-                            <GlowEffectSize>3</GlowEffectSize>
+                            <GlowEffectSize>2</GlowEffectSize>
                             <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
                             <AllowTextOverflow>True</AllowTextOverflow>
                         </Symbol>
@@ -272,7 +272,7 @@
                     <Description></Description>
                     <Visible>True</Visible>
                     <MinimizeScale>2000</MinimizeScale>
-                    <MaximizeScale>60000</MaximizeScale>
+                    <MaximizeScale>80000</MaximizeScale>
                     <Selectable>True</Selectable>
                     <Editable>True</Editable>
                     <Drawable>True</Drawable>
@@ -291,17 +291,17 @@
                         <LabelProperty>DYMC</LabelProperty>
                         <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
                             <AllowOverlapping>False</AllowOverlapping>
-                            <ForegroundColor>#FF202020</ForegroundColor>
+                            <ForegroundColor>#FF800000</ForegroundColor>
                             <BackgroundColor>#00FFFFFF</BackgroundColor>
                             <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
                             <BorderThickness>0</BorderThickness>
-                            <FontSize>12</FontSize>
+                            <FontSize>10.5</FontSize>
                             <FontFamily>微软雅黑</FontFamily>
                             <FontStyle>Bold</FontStyle>
                             <OffsetX>0</OffsetX>
                             <OffsetY>0</OffsetY>
                             <GlowEffect>True</GlowEffect>
-                            <GlowEffectSize>3</GlowEffectSize>
+                            <GlowEffectSize>2</GlowEffectSize>
                             <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
                             <AllowTextOverflow>True</AllowTextOverflow>
                         </Symbol>
@@ -331,7 +331,7 @@
                     <Description></Description>
                     <Visible>True</Visible>
                     <MinimizeScale>500</MinimizeScale>
-                    <MaximizeScale>20000</MaximizeScale>
+                    <MaximizeScale>30000</MaximizeScale>
                     <Selectable>True</Selectable>
                     <Editable>True</Editable>
                     <Drawable>True</Drawable>
@@ -358,17 +358,17 @@
                         <LabelProperty>DYMC</LabelProperty>
                         <Symbol type="SimpleTextPolygonSymbolPerFeaturePartInView">
                             <AllowOverlapping>False</AllowOverlapping>
-                            <ForegroundColor>#FF202020</ForegroundColor>
+                            <ForegroundColor>#FF2F4F4F</ForegroundColor>
                             <BackgroundColor>#00FFFFFF</BackgroundColor>
                             <BorderStrokeColor>#00FFFFFF</BorderStrokeColor>
                             <BorderThickness>0</BorderThickness>
-                            <FontSize>11</FontSize>
+                            <FontSize>10</FontSize>
                             <FontFamily>微软雅黑</FontFamily>
-                            <FontStyle>Bold</FontStyle>
+                            <FontStyle>3</FontStyle>
                             <OffsetX>0</OffsetX>
                             <OffsetY>0</OffsetY>
                             <GlowEffect>True</GlowEffect>
-                            <GlowEffectSize>3</GlowEffectSize>
+                            <GlowEffectSize>2</GlowEffectSize>
                             <GlowEffectColor>#FFFFFFFF</GlowEffectColor>
                             <AllowTextOverflow>True</AllowTextOverflow>
                         </Symbol>
@@ -398,7 +398,7 @@
             <Name>区域界线</Name>
             <InternalName>zoneBoundarymult_Layer</InternalName>
             <Description></Description>
-            <Visible>False</Visible>
+            <Visible>True</Visible>
             <MinimizeScale>0</MinimizeScale>
             <MaximizeScale>2147483647</MaximizeScale>
             <Selectable>False</Selectable>
@@ -665,7 +665,7 @@
                     <Description></Description>
                     <Visible>True</Visible>
                     <MinimizeScale>0</MinimizeScale>
-                    <MaximizeScale>60000</MaximizeScale>
+                    <MaximizeScale>30000</MaximizeScale>
                     <Selectable>True</Selectable>
                     <Editable>True</Editable>
                     <Drawable>True</Drawable>
@@ -1155,7 +1155,7 @@
             <Name>界址数据</Name>
             <InternalName>boundaryMult_Layer</InternalName>
             <Description></Description>
-            <Visible>True</Visible>
+            <Visible>False</Visible>
             <MinimizeScale>0</MinimizeScale>
             <MaximizeScale>20000</MaximizeScale>
             <Selectable>True</Selectable>
@@ -1209,7 +1209,7 @@
                     <Name>界址点</Name>
                     <InternalName>dot_Layer</InternalName>
                     <Description></Description>
-                    <Visible>False</Visible>
+                    <Visible>True</Visible>
                     <MinimizeScale>0</MinimizeScale>
                     <MaximizeScale>5000</MaximizeScale>
                     <Selectable>True</Selectable>
