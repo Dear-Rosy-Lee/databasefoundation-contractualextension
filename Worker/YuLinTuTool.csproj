@@ -2049,6 +2049,9 @@
     <None Include="Template\Visio.A4.V.yltvd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Template\yltmdPriStyle.yltmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Template\公示无异议声明书.dot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2641,7 +2644,6 @@ copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Oracle\*.dll" "$(SolutionDir)Workspace\"
 copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
-
 
 editbin /largeaddressaware "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
