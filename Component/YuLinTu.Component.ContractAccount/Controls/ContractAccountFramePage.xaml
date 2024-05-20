@@ -110,6 +110,18 @@
                                     ToolTip="可以单个承包关系表导入或者批量导入承包关系表" />
                             </metro:MetroButton>
                             <metro:MetroButton
+                                x:Name="mbtnImportLandTiesExcelLZ"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/adpdiagramaddtable.png"
+                                    ImagePosition="Left"
+                                    Text="承包关系表（乐至）"
+                                    ToolTip="可以单个承包关系表导入或者批量导入承包关系表" />
+                            </metro:MetroButton>
+                            <metro:MetroButton
                                 x:Name="mbtnImportBoundaryExcel"
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"

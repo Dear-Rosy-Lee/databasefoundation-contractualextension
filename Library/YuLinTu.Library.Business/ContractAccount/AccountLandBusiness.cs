@@ -34,7 +34,7 @@ namespace YuLinTu.Library.Business
 
         private IDbContext dbContext;
         private bool isErrorRecord;
-
+        public List<string> ErrorInformation;
         private eVirtualType virtualType;
         private IContractLandWorkStation landStation;//承包台账地块业务逻辑层
         private IVirtualPersonWorkStation<LandVirtualPerson> tableStation;  //承包台账(承包方)Station
@@ -812,6 +812,56 @@ namespace YuLinTu.Library.Business
                         this.ReportProgress(100, "完成");
                         isSuccess = true;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ReportError("导入承包台账地块调查表失败!");
+                YuLinTu.Library.Log.Log.WriteException(this, "ImportData(导入承包台账调查表地块数据)", ex.Message + ex.StackTrace);
+            }
+            return isSuccess;
+        }
+
+        public bool ImportLandTiesLZ(Zone zone, List<string> fileName)
+        {
+            if (fileName == null)
+            {
+                this.ReportProgress(100, null);
+                this.ReportWarn(zone.FullName + "未获取地块调查表,或选择文件夹路径不正确,请检查执行导入操作!");
+                return false;
+            }
+            bool isSuccess = false;
+            isErrorRecord = false;
+            try
+            {
+                using (ImportLandTiesTableLZ landTableImport = new ImportLandTiesTableLZ())
+                {
+                    //List<VirtualPerson> persons = GetByZone(zone.FullCode);
+                    string excelName = GetMarkDesc(zone);
+                    landTableImport.ProgressChanged += ReportPercent; //进度条
+                    landTableImport.Alert += ReportInfo;              //记录错误信息
+                    landTableImport.CurrentZone = zone;
+                    landTableImport.ExcelName = excelName;
+                    landTableImport.TableType = TableType;
+                    landTableImport.DbContext = this.dbContext;
+                    landTableImport.Percent = 95.0;
+                    landTableImport.CurrentPercent = 5.0;
+                    landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
+                    //landTableImport.ListPerson = persons;
+                    this.ReportProgress(1, "开始读取数据");
+                    bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
+                    //landTableImport.MergeHouseData();
+                    this.ReportProgress(3, "开始检查数据");
+                    //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
+                    bool canImport = true;
+                    if (isReadSuccess && canImport && !isErrorRecord)
+                    {
+                        this.ReportProgress(5, "开始处理数据");
+                        landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
+                        this.ReportProgress(100, "完成");
+                        isSuccess = true;
+                    }
+                    ErrorInformation = landTableImport.ErrorInformation;
                 }
             }
             catch (Exception ex)
@@ -3201,7 +3251,6 @@ namespace YuLinTu.Library.Business
         /// <param name="currentZone">当前初始化地块集合所在的地域</param>
         public void ContractLandInitialTool(TaskInitialLandInfoArgument metadata, List<ContractLand> listLand, Zone currentZone)
         {
-            
             string markDesc = GetMarkDesc(currentZone);
 
             //获取地域下所有人
