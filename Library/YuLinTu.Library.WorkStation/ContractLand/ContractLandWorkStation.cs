@@ -675,11 +675,11 @@ namespace YuLinTu.Library.WorkStation
                 }
                 var vpList = new List<VirtualPerson>();
                 var otherLandList = new List<ContractLand>();
-                vpIds.ForEach(vpid => 
+                vpIds.ForEach(vpid =>
                 {
                     var getvp = VirtualPersonWorkStation.Get(vpid);
                     if (getvp == null) return;
-                    vpList.Add(getvp);                    
+                    vpList.Add(getvp);
                 }
                 );
                 vpList.RemoveAll(vp => vp.Status != virtualStatus);
@@ -1203,7 +1203,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         public void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
             string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
-            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson,bool KeepRepeatFlag, Func<string> GetReplace = null)
+            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool KeepRepeatFlag, Func<string> GetReplace = null)
         {
             if (vp == null || zone == null)
                 return;

@@ -158,7 +158,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                     //exportInfo += ImportDataMDB(collection.KJDKJH, db, zoneName, "地块", persent);
 
-                    info = string.IsNullOrEmpty(exportInfo) ? "" : ("成功导出" + zoneName + "下的数据:" + exportInfo);
+                    info = exportInfo;
                 }
                 catch (Exception ex)
                 {
@@ -169,6 +169,61 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 collection.Dispose();
             return info;
         }
+
+        /// <summary>
+        /// 导出数据
+        /// </summary>
+        public string ExportDataFile(DataCollection collection, string zoneName, int persent)
+        {
+            string info = string.Empty;
+            if (collection == null)
+            {
+                return info;
+            }
+            if (ExportFile == null)
+                ExportFile = new ExportFileEntity();
+            using (IDbContext db = DataBase.CreateDbContext(DataBasePath))
+            {
+                try
+                {
+                    //DelByZoneCode(ExportFile, db, zoneCode, DataBasePath);
+                    string exportInfo = string.Empty;
+                    if (ExportFile.TableFBF.IsExport)
+                        exportInfo += ImportDataCollection<FBF>(collection.FBFJH, db, zoneName, "发包方", persent);
+                    if (ExportFile.TableCBF.IsExport)
+                        exportInfo += ImportDataCollection<CBF>(collection.CBFJH, db, zoneName, "承包方", persent);
+                    if (ExportFile.TableJTCY.IsExport)
+                        exportInfo += ImportDataCollection<CBF_JTCY>(collection.JTCYJH, db, zoneName, "家庭成员", persent);
+                    if (ExportFile.TableCBDKXX.IsExport)
+                        exportInfo += ImportDataCollection<CBDKXX>(collection.CBDKXXJH, db, zoneName, "地块信息", persent);
+                    if (ExportFile.TableCBHT.IsExport)
+                        exportInfo += ImportDataCollection<CBHT>(collection.HTJH, db, zoneName, "承包合同", persent);
+                    if (ExportFile.TableQZDJB.IsExport)
+                        exportInfo += ImportDataCollection<CBJYQZDJB>(collection.DJBJH, db, zoneName, "登记簿", persent);
+                    if (ExportFile.TableCBQZ.IsExport)
+                        exportInfo += ImportDataCollection<CBJYQZ>(collection.CBJYQZJH, db, zoneName, "承包经营权证", persent);
+                    if (ExportFile.TableQZBF.IsExport)
+                        exportInfo += ImportDataCollection<CBJYQZ_QZBF>(collection.QZBFExJH, db, zoneName, "权证补发信息", persent);
+                    if (ExportFile.TableQZHF.IsExport)
+                        exportInfo += ImportDataCollection<CBJYQZ_QZHF>(collection.QZHFExJH, db, zoneName, "权证换发信息", persent);
+                    if (ExportFile.TableQZZX.IsExport)
+                        exportInfo += ImportDataCollection<CBJYQZ_QZZX>(collection.QZZXJH, db, zoneName, "权证注销信息", persent);
+                    if (ExportFile.TableLZHT.IsExport)
+                        exportInfo += ImportDataCollection<LZHT>(collection.LZHTJH, db, zoneName, "流转合同", persent);
+                    if (ExportFile.TableFBF.IsExport)
+                        exportInfo += ImportDataCollection<QSLYZLFJ>(collection.FJExJH, db, zoneName, "附件", persent);
+                    info = exportInfo;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            if (collection != null)
+                collection.Dispose();
+            return info;
+        }
+
 
         ///// <summary>
         ///// 导出未登记数据

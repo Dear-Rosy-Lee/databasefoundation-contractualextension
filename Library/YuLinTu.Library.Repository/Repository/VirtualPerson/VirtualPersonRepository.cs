@@ -791,10 +791,24 @@ namespace YuLinTu.Library.Repository
             return qRelation.Where(q => q.VirtualPersonID == personID).ToList();
         }
 
-        public List<BelongRelation> GetRelationByZone(string zoneCode)
+        public List<BelongRelation> GetRelationByZone(string zoneCode, eLevelOption option)
         {
             var qRelation = DataSource.CreateQuery<BelongRelation>();
-            return qRelation.Where(q => q.ZoneCode == zoneCode).ToList();
+            List<BelongRelation> list = new List<BelongRelation>();
+            switch (option)
+            {
+                case eLevelOption.Self:
+                    list = qRelation.Where(q => q.ZoneCode == zoneCode).ToList();
+                    break;
+                case eLevelOption.Subs:
+                case eLevelOption.SelfAndSubs:
+
+                    list = qRelation.Where(q => q.ZoneCode.StartsWith(zoneCode)).ToList();
+                    break;
+                default:
+                    break;
+            }
+            return list;
         }
 
         #endregion Methods

@@ -164,7 +164,7 @@ namespace YuLinTu.Library.Business
             //    }
             //}
             string titleName = UnitName + "农村土地承包经营权发包方调查表";
-            SetRange("A1", "O1", titleName);
+            SetRange("A1", "P1", titleName);
             var order = TissueCollection.OrderBy(te =>
             {
                 int num = 0;
@@ -199,6 +199,7 @@ namespace YuLinTu.Library.Business
                 SetRange("M" + index, "M" + index, (tissue.CheckDate != null && tissue.CheckDate.HasValue) ? ToolDateTime.GetLongDateString(tissue.CheckDate.Value) : "");
                 SetRange("N" + index, "N" + index, tissue.CheckOpinion);
                 SetRange("O" + index, "O" + index, tissue.Comment);
+                SetRange("P" + index, "P" + index, tissue.SocialCode);
                 index++;
             }
             //for (int row = index; row < 34; row++)
@@ -228,7 +229,8 @@ namespace YuLinTu.Library.Business
             SetRange("M" + index, "M" + index, "\\");
             SetRange("N" + index, "N" + index, "\\");
             SetRange("O" + index, "O" + index, "\\");
-            SetLineType("A1", "O" + index, true);
+            SetRange("P" + index, "P" + index, "\\");
+            SetLineType("A1", "P" + index, true);
             //index++;
         }
 

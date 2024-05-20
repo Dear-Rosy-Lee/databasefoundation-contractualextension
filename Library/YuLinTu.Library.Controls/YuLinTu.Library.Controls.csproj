@@ -269,7 +269,6 @@
     <Compile Include="Configuration\CommonConfigPage.xaml.cs">
       <DependentUpon>CommonConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\EnumStore.cs" />
     <Compile Include="Common\InfoPageBase.cs" />
     <Compile Include="Common\NavigateZone.cs" />
     <Compile Include="Configuration\OptionsConnectionStrings.xaml.cs">

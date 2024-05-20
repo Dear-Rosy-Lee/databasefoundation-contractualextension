@@ -481,7 +481,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
             string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
-            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson,bool keepName, Func<string> GetReplace = null);
+            string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool keepName, Func<string> GetReplace = null);
 
         /// <summary>
         /// 导出地块调查表(Word)

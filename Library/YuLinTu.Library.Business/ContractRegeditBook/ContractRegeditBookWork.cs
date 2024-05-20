@@ -128,12 +128,12 @@ namespace YuLinTu.Library.Business
         /// <param name="dt"></param>
         protected virtual void SetSharePersonValue(ContractRegeditBookPrinterData dt)
         {
-            var personSection = WarrantDefine.IsDeleteIndexPage ? 0 : 1;
+            var personSection = 0;
 
             List<Person> person = dt.SharePersons;
             if (SystemSet.PersonTable)
                 person.Remove(person.Find(c => c.IsSharedLand.Equals("否")));
-            int row = 16;
+            int row = 10;
             if (person.Count - 10 > 0)
             {
                 InsertTableRow(0, row, person.Count - 10);
@@ -159,10 +159,9 @@ namespace YuLinTu.Library.Business
                 string comment = person[i].Comment;
 
                 SetTableCellValue(personSection, 0, row, 0, InitalizeFamilyName(name));
-                SetTableCellValue(personSection, 0, row, 1, sex);
-                SetTableCellValue(personSection, 0, row, 2, Relationship);
-                SetTableCellValue(personSection, 0, row, 3, icn);
-                SetTableCellValue(personSection, 0, row, 4, string.IsNullOrEmpty(comment) ? "" : comment);
+                SetTableCellValue(personSection, 0, row, 1, Relationship);
+                SetTableCellValue(personSection, 0, row, 2, icn);
+                SetTableCellValue(personSection, 0, row, 3, string.IsNullOrEmpty(comment) ? "" : comment);
                 row++;
             }
         }
@@ -314,7 +313,7 @@ namespace YuLinTu.Library.Business
         /// <param name="dt"></param>
         protected virtual void SetContractLandValue(ContractRegeditBookPrinterData dt)
         {
-            var landSection = WarrantDefine.IsDeleteIndexPage ? 1 : 2;
+            var landSection = 0;
 
             bool ActualAreaColumnWriteActualAreaWithLandBook = true; // 这个设置还需要探讨
             bool useNeighbor = true;
@@ -324,7 +323,7 @@ namespace YuLinTu.Library.Business
             value = ToolConfiguration.GetSpecialAppSettingValue("ExportLandBookCommentSetting", "false");
             Boolean.TryParse(value, out exportLandComment);
 
-            int tableIndex = 0;
+            int tableIndex = 1;
             int startRow = 2;
             LandCollection.Sort("IsStockLand", eOrder.Ascending);
             if (LandCollection != null && LandCollection.Count > 0)
@@ -404,23 +403,12 @@ namespace YuLinTu.Library.Business
                     string west = string.IsNullOrEmpty(LandCollection[i].NeighborWest) ? "" : LandCollection[i].NeighborWest;
                     string east = string.IsNullOrEmpty(LandCollection[i].NeighborEast) ? "" : LandCollection[i].NeighborEast;
 
-                    SetTableCellValue(landSection, tableIndex, startRow, 0, code);
                     SetTableCellValue(landSection, tableIndex, startRow, 1, name);
-                    SetTableCellValue(landSection, tableIndex, startRow, 2, east);
-                    SetTableCellValue(landSection, tableIndex, startRow, 3, south);
-                    SetTableCellValue(landSection, tableIndex, startRow, 4, west);
-                    SetTableCellValue(landSection, tableIndex, startRow, 5, north);
-                    SetTableCellValue(landSection, tableIndex, startRow, 6, locationStr);
-                    SetTableRowHeight(1, startRow, currentRowHright);
-                    SetTableCellValue(landSection, tableIndex, startRow, 7, tableArea);
-                    SetTableCellValue(landSection, tableIndex, startRow, 8, actualArea);
-                    SetTableCellValue(landSection, tableIndex, startRow, 9, awareArea);
-
-                    SetTableCellValue(landSection, tableIndex, startRow, 10, landpurpose);
-                    SetTableCellValue(landSection, tableIndex, startRow, 11, levelString);
-                    SetTableCellValue(landSection, tableIndex, startRow, 12, landName);
-                    SetTableCellValue(landSection, tableIndex, startRow, 13, isFarmerLand);
-                    SetTableCellValue(landSection, tableIndex, startRow, 14, comment);
+                    SetTableCellValue(landSection, tableIndex, startRow, 2, code);
+                    SetTableCellValue(landSection, tableIndex, startRow, 3, tableArea);
+                    SetTableCellValue(landSection, tableIndex, startRow, 4, actualArea);
+                    SetTableCellValue(landSection, tableIndex, startRow, 5, isFarmerLand);
+                    SetTableCellValue(landSection, tableIndex, startRow, 6, east + "\n" + south + "\n" + west + "\n" + east);
 
                     startRow++;
                 }

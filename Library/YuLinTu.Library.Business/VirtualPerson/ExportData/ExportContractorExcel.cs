@@ -213,6 +213,7 @@ namespace YuLinTu.Library.Business
                 SaveAs(SaveFilePath);
                 // PrintView();
                 //PostProgress(100);
+                GC.Collect();
             }
             catch (System.Exception e)
             {
@@ -972,7 +973,6 @@ namespace YuLinTu.Library.Business
                 vp = null;
                 sharePersons.Clear();
                 tablePersons.Clear();
-                GC.Collect();
             }
 
             #endregion 户信息

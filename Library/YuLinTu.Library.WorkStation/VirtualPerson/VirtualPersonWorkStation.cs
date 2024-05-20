@@ -457,9 +457,9 @@ namespace YuLinTu.Library.WorkStation
             return DefaultRepository.GetRelationsByVpID(personID);
         }
 
-        public List<BelongRelation> GetRelationByZone(string zoneCode)
+        public List<BelongRelation> GetRelationByZone(string zoneCode, eLevelOption option)
         {
-            return DefaultRepository.GetRelationByZone(zoneCode);
+            return DefaultRepository.GetRelationByZone(zoneCode, option);
         }
 
         #endregion 方法实现

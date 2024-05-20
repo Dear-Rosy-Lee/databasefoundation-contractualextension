@@ -449,11 +449,11 @@ namespace YuLinTu.Library.Business
                     zoneName = zoneStation.GetVillageName(zone);
                 }
                 var landStation = dbContext.CreateContractLandWorkstation();
-                List<ContractLand> landArrays = landStation.GetCollection(zone.FullCode);
+                List<ContractLand> landArrays = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
                 landArrays.LandNumberFormat(SystemSetDefine);
                 var concordStation = dbContext.CreateConcordStation();
                 var bookStation = dbContext.CreateRegeditBookStation();
-                var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode);
+                var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode,eLevelOption.Self);
                 var listBooks = bookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
                 string filePath = string.Empty;
                 ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
