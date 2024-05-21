@@ -242,7 +242,7 @@
     <Compile Include="Core\SqliteManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataCollection.cs" />
+    <Compile Include="Core\DataCollection.cs" />
     <Compile Include="Entrance.cs" />
     <Compile Include="Information\FeatureCode.cs" />
     <Compile Include="TaskPageContext.cs" />
