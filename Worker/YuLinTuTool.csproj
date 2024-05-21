@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props" Condition="Exists('..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" />
   <Import Project="..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.props" Condition="Exists('..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.props')" />
   <Import Project="..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.2.1\build\YuLinTu.Components.Ultilities.props" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.2.1\build\YuLinTu.Components.Ultilities.props')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.props" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.props')" />
   <Import Project="..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.props" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.props')" />
-  <Import Project="..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.props" Condition="Exists('..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.props')" />
   <Import Project="..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.props" Condition="Exists('..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.props')" />
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
   <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
@@ -2852,8 +2852,6 @@ copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
     <Error Condition="!Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.targets'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.props'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.props'))" />
@@ -2864,6 +2862,8 @@ copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
     <Error Condition="!Exists('..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -2883,12 +2883,12 @@ copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
   <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.targets" Condition="Exists('..\packages\YuLinTu.Data.Oracle.6.8.2.1\build\YuLinTu.Data.Oracle.targets')" />
-  <Import Project="..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.targets" Condition="Exists('..\packages\YuLinTu.Data.SQLServer.6.8.2.1\build\YuLinTu.Data.SQLServer.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.targets" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.2.1\build\YuLinTu.Components.Core.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.targets" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.2.1\build\YuLinTu.Components.Task.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.2.1\build\YuLinTu.Components.Ultilities.targets" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.2.1\build\YuLinTu.Components.Ultilities.targets')" />
   <Import Project="..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\packages\YuLinTu.tGIS.Client.6.8.2.1\build\YuLinTu.tGIS.Client.targets')" />
   <Import Project="..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.targets" Condition="Exists('..\packages\YuLinTu.Components.tGIS.6.8.8.1\build\YuLinTu.Components.tGIS.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets" Condition="Exists('..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
