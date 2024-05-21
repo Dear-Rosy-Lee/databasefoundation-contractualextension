@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
+using Quality.Business.TaskBasic.GDAL;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Component.BatchDataBaseTask
@@ -18,8 +19,8 @@ namespace YuLinTu.Component.BatchDataBaseTask
         protected override void OnConnect()
         {
             RegisterWorkspaceContext<WorkspaceContext>();
-            LanguageAttribute.AddLanguage(YuLinTuQuality.Business.TaskBasic.Properties.Resources.FolderChs);
-            YuLinTuQuality.Business.TaskBasic.GDALShapeFileWriter<string>.Registerdll();
+            LanguageAttribute.AddLanguage(Quality.Business.TaskBasic.Properties.Resources.FolderChs);
+            GDALShapeFileWriter<string>.Registerdll();
         }
 
         #endregion

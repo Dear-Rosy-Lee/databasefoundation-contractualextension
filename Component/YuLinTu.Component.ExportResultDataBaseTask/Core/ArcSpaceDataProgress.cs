@@ -1,20 +1,21 @@
 ﻿/*
  * (C) 2014-2017 鱼鳞图公司版权所有，保留所有权利
 */
+using GeoAPI.Geometries;
+using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
+using Quality.Business.TaskBasic.GDAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using NetTopologySuite.Features;
-using NetTopologySuite.IO;
-using GeoAPI.Geometries;
-using NetTopologySuite.Geometries;
 using System.Xml;
-using YuLinTuQuality.Business.Entity;
 using YuLinTu;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {
@@ -590,7 +591,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var columns = pi.GetValue(si, null) as List<FieldInformation>;
             foreach (var item in columns)
             {
-                header.AddColumn(item.FieldName, item.CharType, item.FieldLength, item.FieldPrecision);
+                var typechar = 'C';
+                if (item.CharType == "Int")
+                    typechar = 'N';
+                else if (item.CharType == "Double" || item.CharType == "Float")
+                    typechar = 'F';
+                header.AddColumn(item.FieldName, typechar, item.FieldLength, item.FieldPrecision);
             }
             return header;
         }

@@ -1,7 +1,7 @@
 ﻿/*
  * (C) 2016 鱼鳞图公司版权所有,保留所有权利
 */
-using YuLinTuQuality.Business.Entity;
+using Quality.Business.Entity;
 using System;
 using System.Collections.Generic;
 

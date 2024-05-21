@@ -4,20 +4,19 @@
 
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using YuLinTu.Data;
-using YuLinTuQuality.Business.Entity;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using YuLinTu.Data;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.Controls;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
-using YuLinTuQuality.Business.TaskBasic;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
-using NPOI.SS.Formula.Functions;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -787,28 +786,6 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 htNumber + "条,登记簿" + djbNumber + "条,权证" + qzNumner + "条,地块" + dkNumber + "条,权证注销数据" + zxNumber +
                 "条,权证补发数据" + bfNumber + "条,权证换发数据" + hfNumber + "条,流转合同数据" + lzNumber + "条,附件数据" + fjNumber + "条,非承包地" + nccount + "块");
             entityList = null;
-        }
-
-        /// <summary>
-        /// 获取子集地域
-        /// </summary>
-        private void GetChildrenZone(ZoneSelectInfo zoneInfo, List<Zone> zoneList)
-        {
-            if (zoneInfo == null)
-            {
-                return;
-            }
-            if (zoneInfo != null && zoneInfo.Entity != null)
-            {
-                zoneList.Add(zoneInfo.Entity);
-            }
-            if (zoneInfo.Children != null)
-            {
-                foreach (var item in zoneInfo.Children)
-                {
-                    GetChildrenZone(item, zoneList);
-                }
-            }
         }
 
         private void ImportContractLandPropertyRightDatas(IDbContext localService, List<ComplexRightEntity> entityList, string zoneName = null, string zoneCode = null, bool isnormalexport = true)

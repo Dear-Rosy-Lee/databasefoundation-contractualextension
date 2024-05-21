@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using YuLinTuQuality.Business.Entity;
+using Quality.Business.Entity;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -112,7 +112,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
     public class CBDKXXSC : CBDKXX
     {
-        public const string TableName = "CBDKXX";
+        public new string TableName = "CBDKXX";
         public string DKLB { get; set; }
     }
 }

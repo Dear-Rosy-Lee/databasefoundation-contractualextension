@@ -2,15 +2,13 @@
  * (C)2015 鱼鳞图公司版权所有，保留所有权利
  */
 
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using YuLinTu.Excel;
 using YuLinTu.Library.Entity;
-using YuLinTu.Unity;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
-using Zone = YuLinTuQuality.Business.Entity.Zone;
+using Zone = Quality.Business.Entity.Zone;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {

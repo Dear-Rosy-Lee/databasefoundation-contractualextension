@@ -5,23 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Library.Entity;
+using YuLinTu.Data;
 using YuLinTu.Library.Repository;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Windows;
-using YuLinTu.Data;
-using YuLinTu.Library.Business;
-using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
@@ -34,7 +21,9 @@ namespace YuLinTu.Library.Controls
         #region Fields
 
         private ZoneDataItem rootZone;
-
+        public ZoneSelectInfo rootInfo;
+        private List<ZoneSelectInfo> zoneList;
+        public delegate List<ZoneSelectInfo> GetZoneDelegate();
         #endregion
 
         #region Properties
@@ -57,6 +46,11 @@ namespace YuLinTu.Library.Controls
         /// 数据源
         /// </summary>
         public IDbContext DbContext { get; set; }
+
+        /// <summary>
+        /// 获取地域
+        /// </summary>
+        public GetZoneDelegate GetZone { get; set; }
 
         #endregion
 
@@ -82,6 +76,10 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         protected override void OnInitializeGo()
         {
+            if (GetZone != null)
+            {
+                zoneList = GetZone();
+            }
             RootZone = new ZoneDataItem()
             {
                 FullCode = "86",

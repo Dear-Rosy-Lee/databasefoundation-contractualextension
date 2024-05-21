@@ -11,7 +11,7 @@ using YuLinTu.Data;
 using YuLinTu.Data.SQLite;
 using System.Collections.Generic;
 using System.Data;
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {

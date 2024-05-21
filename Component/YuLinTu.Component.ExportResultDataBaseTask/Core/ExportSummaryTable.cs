@@ -1,6 +1,8 @@
 ﻿/*
  * (C)2015 鱼鳞图公司版权所有，保留所有权利
  */
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +10,6 @@ using System.Linq;
 using System.Reflection;
 using YuLinTu.Data;
 using YuLinTu.Excel;
-using YuLinTu.Unity;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {

@@ -167,6 +167,15 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Quality.Business.Entity">
+      <HintPath>..\..\Dependencies\Quality\Quality.Business.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Quality.Business.TaskBasic">
+      <HintPath>..\..\Dependencies\Quality\Quality.Business.TaskBasic.dll</HintPath>
+    </Reference>
+    <Reference Include="Quality.Business.TaskBasic.GDAL">
+      <HintPath>..\..\Dependencies\Quality\Quality.Business.TaskBasic.GDAL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -206,12 +215,6 @@
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTuQuality.Business.Entity">
-      <HintPath>..\..\Dependencies\Quality\YuLinTuQuality.Business.Entity.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTuQuality.Business.TaskBasic">
-      <HintPath>..\..\Dependencies\Quality\YuLinTuQuality.Business.TaskBasic.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
@@ -219,9 +222,6 @@
     </Compile>
     <Compile Include="Configuration\ExportLastResSetDefine.cs" />
     <Compile Include="Core\ArcSpaceDataProgress.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\DataCollection.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\DataExportProgress.cs">
@@ -242,6 +242,7 @@
     <Compile Include="Core\SqliteManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataCollection.cs" />
     <Compile Include="Entrance.cs" />
     <Compile Include="Information\FeatureCode.cs" />
     <Compile Include="TaskPageContext.cs" />

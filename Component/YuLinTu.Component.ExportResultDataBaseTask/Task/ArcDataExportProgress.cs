@@ -2,6 +2,8 @@
  * (C) 2021 - 2024 鱼鳞图公司版权所有,保留所有权利
 */
 
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +18,6 @@ using YuLinTu.Library.WorkStation;
 using YuLinTu.NetAux;
 using YuLinTu.Spatial;
 using YuLinTu.Windows;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {
@@ -595,7 +595,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 var summery = new DataSummary();
                 summery.UnitName = zone.FullName;
                 summery.UnitCode = InitalizeZoneCode(zone);
-                summery.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)(zone.Level));
+                summery.Level = (Quality.Business.Entity.eZoneLevel)((int)(zone.Level));
                 summery.ZoneCode = zone.FullCode;
                 var count = VirtualPersonStation.GetByZoneCode(zone.FullCode).Count();
                 summerys.Add(summery);
@@ -696,7 +696,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var summery = new DataSummary();
             summery.UnitName = zone.FullName;
             summery.UnitCode = InitalizeZoneCode(zone);
-            summery.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)zone.Level);
+            summery.Level = (Quality.Business.Entity.eZoneLevel)((int)zone.Level);
             summery.ZoneCode = zone.FullCode;
             if (insert)
             {
@@ -729,7 +729,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     var summary = new DataSummary();
                     summary.UnitName = cz.FullName;
                     summary.UnitCode = InitalizeZoneCode(cz);
-                    summary.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)(cz.Level));
+                    summary.Level = (Quality.Business.Entity.eZoneLevel)((int)(cz.Level));
                     summary.ZoneCode = cz.FullCode;
                     summerys.Add(summary);
                     var count = datas.FamilyCollection.Count(t => t.ZoneCode == cz.FullCode);
@@ -2993,12 +2993,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化县级行政区
         /// </summary>
-        private List<XJXZQ> InitalizeCountyData(List<YuLinTuQuality.Business.Entity.Zone> zones)
+        private List<XJXZQ> InitalizeCountyData(List<Quality.Business.Entity.Zone> zones)
         {
             List<XJXZQ> countys = new List<XJXZQ>();
             foreach (var zone in zones)
             {
-                if (zone.Level != YuLinTuQuality.Business.Entity.eZoneLevel.County)
+                if (zone.Level != Quality.Business.Entity.eZoneLevel.County)
                 {
                     continue;
                 }
@@ -3015,12 +3015,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化乡镇级行政区
         /// </summary>
-        private List<XJQY> InitalizeTownData(List<YuLinTuQuality.Business.Entity.Zone> zones)
+        private List<XJQY> InitalizeTownData(List<Quality.Business.Entity.Zone> zones)
         {
             List<XJQY> towns = new List<XJQY>();
             foreach (var zone in zones)
             {
-                if (zone.Level != YuLinTuQuality.Business.Entity.eZoneLevel.Town)
+                if (zone.Level != Quality.Business.Entity.eZoneLevel.Town)
                 {
                     continue;
                 }
@@ -3037,12 +3037,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化村级行政区
         /// </summary>
-        private List<CJQY> InitalizeVillageData(List<YuLinTuQuality.Business.Entity.Zone> zones)
+        private List<CJQY> InitalizeVillageData(List<Quality.Business.Entity.Zone> zones)
         {
             List<CJQY> villages = new List<CJQY>();
             foreach (var zone in zones)
             {
-                if (zone.Level != YuLinTuQuality.Business.Entity.eZoneLevel.Village)
+                if (zone.Level != Quality.Business.Entity.eZoneLevel.Village)
                 {
                     continue;
                 }
@@ -3059,12 +3059,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化组级行政区
         /// </summary>
-        private List<ZJQY> InitalizeGroupData(List<YuLinTuQuality.Business.Entity.Zone> zones)
+        private List<ZJQY> InitalizeGroupData(List<Quality.Business.Entity.Zone> zones)
         {
             List<ZJQY> groups = new List<ZJQY>();
             foreach (var zone in zones)
             {
-                if (zone.Level != YuLinTuQuality.Business.Entity.eZoneLevel.Group)
+                if (zone.Level != Quality.Business.Entity.eZoneLevel.Group)
                 {
                     continue;
                 }
@@ -3081,17 +3081,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化点状地物
         /// </summary>
-        private List<YuLinTuQuality.Business.Entity.DZDW> InitalizePointData()
+        private List<Quality.Business.Entity.DZDW> InitalizePointData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.DZDW> points = new List<YuLinTu.Library.Entity.DZDW>();
             zones.ForEach(z => points.AddRange(dzdwStation.GetByZoneCode(z.FullCode)));
 
-            List<YuLinTuQuality.Business.Entity.DZDW> dzdws = new List<YuLinTuQuality.Business.Entity.DZDW>();
+            List<Quality.Business.Entity.DZDW> dzdws = new List<Quality.Business.Entity.DZDW>();
             int startIndex = QuantityValue.PointThing;
             foreach (var point in points)
             {
-                YuLinTuQuality.Business.Entity.DZDW dzdw = new YuLinTuQuality.Business.Entity.DZDW();
+                Quality.Business.Entity.DZDW dzdw = new Quality.Business.Entity.DZDW();
                 dzdw.BSM = startIndex;
                 //dzdw.YSDM = point.YSDM;
                 dzdw.YSDM = "196011";
@@ -3109,17 +3109,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 初始化线状地物
         /// </summary>
         /// <returns></returns>
-        private List<YuLinTuQuality.Business.Entity.XZDW> InitalizePolylineData()
+        private List<Quality.Business.Entity.XZDW> InitalizePolylineData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.XZDW> roads = new List<YuLinTu.Library.Entity.XZDW>();
             zones.ForEach(z => roads.AddRange(xzdwStation.GetByZoneCode(z.FullCode)));
 
             int startIndex = QuantityValue.LineThing;
-            List<YuLinTuQuality.Business.Entity.XZDW> xzdws = new List<YuLinTuQuality.Business.Entity.XZDW>();
+            List<Quality.Business.Entity.XZDW> xzdws = new List<Quality.Business.Entity.XZDW>();
             foreach (var road in roads)
             {
-                YuLinTuQuality.Business.Entity.XZDW xzdw = new YuLinTuQuality.Business.Entity.XZDW();
+                Quality.Business.Entity.XZDW xzdw = new Quality.Business.Entity.XZDW();
                 xzdw.BSM = startIndex;
                 //xzdw.YSDM = road.YSDM;
                 xzdw.YSDM = "196021";
@@ -3140,17 +3140,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化面状地物
         /// </summary>
-        private List<YuLinTuQuality.Business.Entity.MZDW> InitalizePolygonData()
+        private List<Quality.Business.Entity.MZDW> InitalizePolygonData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.MZDW> spots = new List<YuLinTu.Library.Entity.MZDW>();
             zones.ForEach(z => spots.AddRange(mzdwStation.GetByZoneCode(z.FullCode)));
 
-            List<YuLinTuQuality.Business.Entity.MZDW> mzdws = new List<YuLinTuQuality.Business.Entity.MZDW>();
+            List<Quality.Business.Entity.MZDW> mzdws = new List<Quality.Business.Entity.MZDW>();
             int startIndex = QuantityValue.AreaThing;
             foreach (var spot in spots)
             {
-                YuLinTuQuality.Business.Entity.MZDW mzdw = new YuLinTuQuality.Business.Entity.MZDW();
+                Quality.Business.Entity.MZDW mzdw = new Quality.Business.Entity.MZDW();
                 mzdw.BSM = startIndex;
                 //mzdw.YSDM = spot.YSDM;
                 mzdw.YSDM = "196031";
@@ -3178,7 +3178,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<KZD> kzds = new List<KZD>();
             foreach (var point in points)
             {
-                YuLinTuQuality.Business.Entity.KZD kzd = new YuLinTuQuality.Business.Entity.KZD();
+                Quality.Business.Entity.KZD kzd = new Quality.Business.Entity.KZD();
                 kzd.BSM = startIndex;
                 kzd.YSDM = point.FeatureCode;
                 kzd.KZDMC = point.PointName;
@@ -3213,7 +3213,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<QYJX> regions = new List<QYJX>();
             foreach (var point in points)
             {
-                YuLinTuQuality.Business.Entity.QYJX qyjx = new YuLinTuQuality.Business.Entity.QYJX();
+                Quality.Business.Entity.QYJX qyjx = new Quality.Business.Entity.QYJX();
                 qyjx.BSM = startIndex;
                 qyjx.YSDM = point.FeatureCode;
                 qyjx.JXLX = point.BoundaryLineType;
@@ -3239,7 +3239,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<JBNTBHQ> farmers = new List<JBNTBHQ>();
             foreach (var point in points)
             {
-                YuLinTuQuality.Business.Entity.JBNTBHQ jbnt = new YuLinTuQuality.Business.Entity.JBNTBHQ();
+                Quality.Business.Entity.JBNTBHQ jbnt = new Quality.Business.Entity.JBNTBHQ();
                 jbnt.BSM = startIndex;
                 jbnt.YSDM = point.FeatureCode;
                 jbnt.BHQBH = point.ConserveNumber;
@@ -3413,10 +3413,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         {
             var zones = ZoneMapping(zoneList);
             TableDataExportProgress(zones);
-            spaceProgress.XAJXZQS = InitalizeCountyData(zones.FindAll(ze => ze.Level == YuLinTuQuality.Business.Entity.eZoneLevel.County));
-            spaceProgress.XGJXZQS = InitalizeTownData(zones.FindAll(ze => ze.Level == YuLinTuQuality.Business.Entity.eZoneLevel.Town));
-            spaceProgress.CJXZQS = InitalizeVillageData(zones.FindAll(ze => ze.Level == YuLinTuQuality.Business.Entity.eZoneLevel.Village));
-            spaceProgress.ZJXZQS = InitalizeGroupData(zones.FindAll(ze => ze.Level == YuLinTuQuality.Business.Entity.eZoneLevel.Group));
+            spaceProgress.XAJXZQS = InitalizeCountyData(zones.FindAll(ze => ze.Level == Quality.Business.Entity.eZoneLevel.County));
+            spaceProgress.XGJXZQS = InitalizeTownData(zones.FindAll(ze => ze.Level == Quality.Business.Entity.eZoneLevel.Town));
+            spaceProgress.CJXZQS = InitalizeVillageData(zones.FindAll(ze => ze.Level == Quality.Business.Entity.eZoneLevel.Village));
+            spaceProgress.ZJXZQS = InitalizeGroupData(zones.FindAll(ze => ze.Level == Quality.Business.Entity.eZoneLevel.Group));
             spaceProgress.ExportSpaceZone();//导出空间地域数据
             ComplexSpaceEntity spaceEntity = new ComplexSpaceEntity();
             spaceEntity.DZDW = InitalizePointData();
@@ -3431,11 +3431,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出权属单位代码表
         /// </summary>
-        private bool TableDataExportProgress(List<YuLinTuQuality.Business.Entity.Zone> zones)
+        private bool TableDataExportProgress(List<Quality.Business.Entity.Zone> zones)
         {
             try
             {
-                var list = new List<YuLinTuQuality.Business.Entity.Zone>();
+                var list = new List<Quality.Business.Entity.Zone>();
                 var tissues = new List<CollectivityTissue>();
 
                 if (currentZone.Level < YuLinTu.Library.Entity.eZoneLevel.County)
@@ -3454,7 +3454,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                     foreach (var z in entityParentsZones)
                     {
-                        YuLinTuQuality.Business.Entity.Zone exZone = new YuLinTuQuality.Business.Entity.Zone();
+                        Quality.Business.Entity.Zone exZone = new Quality.Business.Entity.Zone();
                         exZone.ID = z.ID;
                         exZone.Code = z.Code;
                         exZone.Comment = z.Comment;
@@ -3462,7 +3462,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         exZone.CreateUser = z.CreateUser;
                         exZone.FullCode = z.FullCode;
                         exZone.FullName = z.FullName;
-                        exZone.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)(z.Level));
+                        exZone.Level = (Quality.Business.Entity.eZoneLevel)((int)(z.Level));
                         exZone.Name = z.Name;
                         exZone.UpLevelCode = z.UpLevelCode;
                         exZone.UpLevelName = z.UpLevelName;
@@ -3492,15 +3492,15 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 地域数据映射
         /// </summary>
-        private List<YuLinTuQuality.Business.Entity.Zone> ZoneMapping(List<YuLinTu.Library.Entity.Zone> zones)
+        private List<Quality.Business.Entity.Zone> ZoneMapping(List<YuLinTu.Library.Entity.Zone> zones)
         {
-            List<YuLinTuQuality.Business.Entity.Zone> zoneCollection = new List<YuLinTuQuality.Business.Entity.Zone>();
+            List<Quality.Business.Entity.Zone> zoneCollection = new List<Quality.Business.Entity.Zone>();
             // ArcGisZoneCollection arcZones = gisInstance.ArcGisZone.GetByZoneCode(county.FullCode, Library.Data.ConditionOption.Like_LeftFixed);
             List<YuLinTu.Library.Entity.Zone> arcZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
 
             foreach (var zone in zones)
             {
-                YuLinTuQuality.Business.Entity.Zone exZone = new YuLinTuQuality.Business.Entity.Zone();
+                Quality.Business.Entity.Zone exZone = new Quality.Business.Entity.Zone();
                 exZone.ID = zone.ID;
                 exZone.Code = zone.Code;
                 exZone.Comment = zone.Comment;
@@ -3508,7 +3508,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 exZone.CreateUser = zone.CreateUser;
                 exZone.FullCode = zone.FullCode;
                 exZone.FullName = zone.FullName;
-                exZone.Level = (YuLinTuQuality.Business.Entity.eZoneLevel)((int)(zone.Level));
+                exZone.Level = (Quality.Business.Entity.eZoneLevel)((int)(zone.Level));
                 exZone.Name = zone.Name;
                 exZone.UpLevelCode = zone.UpLevelCode;
                 exZone.UpLevelName = zone.UpLevelName;

@@ -5,7 +5,7 @@
 using System;
 using System.Configuration;
 using System.IO;
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.BatchDataBaseTask
 {

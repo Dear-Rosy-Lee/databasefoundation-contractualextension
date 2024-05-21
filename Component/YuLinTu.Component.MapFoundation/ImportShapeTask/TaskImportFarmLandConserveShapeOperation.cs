@@ -10,7 +10,7 @@ using YuLinTu.Data.Shapefile;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.MapFoundation
 {

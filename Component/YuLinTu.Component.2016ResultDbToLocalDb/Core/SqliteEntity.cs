@@ -1,6 +1,4 @@
-﻿using YuLinTuQuality.Business.Entity;
-
-namespace YuLinTu.Component.ResultDbof2016ToLocalDb
+﻿namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
     public class BSST
     {

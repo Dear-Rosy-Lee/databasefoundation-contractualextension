@@ -1,19 +1,8 @@
-﻿using System;
+﻿using Quality.Business.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using System.Collections;
-using YuLinTuQuality.Business.Entity;
-using System.IO;
-using System.Windows.Forms;
-using YuLinTuQuality.Business.TaskBasic;
-using YuLinTu.Library.WorkStation;
-using YuLinTu.Data;
-using YuLinTu.Library.Repository;
 using YuLinTu.Spatial;
-using System.Threading.Tasks;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
