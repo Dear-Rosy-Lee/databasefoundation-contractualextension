@@ -260,7 +260,7 @@ namespace YuLinTu.Library.Business
             TableArea += TotalLandTable;
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
-            string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(5, '0');
+            string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
@@ -340,7 +340,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("Z" + 3, "AB" + 3, Tissue.LawyerAddress);
             InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
             InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
-            InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyDate);
+            InitalizeRangeValue("AI" + 3, "AI" + 3, Tissue.SurveyDate);
 
             WriteCount();
         }

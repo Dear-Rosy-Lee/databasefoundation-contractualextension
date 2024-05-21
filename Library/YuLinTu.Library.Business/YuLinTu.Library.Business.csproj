@@ -471,11 +471,15 @@
     <Compile Include="ContractAccount\ImportData\TaskGroupImportLandTableOperation.cs" />
     <Compile Include="ContractAccount\ImportData\TaskImportLandTableArgument.cs" />
     <Compile Include="ContractAccount\ImportData\TaskImportLandTableOperation.cs" />
-    <Compile Include="ContractAccount\ImportLandTiesTable.cs" />
+    <Compile Include="ContractAccount\ImportLandTiesLZ\ImportLandTiesTableLZ.cs" />
+    <Compile Include="ContractAccount\ImportLandTiesLZ\InitalizeLandTiesTableLZ.cs" />
+    <Compile Include="ContractAccount\ImportLandTiesLZ\TaskImportLandTiesTableArgumentLZ.cs" />
+    <Compile Include="ContractAccount\ImportLandTiesLZ\TaskImportLandTiesTableOperationLZ.cs" />
+    <Compile Include="ContractAccount\ImportLandTies\ImportLandTiesTable.cs" />
     <Compile Include="ContractAccount\ImportLandTies\TaskImportLandTiesTableArgument.cs" />
     <Compile Include="ContractAccount\ImportLandTies\TaskImportLandTiesTableOperation.cs" />
     <Compile Include="ContractAccount\InitalizeContractorSurveyExcel.cs" />
-    <Compile Include="ContractAccount\InitalizeLandTiesTable.cs" />
+    <Compile Include="ContractAccount\ImportLandTies\InitalizeLandTiesTable.cs" />
     <Compile Include="ContractAccount\InitalizeSecondLandTableInformation.cs" />
     <Compile Include="ContractAccount\InitalizeLandSurveyInformation.cs" />
     <Compile Include="ContractAccount\InitalzieContractorInformation.cs" />
