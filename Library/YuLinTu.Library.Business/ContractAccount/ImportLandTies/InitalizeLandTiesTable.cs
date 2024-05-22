@@ -22,7 +22,7 @@ namespace YuLinTu.Library.Business
         private int rangeCount;//行数
         private int columnCount;//列数
         private bool isOk;
-     
+
         private bool contractorClear = true;//是否清空承包方
 
         private SortedList<string, string> existPersons;
@@ -38,7 +38,7 @@ namespace YuLinTu.Library.Business
 
         private string bookNumber = string.Empty;//证书编号
 
-     
+
 
         private List<string> errorArray = new List<string>();//错误信息
         private List<string> warnArray = new List<string>();//警告信息
@@ -120,7 +120,7 @@ namespace YuLinTu.Library.Business
 
         public InitalizeLandTiesTable()
         {
-       
+
         }
 
         #endregion Ctor
@@ -168,7 +168,7 @@ namespace YuLinTu.Library.Business
                     string familyName = GetString(allItem[currentIndex, 1]);
 
                     bool flag = true;
-                    if (rowValue != "") 
+                    if (rowValue != "")
                     {
                         if (originalValue != int.Parse(rowValue))
                         {
@@ -176,8 +176,8 @@ namespace YuLinTu.Library.Business
                             originalValue = int.Parse(rowValue);
                         }
                     }
-                   
-                    
+
+
                     if (!flag)
                     {
                         if (isAdd && !AddLandFamily(landFamily)) //添加户与承包地块
@@ -196,7 +196,6 @@ namespace YuLinTu.Library.Business
                             continue;
                         }
                     }
-
                     GetExcelInformation(landFamily, contractLands);//获取Excel表中信息
                 }
             }
@@ -279,13 +278,14 @@ namespace YuLinTu.Library.Business
                 vpNumber = vpNumber.Remove(0, vpCode.Length).TrimStart('0');
                 if (vpNumber == "")
                 {
-                    
+
                 }
-                
+
                 var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var vp = vpStation.GetByHH(vpNumber, vpCode);
-                landFamily.CurrentFamily.ID = vp.ID;
-                landFamily.CurrentFamily.FamilyNumber = vpNumber;
+                landFamily.CurrentFamily = vp;
+                //landFamily.CurrentFamily.ID = vp.ID;
+                //landFamily.CurrentFamily.FamilyNumber = vpNumber;
                 if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
                 {
                     string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", currentIndex + 1);
@@ -396,8 +396,7 @@ namespace YuLinTu.Library.Business
             person.Relationship = GetString(allItem[currentIndex, 12]);
             //备注
             person.Comment = GetString(allItem[currentIndex, 13]);
-
-            person.Opinion = GetString(allItem[currentIndex, 14]);  
+            person.Opinion = GetString(allItem[currentIndex, 14]);
             //名称
             if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || !string.IsNullOrEmpty(icn)))
             {
@@ -454,6 +453,7 @@ namespace YuLinTu.Library.Business
                 landFamily.CurrentFamily.SourceID = person.ID;
                 landFamily.CurrentFamily.Number = person.ICN;
                 landFamily.CurrentFamily.CardType = person.CardType;
+                landFamily.CurrentFamily.Telephone = GetString(allItem[currentIndex, 4]);
                 person.Relationship = "户主";//string.IsNullOrEmpty(person.Relationship) ? "户主" : person.Relationship;
                 if (person.Name.Contains("集体"))
                 {
@@ -617,31 +617,21 @@ namespace YuLinTu.Library.Business
         {
             var tissueWorkstation = dbContext.CreateSenderWorkStation();
             Tissue = tissueWorkstation.Get(CurrentZone.ID);
-            if(Tissue == null)
+            if (Tissue == null)
             {
                 Tissue = new CollectivityTissue();
             }
             Tissue.Name = GetString(allItem[2, 2]);
             Tissue.Code = GetString(allItem[2, 6]);
             Tissue.LawyerName = GetString(allItem[2, 9]);
-            eCredentialsType cardtype = GetCardType( GetString(allItem[2, 9]));
+            eCredentialsType cardtype = GetCardType(GetString(allItem[2, 9]));
             Tissue.LawyerCredentType = cardtype;
             Tissue.LawyerCartNumber = GetString(allItem[2, 15]);
             Tissue.LawyerTelephone = GetString(allItem[2, 20]);
             Tissue.LawyerAddress = GetString(allItem[2, 25]);
             Tissue.LawyerPosterNumber = GetString(allItem[2, 29]);
             Tissue.SurveyPerson = GetString(allItem[2, 31]);
-            var res = GetString(allItem[2, 34]).Substring(0,10);
-            DateTime? date;
-            if(res == "")
-            {
-                date = null;
-            }
-            else
-            {
-                date = Convert.ToDateTime(res);
-            }
-            Tissue.SurveyDate = date;
+            Tissue.SurveyDate = GetDateTime(allItem[2, 34]);
         }
 
         #endregion Method - private
