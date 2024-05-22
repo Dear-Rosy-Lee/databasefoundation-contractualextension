@@ -9,6 +9,7 @@ using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Repository;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -34,7 +35,85 @@ namespace YuLinTu.Component.ContractRegeditBook
             //RegisterWorkstationContext<AccountLandMessageContext>();
             RegisterWorkstationContext<ContractRegeditBookMessageContext>();
         }
+        /// <summary>
+        /// 地域初始化完成
+        /// </summary>
+        [MessageHandler(Name = ZoneMessage.ZONE_UPDATE_COMPLETE)]
+        private void OnInstallZoneComplate(object sender, ModuleMsgArgs arg)
+        {
+            IDbContext dbContext = arg.Datasource;
+            var systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
+            var profile = systemCenter.GetProfile<ZoneDefine>();
+            var section = profile.GetSection<ZoneDefine>();
+            var config = (section.Settings);
+            var ZoneDefine = config.Clone() as ZoneDefine;
+            IWorkpage page = sender as IWorkpage;
+            MultiObjectArg multiObject = arg.Parameter as MultiObjectArg;
+            if (page == null || multiObject == null)
+            {
+                return;
+            }
+            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            if (zdiOld == null || zdiNew == null)
+            {
+                return;
+            }
+            List<Zone> newZoneList = new List<Zone>();
+            List<Zone> oldZoneList = new List<Zone>();
+            GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
+            GetZoneList(zdiNew as ZoneDataItem, newZoneList);
+            var ContractRegeditBooks = dbContext.CreateQuery<Library.Entity.ContractRegeditBook>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
 
+            if (ZoneDefine.SyncCode == true)
+            {
+                ContractRegeditBooks.ForEach(x =>
+                {
+                    x.Number = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
+                    x.RegeditNumber = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
+                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                });
+                UpRegeditBook(dbContext, ContractRegeditBooks);
+            }
+            else
+            {
+                ContractRegeditBooks.ForEach(x =>
+                {
+                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                });
+                UpRegeditBook(dbContext, ContractRegeditBooks);
+            }
+        }
+
+        private void UpRegeditBook(IDbContext dbContext,List<Library.Entity.ContractRegeditBook> ContractRegeditBooks)
+        {
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var regeditBookRep = factory.CreateRepository<IContractRegeditBookRepository>();
+            foreach (var entity in ContractRegeditBooks)
+            {
+                regeditBookRep.Update(entity);
+            }
+            regeditBookRep.SaveChanges();
+        }
+
+        /// <summary>
+        /// 列表中获取集合
+        /// </summary>
+        private void GetZoneList(ZoneDataItem item, List<Zone> list)
+        {
+            if (item == null)
+            {
+                return;
+            }
+            if (item.Children != null && item.Children.Count > 0)
+            {
+                foreach (var c in item.Children)
+                {
+                    GetZoneList(c, list);
+                }
+            }
+            list.Add(item.ConvertTo<Zone>());
+        }
         #endregion
 
     }

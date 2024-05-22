@@ -18,7 +18,7 @@ namespace YuLinTu.Library.Business
         private int familyCount;//承包方数
         private int personCount;//共有人数
         private int landCount;//地块数
-        
+
         private CollectivityTissue tissue;//集体经济组织
         private CollectivityTissue sender;//集体经济组织
         private VirtualPersonBusiness personBusiness;
@@ -46,6 +46,8 @@ namespace YuLinTu.Library.Business
         /// 数据库
         /// </summary>
         public IDbContext DbContext { get; set; }
+
+        public List<string> ErrorInformation { get; set; }
 
         /// <summary>
         /// 是否验证地块编码重复
@@ -135,8 +137,8 @@ namespace YuLinTu.Library.Business
             landInfo.FileName = fileName;
             landInfo.ExcelName = ExcelName;
             landInfo.TableType = TableType;
-
             bool success = landInfo.ReadTableInformation();
+            ErrorInformation = landInfo.ErrorInformation;
             return success;
         }
 
@@ -331,6 +333,7 @@ namespace YuLinTu.Library.Business
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "ImportVirtualPersonInformation(导入承包方数据失败!)", ex.Message + ex.StackTrace);
                 throw new YltException("导入承包方数据失败!");
+                this.ReportError($"导入承包方数据失败!{ex.Message}");
             }
             return vp;
         }

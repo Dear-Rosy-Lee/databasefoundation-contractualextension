@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using YuLinTu.Windows;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Controls;
-using System.Collections.ObjectModel;
 using YuLinTu.Library.Business;
 using System.Windows;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Repository;
 
 namespace YuLinTu.Component.ContractAccount
 {
@@ -31,6 +31,67 @@ namespace YuLinTu.Component.ContractAccount
             RegisterWorkspaceContext<WorkspaceContext>();
             Application.Current.Resources.MergedDictionaries.Add(
                 new ResourceDictionary() { Source = new Uri("pack://application:,,,/YuLinTu.Diagrams;component/Resources/Res.xaml") });
+        }
+        /// <summary>
+        /// 地域初始化完成
+        /// </summary>
+        [MessageHandler(Name = ZoneMessage.ZONE_UPDATE_COMPLETE)]
+        private void OnInstallZoneComplate(object sender, ModuleMsgArgs arg)
+        {
+            IDbContext dbContext = arg.Datasource;
+            var systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
+            var profile = systemCenter.GetProfile<ZoneDefine>();
+            var section = profile.GetSection<ZoneDefine>();
+            var config = (section.Settings);
+            var ZoneDefine = config.Clone() as ZoneDefine;
+            IWorkpage page = sender as IWorkpage;
+            MultiObjectArg multiObject = arg.Parameter as MultiObjectArg;
+            if (page == null || multiObject == null)
+            {
+                return;
+            }
+            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            if (zdiOld == null || zdiNew == null)
+            {
+                return;
+            }
+            List<Zone> newZoneList = new List<Zone>();
+            List<Zone> oldZoneList = new List<Zone>();
+            
+            var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.LocationCode.StartsWith(zdiOld.FullCode)).ToList();
+
+            if (ZoneDefine.SyncCode == true)
+            {
+                ContractLands.ForEach(x =>
+                {
+                    x.LandNumber = zdiNew.FullCode + x.LandNumber.Substring(zdiNew.FullCode.Length);
+                    x.CadastralNumber = zdiNew.FullCode + x.CadastralNumber.Substring(zdiNew.FullCode.Length);
+                    x.LocationCode = zdiNew.FullCode + x.LocationCode.Substring(zdiNew.FullCode.Length);
+                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                });
+                UpContractLand(dbContext, ContractLands);
+            }
+            else
+            {
+                ContractLands.ForEach(x =>
+                {
+                    x.LocationCode = zdiNew.FullCode + x.LocationCode.Substring(zdiNew.FullCode.Length);
+                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                });
+                UpContractLand(dbContext, ContractLands);
+            }
+        }
+
+        private void UpContractLand(IDbContext dbContext, List<ContractLand> ContractLands)
+        {
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var landRep = factory.CreateRepository<IContractLandRepository>();
+            foreach (var entity in ContractLands)
+            {
+                landRep.Update(entity);
+            }
+            landRep.SaveChanges();
         }
 
         #endregion

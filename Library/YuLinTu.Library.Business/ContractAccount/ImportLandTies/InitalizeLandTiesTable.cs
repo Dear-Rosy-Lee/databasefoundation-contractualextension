@@ -120,7 +120,7 @@ namespace YuLinTu.Library.Business
 
         public InitalizeLandTiesTable()
         {
-            SetValue();
+       
         }
 
         #endregion Ctor
@@ -631,7 +631,7 @@ namespace YuLinTu.Library.Business
             Tissue.LawyerAddress = GetString(allItem[2, 25]);
             Tissue.LawyerPosterNumber = GetString(allItem[2, 29]);
             Tissue.SurveyPerson = GetString(allItem[2, 31]);
-            var res = GetString(allItem[2, 34]);
+            var res = GetString(allItem[2, 34]).Substring(0,10);
             DateTime? date;
             if(res == "")
             {
@@ -639,7 +639,7 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                date = Convert.ToDateTime(GetString(allItem[2, 34]));
+                date = Convert.ToDateTime(res);
             }
             Tissue.SurveyDate = date;
         }

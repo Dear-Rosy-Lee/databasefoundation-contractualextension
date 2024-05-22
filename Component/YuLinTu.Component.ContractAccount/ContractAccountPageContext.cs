@@ -222,6 +222,9 @@ namespace YuLinTu.Component.ContractAccount
                 case ContractAccountMessage.CONTRACTACCOUNT_INITIALIMAGENUMBER_COMPLETE:
                     RefreshUi();
                     break;
+                case ZoneMessage.ZONE_UPDATE_COMPLETE:
+                    RefreshUi();
+                    break;
                 default:
                     base.OnWorkspaceMessageReceived(sender, e);
                     break;
