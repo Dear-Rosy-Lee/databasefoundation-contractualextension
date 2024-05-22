@@ -2797,15 +2797,11 @@
   <PropertyGroup>
     <PostBuildEvent>md "$(SolutionDir)Workspace\Libraries\libs\"
 md "$(SolutionDir)Workspace\Libraries\x86\"
-md "$(SolutionDir)Workspace\Libraries\x86\Aspose\"
-md "$(SolutionDir)Workspace\Libraries\x86\DotSpatial\"
 md "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
 md "$(SolutionDir)Workspace\Libraries\x86\Quality\"
 md "$(SolutionDir)Workspace\Libraries\x86\Thought\"
 md "$(SolutionDir)Workspace\Libraries\x86\GDAL\"
 
-copy /Y "$(SolutionDir)Dependencies\Aspose\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Aspose\"
-copy /Y "$(SolutionDir)Dependencies\DotSpatial\*.dll" "$(SolutionDir)Workspace\Libraries\x86\DotSpatial\"
 copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
 copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Quality\"
 copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Thought\"
