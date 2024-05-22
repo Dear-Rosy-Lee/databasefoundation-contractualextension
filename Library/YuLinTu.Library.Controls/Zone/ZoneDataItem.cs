@@ -33,6 +33,7 @@ namespace YuLinTu.Library.Controls
         /// 是否可见
         /// </summary>
         public Visibility Visibility { get; set; }
+        public object ObjectExtension { get; set; }
 
         #endregion
 

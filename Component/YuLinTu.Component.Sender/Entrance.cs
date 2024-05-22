@@ -10,6 +10,7 @@ using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Repository;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -38,6 +39,12 @@ namespace YuLinTu.Component.Sender
         [MessageHandler(Name = ZoneMessage.ZONE_UPDATE_COMPLETE)]
         private void OnInstallZoneComplate(object sender, ModuleMsgArgs arg)
         {
+            IDbContext dbContext = arg.Datasource;
+            var systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
+            var profile = systemCenter.GetProfile<ZoneDefine>();
+            var section = profile.GetSection<ZoneDefine>();
+            var config = (section.Settings);
+            var ZoneDefine = config.Clone() as ZoneDefine;
             IWorkpage page = sender as IWorkpage;
             MultiObjectArg multiObject = arg.Parameter as MultiObjectArg;
             if (page == null || multiObject == null)
@@ -55,33 +62,56 @@ namespace YuLinTu.Component.Sender
             GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
             GetZoneList(zdiNew as ZoneDataItem, newZoneList);
             MultiObjectArg paraMeter = new MultiObjectArg() { ParameterA = newZoneList, ParameterB = oldZoneList };
-            if (zdiNew.Name != zdiOld.Name)
+            var Tissues = dbContext.CreateQuery<CollectivityTissue>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
+            if (ZoneDefine.SyncCode == true)
             {
-                //县级包括县以下的修改名称时需要提示陈泽林20161009
-                if (zdiNew.Level <= eZoneLevel.County)
+                if (zdiNew.Name != zdiOld.Name)
                 {
-                    string content = "是否修改默认发包方名称?";
-                    TabMessageBoxDialog messagePage = new TabMessageBoxDialog()
+                    //县级包括县以下的修改名称时需要提示陈泽林20161009
+                    if (zdiNew.Level <= eZoneLevel.County)
                     {
-                        Header = SenderInfo.SenderEdit,
-                        Message = content,
-                        MessageGrade = eMessageGrade.Warn,
-                        CancelButtonText = "取消",
-                    };
-                    page.Page.ShowMessageBox(messagePage, (b, r) =>
-                    {
-                        if (zdiNew.FullCode != zdiOld.FullCode || (bool)b)
+                        string content = "是否修改默认发包方名称?";
+                        TabMessageBoxDialog messagePage = new TabMessageBoxDialog()
                         {
-                            paraMeter.ParameterC = (bool)b;
-                            SendUpMessage(sender, arg.Datasource, paraMeter);
-                        }
-                    });
+                            Header = SenderInfo.SenderEdit,
+                            Message = content,
+                            MessageGrade = eMessageGrade.Warn,
+                            CancelButtonText = "取消",
+                        };
+                        page.Page.ShowMessageBox(messagePage, (b, r) =>
+                        {
+                            if (zdiNew.FullCode != zdiOld.FullCode || (bool)b)
+                            {
+                                paraMeter.ParameterC = (bool)b;
+                                SendUpMessage(sender, arg.Datasource, paraMeter);
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    SendUpMessage(sender, arg.Datasource, paraMeter);
                 }
             }
             else
             {
-                SendUpMessage(sender, arg.Datasource, paraMeter);
+                Tissues.ForEach(x =>
+                {
+                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                });
+                UpTissues(dbContext, Tissues);
             }
+        }
+
+        private void UpTissues(IDbContext dbContext, List<CollectivityTissue> Tissues)
+        {
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var tissueRep = factory.CreateRepository<ICollectivityTissueRepository>();
+            foreach (var entity in Tissues)
+            {
+                tissueRep.Update(entity);
+            }
+            tissueRep.SaveChanges();
         }
 
         /// <summary>

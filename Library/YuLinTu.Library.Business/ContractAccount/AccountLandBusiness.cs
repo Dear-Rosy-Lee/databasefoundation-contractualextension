@@ -125,6 +125,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double percent { get; set; }
 
+
+
         #region Properties - 导入地块图斑
 
         /// <summary>
@@ -801,6 +803,7 @@ namespace YuLinTu.Library.Business
                     //landTableImport.ListPerson = persons;
                     this.ReportProgress(1, "开始读取数据");
                     bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
+                    ErrorInformation = landTableImport.ErrorInformation;
                     //landTableImport.MergeHouseData();
                     this.ReportProgress(3, "开始检查数据");
                     //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据

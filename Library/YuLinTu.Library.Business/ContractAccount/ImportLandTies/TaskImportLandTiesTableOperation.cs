@@ -44,7 +44,15 @@ namespace YuLinTu.Library.Business
             landBusiness.ProgressChanged += this.ReportPercent;
             //导入地块调查表
             bool flag = landBusiness.ImportLandTies(currentZone, fileName);
-            this.ReportProgress(100, null);
+            var error = landBusiness.ErrorInformation;
+            if (flag == false)
+            {
+                this.ReportError(string.Join(",",error));
+            }
+            else
+            {
+                this.ReportProgress(100, null);
+            }
         }
 
         #endregion Method—Override

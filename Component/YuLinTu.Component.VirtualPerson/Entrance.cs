@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Repository;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -31,9 +33,68 @@ namespace YuLinTu.Component.VirtualPerson
             TheApp.SettingsTypes.Add(typeof(YuLinTu.Library.Business.FamilyImportDefine));
             TheApp.SettingsTypes.Add(typeof(YuLinTu.Library.Business.FamilyOutputDefine));
             TheApp.SettingsTypes.Add(typeof(YuLinTu.Library.Business.FamilyDefine));
-            RegisterWorkstationContext<AccountLandMessageContext>(); 
+            RegisterWorkstationContext<AccountLandMessageContext>();
         }
 
-        #endregion
+        /// <summary>
+        /// 地域初始化完成
+        /// </summary>
+        [MessageHandler(Name = ZoneMessage.ZONE_UPDATE_COMPLETE)]
+        private void OnInstallZoneComplate(object sender, ModuleMsgArgs arg)
+        {
+            IDbContext dbContext = arg.Datasource;
+            IWorkpage page = sender as IWorkpage;
+            MultiObjectArg multiObject = arg.Parameter as MultiObjectArg;
+            if (page == null || multiObject == null)
+            {
+                return;
+            }
+            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            if (zdiOld == null || zdiNew == null)
+            {
+                return;
+            }
+            List<Zone> newZoneList = new List<Zone>();
+            List<Zone> oldZoneList = new List<Zone>();
+            GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
+            GetZoneList(zdiNew as ZoneDataItem, newZoneList);
+         
+            var ListPerson = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
+            ListPerson.ForEach(x => x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length));
+            UpVirtualPerson(dbContext, ListPerson);
+        }
+
+        private void UpVirtualPerson(IDbContext dbContext, List<LandVirtualPerson> ListPerson)
+        {
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var virtualPersonRep = factory.CreateRepository<IVirtualPersonRepository<LandVirtualPerson>>();
+            foreach (var entity in ListPerson)
+            {
+                virtualPersonRep.Update(entity);
+            }
+            virtualPersonRep.SaveChanges();
+        }
+
+        /// <summary>
+        /// 列表中获取集合
+        /// </summary>
+        private void GetZoneList(ZoneDataItem item, List<Zone> list)
+        {
+            if (item == null)
+            {
+                return;
+            }
+            if (item.Children != null && item.Children.Count > 0)
+            {
+                foreach (var c in item.Children)
+                {
+                    GetZoneList(c, list);
+                }
+            }
+            list.Add(item.ConvertTo<Zone>());
+        }
+
+        #endregion Methods
     }
 }

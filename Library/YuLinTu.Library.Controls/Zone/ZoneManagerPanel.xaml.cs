@@ -297,14 +297,8 @@ namespace YuLinTu.Library.Controls
                 }
                 if (editPage.Result)
                 {
-                    if (ZoneDefine.SyncCode == true)
-                    {
-                        UpDataToItem(selectItem, editPage.CurrentItem);
-                        UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
-                    }
-                    else
-                    {
-                    }
+                     UpDataToItem(selectItem, editPage.CurrentItem);
+                     UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
                 }
                 ModuleMsgArgs arg = MessageExtend.ZoneMsg(db, ZoneMessage.ZONE_UPDATE_COMPLETE, (editPage.Result ? new MultiObjectArg() { ParameterA = selectItem, ParameterB = srcItem } : null));
                 ThePage.Workspace.Message.Send(this, arg);
