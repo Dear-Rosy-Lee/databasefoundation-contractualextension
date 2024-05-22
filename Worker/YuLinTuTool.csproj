@@ -151,6 +151,9 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=5.3.1.0, Culture=neutral, PublicKeyToken=9ec0ff091d04b091, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2439,12 +2442,6 @@
     <Content Include="Data\tGIS\Samples\California\Rivers.shp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Python\find_boundary.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Python\find_orientation.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Components\YuLinTu.Appwork.ProcessHandler\Binary\YuLinTu.Appwork.ProcessHandler.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2818,7 +2815,8 @@ del "$(TargetDir)*.manifest"
 del "$(TargetDir)*.vshost.*"
 del "$(TargetDir)*.dll.config"
 
-copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"</PostBuildEvent>
+copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
