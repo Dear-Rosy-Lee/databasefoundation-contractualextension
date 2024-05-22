@@ -9,6 +9,47 @@
         <local:SenderStatusConvert x:Key="StatusConvert" />
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+            SnapsToDevicePixels="True"
+            BorderThickness="0,0,0,1"
+            Height="33"
+            Padding="8,0"
+            BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+            Background="{DynamicResource Metro_Window_Style_Background_Lighter}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+                <cmps:ImageTextItem Grid.Column="0"
+                        Name="lbzone"
+                        ImageTextSpacing="8"
+                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"></cmps:ImageTextItem>
+                <StackPanel Grid.Column="1"  Name="sp_SenderInfo" HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                    <CheckBox Content="全部选中" HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Name="cbIsbatch" 
+                                  IsChecked="{Binding Path=IsBatch}"
+                                  Margin="8,0,8,0" />
+                    <cmps:Separator Orientation="Vertical"
+                                        Visibility="{Binding ElementName=cbIsbatch,Path=Visibility}"></cmps:Separator>
+                    <cmps:ImageTextItem  Name="lb_family"
+                             Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"
+                             ToolTip="发包方数量"
+                             MinWidth="50"
+                             Margin="12,0,0,0"
+                             VerticalAlignment="Center"
+                             Text="{Binding TissueCount}"/>
+                    <cmps:Separator Orientation="Vertical"></cmps:Separator>
+                </StackPanel>
+            </Grid>
+        </Border>
         <cmps:MetroTreeGrid
             x:Name="view"
             Grid.Row="1"
@@ -31,6 +72,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DockPanel LastChildFill="True">
+                                <CheckBox Height="18" Width="18" Margin="5"></CheckBox>
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                     <cmps:ImageTextItem
                                         HorizontalAlignment="Left"
@@ -44,7 +86,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn
-                    Width="300"
+                    Width="150"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
                     Header="社会信用代码"
                     SortMemberPath="SocialCode">

@@ -167,14 +167,17 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<CollectivityTissue> SendersByCode(string zoneCode)
         {
+
             List<CollectivityTissue> list = null;
             if (!CanContinue())
             {
                 return list;
             }
+            if (zoneCode == null || zoneCode.Length < 9)
+                return list;
             try
             {
-                list = Station.GetTissues(zoneCode);
+                list = Station.GetTissues(zoneCode, eLevelOption.SelfAndSubs);
             }
             catch (Exception ex)
             {

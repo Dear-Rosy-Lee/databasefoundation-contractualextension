@@ -6,32 +6,25 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Win32;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.Business;
 using YuLinTu.Data;
-using YuLinTu.Library.Log;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Library.Repository;
-using YuLinTu.Spatial;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Entity.Annotations;
 using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
     /// <summary>
     /// 发包方管理界面
     /// </summary>
-    public partial class SenderManagerPanel : UserControl
+    public partial class SenderManagerPanel : UserControl, INotifyPropertyChanged
     {
         #region Fields
+
+        private int sendercount;
 
         /// <summary>
         /// 发包方业务
@@ -74,6 +67,7 @@ namespace YuLinTu.Library.Controls
         public MenuEnableControl MenuEnable { get; set; }
         public SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
         #region Properties
@@ -82,6 +76,16 @@ namespace YuLinTu.Library.Controls
         /// 工作空间
         /// </summary>
         public IWorkpage ThePage { get; set; }
+
+        public int TissueCount
+        {
+            get { return sendercount; }
+            set
+            {
+                sendercount = value;
+                NotifyPropertyChanged("TissueCount");
+            }
+        }
 
         /// <summary>
         /// 行政发包方集合
@@ -96,13 +100,20 @@ namespace YuLinTu.Library.Controls
                 {
                     InitializeControl(tissueList);
                 }
+                TissueCount = tissueList == null ? 0 : tissueList.Count;
             }
         }
+
+        public Zone currentZone;
 
         /// <summary>
         /// 当前选择发包方
         /// </summary>
-        public Zone CurrentZone { get; set; }
+        public Zone CurrentZone
+        {
+            get { return currentZone; }
+            set { currentZone = value; NotifyPropertyChanged("CurrentZone"); }
+        }
 
         /// <summary>
         /// 根级发包方编码
@@ -121,6 +132,7 @@ namespace YuLinTu.Library.Controls
         public SenderManagerPanel()
         {
             InitializeComponent();
+            DataContext = this;
             worker = new BackgroundWorker();
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -151,7 +163,8 @@ namespace YuLinTu.Library.Controls
                 List<CollectivityTissue> tissueList = e.Result as List<CollectivityTissue>;
                 if (tissueList != null && tissueList.Count > 0)
                 {
-                    InitializeControl(tissueList);
+                    TissueList = tissueList;
+                    //InitializeControl(tissueList);
                 }
             }
             catch (Exception ex)
@@ -715,6 +728,13 @@ namespace YuLinTu.Library.Controls
         private void view_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectItem = view.SelectedItem as SenderDataItem;
+        }
+
+
+        private void NotifyPropertyChanged(String propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

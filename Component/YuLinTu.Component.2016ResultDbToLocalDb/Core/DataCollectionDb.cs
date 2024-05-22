@@ -112,7 +112,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
     public class CBDKXXSC : CBDKXX
     {
-        public new string TableName = "CBDKXX";
+        public const string TableName = "CBDKXX";
         public string DKLB { get; set; }
     }
 }
