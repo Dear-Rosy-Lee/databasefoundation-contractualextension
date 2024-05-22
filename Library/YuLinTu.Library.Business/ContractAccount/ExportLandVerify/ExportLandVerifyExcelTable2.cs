@@ -340,7 +340,12 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("Z" + 3, "AB" + 3, Tissue.LawyerAddress);
             InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
             InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
-            InitalizeRangeValue("AI" + 3, "AI" + 3, Tissue.SurveyDate);
+            DateTime surveyDate = new DateTime();
+            if (Tissue.SurveyDate!=null)
+            {
+                surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
+            }
+            InitalizeRangeValue("AI" + 3, "AI" + 3, surveyDate.ToString("yyyy年MM月dd日"));
 
             WriteCount();
         }
