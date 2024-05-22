@@ -2812,7 +2812,6 @@ copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\Libr
 copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\Libraries\x86\GDAL\" 
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
 
-
 copy /Y "$(SolutionDir)Workspace\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
 
 del "$(TargetDir)*.dll" 
