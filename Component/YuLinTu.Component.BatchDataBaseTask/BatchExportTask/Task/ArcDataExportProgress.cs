@@ -1,19 +1,15 @@
 ﻿/*
  * (C) 2015 - 2016 鱼鳞图公司版权所有,保留所有权利
 */
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity;
 using System.IO;
 using System.Windows.Forms;
 using YuLinTu.Data;
-using YuLinTu.Library.Repository;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
-using YuLinTu.NetAux;
 
 namespace YuLinTu.Component.BatchDataBaseTask
 {

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Quality.Business.Entity;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTuQuality.Business.Entity;
 using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
@@ -39,7 +37,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return obj;
         }
 
-        private static List<ControlPoint> From(List<KZD> kZD)
+        private static List<ControlPoint> From(List<Quality.Business.Entity.KZD> kZD)
         {
             List<Library.Entity.ControlPoint> list = new List<Library.Entity.ControlPoint>();
             if (kZD == null)
@@ -51,7 +49,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return list;
         }
 
-        private static List<Library.Entity.XZDW> From(List<YuLinTuQuality.Business.Entity.XZDW> xZDW)
+        private static List<Library.Entity.XZDW> From(List<Quality.Business.Entity.XZDW> xZDW)
         {
             List<Library.Entity.XZDW> list = new List<Library.Entity.XZDW>();
             if (xZDW == null)
@@ -75,7 +73,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return list;
         }
 
-        private static List<Library.Entity.MZDW> From(List<YuLinTuQuality.Business.Entity.MZDW> mZDW)
+        private static List<Library.Entity.MZDW> From(List<Quality.Business.Entity.MZDW> mZDW)
         {
             List<Library.Entity.MZDW> list = new List<Library.Entity.MZDW>();
             if (mZDW == null)
@@ -99,7 +97,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return list;
         }
 
-        public static List<Library.Entity.DZDW> From(List<YuLinTuQuality.Business.Entity.DZDW> dZDW)
+        public static List<Library.Entity.DZDW> From(List<Quality.Business.Entity.DZDW> dZDW)
         {
             List<Library.Entity.DZDW> list = new List<Library.Entity.DZDW>();
             if (dZDW == null)
@@ -134,7 +132,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return obj;
         }
 
-        private static Library.Entity.XZDW From(YuLinTuQuality.Business.Entity.XZDW item)
+        private static Library.Entity.XZDW From(Quality.Business.Entity.XZDW item)
         {
             var obj = new Library.Entity.XZDW();
             obj.BSM = item.BSM;
@@ -162,10 +160,10 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return obj;
         }
 
-        private static Library.Entity.MZDW From(YuLinTuQuality.Business.Entity.MZDW item)
+        private static Library.Entity.MZDW From(Quality.Business.Entity.MZDW item)
         {
             var obj = new Library.Entity.MZDW();
-            obj.BSM = item.BSM;
+            obj.BSM = (int)item.BSM;
             obj.Area = Math.Round(item.MJ != null ? item.MJ.Value : 0, 2);
             obj.Comment = item.BZ;
             obj.DWMC = item.DWMC;
@@ -189,7 +187,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             return obj;
         }
 
-        private static Library.Entity.DZDW From(YuLinTuQuality.Business.Entity.DZDW item)
+        private static Library.Entity.DZDW From(Quality.Business.Entity.DZDW item)
         {
             var obj = new Library.Entity.DZDW();
             obj.BSM = item.BSM;

@@ -1,4 +1,4 @@
-﻿using YuLinTuQuality.Business.Entity;
+﻿using Quality.Business.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

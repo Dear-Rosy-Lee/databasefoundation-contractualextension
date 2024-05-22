@@ -11,6 +11,7 @@ using NetTopologySuite.Geometries;
 using OSGeo.OGR;
 using YuLinTu.tGISCNet;
 using YuLinTu.Spatial;
+using Quality.Business.TaskBasic.GDAL;
 
 namespace YuLinTu.Component.MergeTask
 {

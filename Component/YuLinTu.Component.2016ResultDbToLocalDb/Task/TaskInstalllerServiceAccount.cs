@@ -2,15 +2,10 @@
  * (C) 2014  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
+using Quality.Business.TaskBasic;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using YuLinTu.Software;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {

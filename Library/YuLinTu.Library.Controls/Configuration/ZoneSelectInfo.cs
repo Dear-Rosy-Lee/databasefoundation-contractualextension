@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Controls
 {
@@ -45,6 +42,21 @@ namespace YuLinTu.Library.Controls
             get { return fullCode; }
             set { fullCode = value; NotifyPropertyChanged("FullCode"); }
         }
+
+        /// <summary>
+        /// 区域等级
+        /// </summary>
+        public eZoneLevel Level { get; set; }
+
+        /// <summary>
+        /// 地域实体
+        /// </summary>
+        public Zone Entity { get; set; }
+
+        /// <summary>
+        /// 是否选择
+        /// </summary>
+        public bool IsSelect { get; set; }
 
         /// <summary>
         /// 子区域集合

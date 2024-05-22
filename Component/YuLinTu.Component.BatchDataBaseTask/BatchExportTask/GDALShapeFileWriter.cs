@@ -3,6 +3,7 @@
 */
 using OSGeo.OGR;
 using Quality.Business.TaskBasic;
+using Quality.Business.TaskBasic.GDAL;
 using System;
 using System.Collections.Generic;
 using System.IO;

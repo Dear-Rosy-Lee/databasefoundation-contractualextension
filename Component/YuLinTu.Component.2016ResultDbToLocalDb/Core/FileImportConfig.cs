@@ -1,9 +1,10 @@
 ﻿/*
  * (C) 2016 鱼鳞图公司版权所有，保留所有权利
  */
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.TaskBasic;
 using System.Collections.Generic;
 using System.IO;
+using YuLinTu.Library.Controls;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {

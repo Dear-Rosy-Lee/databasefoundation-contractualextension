@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf;
-using YuLinTuQuality.Business.Entity;
+using Quality.Business.Entity;
 
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb

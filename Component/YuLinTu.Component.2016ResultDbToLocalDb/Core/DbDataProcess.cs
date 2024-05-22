@@ -9,8 +9,8 @@ using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
 using YuLinTu.Excel;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {

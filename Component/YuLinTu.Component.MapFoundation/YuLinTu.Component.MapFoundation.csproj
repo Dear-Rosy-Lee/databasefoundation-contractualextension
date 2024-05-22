@@ -168,6 +168,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Quality.Business.TaskBasic">
+      <HintPath>..\..\Dependencies\Quality\Quality.Business.TaskBasic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -208,9 +211,6 @@
     </Reference>
     <Reference Include="YuLinTu.NetAux">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTuQuality.Business.TaskBasic">
-      <HintPath>..\..\Dependencies\Quality\YuLinTuQuality.Business.TaskBasic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

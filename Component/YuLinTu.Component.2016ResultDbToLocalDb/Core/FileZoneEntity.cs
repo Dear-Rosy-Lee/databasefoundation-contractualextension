@@ -1,7 +1,8 @@
 ﻿/*
  * (C) 2014-2015 鱼鳞图公司版权所有，保留所有权利
  */
-using YuLinTuQuality.Business.TaskBasic;
+using Quality.Business.TaskBasic;
+using YuLinTu.Library.Controls;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -15,12 +16,12 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 地域选择
         /// </summary>
-        public ZoneSelectInfo ZoneInfo { get; set; }
+        public ZoneDataItem ZoneInfo { get; set; }
 
         /// <summary>
         /// 根级地域选择
         /// </summary>
-        public ZoneSelectInfo RootZoneInfo { get; set; }
+        public ZoneDataItem RootZoneInfo { get; set; }
 
         /// <summary>
         /// 导入文件配置

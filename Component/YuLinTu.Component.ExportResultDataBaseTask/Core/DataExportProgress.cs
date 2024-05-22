@@ -1,21 +1,16 @@
 ﻿/*
  * (C) 2014-2015 鱼鳞图公司版权所有，保留所有权利
 */
-using GeoAPI.Geometries;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using YuLinTu;
 using YuLinTu.Data;
-using YuLinTuQuality.Business.Entity;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {

@@ -1,30 +1,20 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
 */
-
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-
 //using System.ServiceModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Excel;
-using YuLinTuQuality.Business.Entity;
+using YuLinTu.Library.Controls;
+using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 {
@@ -101,7 +91,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
         /// <summary>
         /// 选择地域
         /// </summary>
-        public ZoneSelectInfo SelectZone { get; set; }
+        public ZoneDataItem SelectZone { get; set; }
 
         /// <summary>
         /// 登录SessionCode
@@ -149,8 +139,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             efe.VictorDK = entity.VictorDK.Clone() as FileEntity;
             efe.VictorDZDW = entity.VictorDZDW.Clone() as FileEntity;
             efe.VictorJBNTBHQ = entity.VictorJBNTBHQ.Clone() as FileEntity;
-            efe.VictorJZD = entity.VictorJZD.Clone() as FileEntity;
-            efe.VictorJZX = entity.VictorJZX.Clone() as FileEntity;
+            efe.VictorJZDX = entity.VictorJZDX.Clone() as FileEntity;
             efe.VictorKZD = entity.VictorKZD.Clone() as FileEntity;
             efe.VictorMZDW = entity.VictorMZDW.Clone() as FileEntity;
             efe.VictorXZDW = entity.VictorXZDW.Clone() as FileEntity;
@@ -170,7 +159,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                 if (SelectZone == null)
                     errorInfo = "未选择导入业务数据的地域! ";
 
-                if (fileZoneConfig.RootZoneInfo != null && fileZoneConfig.RootZoneInfo.Level != eZoneLevel.County)
+                if (fileZoneConfig.RootZoneInfo != null && (int)fileZoneConfig.RootZoneInfo.Level != (int)eZoneLevel.County)
                 {
                     errorInfo = "根级地域不是区县级不能导入数据! ";
                 }
@@ -180,7 +169,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
               fileZoneConfig.ImportFile.VictorDZDW.IsExport || fileZoneConfig.ImportFile.VictorJBNTBHQ.IsExport ||
                 fileZoneConfig.ImportFile.VictorKZD.IsExport || fileZoneConfig.ImportFile.VictorMZDW.IsExport ||
                 fileZoneConfig.ImportFile.VictorQYJX.IsExport || fileZoneConfig.ImportFile.VictorXZDW.IsExport ||
-                fileZoneConfig.ImportFile.VictorJZD.IsExport || fileZoneConfig.ImportFile.VictorJZX.IsExport)
+                fileZoneConfig.ImportFile.VictorJZDX.IsExport)
             {
                 hasFileExport = true;
             }
@@ -630,7 +619,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             }));
             townlist.ForEach(t =>
             {
-                Zone zone = new Zone()
+                var zone = new Zone()
                 {
                     Name = t.Name,
                     FullName = t.Name,
@@ -642,7 +631,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             });
             villagelist.ForEach(t =>
             {
-                Zone zone = new Zone()
+                var zone = new Zone()
                 {
                     Name = t.Name,
                     FullName = t.Name,
@@ -654,7 +643,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
             });
             grouplist.ForEach(t =>
             {
-                Zone zone = new Zone()
+                var zone = new Zone()
                 {
                     Name = t.Name,
                     FullName = t.Name,

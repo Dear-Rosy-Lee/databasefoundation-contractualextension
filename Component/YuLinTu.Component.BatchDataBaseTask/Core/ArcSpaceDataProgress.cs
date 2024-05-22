@@ -1,24 +1,13 @@
 ﻿/*
  * (C) 2014-2015 鱼鳞图公司版权所有，保留所有权利
 */
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using NetTopologySuite.Features;
-using NetTopologySuite.IO;
-using GeoAPI.Geometries;
-using NetTopologySuite.Geometries;
-using System.Xml;
-using YuLinTuQuality.Business.Entity;
-using YuLinTu;
-using YuLinTuQuality.Business.TaskBasic;
 using YuLinTu.Data;
-using YuLinTu.Library.WorkStation;
-using YuLinTu.Library.Business;
-//using YuLinTu.Library.Entity;
+using YuLinTu.Library.Business;  
 
 namespace YuLinTu.Component.BatchDataBaseTask
 {

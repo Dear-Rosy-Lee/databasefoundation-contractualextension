@@ -1,11 +1,10 @@
 ﻿/*
  * (C) 2014-2015 鱼鳞图公司版权所有，保留所有权利
 */
+using Quality.Business.Entity;
 using System;
 using System.Collections.Generic;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.WorkStation;
-using YuLinTuQuality.Business.Entity;
+using YuLinTu.Library.Entity; 
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {

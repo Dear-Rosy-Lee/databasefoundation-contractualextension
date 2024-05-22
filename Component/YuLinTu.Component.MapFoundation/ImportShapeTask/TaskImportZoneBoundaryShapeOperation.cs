@@ -1,16 +1,16 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
 using YuLinTu.Data.Shapefile;
+using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Library.Business;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.MapFoundation
 {

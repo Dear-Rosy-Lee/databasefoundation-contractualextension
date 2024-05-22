@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using YuLinTu.Data.Shapefile;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTuQuality.Business.TaskBasic;
 
 namespace YuLinTu.Component.MapFoundation
 {
