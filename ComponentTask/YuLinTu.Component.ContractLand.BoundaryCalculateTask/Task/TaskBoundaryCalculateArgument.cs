@@ -25,7 +25,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
         [DisplayLanguage("矢量地块文件")]
         [DescriptionLanguage("请选择地块矢量文件，可以多选")]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBox),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/border-all.png")]
         public string ShapeFilePath
         {
             get { return shapfilePath; }
@@ -34,7 +34,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 
         [DisplayLanguage("权属MDB数据路")]
         [DescriptionLanguage("请选权属MDB数据路文件")]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedZoneTextBox), 
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedMdb), 
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
         public string DatabaseFilePath
         {
@@ -42,9 +42,9 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             set { databaseFilePath = value; NotifyPropertyChanged("DatabaseFilePath"); }
         }
 
-        [DisplayLanguage("生成文件保存路径")]
+        [DisplayLanguage("文件保存路径")]
         [DescriptionLanguage("请选择生成文件保存路径")]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSaveFileBrowserSQLite),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string DatabaseSavePath
         {
