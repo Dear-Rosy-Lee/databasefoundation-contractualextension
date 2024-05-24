@@ -327,7 +327,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.ContractLand>().
-                    Where(c => c.LocationCode.StartsWith(codeZone)).Delete());
+                    Where(c => c.ZoneCode.StartsWith(codeZone)).Delete());
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.BelongRelation>().
@@ -335,7 +335,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.SecondTableLand>().
-                    Where(c => c.ZoneCode.StartsWith(codeZone)).Delete());
+                    Where(c => c.SenderCode.StartsWith(codeZone)).Delete());
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.BuildLandBoundaryAddressCoil>().
@@ -375,7 +375,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.ContractLandMark>().
-                    Where(c => c.ZoneCode.StartsWith(codeZone)).Delete());
+                    Where(c => c.SenderCode.StartsWith(codeZone)).Delete());
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.ControlPoint>().
@@ -383,7 +383,7 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
                 localService.Queries.Add(
                     localService.CreateQuery<YuLinTu.Library.Entity.ContractLandMark>().
-                    Where(c => c.ZoneCode.StartsWith(codeZone)).Delete());
+                    Where(c => c.SenderCode.StartsWith(codeZone)).Delete());
 
                 localService.Queries.Save();
 
@@ -1028,8 +1028,8 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                         //}
                     }
                     land.OwnerName = family.Name;
-                    land.LocationCode = obj.ZoneCode;
-                    land.LocationName = zoneName;
+                    land.ZoneCode = obj.ZoneCode;
+                    land.ZoneName = zoneName;
 
                     land.LandName = land.LandCode.IsNullOrEmpty() ? string.Empty : (dicLandType.ContainsKey(land.LandCode) ? dicLandType[land.LandCode].Name : string.Empty);
                     land.OwnRightType = YuLinTu.Library.Entity.DictionaryTypeInfo.JTTDSYQ;
@@ -1175,8 +1175,8 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
                     {
                         land.OwnerId = item.CBF.ID;
                         land.OwnerName = item.CBF.Name;
-                        land.LocationCode = zoneCode;
-                        land.LocationName = zoneName;
+                        land.ZoneCode = zoneCode;
+                        land.ZoneName = zoneName;
                         land.LandName = land.LandCode.IsNullOrEmpty() ? string.Empty : (dicLandType.ContainsKey(land.LandCode) ? dicLandType[land.LandCode].Name : string.Empty);
                         land.OwnRightType = YuLinTu.Library.Entity.DictionaryTypeInfo.JTTDSYQ;
                         lands.Add(land);
@@ -1255,8 +1255,8 @@ namespace YuLinTu.Component.ResultDbof2016ToLocalDb
 
             foreach (var land in listhandleCL)
             {
-                land.LocationCode = zoneCode;
-                land.LocationName = zoneName;
+                land.ZoneCode = zoneCode;
+                land.ZoneName = zoneName;
                 land.LandName = land.LandCode.IsNullOrEmpty() ? string.Empty : (dicLandType.ContainsKey(land.LandCode) ? dicLandType[land.LandCode].Name : string.Empty);
                 land.OwnRightType = YuLinTu.Library.Entity.DictionaryTypeInfo.JTTDSYQ;
                 if (vp != null)

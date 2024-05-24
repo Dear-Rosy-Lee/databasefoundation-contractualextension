@@ -279,7 +279,7 @@ namespace YuLinTu.Library.Business
                 Int32.TryParse(Contractor.FamilyNumber, out familyNumber);
             }
             string familyString = familyNumber > 0 ? string.Format("{0:D4}", familyNumber) : "";
-            string familyAllString = Contractor.ZoneCode;//== null ? "" : Contractor.ZoneCode;
+            string familyAllString = Contractor.ZoneCode;//== null ? "" : Contractor.SenderCode;
             familyAllString = familyAllString.PadRight(14, '0') + familyString;
             if (AgricultureSetting.AgricultureLandWordFamilyNumber)
             {

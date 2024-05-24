@@ -215,16 +215,16 @@ namespace YuLinTu.Library.Controls
                         count = landStation.Count(currentZone.FullCode, eLevelOption.Self);
                         break;
                     case LanderType.CollectiveLand:
-                        //count = db.CollectiveLand.SL_Count("ZoneCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
+                        //count = db.CollectiveLand.SL_Count("SenderCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
                         break;
                     case LanderType.HomeSteadLand:
                         // count = db.BuildLandProperty.SL_Count("LandLocatedCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
                         break;
                     case LanderType.WoodLand:
-                        // count = db.ForestryLand.SL_Count("ZoneCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
+                        // count = db.ForestryLand.SL_Count("SenderCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
                         break;
                     case LanderType.Irrigation:
-                        // count = db.Irrigation.SL_Count("ZoneCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
+                        // count = db.Irrigation.SL_Count("SenderCode", currentZone.FullCode, Library.Data.ConditionOption.Equal);
                         break;
                 }
             }

@@ -276,8 +276,8 @@ namespace YuLinTu.Library.Business
                     }
                 }
                 if (exportContractLandShapeDefine.SurveyNumberIndex) attributes.AddAttribute("调查编码", geoland.SurveyNumber);
-                attributes.AddAttribute("地域名称", geoland.ZoneName.IsNullOrEmpty() ? geoland.LocationName : geoland.ZoneName);
-                attributes.AddAttribute("地域编码", geoland.ZoneCode.IsNullOrEmpty() ? geoland.LocationCode : geoland.ZoneCode);
+                attributes.AddAttribute("地域名称", geoland.SenderName.IsNullOrEmpty() ? geoland.ZoneName : geoland.SenderName);
+                attributes.AddAttribute("地域编码", geoland.SenderCode.IsNullOrEmpty() ? geoland.ZoneCode : geoland.SenderCode);
                 if (exportContractLandShapeDefine.ImageNumberIndex) attributes.AddAttribute("图幅编号", geoland.LandExpand != null ? geoland.LandExpand.ImageNumber : "");
                 if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("台账面积", geoland.TableArea != null ? geoland.TableArea.Value.ToString("0.00") : "0");
                 if (exportContractLandShapeDefine.ActualAreaIndex) attributes.AddAttribute("实测面积", geoland.ActualArea.ToString("0.00"));
@@ -364,7 +364,7 @@ namespace YuLinTu.Library.Business
                     attributes.AddAttribute("耕保类型", dictGBLX == null ? "" : dictGBLX.Name);
                 }
                 if (exportContractLandShapeDefine.SourceNameIndex) attributes.AddAttribute("原户主姓名", geoland.FormerPerson);
-                if (exportContractLandShapeDefine.LandLocationIndex) attributes.AddAttribute("座落方位", geoland.LocationName);
+                if (exportContractLandShapeDefine.LandLocationIndex) attributes.AddAttribute("座落方位", geoland.ZoneName);
                 if (exportContractLandShapeDefine.IsTransterIndex) attributes.AddAttribute("是否流转", geoland.IsTransfer == true ? "是" : "否");
                 if (exportContractLandShapeDefine.TransterModeIndex)
                 {

@@ -281,10 +281,10 @@ namespace YuLinTu.Library.Business
             LandCollection = concord != null ? ConcordLands : Lands;
             //LandCollection = concord != null ? LandCollection : SpliteLandCollection(LandCollection);
             base.OnSetParamValue(data);
-            //Zone countyZone = this.CurrentZoneCounty;    //(currentFamily.ZoneCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));   //得到村、镇、组地域
-            //Zone townZone = this.CurrentZoneTown;       //(currentFamily.ZoneCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
-            //Zone zone = this.CurrentZoneVillage;         //currentFamily.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
-            //Zone groupZone = this.CurrentZoneGroup;     //DB.Zone.Get(currentFamily.ZoneCode);
+            //Zone countyZone = this.CurrentZoneCounty;    //(currentFamily.SenderCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));   //得到村、镇、组地域
+            //Zone townZone = this.CurrentZoneTown;       //(currentFamily.SenderCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
+            //Zone zone = this.CurrentZoneVillage;         //currentFamily.SenderCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
+            //Zone groupZone = this.CurrentZoneGroup;     //DB.Zone.Get(currentFamily.SenderCode);
             double landArea = 0.0;
             foreach (ContractLand land in LandCollection)
             {
@@ -475,7 +475,7 @@ namespace YuLinTu.Library.Business
             //        SetBookmarkValue("Group" + (i == 0 ? "" : i.ToString()), zoneName);
             //        string number = ToolString.GetLeftNumberWithInString(zoneName);
             //        string groupName = string.IsNullOrEmpty(number) ? zoneName : ToolMath.GetChineseLowNumber(number);
-            //        SetBookmarkValue("LocationName" + (i == 0 ? "" : i.ToString()), CurrentZone.FullName);//座落
+            //        SetBookmarkValue("ZoneName" + (i == 0 ? "" : i.ToString()), CurrentZone.FullName);//座落
             //        groupName = string.IsNullOrEmpty(number) ? zoneName : zoneName.Replace(number, ToolMath.GetChineseLowNumber(number));
             //        SetBookmarkValue("GroupName" + (i == 0 ? "" : i.ToString()), groupName);
             //        SetBookmarkValue("SmallGroup" + (i == 0 ? "" : i.ToString()), zoneName.Substring(0, zoneName.Length - 1));

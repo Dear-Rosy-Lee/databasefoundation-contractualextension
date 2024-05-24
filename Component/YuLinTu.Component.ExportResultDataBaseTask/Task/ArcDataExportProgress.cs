@@ -816,9 +816,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var linequery = DbContext.CreateQuery<BuildLandBoundaryAddressCoil>();
             var landquery = DbContext.CreateQuery<ContractLand>();
 
-            //var landCount = landquery.Where(t => t.ZoneCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
-            //var jzdcount = pointquery.Where(t => t.ZoneCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
-            //var jzxcount = linequery.Where(t => t.ZoneCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
+            //var landCount = landquery.Where(t => t.SenderCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
+            //var jzdcount = pointquery.Where(t => t.SenderCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
+            //var jzxcount = linequery.Where(t => t.SenderCode.StartsWith(currentZone.FullCode)).Select(s => s.ID).Count();
 
             var landCount = landquery.Count(t => t.ZoneCode.StartsWith(currentZone.FullCode));
             var jzdcount = jzdStation.Count(currentZone.FullCode, eLevelOption.SelfAndSubs);
@@ -852,8 +852,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         {
             var landquery = DbContext.CreateQuery<ContractLand>();
 
-            var landCount = landquery.Count(t => t.ZoneCode.StartsWith(currentZone.FullCode));
-            var lands = landquery.Where(t => t.ZoneCode.StartsWith(currentZone.FullCode));
+            var landCount = landquery.Count(t => t.SenderCode.StartsWith(currentZone.FullCode));
+            var lands = landquery.Where(t => t.SenderCode.StartsWith(currentZone.FullCode));
             ExportLand(DbContext, spaceProgress.ShapeFilePath, currentZone.FullCode,
                     county.FullCode + DateTime.Now.Year, spaceProgress.SpatialText, extendSet,
                     landCount);
@@ -993,7 +993,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<ContractConcord> concordCollection = datas.ConcordCollection.FindAll(t => t.ZoneCode == zone.FullCode);
             List<ContractRegeditBook> bookCollection = datas.BookCollection.FindAll(t => t.ZoneCode == zone.FullCode);
             List<VirtualPerson> familyCollection = datas.FamilyCollection.FindAll(t => t.ZoneCode == zone.FullCode);
-            List<ContractLand> AllLandCollection = datas.LandCollection.FindAll(t => t.ZoneCode == zone.FullCode);
+            List<ContractLand> AllLandCollection = datas.LandCollection.FindAll(t => t.SenderCode == zone.FullCode);
             CollectivityTissue tissue = datas.TissueCollection.Find(t => t.Code == zone.FullCode.PadRight(14, '0'));
             if (concordCollection == null || concordCollection.Count == 0)
             {
@@ -1277,7 +1277,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             //var qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
             //var qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
             //var qglands = VirtualPersonStation.GetRelationByZone(zone.FullCode);//确股的地块
-            //var qghts = stockconcordStation.Get(sv => sv.ZoneCode == zone.FullCode);//确股的合同
+            //var qghts = stockconcordStation.Get(sv => sv.SenderCode == zone.FullCode);//确股的合同
             //var serNumberTemp = GetFullSerialNumberTemp(zone);
 
             //ParallelThread.ForEach(familyCollection, (i, vp) =>

@@ -729,7 +729,7 @@ namespace YuLinTu.Library.Business
             {
                 ID = Guid.NewGuid(),
                 CreationTime = DateTime.Now,
-                ZoneCode = land.LocationCode,
+                ZoneCode = land.ZoneCode,
                 Shape = YuLinTu.Spatial.Geometry.CreatePoint(item, land.Shape.Srid),
                 Modifier = "",
                 ModifiedTime = DateTime.Now,
@@ -1012,7 +1012,7 @@ namespace YuLinTu.Library.Business
             {
                 ID = Guid.NewGuid(),
                 CreationTime = DateTime.Now,
-                ZoneCode = land.LocationCode,
+                ZoneCode = land.ZoneCode,
                 Shape = linestring,
                 Modifier = "",
                 ModifiedTime = DateTime.Now,

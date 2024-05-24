@@ -614,8 +614,8 @@ namespace YuLinTu.Library.Business
                     Guid landid = Guid.NewGuid();
                     Guid.TryParse(targetlandid, out landid);
                     targetLand = currentZoneQueryLandList.Find(cf => cf.ID == landid);
-                    if (targetLand == null || targetLand.LocationCode == null ||
-                        !targetLand.LocationCode.StartsWith(currentZone.FullCode))
+                    if (targetLand == null || targetLand.ZoneCode == null ||
+                        !targetLand.ZoneCode.StartsWith(currentZone.FullCode))
                         continue;
                 }
 

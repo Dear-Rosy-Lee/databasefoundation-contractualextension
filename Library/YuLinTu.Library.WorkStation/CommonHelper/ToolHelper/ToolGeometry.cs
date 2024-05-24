@@ -41,7 +41,7 @@ namespace YuLinTu.Library.WorkStation
                 BuildLandBoundaryAddressDot dot = new BuildLandBoundaryAddressDot()
                 {
                     DotNumber = "J" + i.ToString(),
-                    ZoneCode = geoland.LocationCode,
+                    ZoneCode = geoland.ZoneCode,
                     LandID = geoland.ID,
                     LandNumber = geoland.LandNumber,
                     Description = "",

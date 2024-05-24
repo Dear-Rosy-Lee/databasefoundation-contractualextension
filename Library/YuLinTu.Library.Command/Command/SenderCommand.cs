@@ -69,6 +69,12 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public const string InitilizeName = "Initialize";
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public const string CombineData = "CombineData";
+
+
         #endregion
 
         #region Files - Command
@@ -122,6 +128,8 @@ namespace YuLinTu.Library.Command
         /// 初始化
         /// </summary>
         public RoutedCommand Initialize = new RoutedCommand(InitilizeName, typeof(Button));
+
+        public RoutedCommand combinesender = new RoutedCommand(CombineData, typeof(Button));
 
         #endregion
 
@@ -177,6 +185,11 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public CommandBinding InitializeBind = new CommandBinding();
 
+        /// <summary>
+        /// 合并数据
+        /// </summary>
+        public CommandBinding CombineSenderData = new CommandBinding();
+
         #endregion
 
         #region Properties
@@ -212,6 +225,7 @@ namespace YuLinTu.Library.Command
             WordTemplateBind.Command = ExportWordTemplate;
             FreshBind.Command = Fresh;
             InitializeBind.Command = Initialize;
+            CombineSenderData.Command = combinesender;
         }
 
         #endregion

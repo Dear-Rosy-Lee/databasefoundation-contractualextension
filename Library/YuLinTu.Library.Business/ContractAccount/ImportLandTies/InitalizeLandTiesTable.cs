@@ -345,11 +345,11 @@ namespace YuLinTu.Library.Business
                     ContractLand land = new ContractLand();
                     land.OwnerName = landFamily.CurrentFamily.Name;
                     land.OwnerId = landFamily.CurrentFamily.ID;
-                    land.LocationCode = CurrentZone.FullCode;
-                    land.LocationName = CurrentZone.FullName;
+                    land.ZoneCode = CurrentZone.FullCode;
+                    land.ZoneName = CurrentZone.FullName;
                     land.Name = GetString(allItem[currentIndex, 13]);
                     land.LandNumber = GetString(allItem[currentIndex, 14]);
-                    land.LocationName = GetString(allItem[currentIndex, 15]);
+                    land.ZoneName = GetString(allItem[currentIndex, 15]);
                     land.LandLevel = GetString(allItem[currentIndex, 16]);
                     land.Purpose = GetString(allItem[currentIndex, 17]);
                     land.ConcordArea = GetString(allItem[currentIndex, 18]);

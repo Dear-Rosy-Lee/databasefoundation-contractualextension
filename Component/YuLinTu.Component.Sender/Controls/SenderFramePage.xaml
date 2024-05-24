@@ -154,6 +154,15 @@
                                         ToolTip="初始化地域下所有发包方信息"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/DocumentPanelTemplate.png"/>
                 </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnCombine"
+                   Padding="4,2,4,2"
+                   x:FieldModifier="public"
+                   VerticalContentAlignment="Stretch">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                        Text="合并发包方"
+                        ToolTip="合并发包方"
+                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/编辑数据32.png" />
+                </metro:MetroButton>
                 <metro:MetroButton x:Name="mbtnRefresh"
                                    Padding="4,2,4,2"
                                    x:FieldModifier="public"
@@ -163,6 +172,7 @@
                                         ToolTip="刷新"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/刷新32.png" />
                 </metro:MetroButton>
+
             </cmps:TabControlItemRibbonContainer>
             <cmps:Separator />
             <cmps:TabControlItemRibbonContainer Text="其他"

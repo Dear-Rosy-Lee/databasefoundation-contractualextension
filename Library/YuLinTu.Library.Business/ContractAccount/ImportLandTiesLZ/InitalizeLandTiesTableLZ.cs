@@ -320,8 +320,8 @@ namespace YuLinTu.Library.Business
                         ContractLand land = new ContractLand();
                         land.OwnerName = landFamily.CurrentFamily.Name;
                         land.OwnerId = landFamily.CurrentFamily.ID;
-                        land.LocationCode = CurrentZone.FullCode;
-                        land.LocationName = CurrentZone.FullName;
+                        land.ZoneCode = CurrentZone.FullCode;
+                        land.ZoneName = CurrentZone.FullName;
                         land.LandNumber = "";
                         land.Name = GetString(allItem[i, 1]);
                         land.TableArea = string.IsNullOrEmpty(GetString(allItem[i, 3])) ? 0 : Convert.ToDouble(GetString(allItem[i, 3]));

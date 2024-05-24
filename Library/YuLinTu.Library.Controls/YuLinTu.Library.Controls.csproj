@@ -396,6 +396,9 @@
       <DependentUpon>SecondVirtualPersonPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sender\SenderDataItem.cs" />
+    <Compile Include="Sender\SenderCombinPage.xaml.cs">
+      <DependentUpon>SenderCombinPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sender\SenderEditPage.xaml.cs">
       <DependentUpon>SenderEditPage.xaml</DependentUpon>
     </Compile>
@@ -751,6 +754,10 @@
     <Page Include="SecondAccount\SecondVirtualPersonPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sender\SenderCombinPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Sender\SenderEditPage.xaml">
       <Generator>MSBuild:Compile</Generator>

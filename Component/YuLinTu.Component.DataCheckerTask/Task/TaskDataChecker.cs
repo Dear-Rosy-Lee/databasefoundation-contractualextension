@@ -324,7 +324,7 @@ namespace YuLinTu.Component.DataCheckerTask
                 zoneName = InitalizeZoneName(dbContext, zone);
 
                 familyCollection = listVp.FindAll(c => c.ZoneCode == zone.FullCode);
-                landCollection = listLand.FindAll(c => c.LocationCode == zone.FullCode);
+                landCollection = listLand.FindAll(c => c.ZoneCode == zone.FullCode);
                 concordCollection = listConcord.FindAll(c => c.ZoneCode == zone.FullCode);
                 bookCollection = listBook.FindAll(c => c.ZoneCode == zone.FullCode);
                 var landSpaceCollection = (landCollection ?? new List<ContractLand>()).FindAll(c => c.Shape != null);

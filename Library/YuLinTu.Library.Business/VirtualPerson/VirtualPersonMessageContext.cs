@@ -100,7 +100,7 @@ namespace YuLinTu.Library.Business
         //{
         //    try
         //    {
-        //        string zoneCode = e.ZoneCode as string;
+        //        string zoneCode = e.SenderCode as string;
         //        if (zoneCode == null)
         //        {
         //            e.ReturnValue = null;

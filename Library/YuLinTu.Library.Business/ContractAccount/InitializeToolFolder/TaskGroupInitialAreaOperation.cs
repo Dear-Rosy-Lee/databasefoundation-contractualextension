@@ -78,7 +78,7 @@ namespace YuLinTu.Library.Business
             List<ContractLand> currentGeoLands = new List<ContractLand>();
             foreach (var zone in allZones)
             {
-                currentGeoLands = InitialLands.FindAll(c => c.LocationCode.Equals(zone.FullCode));
+                currentGeoLands = InitialLands.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
                 TaskInitialAreaArgument argument = new TaskInitialAreaArgument();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;

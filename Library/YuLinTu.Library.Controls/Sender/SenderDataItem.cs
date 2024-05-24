@@ -2,12 +2,9 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Controls
@@ -15,11 +12,13 @@ namespace YuLinTu.Library.Controls
     /// <summary>
     /// 发包方绑定实体
     /// </summary>
+
+    [Serializable]
     public class SenderDataItem : CollectivityTissue
     {
         #region Fields
 
-        private static BitmapImage imgSender = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/企业16.png"));
+        private static BitmapImage imgSender = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/population24.png"));
 
         #endregion
 
@@ -34,6 +33,21 @@ namespace YuLinTu.Library.Controls
         /// 是否可见
         /// </summary>
         public Visibility Visibility { get; set; }
+
+        private bool ischeck;
+        [DataColumn(Enabled = false)]
+        public bool DataChecked
+        {
+            get
+            {
+                return ischeck;
+            }
+            set
+            {
+                ischeck = value;
+                NotifyPropertyChanged("DataChecked");
+            }
+        }
 
         #endregion
 

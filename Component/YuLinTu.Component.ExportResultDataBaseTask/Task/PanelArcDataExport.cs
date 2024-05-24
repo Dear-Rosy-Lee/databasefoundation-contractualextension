@@ -58,9 +58,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         //    errorInfo.Clear();
         //    InitalizeByZoneMetadata zoneMeta = new InitalizeByZoneMetadata();
         //    zoneMeta.PerpertyDatabase = YuLinTu.Component.BusinessContext.TheBns.Current.CommonDataSource;
-        //    zoneMeta.ZoneCode = txtTargetZone.Text.Trim();
+        //    zoneMeta.SenderCode = txtTargetZone.Text.Trim();
         //    zoneMeta.SpaceDatabase = YuLinTu.Component.BusinessContext.TheBns.Current.CommonDataSource2;
-        //    Zone zone = zoneMeta.DbInstance.Zone.Get(zoneMeta.ZoneCode);
+        //    Zone zone = zoneMeta.DbInstance.Zone.Get(zoneMeta.SenderCode);
         //    bool canContinue = true;
         //    if (zone == null)
         //    {

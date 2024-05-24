@@ -263,7 +263,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return GetByIsTransfer(isTransfer);
 
-            var entity = Get(c => c.LocationCode.Equals(zoneCode) && c.IsTransfer.Equals(isTransfer));
+            var entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.IsTransfer.Equals(isTransfer));
             return entity;
         }
 
@@ -283,7 +283,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return -1;
 
-            return Count(c => c.LocationCode.Equals(zoneCode) && c.IsTransfer.Equals(isTransfer));
+            return Count(c => c.ZoneCode.Equals(zoneCode) && c.IsTransfer.Equals(isTransfer));
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return GetByTransferType(transferType);
 
-            var entity = Get(c => c.LocationCode.Equals(zoneCode) && c.TransferType.Equals(transferType));
+            var entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.TransferType.Equals(transferType));
             return entity;
         }
 
@@ -379,7 +379,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return null;
-            var entity = Get(c => c.LocationCode.Contains(zoneCode));
+            var entity = Get(c => c.ZoneCode.Contains(zoneCode));
             return entity;
         }
 
@@ -454,7 +454,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode) || !CheckRule.CheckStringNullOrEmpty(ref ownerName))
                 return null;
-            var entity = Get(c => c.LocationCode.Equals(zoneCode) && c.OwnerName.Equals(ownerName));
+            var entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.OwnerName.Equals(ownerName));
             return entity;
         }
 
@@ -522,7 +522,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return 0;
-            return Delete(c => c.LocationCode.Equals(zoneCode));
+            return Delete(c => c.ZoneCode.Equals(zoneCode));
         }
 
         /// <summary>
@@ -633,7 +633,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return -1;
 
-            return Delete(c => c.LocationCode.Equals(zoneCode) && c.LandCategory.Equals(constructType));
+            return Delete(c => c.ZoneCode.Equals(zoneCode) && c.LandCategory.Equals(constructType));
 
         }
 
@@ -880,7 +880,7 @@ namespace YuLinTu.Library.Repository
             {
                 int count = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode == zoneCode).Count();//.Select(c => c.ID)
                 if (count == 0)
-                    return Delete(c => c.LocationCode == zoneCode && c.IsStockLand == false);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
+                    return Delete(c => c.ZoneCode == zoneCode && c.IsStockLand == false);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
                 var idsSelf = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode == zoneCode).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByVitualPerson(compare, idsSelf);
             }
@@ -888,7 +888,7 @@ namespace YuLinTu.Library.Repository
             {
                 int count = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode.StartsWith(zoneCode)).Count();//.Select(c => c.ID)
                 if (count == 0)
-                    return Delete(c => c.LocationCode.StartsWith(zoneCode));//by 江宇 2016.11.10 如果没有承包方，只删除确权地
+                    return Delete(c => c.ZoneCode.StartsWith(zoneCode));//by 江宇 2016.11.10 如果没有承包方，只删除确权地
                 var idsSelfAndSubs = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode.StartsWith(zoneCode)).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByVitualPerson(compare, idsSelfAndSubs);
             }
@@ -896,7 +896,7 @@ namespace YuLinTu.Library.Repository
             {
                 int count = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Count();//.Select(c => c.ID)
                 if (count == 0)
-                    return Delete(c => c.LocationCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
+                    return Delete(c => c.ZoneCode.StartsWith(zoneCode) && c.SenderCode != zoneCode);//by 江宇 2016.11.10 如果没有承包方，只删除确权地
                 var idsSubs = DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByVitualPerson(compare, idsSubs);
             }
@@ -978,11 +978,11 @@ namespace YuLinTu.Library.Repository
                 return 0;
 
             if (searchOption == eLevelOption.Self)
-                return Count(c => c.LocationCode.Equals(zoneCode));
+                return Count(c => c.ZoneCode.Equals(zoneCode));
             else if (searchOption == eLevelOption.SelfAndSubs)
-                return Count(c => c.LocationCode.StartsWith(zoneCode));
+                return Count(c => c.ZoneCode.StartsWith(zoneCode));
             else
-                return Count(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode);
+                return Count(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
         }
 
         /// <summary>
@@ -1003,11 +1003,11 @@ namespace YuLinTu.Library.Repository
 
             object obj = null;
             if (searchOption == eLevelOption.SelfAndSubs)
-                obj = Get(c => c.LocationCode.StartsWith(zoneCode)).Sum(c => c.AwareArea);
+                obj = Get(c => c.ZoneCode.StartsWith(zoneCode)).Sum(c => c.AwareArea);
             else if (searchOption == eLevelOption.Self)
-                obj = Get(c => c.LocationCode.Equals(zoneCode)).Sum(c => c.AwareArea);
+                obj = Get(c => c.ZoneCode.Equals(zoneCode)).Sum(c => c.AwareArea);
             else
-                obj = Get(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode).Sum(c => c.AwareArea);
+                obj = Get(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Sum(c => c.AwareArea);
 
             if (obj == DBNull.Value)
                 return 0D;
@@ -1031,11 +1031,11 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return 0D;
             if (searchOption == eLevelOption.SelfAndSubs)
-                return Get(c => c.LocationCode.StartsWith(zoneCode)).Sum(c => c.ActualArea);
+                return Get(c => c.ZoneCode.StartsWith(zoneCode)).Sum(c => c.ActualArea);
             else if (searchOption == eLevelOption.Self)
-                return Get(c => c.LocationCode.Equals(zoneCode)).Sum(c => c.ActualArea);
+                return Get(c => c.ZoneCode.Equals(zoneCode)).Sum(c => c.ActualArea);
             else
-                return Get(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode).Sum(c => c.ActualArea);
+                return Get(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Sum(c => c.ActualArea);
         }
 
         /// <summary>
@@ -1054,11 +1054,11 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return 0;
             if (searchOption == eLevelOption.SelfAndSubs)
-                return Count(c => c.LocationCode.StartsWith(zoneCode) && c.ConcordId.Equals(null));
+                return Count(c => c.ZoneCode.StartsWith(zoneCode) && c.ConcordId.Equals(null));
             else if (searchOption == eLevelOption.Self)
-                return Count(c => c.LocationCode.Equals(zoneCode) && c.ConcordId.Equals(null));
+                return Count(c => c.ZoneCode.Equals(zoneCode) && c.ConcordId.Equals(null));
             else
-                return Count(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode && c.ConcordId.Equals(null));
+                return Count(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode && c.ConcordId.Equals(null));
         }
 
         /// <summary>
@@ -1080,11 +1080,11 @@ namespace YuLinTu.Library.Repository
             int cnt = 0;
 
             if (searchOption == eLevelOption.Self)
-                cnt = Delete(c => c.LocationCode.Equals(zoneCode));
+                cnt = Delete(c => c.ZoneCode.Equals(zoneCode));
             else if (searchOption == eLevelOption.SelfAndSubs)
-                cnt = Delete(c => c.LocationCode.StartsWith(zoneCode));
+                cnt = Delete(c => c.ZoneCode.StartsWith(zoneCode));
             else
-                cnt = Delete(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode);
+                cnt = Delete(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
 
             return cnt;
         } 
@@ -1108,11 +1108,11 @@ namespace YuLinTu.Library.Repository
             List<T> entity = null;
 
             if (searchOption == eLevelOption.Self)
-                entity = Get(c => c.LocationCode.Equals(zoneCode));
+                entity = Get(c => c.ZoneCode.Equals(zoneCode));
             else if (searchOption == eLevelOption.SelfAndSubs)
-                entity = Get(c => c.LocationCode.StartsWith(zoneCode));
+                entity = Get(c => c.ZoneCode.StartsWith(zoneCode));
             else if (searchOption == eLevelOption.Subs)
-                entity = Get(c => c.LocationCode.StartsWith(zoneCode) && c.LocationCode != zoneCode);
+                entity = Get(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
             return entity;
         }
 
@@ -1130,19 +1130,19 @@ namespace YuLinTu.Library.Repository
             if (levelOption == eLevelOption.Self)
             {
                 entity = (from q in DataSource.CreateQuery<T>()
-                          where q.LocationCode.Equals(zoneCode) && q.Shape != null
+                          where q.ZoneCode.Equals(zoneCode) && q.Shape != null
                           select q).ToList();
             }
             else if (levelOption == eLevelOption.SelfAndSubs)
             {
                 entity = (from q in DataSource.CreateQuery<T>()
-                          where q.LocationCode.StartsWith(zoneCode) && q.Shape != null
+                          where q.ZoneCode.StartsWith(zoneCode) && q.Shape != null
                           select q).ToList();
             }
             else
             {
                 entity = (from q in DataSource.CreateQuery<T>()
-                          where q.LocationCode.StartsWith(zoneCode) && q.LocationCode != zoneCode && q.Shape != null
+                          where q.ZoneCode.StartsWith(zoneCode) && q.ZoneCode != zoneCode && q.Shape != null
                           select q).ToList();
             }
             return entity;
@@ -1265,11 +1265,11 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return null;
 
-            var table = DataSource.CreateQuery<T>().Where(c => c.LocationCode == zoneCode);
+            var table = DataSource.CreateQuery<T>().Where(c => c.ZoneCode == zoneCode);
             if (eLevelOption.SelfAndSubs == option)
-                table = DataSource.CreateQuery<T>().Where(l => l.LocationCode.StartsWith(zoneCode));
+                table = DataSource.CreateQuery<T>().Where(l => l.ZoneCode.StartsWith(zoneCode));
             else if (eLevelOption.Subs == option)
-                table = DataSource.CreateQuery<T>().Where(l => l.LocationCode.StartsWith(zoneCode) && l.LocationCode != zoneCode);
+                table = DataSource.CreateQuery<T>().Where(l => l.ZoneCode.StartsWith(zoneCode) && l.ZoneCode != zoneCode);
 
             var ids = (from dot in DataSource.CreateQuery<BuildLandBoundaryAddressDot>()
                        join coil in DataSource.CreateQuery<BuildLandBoundaryAddressCoil>()
@@ -1418,9 +1418,9 @@ namespace YuLinTu.Library.Repository
             List<T> data = null;
 
             if (searchType == eSearchOption.Precision)
-                data = Get(c => c.CadastralNumber.EndsWith(cadastralNumber) && c.LocationCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
+                data = Get(c => c.CadastralNumber.EndsWith(cadastralNumber) && c.ZoneCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
             else if (searchType == eSearchOption.Fuzzy)
-                data = Get(c => c.CadastralNumber.Contains(cadastralNumber) && c.LocationCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
+                data = Get(c => c.CadastralNumber.Contains(cadastralNumber) && c.ZoneCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
             return data;
         }
 
@@ -1447,9 +1447,9 @@ namespace YuLinTu.Library.Repository
             List<T> data = null;
 
             if (searchType == eSearchOption.Precision)
-                data = Get(c => c.OwnerName.Equals(ownerName) && c.LocationCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
+                data = Get(c => c.OwnerName.Equals(ownerName) && c.ZoneCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
             else if (searchType == eSearchOption.Fuzzy)
-                data = Get(c => c.OwnerName.Contains(ownerName) && c.LocationCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
+                data = Get(c => c.OwnerName.Contains(ownerName) && c.ZoneCode.StartsWith(zoneCode)).OrderBy(c => c.OwnerName).ToList();
 
             return data;
         }
@@ -1470,7 +1470,7 @@ namespace YuLinTu.Library.Repository
             if (string.IsNullOrEmpty(zoneCode))
                 return new List<T>();
 
-            List<T> entity = Get(c => c.LocationCode.Equals(zoneCode) && c.LandCategory.Equals(constructType));
+            List<T> entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.LandCategory.Equals(constructType));
             return entity;
         }
 
@@ -1510,7 +1510,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode) || !CheckRule.CheckStringNullOrEmpty(ref landName))
                 return null;
 
-            T entity = Get(c => c.LocationCode.Equals(zoneCode) && c.LandName.Equals(landName)).FirstOrDefault();
+            T entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.LandName.Equals(landName)).FirstOrDefault();
 
             return entity;
         }

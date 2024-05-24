@@ -4,12 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Repository;
 
 namespace YuLinTu.Library.WorkStation
 {
@@ -54,6 +50,13 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(ContractConcord entity);
+
+        /// <summary>
+        /// 更新对象
+        /// </summary>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        int Updatelist(List<ContractConcord> entitys);
+
 
         /// <summary>
         /// 根据承包合同唯一标识获取农村土地承包合同

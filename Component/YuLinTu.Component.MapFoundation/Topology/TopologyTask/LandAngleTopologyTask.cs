@@ -34,7 +34,7 @@ namespace YuLinTu.Component.MapFoundation
 
             var chk = new SmallAngleCheckWKB(args.AngleTolerance);
 
-            //var env = GetLandsEnvelopeByZone(args.ZoneCode);
+            //var env = GetLandsEnvelopeByZone(args.SenderCode);
             //chk.SetFullExtent(env.MinX, env.MinY, env.MaxX, env.MaxY);
 
             //foreach (var item in dicLand)
@@ -63,7 +63,7 @@ namespace YuLinTu.Component.MapFoundation
 
                 return true;
             },
-            c => c.LocationCode.StartsWith(args.ZoneCode) && c.Shape != null,
+            c => c.ZoneCode.StartsWith(args.ZoneCode) && c.Shape != null,
             c => new ContractLand() { ID = c.ID, Shape = c.Shape });
 
             if (nErrCount > 0)

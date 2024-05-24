@@ -140,7 +140,8 @@ namespace YuLinTu.Library.Entity
             get { return zoneCode; }
             set
             {
-                zoneCode = value; NotifyPropertyChanged("ZoneCode");
+                zoneCode = value; 
+                NotifyPropertyChanged("ZoneCode");
                 if (string.IsNullOrEmpty(zoneCode))
                     return;
                 zoneCode = zoneCode.Trim();

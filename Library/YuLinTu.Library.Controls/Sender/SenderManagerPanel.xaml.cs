@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Entity.Annotations;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -96,13 +96,27 @@ namespace YuLinTu.Library.Controls
             set
             {
                 tissueList = value;
-                if (tissueList != null && tissueList.Count > 0)
-                {
-                    InitializeControl(tissueList);
-                }
-                TissueCount = tissueList == null ? 0 : tissueList.Count;
+                //if (tissueList != null && tissueList.Count > 0)
+                //{
+                //    InitializeControl(tissueList);
+                //}
             }
         }
+
+        /// <summary>
+        /// 界面绑定发包方集合
+        /// </summary>
+        public ObservableCollection<SenderDataItem> BindTissueList
+        {
+            get { return bindList; }
+            set
+            {
+                bindList = value;
+                NotifyPropertyChanged("BindTissueList");
+                TissueCount = bindList.Count;
+            }
+        }
+
 
         public Zone currentZone;
 
@@ -132,7 +146,6 @@ namespace YuLinTu.Library.Controls
         public SenderManagerPanel()
         {
             InitializeComponent();
-            DataContext = this;
             worker = new BackgroundWorker();
             worker.DoWork += worker_DoWork;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
@@ -148,7 +161,10 @@ namespace YuLinTu.Library.Controls
             {
                 this.ThePage = workPage;
             }
-            worker.RunWorkerAsync(CurrentZone == null ? "" : CurrentZone.FullCode);
+            if (!worker.IsBusy)
+            {
+                worker.RunWorkerAsync(CurrentZone == null ? "" : CurrentZone.FullCode);
+            }
         }
 
         /// <summary>
@@ -159,13 +175,15 @@ namespace YuLinTu.Library.Controls
             try
             {
                 MenuEnable();
-                bindList.Clear();
+                BindTissueList.Clear();
                 List<CollectivityTissue> tissueList = e.Result as List<CollectivityTissue>;
                 if (tissueList != null && tissueList.Count > 0)
                 {
-                    TissueList = tissueList;
-                    //InitializeControl(tissueList);
+                    InitializeControl(tissueList);
                 }
+                TissueCount = BindTissueList.Count;
+                cbIsbatch.IsChecked = false;
+                DataContext = this;
             }
             catch (Exception ex)
             {
@@ -181,10 +199,16 @@ namespace YuLinTu.Library.Controls
             MenuEnable(false);
             string zoneCode = e.Argument as string;
             business = new SenderDataBusiness(CreateDb());
-            object returnValue = business.SendersByCode(zoneCode);
-            e.Result = returnValue as List<CollectivityTissue>;
+            if (zoneCode != null && zoneCode.Length > 6)
+            {
+                object returnValue = business.SendersByCode(zoneCode);
+                e.Result = returnValue as List<CollectivityTissue>;
+            }
+            else
+            {
+                e.Result = new List<CollectivityTissue>();
+            }
         }
-
         #endregion
 
         #region Methods
@@ -212,6 +236,7 @@ namespace YuLinTu.Library.Controls
             tissue.Code = business.CreatSenderCode(CurrentZone, tissue);
             SenderEditPage editPage = new SenderEditPage(ThePage, true);
             editPage.CurrentTissue = tissue;
+            editPage.CurrentZone = currentZone;
             ThePage.Page.ShowMessageBox(editPage, (b, r) =>
             {
                 if (!(bool)b)
@@ -242,6 +267,7 @@ namespace YuLinTu.Library.Controls
             CollectivityTissue tissue = selectItem.ConvertTo<CollectivityTissue>();
             SenderEditPage editPage = new SenderEditPage(ThePage);
             editPage.CurrentTissue = tissue.Clone() as CollectivityTissue;
+            editPage.CurrentZone = currentZone;
             ThePage.Page.ShowMessageBox(editPage, (b, a) =>
             {
                 if (!(bool)b)
@@ -570,6 +596,7 @@ namespace YuLinTu.Library.Controls
             {
                 return;
             }
+            cbIsbatch.IsChecked = false;
             worker.RunWorkerAsync(CurrentZone == null ? "" : CurrentZone.FullCode);
         }
 
@@ -602,6 +629,66 @@ namespace YuLinTu.Library.Controls
             if (ShowTaskViewer != null)
                 ShowTaskViewer();
             initialOperation.StartAsync();
+        }
+
+
+        /// <summary>
+        /// 合并发包方
+        /// </summary>
+        public void CombinSenderData()
+        {
+            var selectlist = bindList.Where(w => w.DataChecked).ToList();
+            if (selectlist.Count < 2)
+            {
+                ShowBox("合并发包方", "合并发包方数量不能少于两个!");
+                return;
+            }
+            var editPage = new SenderCombinPage(ThePage);
+            editPage.CurrentZone = currentZone;
+            editPage.TissueList = selectlist.ConvertAll(t => t.ConvertTo<CollectivityTissue>());
+            ThePage.Page.ShowMessageBox(editPage, (b, a) =>
+            {
+                if (!(bool)b)
+                {
+                    return;
+                }
+                if (editPage.Result)
+                {
+                    Refresh();
+                }
+                else
+                {
+                    ShowBox("合并发包方", SenderInfo.CombinFail);
+                }
+                TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(CreateDb(), SenderMessage.SENDER_UPDATE_COMPLETE, (editPage.Result ? editPage.CurrentTissue : null)));
+            });
+
+
+
+            //if (CurrentZone == null)
+            //{
+            //    ShowBox("初始化发包方", "请选择地域进行初始化发包方");
+            //    return;
+            //}
+            //var db = CreateDb();
+            //var zoneStation = db.CreateZoneWorkStation();
+            //List<Zone> childrenZone = zoneStation.GetChildren(CurrentZone.FullCode, eLevelOption.SelfAndSubs);
+            //TaskSenderArgument meta = new TaskSenderArgument();
+            //meta.ArgType = eSenderArgType.InitialSender;
+            //meta.Database = db;
+            //meta.ChildrenZone = childrenZone;
+            //TaskSenderOperation initialOperation = new TaskSenderOperation();
+            //initialOperation.Workpage = ThePage;
+            //initialOperation.Argument = meta;
+            //initialOperation.Description = "初始化地域下(包含子级地域)所有发包方";
+            //initialOperation.Name = "初始化发包方";
+            //initialOperation.Completed += new TaskCompletedEventHandler((o, t) =>
+            //{
+            //});
+            //ThePage.TaskCenter.Add(initialOperation);
+            //if (ShowTaskViewer != null)
+            //    ShowTaskViewer();
+            //initialOperation.StartAsync();
         }
 
         #endregion
@@ -669,10 +756,9 @@ namespace YuLinTu.Library.Controls
             foreach (CollectivityTissue z in list)
             {
                 SenderDataItem node = SenderDataItem.ConvertToItem(z);
-                bindList.Add(node);
+                BindTissueList.Add(node);
             }
-            //view.ItemsSource = bindList;
-            view.Roots = bindList;
+            //view.Roots = BindTissueList;
         }
 
         #endregion
@@ -727,7 +813,7 @@ namespace YuLinTu.Library.Controls
 
         private void view_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectItem = view.SelectedItem as SenderDataItem;
+            selectItem = view.SelectedItemInner as SenderDataItem;
         }
 
 
@@ -735,6 +821,28 @@ namespace YuLinTu.Library.Controls
         {
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void cbIsbatch_Checked(object sender, RoutedEventArgs e)
+        {
+            var check = ((System.Windows.Controls.Primitives.ToggleButton)sender).IsChecked;
+            if (bindList.Count > 0)
+            {
+                foreach (var item in bindList)
+                {
+                    item.DataChecked = check == null ? false : check.Value;
+                }
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var check = ((System.Windows.Controls.Primitives.ToggleButton)sender).IsChecked;
+            var data = ((System.Windows.FrameworkElement)sender).DataContext as SenderDataItem;
+            if (data != null)
+            {
+                data.DataChecked = check == null ? false : check.Value;
+            }
         }
     }
 }

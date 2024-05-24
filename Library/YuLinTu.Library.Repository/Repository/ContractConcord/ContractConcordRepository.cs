@@ -63,7 +63,7 @@ namespace YuLinTu.Library.Repository
         //    var qcConcord = DataSource.CreateQuery<ContractConcord>();
 
         //    var qc = from zone in qcZone
-        //             join person in qcPerson on zone.FullCode equals person.ZoneCode
+        //             join person in qcPerson on zone.FullCode equals person.SenderCode
         //             where zone.FullCode == codeZone && person.Status == state
         //             select person.ID;
 
@@ -364,15 +364,15 @@ namespace YuLinTu.Library.Repository
         //    object entity = null;
         //    if (eLevelOption == eLevelOption.Self)
         //    {
-        //        entity = Get(c => c.ZoneCode.Equals(zoneCode) && c.IsValid.Equals(true));//
+        //        entity = Get(c => c.SenderCode.Equals(zoneCode) && c.IsValid.Equals(true));//
         //    }
         //    else if (eLevelOption==eLevelOption.Subs)
         //    {
-        //        entity= Get(c => (c.ZoneCode.Equals(zoneCode)&&c.ZoneCode.StartsWith(zoneCode)) && c.IsValid.Equals(true));//
+        //        entity= Get(c => (c.SenderCode.Equals(zoneCode)&&c.SenderCode.StartsWith(zoneCode)) && c.IsValid.Equals(true));//
         //    }
         //    else if(eLevelOption == eLevelOption.SelfAndSubs)
         //    {
-        //        entity = Get(c => c.ZoneCode.StartsWith(zoneCode) && c.IsValid.Equals(true));//
+        //        entity = Get(c => c.SenderCode.StartsWith(zoneCode) && c.IsValid.Equals(true));//
         //    }
         //    return entity as List<ContractConcord>;
         //}

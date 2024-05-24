@@ -121,7 +121,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private bool CheckImportAgrilatureDataOperation()
         {
-            return database.CreateContractLandWorkstation().Any(t => t.ZoneCode == currentZone.FullCode);
+            return database.CreateContractLandWorkstation().Any(t => t.SenderCode == currentZone.FullCode);
         }
 
         /// <summary>

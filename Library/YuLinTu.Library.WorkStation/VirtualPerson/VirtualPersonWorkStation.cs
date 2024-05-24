@@ -413,8 +413,8 @@ namespace YuLinTu.Library.WorkStation
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractRequireTable>(c => c.ZoneCode.StartsWith(zoneCode));
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractRegeditBook>(c => c.ZoneCode.StartsWith(zoneCode));
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractConcord>(c => c.ZoneCode.StartsWith(zoneCode));
-                base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractLand>(c => c.LocationCode.StartsWith(zoneCode));
-                base.DefaultRepository.Delete<YuLinTu.Library.Entity.SecondTableLand>(c => c.ZoneCode.StartsWith(zoneCode));
+                base.DefaultRepository.Delete<YuLinTu.Library.Entity.ContractLand>(c => c.ZoneCode.StartsWith(zoneCode));
+                base.DefaultRepository.Delete<YuLinTu.Library.Entity.SecondTableLand>(c => c.SenderCode.StartsWith(zoneCode));
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.BuildLandBoundaryAddressCoil>(c => c.ZoneCode.StartsWith(zoneCode));
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.BuildLandBoundaryAddressDot>(c => c.ZoneCode.StartsWith(zoneCode));
                 base.DefaultRepository.Delete<YuLinTu.Library.Entity.LandVirtualPerson>(c => c.ZoneCode.StartsWith(zoneCode));

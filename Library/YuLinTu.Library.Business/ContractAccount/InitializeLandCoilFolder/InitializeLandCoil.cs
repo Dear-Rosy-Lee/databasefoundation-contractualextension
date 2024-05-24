@@ -361,7 +361,7 @@ namespace YuLinTu.Library.Business
 
             coiladd.LandID = geoLand.ID;
             coiladd.LandNumber = geoLand.LandNumber;
-            coiladd.ZoneCode = geoLand.LocationCode;
+            coiladd.ZoneCode = geoLand.ZoneCode;
             coiladd.OrderID = (short)(i);
 
             double lineLength = ToolMath.CutNumericFormat(getCoilShape.Length(), 2);

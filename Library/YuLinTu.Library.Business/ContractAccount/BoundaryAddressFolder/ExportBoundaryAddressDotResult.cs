@@ -159,7 +159,7 @@ namespace YuLinTu.Library.Business
                 {
                     if (land != null)
                     {
-                        saveFPath = Path.Combine(SavePath, land.LandNumber.Substring(land.ZoneCode.Length) + ".xls");
+                        saveFPath = Path.Combine(SavePath, land.LandNumber.Substring(land.SenderCode.Length) + ".xls");
                         SaveAs(saveFPath);
                     }
                     else if (consLand != null)
@@ -237,7 +237,7 @@ namespace YuLinTu.Library.Business
         {
             if (land != null)
             {
-                SetRange("A3", "E3", "    宗地号: " + land.LandNumber.Substring(land.ZoneCode.Length), true);   //ZoneCode为权属单位代码
+                SetRange("A3", "E3", "    宗地号: " + land.LandNumber.Substring(land.SenderCode.Length), true);   //ZoneCode为权属单位代码
                 SetRange("A4", "E4", "    承包方: " + land.OwnUnitName.InitalizeFamilyName(systemset.KeepRepeatFlag), true);
                 bool useSquareArea = true;   //使用平方米
                 if (useSquareArea)
@@ -369,7 +369,7 @@ namespace YuLinTu.Library.Business
                 switch (landerType)
                 {
                     case LanderType.CollectiveLand:
-                        message = "宗地编码:" + land.LandNumber.Replace(land.ZoneCode, "") + "无空间信息!";
+                        message = "宗地编码:" + land.LandNumber.Replace(land.SenderCode, "") + "无空间信息!";
                         break;
                     case LanderType.ConstructionLand:
                         message = "宗地编码:" + consLand.CadastralNumber + "无空间信息!";

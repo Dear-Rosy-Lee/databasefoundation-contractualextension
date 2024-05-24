@@ -56,6 +56,27 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 合并发包方数据
+        /// </summary>
+        [MessageHandler(Name = SenderMessage.SENDER_COMBINE)]
+        private void OnComBineSender(object sender, ModuleMsgArgs e)
+        {
+            try
+            {
+                CollectivityTissue tissue = e.Parameter as CollectivityTissue;
+                IDbContext db = e.Datasource;
+                SenderDataBusiness business = CreateBusiness(e.Datasource);
+                e.ReturnValue = business.AddSender(tissue);
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "OnAddSender(添加发包方数据)", ex.Message + ex.StackTrace);
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
         /// 更新发包方数据
         /// </summary>
         [MessageHandler(Name = SenderMessage.SENDER_UPDATE)]

@@ -391,7 +391,7 @@ namespace YuLinTu.Library.Controls
             landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self);
             if (IsStockLand)
             {
-                landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.LocationCode == CurrentZone.FullCode);
+                landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
                 ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode, eLevelOption.Self);
             }
 
@@ -447,10 +447,15 @@ namespace YuLinTu.Library.Controls
             ContractLandPersonItem item = arg.UserState as ContractLandPersonItem;
             if (item != null && FamilyOtherDefine.ShowFamilyInfomation && item.Tag.Name.Equals("集体"))
                 return;
-            else
-                if (item != null && item.Children.Count > 0)
+            else if (item != null && item.Children.Count > 0)
+            {
                 accountLandItems.Add(item);
-            if (item != null) count += item.Children.Count;
+                DataCount(item);
+            }
+            if (item != null)
+            {
+                count += item.Children.Count;
+            }
         }
 
         /// <summary>
@@ -537,6 +542,63 @@ namespace YuLinTu.Library.Controls
             AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
             AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
             AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(2);
+        }
+
+        private void DataCount(ContractLandPersonItem item)
+        {
+            double summaryTableArea = 0;
+            double summaryActualArea = 0;
+            double summaryAwareArea = 0;
+            double? summrayContractDelayArea = 0;
+            int i = -1;
+
+            foreach (var land in item.Children)
+            {
+                if (!view.IsItemVisible(land))
+                    continue;
+                if (land.Visibility != Visibility.Visible || land.Tag == null)
+                {
+                    continue;
+                }
+                if (!land.IsStockLand)
+                {
+                    double tableArea = land.Tag.TableArea == null ? 0 : land.Tag.TableArea.Value;
+                    double contractDelayArea = land.Tag.ContractDelayArea;
+                    summaryTableArea += tableArea;
+                    summaryActualArea += land.Tag.ActualArea;
+                    summaryAwareArea += land.Tag.AwareArea;
+                    summrayContractDelayArea += contractDelayArea;
+                }
+            }
+
+            //加上确股地块统计信息
+            if (IsStockLand)
+            {
+                if (CurrentZone != null)
+                {
+                    var landStock = new List<ContractLand>();
+                    landStockAll.ForEach(l =>
+                    {
+                        if (ralations.Any(r => r.LandID == l.ID))
+                        {
+                            landStock.Add(l);
+                        }
+                    });
+                    if (landStockAll.Count > 0 && landStock.Count > 0)
+                    {
+                        summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
+                        summaryActualArea = summaryActualArea + Convert.ToDouble(landStock.Sum(o => o.ActualArea));
+                        summaryAwareArea = summaryAwareArea + Convert.ToDouble(landStock.Sum(o => o.AwareArea));
+                        summrayContractDelayArea = summrayContractDelayArea + Convert.ToDouble(landStock.Sum(o => o.ContractDelayArea));
+                    }
+                }
+            }
+            AccountSummary.FamilyCount++;
+            AccountSummary.LandCount += item.Children.Count;
+            AccountSummary.TableAreaCount = (Convert.ToDouble(AccountSummary.TableAreaCount) + summaryTableArea) + "";
+            AccountSummary.ActualAreaCount = (Convert.ToDouble(AccountSummary.ActualAreaCount) + summaryActualArea) + "";
+            AccountSummary.ArwareAreaCount = (Convert.ToDouble(AccountSummary.ArwareAreaCount) + summaryAwareArea) + "";
+            AccountSummary.ContractDelayAreaCount = (Convert.ToDouble(AccountSummary.ContractDelayAreaCount) + summrayContractDelayArea) + "";
         }
 
         #endregion 获取数据
@@ -5699,9 +5761,9 @@ namespace YuLinTu.Library.Controls
                     var landStation = dbContext.CreateContractLandWorkstation();
                     int listGeoLand = 0;
                     if (currentZone.Level == eZoneLevel.Group)
-                        listGeoLand = landStation.Count(t => t.Shape != null && t.LocationCode.Equals(currentZone.FullCode));
+                        listGeoLand = landStation.Count(t => t.Shape != null && t.ZoneCode.Equals(currentZone.FullCode));
                     else
-                        listGeoLand = landStation.Count(t => t.Shape != null && t.LocationCode.StartsWith(currentZone.FullCode));
+                        listGeoLand = landStation.Count(t => t.Shape != null && t.ZoneCode.StartsWith(currentZone.FullCode));
                     //选择地域为组级地域或者大于组级地域时没有子级地域
                     if (listGeoLand == 0)
                     {

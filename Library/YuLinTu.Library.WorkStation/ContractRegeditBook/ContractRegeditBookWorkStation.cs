@@ -8,6 +8,7 @@ using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
+using static YuLinTu.tGISCNet.PointAreaRelationCheck;
 
 namespace YuLinTu.Library.WorkStation
 {
@@ -119,6 +120,15 @@ namespace YuLinTu.Library.WorkStation
         public int Update(ContractRegeditBook entity)
         {
             DefaultRepository.Update(entity);
+            return TrySaveChanges(DefaultRepository);
+        }
+
+        public int UpdataList(List<ContractRegeditBook> listBook)
+        {
+            foreach (var item in listBook)
+            {
+                DefaultRepository.Update(item);
+            }
             return TrySaveChanges(DefaultRepository);
         }
 

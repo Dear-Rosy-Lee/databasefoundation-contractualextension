@@ -104,8 +104,8 @@ namespace YuLinTu.Library.Business
         public const string SmallGroupName = "SmallGroup";//不加地域单位组级地域名称
         public const string SmallChineseGroupName = "GroupName";//不加地域单位组级大写地域名称
         public const string SmallChineseGroupNoZoneName = "GroupNoZoneName";//不加地域单位组级大写地域名称,无组 社区的，例如一
-        public const string ZoneName = "ZoneName";//地域全名称
-        public const string LocationName = "LocationName";//坐落地域
+        public const string ZoneName = "SenderName";//地域全名称
+        public const string LocationName = "ZoneName";//坐落地域
         public const string CountyUnitName = "CountyUnitName";//地域县、镇、村、组名称
         public const string CountyVillageName = "CountyVillageName";//地域县、镇、村名称
         public const string TownUnitName = "TownUnitName";//地域镇、村、组名称

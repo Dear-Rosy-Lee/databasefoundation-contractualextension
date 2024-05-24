@@ -76,7 +76,7 @@ namespace YuLinTu.Library.Business
             int[] combinationLandNumber = new int[1] { 1 };
             foreach (var zone in allZones)
             {
-                currentLands = listAllLands.FindAll(c => c.LocationCode.Equals(zone.FullCode));
+                currentLands = listAllLands.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
                 //if (currentLands == null || currentLands.Count <= 0)
                 //    continue;
                 var argument = new TaskInitialLandInfoArgument();

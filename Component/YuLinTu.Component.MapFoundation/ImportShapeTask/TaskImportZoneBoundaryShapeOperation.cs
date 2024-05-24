@@ -208,8 +208,8 @@ namespace YuLinTu.Component.MapFoundation
                     }
                     try
                     {
-                        //zoneBoundary.ZoneCode = metadata.CurrentZone.FullCode;
-                        //zoneBoundary.ZoneName = metadata.CurrentZone.FullName;
+                        //zoneBoundary.SenderCode = metadata.CurrentZone.FullCode;
+                        //zoneBoundary.SenderName = metadata.CurrentZone.FullName;
                         var g = YuLinTu.ObjectExtension.GetPropertyValue(shpLandItem, "Shape") as YuLinTu.Spatial.Geometry;
                         var shapevalue = YuLinTu.Spatial.Geometry.FromBytes(g.AsBinary(), 0);
                         zoneBoundary.Shape = shapevalue == null ? null : shapevalue as YuLinTu.Spatial.Geometry;

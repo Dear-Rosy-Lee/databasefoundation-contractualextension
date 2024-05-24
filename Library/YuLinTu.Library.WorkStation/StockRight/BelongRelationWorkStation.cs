@@ -79,7 +79,7 @@ namespace YuLinTu.Library.WorkStation
         public int DeleteRelations(string zoneCode)
         {
             Delete(o => o.ZoneCode == zoneCode);
-            var lands = LandRepository.Get(o => o.LocationCode == zoneCode && o.IsStockLand);
+            var lands = LandRepository.Get(o => o.ZoneCode == zoneCode && o.IsStockLand);
             lands.ForEach(o =>
             {
                 o.ShareArea = "0";
@@ -95,7 +95,7 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         public int Deleteland(string zoneCode)
         {
-            var lands = LandRepository.Get(o => o.LocationCode == zoneCode && o.IsStockLand);
+            var lands = LandRepository.Get(o => o.ZoneCode == zoneCode && o.IsStockLand);
             lands.ForEach(o => 
             {
                 LandRepository.Delete(o.ID);
@@ -148,7 +148,7 @@ namespace YuLinTu.Library.WorkStation
                 var land = LandRepository.Get(o.LandID);
                 if (land != null)
                 {
-                    land.Comment ="共有宗地总面积:"+ LandRepository.Get(l => l.LocationCode == zoneCode && l.IsStockLand).Sum(landEx=> landEx.ActualArea);
+                    land.Comment ="共有宗地总面积:"+ LandRepository.Get(l => l.ZoneCode == zoneCode && l.IsStockLand).Sum(landEx=> landEx.ActualArea);
                     lands.Add(land);
                 }
             });
@@ -209,7 +209,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         private void SetPerson(string zoneCode)
         {
-            var personIds=LandRepository.Get(o => o.IsStockLand&&o.LocationCode==zoneCode).Select(o=>o.OwnerId).Distinct();
+            var personIds=LandRepository.Get(o => o.IsStockLand&&o.ZoneCode==zoneCode).Select(o=>o.OwnerId).Distinct();
             foreach (var id in personIds)
             {
                 var p = PersonRepository.Get(o => o.ID == id).FirstOrDefault();
@@ -224,7 +224,7 @@ namespace YuLinTu.Library.WorkStation
         /// <param name="zoneCode"></param>
         private void SetRelation(string zoneCode)
         {
-            var stockLands = LandRepository.Get(o => o.IsStockLand && o.LocationCode == zoneCode);
+            var stockLands = LandRepository.Get(o => o.IsStockLand && o.ZoneCode == zoneCode);
             stockLands.ForEach(o =>
             {
                 var relation = new BelongRelation();
@@ -288,7 +288,7 @@ namespace YuLinTu.Library.WorkStation
         /// <param name="zoneCode"></param>
         private void DeleteOldLand(string zoneCode)
         {
-            var stockLands = LandRepository.Get(o => o.IsStockLand && o.LocationCode == zoneCode);
+            var stockLands = LandRepository.Get(o => o.IsStockLand && o.ZoneCode == zoneCode);
             stockLands.ForEach(o =>
             {
                 if (!string.IsNullOrWhiteSpace(o.QuantificatAreaByStock))
@@ -305,7 +305,7 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         private Dictionary<string, List<ContractLand>> GetLandGroup(string zoneCode)
         {
-            var stockLands = LandRepository.Get(o => o.IsStockLand && o.LocationCode == zoneCode);
+            var stockLands = LandRepository.Get(o => o.IsStockLand && o.ZoneCode == zoneCode);
             Dictionary<string, List<ContractLand>> dic = new Dictionary<string, List<ContractLand>>();
             stockLands.ForEach(o =>
             {

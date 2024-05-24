@@ -196,6 +196,13 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>-1（参数错误）/int 添加对象数量</returns>
         int AddRange(List<CollectivityTissue> listTissue);
 
+        /// <summary>
+        /// 批量删除发包方数据
+        /// </summary>
+        /// <param name="listPerson">发包方对象集合</param>
+        /// <returns>-1（参数错误）/int 添加对象数量</returns>
+        int DelectSenders(List<string> listTissueCode);
+
         #endregion
     }
 }

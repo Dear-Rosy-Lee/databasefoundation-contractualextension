@@ -321,6 +321,27 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 更新发包方编码
+        /// </summary>
+        /// <param name="oldsenderCode"></param>
+        /// <param name="newsenderCode"></param>
+        /// <param name="zonecode"></param>
+        public void UpdataSenderCode(string oldsenderCode, CollectivityTissue sender)
+        {
+            var concords = concordStation.GetByZoneCode(oldsenderCode);
+            if (concords.Count == 0)
+                return;
+            foreach (var cc in concords)
+            {
+                cc.ZoneCode = sender.ZoneCode;
+                cc.SenderName = sender.Name;
+                cc.SenderId = sender.ID;
+            }
+            concordStation.Updatelist(concords);
+        }
+
+
+        /// <summary>
         /// 根据承包方id集合获取承包方集合
         /// </summary>
         public List<ContractConcord> GetByVpIds(Guid[] ownerIds)
@@ -809,12 +830,12 @@ namespace YuLinTu.Library.Business
                     this.ReportWarn(warnNoLandInfo);
                     return false;
                 }
-                //printBook.CurrentZoneCounty = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));
-                //printBook.CurrentZoneProvince = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_PROVICE_LENGTH));
-                //printBook.CurrentZoneTown = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
-                //printBook.CurrentZoneCity = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_CITY_LENGTH));
-                //printBook.CurrentZoneVillage = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
-                //printBook.CurrentZoneGroup = zoneStation.Get(vp.ZoneCode);
+                //printBook.CurrentZoneCounty = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));
+                //printBook.CurrentZoneProvince = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_PROVICE_LENGTH));
+                //printBook.CurrentZoneTown = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
+                //printBook.CurrentZoneCity = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_CITY_LENGTH));
+                //printBook.CurrentZoneVillage = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
+                //printBook.CurrentZoneGroup = zoneStation.Get(vp.SenderCode);
                 printBook.OpenTemplate(tempPath);
                 string filepath = SystemSet.DefaultPath + "\\" + vp.Name;
                 printBook.PrintPreview(vp, filepath);
@@ -902,12 +923,12 @@ namespace YuLinTu.Library.Business
                     MessageWarn = warnNoLandInfo;
                     return false;
                 }
-                //printBook.CurrentZoneCounty = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));
-                //printBook.CurrentZoneProvince = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_PROVICE_LENGTH));
-                //printBook.CurrentZoneTown = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
-                //printBook.CurrentZoneCity = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_CITY_LENGTH));
-                //printBook.CurrentZoneVillage = zoneStation.Get(vp.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
-                //printBook.CurrentZoneGroup = zoneStation.Get(vp.ZoneCode);
+                //printBook.CurrentZoneCounty = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_COUNTY_LENGTH));
+                //printBook.CurrentZoneProvince = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_PROVICE_LENGTH));
+                //printBook.CurrentZoneTown = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_TOWN_LENGTH));
+                //printBook.CurrentZoneCity = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_CITY_LENGTH));
+                //printBook.CurrentZoneVillage = zoneStation.Get(vp.SenderCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH));
+                //printBook.CurrentZoneGroup = zoneStation.Get(vp.SenderCode);
                 printBook.OpenTemplate(tempPath);
                 string filePath = fileName + @"\" + vp.FamilyNumber + "-" + vp.Name + templemPath;
                 printBook.SaveAs(vp, filePath);

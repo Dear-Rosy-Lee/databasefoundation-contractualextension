@@ -1,20 +1,25 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using static System.Windows.Forms.AxHost;
 
 namespace YuLinTu.Library.Controls
 {
     /// <summary>
-    /// 发包方编辑页面
+    /// 发包方合并页面
     /// </summary>
-    public partial class SenderEditPage : InfoPageBase
+    public partial class SenderCombinPage : InfoPageBase
     {
         #region Fields
 
@@ -22,6 +27,8 @@ namespace YuLinTu.Library.Controls
         /// 当前选择发包方
         /// </summary>
         private CollectivityTissue currentTissue;
+        private List<CollectivityTissue> tissues;
+        private IDbContext db;
 
         /// <summary>
         /// 临时发包方
@@ -29,9 +36,14 @@ namespace YuLinTu.Library.Controls
         private CollectivityTissue tempTissue;
 
         /// <summary>
-        /// 是否添加
+        /// 是否删除地域及原发包方
         /// </summary>
-        private bool isAdd;
+        private bool isdel;
+
+        /// <summary>
+        /// 定义后台线程
+        /// </summary>
+        private BackgroundWorker worker;
 
         #endregion
 
@@ -60,6 +72,24 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        public List<CollectivityTissue> TissueList
+        {
+            get { return tissues; }
+            set
+            {
+                tissues = value;
+                var collectivityTissue = tissues[0].Clone() as CollectivityTissue;
+                collectivityTissue.ID = Guid.NewGuid();
+                if (CurrentZone != null)
+                {
+                    collectivityTissue.ID = CurrentZone.ID;
+                    collectivityTissue.ZoneCode = CurrentZone.FullCode;
+                    collectivityTissue.Code = CurrentZone.FullCode.PadRight(14, '0');
+                }
+                CurrentTissue = collectivityTissue;
+            }
+        }
+
         public Zone CurrentZone { get; set; }
 
         /// <summary>
@@ -74,14 +104,20 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 构造函数
         /// </summary>
-        public SenderEditPage(IWorkpage page, bool isAdd = false)
+        public SenderCombinPage(IWorkpage page)
         {
             InitializeComponent();
             this.Workpage = page;
             pageContent.ThePage = page;
             pageContent.Visibility = Visibility.Hidden;
             loadIcon.Visibility = Visibility.Visible;
-            this.isAdd = isAdd;
+            pageContent.mtbCode.IsEnabled = true;
+            db = DataBaseSourceWork.GetDataBaseSource();
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.ProgressChanged += Worker_ProgressChanged;
         }
 
         #endregion
@@ -100,6 +136,83 @@ namespace YuLinTu.Library.Controls
             pageContent.CurrentZone = CurrentZone;
         }
 
+        /// <summary>
+        /// 任务完成
+        /// </summary> 
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Result = (bool)e.Result;
+            this.CanClose = true;
+            if (Result)
+
+                Workpage.Page.CloseMessageBox(true);
+            MenueEnable(true);
+        }
+
+        /// <summary>
+        /// 执行任务
+        /// </summary>
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var tissue = e.Argument as CollectivityTissue;
+            try
+            {
+                SenderDataBusiness business = CreateBusiness();
+                Result = business.AddSender(tissue);
+                if (TissueList != null && TissueList.Count > 0)
+                {
+
+                    var vpbs = new VirtualPersonBusiness(db);
+                    var cbs = new ConcordBusiness(db);
+                    var landBusiness = new AccountLandBusiness(db);
+                    var crBusiness = new ContractRegeditBookBusiness(db);
+                    var zBusiness = new ZoneDataBusiness(db);
+                    int index = 1;
+                    foreach (var t in TissueList)
+                    {
+                        db.BeginTransaction();
+                        worker.ReportProgress(index, t.Name);
+                        var zonecode = t.ZoneCode;
+                        vpbs.UpdataSenderCode(zonecode, tempTissue);
+                        cbs.UpdataSenderCode(zonecode, tempTissue);
+                        landBusiness.UpdateLands(zonecode, tempTissue);
+                        crBusiness.UpdateList(zonecode, tempTissue);
+                        db.CommitTransaction();
+                        if (isdel)
+                        {
+                            business.DeleteSender(t);
+                            zBusiness.DeleteZone(t.ZoneCode);
+                        }
+                        index++;
+                    }
+                }
+                e.Result = true;
+            }
+            catch (Exception ex)
+            {
+                db.RollbackTransaction();
+                e.Result = false;
+                Dispatcher.Invoke(() =>
+                {
+                    lbTip.Text = ex.Message;
+                });
+            }
+        }
+
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            lbTip.Text = $" 数据合并中：{e.UserState.ToString()} ({e.ProgressPercentage}/{tissues.Count})";
+        }
+
+        public void MenueEnable(bool enable)
+        {
+            this.CanClose = enable;
+            this.CloseButtonVisibility = enable ? Visibility.Visible : Visibility.Hidden;
+            btnSubmit.IsEnabled = enable;
+            btnCancel.IsEnabled = enable;
+            gridContent.IsEnabled = enable;
+        }
+
         #endregion
 
         #region Private
@@ -113,97 +226,32 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (isAdd)
+            GetComboxSelect();
+            if (!pageContent.CheckEntity(tempTissue))
             {
-                AddData();
+                return;
             }
-            else
+            if (IsNameRepeat(tempTissue))
             {
-                EditData();
+                ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
+                return;
             }
+            isdel = cb_recode.IsChecked == null ? false : cb_recode.IsChecked.Value;
+            MenueEnable(false);
+            if (!worker.IsBusy)
+                worker.RunWorkerAsync(tempTissue);
         }
 
         /// <summary>
-        /// 提交数据
+        /// 创建业务逻辑
         /// </summary>
-        private void AddData()
+        private SenderDataBusiness CreateBusiness()
         {
-            try
-            {
-                GetComboxSelect();
-                currentTissue = tempTissue;
-                if (!pageContent.CheckEntity(tempTissue, isAdd))
-                {
-                    return;
-                }
-                if (IsNameRepeat(currentTissue))
-                {
-                    ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
-                    //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
-                    //{
-                    //    Header = SenderInfo.SenderAdd,
-                    //    Message = SenderInfo.SenderNameRepeat,
-                    //    MessageGrade = eMessageGrade.Error
-                    //});
-                    return;
-                }
-                ModuleMsgArgs argsAdd = new ModuleMsgArgs();
-                argsAdd.Datasource = DataBaseSourceWork.GetDataBaseSource();
-                argsAdd.Name = SenderMessage.SENDER_ADD;
-                argsAdd.Parameter = currentTissue;
-                TheBns.Current.Message.Send(this, argsAdd);
-                Result = (bool)argsAdd.ReturnValue;
-            }
-            catch
-            {
-                Result = false;
-            }
-            Workpage.Page.CloseMessageBox(true);
-        }
-
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        private void EditData()
-        {
-            try
-            {
-                GetComboxSelect();
-                if (!pageContent.CheckEntity(tempTissue, isAdd))
-                {
-                    return;
-                }
-                if (IsNameRepeat(tempTissue) && currentTissue.ZoneCode == tempTissue.ZoneCode)
-                {
-                    ShowBox(SenderInfo.SenderEdit, "该地域下已存在此发包方名称!", eMessageGrade.Error);
-
-                    //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
-                    //{
-                    //    Header = SenderInfo.SenderAdd,
-                    //    Message = SenderInfo.SenderNameRepeat,
-                    //    MessageGrade = eMessageGrade.Error
-                    //});
-                    return;
-                }
-                ExcuteSaveData();
-            }
-            catch
-            {
-                Result = false;
-            }
-            Workpage.Page.CloseMessageBox(true);
-        }
-
-        private void ExcuteSaveData()
-        {
-            pageContent.CheckEntity(tempTissue, isAdd);
-            currentTissue = tempTissue;
-            ModuleMsgArgs args = new ModuleMsgArgs();
-            args.Datasource = DataBaseSourceWork.GetDataBaseSource();
-            args.Name = SenderMessage.SENDER_UPDATE;
-            args.Parameter = currentTissue;
-            TheBns.Current.Message.Send(this, args);
-            Result = (bool)args.ReturnValue;
+            IDbContext db = DataBaseSourceWork.GetDataBaseSource();
+            SenderDataBusiness business = new SenderDataBusiness();
+            business.DbContext = db;
+            business.Station = db.CreateSenderWorkStation();
+            return business;
         }
 
         /// <summary>
@@ -212,28 +260,12 @@ namespace YuLinTu.Library.Controls
         /// <param name="tissue"></param>
         private void SetComboxSelect(CollectivityTissue tissue)
         {
-            if (isAdd)
-            {
-                return;
-            }
             foreach (var item in pageContent.cbCredtype.Items)
             {
                 EnumStore<eCredentialsType> type = item as EnumStore<eCredentialsType>;
                 if (type.Value == tissue.LawyerCredentType)
                     pageContent.cbCredtype.SelectedItem = item;
             }
-            //foreach (var item in pageContent.cbSenderKind.Items)
-            //{
-            //    EnumStore<eTissueType> type = item as EnumStore<eTissueType>;
-            //    if (type.Value == tissue.Type)
-            //        pageContent.cbSenderKind.SelectedItem = item;
-            //}
-            //foreach (var item in pageContent.cbStatus.Items)
-            //{
-            //    EnumStore<eStatus> type = item as EnumStore<eStatus>;
-            //    if (type.Value == tissue.Status)
-            //        pageContent.cbStatus.SelectedItem = item;
-            //}
         }
 
         /// <summary>
@@ -248,16 +280,6 @@ namespace YuLinTu.Library.Controls
             }
             if (!string.IsNullOrEmpty(pageContent.selectZoneCode) && tempTissue.ZoneCode != pageContent.selectZoneCode)
                 tempTissue.ZoneCode = pageContent.selectZoneCode;
-            //EnumStore<eTissueType> tissuetype = pageContent.cbSenderKind.SelectedItem as EnumStore<eTissueType>;
-            //if (tissuetype != null)
-            //{
-            //    tempTissue.Type = tissuetype.Value;
-            //}
-            //EnumStore<eStatus> statustype = pageContent.cbStatus.SelectedItem as EnumStore<eStatus>;
-            //if (statustype != null)
-            //{
-            //    tempTissue.Status = statustype.Value;
-            //}
         }
 
         /// <summary>

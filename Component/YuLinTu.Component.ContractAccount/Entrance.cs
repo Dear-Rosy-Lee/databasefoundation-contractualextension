@@ -59,7 +59,7 @@ namespace YuLinTu.Component.ContractAccount
             List<Zone> newZoneList = new List<Zone>();
             List<Zone> oldZoneList = new List<Zone>();
             
-            var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.LocationCode.StartsWith(zdiOld.FullCode)).ToList();
+            var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
 
             if (ZoneDefine.SyncCode == true)
             {
@@ -67,8 +67,8 @@ namespace YuLinTu.Component.ContractAccount
                 {
                     x.LandNumber = zdiNew.FullCode + x.LandNumber.Substring(zdiNew.FullCode.Length);
                     x.CadastralNumber = zdiNew.FullCode + x.CadastralNumber.Substring(zdiNew.FullCode.Length);
-                    x.LocationCode = zdiNew.FullCode + x.LocationCode.Substring(zdiNew.FullCode.Length);
                     x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                    x.SenderCode = zdiNew.FullCode + x.SenderCode.Substring(zdiNew.FullCode.Length);
                 });
                 UpContractLand(dbContext, ContractLands);
             }
@@ -76,8 +76,8 @@ namespace YuLinTu.Component.ContractAccount
             {
                 ContractLands.ForEach(x =>
                 {
-                    x.LocationCode = zdiNew.FullCode + x.LocationCode.Substring(zdiNew.FullCode.Length);
                     x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                    x.SenderCode = zdiNew.FullCode + x.SenderCode.Substring(zdiNew.FullCode.Length);
                 });
                 UpContractLand(dbContext, ContractLands);
             }

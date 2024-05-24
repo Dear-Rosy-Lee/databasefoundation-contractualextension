@@ -494,26 +494,26 @@ namespace YuLinTu.Library.Repository
 
             if (levelOption == eLevelOption.SelfAndSubs)
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode)).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode)).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.StartsWith(zoneCode));
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
             else if (levelOption == eLevelOption.Self)
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.Equals(zoneCode)).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.Equals(zoneCode)).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.Equals(zoneCode));
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.Equals(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.Equals(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
             else
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode) && c.SenderCode != zoneCode).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode) && c.SenderCode != zoneCode).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
 
@@ -568,7 +568,7 @@ namespace YuLinTu.Library.Repository
                     //   "insert into[JZD] ([ID], [BSM], [TBJZDH], [JZDH], [JBLX], [JZDLX], [DKID], [CJZ], [CJSJ], [XGZ], [XGSJ], [MSXX], [DYBM], [JZDSSQLLX], [DKBM], [SFKY], [Shape]) values" +
                     //   "('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}','{10}', '{11}', '{12}', '{13}', '{14}', '{15}', {16})",
                     //   dots[i].ID, dots[i].DotCode, dots[i].UniteDotNumber, dots[i].DotNumber, dots[i].LandMarkType, dots[i].DotType, dots[i].LandID,
-                    //   dots[i].Founder,string.Format("'{0}'", ((DateTime)dots[i].CreationTime).ToString("s")), dots[i].Modifier, string.Format("'{0}'", ((DateTime)dots[i].ModifiedTime).ToString("s")),dots[i].Description, dots[i].ZoneCode,
+                    //   dots[i].Founder,string.Format("'{0}'", ((DateTime)dots[i].CreationTime).ToString("s")), dots[i].Modifier, string.Format("'{0}'", ((DateTime)dots[i].ModifiedTime).ToString("s")),dots[i].Description, dots[i].SenderCode,
                     //   dots[i].LandType, dots[i].LandNumber, dots[i].IsValid, string.Format("GeomFromText('{0}', {1})", dots[i].Shape.AsText(), srid));
 
                     string sql = string.Format(

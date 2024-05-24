@@ -469,26 +469,26 @@ namespace YuLinTu.Library.Repository
 
             if (levelOption == eLevelOption.SelfAndSubs)
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode)).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode)).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.StartsWith(zoneCode));
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
             else if (levelOption == eLevelOption.Self)
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.Equals(zoneCode)).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.Equals(zoneCode)).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.Equals(zoneCode));
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.Equals(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.Equals(zoneCode)).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
             else
             {
-                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Count();//.Select(c => c.ID)
+                int count = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode) && c.SenderCode != zoneCode).Count();//.Select(c => c.ID)
                 if (count == 0)
                     return Delete(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
-                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
+                var idsSelf = DataSource.CreateQuery<ContractLand>().Where(c => c.SenderCode.StartsWith(zoneCode) && c.SenderCode != zoneCode).Select(s => new { s.ID }).ToList().Select(c => c.ID).ToList();
                 cnt = DeleteByContractLand(compare, idsSelf);
             }
 

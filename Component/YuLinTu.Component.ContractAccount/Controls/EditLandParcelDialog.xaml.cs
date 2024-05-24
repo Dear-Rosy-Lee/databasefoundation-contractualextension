@@ -124,11 +124,11 @@ namespace YuLinTu.Component.ContractAccount
             var lineStation = DbContext.CreateXZDWWorkStation();
             var PointStation = DbContext.CreateDZDWWorkStation();
             var PolygonStation = DbContext.CreateMZDWWorkStation();
-            ListGeoLand = landWork.GetCollection(SelectedLand.LocationCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
+            ListGeoLand = landWork.GetCollection(SelectedLand.ZoneCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
             geoLandCollection = ListGeoLand.FindAll(c => c.OwnerId == SelectedLand.OwnerId);
-            ListLineFeature = lineStation.GetByZoneCode(SelectedLand.LocationCode);
-            ListPointFeature = PointStation.GetByZoneCode(SelectedLand.LocationCode);
-            ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.LocationCode);
+            ListLineFeature = lineStation.GetByZoneCode(SelectedLand.ZoneCode);
+            ListPointFeature = PointStation.GetByZoneCode(SelectedLand.ZoneCode);
+            ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.ZoneCode);
             ListLineFeature.RemoveAll(l => l.Shape == null);
             ListPointFeature.RemoveAll(l => l.Shape == null);
             ListPolygonFeature.RemoveAll(l => l.Shape == null);

@@ -37,7 +37,7 @@ namespace YuLinTu.Library.Business
             //var senderList = senderStation.GetTissues(currentZone.FullCode, eLevelOption.SelfAndSubs);
             foreach (var zone in allZones)
             {
-                //var sender = senderList.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode).FirstOrDefault();
+                //var sender = senderList.FindAll(c => !string.IsNullOrEmpty(c.SenderCode) && c.SenderCode == zone.FullCode).FirstOrDefault();
                 //if (sender == null)
                 //{
                 //    this.ReportWarn(string.Format("{0}未获得发包方信息!", zone.FullName));
@@ -57,7 +57,7 @@ namespace YuLinTu.Library.Business
                     new List<ContractConcord>() : groupMeta.ConcordsModified.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
                 //argument.ConcordsModified.ForEach(c => { c.SenderId = sender.ID; c.SenderName = sender.Name; });
                 argument.LandsOfInitialConcord = groupMeta.LandsOfInitialConcord == null ?
-                    new List<ContractLand>() : groupMeta.LandsOfInitialConcord.FindAll(c => !string.IsNullOrEmpty(c.LocationCode) && c.LocationCode == zone.FullCode);
+                    new List<ContractLand>() : groupMeta.LandsOfInitialConcord.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
                 argument.IsCalculateArea = groupMeta.IsCalculateArea;
                 argument.VillageInlitialSet = groupMeta.VillageInlitialSet;
                 argument.Sender = tissue;

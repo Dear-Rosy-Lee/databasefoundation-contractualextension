@@ -102,8 +102,8 @@ namespace YuLinTu.Library.WorkStation
         public const string ChineseGroupName = "ChineseGroup";//大写组级地域名称
         public const string SmallGroupName = "SmallGroup";//不加地域单位组级地域名称
         public const string SmallChineseGroupName = "GroupName";//不加地域单位组级大写地域名称
-        public const string ZoneName = "ZoneName";//地域全名称
-        public const string LocationName = "LocationName";//坐落地域
+        public const string ZoneName = "SenderName";//地域全名称
+        public const string LocationName = "ZoneName";//坐落地域
         public const string CountyUnitName = "CountyUnitName";//地域县、镇、村、组名称
         public const string TownUnitName = "TownUnitName";//地域镇、村、组名称
         public const string VillageUnitName = "VillageUnitName";//地域村、组名称

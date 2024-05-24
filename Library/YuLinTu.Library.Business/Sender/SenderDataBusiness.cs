@@ -162,6 +162,33 @@ namespace YuLinTu.Library.Business
             return result;
         }
 
+
+        /// <summary>
+        /// 删除发包方数据
+        /// </summary>
+        public bool DeleteSenders(List<string> tissueCodes)
+        {
+            if (!CanContinue())
+            {
+                return false;
+            }
+            bool result = true;
+            try
+            {
+                int num = Station.Delete(t => tissueCodes.Contains(t.Code));
+                result = (num > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "DeleteSender(删除发包方数据)", ex.Message + ex.StackTrace);
+                this.ReportError("删除发包方出错," + ex.Message);
+                result = false;
+            }
+            return result;
+        }
+
+
+
         /// <summary>
         /// 获取指定地域编码下的发包方
         /// </summary>
@@ -173,7 +200,7 @@ namespace YuLinTu.Library.Business
             {
                 return list;
             }
-            if (zoneCode == null || zoneCode.Length < 9)
+            if (zoneCode == null)
                 return list;
             try
             {

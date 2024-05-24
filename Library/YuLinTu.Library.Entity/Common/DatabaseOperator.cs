@@ -932,10 +932,10 @@ namespace YuLinTu.Library.Entity
                 cmd.ExecuteNonQuery();
             }
             dataReader = readCommand.ExecuteReader();
-            isExist = InitalizeFieldInformation(dataReader, "ZoneCode");
+            isExist = InitalizeFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [ZoneCode] Text";
+                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [SenderCode] Text";
                 cmd = new System.Data.OleDb.OleDbCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -972,10 +972,10 @@ namespace YuLinTu.Library.Entity
                 cmd.ExecuteNonQuery();
             }
             dataReader = readCommand.ExecuteReader();
-            isExist = InitalizeFieldInformation(dataReader, "ZoneCode");
+            isExist = InitalizeFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [ZoneCode] Text";
+                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [SenderCode] Text";
                 cmd = new System.Data.OleDb.OleDbCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -1020,10 +1020,10 @@ namespace YuLinTu.Library.Entity
             System.Data.OleDb.OleDbCommand readCommand = new System.Data.OleDb.OleDbCommand(cmdString, connection);
             System.Data.OleDb.OleDbDataReader dataReader = readCommand.ExecuteReader();
             System.Data.OleDb.OleDbCommand cmd = null;
-            bool isExist = InitalizeFieldInformation(dataReader, "ZoneCode");
+            bool isExist = InitalizeFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [ZoneCode] Memo";
+                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [SenderCode] Memo";
                 cmd = new System.Data.OleDb.OleDbCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -1044,10 +1044,10 @@ namespace YuLinTu.Library.Entity
             System.Data.OleDb.OleDbCommand readCommand = new System.Data.OleDb.OleDbCommand(cmdString, connection);
             System.Data.OleDb.OleDbDataReader dataReader = readCommand.ExecuteReader();
             System.Data.OleDb.OleDbCommand cmd = null;
-            bool isExist = InitalizeFieldInformation(dataReader, "ZoneCode");
+            bool isExist = InitalizeFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [ZoneCode] Memo";
+                cmdString = "ALTER TABLE " + tableName + " ADD COLUMN [SenderCode] Memo";
                 cmd = new System.Data.OleDb.OleDbCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -1103,7 +1103,7 @@ namespace YuLinTu.Library.Entity
                         return true;
                     }
                     string cmdString = "CREATE TABLE TableVirtualPerson ([ID] GUID, [Name] Memo, [Number] Memo, [SharePerson] Memo, ";
-                    cmdString += "[LandLocated] Memo, [ZoneCode] Memo, [VirtualType] Int, [SourceID] GUID, [Founder] Memo, ";
+                    cmdString += "[LandLocated] Memo, [SenderCode] Memo, [VirtualType] Int, [SourceID] GUID, [Founder] Memo, ";
                     cmdString += "[CreationTime] DateTime, [Modifier] Memo, [ModifiedTime] DateTime, [Comment] Memo, ";
                     cmdString += "[Status] Int, [Telephone] Memo, [PersonCount] Memo, [TotalArea] Memo, [PostalNumber] Memo, ";
                     cmdString += "[FamilyNumber] Memo, [TotalActualArea] Memo, [TotalAwareArea] Memo, [TotalModoArea] Memo, ";
@@ -1149,7 +1149,7 @@ namespace YuLinTu.Library.Entity
                     string cmdString = "CREATE TABLE SecondTableLand ([ID] GUID, [CadastralNumber] Memo, [Name] Memo, ";
                     cmdString += "[LandNumber] Memo, [HouseHolderName] Memo, [HouseHolderId] GUID, [LandCode] Memo, [ContractType] Int, ";
                     cmdString += "[LandLevel] Int, [PlantType] Int, [LandScopeLevel] Int, [LandNeighbor] Memo, ";
-                    cmdString += "[OwnRightType] Int, [OwnRightCode] Text, [OwnRightName] Text, [LocationCode] Text, [LocationName] Text, ";
+                    cmdString += "[OwnRightType] Int, [OwnRightCode] Text, [OwnRightName] Text, [ZoneCode] Text, [ZoneName] Text, ";
                     cmdString += "[LineArea] LONG, [TableArea] LONG, [ActualArea] LONG, [AwareArea] LONG, ";
                     cmdString += "[IsFarmerLand] Int, [Purpose] Int, [ManagementType] LONG, [Soiltype] Memo, ";
                     cmdString += "[IsFlyLand] Int, [ConcordId] LONG, [Founder] Memo, [CreationTime] DateTime, ";
@@ -1200,7 +1200,7 @@ namespace YuLinTu.Library.Entity
                         return true;
                     }
                     string cmdString = "CREATE TABLE AgricultureAffair ([ID] GUID, [Name] Memo, [Category] Int, [OwnershipCategory] Int, ";
-                    cmdString += "[Description] Memo, [WorkAgrument] Memo, [Status] Int, [ZoneCode]  Memo,[ZoneName]  Memo, [Creater] Memo, ";
+                    cmdString += "[Description] Memo, [WorkAgrument] Memo, [Status] Int, [SenderCode]  Memo,[SenderName]  Memo, [Creater] Memo, ";
                     cmdString += "[CreaterTime] DateTime, [Modifyer] Memo, [ModifyerTime] DateTime, [Comment] Memo)";
                     System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(cmdString, connection);
                     cmd.ExecuteNonQuery();
@@ -1308,7 +1308,7 @@ namespace YuLinTu.Library.Entity
                         return true;
                     }
                     string cmdString = "CREATE TABLE TableVirtualPerson ([ID] [uniqueidentifier] NOT NULL, [Name] [nvarchar](150) NULL, [Number] [nvarchar](150) NULL, [SharePerson] [xml] NULL, ";
-                    cmdString += "[LandLocated] [nvarchar](200) NULL, [ZoneCode] [nvarchar](50) NOT NULL, [VirtualType] [int] NOT NULL, [SourceID] [uniqueidentifier] NULL, [Founder] [nvarchar](50) NULL, ";
+                    cmdString += "[LandLocated] [nvarchar](200) NULL, [SenderCode] [nvarchar](50) NOT NULL, [VirtualType] [int] NOT NULL, [SourceID] [uniqueidentifier] NULL, [Founder] [nvarchar](50) NULL, ";
                     cmdString += "[CreationTime] [datetime] NULL, [Modifier] [nvarchar](50) NULL, [ModifiedTime] [datetime] NULL, [Comment] [ntext] NULL, ";
                     cmdString += "[Status] [int] NOT NULL, [Telephone] [nvarchar](50) NULL, [PersonCount] [nvarchar](20) NULL, [TotalArea] [nvarchar](20) NULL, [PostalNumber] [nvarchar](30) NULL, ";
                     cmdString += "[FamilyNumber] [nvarchar](30) NULL, [TotalActualArea] [nvarchar](20) NULL, [TotalAwareArea] [nvarchar](20) NULL, [TotalModoArea] [nvarchar](20) NULL, ";
@@ -1354,7 +1354,7 @@ namespace YuLinTu.Library.Entity
                     string cmdString = "CREATE TABLE SecondTableLand ([ID] [uniqueidentifier] NOT NULL, [CadastralNumber] [nvarchar](50) NOT NULL, [Name] [nvarchar](50) NULL, ";
                     cmdString += "[LandNumber] [nvarchar](50) NOT NULL, [HouseHolderName] [nvarchar](50) NOT NULL, [HouseHolderId] [uniqueidentifier] NULL, [LandCode] [nvarchar](4) NOT NULL, [ContractType] [int] NOT NULL, ";
                     cmdString += "[LandLevel] [int] NOT NULL, [PlantType] [int] NOT NULL, [LandScopeLevel] [int] NOT NULL, [LandNeighbor] [ntext] NULL, ";
-                    cmdString += "[OwnRightType] [int] NOT NULL, [OwnRightCode] [nvarchar](50) NOT NULL, [OwnRightName] [nvarchar](150) NOT NULL, [LocationCode] [nvarchar](50) NOT NULL, [LocationName] [nvarchar](150) NOT NULL, ";
+                    cmdString += "[OwnRightType] [int] NOT NULL, [OwnRightCode] [nvarchar](50) NOT NULL, [OwnRightName] [nvarchar](150) NOT NULL, [ZoneCode] [nvarchar](50) NOT NULL, [ZoneName] [nvarchar](150) NOT NULL, ";
                     cmdString += "[LineArea] [decimal](20, 8) NULL, [TableArea] [decimal](20, 8) NULL, [ActualArea] [decimal](20, 8) NOT NULL, [AwareArea] [decimal](20, 8) NOT NULL, ";
                     cmdString += "[IsFarmerLand] [bit] NULL, [Purpose] [int] NOT NULL, [ManagementType] [int] NOT NULL, [Soiltype] [nvarchar](50) NULL, ";
                     cmdString += "[IsFlyLand] [bit] NOT NULL, [ConcordId] [uniqueidentifier] NULL, [Founder] [nvarchar](50) NULL, [CreationTime] [datetime] NULL, ";
@@ -1405,7 +1405,7 @@ namespace YuLinTu.Library.Entity
                         return true;
                     }
                     string cmdString = "CREATE TABLE AgricultureAffair ([ID] [uniqueidentifier] NOT NULL, [Name] [nvarchar](50) NULL, [Category] [int] NOT NULL, [OwnershipCategory] [tinyint] NOT NULL, ";
-                    cmdString += "[Description] [nvarchar](500) NULL, [WorkAgrument] [xml] NULL, [Status] [int] NOT NULL, [ZoneCode]  [nvarchar](19) NOT NULL,[ZoneName]  [nvarchar](50) NOT NULL, [Creater] [nvarchar](50) NULL, ";
+                    cmdString += "[Description] [nvarchar](500) NULL, [WorkAgrument] [xml] NULL, [Status] [int] NOT NULL, [SenderCode]  [nvarchar](19) NOT NULL,[SenderName]  [nvarchar](50) NOT NULL, [Creater] [nvarchar](50) NULL, ";
                     cmdString += "[CreaterTime] [datetime] NULL, [Modifyer] [nvarchar](50) NULL, [ModifyerTime] [datetime] NULL, [Comment] [nvarchar](500) NULL)";
                     SqlCommand cmd = new SqlCommand(cmdString, connection);
                     cmd.ExecuteNonQuery();
@@ -2133,10 +2133,10 @@ namespace YuLinTu.Library.Entity
                 cmd.ExecuteNonQuery();
             }
             dataReader = readCommand.ExecuteReader();
-            isExist = InitalizeSqlServerFieldInformation(dataReader, "ZoneCode");
+            isExist = InitalizeSqlServerFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD [ZoneCode] [nvarchar](50) NULL";
+                cmdString = "ALTER TABLE " + tableName + " ADD [SenderCode] [nvarchar](50) NULL";
                 cmd = new SqlCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -2173,10 +2173,10 @@ namespace YuLinTu.Library.Entity
                 cmd.ExecuteNonQuery();
             }
             dataReader = readCommand.ExecuteReader();
-            isExist = InitalizeSqlServerFieldInformation(dataReader, "ZoneCode");
+            isExist = InitalizeSqlServerFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD [ZoneCode] [nvarchar](50) NULL";
+                cmdString = "ALTER TABLE " + tableName + " ADD [SenderCode] [nvarchar](50) NULL";
                 cmd = new SqlCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -2221,10 +2221,10 @@ namespace YuLinTu.Library.Entity
             SqlCommand readCommand = new SqlCommand(cmdString, connection);
             SqlDataReader dataReader = readCommand.ExecuteReader();
             SqlCommand cmd = null;
-            bool isExist = InitalizeSqlServerFieldInformation(dataReader, "ZoneCode");
+            bool isExist = InitalizeSqlServerFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD [ZoneCode] [nvarchar](50) NULL";
+                cmdString = "ALTER TABLE " + tableName + " ADD [SenderCode] [nvarchar](50) NULL";
                 cmd = new SqlCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }
@@ -2245,10 +2245,10 @@ namespace YuLinTu.Library.Entity
             SqlCommand readCommand = new SqlCommand(cmdString, connection);
             SqlDataReader dataReader = readCommand.ExecuteReader();
             SqlCommand cmd = null;
-            bool isExist = InitalizeSqlServerFieldInformation(dataReader, "ZoneCode");
+            bool isExist = InitalizeSqlServerFieldInformation(dataReader, "SenderCode");
             if (!isExist)
             {
-                cmdString = "ALTER TABLE " + tableName + " ADD [ZoneCode] [nvarchar](50) NULL";
+                cmdString = "ALTER TABLE " + tableName + " ADD [SenderCode] [nvarchar](50) NULL";
                 cmd = new SqlCommand(cmdString, connection);
                 cmd.ExecuteNonQuery();
             }

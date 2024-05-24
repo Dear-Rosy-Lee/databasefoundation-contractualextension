@@ -439,8 +439,8 @@ namespace YuLinTu.Library.Business
             land.LandCategory = DictionaryTypeInfo.CBDK; //this.listDKLB.Find(c => c.Name == "承包地块").Code;
             land.LandScopeLevel = this.listGDPDJ.Find(c => c.Name == "未知") == null ? "" : listGDPDJ.Find(c => c.Name == "未知").Code;
             land.CadastralZoneCode = currentZone.FullCode;
-            land.LocationCode = currentZone.FullCode;
-            land.LocationName = currentZone.FullName;
+            land.ZoneCode = currentZone.FullCode;
+            land.ZoneName = currentZone.FullName;
             land.AwareArea = land.ActualArea;
             land.IsFlyLand = false;
             land.IsTransfer = false;

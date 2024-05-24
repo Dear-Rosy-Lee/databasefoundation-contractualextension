@@ -451,7 +451,7 @@ namespace YuLinTu.Component.MapFoundation
                             workpage.Page.ShowMessageBox(messagebox);
                             return;
                         }
-                        currentZoneCode = selectLand.LocationCode;
+                        currentZoneCode = selectLand.ZoneCode;
                     }
                 }
                 selectContractLandCollection.Add(selectLand);
