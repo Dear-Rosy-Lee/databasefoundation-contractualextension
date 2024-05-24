@@ -156,6 +156,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.SeparateD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.BatchDataBaseTask", "ComponentTask\YuLinTu.Component.BatchDataBaseTask\YuLinTu.Component.BatchDataBaseTask.csproj", "{A3C7CEAB-E53A-4637-884A-8970541F4006}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.ContractedLand.BoundaryCalculateTask", "ComponentTask\YuLinTu.Component.ContractLand.BoundaryCalculateTask\YuLinTu.Component.ContractedLand.BoundaryCalculateTask.csproj", "{7EB88130-E845-446B-B507-8811260BEF1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -729,6 +731,22 @@ Global
 		{A3C7CEAB-E53A-4637-884A-8970541F4006}.Release|x64.Build.0 = Release|x64
 		{A3C7CEAB-E53A-4637-884A-8970541F4006}.Release|x86.ActiveCfg = Release|x86
 		{A3C7CEAB-E53A-4637-884A-8970541F4006}.Release|x86.Build.0 = Release|x86
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|x64.ActiveCfg = Debug|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|x64.Build.0 = Debug|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|x86.ActiveCfg = Debug|x86
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Debug|x86.Build.0 = Debug|x86
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|Mixed Platforms.ActiveCfg = Release|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|Mixed Platforms.Build.0 = Release|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|x64.ActiveCfg = Release|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|x64.Build.0 = Release|x64
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|x86.ActiveCfg = Release|x86
+		{7EB88130-E845-446B-B507-8811260BEF1D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -770,6 +788,7 @@ Global
 		{D55B87E9-2B5B-4ABC-9A6A-92323069486C} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{B7C00328-3B9E-449C-9F70-5832924AA201} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{A3C7CEAB-E53A-4637-884A-8970541F4006} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
+		{7EB88130-E845-446B-B507-8811260BEF1D} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD91C12-2BD4-444D-A690-F2AA0E7ABF34}

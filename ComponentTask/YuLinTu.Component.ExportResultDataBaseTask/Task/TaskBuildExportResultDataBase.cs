@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data.SQLite;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -14,9 +7,9 @@ using YuLinTu.Windows;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {
-    [TaskDescriptor(IsLanguageName = false, Name = "导出数据库成果", Gallery = "导出数据库成果",
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
+    [TaskDescriptor(IsLanguageName = false, Name = "导出汇交成果数据", Gallery = "汇交数据库成果",
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/arrow-270.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/arrow-270.png")]
     public class TaskBuildExportResultDataBase : Task
     {
         #region Fields

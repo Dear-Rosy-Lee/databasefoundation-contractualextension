@@ -19,25 +19,22 @@ using YuLinTu.Library.Controls;
 using YuLinTu.Windows;
 using System.Windows.Forms;
 
-namespace YuLinTu.Component.Common
+namespace YuLinTu.Component.SeparateDataBaseTask
 {
     /// <summary>
-    /// 选择文件文本框界面
+    /// 选择文件夹文本框界面
     /// </summary>
-    public partial class SelectedFileTextBox : MetroTextBox
+    public partial class SelectedFolderTextBox : MetroTextBox
     {
-        public string Filter { get; set; }
-
         #region Ctor
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public SelectedFileTextBox()
+        public SelectedFolderTextBox()
         {
             InitializeComponent();
             this.DataContext = this;
-            Filter = "文件类型(*.sqlite)|*.sqlite"; ;
         }
 
         #endregion
@@ -45,19 +42,19 @@ namespace YuLinTu.Component.Common
         #region Properties
 
         /// <summary>
-        /// 依赖属性文件路径
+        /// 依赖属性文件夹路径
         /// </summary>
-        public string FileName
+        public string FolderName
         {
-            get { return (string)GetValue(FileNameProperty); }
-            set { SetValue(FileNameProperty, value); }
+            get { return (string)GetValue(FolderNameProperty); }
+            set { SetValue(FolderNameProperty, value); }
         }
 
-        public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(SelectedFileTextBox), new PropertyMetadata((s, a) =>
+        public static readonly DependencyProperty FolderNameProperty = DependencyProperty.Register("FolderName", typeof(string), typeof(SelectedFolderTextBox), new PropertyMetadata((s, a) =>
         {
-            var fileName = a.NewValue as string;
-            if (!fileName.IsNullOrBlank())
-                (s as MetroTextBox).Text = fileName;
+            var folderName = a.NewValue as string;
+            if (!folderName.IsNullOrBlank())
+                (s as MetroTextBox).Text = folderName;
         }));
 
         /// <summary>
@@ -74,17 +71,17 @@ namespace YuLinTu.Component.Common
         /// </summary>
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Multiselect = false;
-            ofd.Filter = Filter;
-            var val = ofd.ShowDialog();
-            if (val == null || !val.Value)
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
-                return;
+                fbd.Description = "请选择文件夹";
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    FolderName = fbd.SelectedPath;
+                }
             }
-            FileName = ofd.FileName;
         }
 
         #endregion
+
     }
 }

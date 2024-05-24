@@ -19,15 +19,13 @@ using YuLinTu.Library.Controls;
 using YuLinTu.Windows;
 using System.Windows.Forms;
 
-namespace YuLinTu.Component.Common
+namespace YuLinTu.Component.SeparateDataBaseTask
 {
     /// <summary>
     /// 选择文件文本框界面
     /// </summary>
     public partial class SelectedFileTextBox : MetroTextBox
     {
-        public string Filter { get; set; }
-
         #region Ctor
 
         /// <summary>
@@ -37,7 +35,6 @@ namespace YuLinTu.Component.Common
         {
             InitializeComponent();
             this.DataContext = this;
-            Filter = "文件类型(*.sqlite)|*.sqlite"; ;
         }
 
         #endregion
@@ -74,17 +71,17 @@ namespace YuLinTu.Component.Common
         /// </summary>
         private void ImageButton_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Multiselect = false;
-            ofd.Filter = Filter;
-            var val = ofd.ShowDialog();
-            if (val == null || !val.Value)
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                return;
+                ofd.Filter = "文件类型(*.sqlite)|*.sqlite";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    FileName = ofd.FileName;
+                }
             }
-            FileName = ofd.FileName;
         }
 
         #endregion
+
     }
 }

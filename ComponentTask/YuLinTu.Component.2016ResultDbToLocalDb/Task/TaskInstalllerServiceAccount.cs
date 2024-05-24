@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2014  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
 using Quality.Business.TaskBasic;
@@ -12,9 +12,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
     /// <summary>
     /// 2016年新规范农业部数据交换任务导入
     /// </summary>
-    [TaskDescriptor(Name = "导入2016数据任务", Gallery = "导入数据库成果",
-        UriImage16 = "pack://application:,,,/YuLinTu.Component.ResultDbToLocalDb;component/Resources/import16.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Component.ResultDbToLocalDb;component/Resources/import24.png")]
+    [TaskDescriptor(Name = "导入汇交成果数据", Gallery = "汇交数据库成果",
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/arrow-090.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/arrow-090.png")]
     public class TaskInstalllerServiceAccount : YuLinTu.Task
     {
         #region Ctor
@@ -25,8 +25,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
         public TaskInstalllerServiceAccount()
         {
-            Name = "导入2016数据任务";
-            Description = "导入符合农业部要求的2016年格式的数据";
+            Name = "导入汇交成果数据任务";
+            Description = "导入符合农业部2539规范格式的成果数据";
         }
 
         #endregion

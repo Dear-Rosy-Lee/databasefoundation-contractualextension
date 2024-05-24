@@ -1,24 +1,13 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using YuLinTu;
-using YuLinTu.Data;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity;
-
 namespace YuLinTu.Component.ExportDataSummaryTask
 {
     /// <summary>
     /// 合并SQLite数据库任务
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "导出农村土地承包方汇总数据",
-        Gallery = "导出农村土地承包方汇总数据",
+        Gallery = "汇交数据库成果",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class TaskDataSummaryExport: TaskGroup

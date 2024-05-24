@@ -3,7 +3,7 @@
  */
 using YuLinTu.Windows;
 
-namespace YuLinTu.Component.SeparateDataBaseTask
+namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 {
     /// <summary>
     /// 应用程序上下文
