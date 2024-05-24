@@ -41,7 +41,7 @@
                             <TextBlock Text="视图" Margin="0,2,0,0" VerticalAlignment="Center"/>
                         </StackPanel>
                     </cmps:MetroExpander.Header>
-                    <WrapPanel Orientation="Horizontal" Margin="10">
+                    <WrapPanel Orientation="Horizontal" x:Name="previouspanel" Margin="10">
                         <cmps:SuperButton Margin="0" Padding="3" ToolTip="上一视图" MinWidth="60"
                                           Name="previousView" Click="previousView_Click" HorizontalContentAlignment="Center">
                             <cmps:ImageTextItem ImagePosition="Top"

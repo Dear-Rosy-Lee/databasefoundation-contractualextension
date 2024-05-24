@@ -1274,7 +1274,7 @@ namespace YuLinTu.Component.MapFoundation
 
             #region 导出选中Shape
 
-            var LandAssignment = new MetroToggleButton();
+            var LandAssignment = new MetroButton();
             LandAssignment.ToolTip = "导出所选中的地块的空间数据";
             LandAssignment.Padding = new Thickness(4, 2, 4, 2);
             LandAssignment.VerticalAlignment = VerticalAlignment.Stretch;
@@ -1282,7 +1282,7 @@ namespace YuLinTu.Component.MapFoundation
             LandAssignment.Content = new ImageTextItem()
             {
                 ImagePosition = eDirection.Top,
-                Text = "导出Shape文件",
+                Text = "矢量导出",
                 Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/blogpublish.png")),
             };
             数据操作.Items.Insert(8, LandAssignment);
@@ -1292,7 +1292,7 @@ namespace YuLinTu.Component.MapFoundation
 
             #region 编辑地块编码
 
-            var SplitLand = new MetroToggleButton();
+            var SplitLand = new MetroButton();
             SplitLand.ToolTip = "地块分割后，编辑地块编码";
             SplitLand.Padding = new Thickness(4, 2, 4, 2);
             SplitLand.VerticalAlignment = VerticalAlignment.Stretch;
@@ -4631,6 +4631,11 @@ namespace YuLinTu.Component.MapFoundation
         private void SplitLandCodeEdit(object sender, RoutedEventArgs e)
         {
             var layers = MapControl.SelectedItems.Select(c => c.Layer).Distinct().ToList();
+            if (layers.Count == 0)
+            {
+                ShowBox("信息提示", "请选择多个地块进行地块编码的处理！");
+                return;
+            }
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
             var layer = layers[0];
@@ -4782,6 +4787,11 @@ namespace YuLinTu.Component.MapFoundation
         {
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
+            if (graphics.Count == 0)
+            {
+                ShowBox("信息提示", "请选中矢量要素进行导出！");
+                return;
+            }
             ExportDataPage extPage = new ExportDataPage(currentZone.Name, Workpage, "导出ShapeFile");
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (b, r) =>

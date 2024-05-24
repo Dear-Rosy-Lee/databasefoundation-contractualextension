@@ -16,11 +16,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1E71531-E3AA-4D87-B697-349C8CC022AB}</ProjectGuid>
+    <ProjectGuid>{30B45582-C56E-4BCF-BA88-170FAEABEA13}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YuLinTu.Component.MapFoundation</RootNamespace>
-    <AssemblyName>YuLinTu.Component.MapFoundation</AssemblyName>
+    <RootNamespace>YuLinTu.Component.ExportDataSummaryTask</RootNamespace>
+    <AssemblyName>YuLinTu.Component.ExportDataSummaryTask</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,19 +31,41 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Workspace\Components\YuLinTu.Component.MapFoundation\Binary\</OutputPath>
+    <OutputPath>..\..\Workspace\Components\YuLinTu.Component.ExportDataSummaryTask\Binary\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Workspace\Components\YuLinTu.Component.MapFoundation\Binary\</OutputPath>
+    <OutputPath>..\..\Workspace\Components\YuLinTu.Component.ExportDataSummaryTask\Binary\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -66,51 +88,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Data">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Data.Forms">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Data.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Extensions">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Modeling.Forms">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Modeling.Forms.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Projections, Version=1.7.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.dll</HintPath>
     </Reference>
     <Reference Include="DotSpatial.Projections.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=52099474f11b7ff0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Tools">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Tools.dll</HintPath>
-    </Reference>
-    <Reference Include="DotSpatial.Topology">
-      <HintPath>..\..\Dependencies\DotSpatial\DotSpatial.Topology.dll</HintPath>
     </Reference>
     <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
@@ -168,13 +154,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Quality.Business.TaskBasic">
-      <HintPath>..\..\Dependencies\Quality\Quality.Business.TaskBasic.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -198,364 +180,42 @@
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="YuLinTu.Appwork.New">
+      <HintPath>..\..\Worker\Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="YuLinTu.Appwork.Task">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Components.tGIS">
-      <HintPath>..\..\Worker\Components\YuLinTu.Components.tGIS\Binary\YuLinTu.Components.tGIS.dll</HintPath>
+    <Reference Include="YuLinTu.Core">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Core.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="YuLinTu.Components.tGIS.Edit">
-      <HintPath>..\..\Worker\Components\YuLinTu.Components.tGIS.Edit\Binary\YuLinTu.Components.tGIS.Edit.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.NetAux">
-      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ApplicationContext.cs" />
-    <Compile Include="Configuration\ImportControlPointDefine.cs" />
-    <Compile Include="Configuration\ImportDZDWDefine.cs" />
-    <Compile Include="Configuration\ImportFarmLandConserveDefine.cs" />
-    <Compile Include="Configuration\ImportMZDWDefine.cs" />
-    <Compile Include="Configuration\ImportXZDWDefine.cs" />
-    <Compile Include="Configuration\ImportZoneBoundaryDefine.cs" />
-    <Compile Include="Configuration\LoadConfig.cs" />
-    <Compile Include="Configuration\LoadPropertyTable.cs" />
-    <Compile Include="Configuration\MapFoundationUserSettingDefine.cs" />
-    <Compile Include="Configuration\PropertyTableDefine.cs" />
-    <Compile Include="Controls\ClearDataCommon.xaml.cs">
-      <DependentUpon>ClearDataCommon.xaml</DependentUpon>
+    <Compile Include="Controls\DataSummaryExportFramePage.xaml.cs">
+      <DependentUpon>DataSummaryExportFramePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ClipPolygonSetting.xaml.cs">
-      <DependentUpon>ClipPolygonSetting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CoilPropertyPanel.xaml.cs">
-      <DependentUpon>CoilPropertyPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DealTopoData.xaml.cs">
-      <DependentUpon>DealTopoData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DiagramFoundationCommonConfigPage.xaml.cs">
-      <DependentUpon>DiagramFoundationCommonConfigPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DotPropertyPanel.xaml.cs">
-      <DependentUpon>DotPropertyPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\GenerateData.xaml.cs">
-      <DependentUpon>GenerateData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportCBDShapeByRightMenu.xaml.cs">
-      <DependentUpon>ImportCBDShapeByRightMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportControlPointShape.xaml.cs">
-      <DependentUpon>ImportControlPointShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportDataCommon.xaml.cs">
-      <DependentUpon>ImportDataCommon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportDZDWShape.xaml.cs">
-      <DependentUpon>ImportDZDWShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportFarmLandConserveShape.xaml.cs">
-      <DependentUpon>ImportFarmLandConserveShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportMZDWShape.xaml.cs">
-      <DependentUpon>ImportMZDWShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportShapeField.xaml.cs">
-      <DependentUpon>ImportShapeField.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportZoneBoundaryShape.xaml.cs">
-      <DependentUpon>ImportZoneBoundaryShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\InitializeLandInfo.xaml.cs">
-      <DependentUpon>InitializeLandInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MapFoundationUserConfigPage.xaml.cs">
-      <DependentUpon>MapFoundationUserConfigPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MapToolPanel.xaml.cs">
-      <DependentUpon>MapToolPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MapToolsShell.xaml.cs">
-      <DependentUpon>MapToolsShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImportXZDWShape.xaml.cs">
-      <DependentUpon>ImportXZDWShape.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PointPropertyPanel.xaml.cs">
-      <DependentUpon>PointPropertyPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PolygonTopologyByUserSetting.xaml.cs">
-      <DependentUpon>PolygonTopologyByUserSetting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ImportShapeTask\TaskImportControlPointShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportControlPointShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskDealTopoArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportDCZDShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskDealTopoOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportDCZDShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportZDBZShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportDZDWShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportZDBZShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportDZDWShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportFarmLandConserveShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportFarmLandConserveShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportMapCBDShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportMZDWShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportMZDWShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportXZDWShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportXZDWShapeOperation.cs" />
-    <Compile Include="ImportShapeTask\TaskImportZoneBoundaryShapeArgument.cs" />
-    <Compile Include="ImportShapeTask\TaskImportZoneBoundaryShapeOperation.cs" />
-    <Compile Include="MapClip\MapActionToMapClipAngleByLineButtonIsCheckedConverter.cs" />
-    <Compile Include="MapClip\MapActionToMapClipButtonIsCheckedConverter.cs" />
-    <Compile Include="MapClip\MapActionToMapClipBySetButtonIsCheckedConverter.cs" />
-    <Compile Include="MapClip\MapControlActionQueryMapClipAngleByLine.cs" />
-    <Compile Include="MapClip\MapControlActionQueryMapClipByLine.cs" />
-    <Compile Include="MapClip\MapControlActionQueryMapClipBySetting.cs" />
-    <Compile Include="MapControl\EditGISClient.cs" />
-    <Compile Include="MapCoordinate\MapCoordinateStatusbarShell.xaml.cs">
-      <DependentUpon>MapCoordinateStatusbarShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MapEdit\MapControlActionMapEditByLine.cs" />
-    <Compile Include="MapEdit\MapControlActionMapEditByLineButtonIsCheckedConverter.cs" />
-    <Compile Include="MapClip\MapControlActionMapZoneAssignmentConverter.cs" />
-    <Compile Include="MapFoundationTools\MapActionToMapAllExtendButtonIsCheckedConverter.cs" />
-    <Compile Include="MapFoundationTools\MapActionToUndoExtendViewButtonIsCheckedConverter.cs" />
-    <Compile Include="MapFoundationTools\MapActionToZoomInButtonIsCheckedConverter.cs" />
-    <Compile Include="MapFoundationTools\MapActionToZoomOutButtonIsCheckedConverter.cs" />
-    <Compile Include="MapFoundationTools\MapControlActionMapAllExtend.cs" />
-    <Compile Include="MapFoundationTools\MapControlActionRedoExtendView.cs" />
-    <Compile Include="MapFoundationTools\MapControlActionUndoExtendView.cs" />
-    <Compile Include="MapFoundationTools\MapControlActionZoomIn.cs" />
-    <Compile Include="MapFoundationTools\MapControlActionZoomOut.cs" />
-    <Compile Include="MapFoundationTools\MapPageOpen.cs" />
-    <Compile Include="MapQueryBusiness\GeoPointUI.cs" />
-    <Compile Include="MapQueryBusiness\MapActionToQueryGeoPointButtonIsCheckedConverter.cs" />
-    <Compile Include="MapQueryBusiness\MapControlActionQueryGeoPoint.cs" />
-    <Compile Include="MapQueryBusiness\MapControlActionQueryGeoPointDataSource.cs" />
-    <Compile Include="Measure\MapActionMeasureAreaAssignment.cs" />
-    <Compile Include="Task\BuildPyramid.cs" />
-    <Compile Include="Task\MySqlHelper.cs" />
-    <Compile Include="Task\PropertyDescriptorBuilderSaveFileBrowserSQLite.cs" />
-    <Compile Include="Task\SaveFileBrowserTextBox.xaml.cs">
-      <DependentUpon>SaveFileBrowserTextBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Task\SQLiteHelper.cs" />
-    <Compile Include="Task\TaskBuildPyramid.cs" />
-    <Compile Include="Task\TaskBuildPyramidArgument.cs" />
-    <Compile Include="Task\TaskExportSelectedLandShapeArgument.cs" />
-    <Compile Include="Task\TaskExportSelectedLandShapeOperation.cs" />
-    <Compile Include="Task\TaskInitializeLandArgument.cs" />
-    <Compile Include="Task\TaskGenerateQYJXShapeArgument.cs" />
-    <Compile Include="Task\TaskInitializeLandOperation.cs" />
-    <Compile Include="Task\TaskGenerateQYJXShapeOperation.cs" />
-    <Compile Include="Task\UIHelper.cs" />
-    <Compile Include="Topology\LandTopologyDialog.xaml.cs">
-      <DependentUpon>LandTopologyDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Topology\MapPageContextsTopology.cs" />
-    <Compile Include="Topology\MessageSplitLandInstallEventArgs.cs" />
-    <Compile Include="Topology\SplitItem.cs" />
-    <Compile Include="Topology\SplitLandEdit.xaml.cs">
-      <DependentUpon>SplitLandEdit.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Topology\TopologyCommands.cs" />
-    <Compile Include="Topology\TopologyTask\LandAreaTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandAngleTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandNearNodeRepeatTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandNodeOnEdgeTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandSelfOverlapsTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandNodeRepeatTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandTopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandOverlapsTopologyTask.cs" />
-    <Compile Include="Topology\LandTopologyTaskArgument.cs" />
-    <Compile Include="Topology\TopologyTaskArgument.cs" />
-    <Compile Include="Topology\TopologyTask.cs" />
-    <Compile Include="Topology\TopologyTask\LandTopologyTaskGroup.cs" />
-    <Compile Include="Topology\TopologyMenuShell.xaml.cs">
-      <DependentUpon>TopologyMenuShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Topology\TopologyToolbarShell.xaml.cs">
-      <DependentUpon>TopologyToolbarShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DragHandlerVirtualPerson.cs" />
-    <Compile Include="UI\MapControlActionQueryGeoPointShell.xaml.cs">
-      <DependentUpon>MapControlActionQueryGeoPointShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MeasureButtonShell.xaml.cs">
-      <DependentUpon>MeasureButtonShell.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Measure\LabelObject.cs" />
-    <Compile Include="Measure\MapActionToMeasureAreaButtonIsCheckedConverter.cs" />
-    <Compile Include="Measure\MapActionToMeasureLengthButtonIsCheckedConverter.cs" />
-    <Compile Include="Measure\MapControlActionMeasureArea.cs" />
-    <Compile Include="Measure\MapControlActionMeasureLength.cs" />
-    <Compile Include="MapPageContext.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="VirtualPersonNavigator.cs" />
+    <Compile Include="Entrance.cs" />
+    <Compile Include="ExportDataSummaryPageContext.cs" />
     <Compile Include="TaskPageContext.cs" />
-    <Compile Include="MapPageContextTopology.cs" />
+    <Compile Include="Task\TaskDataSummaryExport.cs" />
+    <Compile Include="Task\TaskDataSummaryExportArgument.cs" />
     <Compile Include="WorkspaceContext.cs" />
-    <Compile Include="Controls\YuLinTuMapFoundation.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\ClearDataCommon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ClipPolygonSetting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CoilPropertyPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DealTopoData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DiagramFoundationCommonConfigPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DotPropertyPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\GenerateData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportCBDShapeByRightMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportControlPointShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportDataCommon.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportDZDWShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportFarmLandConserveShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportMZDWShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportShapeField.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportZoneBoundaryShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\InitializeLandInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MapFoundationUserConfigPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MapToolPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MapToolsShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ImportXZDWShape.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PointPropertyPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PolygonTopologyByUserSetting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MapCoordinate\MapCoordinateStatusbarShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Task\SaveFileBrowserTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Topology\LandTopologyDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Topology\SplitLandEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Topology\TopologyMenuShell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Topology\TopologyToolbarShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MapControlActionQueryGeoPointShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MeasureButtonShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Symbols.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\QueryBuilder.png" />
-    <Resource Include="Resources\ClipAngleByLine.png" />
-    <Resource Include="Resources\ClipBySet.png" />
-    <Resource Include="Resources\QueryGeoPoint.png" />
-    <Resource Include="Resources\ClipByLine.png" />
-    <Content Include="Resources\langChs.xml" />
-    <Resource Include="Resources\VirtualPerson.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
+      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
+      <Name>YuLinTu.Library.Command</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
@@ -576,29 +236,38 @@
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
       <Project>{d52b9ce3-8d34-4a2a-9823-d9208f846d97}</Project>
       <Name>YuLinTu.Library.Office</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
       <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
       <Name>YuLinTu.Library.Repository</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.WinFoundationAux2018.csproj">
-      <Project>{7B05A4EC-0279-47D1-886A-C2EECF030976}</Project>
-      <Name>YuLinTu.Library.WinFoundationAux2018</Name>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
+      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
+      <Name>YuLinTu.Library.Resources</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
       <Name>YuLinTu.Library.WorkStation</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj">
+    <ProjectReference Include="..\..\Component\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj">
       <Project>{5d529712-2c25-409c-a865-f832cf5324cc}</Project>
       <Name>YuLinTu.Component.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\DataSummaryExportFramePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
