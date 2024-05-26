@@ -4,14 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using YuLinTu;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Controls;
 using YuLinTu.Data;
-using YuLinTu.Data.SQLite;
-using YuLinTu.Library.Business;
+using YuLinTu.Library.BuildJzdx;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Log;
-using YuLinTu.Spatial;
+using YuLinTu.NetAux;
 
 namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 {
@@ -39,18 +40,14 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 
         #region Fields
 
-        private Zone currentZone; //当前地域
-        private IDbContext dbContextTarget;  //待合并数据源
-        private IDbContext dbContextLocal;  //本地数据源
-        private double averagePercent;  //平均百分比
-        private double currentPercent;  //当前百分比
-        private string newDatabaseSavePath;  //分离数据库保存路径
+        private readonly DKQlr _qlrMgr = new DKQlr();
+
+        [DllImport("shell32.dll")]
+        public static extern int ShellExecute(IntPtr hwnd, string lpszOp, string lpszFile, string lpszParams, string lpszDir, int fsShowCmd);
 
         #endregion Fields
 
-        #region Methods
-
-        #region Method - Override
+        #region  Methods
 
         /// <summary>
         /// 开始执行任务
@@ -59,19 +56,13 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
         {
             this.ReportProgress(0, "开始验证参数...");
             this.ReportInfomation("验证参数...");
-            System.Threading.Thread.Sleep(200);
             if (!ValidateArgs())
                 return;
-            //this.ReportProgress(1, "开始分离...");
-            //this.ReportInfomation("开始分离...");
-            System.Threading.Thread.Sleep(200);
             try
             {
-                if (!BuildDataBaseSeparatePro())
-                {
-                    this.ReportError(string.Format("界址点线生成出错!"));
-                    return;
-                }
+                var args = Argument as TaskBoundaryCalculateArgument;
+                InitLandDotCoilParam param = Createparams();
+                ProductData(args.ShapeFilePath, args.ShapeFilePath, args.DatabaseFilePath, param);
             }
             catch (Exception ex)
             {
@@ -82,10 +73,6 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             this.ReportProgress(100);
             this.ReportInfomation("生成界址点线数据完成。");
         }
-
-        #endregion Method - Override
-
-        #region Method - Private - Validate
 
         /// <summary>
         /// 参数合法性检查
@@ -113,267 +100,128 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
                 this.ReportError(string.Format("请选择生成文件保存路径。"));
                 return false;
             }
+            if (args.ShapeFilePath == args.DatabaseSavePath)
+            {
+                this.ReportError(string.Format("保存路径不能与地块路径相同！"));
+                return false;
+            }
             this.ReportInfomation(string.Format("数据参数正确。"));
             return true;
         }
 
-        #endregion Method - Private - Validate
-
-        #region Method - Private - Pro
-
         /// <summary>
-        /// 分离数据库业务
-        /// </summary>
-        private bool BuildDataBaseSeparatePro()
+        /// 生成界址点线
+        /// </summary> >
+        private void ProductData(string sShpCBDFile, string outfolder, string mdbFile, InitLandDotCoilParam param)
         {
-            try
+            var pathList = new List<string>();
+            var sp = new ShapeProcess(sShpCBDFile, outfolder);
+            sp.Info += (msg) => { this.ReportInfomation(msg); };
+            sp.Process += (i) => { this.ReportProgress((int)i); };
+            sShpCBDFile = sp.ProcessDkPath();
+
+            pathList.Add(sShpCBDFile);
+
+            var exeFile = "BuildCbfMc.exe";// 
+            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + exeFile))
             {
-                if (!UpgradeDatabase(dbContextLocal))
-                {
-                    this.ReportError("待分离数据库未升级到最新版,请检查!");
-                    return false;
-                }
-
-                this.ReportProgress(1, "开始创建新数据库...");
-                this.ReportInfomation("开始创建新数据库...");
-                var localSpatialReference = dbContextLocal.CreateSchema().GetElementSpatialReference(
-                    ObjectContext.Create(typeof(Zone)).Schema,
-                    ObjectContext.Create(typeof(Zone)).TableName);
-                if (!CreateNewDatabase(newDatabaseSavePath, localSpatialReference))
-                {
-                    this.ReportError("创建新数据库失败,无法进行分库操作!");
-                    return false;
-                }
-                this.ReportProgress(5, "开始分离新数据库...");
-                this.ReportInfomation("开始分离新数据库...");
-
-                CreateWorkStation createWsLocal = new CreateWorkStation();
-                createWsLocal.Create(dbContextLocal);
-                CreateWorkStation createWsTarget = new CreateWorkStation();
-                createWsTarget.Create(dbContextTarget);
-
-                var zoneStationLocal = createWsLocal.ZoneStation;
-                var zoneStationTarget = createWsTarget.ZoneStation;
-                List<Zone> allZones = currentZone.Level == eZoneLevel.State ? zoneStationLocal.GetAll() : zoneStationLocal.GetAllZonesToProvince(currentZone);
-                List<Zone> zones = zoneStationTarget.GetAll();
-                if (allZones == null || allZones.Count == 0)
-                {
-                    this.ReportError("未获取地域信息,无法进行分库操作!");
-                    return false;
-                }
-                allZones.OrderByDescending(c => c.Level);
-                if (zones == null)
-                    zones = new List<Zone>();
-
-                DataProcess dataProcess = new DataProcess();
-                dataProcess.ReportInfo += ReportInfoDelegate;
-                if (!dataProcess.ZoneDataProcess(allZones, zones, dbContextTarget, createWsTarget))
-                {
-                    this.ReportError("分离行政地域数据失败!");
-                    return false;
-                }
-
-                if (!dataProcess.SurveyLandDataProcess(createWsLocal, createWsTarget, true, false))
-                {
-                    this.ReportWarn("分离调查宗地数据失败!");
-                }
-
-                int removeCount = allZones.RemoveAll(c => c.Level > currentZone.Level || c.Level > eZoneLevel.Town);
-                int index = 0;  //索引
-                averagePercent = 95.0 / (double)allZones.Count;
-                foreach (Zone zone in allZones)
-                {
-                    if (!dataProcess.OtherDataProcess(zone, createWsLocal, createWsTarget, true, false))
-                    {
-                        this.ReportAlert(eMessageGrade.Error, null, string.Format("分离{0}业务数据失败!", zone.FullName));
-                        index++;
-                        continue;
-                    }
-                    currentPercent = 5.0 + averagePercent * (index++);
-                    string info = string.Format("{0}数据分离完毕。", zone.FullName);
-                    this.ReportProgress((int)currentPercent, zone.FullName);
-                    this.ReportInfomation(info);
-                }
-
-                allZones = null;
+                throw new Exception("未找到执行程序" + exeFile);
             }
-            catch (System.Exception ex)
+            if (!File.Exists(mdbFile))
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "BuildDataBaseSeparatePro(处理分离数据库业务失败!)", ex.Message + ex.StackTrace);
-                this.ReportError("处理分离数据库业务失败!");
-                return false;
+                throw new Exception("文件" + mdbFile + "不存在！");
             }
-            finally
+            int SW_HIDE = 0;
+            ShellExecute(IntPtr.Zero, "open", exeFile, "\"" + mdbFile + "\"", null, SW_HIDE);
+
+            var mdbPath = FileHelper.GetFilePath(mdbFile);
+            var sw1 = System.Diagnostics.Stopwatch.StartNew();
+            var fOK = false;
+            while (!fOK)
             {
-                GC.Collect();
+                fOK = _qlrMgr.Init(mdbPath, sShpCBDFile);
+                if (fOK)
+                {
+                    sw1.Stop();
+                    Console.WriteLine("等待权利人名称字典生成耗时：" + sw1.Elapsed);
+                    break;
+                }
+                System.Threading.Thread.Sleep(1000);
             }
-            return true;
-        }
+
+            var s = sShpCBDFile.Replace('\\', '/');
+            int n = s.LastIndexOf('/');
+            var path = s.Substring(0, n + 1);
+            var name = s.Substring(n + 1);
+            if (!name.Contains("DK"))
+            {
+                MessageBox.Show("请选择有效的地块shape文件（以DK开头的.shp文件）！", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var sShpJzdFile = path + name.Replace("DK", "JZD");
+            var sShpJzxFile = path + name.Replace("DK", "JZX");
+
+            pathList.Add(sShpJzdFile);
+            pathList.Add(sShpJzxFile);
 
 
-        /// <summary>
-        /// 报告信息
-        /// </summary>
-        public void ReportInfoDelegate(eMessageGrade errortype, string msg)
-        {
-            if (errortype == eMessageGrade.Warn)
-                this.ReportWarn(msg);
-            else if (errortype == eMessageGrade.Infomation)
+            var SplitLineString = System.Configuration.ConfigurationManager.AppSettings["SplitNumber"].ToString();
+            var onlykey = System.Configuration.ConfigurationManager.AppSettings["OnlyExportKeyJzd"].ToString();
+
+
+            var t = new InitLandDotCoil(param);
+            t.OnQueryCbdQlr += en =>
+            {
+                var sQlr = _qlrMgr.GetQlr(en.rowid);
+                if (sQlr == null)
+                {
+                    sQlr = en.rowid.ToString();
+                }
+                return sQlr;
+            };
+            t.ReportProgress += (msg, i) =>
+            {
+                this.ReportProgress((int)i);
+            };
+            t.ReportInfomation += msg =>
+            {
                 this.ReportInfomation(msg);
-            else if (errortype == eMessageGrade.Error)
-                this.ReportError(msg);
-        }
-
-        /// <summary>
-        /// 默认升级数据库
-        /// </summary>
-        private bool UpgradeDatabase(IDbContext dbContext)
-        {
-            UpdateDatabase upDatabase = new UpdateDatabase();
-            List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContext, tableList, dbContext);
-        }
-
-        /// <summary>
-        /// 创建新数据库
-        /// </summary>
-        /// <returns></returns>
-        private bool CreateNewDatabase(string fileName, SpatialReference sr)
-        {
-            bool creatsucess = true;
-
-            dbContextTarget = ProviderDbCSQLite.CreateNewDatabase(fileName) as IDbContext;
-            if (dbContextTarget == null)
-                return false;
-            var schema = dbContextTarget.CreateSchema();
-
-            schema.Export(typeof(Zone), sr.WKID);
-            schema.Export(typeof(CollectivityTissue), sr.WKID);
-
-            schema.Export(typeof(BuildLandBoundaryAddressDot), sr.WKID);
-            schema.Export(typeof(BuildLandBoundaryAddressCoil), sr.WKID);
-
-            schema.Export(typeof(CollectivityTissue), sr.WKID);
-            schema.Export(typeof(LandVirtualPerson), sr.WKID);
-            schema.Export(typeof(CollectiveLandVirtualPerson), sr.WKID);
-            schema.Export(typeof(HouseVirtualPerson), sr.WKID);
-            schema.Export(typeof(TableVirtualPerson), sr.WKID);
-            schema.Export(typeof(WoodVirtualPerson), sr.WKID);
-            schema.Export(typeof(YardVirtualPerson), sr.WKID);
-
-            schema.Export(typeof(ZoneBoundary), sr.WKID);
-            schema.Export(typeof(XZDW), sr.WKID);
-            schema.Export(typeof(MZDW), sr.WKID);
-            schema.Export(typeof(FarmLandConserve), sr.WKID);
-            schema.Export(typeof(DZDW), sr.WKID);
-            schema.Export(typeof(DCZD), sr.WKID);
-            schema.Export(typeof(ControlPoint), sr.WKID);
-
-            schema.Export(typeof(SecondTableLand), sr.WKID);
-            schema.Export(typeof(ContractLand), sr.WKID);
-            schema.Export(typeof(ContractLandMark), sr.WKID);
-            schema.Export(typeof(ContractConcord), sr.WKID);
-            schema.Export(typeof(ContractRegeditBook), sr.WKID);
-            schema.Export(typeof(ContractRequireTable), sr.WKID);
-            schema.Export(typeof(BelongRelation), sr.WKID);
-            schema.Export(typeof(StockConcord), sr.WKID);
-            schema.Export(typeof(StockWarrant), sr.WKID);
-
-            schema.Export(typeof(Dictionary), sr.WKID);
-            schema.Export(typeof(TopologyErrorPoint), sr.WKID);
-            schema.Export(typeof(TopologyErrorPolygon), sr.WKID);
-            schema.Export(typeof(TopologyErrorPolyline), sr.WKID);
-
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(LandVirtualPerson)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractRequireTable)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractRegeditBook)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractConcord)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressDot)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(StockConcord)).TableName, "ID", null, true);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(StockWarrant)).TableName, "ID", null, true);
-
-            schema.CreateIndex(null, ObjectContext.Create(typeof(Zone)).TableName, "DYQBM", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "DKLB", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "ZLDM", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "QLRBS", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(LandVirtualPerson)).TableName, "DYBM", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "DKBS", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "DYDM", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressDot)).TableName, "DKID", null);
-            schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressDot)).TableName, "DYBM", null);
-
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(Zone)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(SecondTableLand)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ContractLandMark)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressDot)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ControlPoint)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(DCZD)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(DZDW)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(XZDW)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(MZDW)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(ZoneBoundary)).TableName, "Shape");
-            schema.CreateSpatialIndex(null, ObjectContext.Create(typeof(FarmLandConserve)).TableName, "Shape");
-
+            };
+            t.ReportSaveCount += i =>
+            {
+            };
             try
             {
-                dbContextTarget.BeginTransaction();
-                string cmds = YuLinTu.Component.Common.Properties.Resources.DictionarySQL;
-
-                var sqls = cmds.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var sql in sqls)
-                {
-                    var cmd = sql.Trim();
-                    if (cmd.IsNullOrBlank())
-                        continue;
-
-                    var qc = dbContextTarget.CreateQuery();
-                    qc.CommandContext.CommandText.Append(cmd);
-                    qc.CommandContext.ExecuteArgument = eDbExecuteType.NonQuery;
-                    qc.CommandContext.Type = eCommandType.Edit;
-                    qc.Execute();
-                }
-                dbContextTarget.CommitTransaction();
-                return creatsucess;
+                t.DoInit(sShpCBDFile, sShpJzdFile, sShpJzxFile);
             }
             catch (Exception ex)
             {
-                dbContextTarget.RollbackTransaction();
-                Log.WriteException(this, "创建新数据库", ex.Message + ex.StackTrace);
-                return false;
             }
         }
 
-        /// <summary>
-        /// 对比数据源坐标系
-        /// </summary>
-        private bool CompareDatabaseCoordinate()
+        private InitLandDotCoilParam Createparams()
         {
-            try
-            {
-                var targetSpatialReference = dbContextTarget.CreateSchema().GetElementSpatialReference(
-                    ObjectContext.Create(typeof(Zone)).Schema,
-                    ObjectContext.Create(typeof(Zone)).TableName);  //待合并数据库坐标系
-                var localSpatialReference = dbContextLocal.CreateSchema().GetElementSpatialReference(
-                    ObjectContext.Create(typeof(Zone)).Schema,
-                    ObjectContext.Create(typeof(Zone)).TableName);  //系统数据库坐标系
-                if (targetSpatialReference.WKID == localSpatialReference.WKID)
-                    return true;
-                else
-                    return false;
-            }
-            catch
-            {
-                return false;
-            }
+            var param = new InitLandDotCoilParam();
+            param.fOnlyExportKeyJzd = true;
+            param.fSplitLine = true;
+            param.AddressPointPrefix = "J";
+
+            param.nJzdBSMStartVal = SafeConvertAux.SafeConvertToInt32("20000000");
+            param.sJzdYSDMVal = "211021";
+            param.sJBLXVal = "6";
+            param.sJZDLXVal = "3";
+            param.nJzxBSMStartVal = SafeConvertAux.SafeConvertToInt32("50000000");
+            param.sJzxYSDMVal = "211031";
+            param.JXXZ = "600001";
+            //param.JZXSM = tbJZXSM.Text.Trim();
+            //param.PLDWZJR = tbPLDWZJR.Text.Trim();
+            param.JZXLB = "01";
+            //param.JZXWZ = tbJZXWZ.Text.Trim();
+            param.AddressLinedbiDistance = 1.5;
+            param.LineDescription = eLineDescription.LengthDirectrion;
+            return param;
         }
 
-        #endregion Method - Private - Pro
-
-        #endregion Methods
+        #endregion 
     }
 }

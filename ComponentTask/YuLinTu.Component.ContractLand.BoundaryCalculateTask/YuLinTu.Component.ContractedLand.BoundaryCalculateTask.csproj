@@ -17,11 +17,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B7C00328-3B9E-449C-9F70-5832924AA201}</ProjectGuid>
+    <ProjectGuid>{7EB88130-E845-446B-B507-8811260BEF1D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YuLinTu.Component.SeparateDataBaseTask</RootNamespace>
-    <AssemblyName>YuLinTu.Component.SeparateDataBaseTask</AssemblyName>
+    <RootNamespace>YuLinTu.Component.ContractedLand.BoundaryCalculateTask</RootNamespace>
+    <AssemblyName>YuLinTu.Component.ContractedLand.BoundaryCalculateTask</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -190,6 +190,13 @@
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="YuLinTu.Library.BuildJzdx">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Library.BuildJzdx.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.NetAux, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
@@ -197,10 +204,12 @@
     </Compile>
     <Compile Include="Entrance.cs" />
     <Compile Include="TaskPageContext.cs" />
-    <Compile Include="Task\TaskSQLiteSeparate.cs">
+    <Compile Include="Task\DKQlr.cs" />
+    <Compile Include="Task\ShapeProcess.cs" />
+    <Compile Include="Task\TaskBoundaryCalculate.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Task\TaskSQLiteSeparateArgument.cs">
+    <Compile Include="Task\TaskBoundaryCalculateArgument.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WorkspaceContext.cs" />

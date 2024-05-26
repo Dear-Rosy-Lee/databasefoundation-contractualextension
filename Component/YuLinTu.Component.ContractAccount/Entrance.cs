@@ -77,7 +77,7 @@ namespace YuLinTu.Component.ContractAccount
                 ContractLands.ForEach(x =>
                 {
                     x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
-                    x.SenderCode = zdiNew.FullCode + x.SenderCode.Substring(zdiNew.FullCode.Length);
+                    x.SenderCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 });
                 UpContractLand(dbContext, ContractLands);
             }
