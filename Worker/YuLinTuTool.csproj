@@ -2804,6 +2804,7 @@ copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\Libr
 copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Thought\"
 copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\Libraries\x86\GDAL\" 
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
+copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.exe" "$(SolutionDir)Workspace\Libraries\libs\"
 
 copy /Y "$(SolutionDir)Workspace\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
 

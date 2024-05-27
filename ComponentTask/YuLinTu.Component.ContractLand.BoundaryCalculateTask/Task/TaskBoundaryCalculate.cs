@@ -62,6 +62,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             {
                 var args = Argument as TaskBoundaryCalculateArgument;
                 InitLandDotCoilParam param = Createparams();
+                param.shapefilePath = args.DatabaseSavePath;
                 ProductData(args.ShapeFilePath, args.DatabaseSavePath, args.DatabaseFilePath, param);
             }
             catch (Exception ex)
@@ -115,9 +116,11 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
         private void ProductData(string sShpCBDFile, string outfolder, string mdbFile, InitLandDotCoilParam param)
         {
             var pathList = new List<string>();
+            param.prjStr = ShapeFileHelper.GetPrjString(sShpCBDFile);
+            param.extName = Path.GetFileNameWithoutExtension(mdbFile);
             var sp = new ShapeProcess(sShpCBDFile, outfolder);
             sp.Info += (msg) => { this.ReportInfomation(msg); };
-            sp.Process += (i) => { this.ReportProgress(2, $"初始化数据 {i}%"); };
+            sp.Process += (i) => { this.ReportProgress(1, $"初始化数据 {i}%"); };
             sShpCBDFile = sp.ProcessDkPath();
 
             pathList.Add(sShpCBDFile);
@@ -135,7 +138,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             ShellExecute(IntPtr.Zero, "open", exeFile, "\"" + mdbFile + "\"", null, SW_HIDE);
 
             var mdbPath = FileHelper.GetFilePath(mdbFile);
-            this.ReportProgress(3, $"初始化权利人名称字典...");
+            this.ReportProgress(2, $"初始化权利人名称字典...");
             var sw1 = System.Diagnostics.Stopwatch.StartNew();
             var fOK = false;
             while (!fOK)
@@ -151,7 +154,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
                 }
                 System.Threading.Thread.Sleep(1000);
             }
-            this.ReportProgress(5, $"生成界址点线数据...");
+            this.ReportProgress(3, $"生成界址点线数据...");
             var s = sShpCBDFile.Replace('\\', '/');
             int n = s.LastIndexOf('/');
             var path = s.Substring(0, n + 1);
@@ -185,7 +188,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             };
             t.ReportProgress += (msg, i) =>
             {
-                this.ReportProgress((int)i);
+                this.ReportProgress((int)i+3);
             };
             t.ReportInfomation += msg =>
             {
@@ -197,6 +200,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             }
             catch (Exception ex)
             {
+                this.ReportError(ex.Message);
             }
         }
 

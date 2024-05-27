@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using YuLinTu.NetAux;
 using YuLinTu.tGISCNet;
 namespace YuLinTu.Library.BuildJzdx
@@ -24,6 +25,7 @@ namespace YuLinTu.Library.BuildJzdx
             ///// </summary>
             //protected readonly Dictionary<string, List<int>> _dic = new Dictionary<string, List<int>>();
             protected int _nCurrShapeID = 0;
+            protected int _nindex = 1;
 
             protected readonly InitLandDotCoil _p;
             //protected readonly string[] _fields;
@@ -336,16 +338,8 @@ namespace YuLinTu.Library.BuildJzdx
                     return null;
                 }
 
-                var shp = _jzdShp;
-               
                 string jzdh = _p._param.AddressPointPrefix + (1 + _nCurrShapeID);
                 string dkbm = null;
-
-                //if (InitLandDotCoilUtil.testIsEqual(jzdEn.shape, 374145.28367387172, 3844386.5327095818,0.1))
-                //{
-                //    Console.WriteLine(jzdEn.shape);
-                //}
-
                 JzdEdges val;
                 if (_p._jzdCache.TryGetValue(jzdEn.shape, out val))
                 {
@@ -376,6 +370,15 @@ namespace YuLinTu.Library.BuildJzdx
                     return null;
                 }
 
+                if (_nCurrShapeID > _nindex * 2000000)
+                {
+                    _jzdShp.Close();
+                    var shppath = Path.Combine(_p._param.shapefilePath, $"JZD{_p._param.extName}_{_nindex}.shp");
+                    _jzdShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
+                    _jzdShp.Open(shppath, "rb+");
+                    _nindex++;
+                }
+                var shp = _jzdShp;
                 var wkb = toWKB(jzdEn.shape);
                 try
                 {
@@ -562,7 +565,7 @@ namespace YuLinTu.Library.BuildJzdx
                     }
                     else if (_p._param.LineDescription == eLineDescription.LengthDirectrionPosition)
                     {
-                        
+
                         jzxEn.JZXSM = string.Format("沿{0}{1}{2}方向{3}米", GetLineType(_p._param.JZXLB), GetLinePosition(jzxEn.JZXWZ), direction, length);
                     }
                 }
@@ -781,6 +784,14 @@ namespace YuLinTu.Library.BuildJzdx
                     en.JZXSM = qJzdh + en.JZXSM + "到" + zJzdh;
                 }
 
+                if (_nCurrShapeID > _nindex * 2000000)
+                {
+                    _jzxShp.Close();
+                    var shppath = Path.Combine(_p._param.shapefilePath, $"JZX{_p._param.extName}_{_nindex}.shp");
+                    _jzxShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
+                    _jzxShp.Open(shppath, "rb+");
+                    _nindex++;
+                }
                 var shp = _jzxShp;
                 //string jzdh = _p._param.AddressPointPrefix + (1 + _nCurrShapeID);
                 string jzxh = (1 + _nCurrShapeID).ToString();
@@ -1816,7 +1827,7 @@ namespace YuLinTu.Library.BuildJzdx
         }
 
         //private readonly DBSpatialite _db;
-        private readonly InitLandDotCoilParam _param;
+        private InitLandDotCoilParam _param;
 
         private int _curProgress;
         private int _oldProgress;//进度相关
@@ -1862,6 +1873,8 @@ namespace YuLinTu.Library.BuildJzdx
         /// 获取承包地的权利人名称
         /// </summary>
         public Func<ShortZd_cbd, string> OnQueryCbdQlr;
+
+
         public InitLandDotCoil(/*DBSpatialite db,*/InitLandDotCoilParam param)
         {
             //_db = db;
@@ -1891,14 +1904,7 @@ namespace YuLinTu.Library.BuildJzdx
                 ShapeFileHelper.DeleteShapeFile(jzxShapeFile);
                 //throw new Exception("文件" + jzxShapeFile + "不存在！");
             }
-            //ShapeFileHelper.ClearShapeFile(jzdShapeFile);
-            //ShapeFileHelper.ClearShapeFile(jzxShapeFile);
-            //using(var dkShp = new ShapeFile())
-            //using(var jzdShp=new ShapeFile())
-            //using (var jzxShp = new ShapeFile())
             var dkShp = new ShapeFile();
-            //var jzdShp = new ShapeFile();
-            //var jzxShp = new ShapeFile();
 
             try
             {
@@ -1975,7 +1981,6 @@ namespace YuLinTu.Library.BuildJzdx
             //_param.cjsj = DateTime.Now;
 
             int nDkShpCount = dkShp.GetRecordCount();
-
             _progressCount = nDkShpCount;// dkShp.GetRecordCount();
 
             //_jzdTable.init();// InitLandDotCoilUtil.QueryJzdRowIDs(_db, _testDic);
@@ -2063,11 +2068,6 @@ namespace YuLinTu.Library.BuildJzdx
                         {
                             nTestMaxCacheSize = _cbdCache.Count;
                         }
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    throw ex;
-                        //}
                     }
                 }
                 dicCbd.Clear();
@@ -2781,6 +2781,12 @@ namespace YuLinTu.Library.BuildJzdx
         /// 是否缓冲一定距离查找毗邻地权利人
         /// </summary>
         internal bool fUserBufferToFindPldwqlr = false;
+
+        public string shapefilePath;
+
+        public string prjStr;
+
+        public string extName;
 
         public InitLandDotCoilParam(double tolerance = 0.05, double lineOverlapTolerance = 0.01)
         {

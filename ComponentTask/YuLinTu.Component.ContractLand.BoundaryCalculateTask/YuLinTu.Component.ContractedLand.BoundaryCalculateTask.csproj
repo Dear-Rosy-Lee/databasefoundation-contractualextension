@@ -200,7 +200,6 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildCore\Entities.cs" />
-    <Compile Include="BuildCore\ExportJzdx.cs" />
     <Compile Include="BuildCore\InitLandDotCoil.cs" />
     <Compile Include="BuildCore\InitLandDotCoilUtil.cs" />
     <Compile Include="BuildCore\ShapeFileHelper.cs" />
