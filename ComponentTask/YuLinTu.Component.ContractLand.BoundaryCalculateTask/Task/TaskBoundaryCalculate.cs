@@ -62,7 +62,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             {
                 var args = Argument as TaskBoundaryCalculateArgument;
                 InitLandDotCoilParam param = Createparams();
-                ProductData(args.ShapeFilePath, args.ShapeFilePath, args.DatabaseFilePath, param);
+                ProductData(args.ShapeFilePath, args.DatabaseSavePath, args.DatabaseFilePath, param);
             }
             catch (Exception ex)
             {
@@ -117,13 +117,13 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             var pathList = new List<string>();
             var sp = new ShapeProcess(sShpCBDFile, outfolder);
             sp.Info += (msg) => { this.ReportInfomation(msg); };
-            sp.Process += (i) => { this.ReportProgress((int)i); };
+            sp.Process += (i) => { this.ReportProgress(2, $"初始化数据 {i}%"); };
             sShpCBDFile = sp.ProcessDkPath();
 
             pathList.Add(sShpCBDFile);
 
-            var exeFile = "BuildCbfMc.exe";// 
-            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + exeFile))
+            var exeFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "Libraries\\libs\\", "BuildCbfMc.exe");// 
+            if (!File.Exists(exeFile))
             {
                 throw new Exception("未找到执行程序" + exeFile);
             }
@@ -135,20 +135,23 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             ShellExecute(IntPtr.Zero, "open", exeFile, "\"" + mdbFile + "\"", null, SW_HIDE);
 
             var mdbPath = FileHelper.GetFilePath(mdbFile);
+            this.ReportProgress(3, $"初始化权利人名称字典...");
             var sw1 = System.Diagnostics.Stopwatch.StartNew();
             var fOK = false;
             while (!fOK)
             {
+                if (IsStopPending)
+                    return;
                 fOK = _qlrMgr.Init(mdbPath, sShpCBDFile);
                 if (fOK)
                 {
                     sw1.Stop();
-                    Console.WriteLine("等待权利人名称字典生成耗时：" + sw1.Elapsed);
+                    this.ReportInfomation($"权利人名称字典生成完成：{sw1.Elapsed}");
                     break;
                 }
                 System.Threading.Thread.Sleep(1000);
             }
-
+            this.ReportProgress(5, $"生成界址点线数据...");
             var s = sShpCBDFile.Replace('\\', '/');
             int n = s.LastIndexOf('/');
             var path = s.Substring(0, n + 1);
@@ -166,8 +169,9 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 
 
             var SplitLineString = System.Configuration.ConfigurationManager.AppSettings["SplitNumber"].ToString();
-            var onlykey = System.Configuration.ConfigurationManager.AppSettings["OnlyExportKeyJzd"].ToString();
-
+            var onlykey = "true";
+            if (System.Configuration.ConfigurationManager.AppSettings.AllKeys.Contains("OnlyExportKeyJzd"))
+                onlykey = System.Configuration.ConfigurationManager.AppSettings["OnlyExportKeyJzd"].ToString();
 
             var t = new InitLandDotCoil(param);
             t.OnQueryCbdQlr += en =>
@@ -186,9 +190,6 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             t.ReportInfomation += msg =>
             {
                 this.ReportInfomation(msg);
-            };
-            t.ReportSaveCount += i =>
-            {
             };
             try
             {
@@ -218,7 +219,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             param.JZXLB = "01";
             //param.JZXWZ = tbJZXWZ.Text.Trim();
             param.AddressLinedbiDistance = 1.5;
-            param.LineDescription = eLineDescription.LengthDirectrion;
+            //param.LineDescription = eLineDescription.LengthDirectrion;
             return param;
         }
 

@@ -24,7 +24,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 
         [DisplayLanguage("矢量地块目录")]
         [DescriptionLanguage("请选择地块矢量文件，可以多选")]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBox),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/border-all.png")]
         public string ShapeFilePath
         {

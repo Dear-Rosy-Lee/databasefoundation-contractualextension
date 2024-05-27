@@ -74,7 +74,7 @@ namespace YuLinTu.Component.Common
             {
                 filename += item + ";";
             }
-            FileName = filename;
+            FileName = filename.TrimEnd(';');
         }
 
         #endregion
