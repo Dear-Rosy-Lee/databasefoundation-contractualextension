@@ -188,7 +188,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             };
             t.ReportProgress += (msg, i) =>
             {
-                this.ReportProgress((int)i+3);
+                this.ReportProgress((int)i + 3);
             };
             t.ReportInfomation += msg =>
             {
@@ -197,6 +197,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             try
             {
                 t.DoInit(sShpCBDFile, sShpJzdFile, sShpJzxFile);
+                sp.SplitFile(pathList);
             }
             catch (Exception ex)
             {

@@ -369,15 +369,14 @@ namespace YuLinTu.Library.BuildJzdx
                     //_p._jzdCache.AddPoint(jzdEn.shape);
                     return null;
                 }
-
-                if (_nCurrShapeID > _nindex * 5000000)
-                {
-                    _jzdShp.Close();
-                    var shppath = Path.Combine(_p._param.shapefilePath, $"JZD{_p._param.extName}_{_nindex}.shp");
-                    _jzdShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
-                    _jzdShp.Open(shppath, "rb+");
-                    _nindex++;
-                }
+                //if (_nCurrShapeID > _nindex * 500)
+                //{
+                //    _jzdShp.Close();
+                //    GC.Collect();
+                //    var shppath = Path.Combine(_p._param.shapefilePath, $"JZD{_p._param.extName}_{_nindex}.shp");
+                //    _jzdShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
+                //    _nindex++;
+                //}
                 var shp = _jzdShp;
                 var wkb = toWKB(jzdEn.shape);
                 try
@@ -784,14 +783,14 @@ namespace YuLinTu.Library.BuildJzdx
                     en.JZXSM = qJzdh + en.JZXSM + "到" + zJzdh;
                 }
 
-                if (_nCurrShapeID > _nindex * 2000000)
-                {
-                    _jzxShp.Close();
-                    var shppath = Path.Combine(_p._param.shapefilePath, $"JZX{_p._param.extName}_{_nindex}.shp");
-                    _jzxShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
-                    _jzxShp.Open(shppath, "rb+");
-                    _nindex++;
-                }
+                //if (_nCurrShapeID > _nindex * 2000000)
+                //{
+                //    _jzxShp.Close();
+                //    var shppath = Path.Combine(_p._param.shapefilePath, $"JZX{_p._param.extName}_{_nindex}.shp");
+                //    _jzxShp = ShapeFileHelper.createJzdShapeFile(shppath, _p._param.prjStr);
+                //    _jzxShp.Open(shppath, "rb+");
+                //    _nindex++;
+                //}
                 var shp = _jzxShp;
                 //string jzdh = _p._param.AddressPointPrefix + (1 + _nCurrShapeID);
                 string jzxh = (1 + _nCurrShapeID).ToString();
