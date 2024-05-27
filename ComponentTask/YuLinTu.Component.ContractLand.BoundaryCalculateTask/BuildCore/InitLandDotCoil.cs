@@ -370,7 +370,7 @@ namespace YuLinTu.Library.BuildJzdx
                     return null;
                 }
 
-                if (_nCurrShapeID > _nindex * 2000000)
+                if (_nCurrShapeID > _nindex * 5000000)
                 {
                     _jzdShp.Close();
                     var shppath = Path.Combine(_p._param.shapefilePath, $"JZD{_p._param.extName}_{_nindex}.shp");

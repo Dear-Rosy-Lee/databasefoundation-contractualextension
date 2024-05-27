@@ -24,8 +24,8 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
         {
             this.dkPath = dkPath;
             this.destinPath = destinPath;
-            splitePath = destinPath + "\\分图层数据";
-            Directory.CreateDirectory(splitePath);
+            //splitePath = destinPath + "\\分图层数据";
+            //Directory.CreateDirectory(splitePath);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             var ods = driver.Open(folder, 1);
             if (ods == null)
                 return;
-            Directory.CreateDirectory(splitePath);
+            //Directory.CreateDirectory(splitePath);
             var files = Directory.GetFiles(splitePath);
             List<string> delList = new List<string>();
 
