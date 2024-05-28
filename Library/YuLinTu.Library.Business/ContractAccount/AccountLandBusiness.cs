@@ -2156,7 +2156,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[26].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.LocationName = GetproertValue(shapeData, selectColNameList[26]);
+                targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[26]);
             }
             if ((string)infoList[27].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
