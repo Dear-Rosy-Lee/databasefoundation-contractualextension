@@ -143,6 +143,7 @@ namespace YuLinTu.Library.Business
 
             bool success = landInfo.ReadTableInformation();
             ErrorInformation = landInfo.ErrorInformation;
+            success = true;
             return success;
         }
 

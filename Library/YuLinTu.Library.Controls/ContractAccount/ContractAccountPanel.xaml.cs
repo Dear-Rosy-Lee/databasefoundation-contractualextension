@@ -2602,6 +2602,7 @@ namespace YuLinTu.Library.Controls
                 meta.UseContractorInfoImport = addPage.UseContractorInfoImport;
                 meta.UseLandCodeBindImport = addPage.UseLandCodeBindImport;
                 meta.UseContractorNumberImport = addPage.UseContractorNumberImport;
+                meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
                 ImportLandShapeData(meta, dbContext);
             });

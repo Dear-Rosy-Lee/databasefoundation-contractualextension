@@ -152,6 +152,7 @@ namespace YuLinTu.Library.Business
                     return result;
                 }
                 this.ReportProgress(1, "开始");
+                var zonelist = GetParentZone(argument.CurrentZone,argument.DbContext);
                 var concordStation = argument.DbContext.CreateConcordStation();
                 var bookStation = argument.DbContext.CreateRegeditBookStation();
                 var senderStation = argument.DbContext.CreateSenderWorkStation();
@@ -285,6 +286,7 @@ namespace YuLinTu.Library.Business
                     parcelWord.SavePathOfWord = savePathOfWord;
                     parcelWord.DictList = listDict;
                     parcelWord.DictDKLB = dictDKLB;
+                    parcelWord.ZoneList = zonelist;
                     parcelWord.IsStockLand = IsStockLand;
                     parcelWord.ListGeoLand = listGeoLand;
                     parcelWord.ListLineFeature = listLine;
@@ -425,11 +427,12 @@ namespace YuLinTu.Library.Business
             {
                 return "";
             }
-            string imagePath = filePath + "\\" + family.ZoneCode.PadRight(14, '0');
+            string imagePath = filePath + "\\" + family.ZoneCode.PadRight(14, '0') + "\\" + $"{family.Name}{family.Number}";
             if (!Directory.Exists(imagePath))
             {
                 Directory.CreateDirectory(imagePath);
             }
+            
             string imageName = imagePath + "\\" + "DKSYT" + family.ZoneCode.PadRight(14, '0');
             int number = 0;
             Int32.TryParse(family.FamilyNumber, out number);
@@ -441,7 +444,18 @@ namespace YuLinTu.Library.Business
         #endregion
 
         #region Method—Private
-
+        /// <summary>
+        /// 获取地域集合
+        /// </summary>
+        public List<Zone> GetParentZone(Zone zone, IDbContext dbContext)
+        {
+            ModuleMsgArgs arg = new ModuleMsgArgs();
+            arg.Datasource = dbContext;
+            arg.Parameter = zone;
+            arg.Name = ZoneMessage.ZONE_PARENTS_ZONE;
+            TheBns.Current.Message.Send(this, arg);
+            return (arg.ReturnValue as List<Zone>);
+        }
         /// <summary>
         ///  获取上级地域
         /// </summary>

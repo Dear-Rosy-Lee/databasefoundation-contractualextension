@@ -283,9 +283,16 @@ namespace YuLinTu.Library.Business
 
                 var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var vp = vpStation.GetByHH(vpNumber, vpCode);
-                landFamily.CurrentFamily = vp;
-                //landFamily.CurrentFamily.ID = vp.ID;
-                //landFamily.CurrentFamily.FamilyNumber = vpNumber;
+                if (vp != null)
+                {
+                    landFamily.CurrentFamily = vp;
+                }
+                else
+                {
+                    landFamily.CurrentFamily.ID = landFamily.CurrentFamily.ID;
+                    landFamily.CurrentFamily.FamilyNumber = vpNumber;
+                }
+
                 if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
                 {
                     string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", currentIndex + 1);
@@ -347,18 +354,21 @@ namespace YuLinTu.Library.Business
                     land.OwnerId = landFamily.CurrentFamily.ID;
                     land.LocationCode = CurrentZone.FullCode;
                     land.LocationName = CurrentZone.FullName;
-                    land.Name = GetString(allItem[currentIndex, 13]);
-                    land.LandNumber = GetString(allItem[currentIndex, 14]);
-                    land.LocationName = GetString(allItem[currentIndex, 15]);
-                    land.LandLevel = GetString(allItem[currentIndex, 16]);
-                    land.Purpose = GetString(allItem[currentIndex, 17]);
-                    land.ConcordArea = GetString(allItem[currentIndex, 18]);
-                    land.ActualArea = double.Parse(GetString(allItem[currentIndex, 20]));
-                    land.NeighborEast = GetString(allItem[currentIndex, 22]);
-                    land.NeighborSouth = GetString(allItem[currentIndex, 23]);
-                    land.NeighborWest = GetString(allItem[currentIndex, 24]);
-                    land.NeighborNorth = GetString(allItem[currentIndex, 25]);
-                    land.Comment = GetString(allItem[currentIndex, 26]);
+                    land.Name = GetString(allItem[currentIndex, 15]);
+                    land.OwnRightType = GetString(allItem[currentIndex, 17]);
+                    land.LandCategory = GetString(allItem[currentIndex, 18]);
+                    land.LandCode = GetString(allItem[currentIndex, 19]);
+                    land.LandLevel = GetString(allItem[currentIndex, 20]);
+                    land.Purpose = GetString(allItem[currentIndex, 21]);
+                    land.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
+                    land.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
+                    land.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
+                    land.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+                    land.NeighborEast = GetString(allItem[currentIndex, 28]);
+                    land.NeighborSouth = GetString(allItem[currentIndex, 29]);
+                    land.NeighborWest = GetString(allItem[currentIndex, 30]);
+                    land.NeighborNorth = GetString(allItem[currentIndex, 31]);
+                    land.Comment = GetString(allItem[currentIndex, 32]);
                     landFamily.LandCollection.Add(land);
                 }
             }

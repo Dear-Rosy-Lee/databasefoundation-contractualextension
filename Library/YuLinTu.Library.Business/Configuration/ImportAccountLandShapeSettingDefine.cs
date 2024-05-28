@@ -72,6 +72,20 @@ namespace YuLinTu.Library.Business
         private string cadastralNumberIndex;
 
         /// <summary>
+        ///原地块编码
+        /// </summary>
+        [DisplayLanguage("原地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("原地块编码", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
+           Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
+        public string YCadastralNumberIndex
+        {
+            get { return ycadastralNumberIndex; }
+            set { ycadastralNumberIndex = value; NotifyPropertyChanged("YCadastralNumberIndex"); }
+        }
+        private string ycadastralNumberIndex;
+
+        /// <summary>
         ///调查编码
         /// </summary>
         [DisplayLanguage("调查编码", IsLanguageName = false)]
@@ -661,6 +675,8 @@ namespace YuLinTu.Library.Business
         }
         private string isRegisterIndex;
 
+        
+
         public ImportAccountLandShapeSettingDefine()
         {
             IsRegisterIndex = "None";
@@ -669,6 +685,7 @@ namespace YuLinTu.Library.Business
             //ShapeIndex = "None";
             LandNameIndex = "None";
             CadastralNumberIndex = "None";
+            YCadastralNumberIndex = "None";
             SurveyNumberIndex = "None";
             ImageNumberIndex = "None";
             TableAreaIndex = "None";

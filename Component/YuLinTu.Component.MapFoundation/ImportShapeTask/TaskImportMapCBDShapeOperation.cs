@@ -116,6 +116,7 @@ namespace YuLinTu.Component.MapFoundation
             landBusiness.IsBatch = IsBatch;
             landBusiness.UseContractorInfoImport = metadata.UseContractorInfoImport;
             landBusiness.UseLandCodeBindImport = metadata.UseLandCodeBindImport;
+            landBusiness.UseOldLandCodeBindImport = metadata.UseOldLandCodeBindImport;
             landBusiness.shapeAllcolNameList = metadata.shapeAllcolNameList;
             var zoneStation = dbContext.CreateZoneWorkStation();
             List<Zone> childrenZone = zoneStation.GetChildren(zone.FullCode, eLevelOption.Subs);

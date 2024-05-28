@@ -160,8 +160,8 @@ namespace YuLinTu.Library.Business
                     existTablePersons = new SortedList<string, string>();
                     isOk = true;
                     string familyName = GetString(allItem[1, 4]);
-                    var number = GetString(allItem[1, 10]);
-                    number = number.Substring(number.Length - 5, 4);
+                    var number = GetString(allItem[1, 1]);
+                    number = number.Substring(number.Length - 9, 4);
                     landFamily.CurrentFamily.FamilyNumber = number;
 
                     GetExcelInformation(landFamily);//获取Excel表中信息
@@ -282,9 +282,13 @@ namespace YuLinTu.Library.Business
             isOk = false;
             AddErrorMessage(errorInfo);
         }
-
+        private void RecordWarnInformation(string errorInfo)
+        {
+            AddErrorMessage(errorInfo);
+        }
         private void InitalizeLandInformation(LandFamily landFamily, List<ContractLand> contractLands)
         {
+            KeyValueList<string, double> keyValues = new KeyValueList<string, double>();
             for (int i = 11; i < landCount + 11; i++)
             {
                 var landNumber = GetString(allItem[i, 0]);
@@ -302,6 +306,7 @@ namespace YuLinTu.Library.Business
                         entity.Name = GetString(allItem[i, 1]);
                         entity.TableArea = string.IsNullOrEmpty(GetString(allItem[i, 3])) ? 0 : Convert.ToDouble(GetString(allItem[i, 3]));
                         entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[i, 4])) ? 0 : Convert.ToDouble(GetString(allItem[i, 4]));
+                        keyValues.Add(entity.Name, entity.ActualArea);
                         entity.NeighborEast = GetString(allItem[i, 5]);
                         entity.NeighborSouth = GetString(allItem[i, 6]);
                         entity.NeighborWest = GetString(allItem[i, 7]);
@@ -313,6 +318,7 @@ namespace YuLinTu.Library.Business
                         entity.Purpose = tdyt.Code;
                         entity.LandLevel = GetString(allItem[i, 11]).PadLeft(2, '0');
                         entity.Comment = GetString(allItem[i, 12]);
+                        entity.OldLandNumber = GetString(allItem[1,1]).Substring(0,14) + GetString(allItem[i, 0]);
                         landFamily.LandCollection.Add(entity);
                     }
                     else
@@ -326,6 +332,7 @@ namespace YuLinTu.Library.Business
                         land.Name = GetString(allItem[i, 1]);
                         land.TableArea = string.IsNullOrEmpty(GetString(allItem[i, 3])) ? 0 : Convert.ToDouble(GetString(allItem[i, 3]));
                         land.ActualArea = string.IsNullOrEmpty(GetString(allItem[i, 4])) ? 0 : Convert.ToDouble(GetString(allItem[i, 4]));
+                        keyValues.Add(land.Name, land.ActualArea);
                         land.NeighborEast = GetString(allItem[i, 5]);
                         land.NeighborSouth = GetString(allItem[i, 6]);
                         land.NeighborWest = GetString(allItem[i, 7]);
@@ -341,6 +348,14 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
+            var duplicateEntries = keyValues.GroupBy(x => new { x.Key, x.Value })
+                                        .Where(group => group.Count() > 1)
+                                        .Select(group => group.First()).ToList();
+            if(duplicateEntries != null && duplicateEntries.Count() != 0)
+            {
+                RecordWarnInformation($"请检查导入文件夹中名字为：{landFamily.CurrentFamily.Name} 的数据中包含重复地块名称和面积，需要手动处理。");
+            }
+
         }
 
         private void AddPerson(LandFamily landFamily)

@@ -48,7 +48,11 @@ namespace YuLinTu.Library.Business
             //导入地块调查表
             bool flag = landBusiness.ImportLandTiesLZ(currentZone, files);
             var error = landBusiness.ErrorInformation;
-            var errInformation = string.Join(",", error);
+            string errInformation = "";
+            if (error != null)
+            {
+                errInformation = string.Join(",", error);
+            }
             if (flag == false)
             {
                 this.ReportProgress(0, "失败");

@@ -238,6 +238,11 @@ namespace YuLinTu.Library.Entity
         private string landExpand;
 
         /// <summary>
+        /// 原地块编码
+        /// </summary>
+        private string oldLandNumber;
+
+        /// <summary>
         /// 空间字段
         /// </summary>
         private Geometry shape;
@@ -477,6 +482,20 @@ namespace YuLinTu.Library.Entity
             {
                 opinion = value;
                 NotifyPropertyChanged("Opinion");
+            }
+        }
+
+        /// <summary>
+        /// 原地块编码
+        /// </summary>
+        [DataColumn("YDKBM")]
+        public string OldLandNumber
+        {
+            get { return oldLandNumber; }
+            set
+            {
+                oldLandNumber = value;
+                NotifyPropertyChanged("OldLandNumber");
             }
         }
 

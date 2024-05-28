@@ -864,6 +864,14 @@ namespace YuLinTu.Library.Business
             upCBDFields.Add(ybmj);
             upCBD.FieldList = upCBDFields;
 
+            UpdateField ydkbm = new UpdateField(); // 权属性质
+            ydkbm.FieldName = "YDKBM";
+            ydkbm.FieldType = "TEXT";
+            ydkbm.IsNull = true;
+            ydkbm.IsAdd = true;
+            ydkbm.FieldLength = "100";
+            upCBDFields.Add(ydkbm);
+            upCBD.FieldList = upCBDFields;
             return upCBD;
         }
 

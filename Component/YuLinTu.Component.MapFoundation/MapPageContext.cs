@@ -5247,8 +5247,9 @@ namespace YuLinTu.Component.MapFoundation
                 meta.VirtualType = eVirtualType.Land;
                 meta.UseContractorInfoImport = addPage.UseContractorInfoImport;
                 meta.UseLandCodeBindImport = addPage.UseLandCodeBindImport;
+                meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
-
+       
                 if (meta.CurrentZone == null)
                 {
                     ShowBox("提示", "当前选择地域为空", eMessageGrade.Infomation);

@@ -59,6 +59,11 @@ namespace YuLinTu.Library.Controls
         public bool UseContractorNumberImport { get; private set; }
 
         /// <summary>
+        /// 按照原地块编码绑定导入
+        /// </summary>
+        public bool UseOldLandCodeBindImport { get; private set; }
+
+        /// <summary>
         /// 数据汇总设置实体属性
         /// </summary>
         public ImportAccountLandShapeSettingDefine ImportLandShapeInfoDefine
@@ -112,6 +117,7 @@ namespace YuLinTu.Library.Controls
             UseLandCodeBindImport = true;
             UseContractorInfoImport = false;
             UseContractorNumberImport = false;
+            UseOldLandCodeBindImport = false;
             btnExcuteImport.IsEnabled = false;
         }
 
@@ -308,12 +314,14 @@ namespace YuLinTu.Library.Controls
         {
             if (chkUseLandCodeBindImport.IsChecked.Value)
             {
-                UseContractorNumberImport = false;
                 UseLandCodeBindImport = true;
                 UseContractorInfoImport = false;
+                UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = true;
                 importShpByType.UseContractorInfoImport = false;
                 importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
@@ -322,18 +330,42 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 按照原地块编码绑定导入选择
+        /// </summary>
+        private void chkUseOldLandCodeBindImport_Check(object sender, RoutedEventArgs e)
+        {
+            if (chkUseOldLandCodeBindImport.IsChecked.Value)
+            {
+                UseLandCodeBindImport = false;
+                UseContractorInfoImport = false;
+                UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = true;
+                importShpByType.UseLandCodeBindImport = false;
+                importShpByType.UseContractorInfoImport = false;
+                importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = true;
+                if (ProGrid.Object != null)
+                {
+                    ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
+                }
+            }
+        }
+        /// <summary>
         /// 按照承包方信息绑定导入选择
         /// </summary>
         private void chkUseContractorInfoImport_Checked(object sender, RoutedEventArgs e)
         {
             if (chkUseContractorInfoImport.IsChecked.Value)
             {
-                UseContractorNumberImport = false;
+
                 UseLandCodeBindImport = false;
                 UseContractorInfoImport = true;
+                UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = false;
                 importShpByType.UseContractorInfoImport = true;
                 importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
@@ -353,9 +385,11 @@ namespace YuLinTu.Library.Controls
                 UseLandCodeBindImport = false;
                 UseContractorInfoImport = false;
                 UseContractorNumberImport = true;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = false;
                 importShpByType.UseContractorInfoImport = false;
                 importShpByType.UseContractorNumberImport = true;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
@@ -405,6 +439,11 @@ namespace YuLinTu.Library.Controls
         /// 按照地块编码绑定导入
         /// </summary>
         public bool UseLandCodeBindImport { get; set; }
+
+        /// <summary>
+        /// 按照原地块编码绑定导入
+        /// </summary>
+        public bool UseOldLandCodeBindImport { get; set; }
 
         /// <summary>
         /// 按照承包方信息绑定导入

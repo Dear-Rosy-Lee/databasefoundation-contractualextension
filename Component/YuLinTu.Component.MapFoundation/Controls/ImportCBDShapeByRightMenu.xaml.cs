@@ -85,6 +85,11 @@ namespace YuLinTu.Component.MapFoundation
         public bool UseContractorNumberImport { get; set; }
 
         /// <summary>
+        /// 按照原地块编码绑定导入
+        /// </summary>
+        public bool UseOldLandCodeBindImport { get; private set; }
+
+        /// <summary>
         /// 数据汇总设置实体属性
         /// </summary>
         public ImportAccountLandShapeSettingDefine ImportLandShapeInfoDefine
@@ -133,10 +138,12 @@ namespace YuLinTu.Component.MapFoundation
             this.Workpage = page;
             DataContext = this;
             chkUseLandCodeBindImport.IsChecked = true;
+            chkUseOldLandCodeBindImport.IsChecked = true;
             importShpByType.UseLandCodeBindImport = true;
             UseLandCodeBindImport = true;
             UseContractorInfoImport = false;
             UseContractorNumberImport = false;
+            UseOldLandCodeBindImport = false;
             btnExcuteImport.IsEnabled = false;
             btnFileSelect.IsEnabled = false;
             txt_file.IsEnabled = false;
@@ -343,9 +350,11 @@ namespace YuLinTu.Component.MapFoundation
                 UseLandCodeBindImport = true;
                 UseContractorInfoImport = false;
                 UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = true;
                 importShpByType.UseContractorInfoImport = false;
                 importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
@@ -353,6 +362,27 @@ namespace YuLinTu.Component.MapFoundation
             }
         }
 
+        /// <summary>
+        /// 按照原地块编码绑定导入选择
+        /// </summary>
+        private void chkUseOldLandCodeBindImport_Check(object sender, RoutedEventArgs e)
+        {
+            if (chkUseOldLandCodeBindImport.IsChecked.Value)
+            {
+                UseLandCodeBindImport = false;
+                UseContractorInfoImport = false;
+                UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = true;
+                importShpByType.UseLandCodeBindImport = false;
+                importShpByType.UseContractorInfoImport = false;
+                importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = true;
+                if (ProGrid.Object != null)
+                {
+                    ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
+                }
+            }
+        }
         /// <summary>
         /// 按照承包方信息绑定导入选择
         /// </summary>
@@ -364,9 +394,11 @@ namespace YuLinTu.Component.MapFoundation
                 UseLandCodeBindImport = false;
                 UseContractorInfoImport = true;
                 UseContractorNumberImport = false;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = false;
                 importShpByType.UseContractorInfoImport = true;
                 importShpByType.UseContractorNumberImport = false;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;
@@ -386,9 +418,11 @@ namespace YuLinTu.Component.MapFoundation
                 UseLandCodeBindImport = false;
                 UseContractorInfoImport = false;
                 UseContractorNumberImport = true;
+                UseOldLandCodeBindImport = false;
                 importShpByType.UseLandCodeBindImport = false;
                 importShpByType.UseContractorInfoImport = false;
                 importShpByType.UseContractorNumberImport = true;
+                importShpByType.UseOldLandCodeBindImport = false;
                 if (ProGrid.Object != null)
                 {
                     ImportLandShapeInfoDefine.NameIndex = ImportLandShapeInfoDefine.NameIndex;

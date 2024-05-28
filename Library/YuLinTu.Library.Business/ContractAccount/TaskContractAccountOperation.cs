@@ -122,6 +122,7 @@ namespace YuLinTu.Library.Business
             landBusiness.UseContractorInfoImport = metadata.UseContractorInfoImport;
             landBusiness.UseLandCodeBindImport = metadata.UseLandCodeBindImport;
             landBusiness.UseContractorNumberImport = metadata.UseContractorNumberImport;
+            landBusiness.UseOldLandCodeBindImport = metadata.UseOldLandCodeBindImport;
             landBusiness.shapeAllcolNameList = metadata.shapeAllcolNameList;
             var zoneStation = dbContext.CreateZoneWorkStation();
             List<Zone> childrenZone = zoneStation.GetChildren(zone.FullCode, eLevelOption.Subs);

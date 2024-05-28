@@ -120,6 +120,11 @@ namespace YuLinTu.Library.Business
         public bool UseContractorNumberImport { get; set; }
 
         /// <summary>
+        /// 按照地块编码绑定导入-导入地块图斑设置
+        /// </summary>
+        public bool UseOldLandCodeBindImport { get; set; }
+
+        /// <summary>
         /// 读取的shp所有字段名称
         /// </summary>
         public List<KeyValue<int, string>> shapeAllcolNameList { get; set; }

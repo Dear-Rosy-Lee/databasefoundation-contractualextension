@@ -8,7 +8,7 @@
                  xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
                  Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                  Height="550"
-                 Width="650"
+                 Width="660"
                  Header="导入地块图斑数据">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}">
         <Grid.RowDefinitions>
@@ -82,7 +82,13 @@
                              VerticalAlignment="Center"
                              Margin="15,0,0,0"
                              TabIndex="3" />
-                
+                <RadioButton Content="按照原地块编码导入"
+                             Name="chkUseOldLandCodeBindImport"
+                             Click="chkUseOldLandCodeBindImport_Check"
+                             VerticalAlignment="Center"
+                             Margin="15,0,0,0"
+                             TabIndex="3" />
+
             </DockPanel>
         </Grid>
         <DockPanel LastChildFill="True"
