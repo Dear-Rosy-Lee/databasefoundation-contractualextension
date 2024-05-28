@@ -118,7 +118,7 @@ namespace YuLinTu.Library.Business
         {
             TaskRelationDealArgument metadata = Argument as TaskRelationDealArgument;
             var vpstation = metadata.Database.CreateVirtualPersonStation<LandVirtualPerson>();
-            int familyCount = vpstation.Count(c => c.ZoneCode.Equals(zone.FullCode));// "ZoneCode", zone.FullCode, Library.Data.ConditionOption.Equal);
+            int familyCount = vpstation.Count(c => c.ZoneCode.Equals(zone.FullCode));// "SenderCode", zone.FullCode, Library.Data.ConditionOption.Equal);
             if (familyCount == 0)
             {
                 this.ReportInfomation(string.Format("{0}下没有承包方数据", zone.Name));

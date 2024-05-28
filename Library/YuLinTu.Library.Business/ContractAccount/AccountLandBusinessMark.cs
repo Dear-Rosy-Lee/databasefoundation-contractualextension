@@ -274,8 +274,8 @@ namespace YuLinTu.Library.Business
                     {
                         resLand.Shape.SpatialReference = targetSpatialReference;
                     }
-                    resLand.ZoneCode = zone.FullCode;
-                    resLand.ZoneName = zone.FullName;
+                    resLand.SenderCode = zone.FullCode;
+                    resLand.SenderName = zone.FullName;
                     //ListLand.Add(resLand);
                     int result = landStation.Add(resLand);
                     if (result == -1)
@@ -457,8 +457,8 @@ namespace YuLinTu.Library.Business
             //            resLand = modifyContractLandinfo(addZoneLand, addData[i], allGetSelectColList, zoneNameInfo);
             //            if (resLand == null) { dbContext.RollbackTransaction(); return 0; }
             //            resLand.OwnerId = addPersonList[i].ID;
-            //            resLand.LocationCode = addPersonList[i].ZoneCode;
-            //            resLand.LocationName = addPersonList[i].Address;
+            //            resLand.ZoneCode = addPersonList[i].SenderCode;
+            //            resLand.ZoneName = addPersonList[i].Address;
 
             //            // resLand.Shape = YuLinTu.Spatial.Geometry.FromInstance(resLand.Shape.Instance);
             //            if (resLand.Shape != null)
@@ -763,7 +763,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[24].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.LocationName = GetproertValue(shapeData, selectColNameList[24]); //(ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[24]).ToString());
+                targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[24]); //(ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[24]).ToString());
             }
             if ((string)infoList[25].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {

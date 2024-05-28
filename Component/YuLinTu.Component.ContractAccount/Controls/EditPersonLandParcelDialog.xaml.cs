@@ -183,10 +183,10 @@ namespace YuLinTu.Component.ContractAccount
             var lineStation = DbContext.CreateXZDWWorkStation();
             var PointStation = DbContext.CreateDZDWWorkStation();
             var PolygonStation = DbContext.CreateMZDWWorkStation();
-            //ListGeoLand = ContractLandHeler.GetParcelLands(selectedLand.LocationCode, DbContext);// landStation.GetCollection(SelectedLand.LocationCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
+            //ListGeoLand = ContractLandHeler.GetParcelLands(selectedLand.ZoneCode, DbContext);// landStation.GetCollection(SelectedLand.ZoneCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
             //geoLandCollection = ListGeoLand.FindAll(c => c.OwnerId == SelectedLand.OwnerId);
 
-            ListGeoLand = landStation.GetCollection(SelectedLand.LocationCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
+            ListGeoLand = landStation.GetCollection(SelectedLand.ZoneCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
             geoLandCollection = ListGeoLand.FindAll(c => c.OwnerId == SelectedLand.OwnerId);
 
             geoLandCollection = InitalizeAgricultureLandSortValue(geoLandCollection);
@@ -213,9 +213,9 @@ namespace YuLinTu.Component.ContractAccount
 
                 var visibleBounds = new CglEnvelope(0, 0, mapW, mapH);
                                 
-                ListLineFeature = lineStation.GetByZoneCode(SelectedLand.LocationCode);
-                ListPointFeature = PointStation.GetByZoneCode(SelectedLand.LocationCode);
-                ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.LocationCode);
+                ListLineFeature = lineStation.GetByZoneCode(SelectedLand.ZoneCode);
+                ListPointFeature = PointStation.GetByZoneCode(SelectedLand.ZoneCode);
+                ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.ZoneCode);
                 ListLineFeature.RemoveAll(l => l.Shape == null);
                 ListPointFeature.RemoveAll(l => l.Shape == null);
                 ListPolygonFeature.RemoveAll(l => l.Shape == null);

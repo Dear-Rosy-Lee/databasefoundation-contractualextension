@@ -70,7 +70,7 @@ namespace YuLinTu.Library.Repository
                 return null;
 
             var q = from qc in DataSource.CreateQuery<ConstructionLand>()
-                    where qc.ZoneCode.Equals(ownUnitCode)
+                    where qc.SenderCode.Equals(ownUnitCode)
                     orderby qc.OwnerName
                     select qc;
             object data = q.ToList();
@@ -99,7 +99,7 @@ namespace YuLinTu.Library.Repository
             if (levelOption == eLevelOption.Self)
             {
                 var q = from qc in DataSource.CreateQuery<ConstructionLand>()
-                        where qc.ZoneCode.StartsWith(ownUnitCode) && qc.IsValid.Equals(isValid)
+                        where qc.SenderCode.StartsWith(ownUnitCode) && qc.IsValid.Equals(isValid)
                         orderby qc.OwnerName
                         select qc;
                 data = q.ToList();
@@ -107,7 +107,7 @@ namespace YuLinTu.Library.Repository
             else
             {
                 var q = from qc in DataSource.CreateQuery<ConstructionLand>()
-                        where qc.ZoneCode.Equals(ownUnitCode) && qc.IsValid.Equals(isValid)
+                        where qc.SenderCode.Equals(ownUnitCode) && qc.IsValid.Equals(isValid)
                         orderby qc.OwnerName
                         select qc;
                 data = q.ToList();
@@ -171,7 +171,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return -1;
-            return Count(c => c.ZoneCode.Equals(zoneCode));
+            return Count(c => c.SenderCode.Equals(zoneCode));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace YuLinTu.Library.Repository
             if (!CheckRule.CheckStringNullOrEmpty(ref fullCode))
                 return null;
 
-            object data = Get(c => c.ZoneCode.Equals(fullCode));
+            object data = Get(c => c.SenderCode.Equals(fullCode));
             return data as List<ContractLand>;
         }
 
@@ -263,7 +263,7 @@ namespace YuLinTu.Library.Repository
                 return -1;
 
             var q = from qc in DataSource.CreateQuery<ConstructionLand>()
-                    where qc.ZoneCode.Equals(zoneCode)
+                    where qc.SenderCode.Equals(zoneCode)
                     select qc;
             foreach (var item in q.ToList())
             {
@@ -336,7 +336,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref fullCode))
                 return -1;
-            return Delete(c => c.ZoneCode.Equals(fullCode));
+            return Delete(c => c.SenderCode.Equals(fullCode));
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace YuLinTu.Library.Repository
             if (searchOption == eSearchOption.Precision)
             {
                 var q=from qc in DataSource.CreateQuery<ConstructionLand>()
-                      where qc.CadastralNumber.EndsWith(number) && qc.ZoneCode.StartsWith(zoneCode)
+                      where qc.CadastralNumber.EndsWith(number) && qc.SenderCode.StartsWith(zoneCode)
                       orderby qc.OwnerName
                       select qc;
                 data = q.ToList();
@@ -511,7 +511,7 @@ namespace YuLinTu.Library.Repository
             else if (searchOption == eSearchOption.Fuzzy)
             {                
                 var q=from qc in DataSource.CreateQuery<ConstructionLand>()
-                      where qc.CadastralNumber.Contains(number) && qc.ZoneCode.StartsWith(zoneCode)
+                      where qc.CadastralNumber.Contains(number) && qc.SenderCode.StartsWith(zoneCode)
                       orderby qc.OwnerName
                       select qc;
                 data = q.ToList();
@@ -545,7 +545,7 @@ namespace YuLinTu.Library.Repository
             if (searchOption == eSearchOption.Precision)
             {
                  var q=from qc in DataSource.CreateQuery<ConstructionLand>()
-                      where qc.OwnerName.Equals(name) && qc.ZoneCode.StartsWith(zoneCode)
+                      where qc.OwnerName.Equals(name) && qc.SenderCode.StartsWith(zoneCode)
                       orderby qc.OwnerName
                       select qc;
                 data = q.ToList();
@@ -553,7 +553,7 @@ namespace YuLinTu.Library.Repository
             else if (searchOption == eSearchOption.Fuzzy) 
             {                
                 var q=from qc in DataSource.CreateQuery<ConstructionLand>()
-                      where qc.OwnerName.Contains(name) && qc.ZoneCode.StartsWith(zoneCode)
+                      where qc.OwnerName.Contains(name) && qc.SenderCode.StartsWith(zoneCode)
                       orderby qc.OwnerName
                       select qc;
                 data = q.ToList();

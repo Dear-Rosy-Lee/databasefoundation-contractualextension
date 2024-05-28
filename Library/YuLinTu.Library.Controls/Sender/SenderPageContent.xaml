@@ -41,8 +41,7 @@
         <Label Content="发包方名称:" Style="{StaticResource LeftStyle}" />
         <cmps:MetroTextBox
             Name="mtbName"
-            Grid.Column="1"
-            Grid.ColumnSpan="3"
+            Grid.Column="1" 
             Height="30"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
@@ -50,12 +49,18 @@
             MaxLength="40"
             TabIndex="1"
             Text="{Binding Path=Name, Mode=TwoWay}" />
+        <Label Content="所在地域:" Grid.Column="2" Style="{StaticResource LeftStyle}" />
+        <DockPanel Grid.Column="3" LastChildFill="True">
+            <metro:MetroButton Content="选择" Width="40" Click="MetroButton_Click"  Height="30" Margin="5,0,0,0" BorderThickness="1" BorderBrush="LightGray" DockPanel.Dock="Right"/>
+            <cmps:MetroTextBox IsReadOnly="True"  Height="30" x:Name="senderzonetxt" Text="{Binding Path=ZoneCode, Mode=TwoWay}"></cmps:MetroTextBox>
+        </DockPanel>
+
         <Label
             Grid.Row="1"
             Content="发包方编码:"
             Style="{StaticResource LeftStyle}" />
         <cmps:MetroTextBox
-            Name="mtbCode"
+            x:Name="mtbCode"
             Grid.Row="1"
             Grid.Column="1"
             Height="30"
@@ -298,7 +303,7 @@
         <Label
             Grid.Row="10"
             VerticalAlignment="Center"
-            Content="社会信号代码:"
+            Content="社会信用代码:"
             Style="{StaticResource LeftStyle}" />
         <cmps:MetroTextBox
             Grid.Row="10"

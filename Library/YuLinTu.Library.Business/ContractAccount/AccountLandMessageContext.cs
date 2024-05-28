@@ -90,7 +90,7 @@ namespace YuLinTu.Library.Business
         //    try
         //    {
         //        var dbContext = e.Datasource;
-        //        var zoneCode = e.ZoneCode;
+        //        var zoneCode = e.SenderCode;
         //        if (dbContext == null || string.IsNullOrEmpty(zoneCode))
         //            return;
         //        var landStation = dbContext.CreateContractLandWorkstation();
@@ -166,7 +166,7 @@ namespace YuLinTu.Library.Business
         //{
         //    try
         //    {
-        //        string zoneCode = e.ZoneCode as string;
+        //        string zoneCode = e.SenderCode as string;
         //        if (zoneCode == null)
         //        {
         //            e.ReturnValue = null;

@@ -616,8 +616,8 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
             }
-            currentLand.LocationCode = currentZone.FullCode;
-            currentLand.LocationName = currentZone.FullName;
+            currentLand.ZoneCode = currentZone.FullCode;
+            currentLand.ZoneName = currentZone.FullName;
 
             if (currentPerson != null)
             {
@@ -940,7 +940,7 @@ namespace YuLinTu.Library.Controls
             {
                 ID = Guid.NewGuid(),
                 CreationTime = DateTime.Now,
-                ZoneCode = land.LocationCode,
+                ZoneCode = land.ZoneCode,
                 Shape = linestring,
                 Modifier = "",
                 ModifiedTime = DateTime.Now,

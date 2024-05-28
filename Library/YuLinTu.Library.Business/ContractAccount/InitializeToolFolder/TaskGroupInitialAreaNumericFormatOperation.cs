@@ -79,7 +79,7 @@ namespace YuLinTu.Library.Business
             List<ContractLand> currentLands = new List<ContractLand>();
             foreach (var zone in allZones)
             {
-                currentLands = InitialLands.FindAll(c => c.LocationCode.Equals(zone.FullCode));
+                currentLands = InitialLands.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
                 TaskInitialAreaNumericFormatArgument argument = new TaskInitialAreaNumericFormatArgument();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;

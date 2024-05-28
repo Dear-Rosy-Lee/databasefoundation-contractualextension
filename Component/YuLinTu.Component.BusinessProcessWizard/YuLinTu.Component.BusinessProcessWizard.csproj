@@ -196,6 +196,10 @@
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ComponentTask\YuLinTu.Component.ExportDataSummaryTask\YuLinTu.Component.ExportDataSummaryTask.csproj">
+      <Project>{30b45582-c56e-4bcf-ba88-170faeabea13}</Project>
+      <Name>YuLinTu.Component.ExportDataSummaryTask</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
@@ -249,11 +253,6 @@
     <ProjectReference Include="..\YuLinTu.Component.Dictionary\YuLinTu.Component.Dictionary.csproj">
       <Project>{faaee909-3350-4e4f-ba70-9dc22168c152}</Project>
       <Name>YuLinTu.Component.Dictionary</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\YuLinTu.Component.ExportDataSummaryTask\YuLinTu.Component.ExportDataSummaryTask.csproj">
-      <Project>{30b45582-c56e-4bcf-ba88-170faeabea13}</Project>
-      <Name>YuLinTu.Component.ExportDataSummaryTask</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Component.Setting\YuLinTu.Component.Setting.csproj">

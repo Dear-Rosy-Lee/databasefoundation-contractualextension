@@ -99,7 +99,7 @@ namespace YuLinTu.Library.Business
             ContractLand land = data as ContractLand;
             try
             {
-                string code = Tissue != null ? InitalzieTissueCode(Tissue.ZoneCode) : InitalzieTissueCode(land.LocationCode);
+                string code = Tissue != null ? InitalzieTissueCode(Tissue.ZoneCode) : InitalzieTissueCode(land.ZoneCode);
                 string tissueCode = (Tissue != null && Tissue.Code.Length == 14) ? Tissue.Code : code;
                 WriteTitleInformation(land, tissueCode);
                 if (ListLandCoil != null && ListLandCoil.Count == 0)

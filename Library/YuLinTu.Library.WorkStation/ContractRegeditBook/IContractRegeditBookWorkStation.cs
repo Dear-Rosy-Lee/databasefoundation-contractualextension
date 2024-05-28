@@ -58,6 +58,8 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(ContractRegeditBook entity);
 
+        int UpdataList(List<ContractRegeditBook> listBook);
+
         /// <summary>
         /// 根据ID获取农村土地承包经营权登记薄对象
         /// </summary>

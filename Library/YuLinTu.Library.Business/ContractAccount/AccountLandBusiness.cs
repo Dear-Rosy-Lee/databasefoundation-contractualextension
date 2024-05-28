@@ -233,11 +233,11 @@ namespace YuLinTu.Library.Business
             {
                 if (id == null)
                 {
-                    result = landStation.Any(t => t.LandNumber == landNumber && t.LocationCode == zoneCode);
+                    result = landStation.Any(t => t.LandNumber == landNumber && t.ZoneCode == zoneCode);
                 }
                 else
                 {
-                    result = landStation.Any(t => t.LandNumber == landNumber && t.ID != id && t.LocationCode == zoneCode);
+                    result = landStation.Any(t => t.LandNumber == landNumber && t.ID != id && t.ZoneCode == zoneCode);
                 }
             }
             catch (Exception ex)
@@ -362,8 +362,8 @@ namespace YuLinTu.Library.Business
             try
             {
                 if (zoneCode.Length == 14)
-                    //list = landStation.Get(c => c.LocationCode == zoneCode);
-                    list = DataBaseSource.GetDataBaseSource().CreateQuery<ContractLand>().Where(l => l.LocationCode == zoneCode).ToList();
+                    //list = landStation.Get(c => c.ZoneCode == zoneCode);
+                    list = DataBaseSource.GetDataBaseSource().CreateQuery<ContractLand>().Where(l => l.ZoneCode == zoneCode).ToList();
                 else
                     list = landStation.GetCollection(zoneCode);
             }
@@ -565,6 +565,36 @@ namespace YuLinTu.Library.Business
             }
             return updateCount;
         }
+
+
+        /// <summary>
+        ///  批量更新地块发包方信息
+        /// </summary> 
+        public int UpdateLands(string zoneCode, CollectivityTissue tissue)
+        {
+            int updateCount = 0;
+            if (!CanContinue())
+            {
+                return updateCount;
+            }
+            try
+            {
+                var lands = landStation.GetCollection(zoneCode);
+                foreach (var land in lands)
+                {
+                    land.ZoneCode = tissue.ZoneCode;
+                    land.SenderCode = tissue.Code;
+                }
+                updateCount = landStation.UpdateRange(lands);
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "修改地块的权利认名称", ex.Message + ex.StackTrace);
+                this.ReportError("修改地块的承包方名称数据失败," + ex.Message);
+            }
+            return updateCount;
+        }
+
 
         /// <summary>
         /// 根据行政地域编码删除该地域下的所有地块
@@ -1220,8 +1250,8 @@ namespace YuLinTu.Library.Business
                     }
                     resLand.OwnerId = addPersonList[i].ID;
                     resLand.OwnerName = addPersonList[i].Name;
-                    resLand.LocationCode = addPersonList[i].ZoneCode;
-                    resLand.LocationName = addPersonList[i].Address;
+                    resLand.ZoneCode = addPersonList[i].ZoneCode;
+                    resLand.ZoneName = addPersonList[i].Address;
 
                     // resLand.Shape = YuLinTu.Spatial.Geometry.FromInstance(resLand.Shape.Instance);
                     if (resLand.Shape != null)
@@ -1326,8 +1356,8 @@ namespace YuLinTu.Library.Business
                     }
                     resLand.OwnerId = addPersonList[i].ID;
                     resLand.OwnerName = addPersonList[i].Name;
-                    resLand.LocationCode = addPersonList[i].ZoneCode;
-                    resLand.LocationName = addPersonList[i].Address;
+                    resLand.ZoneCode = addPersonList[i].ZoneCode;
+                    resLand.ZoneName = addPersonList[i].Address;
 
                     // resLand.Shape = YuLinTu.Spatial.Geometry.FromInstance(resLand.Shape.Instance);
                     if (resLand.Shape != null)
@@ -1683,7 +1713,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[26].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.LocationName = GetproertValue(shapeData, selectColNameList[26]);
+                targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[26]);
             }
             if ((string)infoList[27].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -3854,7 +3884,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
                 var landsOfStatus = landStation.GetCollection(currentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
-                landsOfStatus.AddRange(landStation.Get(o => o.IsStockLand == true && o.LocationCode == currentZone.FullCode).ToList());
+                landsOfStatus.AddRange(landStation.Get(o => o.IsStockLand == true && o.ZoneCode == currentZone.FullCode).ToList());
                 if (landsOfStatus == null || landsOfStatus.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -4106,8 +4136,9 @@ namespace YuLinTu.Library.Business
                 {
                     if (metadata.InitialLandNumber)
                     {
+                        land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)
-                        {
+                        { 
                             //如果地块编码是19位的，不处理。如果调查编码是空的，就用地块编码。
                             if (land.SurveyNumber.IsNullOrEmpty() == false)
                             {

@@ -291,7 +291,7 @@ namespace YuLinTu.Component.MapFoundation
                             workpage.Page.ShowMessageBox(messagebox);
                             return;
                         }
-                        currentZoneCode = selectLand.LocationCode;
+                        currentZoneCode = selectLand.ZoneCode;
                         if (currentZoneCode.IsNullOrEmpty())
                         {
                             TabMessageBoxDialog messagebox = new TabMessageBoxDialog();
@@ -423,7 +423,7 @@ namespace YuLinTu.Component.MapFoundation
                                 graphic1.Object.GeometryPropertyName = "Shape";
                                 gs.Add(graphic1);
                             }
-                            var zoneCode = selectContractLandCollection.FirstOrDefault().LocationCode;
+                            var zoneCode = selectContractLandCollection.FirstOrDefault().ZoneCode;
                             var layers = MapControl.SelectedItems.Select(c => c.Layer).Distinct().ToList();
                             var map = MapControl;
                             TaskThreadDispatcher.Create(MapControl.Dispatcher,

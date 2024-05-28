@@ -9,6 +9,44 @@
         <local:SenderStatusConvert x:Key="StatusConvert" />
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+            SnapsToDevicePixels="True"
+            BorderThickness="0,0,0,1"
+            Height="33"
+            Padding="8,0"
+            BorderBrush="{DynamicResource Metro_Window_Style_BorderBrush_Default}"
+            Background="{DynamicResource Metro_Window_Style_Background_Lighter}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35*" />
+                    <ColumnDefinition Width="65*" />
+                </Grid.ColumnDefinitions>
+                <cmps:ImageTextItem Grid.Column="0"
+                        Name="lbzone"
+                        Text="{Binding CurrentZone.FullName}"
+                        ImageTextSpacing="8"
+                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"></cmps:ImageTextItem>
+                <StackPanel Grid.Column="1"  Name="sp_SenderInfo" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <CheckBox Content="全部选中" HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Name="cbIsbatch"  Checked="cbIsbatch_Checked" Unchecked="cbIsbatch_Checked"
+                                  Margin="8,0,8,0" />
+                    <cmps:Separator Orientation="Vertical" Visibility="{Binding ElementName=cbIsbatch,Path=Visibility}"></cmps:Separator>
+
+                    <cmps:ImageTextItem  Name="lb_family"
+                             Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"
+                             ToolTip="发包方数量"
+                             MinWidth="100"
+                             Margin="20,0,0,0"
+                             VerticalAlignment="Center"
+                             Text="{Binding TissueCount}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
         <cmps:MetroTreeGrid
             x:Name="view"
             Grid.Row="1"
@@ -19,10 +57,22 @@
             ExpandItemWhenLeftMouseDoubleClick="False"
             ItemAutoExpand="False"
             ItemPadding="4,7"
+           ItemsSource="{Binding BindTissueList}"
             MouseDoubleClick="view_MouseDoubleClick"
             SelectionChanged="view_SelectionChanged"
             Visibility="Visible">
             <cmps:MetroTreeGrid.Columns>
+                <DataGridTemplateColumn
+                    Width="50"
+                    cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                    Header=""
+                    SortMemberPath="Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Height="18" Width="18" Margin="5" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" IsChecked="{Binding DataChecked,Mode=TwoWay}"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn
                     Width="300"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
@@ -35,37 +85,19 @@
                                     <cmps:ImageTextItem
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Image="{Binding Object.Img}"
+                                        Image="{Binding Img}"
                                         ImageTextSpacing="7"
-                                        Text="{Binding Object.Name}" />
+                                        Text="{Binding Name}" />
                                 </StackPanel>
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="300"
-                    cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
-                    Header="社会信用代码"
-                    SortMemberPath="SocialCode">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DockPanel LastChildFill="True">
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <cmps:ImageTextItem
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        ImageTextSpacing="7"
-                                        Text="{Binding Object.SocialCode}" />
-                                </StackPanel>
-                            </DockPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+
                 <DataGridTemplateColumn
                     Width="150"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
-                    Header="编码"
+                    Header="发包方编码"
                     SortMemberPath="Code">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -73,7 +105,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.Code}" />
+                                    Text="{Binding Code}" />
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -89,7 +121,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.LawyerName}" />
+                                    Text="{Binding LawyerName}" />
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -105,13 +137,52 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.LawyerTelephone}" />
+                                    Text="{Binding LawyerTelephone}" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTemplateColumn    Width="150"
+                                           cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                           Header="地域编码"
+                                           SortMemberPath="SocialCode">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel LastChildFill="True">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <cmps:ImageTextItem
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ImageTextSpacing="7"
+                        Text="{Binding ZoneCode}" />
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn    Width="150"
+                                           cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                           Header="社会信用代码"
+                                           SortMemberPath="SocialCode">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel LastChildFill="True">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <cmps:ImageTextItem
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ImageTextSpacing="7"
+                        Text="{Binding SocialCode}" />
+                                </StackPanel>
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn
-                    Width="370"
+                    Width="150"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
                     Header="备注"
                     SortMemberPath="Comment">
@@ -121,7 +192,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.Comment}" />
+                                    Text="{Binding Comment}" />
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

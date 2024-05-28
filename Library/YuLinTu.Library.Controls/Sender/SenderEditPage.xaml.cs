@@ -2,26 +2,11 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Repository;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
@@ -34,12 +19,12 @@ namespace YuLinTu.Library.Controls
         #region Fields
 
         /// <summary>
-        /// 当前选择地域
+        /// 当前选择发包方
         /// </summary>
         private CollectivityTissue currentTissue;
 
         /// <summary>
-        /// 临时地域
+        /// 临时发包方
         /// </summary>
         private CollectivityTissue tempTissue;
 
@@ -74,6 +59,8 @@ namespace YuLinTu.Library.Controls
                 SetComboxSelect(tempTissue);
             }
         }
+
+        public Zone CurrentZone { get; set; }
 
         /// <summary>
         /// 操作结果
@@ -110,6 +97,7 @@ namespace YuLinTu.Library.Controls
         {
             pageContent.Visibility = Visibility.Visible;
             loadIcon.Visibility = Visibility.Collapsed;
+            pageContent.CurrentZone = CurrentZone;
         }
 
         #endregion
@@ -148,7 +136,7 @@ namespace YuLinTu.Library.Controls
                 {
                     return;
                 }
-                if (IsNameRepeat())
+                if (IsNameRepeat(currentTissue))
                 {
                     ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
                     //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
@@ -181,14 +169,13 @@ namespace YuLinTu.Library.Controls
             try
             {
                 GetComboxSelect();
-                currentTissue = tempTissue;
                 if (!pageContent.CheckEntity(tempTissue, isAdd))
                 {
                     return;
                 }
-                if (IsNameRepeat())
+                if (IsNameRepeat(tempTissue) && currentTissue.ZoneCode == tempTissue.ZoneCode)
                 {
-                    ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
+                    ShowBox(SenderInfo.SenderEdit, "该地域下已存在此发包方名称!", eMessageGrade.Error);
 
                     //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
                     //{
@@ -198,19 +185,25 @@ namespace YuLinTu.Library.Controls
                     //});
                     return;
                 }
-                pageContent.CheckEntity(tempTissue, isAdd);
-                ModuleMsgArgs args = new ModuleMsgArgs();
-                args.Datasource = DataBaseSourceWork.GetDataBaseSource();
-                args.Name = SenderMessage.SENDER_UPDATE;
-                args.Parameter = currentTissue;
-                TheBns.Current.Message.Send(this, args);
-                Result = (bool)args.ReturnValue;
+                ExcuteSaveData();
             }
             catch
             {
                 Result = false;
             }
             Workpage.Page.CloseMessageBox(true);
+        }
+
+        private void ExcuteSaveData()
+        {
+            pageContent.CheckEntity(tempTissue, isAdd);
+            currentTissue = tempTissue;
+            ModuleMsgArgs args = new ModuleMsgArgs();
+            args.Datasource = DataBaseSourceWork.GetDataBaseSource();
+            args.Name = SenderMessage.SENDER_UPDATE;
+            args.Parameter = currentTissue;
+            TheBns.Current.Message.Send(this, args);
+            Result = (bool)args.ReturnValue;
         }
 
         /// <summary>
@@ -253,6 +246,8 @@ namespace YuLinTu.Library.Controls
             {
                 tempTissue.LawyerCredentType = cretype.Value;
             }
+            if (!string.IsNullOrEmpty(pageContent.selectZoneCode) && tempTissue.ZoneCode != pageContent.selectZoneCode)
+                tempTissue.ZoneCode = pageContent.selectZoneCode;
             //EnumStore<eTissueType> tissuetype = pageContent.cbSenderKind.SelectedItem as EnumStore<eTissueType>;
             //if (tissuetype != null)
             //{
@@ -281,7 +276,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 名称是否重复
         /// </summary>
-        private bool IsNameRepeat()
+        private bool IsNameRepeat(CollectivityTissue tissue)
         {
             bool exit = false;
             try
@@ -289,7 +284,7 @@ namespace YuLinTu.Library.Controls
                 ModuleMsgArgs argsAdd = new ModuleMsgArgs();
                 argsAdd.Datasource = DataBaseSourceWork.GetDataBaseSource();
                 argsAdd.Name = SenderMessage.SENDER_NAMEEXIT;
-                argsAdd.Parameter = currentTissue;
+                argsAdd.Parameter = tissue;
                 TheBns.Current.Message.Send(this, argsAdd);
                 exit = (bool)argsAdd.ReturnValue;
             }

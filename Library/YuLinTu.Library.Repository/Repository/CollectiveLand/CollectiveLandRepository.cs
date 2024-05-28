@@ -95,7 +95,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref ownUnitCode))
                 return 0;
-            return Delete(c => c.ZoneCode.Equals(ownUnitCode));
+            return Delete(c => c.SenderCode.Equals(ownUnitCode));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckStringNullOrEmpty(ref zoneCode))
                 return null; 
-            object data = Get(c => c.ZoneCode.Equals(zoneCode));
+            object data = Get(c => c.SenderCode.Equals(zoneCode));
             return (CollectiveLand)data;
         }
 
@@ -181,13 +181,13 @@ namespace YuLinTu.Library.Repository
 
             if (levelOption == eLevelOption.Self)
                 data =(from q in DataSource.CreateQuery<CollectiveLand>()
-                          where q.ZoneCode.Equals(zoneCode)
-                         orderby q.ZoneCode
+                          where q.SenderCode.Equals(zoneCode)
+                         orderby q.SenderCode
                         select q).ToList(); 
             else if (levelOption == eLevelOption.Subs)
                 data = (from q in DataSource.CreateQuery<CollectiveLand>()
-                        where q.ZoneCode.StartsWith(zoneCode)
-                        orderby q.ZoneCode
+                        where q.SenderCode.StartsWith(zoneCode)
+                        orderby q.SenderCode
                         select q).ToList();
 
             return (List<CollectiveLand>)data;
@@ -253,7 +253,7 @@ namespace YuLinTu.Library.Repository
             if (levelOption == eLevelOption.Subs)
             {
                 var q = (from qa in qc
-                         where qa.ZoneCode.StartsWith(zoneCode)
+                         where qa.SenderCode.StartsWith(zoneCode)
                          select new
                          {
                              sunArea = qc.Sum(c => c.Area),
@@ -271,7 +271,7 @@ namespace YuLinTu.Library.Repository
             {
 
                 var q = (from qa in qc
-                         where qa.ZoneCode.Equals(zoneCode)
+                         where qa.SenderCode.Equals(zoneCode)
                          select new
                          {
                              sunArea = qc.Sum(c => c.Area),

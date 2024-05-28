@@ -130,7 +130,7 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         ///座落单位代码
         /// </summary>
-        [DataColumn("LocationCode", ColumnType = eDataType.String)]
+        [DataColumn("ZoneCode", ColumnType = eDataType.String)]
         public string LocationCode
         {
             get { return _LocationCode; }
@@ -146,7 +146,7 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         ///座落单位名称
         /// </summary>
-        [DataColumn("LocationName", ColumnType = eDataType.String)]
+        [DataColumn("ZoneName", ColumnType = eDataType.String)]
         public string LocationName { get; set; }
 
         /// <summary>

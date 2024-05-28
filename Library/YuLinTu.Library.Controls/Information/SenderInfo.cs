@@ -1,16 +1,6 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-
 namespace YuLinTu.Library.Controls
 {
     /// <summary>
@@ -144,6 +134,11 @@ namespace YuLinTu.Library.Controls
         /// 更新发包方数据失败
         /// </summary>
         public const string EditFail = "更新发包方数据失败!";
+
+        /// <summary>
+        /// 合并发包方数据失败
+        /// </summary>
+        public const string CombinFail = "合并发包方数据失败!";
 
         /// <summary>
         /// 发包方号码不正确

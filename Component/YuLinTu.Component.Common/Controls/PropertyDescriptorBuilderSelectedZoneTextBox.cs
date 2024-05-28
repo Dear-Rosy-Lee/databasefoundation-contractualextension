@@ -168,21 +168,50 @@ namespace YuLinTu.Component.Common
                 bind.Source = defaultValue;
                 bind.Mode = BindingMode.TwoWay;
 
-                var fileTextBox = new SelectedFileTextBox();
+                var fileTextBox = new SelectedFileTextBox() { Filter = "文件类型(*.shp)|*.shp" };
                 fileTextBox.IsReadOnly = true;
                 fileTextBox.Visibility = Visibility.Visible;
                 fileTextBox.WorkPage = defaultValue.PropertyGrid.Properties["Workpage"] as IWorkpage;
                 fileTextBox.SetBinding(SelectedFileTextBox.FileNameProperty, bind);
-
-                var folderTextBox = new SelectedFolderTextBox();
-                folderTextBox.IsReadOnly = true;
-                folderTextBox.Visibility = Visibility.Collapsed;
-                folderTextBox.WorkPage = defaultValue.PropertyGrid.Properties["Workpage"] as IWorkpage;
-                folderTextBox.SetBinding(SelectedFolderTextBox.FolderNameProperty, bind);
-
                 var grid = new Grid();
                 grid.Children.Add(fileTextBox);
-                grid.Children.Add(folderTextBox);
+
+                defaultValue.Designer = grid;
+            }));
+            return defaultValue;
+        }
+
+        #endregion Method
+    }
+
+
+    /// <summary>
+    /// 自定义控件(设计器)
+    /// 对应对象实体类属性为 string 型
+    /// </summary>
+    public class PropertyDescriptorBuilderSelectedMdb : PropertyDescriptorBuilder
+    {
+        #region Method
+
+        /// <summary>
+        /// 自定义textbox控件，通过defaultValue绑定控件，textbox的值是绑定的属性Value
+        /// 其实这个Value就是对象的某个属性值
+        /// </summary>
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke(new Action(() =>
+            {
+                var bind = new Binding("Value");
+                bind.Source = defaultValue;
+                bind.Mode = BindingMode.TwoWay;
+
+                var fileTextBox = new SelectedFileTextBox() { Filter = "文件类型(*.mdb)|*.mdb" };
+                fileTextBox.IsReadOnly = true;
+                fileTextBox.Visibility = Visibility.Visible;
+                fileTextBox.WorkPage = defaultValue.PropertyGrid.Properties["Workpage"] as IWorkpage;
+                fileTextBox.SetBinding(SelectedFileTextBox.FileNameProperty, bind);
+                var grid = new Grid();
+                grid.Children.Add(fileTextBox);
 
                 defaultValue.Designer = grid;
             }));

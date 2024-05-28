@@ -78,7 +78,7 @@ namespace YuLinTu.Library.Business
             //if (currentZone.Level == eZoneLevel.Village)
             //{
             VillageLands = db.CreateQuery<ContractLand>().
-                Where(c => c.LocationCode.Contains(currentZone.FullCode) && c.Shape != null).
+                Where(c => c.ZoneCode.Contains(currentZone.FullCode) && c.Shape != null).
                 Select(c => new ContractLand()
                 {
                     Shape = c.Shape,
@@ -92,7 +92,7 @@ namespace YuLinTu.Library.Business
             //{
             //    var query = db.CreateQuery<ContractLand>();
             //    var qc = db.CreateQuery<Zone>().Where(z => z.UpLevelCode == currentZone.UpLevelCode).Select(z => z.FullCode);  // 取所有的组级编码
-            //    VillageLands = query.Where(c => qc.Contains(c.LocationCode) && c.Shape != null).
+            //    VillageLands = query.Where(c => qc.Contains(c.ZoneCode) && c.Shape != null).
             //        Select(c => new ContractLand()
             //        {
             //            Shape = c.Shape,
@@ -135,7 +135,7 @@ namespace YuLinTu.Library.Business
                 return lands;
 
             lands = db.CreateQuery<ContractLand>().
-                Where(c => c.LocationCode.Equals(zoneCode) && c.Shape != null).
+                Where(c => c.ZoneCode.Equals(zoneCode) && c.Shape != null).
                 Select(c => new ContractLand()
                 {
                     Shape = c.Shape,
@@ -154,8 +154,8 @@ namespace YuLinTu.Library.Business
                     LandCode = c.LandCode,
                     LandLevel = c.LandLevel,
                     //LandName = c.LandName,
-                    ZoneName = c.ZoneName,
-                    ZoneCode = c.ZoneCode,
+                    SenderName = c.SenderName,
+                    SenderCode = c.SenderCode,
                     Name = c.Name,
                     NeighborEast = c.NeighborEast,
                     NeighborNorth = c.NeighborNorth,

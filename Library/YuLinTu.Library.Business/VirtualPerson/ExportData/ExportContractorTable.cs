@@ -79,7 +79,7 @@ namespace YuLinTu.Library.Business
                 }
 
                 base.OnSetParamValue(family);
-                //WriteSenderInformation(family.ZoneCode);   //书写发包方信息
+                //WriteSenderInformation(family.SenderCode);   //书写发包方信息
                 WriteContractorInformtaion(family);   //书写承包方信息
                 WriteSharePersonInformation(family);  //书写共有人信息
                 WriteSecondConcordInformation(family); //书写合同信息

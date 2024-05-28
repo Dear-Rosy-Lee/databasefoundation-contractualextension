@@ -1274,7 +1274,7 @@ namespace YuLinTu.Component.MapFoundation
 
             #region 导出选中Shape
 
-            var LandAssignment = new MetroToggleButton();
+            var LandAssignment = new MetroButton();
             LandAssignment.ToolTip = "导出所选中的地块的空间数据";
             LandAssignment.Padding = new Thickness(4, 2, 4, 2);
             LandAssignment.VerticalAlignment = VerticalAlignment.Stretch;
@@ -1282,7 +1282,7 @@ namespace YuLinTu.Component.MapFoundation
             LandAssignment.Content = new ImageTextItem()
             {
                 ImagePosition = eDirection.Top,
-                Text = "导出Shape文件",
+                Text = "矢量导出",
                 Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/blogpublish.png")),
             };
             数据操作.Items.Insert(8, LandAssignment);
@@ -1292,7 +1292,7 @@ namespace YuLinTu.Component.MapFoundation
 
             #region 编辑地块编码
 
-            var SplitLand = new MetroToggleButton();
+            var SplitLand = new MetroButton();
             SplitLand.ToolTip = "地块分割后，编辑地块编码";
             SplitLand.Padding = new Thickness(4, 2, 4, 2);
             SplitLand.VerticalAlignment = VerticalAlignment.Stretch;
@@ -1589,7 +1589,7 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             cl.OwnerId = vp.ID;
                             cl.OwnerName = vp.Name;
-                            cl.LocationCode = vp.ZoneCode;
+                            cl.ZoneCode = vp.ZoneCode;
                             landBusiness.ModifyLand(cl);
                             vl.Refresh();
                             panel.OwerShipPanel.Refresh();
@@ -1619,7 +1619,7 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             cl.OwnerId = vp.ID;
                             cl.OwnerName = vp.Name;
-                            cl.LocationCode = vp.ZoneCode;
+                            cl.ZoneCode = vp.ZoneCode;
                             cl.Shape = dzdw.Shape;
                             cl.ActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(dzdw.Shape.Area() * projectionUnit, 2);
 
@@ -1702,9 +1702,9 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             vl.Refresh();
                             panel.OwerShipPanel.Refresh();
-                            ModuleMsgArgs args = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, cl, cl.LocationCode, previousCl);
+                            ModuleMsgArgs args = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, cl, cl.ZoneCode, previousCl);
                             SendMessasge(args);
-                            ModuleMsgArgs arg = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, dragLand, dragLand.LocationCode, previousdragLand);
+                            ModuleMsgArgs arg = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, dragLand, dragLand.ZoneCode, previousdragLand);
                             SendMessasge(arg);
                         }
                         else if (vl.Name == "调查宗地")
@@ -1730,7 +1730,7 @@ namespace YuLinTu.Component.MapFoundation
                             vl.Refresh();
                             panel.OwerShipPanel.Refresh();
                             MapControl.Refresh();
-                            ModuleMsgArgs arg = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, dragLand, dragLand.LocationCode);
+                            ModuleMsgArgs arg = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, dragLand, dragLand.ZoneCode);
                             SendMessasge(arg);
                         }
                     },
@@ -4347,7 +4347,7 @@ namespace YuLinTu.Component.MapFoundation
                 ContractLand previousCl = cl.Clone() as ContractLand;
                 previousCl.ActualArea = area;
                 previousCl.Shape = geo;
-                ModuleMsgArgs argsEdit = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, previousCl, previousCl.LocationCode, previousCl);
+                ModuleMsgArgs argsEdit = MessageExtend.ContractAccountMsg(dbContext, ContractAccountMessage.CONTRACTLAND_EDIT_COMPLETE, previousCl, previousCl.ZoneCode, previousCl);
                 SendMessasge(argsEdit);
             }
             catch (Exception ex)
@@ -4631,6 +4631,11 @@ namespace YuLinTu.Component.MapFoundation
         private void SplitLandCodeEdit(object sender, RoutedEventArgs e)
         {
             var layers = MapControl.SelectedItems.Select(c => c.Layer).Distinct().ToList();
+            if (layers.Count == 0)
+            {
+                ShowBox("信息提示", "请选择多个地块进行地块编码的处理！");
+                return;
+            }
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
             var layer = layers[0];
@@ -4782,6 +4787,11 @@ namespace YuLinTu.Component.MapFoundation
         {
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
+            if (graphics.Count == 0)
+            {
+                ShowBox("信息提示", "请选中矢量要素进行导出！");
+                return;
+            }
             ExportDataPage extPage = new ExportDataPage(currentZone.Name, Workpage, "导出ShapeFile");
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (b, r) =>
@@ -5858,8 +5868,8 @@ namespace YuLinTu.Component.MapFoundation
                 AgricultureLandExpand landexp = new AgricultureLandExpand();
                 newLand.LandExpand = landexp;
 
-                newLand.LocationCode = currentZone.FullCode;
-                newLand.LocationName = currentZone.FullName;
+                newLand.ZoneCode = currentZone.FullCode;
+                newLand.ZoneName = currentZone.FullName;
                 newLand.OwnerId = selectPersonNow.ID;
                 newLand.OwnerName = selectPersonNow.Name;
 
@@ -5939,13 +5949,13 @@ namespace YuLinTu.Component.MapFoundation
 
             ZoneDataBusiness zonebus = new ZoneDataBusiness();
             zonebus.Station = db == null ? null : db.CreateZoneWorkStation();
-            if (newLand.LocationCode.IsNullOrEmpty())
+            if (newLand.ZoneCode.IsNullOrEmpty())
             {
                 ShowBox("提示", "承包地标注坐落编码为空");
                 return;
             }
 
-            Zone newLandZone = zonebus.Get(newLand.LocationCode);
+            Zone newLandZone = zonebus.Get(newLand.ZoneCode);
 
             VirtualPersonBusiness virtualbus = new VirtualPersonBusiness(db);
             eVirtualType virtualtype = eVirtualType.Land;
@@ -6095,10 +6105,10 @@ namespace YuLinTu.Component.MapFoundation
             land.SurveyNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DCBM")).Value;
             land.LandNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DKBM")).Value;
             land.CadastralNumber = keyValues.FirstOrDefault(x => x.Key.Contains("DJBM")).Value;
-            land.LocationCode = keyValues.FirstOrDefault(x => x.Key.Contains("ZLDM")).Value;
-            land.LocationName = keyValues.FirstOrDefault(x => x.Key.Contains("ZLMC")).Value;
-            land.ZoneName = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWMC")).Value;
-            land.ZoneCode = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWDM")).Value;
+            land.ZoneCode = keyValues.FirstOrDefault(x => x.Key.Contains("ZLDM")).Value;
+            land.ZoneName = keyValues.FirstOrDefault(x => x.Key.Contains("ZLMC")).Value;
+            land.SenderName = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWMC")).Value;
+            land.SenderCode = keyValues.FirstOrDefault(x => x.Key.Contains("QSDWDM")).Value;
             land.OwnerName = keyValues.FirstOrDefault(x => x.Key.Contains("QLRMC")).Value;
             land.OwnerId = Guid.Parse(keyValues.FirstOrDefault(x => x.Key.Contains("QLRBS")).Value);
             land.LandCode = keyValues.FirstOrDefault(x => x.Key.Contains("TDLYLX")).Value;

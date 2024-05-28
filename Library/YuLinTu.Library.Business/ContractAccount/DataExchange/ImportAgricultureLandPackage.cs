@@ -602,7 +602,7 @@ namespace YuLinTu.Library.Business
         //    person.Number = string.IsNullOrEmpty(exContractor.Number) ? person.Number : exContractor.Number;
         //    person.Telephone = string.IsNullOrEmpty(exContractor.Telephone) ? person.Telephone : exContractor.Telephone;
         //    person.VirtualType = eVirtualPersonType.Family;
-        //    person.ZoneCode = exLandContractor.Zone != null ? exLandContractor.Zone.FullCode : currentZone.FullCode;
+        //    person.SenderCode = exLandContractor.Zone != null ? exLandContractor.Zone.FullCode : currentZone.FullCode;
         //    person.Address = string.IsNullOrEmpty(exContractor.LandLocated) ? person.Address : exContractor.LandLocated;
         //    person.SharePerson = GetAgriSharePersons(exLandContractor);
         //    return person;
@@ -709,7 +709,7 @@ namespace YuLinTu.Library.Business
         //    }
         //    var concordStation = database.CreateConcordStation();
         //    ContractConcord concord = AgriContractConcordMapping(exContractConcord);
-        //    concord.ZoneCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
+        //    concord.SenderCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
         //    concord.ID = concord.ID != Guid.Empty ? concord.ID : exContractConcord.ID;
         //    concordStation.Add(concord);
         //    concord = null;
@@ -850,7 +850,7 @@ namespace YuLinTu.Library.Business
         //    }
         //    crb.WriteOrganization = string.IsNullOrEmpty(ecrb.WriteOrganization) ? crb.WriteOrganization : ecrb.WriteOrganization;
         //    crb.Year = string.IsNullOrEmpty(ecrb.Year) ? crb.Year : ecrb.Year;
-        //    crb.ZoneCode = zoneCode;
+        //    crb.SenderCode = zoneCode;
         //    return crb;
         //}
 
@@ -871,14 +871,6 @@ namespace YuLinTu.Library.Business
         //        ContractLand contractLand = AgriContractLandMapping(land, true);
         //        contractLand.ID = contractLand.ID != Guid.Empty ? contractLand.ID : land.ID;
         //        contractLand.OwnerId = landContractor.Contractor != null ? landContractor.Contractor.ID : Guid.Empty;
-        //        if (string.IsNullOrEmpty(contractLand.LocationCode))
-        //        {
-        //            contractLand.LocationCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
-        //        }
-        //        if (string.IsNullOrEmpty(contractLand.LocationName))
-        //        {
-        //            contractLand.LocationName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
-        //        }
         //        if (string.IsNullOrEmpty(contractLand.ZoneCode))
         //        {
         //            contractLand.ZoneCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
@@ -887,11 +879,19 @@ namespace YuLinTu.Library.Business
         //        {
         //            contractLand.ZoneName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
         //        }
+        //        if (string.IsNullOrEmpty(contractLand.SenderCode))
+        //        {
+        //            contractLand.SenderCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
+        //        }
+        //        if (string.IsNullOrEmpty(contractLand.SenderName))
+        //        {
+        //            contractLand.SenderName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
+        //        }
         //        try
         //        {
-        //            if (contractLand.ZoneCode.Length == 16)
+        //            if (contractLand.SenderCode.Length == 16)
         //            {
-        //                contractLand.ZoneCode = contractLand.ZoneCode.Substring(0, 12) + contractLand.ZoneCode.Substring(14, 2);
+        //                contractLand.SenderCode = contractLand.SenderCode.Substring(0, 12) + contractLand.SenderCode.Substring(14, 2);
         //            }
         //            if (land.Shape != null)
         //            {
@@ -961,7 +961,7 @@ namespace YuLinTu.Library.Business
         //    land.Modifier = string.IsNullOrEmpty(exContractLand.Modifier) ? land.Modifier : exContractLand.Modifier;
         //    land.MotorizeLandArea = exContractLand.MotorizeLandArea == 0.0 ? land.MotorizeLandArea : exContractLand.MotorizeLandArea;
         //    land.Name = string.IsNullOrEmpty(exContractLand.Name) ? land.Name : exContractLand.Name;
-        //    land.ZoneName = string.IsNullOrEmpty(exContractLand.OwnerRightName) ? land.ZoneName : exContractLand.OwnerRightName;
+        //    land.SenderName = string.IsNullOrEmpty(exContractLand.OwnerRightName) ? land.SenderName : exContractLand.OwnerRightName;
         //    land.OwnRightType = exContractLand.OwnerRightType <= 0 ? land.OwnRightType : ((int)Enum.Parse(typeof(eLandPropertyType), exContractLand.OwnerRightType.ToString())).ToString();
         //    land.PertainToArea = exContractLand.PertainToArea == 0.0 ? land.PertainToArea : exContractLand.PertainToArea;
         //    land.PlantType = exContractLand.PlantType <= 0 ? land.PlantType : ((int)Enum.Parse(typeof(ePlantProtectType), exContractLand.PlantType.ToString())).ToString();
@@ -1038,7 +1038,7 @@ namespace YuLinTu.Library.Business
         //    //table.ModifiedTime = DateTime.Now;
         //    //table.Modifier = "Admin";
         //    //table.Founder = "Admin";
-        //    //table.ZoneCode = zoneCode;
+        //    //table.SenderCode = zoneCode;
         //    //database.ContractRequireTable.Add(table);
         //    //table = null;
         //}
@@ -1069,7 +1069,7 @@ namespace YuLinTu.Library.Business
         //    tissue.LawyerName = string.IsNullOrEmpty(exTissue.LawyerName) ? tissue.LawyerName : exTissue.LawyerName;
         //    tissue.Name = string.IsNullOrEmpty(exTissue.Name) ? tissue.Name : exTissue.Name;
         //    tissue.Type = exTissue.Type <= 0 ? tissue.Type : (eTissueType)Enum.Parse(typeof(eTissueType), exTissue.Type.ToString());
-        //    tissue.ZoneCode = string.IsNullOrEmpty(exTissue.ZoneCode) ? tissue.ZoneCode : exTissue.ZoneCode;
+        //    tissue.SenderCode = string.IsNullOrEmpty(exTissue.SenderCode) ? tissue.SenderCode : exTissue.SenderCode;
         //    return tissue;
         //}
 
@@ -1105,7 +1105,7 @@ namespace YuLinTu.Library.Business
         //        return;
         //    }
         //    tue = tissueStation.Get(tissue.Name);
-        //    if (tue != null && currentZone.FullCode.IndexOf(tue.ZoneCode) == 0)
+        //    if (tue != null && currentZone.FullCode.IndexOf(tue.SenderCode) == 0)
         //    {
         //        return;
         //    }
@@ -1142,7 +1142,7 @@ namespace YuLinTu.Library.Business
         //        return true;
         //    }
         //    virtualPerson.ID = virtualPerson.ID == Guid.Empty ? exLandContractor.Contractor.ID : virtualPerson.ID;
-        //    var p = personStation.FirstOrDefault(t => t.ID == virtualPerson.ID || (t.ZoneCode == virtualPerson.ZoneCode && t.Name == virtualPerson.Name));
+        //    var p = personStation.FirstOrDefault(t => t.ID == virtualPerson.ID || (t.SenderCode == virtualPerson.SenderCode && t.Name == virtualPerson.Name));
         //    if (p != null)
         //    {
         //        virtualPerson.ID = p.ID;
@@ -1173,7 +1173,7 @@ namespace YuLinTu.Library.Business
         //    }
         //    var concordStation = database.CreateConcordStation();
         //    ContractConcord concord = AgriContractConcordMapping(exContractConcord);
-        //    concord.ZoneCode = landContractor.Zone != null ? landContractor.Zone.FullCode : currentZone.FullCode;
+        //    concord.SenderCode = landContractor.Zone != null ? landContractor.Zone.FullCode : currentZone.FullCode;
         //    if (concord.ID == Guid.Empty)
         //    {
         //        concord.ID = concord.ID != Guid.Empty ? concord.ID : exContractConcord.ID;
@@ -1251,14 +1251,6 @@ namespace YuLinTu.Library.Business
         //    {
         //        ContractLand contractLand = AgriContractLandMapping(land, true);
         //        contractLand.OwnerId = vp != null ? vp.ID : landContractor.Contractor.ID;
-        //        if (string.IsNullOrEmpty(contractLand.LocationCode))
-        //        {
-        //            contractLand.LocationCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
-        //        }
-        //        if (string.IsNullOrEmpty(contractLand.LocationName))
-        //        {
-        //            contractLand.LocationName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
-        //        }
         //        if (string.IsNullOrEmpty(contractLand.ZoneCode))
         //        {
         //            contractLand.ZoneCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
@@ -1266,6 +1258,14 @@ namespace YuLinTu.Library.Business
         //        if (string.IsNullOrEmpty(contractLand.ZoneName))
         //        {
         //            contractLand.ZoneName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
+        //        }
+        //        if (string.IsNullOrEmpty(contractLand.SenderCode))
+        //        {
+        //            contractLand.SenderCode = landContractor.Zone != null ? landContractor.Zone.FullCode : string.Empty;
+        //        }
+        //        if (string.IsNullOrEmpty(contractLand.SenderName))
+        //        {
+        //            contractLand.SenderName = landContractor.Zone != null ? landContractor.Zone.FullName : string.Empty;
         //        }
         //        try
         //        {
@@ -1279,7 +1279,7 @@ namespace YuLinTu.Library.Business
         //            else
         //            {
         //                contractLand.ID = contractLand.ID != Guid.Empty ? contractLand.ID : land.ID;
-        //                var en = landsStation.FirstOrDefault(t => t.ID == contractLand.ID || (t.ZoneCode == contractLand.ZoneCode && t.LandNumber == contractLand.LandNumber));
+        //                var en = landsStation.FirstOrDefault(t => t.ID == contractLand.ID || (t.SenderCode == contractLand.SenderCode && t.LandNumber == contractLand.LandNumber));
         //                if (en != null)
         //                {
         //                    contractLand.ID = en.ID;
@@ -1324,7 +1324,7 @@ namespace YuLinTu.Library.Business
         //    table.ModifiedTime = DateTime.Now;
         //    table.Modifier = "Admin";
         //    table.Founder = "Admin";
-        //    table.ZoneCode = zoneCode;
+        //    table.SenderCode = zoneCode;
         //    if (table.ID == Guid.Empty)
         //    {
         //        table.ID = table.ID != Guid.Empty ? table.ID : exContractConcord.RequireBookId;
@@ -1370,7 +1370,7 @@ namespace YuLinTu.Library.Business
         //        return;
         //    }
         //    tue = tissueStation.Get(tissue.Name);
-        //    if (tue != null && currentZone.FullCode.IndexOf(tue.ZoneCode) == 0)
+        //    if (tue != null && currentZone.FullCode.IndexOf(tue.SenderCode) == 0)
         //    {
         //        return;
         //    }

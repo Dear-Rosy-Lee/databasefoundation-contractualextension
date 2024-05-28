@@ -4,27 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Win32;
+using YuLinTu.Appwork;
+using YuLinTu.Appwork.Task;
+using YuLinTu.Component.ExportDataSummaryTask;
+using YuLinTu.Component.Setting;
+using YuLinTu.Data;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
-using YuLinTu.Library.Business;
-using YuLinTu.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Library.Controls;
-using YuLinTu.Component.Setting;
-using YuLinTu.Appwork;
-using YuLinTu.Component.ExportDataSummaryTask;
-using YuLinTu.Appwork.Task;
 
 namespace YuLinTu.Component.BusinessProcessWizard
 {

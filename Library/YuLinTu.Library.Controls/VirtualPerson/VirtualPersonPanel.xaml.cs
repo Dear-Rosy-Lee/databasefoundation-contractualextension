@@ -6,22 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Win32;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Library.Business;
 using YuLinTu.Data;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
@@ -4381,7 +4374,7 @@ namespace YuLinTu.Library.Controls
             }
             var vpstation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             bool flag = vpstation.Any(c => c.ZoneCode.StartsWith(CurrentZone.FullCode));
-            //int count = database.LandVirtualPerson.SL_Count("ZoneCode", currentZone.FullCode, (equal ? Library.Data.ConditionOption.Equal : Library.Data.ConditionOption.Like_LeftFixed));
+            //int count = database.LandVirtualPerson.SL_Count("SenderCode", currentZone.FullCode, (equal ? Library.Data.ConditionOption.Equal : Library.Data.ConditionOption.Like_LeftFixed));
             if (!flag)
             {
                 ShowBox(tip, "当前行政区域下没有数据可供操作!");

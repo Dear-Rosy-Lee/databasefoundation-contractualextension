@@ -1,0 +1,53 @@
+﻿<local:InfoPageBase x:Class="YuLinTu.Library.Controls.SenderCombinPage"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
+                    Header="发包方信息(合并)" MinHeight="250"
+                    xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                    xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                    xmlns:local="clr-namespace:YuLinTu.Library.Controls">
+    <Grid x:Name="gridContent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer MinHeight="165" Margin="10" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <Grid Width="700">
+                <local:SenderPageContent x:Name="pageContent"/>
+                <cmps:LoadingIcon Width="16" x:Name="loadIcon"
+                          Height="16"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          RenderOptions.BitmapScalingMode="NearestNeighbor">
+                </cmps:LoadingIcon>
+            </Grid>
+        </ScrollViewer>
+        <Border BorderBrush="LightGray" BorderThickness="0,1,0,0" Grid.Row="1" Margin="10,0,10,0" SnapsToDevicePixels="True" >
+            <DockPanel Margin="0,5,0,5" LastChildFill="True">
+
+                <CheckBox DockPanel.Dock="Left" IsChecked="True" Margin="5,0" Content="删除原发包方及地域" x:Name="cb_recode"></CheckBox>
+
+                <metro:MetroButton DockPanel.Dock="Right"
+                                       Padding="5" Height="30" x:Name="btnCancel"
+                                       Style="{StaticResource Metro_Button_Paneled_Style}"
+                                       Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}">
+                    <cmps:ImageTextItem RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                            Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png" 
+                                            Text="取消"></cmps:ImageTextItem>
+                </metro:MetroButton>
+
+                <metro:MetroButton DockPanel.Dock="Right" Name="btnSubmit"
+                                       Padding="5" Margin="0,0,5,0"
+                                       Click="btnSubmit_Click" Height="30"
+                                       Style="{StaticResource Metro_Button_Paneled_Style}">
+                    <cmps:ImageTextItem RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png" Text="确定"></cmps:ImageTextItem>
+                </metro:MetroButton>
+
+                <TextBlock Name="lbTip" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</local:InfoPageBase>

@@ -591,10 +591,10 @@ namespace YuLinTu.Library.Business
             land.LandNumber = land.CadastralNumber;
             land.OwnerName = landFamily.TableFamily.Name;
             land.OwnerId = landFamily.TableFamily.ID;
+            land.SenderCode = currentZone.FullCode;
+            land.SenderName = currentZone.FullName;
             land.ZoneCode = currentZone.FullCode;
             land.ZoneName = currentZone.FullName;
-            land.LocationCode = currentZone.FullCode;
-            land.LocationName = currentZone.FullName;
             land.AwareArea = land.ActualArea;//发证面积为了打证而用。
             land.IsFlyLand = false;
             land.IsTransfer = false;

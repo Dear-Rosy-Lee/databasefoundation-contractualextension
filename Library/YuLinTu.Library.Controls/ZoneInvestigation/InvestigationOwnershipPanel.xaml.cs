@@ -822,8 +822,8 @@ namespace YuLinTu.Library.Controls
             landDlg.CurrentPerson = currentVritualPerson;
             landDlg.CurrentLand = new ContractLand()
             {
-                ZoneCode = currentZone.FullCode,
-                ZoneName = currentZone.FullName,
+                SenderCode = currentZone.FullCode,
+                SenderName = currentZone.FullName,
                 OwnerId = currentVritualPerson.ID,
                 OwnerName = currentVritualPerson.Name
             };

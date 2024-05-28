@@ -170,7 +170,7 @@ namespace YuLinTu.Library.Business
                 vp.ForEach(c => persons += c.SharePersonList.Count);
                 staticinfo.AllpersonsCount = persons;
 
-                List<ContractLand> lands = landstation.Get(c => c.LocationCode.StartsWith(zone.FullCode));
+                List<ContractLand> lands = landstation.Get(c => c.ZoneCode.StartsWith(zone.FullCode));
 
                 int allcount = 0;
                 double tablearea = 0.0, actularea = 0.0;

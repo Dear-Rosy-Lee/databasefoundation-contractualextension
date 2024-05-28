@@ -517,7 +517,7 @@ namespace YuLinTu.Component.MapFoundation
             {
                 ID = Guid.NewGuid(),
                 CreationTime = DateTime.Now,
-                ZoneCode = land.LocationCode,
+                ZoneCode = land.ZoneCode,
                 Shape = linestring,
                 Modifier = "",
                 ModifiedTime = DateTime.Now,

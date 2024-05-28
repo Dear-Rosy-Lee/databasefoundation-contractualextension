@@ -3,13 +3,7 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu;
 using YuLinTu.Data;
-using YuLinTu.Spatial;
-using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Entity
 {
@@ -49,22 +43,22 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         /// 坐落代码
         /// </summary>
-        private string locationCode;
+        private string zoneCode;
 
         /// <summary>
         /// 坐落名称
         /// </summary>
-        private string locationName;
+        private string zoneName;
 
         /// <summary>
         /// 权属单位代码
         /// </summary>
-        private string zoneCode;
+        private string senderCode;
 
         /// <summary>
         /// 权属单位名称
         /// </summary>
-        private string zoneName;
+        private string senderName;
 
         /// <summary>
         /// 承包方名称
@@ -206,34 +200,6 @@ namespace YuLinTu.Library.Entity
         /// 坐落代码
         /// </summary>
         [DataColumn("ZLDM")]
-        public string LocationCode
-        {
-            get { return locationCode; }
-            set
-            {
-                locationCode = value;
-                NotifyPropertyChanged("LocationCode");
-            }
-        }
-
-        /// <summary>
-        /// 坐落名称
-        /// </summary>
-        [DataColumn("ZLMC")]
-        public string LocationName
-        {
-            get { return locationName; }
-            set
-            {
-                locationName = value;
-                NotifyPropertyChanged("LocationName");
-            }
-        }
-
-        /// <summary>
-        /// 权属单位代码
-        /// </summary>
-        [DataColumn("QSDWDM")]
         public string ZoneCode
         {
             get { return zoneCode; }
@@ -245,9 +211,9 @@ namespace YuLinTu.Library.Entity
         }
 
         /// <summary>
-        /// 权属单位名称
+        /// 坐落名称
         /// </summary>
-        [DataColumn("QSDWMC")]
+        [DataColumn("ZLMC")]
         public string ZoneName
         {
             get { return zoneName; }
@@ -255,6 +221,34 @@ namespace YuLinTu.Library.Entity
             {
                 zoneName = value;
                 NotifyPropertyChanged("ZoneName");
+            }
+        }
+
+        /// <summary>
+        /// 权属单位代码
+        /// </summary>
+        [DataColumn("QSDWDM")]
+        public string SenderCode
+        {
+            get { return senderCode; }
+            set
+            {
+                senderCode = value;
+                NotifyPropertyChanged("SenderCode");
+            }
+        }
+
+        /// <summary>
+        /// 权属单位名称
+        /// </summary>
+        [DataColumn("QSDWMC")]
+        public string SenderName
+        {
+            get { return senderName; }
+            set
+            {
+                senderName = value;
+                NotifyPropertyChanged("SenderName");
             }
         }
 

@@ -49,8 +49,8 @@ namespace YuLinTu.Library.Entity
         ///// <summary>
         /////对应地域
         ///// </summary>
-        //[DataColumn("ZoneCode", ColumnType = eDataType.String)]
-        //public string ZoneCode
+        //[DataColumn("SenderCode", ColumnType = eDataType.String)]
+        //public string SenderCode
         //{
         //    get { return _ZoneCode; }
         //    set
@@ -124,8 +124,8 @@ namespace YuLinTu.Library.Entity
         ///// <summary>
         /////权属单位代码
         ///// </summary>
-        //[DataColumn("ZoneCode", ColumnType = eDataType.String)]
-        //public string ZoneCode
+        //[DataColumn("SenderCode", ColumnType = eDataType.String)]
+        //public string SenderCode
         //{
         //    get { return _OwnUnitCode; }
         //    set

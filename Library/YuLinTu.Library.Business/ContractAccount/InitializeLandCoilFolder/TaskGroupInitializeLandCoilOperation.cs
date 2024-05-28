@@ -58,7 +58,7 @@ namespace YuLinTu.Library.Business
             foreach (var zone in allZones)
             {
                 allLands = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
-                List<ContractLand> listGeoLand = allLands.FindAll(c => c.LocationCode == zone.FullCode && c.Shape != null);
+                List<ContractLand> listGeoLand = allLands.FindAll(c => c.ZoneCode == zone.FullCode && c.Shape != null);
                 TaskInitializeLandCoilArgument meta = new TaskInitializeLandCoilArgument();
                 meta.CurrentZoneLandList = listGeoLand == null ? new List<ContractLand>() : listGeoLand;
                 meta.CurrentZone = zone;

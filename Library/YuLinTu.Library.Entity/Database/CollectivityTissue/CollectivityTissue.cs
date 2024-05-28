@@ -423,7 +423,6 @@ namespace YuLinTu.Library.Entity
                 }
             }
         }
-
         #endregion Properties
 
         #region Methods

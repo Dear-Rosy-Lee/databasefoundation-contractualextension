@@ -549,7 +549,7 @@ namespace YuLinTu.Library.Business
             fieldInfo.SetValue(instance, listGeoLand);
             object result = methodInfo.Invoke(instance, null);
 
-            //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.ZoneCode + "-" + Contractor.Name + ".jpg", 180, 250);
+            //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.SenderCode + "-" + Contractor.Name + ".jpg", 180, 250);
             SetBookmarkValue("SocialCode", Tissue.SocialCode);
             SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
             SetBookmarkValue(AgricultureBookMark.ConcordDate, Concord.Flag ? "" : date);                                // 承包时间

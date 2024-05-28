@@ -5,12 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Repository;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 
@@ -212,7 +209,7 @@ namespace YuLinTu.Library.Business
                     return;
                 }
                 var metaargument = Argument as TaskContractRegeditBookArgument;
-                var rbStation = dbContext.CreateRegeditBookStation();                
+                var rbStation = dbContext.CreateRegeditBookStation();
                 List<ContractRegeditBook> listWarrant = rbStation.GetByZoneCode(currentZone.FullCode, eSearchOption.Precision);//metaargument.ListWarrants;
                 List<VirtualPerson> listPerson = metaargument.listPerson;
                 if (metaargument.Concords == null || metaargument.Concords.Count == 0)
@@ -227,7 +224,7 @@ namespace YuLinTu.Library.Business
                     this.ReportWarn(string.Format("在{0}下未获得待签订的权证集合!", currentZone.FullName));
                     this.ReportProgress(100, "完成");
                     return;
-                }            
+                }
                 percent = 99 / (double)WarrantsModified.Count;
 
                 int maxSerialNumber = 0;
@@ -248,11 +245,11 @@ namespace YuLinTu.Library.Business
                             erri1 = c.Number + c.ContractRegeditBookPerson;
                             erri2 = c.SerialNumber;
                             ret = Convert.ToInt32(c.SerialNumber);
-                           
+
                         }
                         catch (Exception)
                         {
-                            this.ReportInfomation($"发现错误权证数据，权证编码为{erri1},流水号为{erri2}");                            
+                            this.ReportInfomation($"发现错误权证数据，权证编码为{erri1},流水号为{erri2}");
                         }
                         return ret;
                     });
@@ -274,7 +271,7 @@ namespace YuLinTu.Library.Business
                     {
                         //添加
                         AddRegeditBook(warrant);
-                    }                    
+                    }
 
                     this.ReportProgress((int)(1 + percent * index), string.Format("初始化{0}的权证", person.Name));
                     index++;
@@ -456,6 +453,36 @@ namespace YuLinTu.Library.Business
             try
             {
                 updateCount = regeditBookStation.Update(book);
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "Update(更新承包权证失败)", ex.Message + ex.StackTrace);
+                this.ReportError("更新承包权证失败," + ex.Message);
+            }
+            return updateCount;
+        }
+
+
+        /// <summary>
+        /// 更新农村土地承包经营权登记薄对象
+        /// </summary>
+        /// <param name="book">权证对象</param>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        public int UpdateList(string zoneCode, CollectivityTissue tissue)
+        {
+            int updateCount = 0;
+            if (!CanContinue())
+            {
+                return updateCount;
+            }
+            try
+            {
+                var books = regeditBookStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self);
+                foreach (var book in books)
+                {
+                    book.ZoneCode = tissue.ZoneCode;
+                }
+                regeditBookStation.UpdataList(books);
             }
             catch (Exception ex)
             {
@@ -817,7 +844,7 @@ namespace YuLinTu.Library.Business
                             printContract.Contractor = vpn;
                             printContract.Tissue = Tissue;
                             printContract.DictList = DictList;
-                            printContract.TempleFilePath = tempPath;                           
+                            printContract.TempleFilePath = tempPath;
                             printContract.UseExcel = ExtendUseExcelDefine.WarrantExtendByExcel;
                             printContract.BookPersonNum = BookPersonNum;
                             printContract.BookLandNum = BookLandNum;
@@ -880,8 +907,8 @@ namespace YuLinTu.Library.Business
                 printContract.Contractor = vpn;
                 printContract.Tissue = Tissue;
                 printContract.DictList = DictList;
-                printContract.TempleFilePath = tempPath;             
-                printContract.UseExcel = ExtendUseExcelDefine.WarrantExtendByExcel;              
+                printContract.TempleFilePath = tempPath;
+                printContract.UseExcel = ExtendUseExcelDefine.WarrantExtendByExcel;
                 printContract.BookPersonNum = BookPersonNum;
                 printContract.BookLandNum = BookLandNum;
                 printContract.BookNumSetting = BookNumSetting;
@@ -1135,7 +1162,7 @@ namespace YuLinTu.Library.Business
                     confirmExport.SaveFilePath = fileName + @"\" + person.FamilyNumber + "-" + person.Name + "-" + "单户确认表" + ".xls";
                     if (isShow)
                     {
-                        confirmExport.PostProgressEvent +=export_PostProgressEvent;
+                        confirmExport.PostProgressEvent += export_PostProgressEvent;
                     }
                     confirmExport.PostErrorInfoEvent += export_PostErrorInfoEvent;
                     confirmExport.BeginToVirtualPerson(person, templatePath);   //开始导表
@@ -1203,7 +1230,7 @@ namespace YuLinTu.Library.Business
                     confirmExport.SaveFilePath = fileName + @"\" + person.FamilyNumber + "-" + person.Name + "-" + "单户确认表" + ".xls";
                     if (isShow)
                     {
-                        confirmExport.PostProgressEvent +=export_PostProgressEvent;
+                        confirmExport.PostProgressEvent += export_PostProgressEvent;
                     }
                     confirmExport.PostErrorInfoEvent += export_PostErrorInfoEvent;
                     confirmExport.BeginToVirtualPerson(person, templatePath);   //开始导表

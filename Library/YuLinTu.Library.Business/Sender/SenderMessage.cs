@@ -18,6 +18,10 @@ namespace YuLinTu.Library.Business
     public class SenderMessage
     {
         #region Const
+        /// <summary>
+        ///  合并发包方
+        /// </summary>
+        public const string SENDER_COMBINE= "Sender_Combine";
 
         /// <summary>
         /// 添加发包方

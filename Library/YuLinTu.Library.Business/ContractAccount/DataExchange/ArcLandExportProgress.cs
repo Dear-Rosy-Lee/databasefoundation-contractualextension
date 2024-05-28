@@ -1491,20 +1491,20 @@ namespace YuLinTu.Library.Business
             Enum.TryParse<eLandSlopeLevel>(land.LandScopeLevel, out spopeLevel);
             exLand.LandScopeLevel = (int)spopeLevel;
             exLand.LineArea = (land.LineArea == null || !land.LineArea.HasValue) ? 0.0 : land.LineArea.Value;
-            if (zone.FullCode == land.LocationCode)
+            if (zone.FullCode == land.ZoneCode)
             {
                 exLand.LocationCode = zone != null ? zone.ID : Guid.Empty;
             }
             else
             {
-                Zone curZone = db.CreateZoneWorkStation().Get(land.LocationCode);
+                Zone curZone = db.CreateZoneWorkStation().Get(land.ZoneCode);
                 exLand.LocationCode = curZone != null ? curZone.ID : Guid.Empty;
             }
             exLand.ManagementType = (int)Enum.Parse(typeof(eManageType), land.ManagementType);
             exLand.ModifiedTime = land.ModifiedTime;
             exLand.Modifier = land.Modifier;
             exLand.Name = land.Name;
-            exLand.OwnerRightName = land.ZoneName;
+            exLand.OwnerRightName = land.SenderName;
             exLand.OwnerRightType = (int)Enum.Parse(typeof(eLandPropertyType), land.OwnRightType);
             exLand.OwnRightCode = zone != null ? zone.ID : Guid.Empty;
             exLand.ParcelNumber = land.ExtendB;

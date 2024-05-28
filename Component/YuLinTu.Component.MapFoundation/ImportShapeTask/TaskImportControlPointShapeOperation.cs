@@ -350,8 +350,8 @@ namespace YuLinTu.Component.MapFoundation
 
                     try
                     {
-                        //controlPoint.ZoneCode = metadata.CurrentZone.FullCode;
-                        //controlPoint.ZoneName = metadata.CurrentZone.FullName;
+                        //controlPoint.SenderCode = metadata.CurrentZone.FullCode;
+                        //controlPoint.SenderName = metadata.CurrentZone.FullName;
                         var g = YuLinTu.ObjectExtension.GetPropertyValue(shpLandItem, "Shape") as YuLinTu.Spatial.Geometry;
                         var shapevalue = YuLinTu.Spatial.Geometry.FromBytes(g.AsBinary(), 0);
                         controlPoint.Shape = shapevalue == null ? null : shapevalue as YuLinTu.Spatial.Geometry;

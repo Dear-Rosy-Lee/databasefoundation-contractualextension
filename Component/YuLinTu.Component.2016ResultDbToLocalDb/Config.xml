@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Order>127</Order>
-  <EntranceType>YuLinTu.Component.ResultDbof2016ToLocalDb.Entrance</EntranceType>
-  <EntrancePath>.\Components\YuLinTu.Component.ResultDbof2016ToLocalDb\Binary\YuLinTu.Component.ResultDbof2016ToLocalDb.dll</EntrancePath>
-</WinComponent>

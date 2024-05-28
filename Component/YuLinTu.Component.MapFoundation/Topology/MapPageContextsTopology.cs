@@ -53,7 +53,7 @@ namespace YuLinTu.Component.MapFoundation
                         {
                             for (int i = 0; i < items.Count; i++)
                             {
-                                entities[i].LandNumber = entities[i].LocationCode + items[i].SurveyNumber;
+                                entities[i].LandNumber = entities[i].ZoneCode + items[i].SurveyNumber;
                                 landStation.Update(entities[i]);
                             }
                         }
@@ -69,7 +69,7 @@ namespace YuLinTu.Component.MapFoundation
                             var entityNew = landBus.GetLandById(landNewId);
                             var entityOld = landBus.GetLandById(landOldId);
                             entityOld.LandNumber = entityNew.LandNumber;
-                            entityNew.LandNumber = entityNew.LocationCode + landCode;
+                            entityNew.LandNumber = entityNew.ZoneCode + landCode;
                             landStation.Update(entityOld);
                             landStation.Update(entityNew);
                         }

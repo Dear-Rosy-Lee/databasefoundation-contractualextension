@@ -426,10 +426,10 @@ namespace YuLinTu.Library.Business
             land.OwnRightType = this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权") == null ? ((int)eLandPropertyType.Collectived).ToString() : this.listSYQXZ.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "集体土地所有权").Code;//eLandPropertyType.Collectived;
             land.ConstructMode = this.listCBJYQQDFS.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "家庭承包") == null ? ((int)eConstructMode.Family).ToString() :
                 this.listCBJYQQDFS.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == "家庭承包").Code;
+            land.SenderCode = currentZone.FullCode;
+            land.SenderName = currentZone.FullName;
             land.ZoneCode = currentZone.FullCode;
             land.ZoneName = currentZone.FullName;
-            land.LocationCode = currentZone.FullCode;
-            land.LocationName = currentZone.FullName;
             land.AwareArea = land.ActualArea;  //发证面积为了打证而用。
             land.IsFlyLand = false;
             land.IsTransfer = false;

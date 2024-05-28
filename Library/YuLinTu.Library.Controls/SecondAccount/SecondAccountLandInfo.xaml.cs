@@ -299,8 +299,8 @@ namespace YuLinTu.Library.Controls
         {
             try
             {
-                currentSecondLand.LocationCode = currentZone.FullCode;
-                currentSecondLand.LocationName = currentZone.FullName;
+                currentSecondLand.ZoneCode = currentZone.FullCode;
+                currentSecondLand.ZoneName = currentZone.FullName;
                 currentSecondLand.OwnerId = currentItem.ID;
                 currentSecondLand.OwnerName = currentItem.Tag.Name;
                 Dispatcher.Invoke(new Action(() =>

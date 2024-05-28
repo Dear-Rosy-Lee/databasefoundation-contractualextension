@@ -72,7 +72,7 @@ namespace YuLinTu.Library.Business
         //    try
         //    {
         //        var dbContext = e.Datasource;
-        //        var zoneCode = e.ZoneCode;
+        //        var zoneCode = e.SenderCode;
         //        if (dbContext == null || string.IsNullOrEmpty(zoneCode))
         //            return;
         //        var concordStation = dbContext.CreateConcordStation();

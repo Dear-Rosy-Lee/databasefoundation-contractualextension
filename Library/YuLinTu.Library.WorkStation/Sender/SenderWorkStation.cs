@@ -352,6 +352,20 @@ namespace YuLinTu.Library.WorkStation
             return addCount;
         }
 
+        public int DelectSenders(List<string> listTissueCode)
+        {
+            int addCount = 0;
+            if (listTissueCode == null || listTissueCode.Count == 0)
+            {
+                return addCount;
+            }
+            foreach (var tissue in listTissueCode)
+            {
+                DefaultRepository.Delete(t => t.Code == tissue);
+            }
+            addCount = TrySaveChanges(DefaultRepository);
+            return addCount;
+        }
         #endregion
     }
 }

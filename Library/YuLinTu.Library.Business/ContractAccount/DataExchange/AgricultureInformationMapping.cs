@@ -645,7 +645,7 @@ namespace YuLinTu.Library.Business
                 exLand.DKBM = land.LandNumber;
 
                 exLand.YDKBM = (ContractLand.GetLandNumber(land.CadastralNumber) == exLand.DKBM) ? "" : ContractLand.GetLandNumber(land.CadastralNumber);
-                exLand.ZLDWDM = land.IsFlyLand ? zone.UpLevelCode : land.ZoneCode;
+                exLand.ZLDWDM = land.IsFlyLand ? zone.UpLevelCode : land.SenderCode;
                 if (exLand.ZLDWDM.IsNullOrEmpty())
                 {
                     exLand.ZLDWDM = zone.FullCode;
@@ -691,8 +691,8 @@ namespace YuLinTu.Library.Business
                     if (land.PlantType == "2")
                         exLand.GBLX = ePlantProtectionType.SecondGrade;
                 }
-                exLand.SZDY = land.ZoneCode.IsNullOrEmpty() ? "" : land.ZoneCode;
-                exLand.ZLDWMC = land.LocationName.IsNullOrEmpty() ? " " : land.LocationName; //land.ZoneName.IsNullOrEmpty() ? " " : land.ZoneName;
+                exLand.SZDY = land.SenderCode.IsNullOrEmpty() ? "" : land.SenderCode;
+                exLand.ZLDWMC = land.ZoneName.IsNullOrEmpty() ? " " : land.ZoneName; //land.SenderName.IsNullOrEmpty() ? " " : land.SenderName;
                 exLand.QQMJ = land.AwareArea;
                 if (land.ManagementType.IsNullOrEmpty())
                 {
@@ -879,7 +879,7 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
-                    lyxz.DKBM = string.IsNullOrEmpty(land.LandExpand.AgricultureNumber) ? InitalizeAgricultureNumber(land.LocationCode, ContractLand.GetLandNumber(land.CadastralNumber)) : land.LandExpand.AgricultureNumber;
+                    lyxz.DKBM = string.IsNullOrEmpty(land.LandExpand.AgricultureNumber) ? InitalizeAgricultureNumber(land.ZoneCode, ContractLand.GetLandNumber(land.CadastralNumber)) : land.LandExpand.AgricultureNumber;
                 }
                 if (land.LandExpand != null)
                 {
@@ -896,7 +896,7 @@ namespace YuLinTu.Library.Business
                         lyxz.SFJBNT = land.IsFarmerLand.GetValueOrDefault(true);
                     }
                     lyxz.SFLHD = land.ConstructMode == ((int)eLandCategoryType.AbandonedLand).ToString() ? true : false;
-                    lyxz.SZDY = land.LocationCode;
+                    lyxz.SZDY = land.ZoneCode;
                 }
                 lyxz.TJSJ = land.ModifiedTime ?? DateTime.Now;
                 lyxz.DCRQ = lyxz.TJSJ;

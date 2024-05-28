@@ -127,6 +127,7 @@ namespace YuLinTu.Component.Sender
             SetCommandBinding(mbtnWordTemplate, command.ExportWordTemplate, command.WordTemplateBind);
             SetCommandBinding(mbtnRefresh, command.Fresh, command.FreshBind);
             SetCommandBinding(mbtnInitial, command.Initialize, command.InitializeBind);
+            SetCommandBinding(mbtnCombine, command.combinesender, command.CombineSenderData);
         }
 
         /// <summary>
@@ -197,6 +198,10 @@ namespace YuLinTu.Component.Sender
                     break;
                 case SenderCommand.InitilizeName:
                     senderPanel.InitializeSender();
+                    break;
+
+                case SenderCommand.CombineData:
+                    senderPanel.CombinSenderData();
                     break;
             }
         }

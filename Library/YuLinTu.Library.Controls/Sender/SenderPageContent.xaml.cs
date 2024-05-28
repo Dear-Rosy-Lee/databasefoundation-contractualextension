@@ -1,24 +1,16 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+using System.Net.Sockets;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace YuLinTu.Library.Controls
 {
@@ -58,6 +50,10 @@ namespace YuLinTu.Library.Controls
         /// 工作空间
         /// </summary>
         public IWorkpage ThePage { get; set; }
+
+        public Zone CurrentZone { get; set; }
+
+        public string selectZoneCode { get; set; }
 
         #endregion
 
@@ -256,5 +252,21 @@ namespace YuLinTu.Library.Controls
         }
 
         #endregion
+
+        private void MetroButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ZoneSelectorPanel zoneSelectorPanel = new ZoneSelectorPanel();
+            zoneSelectorPanel.SelectorZone = new ZoneDataItem() { FullCode = CurrentZone.FullCode };
+            zoneSelectorPanel.Workpage = this.ThePage;
+            ThePage.Page.ShowDialog(zoneSelectorPanel, (b, r) =>
+            {
+                if (!(bool)b)
+                {
+                    return;
+                }
+                var selectzone = zoneSelectorPanel.RootZone.ConvertTo<Zone>();
+                senderzonetxt.Text = selectZoneCode = selectzone.FullCode;
+            });
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace YuLinTu.Component.MapFoundation
 
                 return true;
             },
-            c => c.LocationCode.StartsWith(args.ZoneCode) && c.Shape != null,
+            c => c.ZoneCode.StartsWith(args.ZoneCode) && c.Shape != null,
             c => new ContractLand() { ID = c.ID, Shape = c.Shape });
 
             if (nErrCount > 0)

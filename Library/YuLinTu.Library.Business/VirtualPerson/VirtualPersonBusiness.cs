@@ -3,23 +3,13 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Unity;
 using YuLinTu;
 using YuLinTu.Data;
-using YuLinTu.Library.Repository;
-using System.ComponentModel;
-using System.Threading;
-using System.Diagnostics;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Library.Office;
-using System.IO;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Business
 {
@@ -304,6 +294,24 @@ namespace YuLinTu.Library.Business
                 this.ReportError("获取承包方数据出错," + ex.Message);
             }
             return person;
+        }
+
+        /// <summary>
+        /// 更新发包方编码
+        /// </summary>
+        /// <param name="oldsenderCode"></param>
+        /// <param name="newsenderCode"></param>
+        /// <param name="zonecode"></param>
+        public void UpdataSenderCode(string oldsenderCode, CollectivityTissue tissue)
+        {
+            var vps = landStation.GetByZoneCode(oldsenderCode);
+            if (vps.Count == 0)
+                return;
+            foreach (var vp in vps)
+            {
+                vp.ZoneCode = tissue.ZoneCode;
+            }
+            landStation.UpdatePersonList(vps);
         }
 
         /// <summary>
@@ -1041,7 +1049,7 @@ namespace YuLinTu.Library.Business
                     export.ZoneDesc = excelName;
                     export.PersonType = VirtualType;
                     //export.TemplateFile = tempPath;
-                    export.PostProgressEvent +=export_PostProgressEvent;
+                    export.PostProgressEvent += export_PostProgressEvent;
                     export.PostErrorInfoEvent += export_PostErrorInfoEvent;
                     bool result = export.BeginExcel(tempPath);
                 }

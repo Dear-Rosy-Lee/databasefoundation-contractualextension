@@ -86,7 +86,7 @@ namespace YuLinTu.Library.Business
         ///// </summary>
         //private void WriteZoneExpressBookMark()
         //{
-        //    Zone currentZone = DB.Zone.Get(currentFamily.ZoneCode);
+        //    Zone currentZone = DB.Zone.Get(currentFamily.SenderCode);
         //    if (currentZone == null)
         //    {
         //        return;
@@ -135,7 +135,7 @@ namespace YuLinTu.Library.Business
         //            SetBookmarkValue("Group" + (i == 0 ? "" : i.ToString()), zoneName);
         //            string number = ToolString.GetLeftNumberWithInString(zoneName);
         //            string groupName = string.IsNullOrEmpty(number) ? zoneName : ToolMath.GetChineseLowNumber(number);
-        //            SetBookmarkValue("LocationName" + (i == 0 ? "" : i.ToString()), currentZone.FullName);//座落
+        //            SetBookmarkValue("ZoneName" + (i == 0 ? "" : i.ToString()), currentZone.FullName);//座落
         //            groupName = string.IsNullOrEmpty(number) ? zoneName : zoneName.Replace(number, ToolMath.GetChineseLowNumber(number));
         //            SetBookmarkValue("GroupName" + (i == 0 ? "" : i.ToString()), groupName);
         //            SetBookmarkValue("SmallGroup" + (i == 0 ? "" : i.ToString()), zoneName.Substring(0, zoneName.Length - 1));

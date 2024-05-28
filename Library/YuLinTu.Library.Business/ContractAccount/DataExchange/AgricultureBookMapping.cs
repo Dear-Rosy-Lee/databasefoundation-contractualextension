@@ -588,15 +588,15 @@ namespace YuLinTu.Library.Business
             land.NeighborWest = arrayList[2];
             land.NeighborNorth = arrayList[3];
             land.PlantType = ((int)(ePlantProtectType)exLand.GBLX).ToString();
-            land.LocationCode = (string.IsNullOrEmpty(exLand.SZDY) && zone != null) ? zone.FullCode : exLand.SZDY;
-            land.LocationName = (string.IsNullOrEmpty(exLand.ZLDWMC) && zone != null) ? zone.FullName : exLand.ZLDWMC;
-            land.ZoneCode = (string.IsNullOrEmpty(exLand.ZLDWDM) && zone != null) ? zone.FullCode : exLand.ZLDWDM;
+            land.ZoneCode = (string.IsNullOrEmpty(exLand.SZDY) && zone != null) ? zone.FullCode : exLand.SZDY;
+            land.ZoneName = (string.IsNullOrEmpty(exLand.ZLDWMC) && zone != null) ? zone.FullName : exLand.ZLDWMC;
+            land.SenderCode = (string.IsNullOrEmpty(exLand.ZLDWDM) && zone != null) ? zone.FullCode : exLand.ZLDWDM;
             if (exLand.ZLDWDM.Length == 16)
             {
-                land.ZoneCode = exLand.ZLDWDM.Substring(0, 12) + exLand.ZLDWDM.Substring(14, 2);
-                land.LocationCode = land.ZoneCode;
+                land.SenderCode = exLand.ZLDWDM.Substring(0, 12) + exLand.ZLDWDM.Substring(14, 2);
+                land.ZoneCode = land.SenderCode;
             }
-            land.ZoneName = land.LocationName;
+            land.SenderName = land.ZoneName;
             land.AwareArea = (exLand.QQMJ != null && exLand.QQMJ.HasValue) ? exLand.QQMJ.Value : 0.0;
             land.ManagementType = ((int)(eManageType)exLand.JYFS).ToString();
             land.IsFlyLand = exLand.SFFD;
@@ -621,10 +621,10 @@ namespace YuLinTu.Library.Business
                 land.ConstructMode = ((int)eConstructMode.Family).ToString();
             }
             land.Comment = exLand.DKBZXX;
+            if (land.SenderCode.Length == 16)
+                land.SenderCode = land.SenderCode.Substring(0, 12) + land.SenderCode.Substring(14, 2);
             if (land.ZoneCode.Length == 16)
                 land.ZoneCode = land.ZoneCode.Substring(0, 12) + land.ZoneCode.Substring(14, 2);
-            if (land.LocationCode.Length == 16)
-                land.LocationCode = land.LocationCode.Substring(0, 12) + land.LocationCode.Substring(14, 2);
             InitalizeLandExpandInformtion(land, exLand);
             InitalizeAgriLandExpandInformation(land, exLand);
             return land;

@@ -99,8 +99,8 @@ namespace YuLinTu.Library.Business
                 }
                 if (arcZone != null)
                 {
-                    arcLand.LocationCode = arcZone.FullCode;
-                    arcLand.LocationName = arcZone.FullName;
+                    arcLand.ZoneCode = arcZone.FullCode;
+                    arcLand.ZoneName = arcZone.FullName;
                 }
                 LandCollection.Add(arcLand);
             }
@@ -313,7 +313,7 @@ namespace YuLinTu.Library.Business
             land.ModifiedTime = exContractLand.ModifiedTime == null ? land.ModifiedTime : exContractLand.ModifiedTime;
             land.Modifier = string.IsNullOrEmpty(exContractLand.Modifier) ? land.Modifier : exContractLand.Modifier;
             land.Name = string.IsNullOrEmpty(exContractLand.Name) ? land.Name : exContractLand.Name;
-            land.ZoneName = string.IsNullOrEmpty(exContractLand.OwnerRightName) ? land.ZoneName : exContractLand.OwnerRightName;
+            land.SenderName = string.IsNullOrEmpty(exContractLand.OwnerRightName) ? land.SenderName : exContractLand.OwnerRightName;
             land.OwnRightType = exContractLand.OwnerRightType <= 0 ? land.OwnRightType : ((int)Enum.Parse(typeof(eLandPropertyType), exContractLand.OwnerRightType.ToString())).ToString();
             land.PlantType = exContractLand.PlantType <= 0 ? land.PlantType : ((int)Enum.Parse(typeof(ePlantProtectType), exContractLand.PlantType.ToString())).ToString();
             land.PlotNumber = string.IsNullOrEmpty(exContractLand.PlotNumber) ? land.PlotNumber : exContractLand.PlotNumber;

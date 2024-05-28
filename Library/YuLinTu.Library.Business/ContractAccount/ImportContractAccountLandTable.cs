@@ -531,7 +531,7 @@ namespace YuLinTu.Library.Business
                     landFamily.Concord.SenderId = tissue.ID;
                     landFamily.Concord.SenderName = tissue.Name;
                 }
-                //string number = landFamily.CurrentFamily.ZoneCode.PadRight(14, '0') + landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0') + (landFamily.Concord.ArableLandType == "110" ? "J" : "Q");
+                //string number = landFamily.CurrentFamily.SenderCode.PadRight(14, '0') + landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0') + (landFamily.Concord.ArableLandType == "110" ? "J" : "Q");
                 if (string.IsNullOrEmpty(landFamily.Concord.ConcordNumber))
                 {
                     landFamily.Concord.ConcordNumber = "";
@@ -665,21 +665,21 @@ namespace YuLinTu.Library.Business
                 if (lands[i] == null)
                     continue;
 
-                lands[i].LocationCode = CurrentZone.FullCode;
-                lands[i].LocationName = CurrentZone.FullName;
+                lands[i].ZoneCode = CurrentZone.FullCode;
+                lands[i].ZoneName = CurrentZone.FullName;
 
                 //设置地块的权属单位
                 //如果存在相应的集体经济组织则其权属单位为对应集体经济组织，否则为当前地域（地域是默认的集体经济组织）
                 //CollectivityTissue tissue = concordBusiness.GetSenderById(CurrentZone.ID);
                 if (sender != null)
                 {
-                    lands[i].ZoneCode = sender.Code;
-                    lands[i].ZoneName = sender.Name;
+                    lands[i].SenderCode = sender.Code;
+                    lands[i].SenderName = sender.Name;
                 }
                 else
                 {
-                    lands[i].ZoneCode = CurrentZone.FullCode;
-                    lands[i].ZoneName = CurrentZone.FullName;
+                    lands[i].SenderCode = CurrentZone.FullCode;
+                    lands[i].SenderName = CurrentZone.FullName;
                 }
 
                 lands[i].Founder = "Admin";
@@ -764,15 +764,15 @@ namespace YuLinTu.Library.Business
                         landCount++;
                         continue;
                     }
-                    if (!string.IsNullOrEmpty(temp.LocationCode)
-                       && (temp.LocationCode == CurrentZone.UpLevelCode || temp.LocationCode == CurrentZone.FullCode))
+                    if (!string.IsNullOrEmpty(temp.ZoneCode)
+                       && (temp.ZoneCode == CurrentZone.UpLevelCode || temp.ZoneCode == CurrentZone.FullCode))
                     {
                         landBusiness.Delete(temp.ID);
                     }
                     else
                     {
                         this.ReportErrorInfo("Excel中承包方" + land.OwnerName + "的地块地块编码号:" + ContractLand.GetLandNumber(land.CadastralNumber) + "与" +
-                            temp.LocationName + "下承包方" + temp.OwnerName + " 的地块地块编码重复");
+                            temp.ZoneName + "下承包方" + temp.OwnerName + " 的地块地块编码重复");
                         isOk = false;
                         return;
                     }
@@ -787,22 +787,22 @@ namespace YuLinTu.Library.Business
                 //        landCount++;
                 //        continue;
                 //    }
-                //    if (!string.IsNullOrEmpty(temp.LocationCode)
-                //        && (temp.LocationCode == CurrentZone.UpLevelCode || temp.LocationCode == CurrentZone.FullCode))
+                //    if (!string.IsNullOrEmpty(temp.ZoneCode)
+                //        && (temp.ZoneCode == CurrentZone.UpLevelCode || temp.ZoneCode == CurrentZone.FullCode))
                 //    {
                 //        landBusiness.Delete(temp.ID);
                 //    }
                 //    else
                 //    {
                 //        this.ReportErrorInfo("Excel中户 " + land.OwnerName + "的地块地块编码号:" + ContractLand.GetLandNumber(land.CadastralNumber) + "与" +
-                //            temp.LocationName + "下 户" + temp.OwnerName + " 的地块地块编码重复");
+                //            temp.ZoneName + "下 户" + temp.OwnerName + " 的地块地块编码重复");
                 //        isOk = false;
                 //        return;
                 //    }
                 //}
 
                 land.Name = land.Name.Replace("\0", "");
-                land.LandNumber = $"{land.LocationCode}{land.LandNumber}";
+                land.LandNumber = $"{land.ZoneCode}{land.LandNumber}";
                 if (land.Comment.Contains("自留地"))
                     land.LandCategory = "21";
                 landBusiness.AddLand(land);
@@ -828,7 +828,7 @@ namespace YuLinTu.Library.Business
                         {
                             continue;
                         }
-                        this.ReportExcetionInfo("地块编码" + landNumber + "在" + conLand.LocationName + "下已经存在!");
+                        this.ReportExcetionInfo("地块编码" + landNumber + "在" + conLand.ZoneName + "下已经存在!");
                     }
                 }
             }

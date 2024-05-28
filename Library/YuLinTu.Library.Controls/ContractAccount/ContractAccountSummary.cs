@@ -118,6 +118,7 @@ namespace YuLinTu.Library.Controls
             this.ActualAreaCount = "0.00";
             this.ArwareAreaCount = "0.00";
             this.TableAreaCount = "0.00";
+            this.ContractDelayAreaCount = "0.00";
         }
 
         #endregion
