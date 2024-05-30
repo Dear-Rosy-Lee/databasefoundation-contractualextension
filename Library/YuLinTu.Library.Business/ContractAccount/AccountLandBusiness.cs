@@ -125,8 +125,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double percent { get; set; }
 
-
-
         #region Properties - 导入地块图斑
 
         /// <summary>
@@ -566,10 +564,9 @@ namespace YuLinTu.Library.Business
             return updateCount;
         }
 
-
         /// <summary>
         ///  批量更新地块发包方信息
-        /// </summary> 
+        /// </summary>
         public int UpdateLands(string zoneCode, CollectivityTissue tissue)
         {
             int updateCount = 0;
@@ -594,7 +591,6 @@ namespace YuLinTu.Library.Business
             }
             return updateCount;
         }
-
 
         /// <summary>
         /// 根据行政地域编码删除该地域下的所有地块
@@ -850,64 +846,6 @@ namespace YuLinTu.Library.Business
                         this.ReportProgress(100, "完成");
                         isSuccess = true;
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ReportError("导入承包台账地块调查表失败!");
-                YuLinTu.Library.Log.Log.WriteException(this, "ImportData(导入承包台账调查表地块数据)", ex.Message + ex.StackTrace);
-            }
-            return isSuccess;
-        }
-     
-        public bool ImportLandTiesLZ(Zone zone, List<string> fileName)
-        {
-            if (fileName == null)
-            {
-                this.ReportProgress(100, null);
-                this.ReportWarn(zone.FullName + "未获取地块调查表,或选择文件夹路径不正确,请检查执行导入操作!");
-                return false;
-            }
-            bool isSuccess = false;
-            isErrorRecord = false;
-            try
-            {
-                using (ImportLandTiesTableLZ landTableImport = new ImportLandTiesTableLZ())
-                {
-                    //List<VirtualPerson> persons = GetByZone(zone.FullCode);
-                    string excelName = GetMarkDesc(zone);
-                    landTableImport.ProgressChanged += ReportPercent; //进度条
-                    landTableImport.Alert += ReportInfo;              //记录错误信息
-                    landTableImport.CurrentZone = zone;
-                    landTableImport.ExcelName = excelName;
-                    landTableImport.TableType = TableType;
-                    landTableImport.DbContext = this.dbContext;
-                    landTableImport.Percent = 95.0;
-                    landTableImport.CurrentPercent = 5.0;
-                    landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
-                    //landTableImport.ListPerson = persons;
-                    this.ReportProgress(1, "开始读取数据");
-                    bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);
-                    ErrorInformation = landTableImport.ErrorInformation;//读取承包台账调查表数据
-                    //landTableImport.MergeHouseData();
-                    this.ReportProgress(3, "开始检查数据");
-                    //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
-                    bool canImport = true;
-                    if (isReadSuccess && canImport && !isErrorRecord)
-                    {
-                        this.ReportProgress(5, "开始处理数据");
-                        landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
-                        if (ErrorInformation != null)
-                        {
-                            this.ReportWarn(string.Join(",", ErrorInformation));
-                        }
-                        else
-                        {
-                            this.ReportProgress(100, "完成");
-                        }
-                        isSuccess = true;
-                    }
-                    
                 }
             }
             catch (Exception ex)
@@ -2277,6 +2215,7 @@ namespace YuLinTu.Library.Business
             else
                 return null;
         }
+
         /// <summary>
         /// 获取选择的土地地块弹出框导入配置下拉列表所有字段名称，与配置实体保持对应
         /// </summary>
@@ -4138,7 +4077,7 @@ namespace YuLinTu.Library.Business
                     {
                         land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)
-                        { 
+                        {
                             //如果地块编码是19位的，不处理。如果调查编码是空的，就用地块编码。
                             if (land.SurveyNumber.IsNullOrEmpty() == false)
                             {

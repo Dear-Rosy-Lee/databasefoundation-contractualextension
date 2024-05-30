@@ -471,10 +471,6 @@
     <Compile Include="ContractAccount\ImportData\TaskGroupImportLandTableOperation.cs" />
     <Compile Include="ContractAccount\ImportData\TaskImportLandTableArgument.cs" />
     <Compile Include="ContractAccount\ImportData\TaskImportLandTableOperation.cs" />
-    <Compile Include="ContractAccount\ImportLandTiesLZ\ImportLandTiesTableLZ.cs" />
-    <Compile Include="ContractAccount\ImportLandTiesLZ\InitalizeLandTiesTableLZ.cs" />
-    <Compile Include="ContractAccount\ImportLandTiesLZ\TaskImportLandTiesTableArgumentLZ.cs" />
-    <Compile Include="ContractAccount\ImportLandTiesLZ\TaskImportLandTiesTableOperationLZ.cs" />
     <Compile Include="ContractAccount\ImportLandTies\ImportLandTiesTable.cs" />
     <Compile Include="ContractAccount\ImportLandTies\TaskImportLandTiesTableArgument.cs" />
     <Compile Include="ContractAccount\ImportLandTies\TaskImportLandTiesTableOperation.cs" />
