@@ -298,6 +298,7 @@ namespace YuLinTu.Component.Setting
                     if (sfn != "" && sf != null)
                     {
                         creatsucess = TryCreateDatabase(ds, sfn, sf);
+                        UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
                     }
                     if (creatsucess)
                     {

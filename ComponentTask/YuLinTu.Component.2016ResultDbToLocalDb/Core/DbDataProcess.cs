@@ -440,7 +440,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             right.FBF = fbf;
             var CBDKJH = dc.DKXXJH.FindAll(t => t.CBFBM == (cbfbm));
             right.DKXX = ChangeDKXX(CBDKJH, spaceLandList);
-            if (right.HT == null || right.HT.Count == 0)
+            if (right.DKXX == null || right.DKXX.Count == 0)
             {
                 creList.Add(right);
                 return null;
