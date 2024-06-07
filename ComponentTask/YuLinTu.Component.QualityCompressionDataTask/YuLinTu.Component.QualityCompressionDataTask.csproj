@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" />
@@ -249,6 +250,8 @@ if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(Solution
     <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
@@ -262,4 +265,5 @@ if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(Solution
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
   <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
 </Project>

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2014 鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024 鱼鳞图公司版权所有,保留所有权利
 */
 
 using NetTopologySuite.Geometries;
@@ -15,7 +15,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
-using YuLinTu.Library.Controls;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
@@ -510,11 +509,14 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
             try
             {
+                var pzndic = GetZoneNameProperties();
                 var zoneSet = new HashSet<string>();
                 var zoneList = new List<ZoneDto>();
                 int importcount = 0;
                 foreach (var zone in zoneCollection)
                 {
+                    if (zone.Code.Length == 2 && pzndic.ContainsKey(zone.Code))
+                        zone.Name = pzndic[zone.Code];
                     GeoAPI.Geometries.IGeometry geo = zone.Shape as GeoAPI.Geometries.IGeometry;
                     if (geo != null)
                         geo.SRID = srid;
@@ -735,12 +737,12 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     8000 + creList.Count + 1);
                 ReportImportInfo(entityList, zoneName, nccount);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 sucess = false;
                 string errorMsg = string.Format("导入{0}数据失败", zone.FullName);
-                this.ReportError(errorMsg);
-                LogWrite.WriteErrorLog(errorMsg);
+                this.ReportError(errorMsg + ex.Message);
+                LogWrite.WriteErrorLog(errorMsg + ex.ToString());
             }
             entityList.Clear();
             entityList = null;
@@ -1830,6 +1832,25 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 QualityAlert(e);
         }
 
+
+        private Dictionary<string, string> GetZoneNameProperties()
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            var divisionCodeDic = new Library.Entity.DivisionCodeDictionary();
+            try
+            {
+                divisionCodeDic.Deserialize();
+                foreach (var item in divisionCodeDic.Items)
+                {
+                    dictionary.Add(item.Code, item.Name);
+                }
+                divisionCodeDic.Serialize();
+            }
+            catch
+            {
+            }
+            return dictionary;
+        }
         #endregion 辅助方法
 
         #endregion Methods

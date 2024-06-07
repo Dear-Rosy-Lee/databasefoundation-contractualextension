@@ -49,7 +49,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <summary>
         /// 承包方
         /// </summary>
-        public List<CBF> CBFJH { get; set; }
+        public List<CBFSC> CBFJH { get; set; }
 
         /// <summary>
         /// 登记簿
@@ -110,9 +110,21 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         #endregion
     }
 
+    [Serializable]
     public class CBDKXXSC : CBDKXX
     {
+        public const string TableNameCN = "承包地块信息";
         public const string TableName = "CBDKXX";
         public string DKLB { get; set; }
+    }
+
+    [Serializable]
+    public class CBFSC : CBF
+    {
+        public const string FXZDYBM = "XZDYBM";
+        public const string TableName = "CBF";
+        public const string TableNameCN = "承包方";
+
+        public string XZDYBM { get; set; }
     }
 }

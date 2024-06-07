@@ -39,7 +39,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
 
         [DisplayLanguage("SQLite数据库路径")]
         [DescriptionLanguage("请选择合并SQLite数据库所在路径")]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBoxSqlite),
             Trigger = typeof(PropertyTriggerFile),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string DatabaseFilePath

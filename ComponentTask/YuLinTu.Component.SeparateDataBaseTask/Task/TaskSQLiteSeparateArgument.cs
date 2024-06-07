@@ -28,7 +28,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
 
         [DisplayLanguage("SQLite数据库路径")]
         [DescriptionLanguage("请选择分离SQLite数据库所在路径")]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBoxSqlite),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string DatabaseFilePath
         {

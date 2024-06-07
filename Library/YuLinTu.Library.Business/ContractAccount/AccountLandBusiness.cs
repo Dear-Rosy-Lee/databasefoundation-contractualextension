@@ -22,6 +22,8 @@ using YuLinTu.Diagrams;
 using System.Threading.Tasks;
 using YuLinTu.NetAux;
 using System.Text.RegularExpressions;
+using Microsoft.Scripting.Utils;
+using NPOI.Util;
 
 namespace YuLinTu.Library.Business
 {
@@ -1343,23 +1345,16 @@ namespace YuLinTu.Library.Business
                 expand.Name = targetLand.Name;
                 expand.HouseHolderName = targetLand.Name;
             }
-
-            if ((string)infoList[0].GetValue(ImportLandShapeInfoDefine, null) != "None")
-            {
-                targetLand.OwnerName = GetproertValue(shapeData, selectColNameList[0]);
-            }
-            if ((string)infoList[2].GetValue(ImportLandShapeInfoDefine, null) != "None")
-            {
-                targetLand.Name = GetproertValue(shapeData, selectColNameList[2]);
-            }
-            if ((string)infoList[3].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            targetLand.OwnerName = PropertString(shapeData, infoList, selectColNameList, "NameIndex");
+            targetLand.Name = PropertString(shapeData, infoList, selectColNameList, "LandNameIndex");
+            if ((string)infoList[4].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]) != null)
                 {
                     targetLand.LandNumber = (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]).ToString()).TrimEnd('\0');
                 }
             }
-            if ((string)infoList[4].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[5].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[4]) != null)
                 {
@@ -1381,11 +1376,11 @@ namespace YuLinTu.Library.Business
                 falg = false;
                 //return null;
             }
-            if ((string)infoList[5].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[6].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.ImageNumber = GetproertValue(shapeData, selectColNameList[5]);
             }
-            if ((string)infoList[6].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[7].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 double getTableArea = 0.0;
                 try
@@ -1403,7 +1398,7 @@ namespace YuLinTu.Library.Business
                 }
                 targetLand.TableArea = getTableArea;
             }
-            if ((string)infoList[7].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[8].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {   //实测面积处理
                 double getActualArea = 0.0;
                 try
@@ -1426,23 +1421,23 @@ namespace YuLinTu.Library.Business
                 }
                 targetLand.ActualArea = getActualArea;
             }
-            if ((string)infoList[8].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[9].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.NeighborEast = GetproertValue(shapeData, selectColNameList[8]);
             }
-            if ((string)infoList[9].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[10].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.NeighborSouth = GetproertValue(shapeData, selectColNameList[9]);
             }
-            if ((string)infoList[10].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[11].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.NeighborWest = GetproertValue(shapeData, selectColNameList[10]);
             }
-            if ((string)infoList[11].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[12].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.NeighborNorth = GetproertValue(shapeData, selectColNameList[11]);
             }
-            if ((string)infoList[12].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[13].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = (GetproertValue(shapeData, selectColNameList[12]));
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
@@ -1455,7 +1450,7 @@ namespace YuLinTu.Library.Business
                     var dictTDYT = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.TDYT);
                     if (dictTDYT == null)
                     {
-                        this.ReportError(string.Format("第" + i + "条Shape数据土地用途名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
+                        this.ReportError(string.Format("第" + i + "条Shape数据土地用途名称 {0} ，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
                         falg = false;
                     }
                     else
@@ -1464,7 +1459,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
-            if ((string)infoList[13].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[14].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 var fieldvalue = GetproertValue(shapeData, selectColNameList[13]);
 
@@ -1481,7 +1476,7 @@ namespace YuLinTu.Library.Business
                 }
                 //}
             }
-            if ((string)infoList[14].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[14]);
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
@@ -1506,7 +1501,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
-            if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[16].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 var value = GetproertValue(shapeData, selectColNameList[15]);
                 if (value.IsNullOrEmpty())
@@ -1521,11 +1516,11 @@ namespace YuLinTu.Library.Business
                     targetLand.IsFarmerLand = boolValue;
                 }
             }
-            if ((string)infoList[16].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[17].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.ReferPerson = GetproertValue(shapeData, selectColNameList[16]);
             }
-            if ((string)infoList[17].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[18].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[17]);
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
@@ -1554,7 +1549,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
-            if ((string)infoList[18].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[19].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 double getAwareArea = 0.0;
                 try
@@ -1570,7 +1565,7 @@ namespace YuLinTu.Library.Business
                 }
                 targetLand.AwareArea = getAwareArea;
             }
-            if ((string)infoList[19].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[20].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
@@ -1584,7 +1579,7 @@ namespace YuLinTu.Library.Business
                     falg = false;
                 }
             }
-            if ((string)infoList[20].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[21].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[20]);
                 var dictCBFS = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.CBJYQQDFS);
@@ -1598,11 +1593,11 @@ namespace YuLinTu.Library.Business
                     targetLand.ConstructMode = dictCBFS.Code;
                 }
             }
-            if ((string)infoList[21].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[22].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.PlotNumber = GetproertValue(shapeData, selectColNameList[21]);
             }
-            if ((string)infoList[22].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[23].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[22]);
                 var dictZZLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.ZZLX);
@@ -1616,7 +1611,7 @@ namespace YuLinTu.Library.Business
                     targetLand.PlatType = dictZZLX.Code;
                 }
             }
-            if ((string)infoList[23].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[24].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[23]);
                 var dictJYFS = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.JYFS);
@@ -1630,7 +1625,7 @@ namespace YuLinTu.Library.Business
                     targetLand.ManagementType = dictJYFS.Code;
                 }
             }
-            if ((string)infoList[24].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[25].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 //targetLand.PlantType = GetproertValue(shapeData, selectColNameList[23]);
                 string s = GetproertValue(shapeData, selectColNameList[24]);
@@ -1645,15 +1640,15 @@ namespace YuLinTu.Library.Business
                     targetLand.PlantType = dictGBLX.Code;
                 }
             }
-            if ((string)infoList[25].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[26].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.FormerPerson = GetproertValue(shapeData, selectColNameList[25]);
             }
-            if ((string)infoList[26].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[27].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[26]);
             }
-            if ((string)infoList[27].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[28].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[27]);
                 bool boolValue = s == "是" || s == "true" || s == "True" || s == "TRUE" ? true : false;
@@ -1667,7 +1662,7 @@ namespace YuLinTu.Library.Business
                     targetLand.IsTransfer = boolValue;
                 }
             }
-            if ((string)infoList[28].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[29].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 string s = GetproertValue(shapeData, selectColNameList[28]);
                 var dictLZLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.LZLX);
@@ -1679,7 +1674,7 @@ namespace YuLinTu.Library.Business
                 else
                 { targetLand.TransferType = dictLZLX.Code; }
             }
-            if ((string)infoList[29].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[30].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 Object obj = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[29]);
                 if (obj == null)
@@ -1687,7 +1682,7 @@ namespace YuLinTu.Library.Business
                 else
                     targetLand.TransferTime = obj.ToString();
             }
-            if ((string)infoList[30].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[31].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
@@ -1701,11 +1696,11 @@ namespace YuLinTu.Library.Business
                     falg = false;
                 }
             }
-            if ((string)infoList[31].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[32].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.SurveyPerson = GetproertValue(shapeData, selectColNameList[31]);
             }
-            if ((string)infoList[32].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[33].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
@@ -1725,15 +1720,15 @@ namespace YuLinTu.Library.Business
                     this.ReportInfomation(string.Format("第" + i + "条Shape数据调查日期'{0}'错误" + ex.Message, GetproertValue(shapeData, selectColNameList[32])));
                 }
             }
-            if ((string)infoList[33].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[34].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.SurveyChronicle = GetproertValue(shapeData, selectColNameList[33]);
             }
-            if ((string)infoList[34].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[35].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.CheckPerson = GetproertValue(shapeData, selectColNameList[34]);
             }
-            if ((string)infoList[35].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[36].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
@@ -1753,15 +1748,15 @@ namespace YuLinTu.Library.Business
                     this.ReportInfomation(string.Format("第" + i + "条Shape数据审核日期'{0}'错误" + ex.Message, GetproertValue(shapeData, selectColNameList[35])));
                 }
             }
-            if ((string)infoList[36].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[37].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 expand.CheckOpinion = GetproertValue(shapeData, selectColNameList[36]);
             }
-            if ((string)infoList[37].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[38].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 targetLand.Comment = GetproertValue(shapeData, selectColNameList[37]);
             }
-            if ((string)infoList[38].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            if ((string)infoList[39].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 var value = GetproertValue(shapeData, selectColNameList[38]);
                 targetLand.AliasNameA = value == null ? "" : value.Trim();
@@ -2214,6 +2209,30 @@ namespace YuLinTu.Library.Business
                 return targetLand;
             else
                 return null;
+        }
+
+        private string PropertString(object shapeData, PropertyInfo[] infoList, List<string> selectColNameList, string name)
+        {
+            var indx = FindIndex(infoList, name);
+            if (indx != -1)
+            {
+                return GetproertValue(shapeData, selectColNameList[indx]);
+            }
+            return null;
+        }
+
+        private int FindIndex(PropertyInfo[] infoList, string name)
+        {
+            var info = infoList.FirstOrDefault(f => f.Name == name);
+            if (info != null)
+            {
+                var r = info.GetValue(ImportLandShapeInfoDefine, null).ToString();
+                if (r != "None")
+                {
+                    return infoList.FindIndex(t => t.Name == name);
+                }
+            }
+            return -1;
         }
 
         /// <summary>
