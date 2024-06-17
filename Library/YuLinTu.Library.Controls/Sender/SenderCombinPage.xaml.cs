@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
@@ -157,35 +158,49 @@ namespace YuLinTu.Library.Controls
             try
             {
                 SenderDataBusiness business = CreateBusiness();
+                var vpbs = new VirtualPersonBusiness(db);
+                var cbs = new ConcordBusiness(db);
+                var landBusiness = new AccountLandBusiness(db);
+                var crBusiness = new ContractRegeditBookBusiness(db);
+                var zBusiness = new ZoneDataBusiness(db);
+
                 Result = business.AddSender(tissue);
                 if (!Result)
                     throw new Exception("  添加发包方出错!");
+                db.BeginTransaction();
                 if (TissueList != null && TissueList.Count > 0)
                 {
-                    var vpbs = new VirtualPersonBusiness(db);
-                    var cbs = new ConcordBusiness(db);
-                    var landBusiness = new AccountLandBusiness(db);
-                    var crBusiness = new ContractRegeditBookBusiness(db);
-                    var zBusiness = new ZoneDataBusiness(db);
                     int index = 1;
                     foreach (var t in TissueList)
                     {
-                        db.BeginTransaction();
                         worker.ReportProgress(index, t.Name);
                         var zonecode = t.ZoneCode;
                         vpbs.UpdataSenderCode(zonecode, tempTissue);
                         cbs.UpdataSenderCode(zonecode, tempTissue);
                         landBusiness.UpdateLands(zonecode, tempTissue);
                         crBusiness.UpdateList(zonecode, tempTissue);
-                        db.CommitTransaction();
-                        if (isdel)
-                        {
-                            business.DeleteSender(t);
-                            if (tissue.ZoneCode != t.ZoneCode)
-                                zBusiness.DeleteZone(t.ZoneCode);
-                        }
                         index++;
                     }
+                }
+                db.CommitTransaction();
+                vpbs.VirtualType = eVirtualType.Land;
+                var jts = vpbs.GetCollection(tissue.ZoneCode, "集体");
+                if (jts != null && jts.Count > 1)
+                {
+                    for (int i = 1; i < jts.Count; i++)
+                    {
+                        vpbs.Delete(jts[i].ID);
+                    }
+                }
+                foreach (var t in TissueList)
+                {
+                    if (!isdel)
+                    {
+                        continue;
+                    }
+                    business.DeleteSender(t);
+                    if (tissue.ZoneCode != t.ZoneCode)
+                        zBusiness.DeleteZone(t.ZoneCode);
                 }
                 e.Result = true;
             }

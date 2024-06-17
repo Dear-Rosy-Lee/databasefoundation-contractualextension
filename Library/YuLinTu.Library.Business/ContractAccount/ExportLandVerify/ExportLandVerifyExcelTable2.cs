@@ -197,12 +197,11 @@ namespace YuLinTu.Library.Business
 
             if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.oldVirtualCode))
             {
-                AccountLandFamily.Sort((a, b) =>
-                {
-                    var aNumber = Convert.ToDouble(a.CurrentFamily.oldVirtualCode);
-                    var bNumber = Convert.ToDouble(b.CurrentFamily.oldVirtualCode);
-                    return aNumber.CompareTo(bNumber);
-                });
+                //AccountLandFamily.GroupBy(g=>g.CurrentFamily.)
+                //var query = from d in AccountLandFamily
+                //            orderby d.CurrentFamily.oldVirtualCode, d.CurrentFamily.FamilyNumber
+                //            select d;
+                //AccountLandFamily = query.ToList();
             }
             familyCount = AccountLandFamily.Count;
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
@@ -315,7 +314,7 @@ namespace YuLinTu.Library.Business
             var code = GetCardTypeNumber(person.CardType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
             InitalizeRangeValue("H" + index, "H" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
-            InitalizeRangeValue("I" + index, "I" + index, gender.Name);
+            InitalizeRangeValue("I" + index, "I" + index, gender.Name == "未知" ? "未知" : $"{gender.Name}性");
             InitalizeRangeValue("J" + index, "J" + index, person.Telephone);
             InitalizeRangeValue("K" + index, "K" + index, cardtype.Name);
             InitalizeRangeValue("L" + index, "L" + index, person.ICN);
@@ -333,7 +332,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteTempLate()
         {
-
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);

@@ -424,9 +424,13 @@ namespace YuLinTu.Library.Repository
                 throw new ArgumentNullException("数据库不存在表："
                     + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
             }
-            object data = null;
-            data = Get(c => c.ZoneCode.Equals(code) && c.Name.Equals(Name));
-            return (List<VirtualPerson>)data;
+            var data = Get(c => c.ZoneCode.Equals(code) && c.Name.Equals(Name));
+            List<VirtualPerson> vps = new List<VirtualPerson>();
+            if (data != null && data.Count > 0)
+            {
+                data.ForEach(t => vps.Add(t));
+            }
+            return vps;
         }
 
         /// <summary>

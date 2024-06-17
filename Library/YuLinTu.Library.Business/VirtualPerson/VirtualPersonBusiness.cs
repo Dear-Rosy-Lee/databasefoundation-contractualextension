@@ -1621,7 +1621,7 @@ namespace YuLinTu.Library.Business
             int successCount = 0;
             if (vps == null || vps.Count == 0 || landStation == null)
                 return successCount;
-            vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
+            //vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
             bool isNULL = argument.InitialNull;
             foreach (VirtualPerson vpi in vps)
             {

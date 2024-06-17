@@ -375,6 +375,32 @@ namespace YuLinTu.Library.Business
             return list;
         }
 
+
+        /// <summary>
+        ///  根据承包方编码地块集合
+        /// </summary>
+        /// <param name="persons">地域编码</param>
+        /// <returns>地块集合</returns>
+        public List<ContractLand> GetLandbyPersons(List<string> persons)
+        {
+            List<ContractLand> list = null;
+            if (!CanContinue() || persons.Count == 0)
+            {
+                return list;
+            }
+            try
+            {
+                list = DataBaseSource.GetDataBaseSource().CreateQuery<ContractLand>().Where(l => persons.Contains(l.VirtualPersonCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "GetCollection(获取承包台账地块集合)", ex.Message + ex.StackTrace);
+                this.ReportError("获取承包台账地块集合失败," + ex.Message);
+            }
+            return list;
+        }
+
+
         /// <summary>
         ///  根据地域编码统计承包地块数量
         /// </summary>

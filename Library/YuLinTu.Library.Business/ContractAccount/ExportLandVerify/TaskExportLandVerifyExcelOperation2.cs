@@ -131,7 +131,7 @@ namespace YuLinTu.Library.Business
                 if (tissue == null)
                 {
                     var tis = tissueStation.GetTissues(zone.FullCode);
-                    tissue = tis.FirstOrDefault(t => t.ZoneCode.Equals(zone.FullCode.PadRight(14, '0')));
+                    tissue = tis.FirstOrDefault(t => t.Code.Equals(zone.FullCode.PadRight(14, '0')));
                 }
                 if (tissue != null)
                     zoneName = tissue.Name;

@@ -137,6 +137,8 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
+            var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.GetByZoneCode(CurrentZone.FullCode);
             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
             var contractLands = landBusiness.GetLandCollection(CurrentZone.FullCode);
             LandFamily landFamily = new LandFamily();
@@ -196,7 +198,7 @@ namespace YuLinTu.Library.Business
                             continue;
                         }
                     }
-                    GetExcelInformation(landFamily, contractLands);//获取Excel表中信息
+                    GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
                 }
             }
             catch (Exception ex)
@@ -254,11 +256,11 @@ namespace YuLinTu.Library.Business
             return startIndex == 0 ? -1 : startIndex;
         }
 
-        private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands)
+        private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands, List<VirtualPerson> vps)
         {
             try
             {
-                InitalizeFamilyInformation(landFamily);
+                InitalizeFamilyInformation(landFamily, vps);
 
                 InitalizeLandInformation(landFamily, contractLands);
             }
@@ -269,7 +271,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        private void InitalizeFamilyInformation(LandFamily landFamily)
+        private void InitalizeFamilyInformation(LandFamily landFamily, List<VirtualPerson> vps)
         {
             if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
             {
@@ -280,9 +282,7 @@ namespace YuLinTu.Library.Business
                 {
 
                 }
-
-                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
-                var vp = vpStation.GetByHH(vpNumber, vpCode);
+                var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber);
                 if (vp != null)
                 {
                     landFamily.CurrentFamily = vp;
