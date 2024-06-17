@@ -299,9 +299,6 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 更新发包方编码
         /// </summary>
-        /// <param name="oldsenderCode"></param>
-        /// <param name="newsenderCode"></param>
-        /// <param name="zonecode"></param>
         public void UpdataSenderCode(string oldsenderCode, CollectivityTissue tissue)
         {
             var vps = landStation.GetByZoneCode(oldsenderCode);
@@ -309,6 +306,7 @@ namespace YuLinTu.Library.Business
                 return;
             foreach (var vp in vps)
             {
+                vp.oldVirtualCode = vp.ZoneCode.PadRight(14, '0') + vp.FamilyNumber.PadLeft(4, '0');
                 vp.ZoneCode = tissue.ZoneCode;
             }
             landStation.UpdatePersonList(vps);

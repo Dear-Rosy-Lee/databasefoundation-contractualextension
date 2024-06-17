@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
@@ -12,7 +11,6 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using static System.Windows.Forms.AxHost;
 
 namespace YuLinTu.Library.Controls
 {
@@ -67,6 +65,7 @@ namespace YuLinTu.Library.Controls
                     currentTissue.ID = Guid.NewGuid();
                 }
                 tempTissue = value.Clone() as CollectivityTissue;
+                tempTissue.ID = Guid.NewGuid();
                 this.DataContext = tempTissue;
                 SetComboxSelect(tempTissue);
             }
@@ -159,9 +158,10 @@ namespace YuLinTu.Library.Controls
             {
                 SenderDataBusiness business = CreateBusiness();
                 Result = business.AddSender(tissue);
+                if (!Result)
+                    throw new Exception("  添加发包方出错!");
                 if (TissueList != null && TissueList.Count > 0)
                 {
-
                     var vpbs = new VirtualPersonBusiness(db);
                     var cbs = new ConcordBusiness(db);
                     var landBusiness = new AccountLandBusiness(db);
@@ -181,7 +181,8 @@ namespace YuLinTu.Library.Controls
                         if (isdel)
                         {
                             business.DeleteSender(t);
-                            zBusiness.DeleteZone(t.ZoneCode);
+                            if (tissue.ZoneCode != t.ZoneCode)
+                                zBusiness.DeleteZone(t.ZoneCode);
                         }
                         index++;
                     }
@@ -194,9 +195,17 @@ namespace YuLinTu.Library.Controls
                 e.Result = false;
                 Dispatcher.Invoke(() =>
                 {
-                    lbTip.Text = ex.Message;
+                    lbTip.Text = innermessge(ex);
+                    lbTip.Foreground = System.Windows.Media.Brushes.Red;
                 });
             }
+        }
+
+        private string innermessge(Exception ex)
+        {
+            if (ex.InnerException != null)
+                return innermessge(ex.InnerException);
+            return ex.Message;
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)

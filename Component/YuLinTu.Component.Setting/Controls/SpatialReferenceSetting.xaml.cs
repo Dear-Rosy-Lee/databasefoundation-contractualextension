@@ -511,11 +511,21 @@ namespace YuLinTu.Component.Setting
 
                 //if (System.IO.Directory.Exists(path))
                 //    System.IO.Directory.Delete(path, true);
-                serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
 
-                List<UpgradeDatabase> tableList = null;
-                if (serialSuccess)
+                List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
+                if (tableList.Count == 0)
+                {
+                    serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
                     tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
+                }
+                foreach (var item in tableList)
+                {
+                    var table = dbContext.CreateSchema().GetElementProperties(null, item.TableName);
+                    item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
+                }
+                tableList.RemoveAll(t => t.FieldList.Count == 0);
+                //if (serialSuccess)
+                //tableList = 
                 if (tableList == null || tableList.Count == 0)
                 {
                     var msgPage = new TabMessageBoxDialog

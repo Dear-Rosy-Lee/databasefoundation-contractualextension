@@ -128,9 +128,14 @@ namespace YuLinTu.Library.Business
                 var tissueStation = argument.DbContext.CreateSenderWorkStation();
                 string zoneName = zoneStation.GetZoneName(argument.CurrentZone);
                 CollectivityTissue tissue = tissueStation.Get(zone.ID);
+                if (tissue == null)
+                {
+                    var tis = tissueStation.GetTissues(zone.FullCode);
+                    tissue = tis.FirstOrDefault(t => t.ZoneCode.Equals(zone.FullCode.PadRight(14, '0')));
+                }
                 if (tissue != null)
                     zoneName = tissue.Name;
-              
+
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
                 ExportLandVerifyExcelTable2 export = new ExportLandVerifyExcelTable2();

@@ -195,9 +195,17 @@ namespace YuLinTu.Library.Business
                 return aNumber.CompareTo(bNumber);
             });
 
+            if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.oldVirtualCode))
+            {
+                AccountLandFamily.Sort((a, b) =>
+                {
+                    var aNumber = Convert.ToDouble(a.CurrentFamily.oldVirtualCode);
+                    var bNumber = Convert.ToDouble(b.CurrentFamily.oldVirtualCode);
+                    return aNumber.CompareTo(bNumber);
+                });
+            }
             familyCount = AccountLandFamily.Count;
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
-
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
                 toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);
@@ -325,7 +333,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteTempLate()
         {
-            
+
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);
@@ -341,7 +349,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
             InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
             DateTime surveyDate = new DateTime();
-            if (Tissue.SurveyDate!=null)
+            if (Tissue.SurveyDate != null)
             {
                 surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
             }
@@ -419,7 +427,7 @@ namespace YuLinTu.Library.Business
         /// <param name="zone"></param>
         /// <param name="dbContext"></param>
         /// <returns></returns>
-       
+
         #endregion 开始生成Excel
 
         #endregion Methods
