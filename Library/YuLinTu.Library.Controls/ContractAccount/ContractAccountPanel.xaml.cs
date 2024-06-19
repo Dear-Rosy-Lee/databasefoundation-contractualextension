@@ -2114,7 +2114,7 @@ namespace YuLinTu.Library.Controls
             }
             if (CurrentLandBinding.IsStockLand)//选中确股地块
             {
-                ShowBox(ContractAccountInfo.ContractLandEdit, "请选择确权地块编辑");
+                ShowBox(ContractAccountInfo.ContractLandEdit, "选中地块为确股地块，请选择确权地块编辑");
                 return;
             }
             bool isLock = CurrentAccountItem.Tag.Status == eVirtualPersonStatus.Lock ? true : false;

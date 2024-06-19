@@ -642,34 +642,26 @@ namespace YuLinTu.Library.Business
             {
                 return list;
             }
-            try
+            switch (virtualType)
             {
-                switch (virtualType)
-                {
-                    case eVirtualType.Land:
-                        list = landStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.Yard:
-                        list = yardStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.House:
-                        list = houseStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.Wood:
-                        list = woodStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.CollectiveLand:
-                        list = colleStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.SecondTable:
-                        list = tableStation.GetByZoneCode(zoneCode);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                YuLinTu.Library.Log.Log.WriteException(this, "ZonesByCode(获取承包方数据集合)", ex.Message + ex.StackTrace);
-                this.ReportError("获取承包方数据出错," + ex.Message);
+                case eVirtualType.Land:
+                    list = landStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.Yard:
+                    list = yardStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.House:
+                    list = houseStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.Wood:
+                    list = woodStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.CollectiveLand:
+                    list = colleStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.SecondTable:
+                    list = tableStation.GetByZoneCode(zoneCode);
+                    break;
             }
             return list;
         }

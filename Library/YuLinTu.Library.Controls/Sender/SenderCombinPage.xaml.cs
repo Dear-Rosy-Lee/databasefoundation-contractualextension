@@ -187,6 +187,13 @@ namespace YuLinTu.Library.Controls
                 var jts = vpbs.GetCollection(tissue.ZoneCode, "集体");
                 if (jts != null && jts.Count > 1)
                 {
+                    var fbms = jts.Select(t => t.ID).ToList();
+                    var lands = landBusiness.GetLandbyPersons(fbms);
+                    foreach (var item in lands)
+                    {
+                        item.OwnerId = jts[0].ID;
+                    }
+                    landBusiness.UpdateLands(lands);
                     for (int i = 1; i < jts.Count; i++)
                     {
                         vpbs.Delete(jts[i].ID);

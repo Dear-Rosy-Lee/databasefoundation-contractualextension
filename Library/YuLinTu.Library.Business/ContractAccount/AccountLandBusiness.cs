@@ -2,28 +2,26 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
+using Microsoft.Scripting.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
 using YuLinTu;
 using YuLinTu.Data;
-using YuLinTu.Library.WorkStation;
-using System.IO;
-using YuLinTu.Spatial;
-using YuLinTu.Data.Shapefile;
 using YuLinTu.Data.Dynamic;
-using System.Collections;
-using System.Reflection;
+using YuLinTu.Data.Shapefile;
 using YuLinTu.Diagrams;
-using System.Threading.Tasks;
-using YuLinTu.NetAux;
-using System.Text.RegularExpressions;
-using Microsoft.Scripting.Utils;
-using NPOI.Util;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
+using YuLinTu.Spatial;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Business
 {
@@ -381,16 +379,16 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="persons">地域编码</param>
         /// <returns>地块集合</returns>
-        public List<ContractLand> GetLandbyPersons(List<string> persons)
+        public List<ContractLand> GetLandbyPersons(List<Guid> personids)
         {
             List<ContractLand> list = null;
-            if (!CanContinue() || persons.Count == 0)
+            if (!CanContinue() || personids.Count == 0)
             {
                 return list;
             }
             try
             {
-                list = DataBaseSource.GetDataBaseSource().CreateQuery<ContractLand>().Where(l => persons.Contains(l.VirtualPersonCode)).ToList();
+                list = landStation.GetLandsByObligeeIds(personids.ToArray());
             }
             catch (Exception ex)
             {
@@ -618,6 +616,11 @@ namespace YuLinTu.Library.Business
                 this.ReportError("修改地块的承包方名称数据失败," + ex.Message);
             }
             return updateCount;
+        }
+
+        public int UpdateLands(List<ContractLand> lands)
+        {
+            return landStation.UpdateRange(lands);
         }
 
         /// <summary>

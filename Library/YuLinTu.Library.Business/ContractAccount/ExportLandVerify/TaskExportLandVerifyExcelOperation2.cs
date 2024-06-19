@@ -110,17 +110,27 @@ namespace YuLinTu.Library.Business
                     return result;
                 }
                 List<ContractAccountLandFamily> accountFamilyCollection = new List<ContractAccountLandFamily>();
-                //var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
+                var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
+                var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);
                     ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                     accountLandFamily.CurrentFamily = vp;
                     accountLandFamily.Persons = vp.SharePersonList;
-                    //if(vp.IsStockFarmer)
-                    //    landCollection.AddRange(stockLand);
                     accountLandFamily.LandCollection = landCollection;
                     accountFamilyCollection.Add(accountLandFamily);
+                    var ralations = qglands.FindAll(o => o.VirtualPersonID == vp.ID);
+                    if (ralations.Count > 0)
+                    {
+                        foreach (var r in ralations)
+                        {
+                            var stockland = stockLand.Find(t => t.ID == r.LandID);
+                            if (stockland == null)
+                                continue;
+                            accountLandFamily.LandCollection.Add(stockland);
+                        }
+                    }
                 }
                 string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
                 string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
