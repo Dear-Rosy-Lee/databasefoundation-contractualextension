@@ -170,11 +170,18 @@ namespace YuLinTu.Library.Business
                 senderStation.Update(landInfo.Tissue);
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
-                    ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
-                    familyIndex++;
+                    try
+                    {
+                        ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
+                        familyIndex++;
 
-                    string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
-                    toolProgress.DynamicProgress(info);
+                        string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
+                        toolProgress.DynamicProgress(info);
+                    }
+                    catch(Exception ex)
+                    {
+                        this.ReportError($"{ex.Message}");
+                    }
                 }
                 if (familyCount == landInfo.LandFamilyCollection.Count)
                 {
@@ -192,6 +199,7 @@ namespace YuLinTu.Library.Business
             {
                 DbContext.RollbackTransaction();
                 YuLinTu.Library.Log.Log.WriteException(this, "ImportLandEntity(导入地籍调查表失败!)", ex.Message + ex.StackTrace);
+                this.ReportError("导入承包台账地块调查表失败!");
             }
             finally
             {

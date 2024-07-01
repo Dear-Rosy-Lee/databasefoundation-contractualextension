@@ -43,9 +43,7 @@ namespace YuLinTu.Library.Business
 
         #endregion Ctor
 
-        #region Propertise
 
-        #endregion Propertise
 
         #region Method
 
@@ -547,17 +545,17 @@ namespace YuLinTu.Library.Business
                     (zoneCode) => { return createWsLocal.StockWarrantWorkStation.DeleteByZone(zoneCode, eLevelOption.Self); },
                     (list) => { return createWsLocal.StockWarrantWorkStation.Add(list); });
 
-                BatchImportData<SecondTableLand>("二轮台账地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondTableStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.SecondTableStation.AddRange(list); }, false);
+                //BatchImportData<SecondTableLand>("二轮台账地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                //    (zoneCode) => { return createWsTarget.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
+                //    (zoneCode) => { return createWsLocal.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
+                //    (zoneCode) => { return createWsLocal.SecondTableStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                //    (list) => { return createWsLocal.SecondTableStation.AddRange(list); }, false);
 
-                BatchImportData<VirtualPerson>("二轮台账承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.SecondPersonStation.AddRange(list); }, false);
+                //BatchImportData<VirtualPerson>("二轮台账承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                //    (zoneCode) => { return createWsTarget.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                //    (zoneCode) => { return createWsLocal.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                //    (zoneCode) => { return createWsLocal.SecondPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                //    (list) => { return createWsLocal.SecondPersonStation.AddRange(list); }, false);
 
                 BatchImportData<BuildLandBoundaryAddressDot>("界址点", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
                     (zoneCode) => { return createWsTarget.DotStation.GetByZoneCode(zoneCode, eLevelOption.Self); },

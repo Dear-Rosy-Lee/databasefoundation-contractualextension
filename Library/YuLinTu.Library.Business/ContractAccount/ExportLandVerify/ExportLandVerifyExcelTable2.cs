@@ -34,6 +34,10 @@ namespace YuLinTu.Library.Business
         private List<Dictionary> dictTDYT;
         private List<Dictionary> dictDLDJ;
         private List<Dictionary> dicSF;
+        private List<Dictionary> dictSYQXZ;
+        private List<Dictionary> dictDKLB;
+        private List<Dictionary> dictTDLYLX;
+
         #endregion Fields
 
         #region Properties
@@ -144,7 +148,6 @@ namespace YuLinTu.Library.Business
             }
         }
 
-
         /// <summary>
         /// 打开文件
         /// </summary>
@@ -179,6 +182,9 @@ namespace YuLinTu.Library.Business
                 dictZJLX = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.ZJLX);
                 dictTDYT = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDYT);
                 dictDLDJ = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DLDJ);
+                dictSYQXZ = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.SYQXZ);
+                dictDKLB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DKLB);
+                dictTDLYLX = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDLYLX);
             }
             if (CurrentZone == null)
             {
@@ -281,19 +287,23 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteCurrentZoneInformation(ContractLand land, int index)
         {
+            Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
+            Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
+            Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
+
             Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
             Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
             InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
-            InitalizeRangeValue("R" + index, "R" + index, land.OwnRightType);
-            InitalizeRangeValue("S" + index, "S" + index, land.LandCategory);
-            InitalizeRangeValue("T" + index, "T" + index, land.LandCode);
+            InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+            InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+            InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
             InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
             InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
             Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
             InitalizeRangeValue("W" + index, "W" + index, SF.Name);
-            InitalizeRangeValue("Y" + index, "Y" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
-            InitalizeRangeValue("AA" + index, "AA" + index, (land.ActualArea > 0.0) ? ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("Y" + index, "Y" + index, land.AwareArea);
+            InitalizeRangeValue("AA" + index, "AA" + index, land.ActualArea);
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
             InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
@@ -307,7 +317,14 @@ namespace YuLinTu.Library.Business
             var code = GetCardTypeNumber(person.CardType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
             InitalizeRangeValue("H" + index, "H" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
-            InitalizeRangeValue("I" + index, "I" + index, gender.Name);
+            if (gender != null)
+            {
+                InitalizeRangeValue("I" + index, "I" + index, gender.Name + "性");
+            }
+            else
+            {
+                InitalizeRangeValue("I" + index, "I" + index, "");
+            }
             InitalizeRangeValue("J" + index, "J" + index, person.Telephone);
             InitalizeRangeValue("K" + index, "K" + index, cardtype.Name);
             InitalizeRangeValue("L" + index, "L" + index, person.ICN);
@@ -325,7 +342,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteTempLate()
         {
-            
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);
@@ -341,7 +357,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
             InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
             DateTime surveyDate = new DateTime();
-            if (Tissue.SurveyDate!=null)
+            if (Tissue.SurveyDate != null)
             {
                 surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
             }
@@ -413,13 +429,14 @@ namespace YuLinTu.Library.Business
             }
             return 0;
         }
+
         /// <summary>
         ///  获取上级地域
         /// </summary>
         /// <param name="zone"></param>
         /// <param name="dbContext"></param>
         /// <returns></returns>
-       
+
         #endregion 开始生成Excel
 
         #endregion Methods

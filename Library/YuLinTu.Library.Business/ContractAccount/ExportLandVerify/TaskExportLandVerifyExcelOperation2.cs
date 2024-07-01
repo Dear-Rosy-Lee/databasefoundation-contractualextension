@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Repository;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 
@@ -52,6 +53,7 @@ namespace YuLinTu.Library.Business
                 return;
             }
             dbContext = argument.DbContext;
+
             zone = argument.CurrentZone;
             try
             {
@@ -59,6 +61,26 @@ namespace YuLinTu.Library.Business
                 var landStation = dbContext.CreateContractLandWorkstation();
                 var listPerson = personStation.GetByZoneCode(zone.FullCode, eLevelOption.Self);
                 var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                ContainerFactory factory = new ContainerFactory(dbContext);
+                var virtualPersonRep = factory.CreateRepository<IVirtualPersonRepository<LandVirtualPerson>>();
+                foreach (var entity in listPerson)
+                {
+                    foreach (var item in entity.SharePersonList)
+                    {
+                        item.Gender = ICNHelper.GetGender(item.ICN);
+                    }
+                    virtualPersonRep.Update(entity);
+                }
+                virtualPersonRep.SaveChanges();
+                //ContainerFactory factory = new ContainerFactory(dbContext);
+                //var landRep = factory.CreateRepository<IContractLandRepository>();
+                //var lands = landStation.GetCollection("512022101222");
+                //foreach (var entity in lands)
+                //{
+                //    entity.Shape = null;
+                //    landRep.Update(entity);
+                //}
+                //landRep.SaveChanges();
                 if (listPerson == null || listPerson.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -130,7 +152,7 @@ namespace YuLinTu.Library.Business
                 CollectivityTissue tissue = tissueStation.Get(zone.ID);
                 if (tissue != null)
                     zoneName = tissue.Name;
-              
+
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
                 ExportLandVerifyExcelTable2 export = new ExportLandVerifyExcelTable2();

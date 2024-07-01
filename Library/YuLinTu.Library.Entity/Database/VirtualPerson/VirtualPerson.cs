@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,7 @@ namespace YuLinTu.Library.Entity
         private Guid? sourceID;
         private eVirtualPersonStatus status;
         private string telephone;
+        private string oldlFamilyNumber;
         private string postalNumber;
         private string familyNumber;
         private string personCount;
@@ -50,7 +52,8 @@ namespace YuLinTu.Library.Entity
         private bool isStockFarmer;
 
         private List<Person> sharePersonList;
-        #endregion
+
+        #endregion Filds
 
         #region Properties
 
@@ -71,7 +74,6 @@ namespace YuLinTu.Library.Entity
                 return base[columnName];
             }
         }
-
 
         /// <summary>
         ///标识码
@@ -208,6 +210,16 @@ namespace YuLinTu.Library.Entity
         }
 
         /// <summary>
+        /// 原承包方编码
+        /// </summary>
+        [DataColumn("YCBFBM")]
+        public string OldlFamilyNumber
+        {
+            get { return oldlFamilyNumber; }
+            set { oldlFamilyNumber = value.TrimSafe(); NotifyPropertyChanged("OldlFamilyNumber"); }
+        }
+
+        /// <summary>
         /// 邮政编码
         /// </summary>
         [DataColumn("YZBM")]
@@ -274,7 +286,6 @@ namespace YuLinTu.Library.Entity
             get { return totalAwareArea; }
             set { totalAwareArea = value.TrimSafe(); NotifyPropertyChanged("TotalAwareArea"); }
         }
-
 
         /// <summary>
         /// 总机动地面积
@@ -357,6 +368,7 @@ namespace YuLinTu.Library.Entity
         }
 
         #region 确权确股项目插件使用
+
         /// <summary>
         ///确股总数
         /// </summary>
@@ -386,9 +398,11 @@ namespace YuLinTu.Library.Entity
             get { return isStockFarmer; }
             set { isStockFarmer = value; NotifyPropertyChanged("IsStockFarmer"); }
         }
-        #endregion
+
+        #endregion 确权确股项目插件使用
+
         private VirtualPersonExpand expand;
-        
+
         /// <summary>
         /// 扩展实体
         /// </summary>
@@ -436,7 +450,7 @@ namespace YuLinTu.Library.Entity
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Ctor
 
@@ -455,7 +469,7 @@ namespace YuLinTu.Library.Entity
             cardType = eCredentialsType.IdentifyCard;
         }
 
-        #endregion
+        #endregion Ctor
 
         #region Methods
 
@@ -503,6 +517,6 @@ namespace YuLinTu.Library.Entity
             return string.Concat(Name, Number, ZoneCode);
         }
 
-        #endregion
+        #endregion Methods
     }
 }
