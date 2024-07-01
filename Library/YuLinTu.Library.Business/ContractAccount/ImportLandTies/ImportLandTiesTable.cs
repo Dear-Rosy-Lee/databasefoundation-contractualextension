@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Hosting;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
@@ -16,7 +17,7 @@ namespace YuLinTu.Library.Business
         private int personCount;//共有人数
         private int landCount;//地块数
 
-        private CollectivityTissue tissue;//集体经济组织
+        //private CollectivityTissue tissue;//集体经济组织
         private CollectivityTissue sender;//集体经济组织
         private VirtualPersonBusiness personBusiness;
         private AccountLandBusiness landBusiness;
@@ -52,9 +53,9 @@ namespace YuLinTu.Library.Business
         public bool IsCheckLandNumberRepeat { get; set; }
 
         /// <summary>
-        /// 是否清空数据
+        /// 导入方式
         /// </summary>
-        public bool IsClear { get; set; }
+        public eImportTypes ImportType { get; set; }
 
         //导入地块时的验证
         public bool isOk { get; set; }
@@ -143,31 +144,33 @@ namespace YuLinTu.Library.Business
         {
             try
             {
-                DbContext.BeginTransaction();
+                var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DbContext.CreateContractLandWorkstation();
+                var concordStation = DbContext.CreateConcordStation();
+                remainVps = personStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
+                remainLands = landStation.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
 
-                ClearLandReleationData();    //清空数据
+                DbContext.BeginTransaction();
+                DeleteAllLandDataByZone(ContractBusinessSettingDefine.ClearVirtualPersonData, ImportType);
+                //ClearLandReleationData();    //清空数据
 
                 //获取目标数据源中当前地域下的所有户信息，用于之后的快速判断，减少数据库的交互次数
                 toolProgress.InitializationPercent(landInfo.LandFamilyCollection.Count, Percent, CurrentPercent);
 
                 isOk = true;
                 int familyIndex = 1;
-                Zone zone = CurrentZone.Level == eZoneLevel.Village ? CurrentZone.Clone() as Zone : GetParent(CurrentZone);
-                tissue = concordBusiness.GetSenderById(zone.ID);
-                sender = concordBusiness.GetSenderById(CurrentZone.ID);
-                var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
-                var landStation = DbContext.CreateContractLandWorkstation();
-                var concordStation = DbContext.CreateConcordStation();
-                var bookStation = DbContext.CreateRegeditBookStation();
-                var senderStation = DbContext.CreateSenderWorkStation();
-                remainVps = personStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
-                remainLands = landStation.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
-                remainConcords = concordStation.GetContractsByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
-                remainBooks = bookStation.GetByZoneCode(CurrentZone.FullCode, eSearchOption.Fuzzy);
-                senderStation.Update(landInfo.Tissue);
+
+                sender = landInfo.Tissue;// concordBusiness.GetSenderById(CurrentZone.ID);
+                DbContext.CreateSenderWorkStation().Update(landInfo.Tissue); //更新发包方信息
+                 
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
-                    ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
+                    landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
+                    personStation.Add(landFamily.CurrentFamily);
+                    if (ImportType != eImportTypes.Over)//只更新承包方
+                    {
+                        ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
+                    }
                     familyIndex++;
 
                     string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
@@ -182,30 +185,18 @@ namespace YuLinTu.Library.Business
                     this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录,其中{5}户承包方数据被锁定!", ExcelName, landInfo.LandFamilyCollection.Count, familyCount, personCount, landCount, landInfo.LandFamilyCollection.Count - familyCount));
                 }
                 DbContext.CommitTransaction();
-                zone = null;
-                tissue = null;
+                //zone = null;
             }
             catch (Exception ex)
             {
                 DbContext.RollbackTransaction();
                 YuLinTu.Library.Log.Log.WriteException(this, "ImportLandEntity(导入地籍调查表失败!)", ex.Message + ex.StackTrace);
+                throw ex;
             }
             finally
             {
                 landInfo.Dispose();
             }
-            //foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
-            //{
-            //    int familyIndex = 1;
-            //    UpdateVirtualPerson(landFamily, familyIndex);
-            //    List<ContractLand> temp = landFamily.LandCollection.Clone() as List<ContractLand>;
-            //    if (temp.Count != 0)
-            //    {
-            //        var landStation = DbContext.CreateContractLandWorkstation();
-            //        landStation.DeleteLandByPersonID(landFamily.CurrentFamily.ID);
-            //        UpdateContractLand(temp);//导入地块
-            //    }
-            //}
         }
 
         public Zone GetParent(Zone zone)
@@ -279,62 +270,53 @@ namespace YuLinTu.Library.Business
             return (result == -2 || result > 0) ? vp : null;
         }
 
-        private VirtualPerson ImportVirtualPersonInformation(LandFamily landFamily, int familyIndex)
+        /// <summary>
+        /// 设置信息新的信息到承包方
+        /// </summary>
+        /// <returns></returns> 
+        private void SetInfoToEntity(VirtualPerson oldvp, VirtualPerson excelvp)
         {
-            bool contractorClear = ContractBusinessSettingDefine.ClearVirtualPersonData;
-            VirtualPerson vp = null;
-            try
+            if (excelvp == null || oldvp == null)
+                return;
+            oldvp.Name = excelvp.Name;
+            oldvp.Number = excelvp.Number;
+            oldvp.Address = excelvp.Address;
+            oldvp.PersonCount = excelvp.PersonCount;
+            oldvp.Telephone = excelvp.Telephone;
+            oldvp.Comment = excelvp.Comment;
+            oldvp.OldVirtualCode = excelvp.OldVirtualCode;
+            oldvp.SharePersonList = excelvp.SharePersonList;
+        }
+
+        private VirtualPerson FindVirtualPerson(LandFamily landFamily, int familyIndex)
+        {
+            //获取承包方信息 
+            var vp = remainVps.Find(c => !string.IsNullOrEmpty(c.FamilyNumber) && c.FamilyNumber == landFamily.CurrentFamily.FamilyNumber);
+            if (vp == null)
             {
-                if (contractorClear)
-                {
-                    //导入承包方(此时未被锁定的承包方已被清空,直接导入承包方数据)
-                    vp = ImportVirtualPerson(landFamily, familyIndex);
-                    if (vp == null)
-                    {
-                        ReportErrorInfo("导入承包方信息时发生错误。");
-                        return null;
-                    }
-                    if (vp != null && vp.Status == eVirtualPersonStatus.Lock)
-                    {
-                        ReportExcetionInfo(string.Format("承包方{0}被锁定,略过!", vp.Name));
-                        return null;
-                    }
-                }
-                else
-                {
-                    //获取承包方信息
-                    //vp = personBusiness.Get(landFamily.CurrentFamily.Name, CurrentZone.FullCode);
-                    vp = remainVps.Find(c => !string.IsNullOrEmpty(c.Name) && c.Name == landFamily.CurrentFamily.Name);
-                    if (vp == null)
-                    {
-                        this.ReportExcetionInfo(string.Format("承包方{0}未匹配,略过!", landFamily.CurrentFamily.Name));
-                        return null;
-                    }
-                    if (vp != null && vp.Status == eVirtualPersonStatus.Lock)
-                    {
-                        this.ReportExcetionInfo(string.Format("承包方{0}被锁定,略过!", landFamily.CurrentFamily.Name));
-                        return null;
-                    }
-                    int sourceNumber = -1;
-                    int compareNumber = -1;
-                    Int32.TryParse(vp.FamilyNumber, out sourceNumber);
-                    Int32.TryParse(landFamily.CurrentFamily.FamilyNumber, out compareNumber);
-                    if (sourceNumber != compareNumber)
-                    {
-                        this.ReportExcetionInfo(string.Format("承包方{0}编号:{1}与承包方调查表中{2}编号：{3}不一致!", vp.Name, sourceNumber, landFamily.CurrentFamily.Name, compareNumber));
-                        return null;
-                    }
-                }
+                this.ReportExcetionInfo(string.Format("承包方{0}未匹配,略过!", landFamily.CurrentFamily.Name));
+                return null;
             }
-            catch (Exception ex)
+            if (vp != null && vp.Status == eVirtualPersonStatus.Lock)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "ImportVirtualPersonInformation(导入承包方数据失败!)", ex.Message + ex.StackTrace);
-                throw new YltException("导入承包方数据失败!");
-                this.ReportError($"导入承包方数据失败!{ex.Message}");
+                this.ReportExcetionInfo(string.Format("承包方{0}被锁定,略过!", landFamily.CurrentFamily.Name));
+                return null;
+            }
+            int sourceNumber = -1;
+            int compareNumber = -1;
+            Int32.TryParse(vp.FamilyNumber, out sourceNumber);
+            Int32.TryParse(landFamily.CurrentFamily.FamilyNumber, out compareNumber);
+            if (sourceNumber != compareNumber)
+            {
+                this.ReportExcetionInfo(string.Format("承包方{0}编号:{1}与承包方调查表中{2}编号：{3}不一致!", vp.Name, sourceNumber, landFamily.CurrentFamily.Name, compareNumber));
+                return null;
             }
             return vp;
         }
 
+        /// <summary>
+        /// 内存设置更新地块信息
+        /// </summary>
         private List<ContractLand> CombinationLand(List<ContractLand> lands, VirtualPerson vp)
         {
             if (lands == null || lands.Count < 1)
@@ -374,53 +356,36 @@ namespace YuLinTu.Library.Business
             return lands;
         }
 
+        //导入地块数据
         private void ImportLandFamily(LandFamily landFamily, int familyIndex)
         {
-            VirtualPerson vp = ImportVirtualPersonInformation(landFamily, familyIndex);
-            if (vp == null)
-            {
-                return;
-            }
-
-            //导入合同信息陈泽林修改20160901
-            //if (landFamily.Concord != null && (landFamily.Concord.CountActualArea > 0 || landFamily.Concord.CountAwareArea > 0
-            //    || landFamily.Concord.CountMotorizeLandArea > 0 || landFamily.Concord.TotalTableArea > 0
-            //    || !string.IsNullOrEmpty(landFamily.Concord.ConcordNumber) || !string.IsNullOrEmpty(landFamily.Concord.ContractCredentialNumber)))
+            landFamily.LandCollection = CombinationLand(landFamily.LandCollection, landFamily.CurrentFamily);   //组合地块数据
+            //foreach (var land in landFamily.LandCollection)
             //{
-            //    ImportConcordAndRegeditBook(landFamily, vp);//导入合同及证书
+            //    land.SurveyNumber = land.CadastralNumber;
+            //    EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
+            //    for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
+            //    {
+            //        int index = land.Comment.IndexOf("(" + values[i].Description + ")");
+            //        if (index < 0)
+            //        {
+            //            index = land.Comment.IndexOf("（" + values[i].Description + "）");
+            //        }
+            //        if (index < 0)
+            //        {
+            //            continue;
+            //        }
+            //        string objValue = values[i].Value == null ? "" : ((int)values[i].Value).ToString();
+            //        land.LandCategory = objValue;
+            //        break;
+            //    }
             //}
-
-            //导入地块数据
-            landFamily.LandCollection = CombinationLand(landFamily.LandCollection, vp);   //组合地块数据
-            foreach (ContractLand land in landFamily.LandCollection)
-            {
-                //if (!string.IsNullOrEmpty(land.LandNumber) && land.LandNumber.Length >= 5)
-                //{
-                land.SurveyNumber = land.CadastralNumber; //.Substring(land.LandNumber.Length - 5);
-                //}//InitalizeAgricultureLandShare(land);
-                EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
-                for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
-                {
-                    int index = land.Comment.IndexOf("(" + values[i].Description + ")");
-                    if (index < 0)
-                    {
-                        index = land.Comment.IndexOf("（" + values[i].Description + "）");
-                    }
-                    if (index < 0)
-                    {
-                        continue;
-                    }
-                    //string objValue = this.dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB).Find(c => c.Name == values[i].Value.ToString()).Code;
-                    string objValue = values[i].Value == null ? "" : ((int)values[i].Value).ToString();
-                    land.LandCategory = objValue;
-                    break;
-                }
-            }
             List<ContractLand> temp = landFamily.LandCollection.Clone() as List<ContractLand>;
             ImportContractLand(temp);//导入地块
 
-            vp = null;
+            //vp = null;
         }
+
 
         private void ImportContractLand(List<ContractLand> lands)
         {
@@ -429,7 +394,6 @@ namespace YuLinTu.Library.Business
             Boolean.TryParse(value, out checkNumber);
             foreach (var land in lands)
             {
-                //land.ConcordId = null;
                 if (checkNumber)
                 {
                     CheckSurveyNumber(land);   //检查同村下调查编码
@@ -456,30 +420,6 @@ namespace YuLinTu.Library.Business
                         return;
                     }
                 }
-
-                //if (landBusiness.IsLandNumberReapet(land.LandNumber, land.ID, CurrentZone.FullCode))  //根据地籍号查找是否存在
-                //{
-                //    ContractLand temp = landBusiness.GetLandById(land.ID);    //得到承包地块
-                //    if (temp == null)
-                //    {
-                //        landBusiness.AddLand(land);
-                //        landCount++;
-                //        continue;
-                //    }
-                //    if (!string.IsNullOrEmpty(temp.ZoneCode)
-                //        && (temp.ZoneCode == CurrentZone.UpLevelCode || temp.ZoneCode == CurrentZone.FullCode))
-                //    {
-                //        landBusiness.Delete(temp.ID);
-                //    }
-                //    else
-                //    {
-                //        this.ReportErrorInfo("Excel中户 " + land.OwnerName + "的地块地块编码号:" + ContractLand.GetLandNumber(land.CadastralNumber) + "与" +
-                //            temp.ZoneName + "下 户" + temp.OwnerName + " 的地块地块编码重复");
-                //        isOk = false;
-                //        return;
-                //    }
-                //}
-
                 land.Name = land.Name.Replace("\0", "");
                 land.LandNumber = $"{land.LandNumber}";
                 if (land.Comment.Contains("自留地"))
@@ -489,6 +429,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 清除关联数据
+        /// </summary> 
         public void ClearLandReleationData()
         {
             int familyCount = personBusiness.CountByZone(CurrentZone.FullCode);
@@ -504,7 +447,7 @@ namespace YuLinTu.Library.Business
             {
                 //unLockFamilys = FilterContractor(familys, unLockFamilys);
                 //ClearLandInformtion(familys, unLockFamilys);
-                DeleteAllLandDataByZone(ContractBusinessSettingDefine.ClearVirtualPersonData);
+                //DeleteAllLandDataByZone(ContractBusinessSettingDefine.ClearVirtualPersonData);
             }
             catch (SystemException ex)
             {
@@ -519,31 +462,26 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        private bool DeleteAllLandDataByZone(bool vpClear)
+        private bool DeleteAllLandDataByZone(bool vpClear, eImportTypes eImport)
         {
             bool isDeleteSuccess = true;
-            try
-            {
-                var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
-                var landStation = DbContext.CreateContractLandWorkstation();
-                var concordStation = DbContext.CreateConcordStation();
-                var bookStation = DbContext.CreateRegeditBookStation();
-                var dotStation = DbContext.CreateBoundaryAddressDotWorkStation();
-                var coilStation = DbContext.CreateBoundaryAddressCoilWorkStation();
-                if (vpClear)
-                    personStation.DeleteByZoneCode(CurrentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
+            var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var landStation = DbContext.CreateContractLandWorkstation();
+            var concordStation = DbContext.CreateConcordStation();
+            var bookStation = DbContext.CreateRegeditBookStation();
+            var dotStation = DbContext.CreateBoundaryAddressDotWorkStation();
+            var coilStation = DbContext.CreateBoundaryAddressCoilWorkStation();
+            if (vpClear)
+                personStation.DeleteByZoneCode(CurrentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
 
+            if (eImport != eImportTypes.Over)
+            {
                 landStation.DeleteOtherByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
-                concordStation.DeleteOtherByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
-                bookStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 dotStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 coilStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             }
-            catch (Exception ex)
-            {
-                isDeleteSuccess = false;
-                YuLinTu.Library.Log.Log.WriteException(this, "DeleteAllLandDataByZone(清除数据失败)", ex.Message + ex.StackTrace);
-            }
+            concordStation.DeleteOtherByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
+            bookStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             return isDeleteSuccess;
         }
 

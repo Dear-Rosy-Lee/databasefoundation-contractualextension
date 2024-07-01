@@ -14,10 +14,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using YuLinTu.NetAux;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 2.界址线类别：界址线向外延伸，最近的地物如果存在线状地物或面状地物，

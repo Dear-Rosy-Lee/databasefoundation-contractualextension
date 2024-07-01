@@ -396,7 +396,7 @@ namespace YuLinTu.Library.Entity
             get { return oldVirtualCode; }
             set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
         }
-        public string oldVirtualCode;
+        private string oldVirtualCode;
 
         #endregion
         private VirtualPersonExpand expand;

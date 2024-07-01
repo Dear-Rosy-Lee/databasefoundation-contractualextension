@@ -195,7 +195,7 @@ namespace YuLinTu.Library.Business
                 return aNumber.CompareTo(bNumber);
             });
 
-            if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.oldVirtualCode))
+            if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.OldVirtualCode))
             {
                 //AccountLandFamily.GroupBy(g=>g.CurrentFamily.)
                 //var query = from d in AccountLandFamily

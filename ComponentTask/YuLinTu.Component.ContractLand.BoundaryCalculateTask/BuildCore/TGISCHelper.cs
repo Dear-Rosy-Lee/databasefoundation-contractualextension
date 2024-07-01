@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YuLinTu.NetAux;
 
-namespace YuLinTu.Library.BuildJzdx
+namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 {
     public class TGISCHelper
     {

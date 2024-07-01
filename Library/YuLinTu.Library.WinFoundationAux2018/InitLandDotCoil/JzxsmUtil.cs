@@ -14,11 +14,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YuLinTu.Library.WinFoundationAux.Util;
 using YuLinTu.NetAux;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 1.界址线说明：要求生成“j1沿西南方多少米到j2。”如:J1沿西南方2.25米到J2.

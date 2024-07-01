@@ -1,17 +1,8 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.WorkStation;
+using YuLinTu.Library.Aux;
 using YuLinTu.NetAux;
-using YuLinTu.Spatial;
-using System.Linq;
-using System.Text.RegularExpressions;
-using YuLinTu.Library.WinFoundationAux.Util;
-using YuLinTu.Data;
 
 namespace YuLinTu.Library.Business
 {

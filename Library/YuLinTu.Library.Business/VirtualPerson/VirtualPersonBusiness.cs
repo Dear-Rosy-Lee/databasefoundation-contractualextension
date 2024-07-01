@@ -306,7 +306,7 @@ namespace YuLinTu.Library.Business
                 return;
             foreach (var vp in vps)
             {
-                vp.oldVirtualCode = vp.ZoneCode.PadRight(14, '0') + vp.FamilyNumber.PadLeft(4, '0');
+                vp.OldVirtualCode = vp.ZoneCode.PadRight(14, '0') + vp.FamilyNumber.PadLeft(4, '0');
                 vp.ZoneCode = tissue.ZoneCode;
             }
             landStation.UpdatePersonList(vps);

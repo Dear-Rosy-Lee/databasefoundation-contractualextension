@@ -1,17 +1,9 @@
 ﻿using GeoAPI.Geometries;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-//using YuLinTu.Library.Entity;
 using YuLinTu.NetAux;
-using YuLinTu.NetAux.CglLib;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     public class JzdEdge
     {

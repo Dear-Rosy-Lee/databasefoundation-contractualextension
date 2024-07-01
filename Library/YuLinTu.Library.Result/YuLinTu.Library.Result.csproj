@@ -123,9 +123,9 @@
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.WinFoundationAux2018.csproj">
+    <ProjectReference Include="..\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
       <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.WinFoundationAux2018</Name>
+      <Name>YuLinTu.Library.Aux</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

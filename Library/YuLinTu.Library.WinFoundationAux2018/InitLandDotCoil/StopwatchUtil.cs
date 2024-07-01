@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     public class StopwatchUtil
     {

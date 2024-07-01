@@ -55,6 +55,8 @@ namespace YuLinTu.Library.Controls
             this.Header = header;
             this.Workpage = page;
             this.filter = filter;
+            if (!header.Contains("摸底核实"))
+                iptctl.Visibility = Visibility.Hidden;
         }
 
         #endregion

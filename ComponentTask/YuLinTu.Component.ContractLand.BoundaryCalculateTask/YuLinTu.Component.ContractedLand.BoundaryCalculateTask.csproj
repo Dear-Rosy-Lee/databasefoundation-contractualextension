@@ -201,11 +201,9 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildCore\Entities.cs" />
-    <Compile Include="BuildCore\InitLandDotCoil.cs" />
-    <Compile Include="BuildCore\InitLandDotCoilUtil.cs" />
+    <Compile Include="BuildCore\InitLandDotCoil_Shp.cs" />
+    <Compile Include="BuildCore\InitLandDotCoilUtil_Shp.cs" />
     <Compile Include="BuildCore\ShapeFileHelper.cs" />
-    <Compile Include="BuildCore\StopwatchUtil.cs" />
-    <Compile Include="BuildCore\TGISCHelper.cs" />
     <Compile Include="Entrance.cs" />
     <Compile Include="TaskPageContext.cs" />
     <Compile Include="Task\DKQlr.cs" />
@@ -253,6 +251,10 @@
       <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
       <Name>YuLinTu.Library.Resources</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.Aux</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>

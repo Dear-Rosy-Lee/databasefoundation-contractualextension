@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using YuLinTu.NetAux.CglLib;
 
-namespace YuLinTu.Library.WinFoundationAux.Util
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 坡向：y轴反方向为0顺时针旋转的角度。（含义：0表示正北方，π/2表示正东方，π表示正南方，3π/2表示正西方）

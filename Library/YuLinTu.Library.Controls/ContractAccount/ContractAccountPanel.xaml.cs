@@ -549,8 +549,7 @@ namespace YuLinTu.Library.Controls
             double summaryTableArea = 0;
             double summaryActualArea = 0;
             double summaryAwareArea = 0;
-            double? summrayContractDelayArea = 0;
-            int i = -1;
+            double? summrayContractDelayArea = 0; 
 
             foreach (var land in item.Children)
             {
@@ -2443,14 +2442,14 @@ namespace YuLinTu.Library.Controls
             if ((currentZone.Level == eZoneLevel.Group) || (currentZone.Level == eZoneLevel.Village && childrenZones.Count == 0))
             {
                 //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
-                ImportDataPage importLand = new ImportDataPage(TheWorkPage, "导入承包关系表");
+                ImportDataPage importLand = new ImportDataPage(TheWorkPage, "导入摸底核实表");
                 TheWorkPage.Page.ShowMessageBox(importLand, (b, r) =>
                 {
                     if (string.IsNullOrEmpty(importLand.FileName) || b == false)
                     {
                         return;
                     }
-                    ImportLandTiesTask(importLand.FileName);
+                    ImportLandTiesTask(importLand.FileName, importLand.ImportType);
                 });
             }
             else
@@ -2526,13 +2525,14 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        public void ImportLandTiesTask(string fileName)
+        public void ImportLandTiesTask(string fileName, eImportTypes eImport = eImportTypes.Over)
         {
-            TaskImportLandTiesTableArgument meta = new TaskImportLandTiesTableArgument();
+            var meta = new TaskImportLandTiesTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
             meta.CurrentZone = currentZone;    //当前地域
             meta.FileName = fileName;
-            TaskImportLandTiesTableOperation import = new TaskImportLandTiesTableOperation();
+            meta.ImportType = eImport;
+            var import = new TaskImportLandTiesTableOperation();
             import.Argument = meta;
             import.Description = $"导入承包关系表中地块数据-{Path.GetFileName(fileName)}";
             import.Name = $"导入承包关系表-{currentZone.Name}";

@@ -48,9 +48,9 @@ namespace YuLinTu.Library.Business
             Zone currentZone = argument.CurrentZone;
             IDbContext dbContext = argument.Database;
             List<VirtualPerson> listVps = argument.ListPerson;   //当前地域下的承包方集合
-            if (listVps.Count > 0 && !string.IsNullOrEmpty(listVps[0].oldVirtualCode))
+            if (listVps.Count > 0 && !string.IsNullOrEmpty(listVps[0].OldVirtualCode))
             {
-                listVps = listVps.OrderBy(o => o.oldVirtualCode).ToList();
+                listVps = listVps.OrderBy(o => o.OldVirtualCode).ToList();
             }
             VirtualPersonBusiness personBusiness = new VirtualPersonBusiness(dbContext);
             personBusiness.VirtualType = argument.VirtualType;

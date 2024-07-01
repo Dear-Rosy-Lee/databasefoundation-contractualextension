@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using YuLinTu.Data;
+using YuLinTu.Library.Aux;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;

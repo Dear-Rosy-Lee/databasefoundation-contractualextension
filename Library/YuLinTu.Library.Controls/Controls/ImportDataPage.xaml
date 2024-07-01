@@ -9,7 +9,7 @@
                  Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                  Height="250"
                  Width="550"
-                 Header="导入承包方">
+                 Header="导入摸底调查表">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -57,22 +57,22 @@
             </DockPanel>
 
             <Label Content="导入类型:"
-                   Visibility="Hidden"
+                   Visibility="Visible"
                    Grid.Row="1"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
-                   HorizontalContentAlignment="Left" />
+                   HorizontalContentAlignment="Left"  x:Name="iptctl"/>
             <cmps:MetroComboBox Grid.Column="1"
-                                Visibility="Hidden"
+                                Visibility="{Binding  ElementName=iptctl,Path=Visibility}"
                                 Name="cbtype"
                                 Grid.Row="1"
                                 VerticalAlignment="Center"
                                 Height="30"
                                 Padding="5,0,0,0">
                 <ComboBoxItem IsSelected="True"
-                              Tag="Ignore">覆盖原有数据</ComboBoxItem>
-                <!--<ComboBoxItem Tag="Clear">清空原有数据</ComboBoxItem>
-                    <ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
+                              Tag="Ignore">覆盖全部数据</ComboBoxItem>
+                <ComboBoxItem Tag="Over">只覆盖承包方数据</ComboBoxItem>
+                <!--<ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
             </cmps:MetroComboBox>
         </Grid>
         <Border BorderBrush="LightGray"

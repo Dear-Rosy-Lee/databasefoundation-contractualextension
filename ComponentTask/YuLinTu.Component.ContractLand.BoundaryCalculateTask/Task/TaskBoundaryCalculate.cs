@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Data;
-using YuLinTu.Library.BuildJzdx;
+using YuLinTu.Component.ContractedLand.BoundaryCalculateTask;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Log;
 using YuLinTu.NetAux;
@@ -176,7 +176,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             if (System.Configuration.ConfigurationManager.AppSettings.AllKeys.Contains("OnlyExportKeyJzd"))
                 onlykey = System.Configuration.ConfigurationManager.AppSettings["OnlyExportKeyJzd"].ToString();
 
-            var t = new InitLandDotCoil(param);
+            var t = new InitLandDotCoil_Shp(param);
             t.OnQueryCbdQlr += en =>
             {
                 var sQlr = _qlrMgr.GetQlr(en.rowid);

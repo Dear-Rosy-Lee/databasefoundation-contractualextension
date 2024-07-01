@@ -395,6 +395,7 @@ namespace YuLinTu.Library.Controls
                 terminated =>
                 {
                     MenuEnable();
+                    ShowBox("提示", "请检查数据库是否为最新的数据库，否则请升级数据库!");
                 },
                 progressChanged =>
                 {

@@ -2,15 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using YuLinTu.Library.WinFoundationAux.Util;
-//using YuLinTu.Library.Entity;
 using YuLinTu.NetAux;
-using YuLinTu.NetAux.CglLib;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 初始化界址点和界址线业务类
@@ -2526,6 +2520,7 @@ namespace YuLinTu.Library.Business
 
     public class Jzx
     {
+        public bool fInserted = false;
         /// <summary>
         /// 是否起界址点的y值小于止界址点的y值
         /// </summary>
@@ -2662,7 +2657,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 缓存界址点对应的出度的集合 
     /// </summary>
-    class JzdCache
+    public class JzdCache
     {
         private readonly InitLandDotCoil p;
         private readonly Dictionary<Coordinate, JzdEdges> _dicJzdOutEdges;

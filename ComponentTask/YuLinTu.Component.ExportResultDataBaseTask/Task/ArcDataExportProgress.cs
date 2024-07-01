@@ -15,7 +15,6 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
 using YuLinTu.Library.Result;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.NetAux;
 using YuLinTu.Spatial;
 using YuLinTu.Windows;
 
@@ -289,7 +288,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand, int numPoint, int numLine)
         {
-            using (var db = new DBSpatialite())
+            using (var db = new NetAux.DBSpatialite())
             {
                 var dbFile = dataSouce.DataSource.ConnectionString;
                 dbFile = dbFile.Substring(dbFile.IndexOf('=') + 1);
@@ -377,7 +376,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand)
         {
-            using (var db = new DBSpatialite())
+            using (var db = new NetAux.DBSpatialite())
             {
                 var dbFile = dataSouce.DataSource.ConnectionString;
                 dbFile = dbFile.Substring(dbFile.IndexOf('=') + 1);
@@ -417,7 +416,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                 #endregion 输出.prj文件需要
 
-                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
+                var exp = new Library.Business.ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
                 exp.ReportProgress += (msg, i) =>
                 {//进度
                     this.ReportProgress(i, msg);

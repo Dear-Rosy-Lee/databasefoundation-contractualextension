@@ -24,5 +24,10 @@ namespace YuLinTu.Library.Business
         /// 选择文件路径
         /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// 导入类型
+        /// </summary>
+        public eImportTypes ImportType { get; set; }
     }
 }

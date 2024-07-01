@@ -132,7 +132,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManualSlaveProcessTask", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.MapFoundation", "Component\YuLinTu.Component.MapFoundation\YuLinTu.Component.MapFoundation.csproj", "{E1E71531-E3AA-4D87-B697-349C8CC022AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Library.WinFoundationAux2018", "Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.WinFoundationAux2018.csproj", "{7B05A4EC-0279-47D1-886A-C2EECF030976}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Library.Aux", "Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj", "{7B05A4EC-0279-47D1-886A-C2EECF030976}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Library.CompareResult", "Library\YuLinTu.Library.CompareResult\YuLinTu.Library.CompareResult.csproj", "{18051D54-C6EB-4685-BF80-75544CC8FF30}"
 EndProject

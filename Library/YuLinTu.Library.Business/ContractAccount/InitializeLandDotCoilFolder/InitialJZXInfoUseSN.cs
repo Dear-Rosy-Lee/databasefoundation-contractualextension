@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using YuLinTu;
 using YuLinTu.Data;
+using YuLinTu.Library.Aux;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.NetAux;

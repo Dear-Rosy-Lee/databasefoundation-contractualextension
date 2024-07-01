@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using YuLinTu.Library.Business;
+using YuLinTu.Library.Aux;
 using YuLinTu.NetAux;
 
 namespace YuLinTu.Library.Result

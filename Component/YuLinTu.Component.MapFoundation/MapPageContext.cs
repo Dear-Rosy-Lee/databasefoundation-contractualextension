@@ -5974,7 +5974,7 @@ namespace YuLinTu.Component.MapFoundation
                 nowVirtualPerson = new VirtualPerson();
                 nowVirtualPerson.Name = newLand.OwnerName;
                 nowVirtualPerson.ZoneCode = newLandZone.FullCode;
-                nowVirtualPerson.VirtualType = eVirtualPersonType.Family;
+                nowVirtualPerson.FamilyExpand.ContractorType = eContractorType.Farmer;
                 nowVirtualPerson.Status = eVirtualPersonStatus.Right;
             }
 

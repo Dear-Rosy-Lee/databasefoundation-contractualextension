@@ -837,7 +837,7 @@ namespace YuLinTu.Library.Business
             this.ReportInfomation(string.Format("导入成功{0}个表格,失败{1}个表格", count, tableFiles.Count() - count));
         }
 
-        public bool ImportLandTies(Zone zone, string fileName)
+        public bool ImportLandTies(Zone zone, string fileName, eImportTypes eImport)
         {
             if (string.IsNullOrEmpty(fileName))
             {
@@ -862,6 +862,7 @@ namespace YuLinTu.Library.Business
                     landTableImport.Percent = 95.0;
                     landTableImport.CurrentPercent = 5.0;
                     landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
+                    landTableImport.ImportType = eImport;
                     //landTableImport.ListPerson = persons;
                     this.ReportProgress(1, "开始读取数据");
                     bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
@@ -881,7 +882,7 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                this.ReportError("导入承包台账地块调查表失败!");
+                ErrorInformation.Add("导入承包台账地块调查表失败! \n" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteException(this, "ImportData(导入承包台账调查表地块数据)", ex.Message + ex.StackTrace);
             }
             return isSuccess;

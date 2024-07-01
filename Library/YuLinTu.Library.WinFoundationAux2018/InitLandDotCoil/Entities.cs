@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 承包地字段常量
@@ -60,10 +60,17 @@ namespace YuLinTu.Library.Business
         public const string TABLE_NAME = "JZD";
         public const string ID = "ID";
         public const string DKID = "DKID";
-        ///// <summary>
-        ///// 标识码
-        ///// </summary>
-        //public const string BSM = "BSM";
+
+        /// <summary>
+        /// 标识码
+        /// </summary>
+        public const string BSM = "BSM";
+
+        /// <summary>
+        /// 标识码
+        /// </summary>
+        public const string YSDM = "YSDM";
+
         /// <summary>
         /// 统编界址点号
         /// </summary>
@@ -96,6 +103,16 @@ namespace YuLinTu.Library.Business
         /// 是否关键界址点
         /// </summary>
         public const string SFKY = "SFKY";
+
+        /// <summary>
+        /// X坐标值
+        /// </summary>
+        public const string XZBZ = "XZBZ";
+        /// <summary>
+        /// Y坐标值
+        /// </summary>
+        /// 
+        public const string YZBZ = "YZBZ";
 
         public const string JZDSSQLLX = "JZDSSQLLX";
 
@@ -156,6 +173,10 @@ namespace YuLinTu.Library.Business
         /// 是否环的最后一个点
         /// </summary>
         public bool fRingLastPoint = false;
+        /// <summary>
+        /// 是否插入的界址点
+        /// </summary>
+        public bool fInsertedPoint;
     }
 
     /// <summary>
@@ -185,7 +206,7 @@ namespace YuLinTu.Library.Business
     /// 线状地物实体
     /// </summary>
     public class XzdwEntity
-    {        
+    {
         public int rowid;
         public string DWMC;
         public string BZ;
@@ -196,7 +217,7 @@ namespace YuLinTu.Library.Business
     /// 面状地物实体
     /// </summary>
     public class MzdwEntity
-    {       
+    {
         public int rowid;
         public string DWMC;
         public string BZ;
@@ -208,6 +229,8 @@ namespace YuLinTu.Library.Business
     /// </summary>
     public class JzxFields
     {
+        public const string BSM = "BSM";
+        public const string YSDM = "YSDM";
         public const string TABLE_NAME = "JZX";
         public const string ID = "ID";
         public const string DKID = "DKBS";
@@ -273,6 +296,21 @@ namespace YuLinTu.Library.Business
         /// 界址线止点号
         /// </summary>
         public const string JZXZDH = "JZXZDH";
+
+        /// <summary>
+        ///界址线号
+        /// </summary>
+        public const string JZXH = "JZXH";
+
+        /// <summary>
+        ///起界址点号
+        /// </summary>
+        public const string QJZDH = "QJZDH";
+
+        /// <summary>
+        ///止界址点号
+        /// </summary>
+        public const string ZJZDH = "ZJZDH";
 
         public const string SHAPE = "shape";
     }

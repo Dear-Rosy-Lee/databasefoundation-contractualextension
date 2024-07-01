@@ -436,7 +436,7 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "ImportVirtualPersonInformation(导入承包方数据失败!)", ex.Message + ex.StackTrace);
+                YuLinTu.Library.Log.Log.WriteException(this, "FindVirtualPerson(导入承包方数据失败!)", ex.Message + ex.StackTrace);
                 throw new YltException("导入承包方数据失败!");
             }
             return vp;

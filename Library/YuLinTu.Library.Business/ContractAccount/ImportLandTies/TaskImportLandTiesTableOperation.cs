@@ -25,7 +25,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         protected override void OnGo()
         {
-            TaskImportLandTiesTableArgument argument = Argument as TaskImportLandTiesTableArgument;
+            var argument = Argument as TaskImportLandTiesTableArgument;
             if (argument == null)
             {
                 return;
@@ -43,11 +43,11 @@ namespace YuLinTu.Library.Business
             landBusiness.Alert += this.ReportInfo;
             landBusiness.ProgressChanged += this.ReportPercent;
             //导入地块调查表
-            bool flag = landBusiness.ImportLandTies(currentZone, fileName);
+            bool flag = landBusiness.ImportLandTies(currentZone, fileName, argument.ImportType);
             var error = landBusiness.ErrorInformation;
             if (flag == false)
             {
-                this.ReportError(string.Join(",",error));
+                this.ReportError(string.Join(",", error));
             }
             else
             {

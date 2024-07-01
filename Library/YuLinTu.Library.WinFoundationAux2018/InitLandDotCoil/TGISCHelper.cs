@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YuLinTu.NetAux;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     public class TGISCHelper
     {

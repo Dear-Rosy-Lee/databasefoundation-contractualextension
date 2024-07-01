@@ -2,19 +2,16 @@
 using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using YuLinTu.NetAux;
 
-namespace YuLinTu.Library.Business
+namespace YuLinTu.Library.Aux
 {
     /// <summary>
     /// 初始化界址点界址线辅助类
     /// </summary>
-    class InitLandDotCoilUtil
+    public class InitLandDotCoilUtil
     {
         /// <summary>
         /// 根据一组rowid集合查询对应承包地简要信息；
@@ -85,7 +82,7 @@ namespace YuLinTu.Library.Business
         /// <param name="rowids"></param>
         /// <param name="dic"></param>
         public static void QueryShortZd_cbd1(DBSpatialite db, List<int> rowids, Dictionary<int, ShortZd_cbd1> dic
-            ,double distance, Action<ShortZd_cbd1> callback)
+            , double distance, Action<ShortZd_cbd1> callback)
         {
             var xml = new XmlDocument();
 
@@ -107,7 +104,7 @@ namespace YuLinTu.Library.Business
                 en.dkGeo = g.Buffer(distance);
                 //en.EnvelopeInternal = g.EnvelopeInternal;
                 //en.EnvelopeInternal.ExpandBy(distance);
-                en.dkID = SqlUtil.GetString(r, 3);              
+                en.dkID = SqlUtil.GetString(r, 3);
                 //var xmlKzxx = SqlUtil.GetString(r, 6);
                 //if (xmlKzxx != null)
                 //{
@@ -123,7 +120,7 @@ namespace YuLinTu.Library.Business
                 //        en.zjrMc = n.InnerText;
                 //    }
                 //}
-                
+
                 dic[en.rowid] = en;//.use();
                 callback(en);
                 return true;
@@ -343,88 +340,200 @@ namespace YuLinTu.Library.Business
             try
             {
 
-               
-            jzdcache.TryGetValue(dp, out lst);
-            if (cn == 0 || (lst != null && lst.Count > 1))//如果起始点是0 或者是共点  直接返回
-                return cn;
 
-            var nlen = lenDic[cn];
-            var lkv = lenDic.Where(t => (t.Value > nlen - 50 && t.Value < nlen + 50)).ToList();
-            if (lkv.Any(t => t.Key == 0))//如果附件范围内包含起始点,直接返回
-                return 0;
-            if (lkv.Count == 2)
-            {
-                JzdEdges lst2;
-                var newPoint = lkv.Find(t => t.Key != cn).Key;
-                jzdcache.TryGetValue(r[newPoint].qJzd, out lst2);
-                if (lst != null && lst2 != null && lst2.Count != lst.Count)
-                    return lst2.Count > lst.Count ? newPoint : cn;
-            }
-            List<Coordinate> jzdList = new List<Coordinate>();
-            Coordinate c0 = null;
-            for (int i = cn; i < len; ++i)
-            {
-                if (c0 == null)
-                    c0 = r[i].qJzd;
-                jzdList.Add(r[i].qJzd);
-            }
-            for (int i = 0; i < cn; ++i)
-            {
-                jzdList.Add(r[i].qJzd);
-            }
+                jzdcache.TryGetValue(dp, out lst);
+                if (cn == 0 || (lst != null && lst.Count > 1))//如果起始点是0 或者是共点  直接返回
+                    return cn;
 
-            bool find = false;
-            int index = 0;
-            var previewPoint = jzdList.Last();
-            for (; index < jzdList.Count; index++)
-            {
-                var jzd = jzdList[index];
-                if (jzdcache.TryGetValue(jzd, out lst))
+                var nlen = lenDic[cn];
+                var lkv = lenDic.Where(t => (t.Value > nlen - 50 && t.Value < nlen + 50)).ToList();
+                if (lkv.Any(t => t.Key == 0))//如果附件范围内包含起始点,直接返回
+                    return 0;
+                if (lkv.Count == 2)
                 {
-                    //判断是否关键界址点
-                    if (lst != null && lst.Count > 1)
+                    JzdEdges lst2;
+                    var newPoint = lkv.Find(t => t.Key != cn).Key;
+                    jzdcache.TryGetValue(r[newPoint].qJzd, out lst2);
+                    if (lst != null && lst2 != null && lst2.Count != lst.Count)
+                        return lst2.Count > lst.Count ? newPoint : cn;
+                }
+                List<Coordinate> jzdList = new List<Coordinate>();
+                Coordinate c0 = null;
+                for (int i = cn; i < len; ++i)
+                {
+                    if (c0 == null)
+                        c0 = r[i].qJzd;
+                    jzdList.Add(r[i].qJzd);
+                }
+                for (int i = 0; i < cn; ++i)
+                {
+                    jzdList.Add(r[i].qJzd);
+                }
+
+                bool find = false;
+                int index = 0;
+                var previewPoint = jzdList.Last();
+                for (; index < jzdList.Count; index++)
+                {
+                    var jzd = jzdList[index];
+                    if (jzdcache.TryGetValue(jzd, out lst))
+                    {
+                        //判断是否关键界址点
+                        if (lst != null && lst.Count > 1)
+                        {
+                            find = true;
+                            break;
+                        }
+                    }
+
+                    // 保证两线段同方向的夹角
+                    var angle = 0.0;
+                    if (index == 0)
+                    {
+                        angle = (180 - CalcAngle(previewPoint.X, previewPoint.Y,
+                            jzdList[0].X, jzdList[0].Y,
+                            jzdList[index].X, jzdList[index].Y,
+                            jzdList[index + 1].X, jzdList[index + 1].Y));
+                    }
+                    else if (index == jzdList.Count - 1)
+                    {
+                        angle = (180 - CalcAngle(jzdList[index - 1].X, jzdList[index - 1].Y,
+                            jzdList[index].X, jzdList[index].Y,
+                            jzdList[index].X, jzdList[index].Y,
+                              jzdList[0].X, jzdList[0].Y));
+                    }
+                    else
+                    {
+                        angle = (180 - CalcAngle(jzdList[index - 1].X, jzdList[index - 1].Y,
+                            jzdList[index].X, jzdList[index].Y,
+                            jzdList[index].X, jzdList[index].Y,
+                            jzdList[index + 1].X, jzdList[index + 1].Y));
+                    }
+                    if (isKeyAngle(angle))
                     {
                         find = true;
                         break;
                     }
                 }
-
-                // 保证两线段同方向的夹角
-                var angle = 0.0;
-                if (index == 0)
-                {
-                    angle = (180 - CalcAngle(previewPoint.X, previewPoint.Y,
-                        jzdList[0].X, jzdList[0].Y,
-                        jzdList[index].X, jzdList[index].Y,
-                        jzdList[index + 1].X, jzdList[index + 1].Y));
-                }
-                else if (index == jzdList.Count - 1)
-                {
-                    angle = (180 - CalcAngle(jzdList[index - 1].X, jzdList[index - 1].Y,
-                        jzdList[index].X, jzdList[index].Y,
-                        jzdList[index].X, jzdList[index].Y,
-                          jzdList[0].X, jzdList[0].Y));
-                }
-                else
-                {
-                    angle = (180 - CalcAngle(jzdList[index - 1].X, jzdList[index - 1].Y,
-                        jzdList[index].X, jzdList[index].Y,
-                        jzdList[index].X, jzdList[index].Y,
-                        jzdList[index + 1].X, jzdList[index + 1].Y));
-                }
-                if (isKeyAngle(angle))
-                {
-                    find = true;
-                    break;
-                }
-            }
-            cn = cn + (find ? index : 0);
+                cn = cn + (find ? index : 0);
             }
             catch (Exception ex)
             {
-                var dd = ex.Message;              
+                var dd = ex.Message;
             }
             return cn >= r.Count ? cn - r.Count : cn;
+        }
+
+        /// <summary>
+        /// 按西北角顺时针排序
+        /// </summary>
+        /// <param name="coords">in,out</param>
+        /// <param name="fCW">输入集合coords是否按顺时针排序</param>
+        public static void SortCoordsByWNOrder(JzxRing r, bool fCW, Action<JzdEntity> callback)//, bool fContainInsertedJzd = false)
+        {
+            //System.Diagnostics.Debug.Assert(coords.Length > 0);
+            //var orderCdts = new Coordinate[coords.Length];
+            int len = r.Count;
+            //double area = 0.0f;
+            var p0 = r[0].qJzd;// coords[0];
+            double leftX = p0.X;
+            double topY = p0.Y;
+            int ip = len - 1;
+            int rowQ = 0;
+            double rowY = 0;
+            var lenDic = new Dictionary<int, double>();
+            for (int i = 1; i < len; ip = i++)
+            {
+                var p = r[ip].qJzd;
+                var q = r[i].qJzd;
+                //double a1 = p.X * q.Y;
+                //double a2 = q.X * p.Y;
+                ////area += a1 - a2;
+                //if (i > 0)
+                //{
+                if (leftX >= q.X)
+                {
+                    leftX = q.X;
+                    if (rowY < q.Y)
+                        rowQ = i;
+                }
+                if (topY < q.Y)
+                    topY = q.Y;
+                //}
+            }
+            //fCCW = area > 0;
+            double d2 = 0;
+            Coordinate dp = null;
+            int n = 0;
+            for (int i = 0; i < len; ++i)
+            {
+                var p = r[i].qJzd;
+                double dx = p.X - leftX;
+                double dy = p.Y - topY;
+                double d = dx * dx + dy * dy;
+                if (d < d2 || i == 0)
+                {
+                    d2 = d;
+                    dp = p;
+                    n = i;
+                }
+                lenDic.Add(i, d);
+            }
+            //查找起止点时 不仅是找与x最小 y最大 距离最近的点，还要与x最小的点比较 如果距离平方不超过50 并且斜率小于45 就选择x最小的点
+            if (lenDic[rowQ] != d2)
+            {
+                var tan = (dp.Y - r[rowQ].qJzd.Y) / (dp.X - r[rowQ].qJzd.X);
+                if (tan < 1)
+                    n = rowQ;
+                else
+                {
+                    for (int k = n; k > 0; k--)
+                    {
+                        var tan1 = (dp.Y - r[k].qJzd.Y) / (dp.X - r[k].qJzd.X);
+                        if (tan1 < 1 && (lenDic[k] - d2) < 50)
+                            n = k;
+                    }
+                }
+            }
+            Coordinate c0 = null;
+            if (fCW)
+            {
+                for (int i = n; i < len; ++i)
+                {
+                    var jzd = new JzdEntity() { shape = r[i].qJzd, fInsertedPoint = r[i].fInserted };
+                    callback(jzd);
+                    //if (!fContainInsertedJzd && r[i].fInserted)
+                    //    continue;
+                    //callback(r[i].qJzd);
+                }
+                for (int i = 0; i < n; ++i)
+                {
+                    var jzd = new JzdEntity() { shape = r[i].qJzd, fInsertedPoint = r[i].fInserted };
+                    callback(jzd);
+                    //if (!fContainInsertedJzd && r[i].fInserted)
+                    //    continue;
+                    //callback(r[i].qJzd);
+                }
+            }
+            else
+            {
+                for (int i = n; i >= 0; --i)
+                {
+                    var jzd = new JzdEntity() { shape = r[i].qJzd, fInsertedPoint = r[i].fInserted };
+                    callback(jzd);
+                    //if (!fContainInsertedJzd && r[i].fInserted)
+                    //    continue;
+                    //callback(r[i].qJzd);
+                }
+                for (int i = len - 1; i > n; --i)
+                {
+                    var jzd = new JzdEntity() { shape = r[i].qJzd, fInsertedPoint = r[i].fInserted };
+                    callback(jzd);
+                    //if (!fContainInsertedJzd && r[i].fInserted)
+                    //    continue;
+                    //callback(r[i].qJzd);
+                }
+            }
         }
 
         /// <summary>
@@ -584,9 +693,9 @@ namespace YuLinTu.Library.Business
                 var fieldName = fields[i];
                 if (i > 0)
                     updateSql += ",";
-                
-                 updateSql += fieldName + "=@" + fieldName;
-                
+
+                updateSql += fieldName + "=@" + fieldName;
+
             }
             updateSql += " where " + where;
             return updateSql;
@@ -627,7 +736,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 行政地域辅助类
     /// </summary>
-    class XzdyUtil
+    public class XzdyUtil
     {
         private readonly Dictionary<string, string> _dicXiang = new Dictionary<string, string>();
 

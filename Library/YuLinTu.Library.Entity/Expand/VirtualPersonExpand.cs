@@ -520,7 +520,17 @@ namespace YuLinTu.Library.Entity
         {
             get { return extendName; }
             set { extendName = value; NotifyPropertyChanged("ExtendName"); }
-        }      
+        }
+
+        /// <summary>
+        /// 变化情况
+        /// </summary>
+        public string ChangeComment
+        {
+            get { return changeComment; }
+            set { changeComment = value; NotifyPropertyChanged("ChangeComment"); }
+        }
+        private string changeComment;
 
         #endregion
 

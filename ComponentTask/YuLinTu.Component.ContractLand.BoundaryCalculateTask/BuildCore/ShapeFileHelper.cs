@@ -18,7 +18,7 @@ using System.Text;
 using YuLinTu.NetAux;
 using YuLinTu.tGISCNet;
 
-namespace YuLinTu.Library.BuildJzdx
+namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 {
     public static class ShapeFileHelper
     {

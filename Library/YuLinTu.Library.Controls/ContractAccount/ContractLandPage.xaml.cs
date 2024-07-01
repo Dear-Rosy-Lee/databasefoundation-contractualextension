@@ -9,17 +9,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.Business;
-using YuLinTu.Data;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Windows;
-using YuLinTu.Library.WorkStation;
 using Xceed.Wpf.Toolkit;
-using YuLinTu.tGIS.Client;
-using YuLinTu.Spatial;
-using YuLinTu.Library.WinFoundationAux.Util;
+using YuLinTu.Data;
+using YuLinTu.Library.Aux;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity; 
+using YuLinTu.Library.WorkStation;
 using YuLinTu.NetAux;
+using YuLinTu.Spatial;
+using YuLinTu.tGIS.Client;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
