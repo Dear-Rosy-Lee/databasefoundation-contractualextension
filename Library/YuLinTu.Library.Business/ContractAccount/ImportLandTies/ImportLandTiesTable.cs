@@ -162,7 +162,7 @@ namespace YuLinTu.Library.Business
 
                 sender = landInfo.Tissue;// concordBusiness.GetSenderById(CurrentZone.ID);
                 DbContext.CreateSenderWorkStation().Update(landInfo.Tissue); //更新发包方信息
-                 
+
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
                     landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
@@ -360,26 +360,26 @@ namespace YuLinTu.Library.Business
         private void ImportLandFamily(LandFamily landFamily, int familyIndex)
         {
             landFamily.LandCollection = CombinationLand(landFamily.LandCollection, landFamily.CurrentFamily);   //组合地块数据
-            //foreach (var land in landFamily.LandCollection)
-            //{
-            //    land.SurveyNumber = land.CadastralNumber;
-            //    EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
-            //    for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
-            //    {
-            //        int index = land.Comment.IndexOf("(" + values[i].Description + ")");
-            //        if (index < 0)
-            //        {
-            //            index = land.Comment.IndexOf("（" + values[i].Description + "）");
-            //        }
-            //        if (index < 0)
-            //        {
-            //            continue;
-            //        }
-            //        string objValue = values[i].Value == null ? "" : ((int)values[i].Value).ToString();
-            //        land.LandCategory = objValue;
-            //        break;
-            //    }
-            //}
+                                                                                                                //foreach (var land in landFamily.LandCollection)
+                                                                                                                //{
+                                                                                                                //    land.SurveyNumber = land.CadastralNumber;
+                                                                                                                //    EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
+                                                                                                                //    for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
+                                                                                                                //    {
+                                                                                                                //        int index = land.Comment.IndexOf("(" + values[i].Description + ")");
+                                                                                                                //        if (index < 0)
+                                                                                                                //        {
+                                                                                                                //            index = land.Comment.IndexOf("（" + values[i].Description + "）");
+                                                                                                                //        }
+                                                                                                                //        if (index < 0)
+                                                                                                                //        {
+                                                                                                                //            continue;
+                                                                                                                //        }
+                                                                                                                //        string objValue = values[i].Value == null ? "" : ((int)values[i].Value).ToString();
+                                                                                                                //        land.LandCategory = objValue;
+                                                                                                                //        break;
+                                                                                                                //    }
+                                                                                                                //}
             List<ContractLand> temp = landFamily.LandCollection.Clone() as List<ContractLand>;
             ImportContractLand(temp);//导入地块
 
@@ -553,7 +553,7 @@ namespace YuLinTu.Library.Business
             if (CurrentZone.Level == eZoneLevel.Group)
             {
                 string landNumber = land.LandNumber;  // ContractLand.GetLandNumber(land.CadastralNumber);
-                //List<ContractLand> landCollection = new List<ContractLand>();//DbContext.ContractLand.SL_GetCollection("CadastralNumber", CurrentZone.UpLevelCode, Data.ConditionOption.Like_LeftFixed);
+                                                      //List<ContractLand> landCollection = new List<ContractLand>();//DbContext.ContractLand.SL_GetCollection("CadastralNumber", CurrentZone.UpLevelCode, Data.ConditionOption.Like_LeftFixed);
                 List<ContractLand> lands = remainLands.FindAll(ld => ld.CadastralNumber.Substring(ld.CadastralNumber.Length > 19 ? 19 : 0) == landNumber);
                 if (lands != null && lands.Count > 0)
                 {

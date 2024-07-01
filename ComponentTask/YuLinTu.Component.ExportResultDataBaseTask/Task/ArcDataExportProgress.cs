@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using YuLinTu.Data;
+using YuLinTu.Library.Aux;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
@@ -416,7 +417,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                 #endregion 输出.prj文件需要
 
-                var exp = new Library.Business.ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
+                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
                 exp.ReportProgress += (msg, i) =>
                 {//进度
                     this.ReportProgress(i, msg);
