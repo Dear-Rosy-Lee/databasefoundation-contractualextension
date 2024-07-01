@@ -177,7 +177,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
                     fsp.CardType = entityperson.CYZJLX.IsNullOrEmpty()
                         ? eCredentialsType.IdentifyCard
-                        : (eCredentialsType) int.Parse(entityperson.CYZJLX);
+                        : (eCredentialsType)int.Parse(entityperson.CYZJLX);
                     fsp.ICN = entityperson.CYZJHM.IsNullOrEmpty() ? "" : entityperson.CYZJHM;
                     //fsp.Comment = SharePersonCommentCodeMapping(entityperson.CYBZ);
                     //if (entityperson.CYBZ == "9")
@@ -343,7 +343,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
 
             //getcbd.ActualArea = Math.Round(dk.SCMJ * 0.0015, 2);
-            getcbd.ActualArea = Library.Business.ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2); 
+            getcbd.ActualArea = Library.Business.ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
             getcbd.NeighborEast = dk.DKDZ;
             getcbd.NeighborSouth = dk.DKNZ;
             getcbd.NeighborWest = dk.DKXZ;
@@ -426,7 +426,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             FBF.Name = entityFBF.FBFMC;
             FBF.ZoneCode = zoneCode;
             FBF.LawyerName = entityFBF.FBFFZRXM;
-            FBF.LawyerCredentType = (eCredentialsType)(int.Parse(entityFBF.FZRZJLX));
+            if (entityFBF.FZRZJLX != null)
+                FBF.LawyerCredentType = (eCredentialsType)(int.Parse(entityFBF.FZRZJLX));
             FBF.LawyerCartNumber = entityFBF.FZRZJHM.IsNullOrEmpty() ? "" : entityFBF.FZRZJHM;
             FBF.LawyerTelephone = entityFBF.LXDH;
             FBF.LawyerAddress = entityFBF.FBFDZ;
@@ -757,5 +758,4 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         #endregion
 
     }
-
 }

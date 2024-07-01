@@ -34,7 +34,7 @@ namespace YuLinTu.Library.Business
         {
             try
             {
-                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\UpgradeDatabaseInformation20161031.xml";
+                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\UpgradeDatabaseFileds.xml";
                 if (!Directory.Exists(Path.GetDirectoryName(fileName)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(fileName));
@@ -68,7 +68,6 @@ namespace YuLinTu.Library.Business
                 upList.Add(fbf);
                 upList.Add(QGQZ);
                 upList.Add(QGHT);
-
                 ToolSerialization.SerializeXml(fileName, upList);
                 return true;
             }
@@ -1101,7 +1100,7 @@ namespace YuLinTu.Library.Business
         {
             try
             {
-                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\UpgradeDatabaseInformation20161031.xml";
+                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\UpgradeDatabaseFileds.xml";
                 if (!File.Exists(fileName))
                 {
                     return new List<UpgradeDatabase>();

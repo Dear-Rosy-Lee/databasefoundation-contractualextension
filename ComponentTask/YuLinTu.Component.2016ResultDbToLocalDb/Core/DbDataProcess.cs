@@ -2,15 +2,14 @@
  * (C) 2016 鱼鳞图公司版权所有,保留所有权利
 */
 
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
-using YuLinTu.Excel;
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
 {
@@ -36,6 +35,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public delegate void ReportWarningInformation(string msg);
 
         public ReportWarningInformation ReportWarningInfo { get; set; }
+
+        public bool UseZoneCode { get; set; }
 
         #endregion Properties
 
@@ -133,7 +134,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <typeparam name="T">类型</typeparam>
         /// <param name="whereString">条件语句</param>
         /// <returns></returns>
-        public List<T> GetAllHash<T>(string fieldName, string keyCode)
+        public List<T> GetDatasByKeyCode<T>(string fieldName, string keyCode)
         {
             List<T> list = new List<T>();
 
@@ -186,18 +187,31 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public DataCollectionDb GetCollection(string keyCode)
         {
             DataCollectionDb dataDb = new DataCollectionDb();
-            dataDb.CBJYQZJH = GetAllHash<CBJYQZ>(CBJYQZ.FCBJYQZBM, keyCode);
-            dataDb.QZBFJH = GetAllHash<CBJYQZ_QZBF>(CBJYQZ_QZBF.FCBJYQZBM, keyCode);
-            dataDb.QZHFJH = GetAllHash<CBJYQZ_QZHF>(CBJYQZ_QZHF.FCBJYQZBM, keyCode);
-            dataDb.QZZXJH = GetAllHash<CBJYQZ_QZZX>(CBJYQZ_QZZX.FCBJYQZBM, keyCode);
-            dataDb.FJJH = GetAllHash<QSLYZLFJ>(QSLYZLFJ.FCBJYQZBM, keyCode);
-            dataDb.HTJH = GetAllHash<CBHT>(CBHT.FCBHTBM, keyCode);
-            dataDb.JTCYJH = GetAllHash<CBF_JTCY>(CBF_JTCY.FCBFBM, keyCode);
-            dataDb.DJBJH = GetAllHash<CBJYQZDJB>(CBJYQZDJB.FCBJYQZBM, keyCode);
-            dataDb.LZHTJH = GetAllHash<LZHT>(LZHT.FCBHTBM, keyCode);
-            dataDb.FBFJH = GetAllHash<FBF>(FBF.FFBFBM, keyCode);
-            dataDb.CBFJH = GetAllHash<CBF>(CBF.FCBFBM, keyCode);
-            var dks = GetAllHash<CBDKXXSC>(CBDKXX.FDKBM, keyCode);
+            dataDb.CBJYQZJH = GetDatasByKeyCode<CBJYQZ>(CBJYQZ.FCBJYQZBM, keyCode);
+            dataDb.QZBFJH = GetDatasByKeyCode<CBJYQZ_QZBF>(CBJYQZ_QZBF.FCBJYQZBM, keyCode);
+            dataDb.QZHFJH = GetDatasByKeyCode<CBJYQZ_QZHF>(CBJYQZ_QZHF.FCBJYQZBM, keyCode);
+            dataDb.QZZXJH = GetDatasByKeyCode<CBJYQZ_QZZX>(CBJYQZ_QZZX.FCBJYQZBM, keyCode);
+            dataDb.FJJH = GetDatasByKeyCode<QSLYZLFJ>(QSLYZLFJ.FCBJYQZBM, keyCode);
+            dataDb.HTJH = GetDatasByKeyCode<CBHT>(CBHT.FCBHTBM, keyCode);
+            dataDb.JTCYJH = GetDatasByKeyCode<CBF_JTCY>(CBF_JTCY.FCBFBM, keyCode);
+            dataDb.DJBJH = GetDatasByKeyCode<CBJYQZDJB>(CBJYQZDJB.FCBJYQZBM, keyCode);
+            dataDb.LZHTJH = GetDatasByKeyCode<LZHT>(LZHT.FCBHTBM, keyCode);
+            dataDb.FBFJH = GetDatasByKeyCode<FBF>(FBF.FFBFBM, keyCode);
+            if (UseZoneCode)
+            {
+                var cbfs = GetDatasByKeyCode<CBF>(CBF.FCBFBM, keyCode);
+                dataDb.CBFJH = cbfs.ConvertAll(t =>
+                {
+                    var cbf = t.ConvertTo<CBFSC>();
+                    cbf.XZDYBM = cbf.CBFBM.Substring(0, 14);
+                    return cbf;
+                });
+            }
+            else
+            {
+                dataDb.CBFJH = GetDatasByKeyCode<CBFSC>(CBFSC.FXZDYBM, keyCode);
+            }
+            var dks = GetDatasByKeyCode<CBDKXXSC>(CBDKXX.FDKBM, keyCode);
             foreach (var item in dks)
             {
                 if (!string.IsNullOrEmpty(item.DKLB) && item.DKLB != "10")
@@ -402,7 +416,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             if (townCollection == null)
                 return dataCollection;
             dataCollection.FBFJH = FilterData(townCollection.FBFJH, searchCode, (t) => { return t.FBFBM; });
-            dataCollection.CBFJH = FilterData(townCollection.CBFJH, searchCode, (s) => { return s.CBFBM; });
+            dataCollection.CBFJH = FilterData(townCollection.CBFJH, searchCode, (s) => { return s.XZDYBM; });
             dataCollection.CBJYQZJH = FilterData(townCollection.CBJYQZJH, searchCode, (t) => { return t.CBJYQZBM; });
             dataCollection.QZBFJH = FilterData(townCollection.QZBFJH, searchCode, (t) => { return t.CBJYQZBM; });
             dataCollection.QZHFJH = FilterData(townCollection.QZHFJH, searchCode, (t) => { return t.CBJYQZBM; });

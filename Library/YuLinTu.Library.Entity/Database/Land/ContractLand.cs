@@ -1,10 +1,5 @@
 ﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Spatial;
 
@@ -1108,6 +1103,12 @@ namespace YuLinTu.Library.Entity
                 shape = value;
                 NotifyPropertyChanged("Shape");
             }
+        }
+
+        [DataColumn(Enabled = false)]
+        public string VirtualPersonCode
+        {
+            get; set;
         }
 
         #endregion Properties

@@ -2,18 +2,11 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
-using System.IO;
-using YuLinTu.Data;
-using YuLinTu.Library.Repository;
-using NetTopologySuite.IO;
 using NetTopologySuite.Features;
-using YuLinTu.Library.WorkStation;
+using NetTopologySuite.IO;
+using System.Collections.Generic;
+using System.Text;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -170,6 +163,7 @@ namespace YuLinTu.Library.Business
             if (Lang == eLanguage.CN)
             {
                 if (exportContractLandShapeDefine.NameIndex) header.AddColumn("承包方名称", 'C', 150, 0);
+                header.AddColumn("承包方户号", 'C', 20, 0);
                 if (exportContractLandShapeDefine.VPNumberIndex) header.AddColumn("证件号码", 'C', 150, 0);
                 if (exportContractLandShapeDefine.VPCommentIndex) header.AddColumn("户主备注", 'C', 250, 0);
                 if (exportContractLandShapeDefine.LandNameIndex) header.AddColumn("地块名称", 'C', 150, 0);
@@ -233,11 +227,13 @@ namespace YuLinTu.Library.Business
 
             if (Lang == eLanguage.CN)
             {
+                VirtualPerson vp = null;
+                if (ListVp != null)
+                    vp = ListVp.Find(v => v.ID == geoland.OwnerId);
                 if (exportContractLandShapeDefine.NameIndex) attributes.AddAttribute("承包方名称", geoland.OwnerName);
 
                 if (exportContractLandShapeDefine.VPNumberIndex)
                 {
-                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
                     if (vp == null)
                     {
                         attributes.AddAttribute("证件号码", "");
@@ -249,7 +245,6 @@ namespace YuLinTu.Library.Business
                 }
                 if (exportContractLandShapeDefine.VPCommentIndex)
                 {
-                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
                     if (vp == null)
                     {
                         attributes.AddAttribute("户主备注", "");
@@ -310,7 +305,6 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.IsFlyLandIndex) attributes.AddAttribute("是否飞地", geoland.IsFlyLand == true ? "是" : "否");
                 if (exportContractLandShapeDefine.VPTelephoneIndex)
                 {
-                    var vp = ListVp.Find(v => v.ID == geoland.OwnerId);
                     if (vp == null)
                     {
                         attributes.AddAttribute("电话号码", "");
@@ -380,6 +374,10 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckDateIndex) attributes.AddAttribute("审核日期", geoland.LandExpand != null ? geoland.LandExpand.CheckDate : null);
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) attributes.AddAttribute("审核意见", geoland.LandExpand != null ? geoland.LandExpand.CheckOpinion : "");
                 if (exportContractLandShapeDefine.CommentIndex) attributes.AddAttribute("备注", geoland.Comment);
+                if (vp != null)
+                {
+                    attributes.AddAttribute("承包方户号", vp.FamilyNumber);
+                }
             }
             return attributes;
         }

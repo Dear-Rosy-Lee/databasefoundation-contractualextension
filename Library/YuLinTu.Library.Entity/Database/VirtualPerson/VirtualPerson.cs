@@ -398,9 +398,17 @@ namespace YuLinTu.Library.Entity
             get { return isStockFarmer; }
             set { isStockFarmer = value; NotifyPropertyChanged("IsStockFarmer"); }
         }
-
-        #endregion 确权确股项目插件使用
-
+        /// <summary>
+        ///原承包方编码
+        /// </summary>
+        [DataColumn("YCBFBM")]
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
+        }
+        public string oldVirtualCode;
+        #endregion
         private VirtualPersonExpand expand;
 
         /// <summary>

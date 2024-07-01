@@ -310,6 +310,7 @@
     <Compile Include="Enum\eSenderArgType.cs" />
     <Compile Include="Expand\AgricultureAffairExpand.cs" />
     <Compile Include="Expand\AgricultureLandExpand.cs" />
+    <Compile Include="Expand\DivisionCodeDictionary.cs" />
     <Compile Include="Expand\FeatureTypeCode.cs" />
     <Compile Include="Expand\VirtualPersonExpand.cs" />
     <Compile Include="Enum\eGender.cs" />
@@ -328,6 +329,9 @@
     <Compile Include="Database\Zone\ZoneHelper.cs" />
     <Compile Include="Database\Zone\CadastralZone.cs" />
     <Compile Include="Database\Zone\CadastralZoneHelper.cs" />
+    <Compile Include="Expand\XBusinessDictionary.cs" />
+    <Compile Include="Expand\XDictionary.cs" />
+    <Compile Include="Expand\XDictionaryItem.cs" />
     <Compile Include="Model\BatchUpdateConcord.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

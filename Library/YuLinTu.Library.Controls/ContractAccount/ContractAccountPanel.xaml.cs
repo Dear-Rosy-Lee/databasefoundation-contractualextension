@@ -595,10 +595,17 @@ namespace YuLinTu.Library.Controls
             }
             AccountSummary.FamilyCount++;
             AccountSummary.LandCount += item.Children.Count;
-            AccountSummary.TableAreaCount = (Convert.ToDouble(AccountSummary.TableAreaCount) + summaryTableArea) + "";
-            AccountSummary.ActualAreaCount = (Convert.ToDouble(AccountSummary.ActualAreaCount) + summaryActualArea) + "";
-            AccountSummary.ArwareAreaCount = (Convert.ToDouble(AccountSummary.ArwareAreaCount) + summaryAwareArea) + "";
-            AccountSummary.ContractDelayAreaCount = (Convert.ToDouble(AccountSummary.ContractDelayAreaCount) + summrayContractDelayArea) + "";
+            AccountSummary.TableAreaCount = (ConvertDouble(AccountSummary.TableAreaCount) + summaryTableArea) + "";
+            AccountSummary.ActualAreaCount = (ConvertDouble(AccountSummary.ActualAreaCount) + summaryActualArea) + "";
+            AccountSummary.ArwareAreaCount = (ConvertDouble(AccountSummary.ArwareAreaCount) + summaryAwareArea) + "";
+            AccountSummary.ContractDelayAreaCount = (ConvertDouble(AccountSummary.ContractDelayAreaCount) + summrayContractDelayArea) + "";
+        }
+
+        private double ConvertDouble(string area)
+        {
+            if (string.IsNullOrEmpty(area.Trim()))
+                return 0;
+            return Convert.ToDouble(AccountSummary.TableAreaCount);
         }
 
         #endregion 获取数据
@@ -2107,7 +2114,7 @@ namespace YuLinTu.Library.Controls
             }
             if (CurrentLandBinding.IsStockLand)//选中确股地块
             {
-                ShowBox(ContractAccountInfo.ContractLandEdit, "请选择确权地块编辑");
+                ShowBox(ContractAccountInfo.ContractLandEdit, "选中地块为确股地块，请选择确权地块编辑");
                 return;
             }
             bool isLock = CurrentAccountItem.Tag.Status == eVirtualPersonStatus.Lock ? true : false;
@@ -2527,8 +2534,8 @@ namespace YuLinTu.Library.Controls
             meta.FileName = fileName;
             TaskImportLandTiesTableOperation import = new TaskImportLandTiesTableOperation();
             import.Argument = meta;
-            import.Description = "导入承包关系表中地块数据";
-            import.Name = "导入承包关系表";
+            import.Description = $"导入承包关系表中地块数据-{Path.GetFileName(fileName)}";
+            import.Name = $"导入承包关系表-{currentZone.Name}";
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
                 Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);

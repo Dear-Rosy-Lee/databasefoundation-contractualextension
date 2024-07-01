@@ -12,7 +12,6 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using static System.Windows.Forms.AxHost;
 
 namespace YuLinTu.Library.Controls
 {
@@ -67,6 +66,7 @@ namespace YuLinTu.Library.Controls
                     currentTissue.ID = Guid.NewGuid();
                 }
                 tempTissue = value.Clone() as CollectivityTissue;
+                tempTissue.ID = Guid.NewGuid();
                 this.DataContext = tempTissue;
                 SetComboxSelect(tempTissue);
             }
@@ -158,33 +158,56 @@ namespace YuLinTu.Library.Controls
             try
             {
                 SenderDataBusiness business = CreateBusiness();
+                var vpbs = new VirtualPersonBusiness(db);
+                var cbs = new ConcordBusiness(db);
+                var landBusiness = new AccountLandBusiness(db);
+                var crBusiness = new ContractRegeditBookBusiness(db);
+                var zBusiness = new ZoneDataBusiness(db);
+
                 Result = business.AddSender(tissue);
+                if (!Result)
+                    throw new Exception("  添加发包方出错!");
+                db.BeginTransaction();
                 if (TissueList != null && TissueList.Count > 0)
                 {
-
-                    var vpbs = new VirtualPersonBusiness(db);
-                    var cbs = new ConcordBusiness(db);
-                    var landBusiness = new AccountLandBusiness(db);
-                    var crBusiness = new ContractRegeditBookBusiness(db);
-                    var zBusiness = new ZoneDataBusiness(db);
                     int index = 1;
                     foreach (var t in TissueList)
                     {
-                        db.BeginTransaction();
                         worker.ReportProgress(index, t.Name);
                         var zonecode = t.ZoneCode;
                         vpbs.UpdataSenderCode(zonecode, tempTissue);
                         cbs.UpdataSenderCode(zonecode, tempTissue);
                         landBusiness.UpdateLands(zonecode, tempTissue);
                         crBusiness.UpdateList(zonecode, tempTissue);
-                        db.CommitTransaction();
-                        if (isdel)
-                        {
-                            business.DeleteSender(t);
-                            zBusiness.DeleteZone(t.ZoneCode);
-                        }
                         index++;
                     }
+                }
+                db.CommitTransaction();
+                vpbs.VirtualType = eVirtualType.Land;
+                var jts = vpbs.GetCollection(tissue.ZoneCode, "集体");
+                if (jts != null && jts.Count > 1)
+                {
+                    var fbms = jts.Select(t => t.ID).ToList();
+                    var lands = landBusiness.GetLandbyPersons(fbms);
+                    foreach (var item in lands)
+                    {
+                        item.OwnerId = jts[0].ID;
+                    }
+                    landBusiness.UpdateLands(lands);
+                    for (int i = 1; i < jts.Count; i++)
+                    {
+                        vpbs.Delete(jts[i].ID);
+                    }
+                }
+                foreach (var t in TissueList)
+                {
+                    if (!isdel)
+                    {
+                        continue;
+                    }
+                    business.DeleteSender(t);
+                    if (tissue.ZoneCode != t.ZoneCode)
+                        zBusiness.DeleteZone(t.ZoneCode);
                 }
                 e.Result = true;
             }
@@ -194,9 +217,17 @@ namespace YuLinTu.Library.Controls
                 e.Result = false;
                 Dispatcher.Invoke(() =>
                 {
-                    lbTip.Text = ex.Message;
+                    lbTip.Text = innermessge(ex);
+                    lbTip.Foreground = System.Windows.Media.Brushes.Red;
                 });
             }
+        }
+
+        private string innermessge(Exception ex)
+        {
+            if (ex.InnerException != null)
+                return innermessge(ex.InnerException);
+            return ex.Message;
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)

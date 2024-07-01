@@ -201,9 +201,16 @@ namespace YuLinTu.Library.Business
                 return aNumber.CompareTo(bNumber);
             });
 
+            if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.oldVirtualCode))
+            {
+                //AccountLandFamily.GroupBy(g=>g.CurrentFamily.)
+                //var query = from d in AccountLandFamily
+                //            orderby d.CurrentFamily.oldVirtualCode, d.CurrentFamily.FamilyNumber
+                //            select d;
+                //AccountLandFamily = query.ToList();
+            }
             familyCount = AccountLandFamily.Count;
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
-
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
                 toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);

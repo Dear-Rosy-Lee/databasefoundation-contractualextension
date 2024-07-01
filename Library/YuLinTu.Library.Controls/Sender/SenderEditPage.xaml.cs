@@ -173,7 +173,8 @@ namespace YuLinTu.Library.Controls
                 {
                     return;
                 }
-                if (IsNameRepeat(tempTissue) && currentTissue.ZoneCode == tempTissue.ZoneCode)
+                if (IsNameRepeat(tempTissue) && currentTissue.ZoneCode == tempTissue.ZoneCode &&
+                    currentTissue.Code == tempTissue.Code)
                 {
                     ShowBox(SenderInfo.SenderEdit, "该地域下已存在此发包方名称!", eMessageGrade.Error);
 
@@ -221,6 +222,10 @@ namespace YuLinTu.Library.Controls
                 EnumStore<eCredentialsType> type = item as EnumStore<eCredentialsType>;
                 if (type.Value == tissue.LawyerCredentType)
                     pageContent.cbCredtype.SelectedItem = item;
+            }
+            if (!tissue.Code.StartsWith(tissue.ZoneCode))
+            {
+                pageContent.mtbCode.IsEnabled = true;
             }
             //foreach (var item in pageContent.cbSenderKind.Items)
             //{

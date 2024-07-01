@@ -670,32 +670,32 @@ namespace YuLinTu.Component.MapFoundation
         {
             if (currentZone != null && yltuserseting.IsUseSelectZoneShowData)
             {
-                cbdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.ContractLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
-                zldlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.PrivateLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
-                jddlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.MotorizeLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
-                khdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.WasteLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
-                qtjttdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.CollectiveLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
+                SetWhere(cbdlayer, "DKLB = \"" + ((int)eLandCategoryType.ContractLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(zldlayer, "DKLB = \"" + ((int)eLandCategoryType.PrivateLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(jddlayer, "DKLB = \"" + ((int)eLandCategoryType.MotorizeLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(khdlayer, "DKLB = \"" + ((int)eLandCategoryType.WasteLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(qtjttdlayer, "DKLB = \"" + ((int)eLandCategoryType.CollectiveLand).ToString() + "\"" + " && " + string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
 
-                zoneBoundarylayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
-                controlPointLayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
-                farmLandLayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
+                SetWhere(zoneBoundarylayer, string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(controlPointLayer, string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(farmLandLayer, string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode));
 
                 //dczdlayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
-                dzdwlayer.Where = string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode);
-                xzdwlayer.Where = string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode);
-                mzdwlayer.Where = string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode);
-                cbdMarklayer.Where = string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode);
+                SetWhere(dzdwlayer, string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(xzdwlayer, string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(mzdwlayer, string.Format("zonecode.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(cbdMarklayer, string.Format("ZLDM.StartsWith(\"{0}\")", currentZone.FullCode));
 
-                dotLayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
-                coilLayer.Where = string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode);
+                SetWhere(dotLayer, string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode));
+                SetWhere(coilLayer, string.Format("DYBM.StartsWith(\"{0}\")", currentZone.FullCode));
             }
             else if (currentZone != null && yltuserseting.IsUseSelectZoneShowData == false)
             {
-                cbdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.ContractLand).ToString() + "\"";
-                zldlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.PrivateLand).ToString() + "\"";
-                jddlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.MotorizeLand).ToString() + "\"";
-                khdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.WasteLand).ToString() + "\"";
-                qtjttdlayer.Where = "DKLB = \"" + ((int)eLandCategoryType.CollectiveLand).ToString() + "\"";
+                SetWhere(cbdlayer, "DKLB = \"" + ((int)eLandCategoryType.ContractLand).ToString() + "\"");
+                SetWhere(zldlayer, "DKLB = \"" + ((int)eLandCategoryType.PrivateLand).ToString() + "\"");
+                SetWhere(jddlayer, "DKLB = \"" + ((int)eLandCategoryType.MotorizeLand).ToString() + "\"");
+                SetWhere(khdlayer, "DKLB = \"" + ((int)eLandCategoryType.WasteLand).ToString() + "\"");
+                SetWhere(qtjttdlayer, "DKLB = \"" + ((int)eLandCategoryType.CollectiveLand).ToString() + "\"");
 
                 zoneBoundarylayer.Where = "";
                 controlPointLayer.Where = "";
@@ -711,6 +711,14 @@ namespace YuLinTu.Component.MapFoundation
                 coilLayer.Where = "";
             }
         }
+
+        private void SetWhere(VectorLayer layer, string where)
+        {
+            if (layer == null)
+                return;
+            layer.Where = where;
+        }
+
 
         [MessageHandler(ID = EdCore.langNavigateSelectedItemChanged)]
         protected virtual void OnNavigateSelectedItemChanged(object sender, NavigateSelectedItemChangedEventArgs e)
@@ -5259,7 +5267,7 @@ namespace YuLinTu.Component.MapFoundation
                 meta.UseLandCodeBindImport = addPage.UseLandCodeBindImport;
                 meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
-       
+
                 if (meta.CurrentZone == null)
                 {
                     ShowBox("提示", "当前选择地域为空", eMessageGrade.Infomation);

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" />
   <Import Project="..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props')" />
@@ -189,7 +190,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="DotSpatial.Projections, Version=1.7.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotSpatial.Projections.1.7\lib\net40-Client\DotSpatial.Projections.dll</HintPath>
+      <HintPath>..\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Projections.Forms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=52099474f11b7ff0, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.Forms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DotSpatial.Tools, Version=1.7.0.0, Culture=neutral, PublicKeyToken=6219d88fb4baf469, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2427,6 +2433,12 @@
     <Content Include="ArcGISExplorer.ico" />
     <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Binary\YuLinTu.Appwork.Apps.Extensions.dll" />
     <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Config.xml" />
+    <None Include="Config\DivisionCodeDictionary.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\UpgradeDatabaseFileds.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Data\tGIS\Samples\California\Cities.shp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2864,6 +2876,8 @@ copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
     <Error Condition="!Exists('..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -2890,6 +2904,7 @@ copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets')" />
   <Import Project="..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
   <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -299,9 +299,6 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 更新发包方编码
         /// </summary>
-        /// <param name="oldsenderCode"></param>
-        /// <param name="newsenderCode"></param>
-        /// <param name="zonecode"></param>
         public void UpdataSenderCode(string oldsenderCode, CollectivityTissue tissue)
         {
             var vps = landStation.GetByZoneCode(oldsenderCode);
@@ -309,6 +306,7 @@ namespace YuLinTu.Library.Business
                 return;
             foreach (var vp in vps)
             {
+                vp.oldVirtualCode = vp.ZoneCode.PadRight(14, '0') + vp.FamilyNumber.PadLeft(4, '0');
                 vp.ZoneCode = tissue.ZoneCode;
             }
             landStation.UpdatePersonList(vps);
@@ -644,34 +642,26 @@ namespace YuLinTu.Library.Business
             {
                 return list;
             }
-            try
+            switch (virtualType)
             {
-                switch (virtualType)
-                {
-                    case eVirtualType.Land:
-                        list = landStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.Yard:
-                        list = yardStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.House:
-                        list = houseStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.Wood:
-                        list = woodStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.CollectiveLand:
-                        list = colleStation.GetByZoneCode(zoneCode);
-                        break;
-                    case eVirtualType.SecondTable:
-                        list = tableStation.GetByZoneCode(zoneCode);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                YuLinTu.Library.Log.Log.WriteException(this, "ZonesByCode(获取承包方数据集合)", ex.Message + ex.StackTrace);
-                this.ReportError("获取承包方数据出错," + ex.Message);
+                case eVirtualType.Land:
+                    list = landStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.Yard:
+                    list = yardStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.House:
+                    list = houseStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.Wood:
+                    list = woodStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.CollectiveLand:
+                    list = colleStation.GetByZoneCode(zoneCode);
+                    break;
+                case eVirtualType.SecondTable:
+                    list = tableStation.GetByZoneCode(zoneCode);
+                    break;
             }
             return list;
         }
@@ -1623,7 +1613,7 @@ namespace YuLinTu.Library.Business
             int successCount = 0;
             if (vps == null || vps.Count == 0 || landStation == null)
                 return successCount;
-            vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
+            //vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
             bool isNULL = argument.InitialNull;
             foreach (VirtualPerson vpi in vps)
             {

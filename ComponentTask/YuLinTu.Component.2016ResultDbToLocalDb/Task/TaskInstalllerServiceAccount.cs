@@ -26,7 +26,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public TaskInstalllerServiceAccount()
         {
             Name = "导入汇交成果数据任务";
-            Description = "导入符合农业部2539规范格式的成果数据";
+            Description = "导入符合农业部NYT-2539规范格式的成果数据";
         }
 
         #endregion
@@ -108,7 +108,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 this.ReportError("导入数据的文件路径不正确!");
                 checkResult = false;
             }
-
+            this.Name = $"{this.Name} -{Path.GetFileName(argument.ImportFilePath)}";
             return checkResult;
         }
 
