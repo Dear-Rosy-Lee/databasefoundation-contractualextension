@@ -1653,6 +1653,7 @@ namespace YuLinTu.Library.Controls
             argument.InitiallNation = page.InitiallNation;
             argument.InitiallZip = page.InitiallZip;
             argument.InitPersonComment = page.InitPersonComment;
+            argument.InitiallSex = page.InitPersonSex;
             //添加初始化共有人备注
             argument.InitSharePersonComment = page.InitSharePersonComment;
             argument.InitiallVpAddress = page.InitiallVpAddress;

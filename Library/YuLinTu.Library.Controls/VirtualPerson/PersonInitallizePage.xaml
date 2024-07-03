@@ -32,9 +32,9 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -42,7 +42,9 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <CheckBox Content="承包方编码" Click="cbCheckBox_Click" Name="cbNumber"  VerticalAlignment="Center"/>
-                    <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Margin="5,0,0,0" Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left" Width="100" VerticalAlignment="Center" Grid.ColumnSpan="2" />
+                    <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Margin="5,0,0,0" Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left" Width="110" VerticalAlignment="Center" Grid.ColumnSpan="2" />
+                    <CheckBox Content="性别" Grid.Column="3"  VerticalAlignment="Center" x:Name="cbSex" Margin="0,0,5,0" HorizontalAlignment="Right" Click="cbSex_Click"/>
+
                     <CheckBox Content="邮政编码" Grid.Row="1" Grid.Column="0" Name="cbZip" Click="cbCheckBox_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75"/>
                     <cmps:MetroTextBox Name="txtZip" PreviewKeyDown="mtbCode_PreviewKeyDown" PreviewTextInput="mtbCode_PreviewTextInput" Height="30" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbZip,Path=IsChecked}" MaxLength="6" Grid.Column="1" Grid.Row="1"/>
 
@@ -53,9 +55,9 @@
                 <StackPanel Grid.Row="1" x:Name="spBase">
                     <Grid >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
                             <!--<ColumnDefinition Width="7"/>-->
                             <ColumnDefinition Width="200"/>
                         </Grid.ColumnDefinitions>
@@ -78,7 +80,7 @@
                         <CheckBox Content="承包方地址:" VerticalAlignment="Center" Name="cbVpAddress" Margin="0,7" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtAddress" Height="30" IsEnabled="{Binding ElementName=cbVpAddress,Path=IsChecked}" Grid.Column="1" Grid.ColumnSpan="4" MaxLength="200" VerticalAlignment="Center"/>
 
-                        <CheckBox Content="调查员:"  Grid.Row="1" VerticalAlignment="Center" Name="cbSurveyPerson" Margin="0,12" Click="cbCheckBox_Click"/>
+                        <CheckBox Content="调查员:"  Grid.Row="1" VerticalAlignment="Center" Name="cbSurveyPerson" Margin="0,5" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtSurvey" Height="30"  IsEnabled="{Binding ElementName=cbSurveyPerson,Path=IsChecked}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,5"/>
                         <CheckBox Content="调查日期:" Margin="5,0,0,0" Grid.Row="1" VerticalAlignment="Center" Name="cbSurveyDate" Grid.Column="2" HorizontalAlignment="Left"  Click="cbCheckBox_Click"/>
                         <wpftoolkit:DateTimeUpDown Name="txtSurveyDate" Height="30"  IsEnabled="{Binding ElementName=cbSurveyDate,Path=IsChecked}" Format="ShortDate" 
@@ -87,7 +89,7 @@
                         <CheckBox Content="调查记事:"  VerticalAlignment="Center" Name="cbSurveyAccount" Grid.Row="2" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtSurveyInfo"  AcceptsReturn="True" TextWrapping="Wrap" Height="30"  IsEnabled="{Binding ElementName=cbSurveyAccount,Path=IsChecked}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" MaxLength="150" VerticalAlignment="Center"/>
 
-                        <CheckBox Content="审核人:" Grid.Row="3" VerticalAlignment="Center" Name="cbCheckPerson" Margin="0,12" Click="cbCheckBox_Click"/>
+                        <CheckBox Content="审核人:" Grid.Row="3" VerticalAlignment="Center" Name="cbCheckPerson" Margin="0,5" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtCheck" Height="30"   IsEnabled="{Binding ElementName=cbCheckPerson,Path=IsChecked}"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,5"/>
                         <CheckBox Content="审核日期:" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Name="cbCheckDate" HorizontalAlignment="Left" Margin="5,0,0,0" Click="cbCheckBox_Click"/>
                         <wpftoolkit:DateTimeUpDown Name="txtCheckDate" Height="30"  IsEnabled="{Binding ElementName=cbCheckDate,Path=IsChecked}"   Grid.Row="3" Format="ShortDate" Grid.Column="4" VerticalAlignment="Center" Margin="0,5"/>
@@ -95,7 +97,7 @@
                         <CheckBox Content="审核意见:" VerticalAlignment="Center" Name="cbCheckOpinion" Grid.Row="4" Margin="0,7" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtCheckInfo"  AcceptsReturn="True" TextWrapping="Wrap" Height="30" Grid.Row="4"  IsEnabled="{Binding ElementName=cbCheckOpinion,Path=IsChecked}"  Grid.Column="1" Grid.ColumnSpan="4" MaxLength="150" VerticalAlignment="Center"/>
 
-                        <CheckBox Content="公示记事人:" Grid.Row="5" VerticalAlignment="Center" Name="cbPublishAccountPerson" Margin="0,12" Click="cbCheckBox_Click"/>
+                        <CheckBox Content="公示记事人:" Grid.Row="5" VerticalAlignment="Center" Name="cbPublishAccountPerson" Margin="0,5" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtPub"  Height="30" Grid.Row="5"  IsEnabled="{Binding ElementName=cbPublishAccountPerson,Path=IsChecked}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,5"/>
                         <CheckBox Content="公示日期:" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Name="cbPublishDate" HorizontalAlignment="Left"  Margin="5,0,0,0" Click="cbCheckBox_Click"/>
                         <wpftoolkit:DateTimeUpDown Name="txtPubDate" Height="30"  IsEnabled="{Binding ElementName=cbPublishDate,Path=IsChecked}"  Format="ShortDate" Grid.Row="5" Grid.Column="4" VerticalAlignment="Center" Margin="0,5"/>
@@ -118,10 +120,10 @@
                         <CheckBox Content="承包结束日期:" VerticalAlignment="Center" Name="cbEndTime" Grid.Row="9" Grid.Column="2" Margin="5,0,0,0" Click="cbCheckBox_Click"/>
                         <wpftoolkit:DateTimeUpDown Name="txtEndTime" Height="30"  IsEnabled="{Binding ElementName=cbEndTime,Path=IsChecked}"  Format="ShortDate" Grid.Row="9" Grid.Column="3" VerticalAlignment="Center" Margin="0,5"/>
 
-                        <CheckBox Content="家庭成员备注:" Grid.Row="10" VerticalAlignment="Center" Name="cbPersonComment" Margin="0,12" Click="cbCheckBox_Click"/>
+                        <CheckBox Content="家庭成员备注:" Grid.Row="10" VerticalAlignment="Center" Name="cbPersonComment" Margin="0,5" Click="cbCheckBox_Click"/>
                         <cmps:MetroTextBox Name="txtPersonComment" Height="30"   IsEnabled="{Binding ElementName=cbPersonComment,Path=IsChecked}"  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="0,5"/>
 
-                        <CheckBox Content="共有人备注" Grid.Row="11" VerticalAlignment="Center" Name="cbSharePersonComment" Margin="0,12" Click="cbCheckBox_Click"/>
+                        <CheckBox Content="共有人备注" Grid.Row="11" VerticalAlignment="Center" Name="cbSharePersonComment" Margin="0,5" Click="cbCheckBox_Click"/>
                     </Grid>
                 </StackPanel>
             </Grid>

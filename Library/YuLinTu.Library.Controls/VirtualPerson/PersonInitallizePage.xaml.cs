@@ -3,23 +3,11 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
@@ -198,6 +186,8 @@ namespace YuLinTu.Library.Controls
         /// 初始化共有人备注
         /// </summary>
         public bool InitSharePersonComment { get; set; }
+
+        public bool InitPersonSex { get; set; }
         #endregion
 
         /// <summary>
@@ -346,7 +336,8 @@ namespace YuLinTu.Library.Controls
 
             if (!InitialContractWay && !InitConcordNumber && !InitWarrentNumber && !initiallNumber && !initiallNation && !initiallZip && !InitiallVpAddress && !InitiallSurveyPerson
                 && !InitStartTime && !InitEndTime && !InitiallSurveyDate && !InitiallSurveyAccount && !InitiallCheckPerson && !InitiallCheckDate
-                && !InitiallCheckOpinion && !InitiallPublishAccountPerson && !InitiallPublishDate && !InitiallPublishCheckPerson && !InitiallcbPublishAccount && !InitPersonComment && !InitSharePersonComment)
+                && !InitiallCheckOpinion && !InitiallPublishAccountPerson && !InitiallPublishDate && !InitiallPublishCheckPerson && !InitiallcbPublishAccount &&
+                !InitPersonComment && !InitSharePersonComment && !InitPersonSex)
             {
                 return false;
             }
@@ -509,6 +500,19 @@ namespace YuLinTu.Library.Controls
             }
             cMode = esValue.Key;
             Enum.TryParse(cMode, out eMode);
+        }
+
+        private void cbSex_Click(object sender, RoutedEventArgs e)
+        {
+            InitPersonSex = cbSex.IsChecked == null ? false : cbSex.IsChecked.Value;
+            if ((bool)cbSex.IsChecked)
+                chkNum++;
+            else
+                chkNum--;
+            if (chkNum > 0)
+                btnAdd.IsEnabled = true;
+            else
+                btnAdd.IsEnabled = false;
         }
     }
 }

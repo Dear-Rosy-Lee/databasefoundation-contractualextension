@@ -1660,6 +1660,21 @@ namespace YuLinTu.Library.Business
                             }
                             vpi.SharePersonList = list;
                         }
+                        if (argument.InitiallSex)
+                        {
+                            List<Person> list = vpi.SharePersonList;
+                            if (list != null)
+                            {
+                                list.ForEach(t =>
+                                {
+                                    if (!string.IsNullOrEmpty(t.ICN) && t.ICN.Length == 18)
+                                    {
+                                        t.Gender = ToolICN.GetAllGenderNoCheck(t.ICN);
+                                    }
+                                });
+                            }
+                            vpi.SharePersonList = list;
+                        }
 
                     }
                     if (!isNULL || (isNULL && (vpi.Address == null || vpi.Address.Trim() == string.Empty)))

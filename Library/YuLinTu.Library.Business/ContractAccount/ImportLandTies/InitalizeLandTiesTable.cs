@@ -187,6 +187,7 @@ namespace YuLinTu.Library.Business
                                 (landFamily.CurrentFamily.SourceID == null || landFamily.CurrentFamily.SourceID.Value == Guid.Empty))
                             {
                                 AddErrorMessage(this.ExcelName + string.Format("表中名称为 {0} 的承包方下家庭成员中不包含户主信息!", landFamily.CurrentFamily.Name));
+                                isOk = false;
                             }
                         }
                         originalValue = int.Parse(rowValue);
@@ -345,6 +346,8 @@ namespace YuLinTu.Library.Business
                         entity = contractLands[0].Clone() as ContractLand;
                         entity.ID = Guid.NewGuid();
                         entity.ConcordId = null;
+                        entity.Shape = null;
+                        entity.ActualArea = 0;
                         entity.LandNumber = landNumber;
                     }
                     else

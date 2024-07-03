@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
+using Microsoft.Scripting.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,11 @@ namespace YuLinTu.Library.Business
         /// 初始化民族
         /// </summary>
         public bool InitiallNation { get; set; }
+
+        /// <summary>
+        /// 初始化姓名
+        /// </summary>
+        public bool InitiallSex { get; set; }
 
         #region 初始化调查信息
 
@@ -202,6 +208,6 @@ namespace YuLinTu.Library.Business
             VirtualType = eVirtualType.Land;
         }
 
-        #endregion
+        #endregion 
     }
 }
