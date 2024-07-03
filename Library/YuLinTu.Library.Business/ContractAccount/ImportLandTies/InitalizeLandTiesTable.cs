@@ -315,10 +315,18 @@ namespace YuLinTu.Library.Business
                     landFamily.CurrentFamily.Name = familyName;
                 }
                 string typestring = GetString(allItem[currentIndex, 2]);
+                var expand = landFamily.CurrentFamily.FamilyExpand;
                 if (typestring == "单位")
-                    landFamily.CurrentFamily.FamilyExpand.ContractorType = eContractorType.Unit;
+                {
+                    expand.ContractorType = eContractorType.Unit;
+                    expand.ConstructMode = eConstructMode.OtherContractType;
+                }
                 if (typestring == "个人")
-                    landFamily.CurrentFamily.FamilyExpand.ContractorType = eContractorType.Personal;
+                {
+                    expand.ContractorType = eContractorType.Personal;
+                    expand.ConstructMode = eConstructMode.OtherContractType;
+                }
+                landFamily.CurrentFamily.FamilyExpand = expand;
             }
             AddPerson(landFamily);
         }

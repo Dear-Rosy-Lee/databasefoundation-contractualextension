@@ -20,6 +20,12 @@ namespace YuLinTu.Library.Entity
         Family = 110,
 
         /// <summary>
+        /// 其他方式承包
+        /// </summary>
+        [EntityEnumName("其他方式承包", IsLanguageName = true)]
+        OtherContractType = 120,
+
+        /// <summary>
         /// 招标
         /// </summary>
         [EntityEnumName("key41262", IsLanguageName = true)]
