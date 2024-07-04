@@ -197,7 +197,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             dataDb.DJBJH = GetDatasByKeyCode<CBJYQZDJB>(CBJYQZDJB.FCBJYQZBM, keyCode);
             dataDb.LZHTJH = GetDatasByKeyCode<LZHT>(LZHT.FCBHTBM, keyCode);
             dataDb.FBFJH = GetDatasByKeyCode<FBF>(FBF.FFBFBM, keyCode);
-            if (UseZoneCode)
+            if (!UseZoneCode)
             {
                 var cbfs = GetDatasByKeyCode<CBF>(CBF.FCBFBM, keyCode);
                 dataDb.CBFJH = cbfs.ConvertAll(t =>

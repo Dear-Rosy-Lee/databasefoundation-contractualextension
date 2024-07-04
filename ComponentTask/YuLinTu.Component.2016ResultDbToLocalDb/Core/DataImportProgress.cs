@@ -8,11 +8,13 @@ using Quality.Business.Entity;
 using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Documents;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
@@ -583,6 +585,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             db = DataBase.CreateDbContext(currentPath.DataBasePath);
             this.ReportProgress(3, "正在获取交换数据...");
             var dbProcess = new DbDataProcess(db);
+            dbProcess.UseZoneCode = ConfigurationManager.AppSettings.TryGetValue<bool>("UseZoneCode", false);
             dbProcess.ReportInfo += (info) => { this.ReportInfomation(info); };
             dbProcess.ReportWarningInfo += (warninfo) => { this.ReportWarn(warninfo); };
             var currentZoneList = dbProcess.CurrentZoneCode();//得到当前数据地域编码
