@@ -517,8 +517,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 int importcount = 0;
                 foreach (var zone in zoneCollection)
                 {
-                    if (zone.FullCode.Length == 2 && pzndic.ContainsKey(zone.FullCode))
-                        zone.Name = pzndic[zone.Code];
+                    if ((zone.FullCode.Length == 2 || zone.FullCode.Length == 4) && pzndic.ContainsKey(zone.FullCode))
+                        zone.Name = pzndic[zone.FullCode];
                     GeoAPI.Geometries.IGeometry geo = zone.Shape as GeoAPI.Geometries.IGeometry;
                     if (geo != null)
                         geo.SRID = srid;

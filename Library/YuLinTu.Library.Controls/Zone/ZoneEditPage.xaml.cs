@@ -349,7 +349,7 @@ namespace YuLinTu.Library.Controls
                 {
                     zoneItem.UpLevelName = item != null ? item.FullName : zoneItem.UpLevelName;
                     zoneItem.FullName = zoneItem.UpLevelName + zoneItem.Name;
-                    zoneItem.UpLevelName = zoneItem.Level == eZoneLevel.Province ? "中华人民共和国" : zoneItem.UpLevelName;
+                    zoneItem.UpLevelName = zoneItem.Level == eZoneLevel.Province ? "中国" : zoneItem.UpLevelName;
                 }
                 if (alterCode || alterName)
                 {
@@ -427,7 +427,7 @@ namespace YuLinTu.Library.Controls
                 {
                     di.UpLevelName = parentItem != null ? parentItem.FullName : di.UpLevelName;
                     di.FullName = di.UpLevelName + di.Name;
-                    di.UpLevelName = di.Level == eZoneLevel.Province ? "中华人民共和国" : di.UpLevelName;
+                    di.UpLevelName = di.Level == eZoneLevel.Province ? "中国" : di.UpLevelName;
                 }
                 if (alterCode || alterName)
                 {
