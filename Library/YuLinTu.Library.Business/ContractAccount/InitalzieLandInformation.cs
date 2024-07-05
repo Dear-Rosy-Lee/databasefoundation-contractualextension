@@ -64,7 +64,7 @@ namespace YuLinTu.Library.Business
                 return false;
 
             InitializeInnerLand(land, landFamily);
-            land.CadastralNumber = currentZone.FullCode + (currentZone.Level == eZoneLevel.Village ? "0000000" : "000") + value;//地籍编码为 发包方14位加3个0加地块编码
+            land.CadastralNumber = currentZone.FullCode.PadRight(17,'0') + value;//地籍编码为 发包方14位加3个0加地块编码
 
             //小地名
             value = ContractLandImportSurveyDefine.LandNameIndex > 0 ? GetString(allItem[currentIndex, ContractLandImportSurveyDefine.LandNameIndex]) : "";

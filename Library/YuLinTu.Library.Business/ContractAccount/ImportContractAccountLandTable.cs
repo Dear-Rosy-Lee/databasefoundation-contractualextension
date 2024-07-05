@@ -238,6 +238,7 @@ namespace YuLinTu.Library.Business
                 DbContext.BeginTransaction();
                 if (landInfo.LandFamilyCollection == null || landInfo.LandFamilyCollection.Count == 0)
                 {
+                    this.ReportInfomation("无数据可以导入！");
                     return false;
                 }
 
@@ -293,7 +294,7 @@ namespace YuLinTu.Library.Business
             {
                 DbContext.RollbackTransaction();
                 YuLinTu.Library.Log.Log.WriteException(this, "ImportLandEntity(导入地籍调查表失败!)", ex.Message + ex.StackTrace);
-                return ReportErrorInfo("导入时发生错误,请检查地籍表格结构或内容是否正确!");
+                return ReportErrorInfo("导入时发生错误,请检查地籍表格结构或内容是否正确! " + ex.Message);
             }
             finally
             {
@@ -353,10 +354,10 @@ namespace YuLinTu.Library.Business
             landFamily.LandCollection = CombinationLand(landFamily.LandCollection, vp);   //组合地块数据
             foreach (ContractLand land in landFamily.LandCollection)
             {
-                //if (!string.IsNullOrEmpty(land.LandNumber) && land.LandNumber.Length >= 5)
-                //{
-                land.SurveyNumber = land.CadastralNumber; //.Substring(land.LandNumber.Length - 5);
-                //}//InitalizeAgricultureLandShare(land);
+                if (!string.IsNullOrEmpty(land.LandNumber) && land.LandNumber.Length >= 5)
+                {
+                    land.SurveyNumber = land.LandNumber.Substring(land.LandNumber.Length - 5);
+                }//InitalizeAgricultureLandShare(land);
                 EnumNameAttribute[] values = EnumNameAttribute.GetAttributes(typeof(eLandCategoryType));
                 for (int i = 0; i < values.Length; i++)    //通过地块的备注给地块类别赋值
                 {
@@ -802,7 +803,8 @@ namespace YuLinTu.Library.Business
                 //}
 
                 land.Name = land.Name.Replace("\0", "");
-                land.LandNumber = $"{land.ZoneCode}{land.LandNumber}";
+                if (land.LandNumber.Length != 19)
+                    land.LandNumber = $"{land.ZoneCode}{land.SurveyNumber}";
                 if (land.Comment.Contains("自留地"))
                     land.LandCategory = "21";
                 landBusiness.AddLand(land);
