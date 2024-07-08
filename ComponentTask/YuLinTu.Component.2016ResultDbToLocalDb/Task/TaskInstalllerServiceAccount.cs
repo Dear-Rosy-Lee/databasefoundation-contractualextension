@@ -108,7 +108,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 this.ReportError("导入数据的文件路径不正确!");
                 checkResult = false;
             }
-            this.Name = $"{this.Name} -{Path.GetFileName(argument.ImportFilePath)}";
+            this.Name = $"导入汇交成果数据任务-{Path.GetFileName(argument.ImportFilePath)}";
             return checkResult;
         }
 
