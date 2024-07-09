@@ -174,6 +174,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        private string seriseNumber = "";
         #endregion Property
 
         #region Methods
@@ -1163,7 +1164,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.BookWarrantNumber + (i == 0 ? "" : i.ToString()), Book.Number);//权证编号
                 SetBookmarkValue(AgricultureBookMark.BookAllNumber + (i == 0 ? "" : i.ToString()), Book.SendOrganization + "农地承包权(" + Book.Year + ")第" + Book.RegeditNumber + "号");
                 SetBookmarkValue(AgricultureBookMark.BookSerialNumber + (i == 0 ? "" : i.ToString()), Book.SerialNumber);//六位流水号
-                SetBookmarkValue(AgricultureBookMark.BookFullSerialNumber + (i == 0 ? "" : i.ToString()), Book.SendOrganization + "农地承包权(" + Book.Year + ")第" + Book.RegeditNumber + "号");//所有权证编号(包括发证机关、年号、流水号)
+                SetBookmarkValue(AgricultureBookMark.BookFullSerialNumber + (i == 0 ? "" : i.ToString()), $"{seriseNumber}{Book.SerialNumber.PadLeft(6, '0')}号");//所有权证编号(包括发证机关、年号、流水号)
                 SetBookmarkValue(AgricultureBookMark.BookContractRegeditBookexcursus + (i == 0 ? "" : i.ToString()), Book.ContractRegeditBookExcursus);//附记
                 SetBookmarkValue(AgricultureBookMark.BookContractRegeditBookPerson + (i == 0 ? "" : i.ToString()), Book.ContractRegeditBookPerson);//登簿人
                 SetBookmarkValue(AgricultureBookMark.BookContractRegeditBookTime + (i == 0 ? "" : i.ToString()), Book.ContractRegeditBookTime.HasValue ? Book.ContractRegeditBookTime.Value.ToString("yyyy年MM月dd日") : string.Empty);//打印所有颁证日期
@@ -1317,12 +1318,13 @@ namespace YuLinTu.Library.Business
             }
             zoneName = InitalizeZoneName(CurrentZone.FullCode, Zone.ZONE_PROVICE_LENGTH);
             var simpleProvinceNamesDics = InitalizeSimpleProvice();
+            var simplenamedic = simpleProvinceNamesDics.Where(s => s.Key.Contains(zoneName)).FirstOrDefault();
+            var simplename = simplenamedic.Value != null ? simplenamedic.Value : "";
+            seriseNumber = $"{simplename}（{Book.Year}）{county.Name}农村土地承包经营权证第";
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.ProviceName + (i == 0 ? "" : i.ToString()), zoneName);
                 SetBookmarkValue(AgricultureBookMark.SmallProviceName + (i == 0 ? "" : i.ToString()), !string.IsNullOrEmpty(zoneName) ? zoneName.Substring(0, zoneName.Length - 1) : "");
-                var simplenamedic = simpleProvinceNamesDics.Where(s => s.Key.Contains(zoneName)).FirstOrDefault();
-                var simplename = simplenamedic.Value != null ? simplenamedic.Value : "";
                 SetBookmarkValue(AgricultureBookMark.SimpleProviceName + (i == 0 ? "" : i.ToString()), simplename);
             }
             zoneName = InitalizeZoneName(CurrentZone.FullCode, Zone.ZONE_CITY_LENGTH);
