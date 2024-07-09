@@ -2442,7 +2442,7 @@ namespace YuLinTu.Library.Controls
             if ((currentZone.Level == eZoneLevel.Group) || (currentZone.Level == eZoneLevel.Village && childrenZones.Count == 0))
             {
                 //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
-                ImportDataPage importLand = new ImportDataPage(TheWorkPage, "导入摸底核实表");
+                var importLand = new ImportDataPage(TheWorkPage, "导入摸底核实表");
                 TheWorkPage.Page.ShowMessageBox(importLand, (b, r) =>
                 {
                     if (string.IsNullOrEmpty(importLand.FileName) || b == false)

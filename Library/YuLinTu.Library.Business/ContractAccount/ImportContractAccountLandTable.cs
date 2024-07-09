@@ -426,6 +426,7 @@ namespace YuLinTu.Library.Business
                     }
                     int sourceNumber = -1;
                     int compareNumber = -1;
+                    landFamily.CurrentFamily.ID = vp.ID;
                     Int32.TryParse(vp.FamilyNumber, out sourceNumber);
                     Int32.TryParse(landFamily.CurrentFamily.FamilyNumber, out compareNumber);
                     if (sourceNumber != compareNumber)

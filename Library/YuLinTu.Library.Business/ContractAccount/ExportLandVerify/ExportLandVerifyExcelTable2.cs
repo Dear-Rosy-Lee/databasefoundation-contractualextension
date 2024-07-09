@@ -277,7 +277,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode}{result}");
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode.PadRight(14,'0')}{result}");
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);

@@ -259,17 +259,8 @@ namespace YuLinTu.Library.Business
 
         private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands, List<VirtualPerson> vps)
         {
-            try
-            {
-                InitalizeFamilyInformation(landFamily, vps);
-
-                InitalizeLandInformation(landFamily, contractLands);
-            }
-            catch (System.Exception ex)
-            {
-                YuLinTu.Library.Log.Log.WriteException(this, "GetExcelInformation(获取Excel表中信息失败)", ex.Message + ex.StackTrace);
-                ReportErrorInfo("读取表格信息失败，" + string.Format("请检查导入地块调查表配置是否与{0}表结构匹配", this.ExcelName));
-            }
+            InitalizeFamilyInformation(landFamily, vps);
+            InitalizeLandInformation(landFamily, contractLands);
         }
 
         private void InitalizeFamilyInformation(LandFamily landFamily, List<VirtualPerson> vps)
@@ -278,7 +269,7 @@ namespace YuLinTu.Library.Business
             if (!string.IsNullOrEmpty(vpNumber))
             {
                 var vpCode = CurrentZone.FullCode.PadRight(14, '0');
-                vpNumber = vpNumber.Remove(0, vpCode.Length).TrimStart('0');
+                vpNumber = vpNumber.Remove(0, vpCode.Length);
                 if (vpNumber == "")
                 {
 
