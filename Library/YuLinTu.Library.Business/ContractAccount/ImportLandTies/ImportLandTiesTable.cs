@@ -162,7 +162,7 @@ namespace YuLinTu.Library.Business
 
                 sender = landInfo.Tissue;// concordBusiness.GetSenderById(CurrentZone.ID);
                 DbContext.CreateSenderWorkStation().Update(landInfo.Tissue); //更新发包方信息
-
+                Log.Log.WriteError(this, "ImportLandEntity", ImportType.ToString());
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
                     landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
