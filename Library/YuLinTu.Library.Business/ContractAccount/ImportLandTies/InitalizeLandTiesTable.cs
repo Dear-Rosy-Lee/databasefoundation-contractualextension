@@ -165,17 +165,16 @@ namespace YuLinTu.Library.Business
                     string rowValue = GetString(allItem[index, 0]);//编号栏数据
                     if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
                     {
+                        if (!SetFamilyInfo(landFamily))
+                            isOk = false;
                         break;
                     }
                     string familyName = GetString(allItem[currentIndex, 1]);
                     string change = GetString(allItem[currentIndex, 34]);
                     if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
                     {
-                        if (landFamily != null)
-                        {
-                            if (!SetFamilyInfo(landFamily))
-                                isOk = false;
-                        }
+                        if (!SetFamilyInfo(landFamily))
+                            isOk = false;
                         originalValue = int.Parse(rowValue);
                         landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
                         landFamily.CurrentFamily.Name = familyName;
@@ -192,11 +191,6 @@ namespace YuLinTu.Library.Business
                         continue;
                     }
                     GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
-                    if (index == rangeCount - 1)
-                    {
-                        if (!SetFamilyInfo(landFamily))
-                            isOk = false;
-                    }
                 }
             }
             catch (Exception ex)
@@ -211,22 +205,24 @@ namespace YuLinTu.Library.Business
 
         private bool SetFamilyInfo(LandFamily landFamily)
         {
-
-            if (landFamily.CurrentFamily.FamilyExpand.ContractorType == eContractorType.Farmer)
+            if (landFamily != null)
             {
-                landFamily.CurrentFamily.PersonCount = landFamily.Persons.Count.ToString();
-                landFamily.CurrentFamily.SharePersonList = landFamily.Persons.ToList();
-            }
-            else
-            {
-                landFamily.CurrentFamily.PersonCount = "0";
-                landFamily.CurrentFamily.SharePersonList = new List<Person>();
-            }
-            if (landFamily.CurrentFamily.FamilyExpand.ContractorType == eContractorType.Farmer &&
-                (landFamily.CurrentFamily.SourceID == null || landFamily.CurrentFamily.SourceID.Value == Guid.Empty))
-            {
-                AddErrorMessage(this.ExcelName + string.Format("表中名称为 {0} 的承包方下家庭成员中不包含户主信息!", landFamily.CurrentFamily.Name));
-                return false;
+                if (landFamily.CurrentFamily.FamilyExpand.ContractorType == eContractorType.Farmer)
+                {
+                    landFamily.CurrentFamily.PersonCount = landFamily.Persons.Count.ToString();
+                    landFamily.CurrentFamily.SharePersonList = landFamily.Persons.ToList();
+                }
+                else
+                {
+                    landFamily.CurrentFamily.PersonCount = "0";
+                    landFamily.CurrentFamily.SharePersonList = new List<Person>();
+                }
+                if (landFamily.CurrentFamily.FamilyExpand.ContractorType == eContractorType.Farmer &&
+                    (landFamily.CurrentFamily.SourceID == null || landFamily.CurrentFamily.SourceID.Value == Guid.Empty))
+                {
+                    AddErrorMessage(this.ExcelName + string.Format("表中名称为 {0} 的承包方下家庭成员中不包含户主信息!", landFamily.CurrentFamily.Name));
+                    return false;
+                }
             }
             return true;
         }

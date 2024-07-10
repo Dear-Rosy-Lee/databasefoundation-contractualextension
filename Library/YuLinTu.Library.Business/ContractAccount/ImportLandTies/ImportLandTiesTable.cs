@@ -150,10 +150,10 @@ namespace YuLinTu.Library.Business
                 remainVps = personStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 remainLands = landStation.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
 
-                DbContext.BeginTransaction();
                 DeleteAllLandDataByZone(ContractBusinessSettingDefine.ClearVirtualPersonData, ImportType);
                 //ClearLandReleationData();    //清空数据
 
+                DbContext.BeginTransaction();
                 //获取目标数据源中当前地域下的所有户信息，用于之后的快速判断，减少数据库的交互次数
                 toolProgress.InitializationPercent(landInfo.LandFamilyCollection.Count, Percent, CurrentPercent);
 
