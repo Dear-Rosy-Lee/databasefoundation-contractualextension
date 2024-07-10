@@ -4669,7 +4669,7 @@ namespace YuLinTu.Library.Controls
                     meta.Database = dbContext;
                     meta.DictList = DictList;
                     meta.vps = vps;
-                    TaskExportLandShapeOperation import = new TaskExportLandShapeOperation();
+                    var  import = new TaskExportLandShapeOperation();
                     import.Argument = meta;
                     import.Description = "导出" + CurrentZone.FullName + ContractAccountInfo.ExportLandShapeData;
                     import.Name = ContractAccountInfo.ExportLandShapeData;

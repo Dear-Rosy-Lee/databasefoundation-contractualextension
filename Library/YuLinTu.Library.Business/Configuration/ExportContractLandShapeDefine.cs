@@ -13,7 +13,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 导出地块Shape数据
     /// </summary>
-   public class ExportContractLandShapeDefine: NotifyCDObject
+    public class ExportContractLandShapeDefine : NotifyCDObject
     {
         /// <summary>
         /// 地块编码截取位数
@@ -27,6 +27,20 @@ namespace YuLinTu.Library.Business
             set { landNumberGetCount = value; NotifyPropertyChanged("LandNumberGetCount"); }
         }
         private int landNumberGetCount;
+
+        /// <summary>
+        ///承包方户号
+        /// </summary>
+        [DisplayLanguage("承包方户号", IsLanguageName = false)]
+        [DescriptionLanguage("承包方户号", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
+           Builder = typeof(PropertyDescriptorBoolean))]
+        public bool FamilyIndex
+        {
+            get { return familyIndex; }
+            set { familyIndex = value; NotifyPropertyChanged("FamilyIndex"); }
+        }
+        private bool familyIndex;
 
         /// <summary>
         ///承包方名称
@@ -736,7 +750,7 @@ namespace YuLinTu.Library.Business
         }
         private bool commentIndex;
 
-       
+
 
         public ExportContractLandShapeDefine()
         {
@@ -758,7 +772,7 @@ namespace YuLinTu.Library.Business
             LandTypeIndex = true;
             IsFarmerLandIndex = false;
             ReferPersonIndex = false;
-            CommentIndex = false;          
+            CommentIndex = false;
             //SharePersonIndex = false;
             //ConcordIndex = false;
             //RegeditBookIndex = false;       
@@ -768,7 +782,7 @@ namespace YuLinTu.Library.Business
             MotorizeAreaIndex = false;
             //TotalMotorizeAreaIndex = false;       
             //TotalTableAreaIndex = false;         
-            ManagementTypeIndex = false;          
+            ManagementTypeIndex = false;
             SourceNameIndex = false;
             LandLocationIndex = false;
             ConstructModeIndex = false;
@@ -787,6 +801,7 @@ namespace YuLinTu.Library.Business
             LandCheckDateIndex = false;
             LandCheckOpinionIndex = false;
             LandNumberGetCount = 0;//截取位数默认为0
+            familyIndex = true;
         }
 
         /// <summary>
@@ -798,7 +813,7 @@ namespace YuLinTu.Library.Business
             var systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
             var profile = systemCenter.GetProfile<ExportContractLandShapeDefine>();
             var section = profile.GetSection<ExportContractLandShapeDefine>();
-            return  section.Settings;
+            return section.Settings;
         }
 
     }

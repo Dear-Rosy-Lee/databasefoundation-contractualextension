@@ -359,6 +359,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
                     qc.Execute();
                 }
                 dbContextTarget.CommitTransaction();
+                //UpgradeDatabase();
                 return creatsucess;
             }
             catch (Exception ex)
@@ -367,6 +368,16 @@ namespace YuLinTu.Component.SeparateDataBaseTask
                 Log.WriteException(this, "创建新数据库", ex.Message + ex.StackTrace);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 默认升级数据库
+        /// </summary>
+        private bool UpgradeDatabase()
+        {
+            UpdateDatabase upDatabase = new UpdateDatabase();
+            List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
+            return upDatabase.UpgradeDatabase(dbContextTarget, tableList, dbContextTarget);
         }
 
         /// <summary>

@@ -492,131 +492,125 @@ namespace YuLinTu.Library.Business
         public bool OtherDataProcess(Zone zone, CreateWorkStation createWsTarget,
             CreateWorkStation createWsLocal, bool isCoverDataByZoneLevel, bool isCombination = true)
         {
-            try
-            {
-                int result;
-                result = BatchImportData<CollectivityTissue>("发包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.SenderStation.GetTissues(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SenderStation.GetTissues(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SenderStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.SenderStation.AddRange(list); });
-                if (result == 0)
-                    return true;
+            int result;
+            result = BatchImportData<CollectivityTissue>("发包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.SenderStation.GetTissues(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SenderStation.GetTissues(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SenderStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.SenderStation.AddRange(list); });
+            if (result == 0)
+                return true;
 
-                result = BatchImportData<VirtualPerson>("承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.LandVirtualPersonStation.GetByZoneCode(zone.FullCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.LandVirtualPersonStation.GetByZoneCode(zone.FullCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.LandVirtualPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.LandVirtualPersonStation.AddRange(list); });
-                if (result == 0)
-                    return true;
+            result = BatchImportData<VirtualPerson>("承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.LandVirtualPersonStation.GetByZoneCode(zone.FullCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.LandVirtualPersonStation.GetByZoneCode(zone.FullCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.LandVirtualPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.LandVirtualPersonStation.AddRange(list); });
+            if (result == 0)
+                return true;
 
-                BatchImportData<ContractLand>("承包地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.ContractLandStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.ContractLandStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.ContractLandStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.ContractLandStation.AddRange(list); });
+            BatchImportData<ContractLand>("承包地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.ContractLandStation.GetCollection(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.ContractLandStation.GetCollection(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.ContractLandStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.ContractLandStation.AddRange(list); });
 
-                BatchImportData<BelongRelation>("权属关系", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                   (zoneCode) => { return createWsTarget.BelongRelationStation.GetdDataByZoneCode(zoneCode, eLevelOption.Self); },
-                   (zoneCode) => { return createWsLocal.BelongRelationStation.GetdDataByZoneCode(zoneCode, eLevelOption.Self); },
-                   (zoneCode) => { return createWsLocal.BelongRelationStation.DeleteByZone(zoneCode, eLevelOption.Self); },
-                   (list) => { return createWsLocal.BelongRelationStation.AddRang(list); });
+            BatchImportData<BelongRelation>("权属关系", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+               (zoneCode) => { return createWsTarget.BelongRelationStation.GetdDataByZoneCode(zoneCode, eLevelOption.Self); },
+               (zoneCode) => { return createWsLocal.BelongRelationStation.GetdDataByZoneCode(zoneCode, eLevelOption.Self); },
+               (zoneCode) => { return createWsLocal.BelongRelationStation.DeleteByZone(zoneCode, eLevelOption.Self); },
+               (list) => { return createWsLocal.BelongRelationStation.AddRang(list); });
 
-                BatchImportData<ContractConcord>("承包合同", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.ConcordStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.ConcordStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.ConcordStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.ConcordStation.AddRange(list); });
+            BatchImportData<ContractConcord>("承包合同", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.ConcordStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.ConcordStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.ConcordStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.ConcordStation.AddRange(list); });
 
-                BatchImportData<ContractRegeditBook>("承包权证", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.BookStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.BookStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.BookStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.BookStation.AddRange(list); });
+            BatchImportData<ContractRegeditBook>("承包权证", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.BookStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.BookStation.GetContractsByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.BookStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.BookStation.AddRange(list); });
 
-                BatchImportData<StockConcord>("确股合同", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.StockConcordWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.StockConcordWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.StockConcordWorkStation.DeleteByZone(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.StockConcordWorkStation.Add(list); });
+            BatchImportData<StockConcord>("确股合同", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.StockConcordWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.StockConcordWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.StockConcordWorkStation.DeleteByZone(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.StockConcordWorkStation.Add(list); });
 
-                BatchImportData<StockWarrant>("确股权证", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.StockWarrantWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.StockWarrantWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.StockWarrantWorkStation.DeleteByZone(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.StockWarrantWorkStation.Add(list); });
+            BatchImportData<StockWarrant>("确股权证", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.StockWarrantWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.StockWarrantWorkStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.StockWarrantWorkStation.DeleteByZone(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.StockWarrantWorkStation.Add(list); });
 
-                BatchImportData<SecondTableLand>("二轮台账地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondTableStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.SecondTableStation.AddRange(list); }, false);
+            BatchImportData<SecondTableLand>("二轮台账地块", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SecondTableStation.GetCollection(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SecondTableStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.SecondTableStation.AddRange(list); }, false);
 
-                BatchImportData<VirtualPerson>("二轮台账承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.SecondPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.SecondPersonStation.AddRange(list); }, false);
+            BatchImportData<VirtualPerson>("二轮台账承包方", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SecondPersonStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.SecondPersonStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.SecondPersonStation.AddRange(list); }, false);
 
-                BatchImportData<BuildLandBoundaryAddressDot>("界址点", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.DotStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.DotStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.DotStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.DotStation.AddRange(list); }, false);
+            BatchImportData<BuildLandBoundaryAddressDot>("界址点", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.DotStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.DotStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.DotStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.DotStation.AddRange(list); }, false);
 
-                BatchImportData<BuildLandBoundaryAddressCoil>("界址线", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.CoilStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.CoilStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
-                    (zoneCode) => { return createWsLocal.CoilStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
-                    (list) => { return createWsLocal.CoilStation.AddRange(list); }, false);
+            BatchImportData<BuildLandBoundaryAddressCoil>("界址线", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.CoilStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.CoilStation.GetByZoneCode(zoneCode, eLevelOption.Self); },
+                (zoneCode) => { return createWsLocal.CoilStation.DeleteByZoneCode(zoneCode, eLevelOption.Self); },
+                (list) => { return createWsLocal.CoilStation.AddRange(list); }, false);
 
-                BatchImportData<ContractRequireTable>("申请登记簿", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.RequireTableStation.GetByZoneCode(zoneCode, eSearchOption.Precision); },
-                    (zoneCode) => { return createWsLocal.RequireTableStation.GetByZoneCode(zoneCode, eSearchOption.Precision); },
-                    (zoneCode) => { return createWsLocal.RequireTableStation.DeleteByZoneCode(zoneCode, eSearchOption.Precision); },
-                    (list) => { return createWsLocal.RequireTableStation.AddRange(list); }, false);
+            BatchImportData<ContractRequireTable>("申请登记簿", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.RequireTableStation.GetByZoneCode(zoneCode, eSearchOption.Precision); },
+                (zoneCode) => { return createWsLocal.RequireTableStation.GetByZoneCode(zoneCode, eSearchOption.Precision); },
+                (zoneCode) => { return createWsLocal.RequireTableStation.DeleteByZoneCode(zoneCode, eSearchOption.Precision); },
+                (list) => { return createWsLocal.RequireTableStation.AddRange(list); }, false);
 
-                BatchImportData<FarmLandConserve>("基本农田保护区", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.FarmLandConserveStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.FarmLandConserveStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.FarmLandConserveStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.FarmLandConserveStation.AddRange(list); }, false);
+            BatchImportData<FarmLandConserve>("基本农田保护区", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.FarmLandConserveStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.FarmLandConserveStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.FarmLandConserveStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.FarmLandConserveStation.AddRange(list); }, false);
 
-                BatchImportData<DZDW>("点状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.PointStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.PointStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.PointStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.PointStation.AddRange(list); }, false);
+            BatchImportData<DZDW>("点状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.PointStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.PointStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.PointStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.PointStation.AddRange(list); }, false);
 
-                BatchImportData<XZDW>("线状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.LineStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.LineStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.LineStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.LineStation.AddRange(list); }, false);
+            BatchImportData<XZDW>("线状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.LineStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.LineStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.LineStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.LineStation.AddRange(list); }, false);
 
-                BatchImportData<MZDW>("面状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.PolygonStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.PolygonStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.PolygonStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.PolygonStation.AddRange(list); }, false);
+            BatchImportData<MZDW>("面状地物", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.PolygonStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.PolygonStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.PolygonStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.PolygonStation.AddRange(list); }, false);
 
-                BatchImportData<ControlPoint>("控制点", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.ControlPointStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.ControlPointStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.ControlPointStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.ControlPointStation.AddRange(list); }, false);
+            BatchImportData<ControlPoint>("控制点", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.ControlPointStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.ControlPointStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.ControlPointStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.ControlPointStation.AddRange(list); }, false);
 
-                BatchImportData<ZoneBoundary>("区域界线", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
-                    (zoneCode) => { return createWsTarget.ZoneBoundaryStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.ZoneBoundaryStation.GetByZoneCode(zoneCode); },
-                    (zoneCode) => { return createWsLocal.ZoneBoundaryStation.Delete(c => c.ZoneCode == zoneCode); },
-                    (list) => { return createWsLocal.ZoneBoundaryStation.AddRange(list); }, false);
-            }
-            catch
-            {
-                return false;
-            }
+            BatchImportData<ZoneBoundary>("区域界线", zone.FullCode, zone.FullName, isCoverDataByZoneLevel, isCombination,
+                (zoneCode) => { return createWsTarget.ZoneBoundaryStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.ZoneBoundaryStation.GetByZoneCode(zoneCode); },
+                (zoneCode) => { return createWsLocal.ZoneBoundaryStation.Delete(c => c.ZoneCode == zoneCode); },
+                (list) => { return createWsLocal.ZoneBoundaryStation.AddRange(list); }, false);
+
             return true;
         }
 

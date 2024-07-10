@@ -87,7 +87,7 @@ namespace YuLinTu.Component.MapFoundation
             var gettype = graphics[0].Object.Object.GetType().ToString();
             if (gettype == "YuLinTu.Library.Entity.ContractLand")
             {
-                oldNumber = graphics[0].Object.Object.GetPropertyValue("landNumber").ToString();
+                oldNumber = graphics[0].Object.Object.GetPropertyValue("LandNumber").ToString();
             }
             else
             {

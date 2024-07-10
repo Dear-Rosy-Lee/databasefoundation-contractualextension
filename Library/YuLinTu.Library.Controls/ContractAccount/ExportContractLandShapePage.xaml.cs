@@ -2,24 +2,10 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Data;
-using YuLinTu.Data.Dynamic;
-using YuLinTu.Data.Shapefile;
 using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
@@ -113,6 +99,7 @@ namespace YuLinTu.Library.Controls
             config = (section.Settings as ExportContractLandShapeDefine);   //得到经反序列化后的对象
 
             ImportDotDefine = config.Clone() as ExportContractLandShapeDefine;
+            importDotDefine.FamilyIndex = config.FamilyIndex;
 
         }
 
