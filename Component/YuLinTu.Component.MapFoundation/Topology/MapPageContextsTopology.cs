@@ -44,9 +44,9 @@ namespace YuLinTu.Component.MapFoundation
                         var entities = new List<ContractLand>();
                         items.ForEach(x =>
                         {
-                            var landId = Guid.Parse(x.Graphic.Object.Object.GetPropertyValue("ID").ToString());
-                            var entity = landBus.GetLandById(landId);
-                            entities.Add(entity);
+                            //var landId = Guid.Parse(x.Graphic.Object.Object.GetPropertyValue("ID").ToString());
+                            //var entity = landBus.GetLandById(landId);
+                            entities.Add(x.Land);
                         });
 
                         if (flag == true)
@@ -54,7 +54,16 @@ namespace YuLinTu.Component.MapFoundation
                             for (int i = 0; i < items.Count; i++)
                             {
                                 entities[i].LandNumber = entities[i].ZoneCode + items[i].SurveyNumber;
-                                landStation.Update(entities[i]);
+                                var dbland = landStation.GetByLandNumber(entities[i].LandNumber);// (l => l.ID == entities[i].ID)
+                                if (dbland != null)
+                                {
+                                    entities[i].ID = dbland.ID;
+                                    landStation.Update(entities[i]);
+                                }
+                                else
+                                {
+                                    landStation.Add(entities[i]);
+                                }
                             }
                         }
                         else

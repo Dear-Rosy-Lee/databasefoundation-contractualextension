@@ -171,6 +171,10 @@ namespace YuLinTu.Library.Business
                     {
                         ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
                     }
+                    else
+                    {
+                        landBusiness.Update(landFamily.CurrentFamily.ID, landFamily.CurrentFamily.Name);
+                    }
                     familyIndex++;
 
                     string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);

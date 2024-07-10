@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using YuLinTu.Library.Entity;
 using YuLinTu.tGIS.Client;
 
 namespace YuLinTu.Component.MapFoundation
@@ -59,6 +60,8 @@ namespace YuLinTu.Component.MapFoundation
         }
 
         public string DKMJ { get; set; }
+
+        public ContractLand Land { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

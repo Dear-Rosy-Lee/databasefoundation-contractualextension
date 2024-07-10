@@ -86,7 +86,8 @@ namespace YuLinTu.Library.Business
             var provider = ds.DataSource as IProviderShapefile;
             ClearExistFiles(provider, elementName);
             var writer = provider.CreateShapefileDataWriter(elementName);
-            writer.Header = dbaseFileHeader == null ? CreateHeader(list[0], list.Count) : dbaseFileHeader;
+            var hedear = CreateHeader(list[0], list.Count);
+            writer.Header = dbaseFileHeader == null ? hedear : dbaseFileHeader;
             writer.Header.NumRecords = list.Count;
             writer.Write(list);
             if (sr != null)
@@ -137,7 +138,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 创建要素集合
         /// </summary>
-        public abstract object GetExportSetting(object exportSetting=null);
+        public abstract object GetExportSetting(object exportSetting = null);
 
         /// <summary>
         /// 创建要素集合

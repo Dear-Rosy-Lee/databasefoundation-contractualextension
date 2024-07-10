@@ -1255,7 +1255,6 @@ namespace YuLinTu.Library.Business
             //获取地域下所有人
             List<VirtualPerson> zonePersonList = new List<VirtualPerson>();
             zonePersonList = landVirtualPersonStation.GetByZoneCode(zone.FullCode, eLevelOption.Self);
-            DeleteLandByZoneCode(zone.FullCode);
 
             ContractLand addZoneLand;
             VirtualPerson addPerson = null;
@@ -1311,12 +1310,14 @@ namespace YuLinTu.Library.Business
             dbContext.BeginTransaction();
             try
             {
+                DeleteLandByZoneCode(zone.FullCode);
+
                 for (int i = 0; i < addPersonList.Count; i++)
                 {
                     addZoneLand = new ContractLand();
                     var resLand = new ContractLand();
-
                     resLand = modifyContractLandinfo(addZoneLand, addData[i], allGetSelectColList, zoneNameInfo, i);
+
                     currentPercent = currentPercent + indexZonePercent;
                     if (resLand == null)
                     {
@@ -1335,7 +1336,7 @@ namespace YuLinTu.Library.Business
                     int resultInt = AddLand(resLand);
                     if (resultInt == -1) continue;
                     successCount++;
-                    this.ReportProgress((int)currentPercent, string.Format("{0}", zoneNameInfo + addPersonList[i].Name));
+                    this.ReportProgress((int)currentPercent, $"{zoneNameInfo + addPersonList[i].Name}({successCount}/{addPersonList.Count}");
                 }
                 this.ReportInfomation(string.Format("{0}共导入{1}条信息", zoneNameInfo, successCount));
                 dbContext.CommitTransaction();
@@ -1377,18 +1378,19 @@ namespace YuLinTu.Library.Business
             }
             targetLand.OwnerName = PropertString(shapeData, infoList, selectColNameList, "NameIndex");
             targetLand.Name = PropertString(shapeData, infoList, selectColNameList, "LandNameIndex");
-            if ((string)infoList[4].GetValue(ImportLandShapeInfoDefine, null) != "None")
-            {
-                if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]) != null)
-                {
-                    targetLand.LandNumber = (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]).ToString()).TrimEnd('\0');
-                }
-            }
+            targetLand.LandNumber = PropertString(shapeData, infoList, selectColNameList, "CadastralNumberIndex");
+            //if ((string)infoList[4].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            //{
+            //    if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]) != null)
+            //    {
+            //        targetLand.LandNumber = (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[3]).ToString()).TrimEnd('\0');
+            //    }
+            //}
             if ((string)infoList[5].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[4]) != null)
+                if (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[5]) != null)
                 {
-                    targetLand.SurveyNumber = (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[4]).ToString()).TrimEnd('\0');
+                    targetLand.SurveyNumber = (ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[5]).ToString()).TrimEnd('\0');
                 }
             }
             else
@@ -1408,14 +1410,14 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[6].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.ImageNumber = GetproertValue(shapeData, selectColNameList[5]);
+                expand.ImageNumber = GetproertValue(shapeData, selectColNameList[6]);
             }
             if ((string)infoList[7].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 double getTableArea = 0.0;
                 try
                 {
-                    var tableArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[6]);
+                    var tableArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[7]);
                     if (tableArea == null)
                         getTableArea = 0.0;
                     else
@@ -1433,7 +1435,7 @@ namespace YuLinTu.Library.Business
                 double getActualArea = 0.0;
                 try
                 {
-                    var actualArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[7]);
+                    var actualArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[8]);
                     if (actualArea == null)
                     {
                         double area = targetLand.Shape.Area();
@@ -1453,23 +1455,23 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[9].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.NeighborEast = GetproertValue(shapeData, selectColNameList[8]);
+                targetLand.NeighborEast = GetproertValue(shapeData, selectColNameList[9]);
             }
             if ((string)infoList[10].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.NeighborSouth = GetproertValue(shapeData, selectColNameList[9]);
+                targetLand.NeighborSouth = GetproertValue(shapeData, selectColNameList[10]);
             }
             if ((string)infoList[11].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.NeighborWest = GetproertValue(shapeData, selectColNameList[10]);
+                targetLand.NeighborWest = GetproertValue(shapeData, selectColNameList[11]);
             }
             if ((string)infoList[12].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.NeighborNorth = GetproertValue(shapeData, selectColNameList[11]);
+                targetLand.NeighborNorth = GetproertValue(shapeData, selectColNameList[12]);
             }
             if ((string)infoList[13].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = (GetproertValue(shapeData, selectColNameList[12]));
+                string s = (GetproertValue(shapeData, selectColNameList[13]));
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
                 if (isNumeric)
                 {
@@ -1491,7 +1493,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[14].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                var fieldvalue = GetproertValue(shapeData, selectColNameList[13]);
+                var fieldvalue = GetproertValue(shapeData, selectColNameList[14]);
 
                 var dictDLDJ = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == fieldvalue && c.GroupCode == DictionaryTypeInfo.DLDJ);
                 if (dictDLDJ == null)
@@ -1508,7 +1510,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[14]);
+                string s = GetproertValue(shapeData, selectColNameList[15]);
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
                 if (isNumeric)
                 {
@@ -1533,7 +1535,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[16].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                var value = GetproertValue(shapeData, selectColNameList[15]);
+                var value = GetproertValue(shapeData, selectColNameList[16]);
                 if (value.IsNullOrEmpty())
                 {
                     //this.ReportError(string.Format("当前Shape数据是否基本农田名称'{0}'错误，无法入库", ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[14]) as string));
@@ -1548,11 +1550,11 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[17].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.ReferPerson = GetproertValue(shapeData, selectColNameList[16]);
+                expand.ReferPerson = GetproertValue(shapeData, selectColNameList[17]);
             }
             if ((string)infoList[18].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[17]);
+                string s = GetproertValue(shapeData, selectColNameList[18]);
                 bool isNumeric = Regex.IsMatch(s, @"^\d+$");
                 if (isNumeric)
                 {
@@ -1584,7 +1586,7 @@ namespace YuLinTu.Library.Business
                 double getAwareArea = 0.0;
                 try
                 {
-                    var awareArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[18]);
+                    var awareArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[19]);
                     if (awareArea != null)
                         getAwareArea = (double)awareArea;
                 }
@@ -1599,7 +1601,7 @@ namespace YuLinTu.Library.Business
             {
                 try
                 {
-                    var motorizeArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[19]);
+                    var motorizeArea = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[20]);
                     if (motorizeArea != null)
                         targetLand.MotorizeLandArea = (double)motorizeArea;
                 }
@@ -1611,7 +1613,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[21].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[20]);
+                string s = GetproertValue(shapeData, selectColNameList[21]);
                 var dictCBFS = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.CBJYQQDFS);
                 if (dictCBFS == null)
                 {
@@ -1625,11 +1627,11 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[22].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.PlotNumber = GetproertValue(shapeData, selectColNameList[21]);
+                targetLand.PlotNumber = GetproertValue(shapeData, selectColNameList[22]);
             }
             if ((string)infoList[23].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[22]);
+                string s = GetproertValue(shapeData, selectColNameList[23]);
                 var dictZZLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.ZZLX);
                 if (dictZZLX == null)
                 {
@@ -1643,7 +1645,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[24].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[23]);
+                string s = GetproertValue(shapeData, selectColNameList[24]);
                 var dictJYFS = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.JYFS);
                 if (dictJYFS == null)
                 {
@@ -1658,7 +1660,7 @@ namespace YuLinTu.Library.Business
             if ((string)infoList[25].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 //targetLand.PlantType = GetproertValue(shapeData, selectColNameList[23]);
-                string s = GetproertValue(shapeData, selectColNameList[24]);
+                string s = GetproertValue(shapeData, selectColNameList[25]);
                 var dictGBLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.GBZL);
                 if (dictGBLX == null)
                 {
@@ -1672,15 +1674,15 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[26].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.FormerPerson = GetproertValue(shapeData, selectColNameList[25]);
+                targetLand.FormerPerson = GetproertValue(shapeData, selectColNameList[26]);
             }
             if ((string)infoList[27].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[26]);
+                targetLand.ZoneName = GetproertValue(shapeData, selectColNameList[27]);
             }
             if ((string)infoList[28].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[27]);
+                string s = GetproertValue(shapeData, selectColNameList[28]);
                 bool boolValue = s == "是" || s == "true" || s == "True" || s == "TRUE" ? true : false;
                 if (s.IsNullOrEmpty())
                 {
@@ -1694,7 +1696,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[29].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                string s = GetproertValue(shapeData, selectColNameList[28]);
+                string s = GetproertValue(shapeData, selectColNameList[29]);
                 var dictLZLX = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == s && c.GroupCode == DictionaryTypeInfo.LZLX);
                 if (dictLZLX == null)
                 {
@@ -1706,7 +1708,7 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[30].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                Object obj = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[29]);
+                Object obj = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[30]);
                 if (obj == null)
                     targetLand.TransferTime = null;
                 else
@@ -1718,7 +1720,7 @@ namespace YuLinTu.Library.Business
                 {
                     //object obj = ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[29]);
                     //string s = obj.ToString();
-                    targetLand.PertainToArea = double.Parse(ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[30]).ToString());
+                    targetLand.PertainToArea = double.Parse(ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[31]).ToString());
                 }
                 catch
                 {
@@ -1728,13 +1730,13 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[32].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.SurveyPerson = GetproertValue(shapeData, selectColNameList[31]);
+                expand.SurveyPerson = GetproertValue(shapeData, selectColNameList[32]);
             }
             if ((string)infoList[33].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
-                    var datetime = GetproertValue(shapeData, selectColNameList[32]);
+                    var datetime = GetproertValue(shapeData, selectColNameList[33]);
                     if (datetime == "" || datetime == null)
                     {
                         expand.SurveyDate = null;
@@ -1752,17 +1754,17 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[34].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.SurveyChronicle = GetproertValue(shapeData, selectColNameList[33]);
+                expand.SurveyChronicle = GetproertValue(shapeData, selectColNameList[34]);
             }
             if ((string)infoList[35].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.CheckPerson = GetproertValue(shapeData, selectColNameList[34]);
+                expand.CheckPerson = GetproertValue(shapeData, selectColNameList[35]);
             }
             if ((string)infoList[36].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
                 try
                 {
-                    var datetime = GetproertValue(shapeData, selectColNameList[35]);
+                    var datetime = GetproertValue(shapeData, selectColNameList[36]);
                     if (datetime == "" || datetime == null)
                     {
                         expand.CheckDate = null;
@@ -1780,15 +1782,15 @@ namespace YuLinTu.Library.Business
             }
             if ((string)infoList[37].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                expand.CheckOpinion = GetproertValue(shapeData, selectColNameList[36]);
+                expand.CheckOpinion = GetproertValue(shapeData, selectColNameList[37]);
             }
             if ((string)infoList[38].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                targetLand.Comment = GetproertValue(shapeData, selectColNameList[37]);
+                targetLand.Comment = GetproertValue(shapeData, selectColNameList[38]);
             }
             if ((string)infoList[39].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
-                var value = GetproertValue(shapeData, selectColNameList[38]);
+                var value = GetproertValue(shapeData, selectColNameList[39]);
                 targetLand.AliasNameA = value == null ? "" : value.Trim();
             }
             targetLand.ExpandInfo = ToolSerialize.SerializeXmlString<AgricultureLandExpand>(expand);

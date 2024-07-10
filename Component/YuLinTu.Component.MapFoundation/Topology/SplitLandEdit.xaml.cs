@@ -59,7 +59,8 @@ namespace YuLinTu.Component.MapFoundation
 
         public void Uninstall()
         {
-            layerHover.Graphics.Clear();
+            if (layerHover != null)
+                layerHover.Graphics.Clear();
             map.Layers.Remove(layerHover);
             layerHover = null;
             map = null;
@@ -87,12 +88,14 @@ namespace YuLinTu.Component.MapFoundation
             var gettype = graphics[0].Object.Object.GetType().ToString();
             if (gettype == "YuLinTu.Library.Entity.ContractLand")
             {
-                oldNumber = graphics[0].Object.Object.GetPropertyValue("LandNumber").ToString();
+                var ep = graphics[0].Object.Object.GetPropertyValue("OldLandNumber");
+                oldNumber = ep == null ? "" : ep.ToString();
             }
             else
             {
                 oldNumber = graphics[0].Object.Object.GetPropertyValue("DKBM").ToString();
             }
+            oldNumber = oldNumber.Length > 5 ? oldNumber.Substring(oldNumber.Length - 5) : "";
             graphics.ForEach(c =>
             {
                 var item = new SplitItem();
@@ -101,10 +104,10 @@ namespace YuLinTu.Component.MapFoundation
                 if (tpye == "YuLinTu.Library.Entity.ContractLand")
                 {
                     var land = c.Object.Object as ContractLand;
+                    item.Land = land;
                     item.Text = land.OwnerName;
-                    item.OldNumber = oldNumber.Substring(land.LandNumber.Length - 5);
-                    var landNumber = int.Parse(land.LandNumber.Substring(land.LandNumber.Length - 5)) + 1;
-                    item.SurveyNumber = landNumber.ToString().PadLeft(5, '0');
+                    item.OldNumber = oldNumber;
+                    item.SurveyNumber = land.SurveyNumber;// landNumber.ToString().PadLeft(5, '0');
                     item.NewNumber = item.SurveyNumber;
                     item.Flag = Visibility.Visible;
                     item.DKMJ = land.AwareArea.ToString();
@@ -144,6 +147,11 @@ namespace YuLinTu.Component.MapFoundation
 
         private void MetroButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Owner == null)
+            {
+                this.Close();
+                return;
+            }
             Owner.ShowDialog(new MessageDialog()
             {
                 Message = "是否确定地块编码编辑完成并保存？",

@@ -371,6 +371,8 @@ namespace YuLinTu.Component.MapFoundation
 
                 if (drawGeoLine != null && selectGeometryCollection != null)
                 {
+                    string number = landbus.GetNewLandNumber(currentZoneCode);
+                    int numindx = int.Parse(number.Substring(number.Length - 5, 5));
                     //循环每一个被选取的面要素
                     for (int m = 0; m < selectGeometryCollection.ToArray().Length; m++)
                     {
@@ -387,7 +389,9 @@ namespace YuLinTu.Component.MapFoundation
                                 Graphic graphic = new Graphic();
                                 //将获取裁剪好的转回
                                 YuLinTu.Spatial.Geometry returnClipGeo = YuLinTu.Spatial.Geometry.FromBytes(feature.ToBinary(), selectGeometryCollection[m].Srid);
-
+                                numindx++;
+                                string surverNumber = $"{numindx.ToString().PadLeft(5, '0')}";
+                                var newLandNumber = $"{currentZoneCode.PadRight(14, '0')}{surverNumber}";
                                 //将第一个分割的赋给原始的，这样就不用裁剪了。
                                 if (i == 0)
                                 {
@@ -395,23 +399,28 @@ namespace YuLinTu.Component.MapFoundation
                                     selectContractLandCollection[m].ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
                                     selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                                     selectContractLandCollection[m].TableArea = 0;
+                                    selectContractLandCollection[m].OldLandNumber = selectContractLandCollection[m].LandNumber;
+                                    //string number = landbus.GetNewLandNumber(currentZoneCode);
+                                    selectContractLandCollection[m].LandNumber = newLandNumber;
+                                    selectContractLandCollection[m].SurveyNumber = surverNumber;
+                                    selectContractLandCollection[m].ID = Guid.NewGuid();
                                     lands.Add(selectContractLandCollection[m]);
-                                    landbus.ModifyLand(selectContractLandCollection[m]);
+                                    //landbus.ModifyLand(selectContractLandCollection[m]);
                                 }
                                 else
                                 {
                                     clipLanditem = selectContractLandCollection[m].Clone() as ContractLand;
                                     clipLanditem.ID = Guid.NewGuid();
                                     clipLanditem.Shape = returnClipGeo;
-                                    string number = landbus.GetNewLandNumber(currentZoneCode);
-                                    clipLanditem.LandNumber = number;
-                                    string surverNumber = clipLanditem.LandNumber.Length >= 5 ? clipLanditem.LandNumber.Substring(clipLanditem.LandNumber.Length - 5) : clipLanditem.LandNumber.PadLeft(5, '0');
+                                    //string number = landbus.GetNewLandNumber(currentZoneCode);
+                                    clipLanditem.OldLandNumber = clipLanditem.LandNumber;
+                                    clipLanditem.LandNumber = newLandNumber;
                                     clipLanditem.SurveyNumber = surverNumber;
                                     clipLanditem.ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
                                     clipLanditem.AwareArea = clipLanditem.ActualArea;
                                     clipLanditem.TableArea = 0;
                                     lands.Add(clipLanditem);
-                                    landbus.AddLand(clipLanditem);
+                                    //landbus.AddLand(clipLanditem);
                                 }
                             }
                             List<Graphic> gs = new List<Graphic>();
@@ -439,7 +448,7 @@ namespace YuLinTu.Component.MapFoundation
                                     map.Message.Send(this, args);
                                     if (args.IsCancel)
                                         return;
-                                    var editor = new SplitLandEdit(map, layer, gs, dbcontext, currentZone);
+                                    //var editor = new SplitLandEdit(map, layer, gs, dbcontext, currentZone);
                                 }));
                             }, null, null,
                             started =>

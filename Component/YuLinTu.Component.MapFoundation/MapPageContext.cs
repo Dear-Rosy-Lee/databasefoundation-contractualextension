@@ -5649,7 +5649,7 @@ namespace YuLinTu.Component.MapFoundation
             argument.VPS = VPS;
             argument.DictList = dictBusiness.GetAll();
             argument.CurrentZone = currentZone;
-            TaskExportSelectedLandShapeOperation operation = new TaskExportSelectedLandShapeOperation(dbcontext);
+            var operation = new TaskExportSelectedLandShapeOperation(dbcontext);
             operation.Argument = argument;
             operation.Completed += new TaskCompletedEventHandler((o, t) =>
             {

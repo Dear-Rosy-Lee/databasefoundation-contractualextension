@@ -139,7 +139,7 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                this.ReportError("导出地域图斑失败!");
+                this.ReportError("导出地域图斑失败!" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportZoneTable(导出地块图斑)", ex.Message + ex.StackTrace);
                 reslut = false;
             }

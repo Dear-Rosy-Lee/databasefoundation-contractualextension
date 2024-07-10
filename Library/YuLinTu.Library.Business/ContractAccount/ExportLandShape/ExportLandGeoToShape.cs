@@ -162,7 +162,8 @@ namespace YuLinTu.Library.Business
             DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
             if (Lang == eLanguage.CN)
             {
-                if (exportContractLandShapeDefine.NameIndex) header.AddColumn("承包方名称", 'C', 150, 0);
+                if (exportContractLandShapeDefine.NameIndex)
+                    header.AddColumn("承包方名称", 'C', 150, 0);
                 header.AddColumn("承包方户号", 'C', 20, 0);
                 if (exportContractLandShapeDefine.VPNumberIndex) header.AddColumn("证件号码", 'C', 150, 0);
                 if (exportContractLandShapeDefine.VPCommentIndex) header.AddColumn("户主备注", 'C', 250, 0);
@@ -377,6 +378,10 @@ namespace YuLinTu.Library.Business
                 if (vp != null)
                 {
                     attributes.AddAttribute("承包方户号", vp.FamilyNumber);
+                }
+                else
+                {
+                    attributes.AddAttribute("承包方户号", "");
                 }
             }
             return attributes;
