@@ -241,8 +241,16 @@ namespace YuLinTu.Library.Business
 
             List<ContractLand> lands = landFamily.LandCollection;
             List<Person> peoples = landFamily.Persons;
-            peopleCount += peoples.Count;
 
+            var hz = peoples.FirstOrDefault(f => f.Relationship == "01" || f.Relationship == "02"
+            || f.Relationship == "户主" || f.Relationship == "本人");
+            if (hz != null)
+            {
+                peoples.Remove(hz);
+                peoples.Insert(0, hz);
+            }
+
+            peopleCount += peoples.Count;
             lands.Sort("IsStockLand", eOrder.Ascending);
             bool flag = false;
             if (peoples.Count > lands.Count)
@@ -277,7 +285,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode.PadRight(14,'0')}{result}");
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode.PadRight(14, '0')}{result}");
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);

@@ -332,8 +332,8 @@ namespace YuLinTu.Library.Business
         {
             List<Dictionary> listDLDJ = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DLDJ);
             List<Dictionary> listTDYT = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDYT);
-            List<Dictionary> listDKLB = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);
-
+            List<Dictionary> listDKLYLX = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);
+            List<Dictionary> listDKLB = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB);
             var landNumber = GetString(allItem[currentIndex, 16]);
             if (landNumber != "")
             {
@@ -363,6 +363,8 @@ namespace YuLinTu.Library.Business
                 var yt = GetString(allItem[currentIndex, 21]);
                 entity.LandLevel = listDLDJ.Find(c => c.Name == dj || c.Code == dj)?.Code;
                 entity.Purpose = listTDYT.Find(c => c.Name == yt || c.Code == yt)?.Code;
+                entity.LandCategory = listDKLB.Find(c => c.Name == entity.LandCategory || c.Code == entity.LandCategory)?.Code;
+                entity.LandCode = listDKLYLX.Find(c => c.Name == entity.LandCode || c.Code == entity.LandCode)?.Code;
                 entity.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
                 entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
                 entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));

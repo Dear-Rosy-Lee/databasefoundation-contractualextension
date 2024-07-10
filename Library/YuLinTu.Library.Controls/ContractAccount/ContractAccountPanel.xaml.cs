@@ -549,7 +549,7 @@ namespace YuLinTu.Library.Controls
             double summaryTableArea = 0;
             double summaryActualArea = 0;
             double summaryAwareArea = 0;
-            double? summrayContractDelayArea = 0; 
+            double? summrayContractDelayArea = 0;
 
             foreach (var land in item.Children)
             {
@@ -3995,12 +3995,12 @@ namespace YuLinTu.Library.Controls
 
         public void ExportVerifyExcelTaskGroup(string fileName, string taskDes, string taskName)
         {
-            TaskGroupExportLandVerifyExcelArgument groupArgument = new TaskGroupExportLandVerifyExcelArgument();
+            var groupArgument = new TaskGroupExportLandVerifyExcelArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.FileName = fileName;
             groupArgument.VirtualType = VirtualType;
-            TaskGroupExportLandVerifyExcelOperation groupOperation = new TaskGroupExportLandVerifyExcelOperation();
+            var groupOperation = new TaskGroupExportLandVerifyExcelOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = taskDes;
             groupOperation.Name = taskName;

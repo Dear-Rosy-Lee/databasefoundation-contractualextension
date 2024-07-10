@@ -185,6 +185,7 @@ namespace YuLinTu.Library.Business
                     this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录,其中{5}户承包方数据被锁定!", ExcelName, landInfo.LandFamilyCollection.Count, familyCount, personCount, landCount, landInfo.LandFamilyCollection.Count - familyCount));
                 }
                 DbContext.CommitTransaction();
+                //DbContext.RollbackTransaction();
                 //zone = null;
             }
             catch (Exception ex)
