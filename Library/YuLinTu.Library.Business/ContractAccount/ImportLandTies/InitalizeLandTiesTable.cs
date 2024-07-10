@@ -363,7 +363,13 @@ namespace YuLinTu.Library.Business
                         entity = new ContractLand() { LandNumber = landNumber };
                     }
                 }
-
+                else
+                {
+                    entity.ConcordId = null;
+                    entity.Shape = null;
+                    entity.ActualArea = 0;
+                    entity.LandNumber = landNumber;
+                }
                 entity.Name = GetString(allItem[currentIndex, 15]);
                 entity.OwnRightType = GetString(allItem[currentIndex, 17]);
                 entity.LandCategory = GetString(allItem[currentIndex, 18]);
