@@ -6,7 +6,7 @@
              xmlns:wpftk="http://schemas.xceed.com/wpf/xaml/toolkit"             
              xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
              xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro" Height="450" Width="650"
-             Icon="pack://application:,,,/YuLinTu.Component.Zone;component/Resources/map.png"
+             Icon="pack://application:,,,/YuLinTu.Component.PadDataHandle;component/Resources/map.png"
              Header="要素空间信息"
              >
     <Grid  Name="dgGrid" Margin="10,0,0,0"  >

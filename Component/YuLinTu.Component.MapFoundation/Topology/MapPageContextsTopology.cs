@@ -49,11 +49,18 @@ namespace YuLinTu.Component.MapFoundation
                             entities.Add(x.Land);
                         });
 
+
                         if (flag == true)
                         {
+                            var oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;
+                            bool deloldLand = true;
                             for (int i = 0; i < items.Count; i++)
                             {
-                                entities[i].LandNumber = entities[i].ZoneCode + items[i].SurveyNumber;
+                                entities[i].LandNumber = entities[i].ZoneCode.PadRight(14, '0') + items[i].SurveyNumber.PadLeft(5, '0');
+                                if (oldlandNumber == entities[i].LandNumber)
+                                {
+                                    deloldLand = false;
+                                }
                                 var dbland = landStation.GetByLandNumber(entities[i].LandNumber);// (l => l.ID == entities[i].ID)
                                 if (dbland != null)
                                 {
@@ -65,6 +72,8 @@ namespace YuLinTu.Component.MapFoundation
                                     landStation.Add(entities[i]);
                                 }
                             }
+                            if (deloldLand)
+                                landStation.Delete((d => d.LandNumber == oldlandNumber);
                         }
                         else
                         {
