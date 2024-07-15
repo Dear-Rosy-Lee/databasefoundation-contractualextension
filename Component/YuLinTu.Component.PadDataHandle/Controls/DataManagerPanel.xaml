@@ -30,32 +30,32 @@
                                             Image="{Binding Img}"
                                             HorizontalAlignment="Left" 
                                             Margin="0,0,5,0" 
-                                            Text="{Binding Name}" 
+                                            Text="{Binding FolderName}" 
                                             VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="数据包大小" Width="300">
+                    <GridViewColumn Header="数据包大小" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <TextBlock Text="{Binding FullName}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding DataSize}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="时间" Width="250">
+                    <GridViewColumn Header="时间" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <TextBlock Text="{Binding UpLevelName}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding FolderDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="操作" Width="auto">
+                    <GridViewColumn Header="操作" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
@@ -66,30 +66,6 @@
                     </GridViewColumn> 
                 </GridView>
             </cmps:MetroTreeListView.View>
-            <cmps:MetroTreeListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="新增" Name="miAddS" Click="miAdd_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/AddInfo16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="编辑" Name="miEdit" Click="miEdit_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/字段16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="删除" Name="miDel" Click="miDel_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/错误16_2.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <!--<MenuItem Header="设置" Name="miSet" Click="miSet_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Stretch="None"/>
-                        </MenuItem.Icon>
-                    </MenuItem>-->
-                </ContextMenu>
-            </cmps:MetroTreeListView.ContextMenu>
         </cmps:MetroTreeListView>
     </Grid>
 </UserControl>

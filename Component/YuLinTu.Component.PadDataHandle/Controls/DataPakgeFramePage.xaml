@@ -156,7 +156,7 @@
                         BorderBrush="LightGray"
                         Grid.Row="1"
                         EnabledAsyncLoading="False"
-                        ExpandItemWhenLeftMouseDoubleClick="False" 
+                        ExpandItemWhenLeftMouseDoubleClick="False"
                         SelectedItemChanged="view_SelectedChanged">
                         <cmps:MetroTreeListView.View>
                             <GridView >

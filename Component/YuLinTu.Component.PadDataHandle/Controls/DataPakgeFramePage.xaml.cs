@@ -3,8 +3,11 @@
  */
 using MediaDevices;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using YuLinTu.Appwork;
 using YuLinTu.Library.Command;
 using YuLinTu.Library.Controls;
@@ -36,6 +39,9 @@ namespace YuLinTu.Component.PadDataHandle
         /// 命令集合
         /// </summary>
         private ZoneCommand command;
+        private DispatcherTimer _timer;
+        private MediaDevice selectmediaDevice;
+
 
         /// <summary>
         /// 是否需要授权
@@ -55,9 +61,14 @@ namespace YuLinTu.Component.PadDataHandle
         public DataPakgeFramePage()
         {
             InitializeComponent();
-            localMgrPanel.MenuEnable += SetControlsEnable; 
+            localMgrPanel.MenuEnable += SetControlsEnable;
             command = new ZoneCommand();
             deviceHelper = new DeviceHelper();
+            deviceHelper.DeviceChage += DeviceChage;
+            //_timer = new DispatcherTimer();
+            //_timer.Interval = TimeSpan.FromSeconds(5);
+            //_timer.Tick += Timer_Tick;
+            //_timer.Start();
         }
 
         #endregion
@@ -245,13 +256,43 @@ namespace YuLinTu.Component.PadDataHandle
 
         #endregion
 
+        /// <summary>
+        /// 设备变化
+        /// </summary>
+        public void DeviceChage()
+        {
+            if (view.SelectedItem == null)
+            {
+                softview.ItemsSource = null;
+                return;
+            }
+            MediaDevice mediaDevice = (MediaDevice)view.SelectedItem;
+            if (!deviceHelper.MediaDevices.Contains(selectmediaDevice))
+            {
+                softview.ItemsSource = null;
+            }
+        }
+
+        //private void Timer_Tick(object sender, EventArgs e)
+        //{
+        //    if (view.SelectedItem == null)
+        //    {
+        //        softview.ItemsSource = null;
+        //        return;
+        //    }
+        //    MediaDevice mediaDevice = (MediaDevice)view.SelectedItem;
+        //    if (mediaDevice == null) return;
+        //    var folderlist = deviceHelper.GetFolderList(mediaDevice);
+        //    softview.ItemsSource = folderlist;
+        //}
+
         private void view_SelectedChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (view.SelectedItem == null)
                 return;
-            MediaDevice mediaDevice = (MediaDevice)view.SelectedItem;
-            if (mediaDevice == null) return;
-            var folderlist = deviceHelper.GetFolderList(mediaDevice);
+            selectmediaDevice = (MediaDevice)view.SelectedItem;
+            if (selectmediaDevice == null) return;
+            var folderlist = deviceHelper.GetFolderList(selectmediaDevice);
             softview.ItemsSource = folderlist;
             //if (folderlist.Count > 0)
             //    softview.SelectedIndex = 0;
@@ -265,7 +306,7 @@ namespace YuLinTu.Component.PadDataHandle
             DeviceFolder deviceFolder = (DeviceFolder)sview.SelectedItem;
             if (deviceFolder == null) return;
             var list = deviceHelper.GetDataList(deviceFolder, (MediaDevice)view.SelectedItem);
-            //zoneMgrPanel.view.ItemsSource = list;
+            localMgrPanel.view.ItemsSource = list;
         }
     }
 }

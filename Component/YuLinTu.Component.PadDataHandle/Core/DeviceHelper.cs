@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Windows.Documents;
 using System.Windows.Threading;
+using YuLinTu.Library.Business;
 
 namespace YuLinTu.Component.PadDataHandle
 {
@@ -16,25 +15,30 @@ namespace YuLinTu.Component.PadDataHandle
     /// </summary>
     public class DeviceHelper
     {
-        private Timer _timer;
+        private DispatcherTimer _timer;
 
         public ObservableCollection<MediaDevice> MediaDevices { get; private set; }
+
+        public Action DeviceChage { get; set; }
 
         public DeviceHelper()
         {
             MediaDevices = new ObservableCollection<MediaDevice>();
-            _timer = new Timer((o) =>
-            {
-                RefreshDeviceList();
-            }, new object(), 5000, Timeout.Infinite);
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(5);
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
         }
 
 
         public void DisPose()
         {
-            _timer.Dispose();
+            _timer.Stop();
         }
-
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            RefreshDeviceList();
+        }
         /// <summary>
         /// 获取列表
         /// </summary>
@@ -47,11 +51,37 @@ namespace YuLinTu.Component.PadDataHandle
                     DispatcherSynchronizationContext(System.Windows.Application.Current.Dispatcher));
                 SynchronizationContext.Current.Post(pl =>
                 {
-                    MediaDevices.Clear();
                     var devices = MediaDevice.GetDevices();
-                    foreach (var item in devices)
+                    if (MediaDevices.Count == devices.Count())
                     {
-                        MediaDevices.Add(item);
+                        return;
+                    }
+                    else if (devices.Count() == 0)
+                    {
+                        MediaDevices.Clear();
+                    }
+                    else
+                    {
+                        var relist = new List<MediaDevice>();
+                        foreach (var item in MediaDevices)
+                        {
+                            if (!devices.Any(w => w.FriendlyName == item.FriendlyName))
+                            {
+                                relist.Add(item);
+                            }
+                        }
+                        foreach (var item in relist)
+                        {
+                            MediaDevices.Remove(item);
+                        }
+
+                        foreach (var item in devices)
+                        {
+                            if (!MediaDevices.Any(w => w.FriendlyName == item.FriendlyName))
+                                MediaDevices.Add(item);
+                        }
+                        if (DeviceChage != null)
+                            DeviceChage();
                     }
                 }, null);
             });
@@ -122,25 +152,26 @@ namespace YuLinTu.Component.PadDataHandle
                 deviceFolder.FolderName = part.Name;
                 deviceFolder.FolderPath = part.FullName;
                 deviceFolder.DirectoryInfo = part;
+                deviceFolder.FolderDate = part.LastWriteTime == null ? "" : part.LastWriteTime.Value.ToString("yyyy/MM/dd");
+                deviceFolder.DataSize = $"{ToolMath.RoundNumericFormat(GetFileSize(part) / 1048576, 2)}MB";
                 list.Add(deviceFolder);
             }
             device.Disconnect();
             return list;
-            dataDirectory.EnumerateDirectories();
-            string folderPath = folder.FolderPath;
-            //创建目录对象
-            MediaDirectoryInfo currentFolder = device.GetRootDirectory();
-            //拆分路径、分步进入
-            string[] pathParts = folderPath.Split('\\');
-            foreach (string part in pathParts)
+        }
+
+        private ulong GetFileSize(MediaDirectoryInfo mediaDirectoryInfo)
+        {
+            ulong fileSize = 1;
+            foreach (var file in mediaDirectoryInfo.EnumerateFiles())
             {
-                if (!string.IsNullOrEmpty(part))
-                {
-                    currentFolder = currentFolder.EnumerateDirectories()
-                        .FirstOrDefault(dir => dir.Name.Equals(part, StringComparison.OrdinalIgnoreCase));
-                }
+                fileSize += file.Length;
             }
-            return list;
+            foreach (var part in mediaDirectoryInfo.EnumerateDirectories())
+            {
+                fileSize += GetFileSize(part);
+            }
+            return fileSize;
         }
     }
 }

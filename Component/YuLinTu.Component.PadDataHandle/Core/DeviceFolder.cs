@@ -16,6 +16,10 @@ namespace YuLinTu.Component.PadDataHandle
         public string FolderName { get; set; }
         public string FolderPath { get; set; }
 
+        public string DataSize { get; set; }
+
+        public string FolderDate { get; set; }
+
         public MediaDirectoryInfo DirectoryInfo { get; set; }
     }
 }
