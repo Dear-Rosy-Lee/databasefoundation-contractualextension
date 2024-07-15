@@ -57,6 +57,8 @@ namespace YuLinTu.Component.MapFoundation
                             for (int i = 0; i < items.Count; i++)
                             {
                                 entities[i].LandNumber = entities[i].ZoneCode.PadRight(14, '0') + items[i].SurveyNumber.PadLeft(5, '0');
+                                if (entities[i].AwareArea == 0)
+                                    entities[i].AwareArea = entities[i].ActualArea;
                                 if (oldlandNumber == entities[i].LandNumber)
                                 {
                                     deloldLand = false;
@@ -73,7 +75,7 @@ namespace YuLinTu.Component.MapFoundation
                                 }
                             }
                             if (deloldLand)
-                                landStation.Delete((d => d.LandNumber == oldlandNumber);
+                                landStation.Delete(d => d.LandNumber == oldlandNumber);
                         }
                         else
                         {
