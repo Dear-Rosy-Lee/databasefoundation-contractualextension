@@ -1320,7 +1320,8 @@ namespace YuLinTu.Library.Business
             var simpleProvinceNamesDics = InitalizeSimpleProvice();
             var simplenamedic = simpleProvinceNamesDics.Where(s => s.Key.Contains(zoneName)).FirstOrDefault();
             var simplename = simplenamedic.Value != null ? simplenamedic.Value : "";
-            seriseNumber = $"{simplename}（{Book.Year}）{county.Name}农村土地承包经营权证第";
+            if (Book != null)
+                seriseNumber = $"{simplename}（{Book.Year}）{county.Name}农村土地承包经营权证第";
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.ProviceName + (i == 0 ? "" : i.ToString()), zoneName);

@@ -3667,6 +3667,7 @@ namespace YuLinTu.Library.Business
                 parcelWord.ViewOfAllMultiParcel = viewOfAllMultiParcel;
                 parcelWord.ViewOfNeighorParcels = viewOfNeighorParcels;
                 parcelWord.CurrentZone = currentZone;
+                parcelWord.ZoneList = GetParentZone(currentZone, dbContext);
                 parcelWord.VillageZone = VillageZone;
                 parcelWord.DictList = DictList;
                 parcelWord.SavePathOfImage = savePathOfImage;
@@ -3718,6 +3719,19 @@ namespace YuLinTu.Library.Business
                 GC.WaitForPendingFinalizers();
                 GC.Collect();
             }
+        }
+
+        /// <summary>
+        /// 获取地域集合
+        /// </summary>
+        public List<YuLinTu.Library.Entity.Zone> GetParentZone(YuLinTu.Library.Entity.Zone zone, IDbContext dbContext)
+        {
+            ModuleMsgArgs arg = new ModuleMsgArgs();
+            arg.Datasource = dbContext;
+            arg.Parameter = zone;
+            arg.Name = ZoneMessage.ZONE_PARENTS_TOPROVINCEZONE;
+            TheBns.Current.Message.Send(this, arg);
+            return (arg.ReturnValue as List<YuLinTu.Library.Entity.Zone>);
         }
 
         /// <summary>
