@@ -520,8 +520,15 @@ namespace YuLinTu.Component.Setting
                 }
                 foreach (var item in tableList)
                 {
-                    var table = dbContext.CreateSchema().GetElementProperties(null, item.TableName);
+                    var schma = dbContext.CreateSchema();
+                    if (!schma.AnyElement(null, item.TableName))
+                    {
+                        Log.WriteWarn(this, "数据库升级模块", $"数据库{item.TableName}表不存在，未进行升级！");
+                        continue;
+                    }
+                    var table = schma.GetElementProperties(null, item.TableName);
                     item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
+
                 }
                 tableList.RemoveAll(t => t.FieldList.Count == 0);
                 //if (serialSuccess)
