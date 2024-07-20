@@ -120,7 +120,8 @@ namespace YuLinTu.Component.MapFoundation
                     if (item.Text.TrimSafe().IsNullOrBlank())
                         item.Text = GetDisplayText(c, dataSource);
                     var res = c.Object.Object.GetPropertyValue("DKBM").ToString();
-                    item.OldNumber = oldNumber.Substring(res.Length - 5);
+                    if (oldNumber.Length > 5)
+                        item.OldNumber = oldNumber.Substring(res.Length - 5);
                     var landNumber = int.Parse(res.Substring(res.Length - 5)) + 1;
                     item.SurveyNumber = landNumber.ToString().PadLeft(5, '0');
                     item.NewNumber = item.SurveyNumber;
