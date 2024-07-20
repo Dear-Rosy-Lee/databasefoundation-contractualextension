@@ -450,7 +450,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             pcpcontrol.vpShowBtn.IsEnabled = false;
-            VirtualPesonSelectPanel vpc = new VirtualPesonSelectPanel();
+            var vpc = new VirtualPesonSelectPanel();
             vpc.theWorkpage = theworkpage;
             vpc.CheckPersons = VirtualPersonItems;
             vpc.CurrenZone = currentZone;

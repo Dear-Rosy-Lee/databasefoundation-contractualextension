@@ -8,6 +8,8 @@ using YuLinTu.Components.tGIS;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using System.Collections.Generic;
+using OSGeo.OGR;
+using YuLinTu.Data;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -93,9 +95,11 @@ namespace YuLinTu.Component.MapFoundation
                             landStation.Update(entityOld);
                             landStation.Update(entityNew);
                         }
+                        //map.Refresh();
+                        var args = new MapMessageEventArgs("RefreshMapContrl_UIdata");
+                        map.Message.Send(this, args);
                     }));
                 };
-
                 Workpage.Page.ShowDialog(dlg, (b, r) => { dlg.Uninstall(); });
             }));
         }

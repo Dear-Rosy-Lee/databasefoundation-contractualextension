@@ -2,28 +2,15 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.Repository;
-using YuLinTu.Library.WorkStation;
-using YuLinTu.Windows;
-using YuLinTu.Data;
-using System.Collections.ObjectModel;
 using YuLinTu.Library.Business;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Library.Entity;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Controls
 {
@@ -55,18 +42,18 @@ namespace YuLinTu.Library.Controls
             set
             {
                 checkpersons = value;
-                NameList.Clear();
-                foreach (VirtualPerson vp in CheckPersons)
-                {
-                    NameToEntity nte = new NameToEntity();
-                    nte.NamePY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name);
-                    nte.NameQPY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name, YuLinTu.Library.WorkStation.eSpellOptions.EnableUnicodeLetter);
-                    nte.VirtualPerson = vp;
-                    nte.Name = vp.Name;
-                    nte.Number = vp.Number;
-                    NameList.Add(nte);
-                }
-                BindToControl(NameList);
+                //NameList.Clear();
+                //foreach (VirtualPerson vp in CheckPersons)
+                //{
+                //    NameToEntity nte = new NameToEntity();
+                //    nte.NamePY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name);
+                //    nte.NameQPY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name, YuLinTu.Library.WorkStation.eSpellOptions.EnableUnicodeLetter);
+                //    nte.VirtualPerson = vp;
+                //    nte.Name = vp.Name;
+                //    nte.Number = vp.Number;
+                //    NameList.Add(nte);
+                //}
+                //BindToControl(NameList);
             }
         }
 
@@ -101,6 +88,23 @@ namespace YuLinTu.Library.Controls
         public VirtualPesonSelectPanel()
         {
             InitializeComponent();
+        }
+        protected override void OnInitializeCompleted()
+        {
+            base.OnInitializeCompleted();
+            NameList.Clear();
+            foreach (VirtualPerson vp in CheckPersons)
+            {
+                NameToEntity nte = new NameToEntity();
+                nte.NamePY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name);
+                nte.NameQPY = YuLinTu.Library.WorkStation.ToolChinese.MakeSpellCode(vp.Name, YuLinTu.Library.WorkStation.eSpellOptions.EnableUnicodeLetter);
+                nte.VirtualPerson = vp;
+                nte.Name = vp.Name;
+                nte.Number = vp.Number;
+                nte.Gender = ToolICN.GenderImgeString(vp.Number);
+                NameList.Add(nte);
+            }
+            BindToControl(NameList);
         }
 
         #endregion
@@ -183,8 +187,11 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void BindToControl(List<NameToEntity> entitys)
         {
-            boxHosts.ItemsSource = entitys;
-            boxHosts.Items.Refresh();
+            Dispatcher.Invoke(() =>
+            {
+                boxHosts.ItemsSource = null;
+                boxHosts.ItemsSource = entitys;
+            });
         }
 
         /// <summary>
@@ -228,9 +235,7 @@ namespace YuLinTu.Library.Controls
             public VirtualPerson VirtualPerson { get; set; }
             public string NamePY { get; set; }
             public string NameQPY { get; set; }
+            public string Gender { get; set; }
         }
-
-
-
     }
 }

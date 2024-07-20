@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -357,6 +358,25 @@ namespace YuLinTu.Library.Business
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
             return string.Empty;
+        }
+
+        public static string GenderImgeString(string ICN)
+        {
+            var pic = "";
+            int sex = ToolICN.GetGenderInNotCheck(ICN);
+            if (string.IsNullOrEmpty(ICN) || sex == -1)
+            {
+                pic = "pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主_黑16.jpg";
+            }
+            else if (sex == 0)
+            {
+                pic = "pack://application:,,,/YuLinTu.Library.Resources;component/Resources/女16.jpg";
+            }
+            else
+            {
+                pic = "pack://application:,,,/YuLinTu.Library.Resources;component/Resources/男16.jpg";
+            }
+            return pic;
         }
 
         #endregion

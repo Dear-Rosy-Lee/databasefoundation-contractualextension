@@ -128,6 +128,7 @@
     <Resource Include="Resources\expackage.png" />
     <Resource Include="Resources\_2D饼.png" />
     <Resource Include="Resources\刷新32.png" />
+    <Resource Include="Resources\户主_黑16.jpg" />
     <Resource Include="Resources\清空32.png" />
     <Resource Include="Resources\编辑图形32.png" />
     <Resource Include="Resources\编辑数据32.png" />
@@ -442,6 +443,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\JzxWZandQLR.png" />
+    <Resource Include="Resources\女16.jpg" />
+    <Resource Include="Resources\男16.jpg" />
     <Resource Include="Resources\population24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

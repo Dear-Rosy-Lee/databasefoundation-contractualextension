@@ -3169,6 +3169,12 @@ namespace YuLinTu.Component.MapFoundation
             e.Instance.Items.AddRange(pnav.GetChildren(e.Instance.Root));
         }
 
+        [MessageHandler(Name = "RefreshMapContrl_UIdata")]
+        public void RefreshUIdata(object sender, MapMessageEventArgs e)
+        {
+            panel.OwerShipPanel.Refresh();
+            MapControl.Refresh();
+        }
         /// <summary>
         /// 合并地块时，修改面积参数
         /// </summary>
@@ -4669,6 +4675,7 @@ namespace YuLinTu.Component.MapFoundation
             },
             completed =>
             {
+                map.Refresh();
             }, null,
             terminated =>
             {

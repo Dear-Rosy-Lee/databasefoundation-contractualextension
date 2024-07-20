@@ -47,16 +47,17 @@
                 </DockPanel>
             </Border>
             <cmps:MetroListBox Grid.Row="1" SelectionChanged="boxHosts_SelectionChanged_1"   SelectionMode="Single"
-                x:Name="boxHosts" Width="560" MouseDoubleClick="boxHosts_MouseDoubleClick_1" Margin="10,2,10,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                x:Name="boxHosts" Width="560" MaxHeight="500" VirtualizingPanel.IsVirtualizing="True" MouseDoubleClick="boxHosts_MouseDoubleClick_1" Margin="10,2,10,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <cmps:MetroListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </cmps:MetroListBox.ItemsPanel>
                 <cmps:MetroListBox.ItemTemplate>
-                    <DataTemplate>
-                        <cmps:ImageTextItem Text="{Binding Path=Name}"  HorizontalAlignment="Left" Width="60"
-                                            Image="{Binding Path=Number, Converter={StaticResource ICNToImageConverter}}"></cmps:ImageTextItem>
+                    <DataTemplate> 
+                        <cmps:BusyImageTextItem  VirtualizingPanel.IsVirtualizing="True" Text="{Binding Path=Name}"  HorizontalAlignment="Left" Width="60"
+                    Image="{Binding Path=Gender}">
+                        </cmps:BusyImageTextItem> 
 
                     </DataTemplate>
                 </cmps:MetroListBox.ItemTemplate>
