@@ -125,9 +125,10 @@ namespace YuLinTu.Library.Business
                     {
                         foreach (var r in ralations)
                         {
-                            var stockland = stockLand.Find(t => t.ID == r.LandID);
+                            var stockland = stockLand.Find(t => t.ID == r.LandID).Clone() as ContractLand;
                             if (stockland == null)
                                 continue;
+                            stockland.AwareArea = r.QuanficationArea;
                             accountLandFamily.LandCollection.Add(stockland);
                         }
                     }

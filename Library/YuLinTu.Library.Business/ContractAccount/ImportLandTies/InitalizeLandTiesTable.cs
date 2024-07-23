@@ -283,7 +283,8 @@ namespace YuLinTu.Library.Business
                 {
 
                 }
-                var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber);
+                var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber ||
+                f.FamilyNumber.PadLeft(4, '0') == vpNumber);
                 if (vp != null)
                 {
                     landFamily.CurrentFamily = vp;

@@ -39,8 +39,12 @@ namespace YuLinTu.Library.Controls
                     var land = accountLandList.Find(g => g.ID == r.LandID);
                     if (land != null)
                     {
+                        land = land.Clone() as ContractLand;
                         if (!list.Any(c => c.ID.Equals(land.ID)))
+                        {
+                            land.AwareArea = r.QuanficationArea;
                             list.Add(land);
+                        }
                     }
                 });
             }

@@ -394,7 +394,6 @@ namespace YuLinTu.Library.Controls
                 landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
                 ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode, eLevelOption.Self);
             }
-
             dictList = DictBusiness.GetAll();
             listDKLB = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB && !string.IsNullOrEmpty(c.Code));
             listDLDJ = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DLDJ && !string.IsNullOrEmpty(c.Code));
