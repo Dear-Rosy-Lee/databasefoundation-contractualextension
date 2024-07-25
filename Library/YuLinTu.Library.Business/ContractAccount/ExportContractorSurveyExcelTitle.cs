@@ -42,7 +42,7 @@ namespace YuLinTu.Library.Business
             }
             //titleName = InitalizeTitleName(titleName);
             titleName = UnitName + titleName;
-            if (!string.IsNullOrEmpty(titleName))
+            if (!SystemSet.TempTableHead && !string.IsNullOrEmpty(titleName))
             {
                 SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
