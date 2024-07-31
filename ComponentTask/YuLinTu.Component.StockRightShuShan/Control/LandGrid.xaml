@@ -1,0 +1,231 @@
+﻿<UserControl x:Class="YuLinTu.Component.StockRightShuShan.Control.LandGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:YuLinTu.Component.StockRightShuShan.Control"
+             xmlns:convert="clr-namespace:YuLinTu.Component.StockRightShuShan.ConvertUI"
+             xmlns:components="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+             xmlns:controls="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
+             mc:Ignorable="d" 
+             >
+    <UserControl.Resources>
+        <convert:BoolConvert x:Key="boolConvert" />
+        <convert:LandLevelConvert x:Key="landLevelConvert"/>
+        <convert:ContractAccountImgConvert x:Key="imgConvert" />
+        <convert:LandUseTypeConvert x:Key="landUseTypeConvert"/>
+        <convert:LandPurposeConvert x:Key="landPurposeConvert"/>
+    </UserControl.Resources>
+    <Grid>
+        <components:MetroTreeGrid Name="view"
+                            AutoGenerateColumns="False"
+                            ItemAutoExpand="True"
+                            BorderThickness="0"
+                            ExpandItemWhenLeftMouseDoubleClick="False"
+                            components:DataGridAttacher.ContentBorderThickness="0,1,0,0"
+                            components:DataGridAttacher.ColumnHeaderThumbWidth="1"    
+                            ItemMouseDoubleClick="view_ItemMouseDoubleClick"
+                            BorderBrush="LightGray"
+                            SelectionChanged="Selector_OnSelectionChanged"
+                            Roots="{Binding Items}"
+                            x:FieldModifier="public"
+                            RootItemAutoExpand="True">
+            <components:MetroTreeGrid.Columns>
+                <DataGridTemplateColumn Header="地块名称"
+                                        SortMemberPath="Name"
+                                        Width="120"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <components:MetroTreeGridRowToggleButton></components:MetroTreeGridRowToggleButton>
+                                <StackPanel HorizontalAlignment="Left"
+                                            Orientation="Horizontal">
+                                    <components:ImageTextItem Image="{Binding Object.Img,Converter={StaticResource imgConvert}}"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="2,0,0,0"
+                                                        x:Name="tbName"
+                                                        Text="{Binding Object.Name, Mode=TwoWay}"
+                                                        VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DockPanel>
+                            <!--<DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Object.Tag.Status}"
+                                             Value="1">
+                                    <Setter TargetName="tbName"
+                                            Property="Foreground"
+                                            Value="#BF2F0B" />
+                                    <Setter TargetName="tbName"
+                                            Property="FontWeight"
+                                            Value="Bold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Object.Tag.Status}"
+                                             Value="2">
+                                    <Setter TargetName="tbName"
+                                            Property="Foreground"
+                                            Value="Green" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>-->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="地块编码"
+                                        Width="180"
+                                        SortMemberPath="LandNumber">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.LandNumber}"
+                                           VerticalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="实测面积"
+                                        Width="80"
+                                        SortMemberPath="ActualArea"
+                                        components:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.ActualArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="台账面积"
+                                        Width="80"
+                                        SortMemberPath="TableArea"
+                                        components:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.TableArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="量化面积"
+                                        Width="80"
+                                        SortMemberPath="QuantificicationArea"
+                                        components:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.QuantificicationArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="预留面积"
+                                        Width="80"
+                                        SortMemberPath="ObligateArea"
+                                        components:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.ObligateArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="土地利用类型"
+                                        Width="80"
+                                        SortMemberPath="LandCode"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.LandCode,Converter={StaticResource landUseTypeConvert}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="基本农田"
+                                        Width="80"
+                                        SortMemberPath="IsFarmerLand"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.IsFarmerLand,Converter={StaticResource boolConvert} }"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="地力等级"
+                                        Width="80"
+                                        SortMemberPath="LandLevel"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.LandLevel,Converter={StaticResource landLevelConvert}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="土地用途"
+                                        Width="80"
+                                        SortMemberPath="Purpose"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Purpose,Converter={StaticResource landPurposeConvert}}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="共用面积"
+                                        Width="80"
+                                        SortMemberPath="ShareArea"
+                                        components:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.ShareArea}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="备注"
+                                        SortMemberPath="Comment"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Object.Comment}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </components:MetroTreeGrid.Columns>
+        </components:MetroTreeGrid>
+    </Grid>
+</UserControl>

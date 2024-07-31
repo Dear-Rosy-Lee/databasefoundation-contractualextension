@@ -6,6 +6,6 @@
     <EntrancePath>.\Components\YuLinTu.Component.PadDataHandle\Binary\YuLinTu.Component.PadDataHandle.dll</EntrancePath>
 	<IsSystemManaged>false</IsSystemManaged>
 	<IsApplicationDependency>false</IsApplicationDependency>
-	<IsConnected>false</IsConnected>
-	<IsEnabled>false</IsEnabled>
+	<IsConnected>true</IsConnected>
+	<IsEnabled>true</IsEnabled>
 </WinComponent>

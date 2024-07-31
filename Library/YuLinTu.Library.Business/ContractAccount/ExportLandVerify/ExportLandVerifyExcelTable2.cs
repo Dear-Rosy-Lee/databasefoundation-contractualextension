@@ -260,7 +260,6 @@ namespace YuLinTu.Library.Business
                 WritePersonInformation(person, bindex, flag);
                 bindex++;
             }
-
             foreach (ContractLand land in lands)
             {
                 double tableArea = land.TableArea ?? 0;
@@ -310,11 +309,11 @@ namespace YuLinTu.Library.Business
             Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
             InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
-            InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
-            InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
-            InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
-            InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
-            InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+            InitalizeRangeValue("R" + index, "R" + index, syqxz?.Name);
+            InitalizeRangeValue("S" + index, "S" + index, dklb?.Name);
+            InitalizeRangeValue("T" + index, "T" + index, tdlylx?.Name);
+            InitalizeRangeValue("U" + index, "U" + index, dldj?.Name);
+            InitalizeRangeValue("V" + index, "V" + index, tdyt?.Name);
             Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
             InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             InitalizeRangeValue("Y" + index, "Y" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
