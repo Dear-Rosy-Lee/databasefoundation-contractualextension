@@ -283,7 +283,7 @@ namespace YuLinTu.Library.Business
             }
             else if (vpNumber.IsNullOrEmpty() && landFamily.Number > 0)
             {
-                vpNumber = landFamily.Number.ToString().PadRight(14, '0');
+                vpNumber = landFamily.Number.ToString().PadLeft(4, '0');
             }
             var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber ||
             f.FamilyNumber.PadLeft(4, '0') == vpNumber);
