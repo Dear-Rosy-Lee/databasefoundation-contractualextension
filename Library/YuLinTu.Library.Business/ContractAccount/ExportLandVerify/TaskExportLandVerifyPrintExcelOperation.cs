@@ -11,7 +11,7 @@ using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Business
 {
-    public class TaskExportLandVerifyExcelOperation2 : Task
+    public class TaskExportLandVerifyPrintExcelOperation : Task
     {
         #region Property
 
@@ -33,7 +33,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 构造函数
         /// </summary>
-        public TaskExportLandVerifyExcelOperation2()
+        public TaskExportLandVerifyPrintExcelOperation()
         {
         }
 
@@ -134,7 +134,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
                 string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
-                string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
+                string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表(打印版)");
                 var zoneStation = argument.DbContext.CreateZoneWorkStation();
                 var tissueStation = argument.DbContext.CreateSenderWorkStation();
                 string zoneName = zoneStation.GetZoneName(argument.CurrentZone);
@@ -149,18 +149,18 @@ namespace YuLinTu.Library.Business
 
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
-                ExportLandVerifyExcelTable2 export = new ExportLandVerifyExcelTable2();
+                ExportLandVerifyExcelPrintTable export = new ExportLandVerifyExcelPrintTable();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
+                string savePath = openFilePath + @"\" + excelName + "摸底核实表(打印版)" + ".xls";
 
                 #region 通过反射等机制定制化具体的业务处理类
 
                 var temp = WorksheetConfigHelper.GetInstance(export);
                 if (temp != null && temp.TemplatePath != null)
                 {
-                    if (temp is ExportLandVerifyExcelTable2)
+                    if (temp is ExportLandVerifyExcelPrintTable)
                     {
-                        export = (ExportLandVerifyExcelTable2)temp;
+                        export = (ExportLandVerifyExcelPrintTable)temp;
                     }
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }

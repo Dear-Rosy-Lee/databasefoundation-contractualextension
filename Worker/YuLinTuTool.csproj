@@ -2209,6 +2209,9 @@
     <None Include="Template\公示无异议声明书.dot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Template\农村土地二轮承包到期后再延长三十年摸底核实表%28打印版%29.xlt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Template\农村土地二轮承包到期后再延长三十年摸底核实表.xlt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

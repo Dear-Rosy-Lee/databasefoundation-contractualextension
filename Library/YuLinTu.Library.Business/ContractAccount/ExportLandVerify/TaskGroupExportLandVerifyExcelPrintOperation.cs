@@ -12,7 +12,7 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Business
 {
-    public class TaskGroupExportLandVerifyExcelOperation : TaskGroup
+    public class TaskGroupExportLandVerifyExcelPrintOperation : TaskGroup
     {
         #region Fields
 
@@ -31,7 +31,7 @@ namespace YuLinTu.Library.Business
 
         #region ctor
 
-        public TaskGroupExportLandVerifyExcelOperation()
+        public TaskGroupExportLandVerifyExcelPrintOperation()
         {
         }
 
@@ -79,12 +79,11 @@ namespace YuLinTu.Library.Business
                 argument.IsShow = false;
                 Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
-                TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+                TaskExportLandVerifyPrintExcelOperation operation = new TaskExportLandVerifyPrintExcelOperation();
                 operation.Argument = argument;
-                operation.Name = "批量导出摸底核实表";
+                operation.Name = "批量导出摸底核实表(打印版)";
                 operation.Description = zone.FullName;
                 Add(operation);
-             
             }
             CanOpenResult = true;
             base.OnGo();

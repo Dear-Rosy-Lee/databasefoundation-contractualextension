@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using YuLinTu.Library.Office;
-using System.Collections;
 using YuLinTu.Library.Entity;
 using System.IO;
+using YuLinTu.Library.WorkStation;
+using YuLinTu.Data;
+using System.Diagnostics;
 
 namespace YuLinTu.Library.Business
 {
@@ -12,57 +15,52 @@ namespace YuLinTu.Library.Business
     /// 摸底调查核实表
     /// </summary>
     [Serializable]
-    public partial class ExportLandVerifyExcelTable : ExportExcelBase
+    public class ExportLandVerifyExcelTable : ExportExcelBase
     {
         #region Fields
 
-        private bool result = true;
-        private Zone currentZone;//当前地域
-        private List<VirtualPerson> familys;//承包方集合
-        private List<VirtualPerson> tablefamilys;//承包方集合
-        private PersonCollection persons;//无户的人口
-        private ContractConcord concord;//承包合同
-        private Library.Entity.ContractRegeditBook regeditBook;//承包权证
-        private string zoneCode;//地域代码
-        private string templaePath;//模版文件
-        private int index;//索引值
-        private int high;//单元格合并数量
-        private ToolProgress toolProgress;//进度
-
-        //private PublicityConfirmDefine PublicityConfirmDefine;//自定义地块导出
-        private int columnIndex;//当前列名
-
-        private bool exportByFamilyNumber;//是否根据户号导出表格
-
-        //合计字段
-        private int PersonCount;//人合计
-
-        private double ActualAreaCount;//单个实测面积
-        private double AwareAreaCount;//总确权面积
-        private double ContractDelayCount;//延包面积
-        private double TotalContractDelayCount = 0.0;//延包总面积
-        private double MotorizeLandAreaCount;//总机动地面积
-        private double TotalTableAreaCount;//总二轮台账面积
-        private double ActualAreaAllCount;//总实测面积
-        private int landCount;//地块合计
-        private double onlyAwareAreaCount;//单个确权面积
-        private double onlyMotorizeLandAreaCount;//单个机动地
-        private double onlyTotalTableAreaCount;//单个二轮台账
-        private int packageCount;//土地延包份数
-        private double secondTableArea;//二轮面积之和
-        private double secondTotalTableArea;//二轮总面积之和
-        private int secondLandCount;//二轮地块合计
-        private LandVerifyDefine landVerifyDefineDefine = LandVerifyDefine.GetIntence();
-        private SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
+        private ToolProgress toolProgress;//进度条
+        private int index;//下标
+        private string templatePath;
+        private int familyCount;//户数
+        private int peopleCount;//家人数
+        private int landCount;//总地块数
+        private double AwareArea;//颁证面积
+        private double TableArea = 0;//合同面积
+        private double ActualArea;//实测面积
+        private List<Dictionary> dictCBFLX;
+        private List<Dictionary> dictXB;
+        private List<Dictionary> dictZJLX;
+        private List<Dictionary> dictTDYT;
+        private List<Dictionary> dictDLDJ;
+        private List<Dictionary> dicSF;
+        private List<Dictionary> dictSYQXZ;
+        private List<Dictionary> dictDKLB;
+        private List<Dictionary> dictTDLYLX;
 
         #endregion Fields
 
         #region Properties
 
         /// <summary>
-        /// 是否显示
+        /// 发包方
         /// </summary>
-        public bool NotShow { get; set; }
+        public CollectivityTissue Tissue { get; set; }
+
+        /// <summary>
+        /// 承包方家庭信息集合
+        /// </summary>
+        public List<ContractAccountLandFamily> AccountLandFamily { get; set; }
+
+        /// <summary>
+        /// 系统设置
+        /// </summary>
+        public SystemSetDefine SystemDefine = SystemSetDefine.GetIntence();
+
+        /// <summary>
+        /// 当前地域
+        /// </summary>
+        public Zone CurrentZone { get; set; }
 
         /// <summary>
         /// 保存文件路径
@@ -70,104 +68,18 @@ namespace YuLinTu.Library.Business
         public string SaveFilePath { get; set; }
 
         /// <summary>
-        /// 表格类型
+        /// 模板文件路径
         /// </summary>
-        public int TableType { get; set; }
+        public string TemplateFile { get; set; }
 
-        ///// <summary>
-        ///// 日期
-        ///// </summary>
-        //public DateTime? Date { get; set; }
+        public string Information { get; set; }
 
         /// <summary>
-        /// 承包方
+        /// 地域描述
         /// </summary>
-        public VirtualPerson Contractor { get; set; }
+        public string ZoneDesc { get; set; }
 
-        /// <summary>
-        /// 单位名称
-        /// </summary>
-        public string UnitName { get; set; }
-
-        /// <summary>
-        /// 到镇的地域名称
-        /// </summary>
-        public string ExcelName { get; set; }
-
-        /// <summary>
-        /// 当前地域
-        /// </summary>
-        public Zone CurrentZone
-        {
-            get { return currentZone; }
-            set { currentZone = value; }
-        }
-
-        /// <summary>
-        /// 承包方集合
-        /// </summary>
-        public List<VirtualPerson> Familys
-        {
-            get { return familys; }
-            set { familys = value; }
-        }
-
-        /// <summary>
-        /// 二轮承包方集合
-        /// </summary>
-        public List<VirtualPerson> TableFamilys
-        {
-            get { return tablefamilys; }
-            set { tablefamilys = value; }
-        }
-
-        ///// <summary>
-        ///// 承包台账导出配置
-        ///// </summary>
-        //public PublicityConfirmDefine landVerifyDefineDefine
-        //{
-        //    get { return PublicityConfirmDefine.GetIntence(); }
-        //}
-
-        /// <summary>
-        /// 承包台账常规设置实体
-        /// </summary>
-        public ContractBusinessSettingDefine SettingDefine = ContractBusinessSettingDefine.GetIntence();
-
-        /// <summary>
-        /// 字典内容
-        /// </summary>
-        public List<Dictionary> DictionList { get; set; }
-
-        /// <summary>
-        /// 地块集合
-        /// </summary>
-        public List<ContractLand> LandArrays { get; set; }
-
-        /// <summary>
-        /// 二轮地块集合
-        /// </summary>
-        public List<SecondTableLand> TableLandArrays { get; set; }
-
-        /// <summary>
-        /// 合同
-        /// </summary>
-        public List<ContractConcord> ConcordCollection { get; set; }
-
-        /// <summary>
-        /// 登记簿集合
-        /// </summary>
-        public List<Library.Entity.ContractRegeditBook> BookColletion { get; set; }
-
-        /// <summary>
-        /// 进度百分比
-        /// </summary>
-        public double Percent { get; set; }
-
-        /// <summary>
-        /// 当前百分比
-        /// </summary>
-        public double CurrentPercent { get; set; }
+        public IDbContext DbContext { get; set; }
 
         #endregion Properties
 
@@ -176,15 +88,9 @@ namespace YuLinTu.Library.Business
         public ExportLandVerifyExcelTable()
         {
             SaveFilePath = string.Empty;
-            secondTotalTableArea = 0;
-            LandArrays = new List<ContractLand>();
-            DictionList = new List<Dictionary>();
-            TableLandArrays = new List<SecondTableLand>();
-            ConcordCollection = new List<ContractConcord>();
-            BookColletion = new List<ContractRegeditBook>();
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
-            base.TemplateName = "农村土地二轮承包到期后再延长三十年摸底核实表";
+            base.TemplateName = "摸底调查核实表";
         }
 
         /// <summary>
@@ -202,488 +108,349 @@ namespace YuLinTu.Library.Business
         #region 开始生成Excel之前的一系列操作
 
         /// <summary>
-        /// 开始操作
+        /// 从数据库直接导出Excel
         /// </summary>
         /// <param name="zoneCode"></param>
-        /// <param name="templaePath"></param>
-        public virtual bool BeginExcel(string zoneCode, string templaePath)
+        /// <param name="templatePath"></param>
+        public virtual bool BeginToZone(string templatePath)
         {
-            result = true;
-            // PostProgress(1);
-
-            if (!File.Exists(templaePath))
+            //RePostProgress(1);
+            if (!File.Exists(templatePath))
             {
                 PostErrorInfo("模板路径不存在！");
                 return false;
             }
-            if (string.IsNullOrEmpty(zoneCode))
-            {
-                PostErrorInfo("目标地域不存在！");
-                return false;
-            }
-            this.zoneCode = zoneCode;
-            this.templaePath = templaePath;
-            index = 6;
+            this.templatePath = templatePath;
             Write();//写数据
-            return result;
+            return true;
         }
 
-        /// <summary>
-        /// 读取数据
-        /// </summary>
         public override void Read()
         {
         }
 
-        /// <summary>
-        /// 写数据
-        /// </summary>
         public override void Write()
         {
             try
             {
-                //PostProgress(5);
-                Open(templaePath);
-                //PostProgress(15);
-                if (!InitalizeValue())
-                {
+                //RePostProgress(5);
+                OpenExcelFile();
+                //RePostProgress(15);
+                if (!SetValue())
                     return;
-                }
-                // PostProgress(30);
                 BeginWrite();
-                if (!string.IsNullOrEmpty(SaveFilePath))
-                {
-                    SaveFilePath = WordOperator.InitalizeValideFileName(SaveFilePath);
-                    if (!Directory.Exists(Path.GetDirectoryName(SaveFilePath)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(SaveFilePath));
-                    }
-                }
-                else
-                {
-                    string fileName = "农村土地延包摸底核实表.xls";
-
-                    SaveFilePath = Path.Combine(AgricultureSetting.SystemDefaultDirectory, fileName);
-                }
-                if (File.Exists(SaveFilePath))
-                {
-                    File.SetAttributes(SaveFilePath, FileAttributes.Normal);
-                    File.Delete(SaveFilePath);
-                }
-                SaveAs(SaveFilePath);
-                toolProgress.DynamicProgress();
-                //if (!NotShow && TableType == 5)
-                //{
-                //    System.Diagnostics.Process.Start(SaveFilePath);
-                //}
+                //RePostProgress(100);
             }
             catch (System.Exception e)
             {
-                //DB.CloseConnection();
-                result = false;
                 PostErrorInfo(e.Message.ToString());
                 Dispose();
-                //if (e is TaskStopException)
-                //    throw e;
             }
         }
 
         /// <summary>
-        /// 初始化数据
+        /// 打开文件
         /// </summary>
-        /// <returns></returns>
-        private bool InitalizeValue()
+        private void OpenExcelFile()
         {
-            persons = new PersonCollection();
-            PersonCount = 0;
-            landCount = 0;
-            onlyAwareAreaCount = 0.0;
-            onlyMotorizeLandAreaCount = 0.0;
-            onlyTotalTableAreaCount = 0.0;
-            ActualAreaCount = 0.0;
-            packageCount = 0;
-            // PostProgress(19);
-            if (familys == null)
-                return false;
-            if (TableType != 5)
-            {
-                string staticsFamily = ToolConfiguration.GetSpecialAppSettingValue("StaticsInformationByLandFamily", "true");
-                bool yes = false;
-                Boolean.TryParse(staticsFamily, out yes);
-                string value = ToolConfiguration.GetSpecialAppSettingValue("ExportAgriLandTableByFamilyNumber", "true");
-                Boolean.TryParse(value, out exportByFamilyNumber);
-                if (exportByFamilyNumber)
-                {
-                    familys.Sort((a, b) =>
-                    {
-                        int numa = 0;
-                        int numb = 0;
-                        Int32.TryParse(a.FamilyNumber, out numa);
-                        Int32.TryParse(b.FamilyNumber, out numb);
-                        return numa.CompareTo(numb);
-                    });
-                }
-                if (yes)
-                {
-                    if (SettingDefine.DisplayCollectUsingCBdata)
-                    {
-                        //List<VirtualPerson> vpList = familys.FindAll(fm => !string.IsNullOrEmpty(fm.Name) && (fm.Name.IndexOf("机动地") >= 0 || fm.Name.IndexOf("集体") >= 0));
-                        //if (vpList != null && vpList.Count > 0)
-                        //{
-                        //    foreach (VirtualPerson vpn in vpList)
-                        //    {
-                        //        familys.Remove(vpn);
-                        //    }
-                        //    vpList.Clear();
-                        //}
-                        //List<ContractLand> landArraysList = LandArrays.FindAll(c => !string.IsNullOrEmpty(c.Name) && (c.Name.IndexOf("机动地") >= 0 || c.Name.IndexOf("集体") >= 0));
-                        //if (landArraysList != null && landArraysList.Count > 0)
-                        //{
-                        //    foreach (ContractLand landArraysitem in landArraysList)
-                        //    {
-                        //        LandArrays.Remove(landArraysitem);
-                        //    }
-                        //    landArraysList.Clear();
-                        //}
+            Open(templatePath);
+        }
 
-                        familys.RemoveAll(c => c.FamilyExpand.ContractorType != eContractorType.Farmer);
-                    }
-                }
-                //PostProgress(25);
-                //PostProgress(28);
-            }
-            else
-            {
-                //familys = new List<VirtualPerson>();
-                if (Contractor != null)
-                {
-                    familys.Add(Contractor);
-                }
-            }
+        /// <summary>
+        /// 初始值
+        /// </summary>
+        private bool SetValue()
+        {
+            //RePostProgress(5);
+            index = 7;
             return true;
         }
 
         #endregion 开始生成Excel之前的一系列操作
 
-        #region 开始往Excel中添加值
+        #region 开始生成Excel
+
+        private bool BeginWrite()
+        {
+            var dictStation = DbContext.CreateDictWorkStation();
+            var DictList = dictStation.Get();
+            if (DictList != null && DictList.Count > 0)
+            {
+                dicSF = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.SF);
+                dictCBFLX = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.CBFLX);
+                dictXB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.XB);
+                dictZJLX = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.ZJLX);
+                dictTDYT = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDYT);
+                dictDLDJ = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DLDJ);
+                dictSYQXZ = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.SYQXZ);
+                dictDKLB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DKLB);
+                dictTDLYLX = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDLYLX);
+            }
+            if (CurrentZone == null)
+            {
+                return false;
+            }
+
+            if (AccountLandFamily == null || AccountLandFamily.Count == 0)
+                return false;
+
+            AccountLandFamily.Sort((a, b) =>
+            {
+                long aNumber = Convert.ToInt64(a.CurrentFamily.FamilyNumber);
+                long bNumber = Convert.ToInt64(b.CurrentFamily.FamilyNumber);
+                return aNumber.CompareTo(bNumber);
+            });
+
+            if (!string.IsNullOrEmpty(AccountLandFamily[0].CurrentFamily.OldVirtualCode))
+            {
+                //AccountLandFamily.GroupBy(g=>g.CurrentFamily.)
+                //var query = from d in AccountLandFamily
+                //            orderby d.CurrentFamily.oldVirtualCode, d.CurrentFamily.FamilyNumber
+                //            select d;
+                //AccountLandFamily = query.ToList();
+            }
+            familyCount = AccountLandFamily.Count;
+            toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
+            foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
+            {
+                toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);
+                WriteInformation(landFamily);
+            }
+            WriteTempLate();
+            SetLineType("A7", "AH" + index, false);
+            this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
+            AccountLandFamily = null;
+            return true;
+        }
 
         /// <summary>
-        /// 书写内容
+        /// 书写每个承包户信息
         /// </summary>
-        private void WriteContent()
+        /// <param name="virtualPerson"></param>
+        private void WriteInformation(ContractAccountLandFamily landFamily)
         {
-            toolProgress.InitializationPercent(familys.Count, Percent, CurrentPercent);
-            high = 0;//得到每个户中的最大条数
-            int concordHigh = 0;//合同高度
-            int number = 1;//编号
+            if (landFamily == null)
+                return;
 
-            bool numberByFamilyNumber;
-            string value = ToolConfiguration.GetSpecialAppSettingValue("ExportAgriLandTableNumberByFamilyNumber", "true");
-            Boolean.TryParse(value, out numberByFamilyNumber);
-            //bool OnlyFamilyInformtion = ToolConfiguration.GetSpecialAppSettingValue("StaticsInformationByLandFamily", "true").ToLower() == "true";
+            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count : landFamily.Persons.Count;
+            double TotalLandAware = 0;
+            double TotalLandActual = 0;
+            double TotalLandTable = 0;
+            int aindex = index;
+            int bindex = index;
 
-            #region 户信息
+            List<ContractLand> lands = landFamily.LandCollection;
+            List<Person> peoples = landFamily.Persons;
 
-            //ContractConcordCollection concordCollection = (landVerifyDefineDefine.ConcordValue || landVerifyDefineDefine.RegeditBookValue) ? DB.ContractConcord.GetByZoneCode(currentZone.FullCode) : new ContractConcordCollection();
-            //根据户读取其家庭成员及承包地
-            foreach (VirtualPerson item in familys)
+            var hz = peoples.FirstOrDefault(f => f.Relationship == "01" || f.Relationship == "02"
+            || f.Relationship == "户主" || f.Relationship == "本人");
+            if (hz != null)
             {
-                columnIndex = 2;
-                //if (OnlyFamilyInformtion && (item.Name.IndexOf("集体") >= 0 || item.Name.IndexOf("机动地") >= 0))
-                //{
-                //    continue;
-                //}
-                VirtualPerson tablevp = null;
-                if ((landVerifyDefineDefine.IsContainTableValue || landVerifyDefineDefine.IsContainTablelandValue) && TableFamilys != null)
-                {
-                    tablevp = tablefamilys.Find(t => t.ID == item.ID);
-                }
-                if (tablevp != null && string.IsNullOrEmpty(tablevp.SharePerson))
-                {
-                    tablevp = null;
-                }
-                item.Name = InitalizeFamilyName(item.Name, SystemSet.KeepRepeatFlag);
-                List<Person> sharePersons = SortSharePerson(item.SharePersonList, item.Name);
-                List<Person> tablePersons = tablevp != null ? SortSharePerson(tablevp.SharePersonList, tablevp.Name) : new PersonCollection();
-                if (SystemSet.PersonTable)
-                {
-                    sharePersons = sharePersons.FindAll(c => c.IsSharedLand.Equals("是"));
-                    tablePersons = tablePersons.FindAll(c => c.IsSharedLand.Equals("是"));
-                    //sharePersons.Remove(sharePersons.Find(c => c.IsSharedLand.Equals("否")));
-                    //tablePersons.Remove(tablePersons.Find(c => c.IsSharedLand.Equals("否")));
-                }
-                PersonCount += sharePersons.Count;
-                //判断是否存在合同
-                List<ContractConcord> concords = (landVerifyDefineDefine.ConcordValue || landVerifyDefineDefine.RegeditBookValue) ? ConcordCollection.FindAll(cd => (cd.ContracterId != null && cd.ContracterId.HasValue) ? cd.ContracterId.Value == item.ID : false) : new List<ContractConcord>();
-                if (concords.Any(cd => string.IsNullOrEmpty(cd.ConcordNumber)))
-                {
-                    concords = new List<ContractConcord>();
-                }
-                List<ContractLand> cs = LandArrays.FindAll(ld => (ld.OwnerId != null && ld.OwnerId.HasValue) ? ld.OwnerId.Value == item.ID : false);
-                if (concords != null && concords.Count == 1)
-                {
-                    cs = cs.FindAll(ld => (ld.ConcordId != null && ld.ConcordId.HasValue) ? ld.ConcordId.Value == concords[0].ID : false);
-                }
-                landCount += cs.Count;
-                List<SecondTableLand> tablelandList = landVerifyDefineDefine.IsContainTablelandValue ? (TableLandArrays == null ? new List<SecondTableLand>() : TableLandArrays).FindAll(t => t.OwnerId == (tablevp == null ? item.ID : tablevp.ID)) : new List<SecondTableLand>();
-                secondLandCount += tablelandList.Count;
-
-                high = (cs.Count > sharePersons.Count) ? cs.Count : sharePersons.Count;
-                if (high == 0)
-                {
-                    high = 1;
-                }
-                //输出户信息
-                if (numberByFamilyNumber && !string.IsNullOrEmpty(item.FamilyNumber))
-                {
-                    Int32.TryParse(item.FamilyNumber, out number);
-                }
-
-                InitalizeContractorInformation(high, item.Name, sharePersons.Count.ToString(), item);
-                //输出人口数据
-                int familyIndex = WritePerson(sharePersons, tablePersons.Clone() as PersonCollection, item, tablevp, high);
-                ////输出二轮承包方信息
-                //WriteTableNumber(high, number.ToString(), tablevp != null ? tablevp.Name : item.Name, tablePersons.Count == 0 ? "1" : tablePersons.Count.ToString(), familyIndex);
-                ////书写调查信息
-                //WriteFamilyExpandInformation(high, item, item.FamilyExpand);
-                //输出承包地信息
-                cs = SortLandCollection(cs);//对承包地块排序
-                concordHigh = high;
-                int telephoneIndex = -1;
-                int curIndex = index;
-                if (concords == null || concords.Count <= 1)
-                {
-                    concord = (concords == null || concords.Count == 0) ? new ContractConcord() { ID = Guid.Empty } : concords[0];
-                    regeditBook = (concords == null || concords.Count == 0) ? new Library.Entity.ContractRegeditBook() { ID = Guid.Empty } : BookColletion.Find(t => t.ID == concords[0].ID);
-                    telephoneIndex = WriteContractLand(cs, high, index, item.Telephone, concords);//填写地块信息
-                }
-                if (landVerifyDefineDefine.ConcordValue || landVerifyDefineDefine.RegeditBookValue)
-                {
-                    if (concords != null && concords.Count > 1)
-                    {
-                        int curCloumnIndex = columnIndex;
-                        //high -= cs.Count;
-                        int countLand = 0;
-                        int cindexx = index;
-                        foreach (ContractConcord conrd in concords)
-                        {
-                            columnIndex = curCloumnIndex;
-                            List<ContractLand> landCollection = cs.FindAll(ld => (ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == conrd.ID));
-                            int height = landCollection != null ? landCollection.Count : 0;
-                            concord = conrd;
-                            if (BookColletion != null)
-                            {
-                                regeditBook = BookColletion.Find(t => t.ID == concord.ID);
-                            }
-                            if (landCollection != null)
-                            {
-                                List<ContractLand> landArray = new List<ContractLand>();
-                                foreach (ContractLand land in landCollection)
-                                {
-                                    landArray.Add(land);
-                                }
-                                telephoneIndex = WriteContractLand(landArray, height, cindexx, item.Telephone, concords);//填写地块信息
-                                landArray.Clear();
-                            }
-                            cindexx += height;
-                            countLand += height;
-                        }
-                        //high += cs.Count - countLand;
-                    }
-                    WriteContract(cs, concordHigh, concords);//书写合同信息
-                }
-                WriteLandExpandInformation(cs, cs.Count);
-                
-                if (landVerifyDefineDefine.IsContainTablelandValue)
-                {
-                    tablelandList = SortTableLandCollection(tablelandList);
-                    WriteSecondTableLand(tablelandList, high, tablevp == null ? "" : tablevp.TotalArea);
-                }
-                WriteLandSurveyInformation(cs, cs.Count);
-                columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + index, PublicityConfirmDefine.GetColumnValue(columnIndex) + (index + high - 1), "");//签字确认
-                number++;
-                index += high;
-                toolProgress.DynamicProgress(ExcelName + item.Name);
-                tablevp = null;
-                sharePersons = null;
-                tablePersons = null;
-                cs = null;
-                tablelandList = null;
-                concords = null;
-                
+                peoples.Remove(hz);
+                peoples.Insert(0, hz);
             }
-            LandArrays = null;
-            ConcordCollection = null;
-            familys.Clear();
-            GC.Collect();
 
-            #endregion 户信息
-
-            if (TableType == 5)
+            peopleCount += peoples.Count;
+            lands.Sort("IsStockLand", eOrder.Ascending);
+            bool flag = false;
+            if (peoples.Count > lands.Count)
+                flag = true;
+            foreach (Person person in peoples)
             {
-                for (int i = 0; i < 20 - high; i++)
-                {
-                    InsertRowCell(5 + high);
-                    index++;
-                }
+                WritePersonInformation(person, bindex, flag);
+                bindex++;
             }
+
+            foreach (ContractLand land in lands)
+            {
+                double tableArea = land.TableArea ?? 0;
+                TotalLandTable += tableArea;
+                TotalLandAware += land.AwareArea;
+                TotalLandActual += land.ActualArea;
+                WriteCurrentZoneInformation(land, aindex);
+                aindex++;
+            }
+
+            landCount += lands.Count;
+            if (lands.Count == 0)
+            {
+                index++;
+            }
+            AwareArea += TotalLandAware;
+            ActualArea += TotalLandActual;
+            TableArea += TotalLandTable;
+            int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
+            Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
+            string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
+            InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
+            InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
+            InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode.PadRight(14, '0')}{result}");
+            InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
+            InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
+            InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
+            InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
+            InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
+            InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
+            InitalizeRangeValue("AH" + index, "AH" + (index + height - 1), "");
+            index += height;
+            workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
+            workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
+            lands.Clear();
+        }
+
+        /// <summary>
+        /// 书写当前地域信息
+        /// </summary>
+        private void WriteCurrentZoneInformation(ContractLand land, int index)
+        {
+            Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
+            Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
+            Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
+
+            Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
+            Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
+            InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
+            InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
+            InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+            InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+            InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
+            InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
+            InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+            Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
+            InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+            InitalizeRangeValue("Y" + index, "Y" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AA" + index, "AA" + index, (land.ActualArea > 0.0) ? ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
+            InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
+            InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
+            InitalizeRangeValue("AF" + index, "AF" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
+            InitalizeRangeValue("AG" + index, "AG" + index, land.Comment);
+        }
+
+        private void WritePersonInformation(Person person, int index, bool flag)
+        {
+            Dictionary gender = dictXB.Find(c => c.Code.Equals(person.Gender == eGender.Male ? "1" : "2"));
+            var code = GetCardTypeNumber(person.CardType);
+            Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
+            InitalizeRangeValue("H" + index, "H" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
+            if (gender != null)
+            {
+                InitalizeRangeValue("I" + index, "I" + index, gender.Name + "性");
+            }
+            else
+            {
+                InitalizeRangeValue("I" + index, "I" + index, "");
+            }
+            InitalizeRangeValue("J" + index, "J" + index, person.Telephone);
+            InitalizeRangeValue("K" + index, "K" + index, cardtype.Name);
+            InitalizeRangeValue("L" + index, "L" + index, person.ICN);
+            InitalizeRangeValue("M" + index, "M" + index, person.Relationship);
+            InitalizeRangeValue("N" + index, "N" + index, person.Comment);
+            InitalizeRangeValue("O" + index, "O" + index, person.Opinion);
+        }
+
+        /// <summary>
+        /// 填写模板
+        /// </summary>
+        private void WriteTempLate()
+        {
+            string title = GetRangeToValue("A1", "AH2").ToString();
+            title = $"{ZoneDesc}{title}";
+            InitalizeRangeValue("A" + 1, "AH" + 2, title);
+            InitalizeRangeValue("C" + 3, "D" + 3, Tissue.Name);
+            InitalizeRangeValue("F" + 3, "F" + 3, Tissue.Code);
+            InitalizeRangeValue("I" + 3, "J" + 3, Tissue.LawyerName);
+            var code = GetCardTypeNumber(Tissue.LawyerCredentType);
+            Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
+            InitalizeRangeValue("L" + 3, "L" + 3, cardtype.Name);
+            InitalizeRangeValue("N" + 3, "P" + 3, Tissue.LawyerCartNumber);
+            InitalizeRangeValue("R" + 3, "S" + 3, Tissue.LawyerTelephone);
+            InitalizeRangeValue("W" + 3, "Z" + 3, Tissue.LawyerAddress);
+            InitalizeRangeValue("AB" + 3, "AB" + 3, Tissue.LawyerPosterNumber);
+            InitalizeRangeValue("AD" + 3, "AE" + 3, Tissue.SurveyPerson);
+            DateTime surveyDate = new DateTime();
+            if (Tissue.SurveyDate != null)
+            {
+                surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
+            }
+            InitalizeRangeValue("AG" + 3, "AH" + 3, surveyDate.ToString("yyyy年MM月dd日"));
+
             WriteCount();
-            if (TableType == 5)
-            {
-                WriteLastInformation();
-            }
-           
-            SetLineType("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5) ? landVerifyDefineDefine.ColumnCount+1 : landVerifyDefineDefine.ColumnCount + 2) + index);
         }
 
         /// <summary>
-        /// 宗地排序
+        /// 书写合计信息
         /// </summary>
-        /// <param name="lands"></param>
+        private void WriteCount()
+        {
+            SetRange("A" + index, "A" + index, 42.25, "合计");
+            InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
+            InitalizeRangeValue("G" + index, "N" + index, $"{peopleCount} 人");
+            InitalizeRangeValue("P" + index, "W" + index, $"{landCount} 块");
+            InitalizeRangeValue("X" + index, "X" + index, $"{TableArea}亩");
+            InitalizeRangeValue("Y" + index, "Y" + index, $"{AwareArea}亩");
+            InitalizeRangeValue("Z" + index, "Z" + index, $"{AwareArea}亩");
+            InitalizeRangeValue("AA" + index, "AA" + index, $"{ActualArea}亩");
+            InitalizeRangeValue("AB" + index, "AB" + index, $"{ActualArea}亩");
+            InitalizeRangeValue("AC" + index, "AC" + index, "\\");
+            InitalizeRangeValue("AD" + index, "AD" + index, "\\");
+            InitalizeRangeValue("AE" + index, "AE" + index, "\\");
+            InitalizeRangeValue("AF" + index, "AF" + index, "\\");
+            InitalizeRangeValue("AG" + index, "AG" + index, "\\");
+            InitalizeRangeValue("AH" + index, "AH" + index, "\\");
+            InitalizeRangeValue("AI" + index, "AI" + index, "\\");
+        }
+
+        private int GetCardTypeNumber(eCredentialsType type)
+        {
+            switch (type)
+            {
+                case eCredentialsType.IdentifyCard:
+                    return 1;
+
+                case eCredentialsType.AgentCard:
+                    return 3;
+
+                case eCredentialsType.OfficerCard:
+                    return 2;
+
+                case eCredentialsType.Other:
+                    return 9;
+
+                case eCredentialsType.Passport:
+                    return 5;
+
+                case eCredentialsType.ResidenceBooklet:
+                    return 4;
+            }
+            return 0;
+        }
+
+        private int GetCBFLXNumber(eContractorType type)
+        {
+            switch (type)
+            {
+                case eContractorType.Farmer:
+                    return 1;
+
+                case eContractorType.Personal:
+                    return 2;
+
+                case eContractorType.Unit:
+                    return 3;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        ///  获取上级地域
+        /// </summary>
+        /// <param name="zone"></param>
+        /// <param name="dbContext"></param>
         /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
-        {
-            if (lands == null || lands.Count == 0)
-            {
-                return new List<ContractLand>();
-            }
-            var orderdVps = lands.OrderBy(ld =>
-            {
-                int num = 0;
-                string landNumber = ContractLand.GetLandNumber(ld.CadastralNumber);
-                int index = landNumber.IndexOf("J");
-                if (index < 0)
-                {
-                    index = landNumber.IndexOf("Q");
-                }
-                if (index > 0)
-                {
-                    landNumber = landNumber.Substring(index + 1);
-                }
-                Int32.TryParse(landNumber, out num);
-                if (num == 0)
-                {
-                    num = 10000;
-                }
-                return num;
-            });
-            List<ContractLand> landCollection = new List<ContractLand>();
-            foreach (var land in orderdVps)
-            {
-                if (land.ID == null || !land.OwnerId.HasValue)
-                {
-                    continue;
-                }
-                landCollection.Add(land);
-            }
-            lands.Clear();
-            return landCollection;
-        }
 
-        /// <summary>
-        /// 宗地排序
-        /// </summary>
-        /// <param name="lands"></param>
-        /// <returns></returns>
-        private List<SecondTableLand> SortTableLandCollection(List<SecondTableLand> lands)
-        {
-            if (lands == null || lands.Count == 0)
-            {
-                return new List<SecondTableLand>();
-            }
-            var orderdVps = lands.OrderBy(ld =>
-            {
-                int num = 0;
-                string landNumber = ContractLand.GetLandNumber(ld.CadastralNumber);
-                int index = landNumber.IndexOf("J");
-                if (index < 0)
-                {
-                    index = landNumber.IndexOf("Q");
-                }
-                if (index > 0)
-                {
-                    landNumber = landNumber.Substring(index + 1);
-                }
-                Int32.TryParse(landNumber, out num);
-                if (num == 0)
-                {
-                    num = 10000;
-                }
-                return num;
-            });
-            List<SecondTableLand> landCollection = new List<SecondTableLand>();
-            foreach (var land in orderdVps)
-            {
-                landCollection.Add(land);
-            }
-            lands.Clear();
-            return landCollection;
-        }
-
-        /// <summary>
-        /// 初始化合同编号
-        /// </summary>
-        /// <returns></returns>
-        private ArrayList InitalizeConcordNumber(VirtualPerson vp)
-        {
-            string concordNumber = string.Empty;
-            string bookNumber = string.Empty;
-            ArrayList list = new ArrayList();
-            if (ConcordCollection != null)
-            {
-                foreach (ContractConcord concord in ConcordCollection)
-                {
-                    concordNumber += concord.ConcordNumber;
-                    concordNumber += "、";
-                    if (BookColletion != null)
-                    {
-                        Library.Entity.ContractRegeditBook book = BookColletion.Find(t => t.ID == concord.ID);
-
-                        if (book == null)
-                        {
-                            continue;
-                        }
-                        bookNumber += book.RegeditNumber;
-                        bookNumber += "、";
-                        book = null;
-                    }
-                }
-                if (!string.IsNullOrEmpty(concordNumber))
-                {
-                    concordNumber.Substring(0, concordNumber.Length - 1);
-                }
-                if (!string.IsNullOrEmpty(bookNumber))
-                {
-                    bookNumber.Substring(0, bookNumber.Length - 1);
-                }
-                list.Add(concordNumber);
-                list.Add(bookNumber);
-            }
-            return list;
-        }
-
-        /// <summary>
-        /// 书写最后一栏信息
-        /// </summary>
-        private void WriteLastInformation()
-        {
-            index++;
-            int count = (landVerifyDefineDefine.ColumnCount + 1) / 3;
-            SetRange("A" + index, PublicityConfirmDefine.GetColumnValue(count) + index, 19.75, 9, false, -1, 0, "填表人(签字):");
-            SetRange(PublicityConfirmDefine.GetColumnValue(count + 1) + index, PublicityConfirmDefine.GetColumnValue(2 * count) + index, 19.75, 9, false, -1, 0, "村民小组长(签字):");
-            SetRange(PublicityConfirmDefine.GetColumnValue(2 * count + 1) + index, PublicityConfirmDefine.GetColumnValue(landVerifyDefineDefine.ColumnCount + 1) + index, 19.75, 9, false, -1, 0, "承包户主(签字):");
-        }
-
-        /// <summary>
-        /// 配置
-        /// </summary>
-        public override void GetReplaceMent()
-        {
-            EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
-        }
-
-        #endregion 开始往Excel中添加值
+        #endregion 开始生成Excel
 
         #endregion Methods
     }

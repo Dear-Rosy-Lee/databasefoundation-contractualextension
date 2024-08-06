@@ -2,6 +2,7 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
+using Aspose.Cells;
 using System.ComponentModel.DataAnnotations;
 
 namespace YuLinTu.Library.Business
@@ -12,10 +13,11 @@ namespace YuLinTu.Library.Business
     public enum eContractAccountType
     {
         #region Fields - 导入导出
+
         /// <summary>
         /// 导入数据
         /// </summary>
-        [Display(Name = "导入数据")]       
+        [Display(Name = "导入数据")]
         ImportData = 1,
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出公示结果归户表
         /// </summary>
-        [Display(Name = "导出公示结果归户表")] 
+        [Display(Name = "导出公示结果归户表")]
         ExportSurveyTable = 52,
 
         /// <summary>
@@ -317,6 +319,12 @@ namespace YuLinTu.Library.Business
         /// 批量导出摸底核实表
         /// </summary>
         [Display(Name = "批量导出摸底核实表")]
-        VolumnExportLandVerifyExcel = 112
+        VolumnExportLandVerifyExcel = 112,
+
+        /// <summary>
+        /// 批量导出摸底核实表(打印版)
+        /// </summary>
+        [Display(Name = "批量导出摸底核实表(打印版)")]
+        VolumnExportLandVerifyPrintExcel = 113
     }
 }

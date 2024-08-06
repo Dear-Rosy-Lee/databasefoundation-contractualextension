@@ -158,6 +158,9 @@ namespace YuLinTu.Library.Business
             //DateValue = DateTime.Now;
             DateValue = Date;
             base.OnSetParamValue(currentFamily);
+            SetBookmarkValue("ShortZoneName",$"{ZoneList.Where(x => x.Level == eZoneLevel.Province).FirstOrDefault().Name}" +
+                                             $"{ZoneList.Where(x => x.Level == eZoneLevel.City).FirstOrDefault().Name}" +
+                                             $"{ZoneList.Where(x => x.Level == eZoneLevel.County).FirstOrDefault().Name}");
             SetBookmarkValue("ZoneName", sysset.ExportAddressToTown ? AddressExporthHelper.GetNewAddressToTown(ZoneName) : ZoneName);
             SetBookmarkValue("RightType", RightName);
             SetBookmarkValue("Date", (Date != null && Date.HasValue) ? string.Format("{0: yyyy 年 MM 月 dd 日}", Date) : "    年    月    日");

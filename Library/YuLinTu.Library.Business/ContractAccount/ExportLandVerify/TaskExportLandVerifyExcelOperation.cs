@@ -15,16 +15,13 @@ namespace YuLinTu.Library.Business
     {
         #region Property
 
-
         public bool IsGroup { get; set; }
-
-        public SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
         #endregion Property
 
         #region Field
 
-        private string openFilePath="";  //打开文件路径
+        private string openFilePath;  //打开文件路径
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
@@ -60,9 +57,8 @@ namespace YuLinTu.Library.Business
             {
                 var personStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var landStation = dbContext.CreateContractLandWorkstation();
-                var listPerson = personStation.GetByZoneCode(zone.FullCode, eLevelOption.SelfAndSubs);
-                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.SelfAndSubs);
-
+                var listPerson = personStation.GetByZoneCode(zone.FullCode, eLevelOption.Self);
+                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
                 if (listPerson == null || listPerson.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -101,7 +97,7 @@ namespace YuLinTu.Library.Business
         #region Method—ExportBusiness
 
         /// <summary>
-        /// 导出摸底核实表
+        /// 导出调查信息公示表
         /// </summary>
         public bool ExportLandVerifyExcel(TaskExportLandVerifyExcelArgument argument, List<VirtualPerson> vps, List<ContractLand> lands)
         {
@@ -113,25 +109,49 @@ namespace YuLinTu.Library.Business
                     this.ReportError("未选择导出数据的地域!");
                     return result;
                 }
-                var currentZone = argument.CurrentZone;
-                string fileName = argument.FileName;
-                string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
-                var dicStation = argument.DbContext.CreateDictWorkStation();
-                List<Dictionary> DictList = dicStation.Get();
-                string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
-                string zoneName = GetUinitName(currentZone);
-                if (SystemSetDefine.CountryTableHead)
+                List<ContractAccountLandFamily> accountFamilyCollection = new List<ContractAccountLandFamily>();
+                var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
+                var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
+                foreach (VirtualPerson vp in vps)
                 {
-                    var zoneStation = dbContext.CreateZoneWorkStation();
-                    zoneName = zoneStation.GetVillageName(currentZone);
+                    var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);
+                    ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
+                    accountLandFamily.CurrentFamily = vp;
+                    accountLandFamily.Persons = vp.SharePersonList;
+                    accountLandFamily.LandCollection = landCollection;
+                    accountFamilyCollection.Add(accountLandFamily);
+                    var ralations = qglands.FindAll(o => o.VirtualPersonID == vp.ID);
+                    if (ralations.Count > 0)
+                    {
+                        foreach (var r in ralations)
+                        {
+                            var stockland = stockLand.Find(t => t.ID == r.LandID).Clone() as ContractLand;
+                            if (stockland == null)
+                                continue;
+                            stockland.AwareArea = r.QuanficationArea;
+                            accountLandFamily.LandCollection.Add(stockland);
+                        }
+                    }
                 }
-                lands.LandNumberFormat(SystemSetDefine);
-                var concordStation = dbContext.CreateConcordStation();
-                var bookStation = dbContext.CreateRegeditBookStation();
-                var listConcords = concordStation.GetContractsByZoneCode(currentZone.FullCode);
-                var listBooks = bookStation.GetByZoneCode(currentZone.FullCode, eSearchOption.Precision);
+                string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
+                string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
+                var zoneStation = argument.DbContext.CreateZoneWorkStation();
+                var tissueStation = argument.DbContext.CreateSenderWorkStation();
+                string zoneName = zoneStation.GetZoneName(argument.CurrentZone);
+                CollectivityTissue tissue = tissueStation.Get(zone.ID);
+                if (tissue == null)
+                {
+                    var tis = tissueStation.GetTissues(zone.FullCode);
+                    tissue = tis.FirstOrDefault(t => t.Code.Equals(zone.FullCode.PadRight(14, '0')));
+                }
+                if (tissue != null)
+                    zoneName = tissue.Name;
+
+                openFilePath = argument.FileName;
+                int personCount = vps == null ? 0 : vps.Count;
                 ExportLandVerifyExcelTable export = new ExportLandVerifyExcelTable();
-                string savePath = argument.FileName + @"\" +excelName  + "摸底核实表.xls";
+                IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
+                string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
 
                 #region 通过反射等机制定制化具体的业务处理类
 
@@ -147,30 +167,35 @@ namespace YuLinTu.Library.Business
 
                 #endregion 通过反射等机制定制化具体的业务处理类
 
-                export.Familys = vps;
-                export.ExcelName = SystemSet.GetTBDWStr(zone);
-                export.UnitName = SystemSet.GetTableHeaderStr(zone);
-                export.DictionList = DictList;
-                export.LandArrays = lands;
-                export.ConcordCollection = listConcords;
                 export.SaveFilePath = savePath;
-                export.BookColletion = listBooks;
+                export.CurrentZone = argument.CurrentZone;
+                export.DbContext = argument.DbContext;
+                export.TemplateFile = tempPath;
+                export.AccountLandFamily = accountFamilyCollection;
+                export.Tissue = tissue;
+                export.ZoneDesc = excelName;
                 export.PostProgressEvent += export_PostProgressEvent;
-                export.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                result = export.BeginExcel(zone.FullCode.ToString(), tempPath);
+                export.PostErrorInfoEvent += export_PostErrorEvent;
+                result = export.BeginToZone(tempPath);
+                export.SaveAs(export.SaveFilePath);
                 if (argument.IsShow)
-                {
                     export.PrintView(savePath);
+                if (result)
+                {
+                    openFilePath = export.SaveFilePath;
+                    export_PostProgressEvent(100, null);
+                    this.ReportInfomation(string.Format("{0}导出{1}户调查信息数据", excelName, personCount));
                 }
-                    
-
-                this.ReportProgress(100, "完成");
-                this.ReportInfomation(string.Format("{0}导出{1}户调查信息数据", excelName, vps.Count));
+                vps.Clear();
+                vps = null;
+                lands.Clear();
+                lands = null;
             }
             catch (Exception ex)
             {
-                this.ReportError(ex.Message);
-                YuLinTu.Library.Log.Log.WriteException(this, "ExportDataExcel(导出数据到Excel表)", ex.Message + ex.StackTrace);
+                result = false;
+                this.ReportError("导出摸底核实表失败");
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportVirtualPersonExcel(导出数据到摸底核实表)", ex.Message + ex.StackTrace);
             }
             return result;
         }
@@ -257,27 +282,6 @@ namespace YuLinTu.Library.Business
                 excelName = parentTowm.Name + parent.Name;
             }
             return excelName;
-        }
-
-        public string GetUinitName(Zone zone)
-        {
-            ModuleMsgArgs arg = new ModuleMsgArgs();
-            arg.Datasource = dbContext;
-            arg.Parameter = zone;
-            arg.Name = VirtualPersonMessage.VIRTUALPERSON_UNITNAME;
-            TheBns.Current.Message.Send(this, arg);
-            return arg.ReturnValue.ToString();
-        }
-
-        /// <summary>
-        ///  错误信息报告
-        /// </summary>
-        private void export_PostErrorInfoEvent(string message)
-        {
-            if (!string.IsNullOrEmpty(message))
-            {
-                this.ReportError(message);
-            }
         }
 
         #endregion Method—Private

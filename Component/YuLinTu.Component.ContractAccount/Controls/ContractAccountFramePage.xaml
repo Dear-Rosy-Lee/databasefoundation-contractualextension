@@ -403,6 +403,18 @@
                                     Text="摸底调查核实表"
                                     ToolTip="导出(批量)摸底调查核实表Excel" />
                             </metro:MetroButton>
+                            <metro:MetroButton
+                                x:Name="btnExportVerifyExcelPrint"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
+                                    ImagePosition="Left"
+                                    Text="摸底调查核实表(打印版)"
+                                    ToolTip="导出(批量)摸底调查核实表Excel" />
+                            </metro:MetroButton>
                             <cmps:SeparatorV
                                 Height="1"
                                 Margin="3,0,3,0"

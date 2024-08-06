@@ -15,7 +15,7 @@ namespace YuLinTu.Library.Business
     /// 摸底调查核实表
     /// </summary>
     [Serializable]
-    public class ExportLandVerifyExcelTable2 : ExportExcelBase
+    public class ExportLandVerifyExcelPrintTable : ExportExcelBase
     {
         #region Fields
 
@@ -85,7 +85,7 @@ namespace YuLinTu.Library.Business
 
         #region Ctor
 
-        public ExportLandVerifyExcelTable2()
+        public ExportLandVerifyExcelPrintTable()
         {
             SaveFilePath = string.Empty;
             toolProgress = new ToolProgress();
@@ -294,6 +294,8 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
             InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "");
             index += height;
+            workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
+            workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
 
@@ -360,17 +362,17 @@ namespace YuLinTu.Library.Business
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);
-            InitalizeRangeValue("C" + 3, "E" + 3, Tissue.Name);
+            InitalizeRangeValue("B" + 3, "D" + 3, Tissue.Name);
             InitalizeRangeValue("G" + 3, "G" + 3, Tissue.Code);
-            InitalizeRangeValue("J" + 3, "K" + 3, Tissue.LawyerName);
+            InitalizeRangeValue("L" + 3, "L" + 3, Tissue.LawyerName);
             var code = GetCardTypeNumber(Tissue.LawyerCredentType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
-            InitalizeRangeValue("M" + 3, "N" + 3, cardtype.Name);
-            InitalizeRangeValue("P" + 3, "S" + 3, Tissue.LawyerCartNumber);
-            InitalizeRangeValue("U" + 3, "V" + 3, Tissue.LawyerTelephone);
-            InitalizeRangeValue("Z" + 3, "AB" + 3, Tissue.LawyerAddress);
-            InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
-            InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
+            InitalizeRangeValue("O" + 3, "O" + 3, cardtype.Name);
+            InitalizeRangeValue("Q" + 3, "Q" + 3, Tissue.LawyerCartNumber);
+            InitalizeRangeValue("Y" + 3, "Y" + 3, Tissue.LawyerTelephone);
+            InitalizeRangeValue("AA" + 3, "AC" + 3, Tissue.LawyerAddress);
+            InitalizeRangeValue("AE" + 3, "AE" + 3, Tissue.LawyerPosterNumber);
+            InitalizeRangeValue("AG" + 3, "AG" + 3, Tissue.SurveyPerson);
             DateTime surveyDate = new DateTime();
             if (Tissue.SurveyDate != null)
             {

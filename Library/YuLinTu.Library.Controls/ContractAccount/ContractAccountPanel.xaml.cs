@@ -822,6 +822,10 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportLandVerifyExcel:
                         ExportVerifyExcelTaskGroup(saveFilePath, taskDes, taskName);
                         break;
+
+                    case eContractAccountType.VolumnExportLandVerifyPrintExcel:
+                        ExportVerifyExcelPrintTaskGroup(saveFilePath, taskDes, taskName);
+                        break;
                     //case eContractAccountType.ExportSendTableWord:
                     //    ExportSenderWordTask(saveFilePath, taskDes, taskName);
                     //    break;
@@ -3930,7 +3934,7 @@ namespace YuLinTu.Library.Controls
             if (CurrentZone == null)
             {
                 //没有选择导出地域
-                ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubExcel, ContractAccountInfo.ExportNoZone);
+                ShowBox(ContractAccountInfo.ExportLandVerifyExcel, ContractAccountInfo.ExportNoZone);
                 return;
             }
             try
@@ -3942,7 +3946,7 @@ namespace YuLinTu.Library.Controls
                     //单个任务
                     if (accountLandItems == null || accountLandItems.Count == 0)
                     {
-                        ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubExcel, ContractAccountInfo.CurrentZoneNoLand);
+                        ShowBox(ContractAccountInfo.ExportLandVerifyExcel, ContractAccountInfo.CurrentZoneNoLand);
                         return;
                     }
 
@@ -3957,7 +3961,7 @@ namespace YuLinTu.Library.Controls
                 else
                 {
                     //选择地域大于镇
-                    ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubExcel, ContractAccountInfo.VolumnExportZoneError);
+                    ShowBox(ContractAccountInfo.ExportLandVerifyExcel, ContractAccountInfo.VolumnExportZoneError);
                     return;
                 }
             }
@@ -3976,7 +3980,7 @@ namespace YuLinTu.Library.Controls
             argument.FileName = fileName;
             argument.VirtualType = VirtualType;
             argument.IsShow = true;
-            TaskExportLandVerifyExcelOperation2 operation = new TaskExportLandVerifyExcelOperation2();
+            TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
             operation.Argument = argument;
             operation.Description = taskDes;
             operation.Name = taskName;
@@ -4016,6 +4020,100 @@ namespace YuLinTu.Library.Controls
         }
 
         #endregion Method-摸底核实表
+
+        #region Method-摸底核实表(打印版)
+
+        public void ExportVerifyPrintExcel()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox(ContractAccountInfo.ExportLandVerifyPrintExcel, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && childrenCount == 0))
+                {
+                    //单个任务
+                    if (accountLandItems == null || accountLandItems.Count == 0)
+                    {
+                        ShowBox(ContractAccountInfo.ExportLandVerifyPrintExcel, ContractAccountInfo.CurrentZoneNoLand);
+                        return;
+                    }
+
+                    ExportVerifyExcelPrintTask(SystemSet.DefaultPath, ContractAccountInfo.ExportLandVerifyPrintExcel, ContractAccountInfo.ExportSurveyTableData);
+                }
+                else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
+                {
+                    //组任务
+                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportLandVerifyPrintExcel,
+                eContractAccountType.VolumnExportLandVerifyPrintExcel, ContractAccountInfo.ExportLandVerifyPrintExcel, ContractAccountInfo.ExportSurveyTableData);
+                }
+                else
+                {
+                    //选择地域大于镇
+                    ShowBox(ContractAccountInfo.ExportLandVerifyPrintExcel, ContractAccountInfo.VolumnExportZoneError);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportPublishExcel(导出调查信息公示表)", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+
+        public void ExportVerifyExcelPrintTask(string fileName, string taskDes, string taskName)
+        {
+            TaskExportLandVerifyExcelArgument argument = new TaskExportLandVerifyExcelArgument();
+            argument.DbContext = DbContext;
+            argument.CurrentZone = currentZone;
+            argument.FileName = fileName;
+            argument.VirtualType = VirtualType;
+            argument.IsShow = true;
+            TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+            operation.Argument = argument;
+            operation.Description = taskDes;
+            operation.Name = taskName;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+
+        public void ExportVerifyExcelPrintTaskGroup(string fileName, string taskDes, string taskName)
+        {
+            var groupArgument = new TaskGroupExportLandVerifyExcelArgument();
+            groupArgument.DbContext = DbContext;
+            groupArgument.CurrentZone = currentZone;
+            groupArgument.FileName = fileName;
+            groupArgument.VirtualType = VirtualType;
+            var groupOperation = new TaskGroupExportLandVerifyExcelPrintOperation();
+            groupOperation.Argument = groupArgument;
+            groupOperation.Description = taskDes;
+            groupOperation.Name = taskName;
+            groupOperation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(groupOperation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            groupOperation.StartAsync();
+        }
+
+        #endregion Method-摸底核实表(打印版)
 
         #region Method-台账导出
 
@@ -4668,7 +4766,7 @@ namespace YuLinTu.Library.Controls
                     meta.Database = dbContext;
                     meta.DictList = DictList;
                     meta.vps = vps;
-                    var  import = new TaskExportLandShapeOperation();
+                    var import = new TaskExportLandShapeOperation();
                     import.Argument = meta;
                     import.Description = "导出" + CurrentZone.FullName + ContractAccountInfo.ExportLandShapeData;
                     import.Name = ContractAccountInfo.ExportLandShapeData;

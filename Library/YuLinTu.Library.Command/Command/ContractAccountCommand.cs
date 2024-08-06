@@ -155,6 +155,11 @@ namespace YuLinTu.Library.Command
         public const string ExportVerifyExcelName = "exportVerifyExcel";
 
         /// <summary>
+        /// 导出(批量)摸底调查核实表命令名称(打印版)
+        /// </summary>
+        public const string ExportVerifyExcelPrintName = "exportVerifyExcelPrint";
+
+        /// <summary>
         /// 导出(批量)发包方调查表(Word)命令名称
         /// </summary>
         public const string ExportSenderWordName = "exportSenderWord";
@@ -551,6 +556,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand ExportVerifyExcel = new RoutedCommand(ExportVerifyExcelName, typeof(Button));
 
         /// <summary>
+        /// 导出(批量)摸底调查核实表命令(打印版)
+        /// </summary>
+        public RoutedCommand ExportVerifyExcelPrint = new RoutedCommand(ExportVerifyExcelPrintName, typeof(Button));
+
+        /// <summary>
         /// 导出(批量)发包方调查表(Word)命令
         /// </summary>
         public RoutedCommand ExportSenderWord = new RoutedCommand(ExportSenderWordName, typeof(Button));
@@ -932,6 +942,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding ExportVerifyExcelBind = new CommandBinding();
 
         /// <summary>
+        /// 导出(批量)摸底调查核实表绑定
+        /// </summary>
+        public CommandBinding ExportVerifyExcelPrintBind = new CommandBinding();
+
+        /// <summary>
         /// 导出(批量)发包方调查表(Word)绑定
         /// </summary>
         public CommandBinding ExportSenderWordBind = new CommandBinding();
@@ -1206,6 +1221,7 @@ namespace YuLinTu.Library.Command
             ExportBoundaryExcelBind.Command = ExportBoundaryExcel;
             ExportPublishExcelBind.Command = ExportPublishExcel;
             ExportVerifyExcelBind.Command = ExportVerifyExcel;
+            ExportVerifyExcelPrintBind.Command = ExportVerifyExcelPrint;
             ExportSenderWordBind.Command = ExportSenderWord;
             ExportVPWordBind.Command = ExportVPWord;
             ExportLandWordBind.Command = ExportLandWord;

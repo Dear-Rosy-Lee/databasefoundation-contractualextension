@@ -373,7 +373,6 @@ namespace YuLinTu.Library.Business
             return list;
         }
 
-
         /// <summary>
         ///  根据承包方编码地块集合
         /// </summary>
@@ -397,7 +396,6 @@ namespace YuLinTu.Library.Business
             }
             return list;
         }
-
 
         /// <summary>
         ///  根据地域编码统计承包地块数量
@@ -3012,6 +3010,7 @@ namespace YuLinTu.Library.Business
                 {
                     return flag;
                 }
+                var zonelist = GetParentZone(zone);
                 string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
                 var concordStation = dbContext.CreateConcordStation();
                 var concords = concordStation.GetAllConcordByFamilyID(vp.ID);
@@ -3035,6 +3034,7 @@ namespace YuLinTu.Library.Business
                 export.CurrentZone = zone;
                 export.Contractor = vp;
                 export.DictList = DictList;
+                export.ZoneList = zonelist;
                 export.LandCollection = landItems;  //地块集合
                 var sender = GetTissue(zone.ID); //发包方
                 if (sender == null)
