@@ -20,6 +20,7 @@ using YuLinTu.Data.Shapefile;
 using YuLinTu.Library.Office;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
+using Microsoft.Scripting.Actions;
 
 namespace YuLinTu.Library.Business
 {
@@ -453,8 +454,10 @@ namespace YuLinTu.Library.Business
                 landArrays.LandNumberFormat(SystemSetDefine);
                 var concordStation = dbContext.CreateConcordStation();
                 var bookStation = dbContext.CreateRegeditBookStation();
-                var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode,eLevelOption.Self);
+                var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode, eLevelOption.Self);
                 var listBooks = bookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
+                var qglands = dbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
+
                 string filePath = string.Empty;
                 ExportContractorSurveyExcel export = new ExportContractorSurveyExcel();
 
@@ -485,6 +488,7 @@ namespace YuLinTu.Library.Business
                 export.CurrentPercent = currentPercent;
                 export.ConcordCollection = listConcords;
                 export.BookColletion = listBooks;
+                export.Relations = qglands;
                 export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorInfoEvent;
                 returnValue = export.BeginExcel(time, pubtime, zone.FullCode.ToString(), tempPath);

@@ -1,0 +1,505 @@
+﻿<core:NavigatableWorkpageFrame x:Class="YuLinTu.Component.StockRightShuShan.Control.MainFramePage"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                               xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+                               xmlns:core="clr-namespace:YuLinTu.Appwork;assembly=YuLinTu.Appwork.Core"
+                               xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                               xmlns:resx="clr-namespace:YuLinTu.Library.Resources.Properties;assembly=YuLinTu.Library.Resources"
+                               xmlns:local="clr-namespace:YuLinTu.Component.StockRightShuShan.Control"
+                               mc:Ignorable="d"
+                               d:DesignHeight="768"
+                               d:DesignWidth="1366"
+                               Title="安徽蜀山确权确股"
+                               Description="安徽蜀山确权确股管理"
+                               Category="应用"
+                               Icon="pack://application:,,,/YuLinTu.Component.ContractAccount;component/Resources/map.png"
+                               Image="pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/建设用地78.png"
+                               LeftSidebarLength="265"
+                               IsLeftSidebarExpanded="False">
+    <core:WorkpageFrame.Toolbar>
+        <DockPanel x:Name="toolDockPanel" TextElement.FontSize="12"
+                   LastChildFill="False"
+                   Height="90">
+            <cmps:TabControlItemRibbonContainer Text="股农操作">
+                <metro:MetroButton Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   Click="Btn_AddPerson_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="添加"
+                                        ToolTip="在当前地域下选中承包方下添加地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
+                </metro:MetroButton>
+                <metro:MetroButton 
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   Click="Btn_DeletePerson_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="删除"
+                                        ToolTip="删除选中的承包地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Clear.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="地块操作">
+                <metro:MetroButton Click="Btn_AddLand_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="添加"
+                                        ToolTip="在当前地域下选中承包方下添加地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
+                </metro:MetroButton>
+                <metro:MetroButton Click="Btn_EditLand_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="编辑"
+                                        ToolTip="编辑选中的承包地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/编辑数据32.png" />
+                </metro:MetroButton>
+                <metro:MetroButton Click="Btn_DeleteLand_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="删除"
+                                        ToolTip="删除选中的承包地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Clear.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="数据导入"
+                                                Name="ImportContainer">
+                <tk:DropDownButton  Name="btnImportExcel"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    HorizontalContentAlignment="Left"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="调查表"
+                                            ToolTip="导入(批量)调查表"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导入户籍32.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <metro:MetroButton  Click="Btn_Importland_Click"
+                                                x:Name="btnImportVPLandInfo"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="调查信息表"
+                                                    ToolTip="可以单个地块调查表导入或者批量导入地块调查表"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导入户籍32.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+                <metro:MetroButton  Name="btnImportData"
+                                    Click="Btn_ImportShape_Click"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="矢量图斑"
+                                            ToolTip="导入(批量)矢量图斑数据"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Shape32.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="数据导出"
+                                                Name="Exportontainer" >
+                <tk:DropDownButton  
+                                    Visibility="Collapsed"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    HorizontalContentAlignment="Left"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="台账报表"
+                                            ToolTip="导出(批量)调查表"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Table.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <metro:MetroButton  Click="Btn_Exportland_Click"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="地块调查表"
+                                                    ToolTip="可以单个或者批量导出地块调查表"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                            <metro:MetroButton  Click="Btn_ExportPerson_Click"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="股农调查表"
+                                                    ToolTip="可以单个或者批量导出地块调查表"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                            <metro:MetroButton  Click="Btn_ExportRegister_Click"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="登记簿册"
+                                                    ToolTip="可以单个或者批量导出登记簿册"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                            <metro:MetroButton  Click="Btn_ExportPublic_Click"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="公示表"
+                                                    ToolTip="可以单个或者批量导出公示表册"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                            <metro:MetroButton  Click="Btn_ExportStock_Click"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="资源股权量化情况表"
+                                                    ToolTip="可以单个或者批量导出资源股权量化情况表"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                            <metro:MetroButton  
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                >
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="股权管理章程"
+                                                    ToolTip="可以单个或者批量导出资源股权管理章程"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+                <metro:MetroButton  Name="btnExportData"
+                                    x:FieldModifier="public"
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom"
+                                    Click="Btn_ExportShape_Click"
+                                    >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                            Text="鱼鳞图斑"
+                                            ToolTip="导出(批量)矢图斑数据"
+                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Shape32.png" />
+                    <!--<tk:DropDownButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <metro:MetroButton  x:Name="mbtnExportVectorShape"
+                                                Padding="8,4"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalContentAlignment="Left"
+                                                Click="Btn_ExportShape_Click"
+                                                x:FieldModifier="public">
+                                <cmps:ImageTextItem ImagePosition="Left"
+                                                    Text="矢量调查图斑"
+                                                    ToolTip="导出当前地域下矢量调查图斑数据"
+                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Shape32.png">
+                                </cmps:ImageTextItem>
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>-->
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="股权分配"
+                                                Name="ComparAnalyContainer">
+                <metro:MetroButton Visibility="Collapsed" Click="Btn_StockQuanlification_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="股权量化"
+                                        ToolTip="股权量化"
+                                        Image="pack://application:,,,/YuLinTu.Component.StockRightShuShan;component/Resources/FLAnalyITI.png" />
+                </metro:MetroButton>
+                <metro:MetroButton Click="Btn_StockDistribution_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="股权分配"
+                                        ToolTip="股权量化"
+                                        Image="pack://application:,,,/YuLinTu.Component.StockRightShuShan;component/Resources/FNAnalyITI.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="合同">
+                <metro:MetroButton Click="Btn_ConcordSet_Click"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="签订合同"
+                                        ToolTip="根据当前地域下承包方、发包方、承包地块等信息设置承包合同"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/InitialData.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnPreviewConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_PreviewConcord_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="预览合同"
+                                        ToolTip="预览当前选择合同信息"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnExportConcord"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_ExportConcord_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="导出合同"
+                                        ToolTip="导出当前选择合同数据"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="权证">
+                <metro:MetroButton x:Name="mbtnInitalizeData"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_WarrantSet_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="签订权证"
+                                        ToolTip="根据当前地域下承包合同信息登记权证信息"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/FileMarkAsFinal.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnPrivewRegeditBook"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_PreviewRegesterBook_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="预览登记簿"
+                                        ToolTip="预览当前选择登记簿信息"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnExportRegeditBook"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_ExportRegisterBook_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="导出登记簿"
+                                        ToolTip="导出当前选择登记簿数据"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnPrintViewWarrant"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_PreviewWarrant_CLick">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="预览证书"
+                                        ToolTip="预览当前选择证书"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                </metro:MetroButton>
+                <metro:MetroButton x:Name="mbtnExportWarrant"
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   x:FieldModifier="public"
+                                   Click="Btn_ExportBook_Click">
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="导出证书"
+                                        ToolTip="导出当前选择证书"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/导出word_32.png" />
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="扩展">
+                <tk:DropDownButton 
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    HorizontalContentAlignment="Left"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem  ImagePosition="Top"
+                                        Text="安徽蜀山确股"
+                                        ToolTip="安徽蜀山确股资料"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/MeasureBook.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <metro:MetroButton x:Name="btnExportLandAccountWord"
+                                   Click="btnExportLandAccountWord_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left">
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="农村土地承包台账"
+                                        ToolTip="导出(批量)农村土地承包经营权承包台账表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="btnExportPublishWord"
+                                   Click="btnExportPublishWord_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left">
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="公示结果归户表"
+                                        ToolTip="导出(批量)公示结果归户表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="btnExportHistorySurveyWord"
+                                   Click="btnExportHistorySurveyWord_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left">
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="历史情况摸底调查表"
+                                        ToolTip="导出(批量)农户土地承包经营权历史情况摸底调查表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="btnExportCurrentSituationSurveyWord"
+                                   Click="btnExportCurrentSituationSurveyWord_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left">
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="现状调查表"
+                                        ToolTip="导出(批量)土地承包经营权确权确亩不确界共用地块农户承包现状调查表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton x:Name="btnExportRegisterSurveyWord"
+                                   Click="btnExportRegisterSurveyWord_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left">
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="登记信息摸底表"
+                                        ToolTip="导出(批量)农村土地承包经营权登记信息摸底表"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Word.png" />
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+            <cmps:TabControlItemRibbonContainer Text="工具">
+                <tk:DropDownButton 
+                                    Padding="4,2"
+                                    VerticalContentAlignment="Top"
+                                    HorizontalContentAlignment="Left"
+                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem  ImagePosition="Top"
+                                        Text="清空"
+                                        ToolTip="清空选择地域所有地块数据(及承包方数据)"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空32.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <metro:MetroButton Click="Btn_ClearPerson_Click"
+                                   Padding="8,4"
+                                   VerticalContentAlignment="Stretch"
+                                   HorizontalContentAlignment="Left"
+                                   >
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="清空股农"
+                                        ToolTip="清空选择地域下所有股农"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空32.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton Click="Btn_ClearLand_Click"
+                                    Padding="8,4"
+                                    VerticalContentAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                   >
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="清空地块"
+                                        ToolTip="清空选择地域下所有确股地块"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空32.png" />
+                            </metro:MetroButton>
+                            <metro:MetroButton Click="Btn_ClearRelation_Click"
+                                     Padding="8,4"
+                                     VerticalContentAlignment="Stretch"
+                                     HorizontalContentAlignment="Left"
+                                   >
+                                <cmps:ImageTextItem  ImagePosition="Left"
+                                        Text="清空股权关系"
+                                        ToolTip="清空选择地域下所有股权关系"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空32.png" />
+                            </metro:MetroButton>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+                <metro:MetroButton    Click="Btn_Refresh_Click" 
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="刷新"
+                                        ToolTip="刷新"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/刷新32.png" />
+
+                </metro:MetroButton>
+                <metro:MetroButton    Click="Btn_DateBaseExchange_Click" 
+                                   Padding="4,2,4,2"
+                                   VerticalContentAlignment="Stretch"
+                                   >
+                    <cmps:ImageTextItem ImagePosition="Top"
+                                        Text="数据转换"
+                                        ToolTip="数据转换"
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/文件转换32.png" />
+
+                </metro:MetroButton>
+            </cmps:TabControlItemRibbonContainer>
+            <cmps:Separator />
+        </DockPanel>
+    </core:WorkpageFrame.Toolbar>
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <local:LandPanel x:Name="landPanel" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <local:PersonPanel x:Name="personPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    </Grid>
+</core:NavigatableWorkpageFrame>

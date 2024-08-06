@@ -164,6 +164,11 @@ namespace YuLinTu.Library.Business
             set { familys = value; }
         }
 
+        public List<BelongRelation> Relations
+        {
+            get; set;
+        }
+
         /// <summary>
         /// 二轮承包方集合
         /// </summary>
@@ -472,6 +477,22 @@ namespace YuLinTu.Library.Business
                 if (concords != null && concords.Count == 1)
                 {
                     cs = cs.FindAll(ld => (ld.ConcordId != null && ld.ConcordId.HasValue) ? ld.ConcordId.Value == concords[0].ID : false);
+                }
+                if (Relations != null && Relations.Count > 0)
+                {
+                    var ralations = Relations.FindAll(o => o.VirtualPersonID == item.ID);
+                    if (ralations.Count > 0)
+                    {
+                        foreach (var r in ralations)
+                        {
+                            var stockland = LandArrays.Find(t => t.ID == r.LandID).Clone() as ContractLand;
+                            if (stockland == null)
+                                continue;
+                            stockland.AwareArea = r.QuanficationArea;
+                            stockland.OwnerId = item.ID;
+                            cs.Add(stockland);
+                        }
+                    }
                 }
                 landCount += cs.Count;
                 List<SecondTableLand> tablelandList = contractLandOutputSurveyDefine.IsContainTablelandValue ? (TableLandArrays == null ? new List<SecondTableLand>() : TableLandArrays).FindAll(t => t.OwnerId == (tablevp == null ? item.ID : tablevp.ID)) : new List<SecondTableLand>();

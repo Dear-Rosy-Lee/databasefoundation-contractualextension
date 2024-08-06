@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>399</Order>
+  <Name>蜀山确权确股插件</Name>
+  <Catalog>系统插件</Catalog>
+  <ImageUri>pack://application:,,,/YuLinTu.Resources;component/Images/32/Publish32.png</ImageUri>
+  <Version>8.3.1.0328</Version>
+  <Author>鱼鳞图</Author>
+  <Description>蜀山确权确股相关功能</Description>
+  <EntranceType>YuLinTu.Component.StockRightShuShan.Entrance</EntranceType>
+  <EntrancePath>.\Components\YuLinTu.Component.StockRightShuShan\Binary\YuLinTu.Component.StockRightShuShan.dll</EntrancePath>
+  <IsSystemManaged>false</IsSystemManaged>
+  <IsApplicationDependency>false</IsApplicationDependency>
+  <IsConnected>false</IsConnected>
+  <IsEnabled>false</IsEnabled>
+</WinComponent>
