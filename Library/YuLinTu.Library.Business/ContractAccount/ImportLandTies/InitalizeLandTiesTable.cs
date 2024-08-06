@@ -275,60 +275,61 @@ namespace YuLinTu.Library.Business
         private void InitalizeFamilyInformation(LandFamily landFamily, List<VirtualPerson> vps)
         {
             var vpNumber = GetString(allItem[currentIndex, 3]);
+
             if (!string.IsNullOrEmpty(vpNumber))
             {
                 var vpCode = CurrentZone.FullCode.PadRight(14, '0');
                 vpNumber = vpNumber.Remove(0, vpCode.Length);
-                if (vpNumber == "")
-                {
+            }
+            else if (vpNumber.IsNullOrEmpty() && landFamily.Number > 0)
+            {
+                vpNumber = landFamily.Number.ToString().PadRight(14, '0');
+            }
+            var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber ||
+            f.FamilyNumber.PadLeft(4, '0') == vpNumber);
+            if (vp != null)
+            {
+                landFamily.CurrentFamily = vp;
+            }
+            else
+            {
+                landFamily.CurrentFamily.ID = landFamily.CurrentFamily.ID;
+                landFamily.CurrentFamily.FamilyNumber = vpNumber;
+            }
 
-                }
-                var vp = vps.FirstOrDefault(f => f.FamilyNumber == vpNumber ||
-                f.FamilyNumber.PadLeft(4, '0') == vpNumber);
-                if (vp != null)
+            if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
+            {
+                string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", currentIndex + 1);
+                RecordErrorInformation(errorInformation);
+            }
+            else
+            {
+                if (!ToolMath.MatchEntiretyNumber(landFamily.CurrentFamily.FamilyNumber))
                 {
-                    landFamily.CurrentFamily = vp;
-                }
-                else
-                {
-                    landFamily.CurrentFamily.ID = landFamily.CurrentFamily.ID;
-                    landFamily.CurrentFamily.FamilyNumber = vpNumber;
-                }
-
-                if (string.IsNullOrEmpty(landFamily.CurrentFamily.FamilyNumber))
-                {
-                    string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", currentIndex + 1);
+                    string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号{1}不符合数字类型要求!", currentIndex + 1, landFamily.CurrentFamily.FamilyNumber);
                     RecordErrorInformation(errorInformation);
                 }
-                else
-                {
-                    if (!ToolMath.MatchEntiretyNumber(landFamily.CurrentFamily.FamilyNumber))
-                    {
-                        string errorInformation = this.ExcelName + string.Format("表中第{0}行承包方编号{1}不符合数字类型要求!", currentIndex + 1, landFamily.CurrentFamily.FamilyNumber);
-                        RecordErrorInformation(errorInformation);
-                    }
-                }
-                landFamily.CurrentFamily.Address = GetString(allItem[currentIndex, 5]);
-
-                string familyName = GetString(allItem[currentIndex, 1]);
-                if (!string.IsNullOrEmpty(familyName))
-                {
-                    landFamily.CurrentFamily.Name = familyName;
-                }
-                string typestring = GetString(allItem[currentIndex, 2]);
-                var expand = landFamily.CurrentFamily.FamilyExpand;
-                if (typestring == "单位")
-                {
-                    expand.ContractorType = eContractorType.Unit;
-                    expand.ConstructMode = eConstructMode.OtherContractType;
-                }
-                if (typestring == "个人")
-                {
-                    expand.ContractorType = eContractorType.Personal;
-                    expand.ConstructMode = eConstructMode.OtherContractType;
-                }
-                landFamily.CurrentFamily.FamilyExpand = expand;
             }
+            landFamily.CurrentFamily.Address = GetString(allItem[currentIndex, 5]);
+
+            string familyName = GetString(allItem[currentIndex, 1]);
+            if (!string.IsNullOrEmpty(familyName))
+            {
+                landFamily.CurrentFamily.Name = familyName;
+            }
+            string typestring = GetString(allItem[currentIndex, 2]);
+            var expand = landFamily.CurrentFamily.FamilyExpand;
+            if (typestring == "单位")
+            {
+                expand.ContractorType = eContractorType.Unit;
+                expand.ConstructMode = eConstructMode.OtherContractType;
+            }
+            if (typestring == "个人")
+            {
+                expand.ContractorType = eContractorType.Personal;
+                expand.ConstructMode = eConstructMode.OtherContractType;
+            }
+            landFamily.CurrentFamily.FamilyExpand = expand;
             AddPerson(landFamily);
         }
 
