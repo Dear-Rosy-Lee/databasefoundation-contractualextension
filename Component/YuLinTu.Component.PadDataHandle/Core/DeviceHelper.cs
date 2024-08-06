@@ -117,7 +117,12 @@ namespace YuLinTu.Component.PadDataHandle
                         deviceFolder.DirectoryInfo = ep2;
                         if (ep2.Name == "tPadCommon")
                         {
-                            deviceFolder.SoftFrendlyName = "tPadCommon调查平板";
+                            deviceFolder.SoftFrendlyName = "专业版移动数据管理应用";
+                            list.Add(deviceFolder);
+                        }
+                        if (ep2.Name == "tPadLite")
+                        {
+                            deviceFolder.SoftFrendlyName = "大众版移动数据管理应用";
                             list.Add(deviceFolder);
                         }
                         else if (ep2.Name == "tPad_NYDPC")

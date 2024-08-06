@@ -152,7 +152,7 @@ namespace YuLinTu.Library.Controls
             }
             else
             {
-                string number = vp.FamilyNumber.PadLeft(4, '0');
+                string number = vp.FamilyNumber == null ? "" : vp.FamilyNumber.PadLeft(4, '0');
                 familyNumber = string.Format("(户号: {0})", number);
                 return familyNumber;
             }

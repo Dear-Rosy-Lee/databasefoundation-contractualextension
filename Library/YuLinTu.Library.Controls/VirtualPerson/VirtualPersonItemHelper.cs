@@ -22,7 +22,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 转换承包方为绑定实体
         /// </summary>
-        public static VirtualPersonItem ConvertToItem(VirtualPerson vp,List<BindPerson> blist = null, bool isExpand = false,bool isAddChildren=true)
+        public static VirtualPersonItem ConvertToItem(VirtualPerson vp, List<BindPerson> blist = null, bool isExpand = false, bool isAddChildren = true)
         {
             if (vp == null)
                 return null;
@@ -49,8 +49,9 @@ namespace YuLinTu.Library.Controls
             {
                 list.ForEach(t => blist.Add(t));
             }
-            item.Name = vp.Name+"(共有人数:"+list.Count+")"+"(户号:"+vp.FamilyNumber.PadLeft(4,'0')+")";//CreateItemName(vp.Name, vp.SharePersonList.Count, vp.FamilyNumber, vp.Status);
-            if(isAddChildren)
+            var num = vp.FamilyNumber == null ? "" : vp.FamilyNumber.PadLeft(4, '0');
+            item.Name = vp.Name + "(共有人数:" + list.Count + ")" + "(户号:" + num + ")";//CreateItemName(vp.Name, vp.SharePersonList.Count, vp.FamilyNumber, vp.Status);
+            if (isAddChildren)
                 list.ForEach(t => item.Children.Add(t));
             item.Img = item.Status == eVirtualPersonStatus.Lock ? eImage.Lock : eImage.Family;
             return item;
