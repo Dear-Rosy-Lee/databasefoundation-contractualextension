@@ -1,6 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using YuLinTu.Appwork.New;
 
 namespace YuLinTu.Component.BusinessProcessWizard
 {
-   public class WorkspaceContext : TheWorkspaceContext
+    public class WorkspaceContext : TheWorkspaceContext
     {
         #region Ctor
 
@@ -25,10 +26,10 @@ namespace YuLinTu.Component.BusinessProcessWizard
             : base(workspace)
         {
             //Register<TaskPage, TaskPageContext>();
-            Register<BusinessProcessWizardFramePage, BusinessProcessWizardPageContext>();
+            //Register<BusinessProcessWizardFramePage, BusinessProcessWizardPageContext>();
         }
 
-        #endregion
+        #endregion Ctor
 
         #region method
 
@@ -39,6 +40,7 @@ namespace YuLinTu.Component.BusinessProcessWizard
         {
             e.Items.Add(new NewMetadata { Type = typeof(BusinessProcessWizardFramePage) });
         }
-        #endregion
+
+        #endregion method
     }
 }
