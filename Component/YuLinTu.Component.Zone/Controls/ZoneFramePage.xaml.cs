@@ -24,7 +24,7 @@ namespace YuLinTu.Component.Zone
         Image = "pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/Zone78.png",
         IsCreateShortcut = true,
         FontIcon = "\uf27c",
-        IsNeedAuthenticated = true)]
+        IsNeedAuthenticated = false)]
     public partial class ZoneFramePage : WorkpageFrame
     {
         #region Fields
@@ -33,18 +33,7 @@ namespace YuLinTu.Component.Zone
         /// 命令集合
         /// </summary>
         private ZoneCommand command;
-
-        /// <summary>
-        /// 是否需要授权
-        /// </summary>
-        public override bool IsNeedAuthenticated
-        {
-            get
-            {
-                return true;
-            }
-        }
-
+         
         #endregion
 
         #region Ctor

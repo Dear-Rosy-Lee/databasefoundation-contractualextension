@@ -126,7 +126,7 @@
                         Height="15"
                         Margin="5,0,3,0"
                         DockPanel.Dock="Right"
-                        Visibility="Collapsed" />
+                        Visibility="Visible" />
                     <cmps:MetroTextBox
                         Name="txt_ICN"
                         Height="30"

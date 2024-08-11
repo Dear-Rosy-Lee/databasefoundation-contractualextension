@@ -1,23 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using YuLinTu;
-using YuLinTu.Data;
-using YuLinTu.Data.Dynamic;
-using YuLinTu.Data.SQLite;
-using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Appwork;
-using System.Diagnostics;
 
 namespace YuLinTu.Component.BusinessProcessWizard
 {

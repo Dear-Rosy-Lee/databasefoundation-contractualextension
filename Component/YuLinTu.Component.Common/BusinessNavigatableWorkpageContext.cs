@@ -1,14 +1,8 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Appwork;
-using YuLinTu.Data;
-using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -35,7 +29,7 @@ namespace YuLinTu.Component
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected override void OnSettingsChanged(object sender, SettingsProfileChangedEventArgs e)
-        {
+        { 
             if (Navigator == null)
             {
                 return;

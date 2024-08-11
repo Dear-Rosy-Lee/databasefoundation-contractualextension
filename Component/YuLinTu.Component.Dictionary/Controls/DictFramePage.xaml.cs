@@ -1,25 +1,10 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using YuLinTu.Appwork;
-using YuLinTu.Library.Controls;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Library.Command;
-using YuLinTu.Library.Entity;
-using System.Collections.ObjectModel;
-using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro;
 
 namespace YuLinTu.Component.Dictionary
 {
@@ -36,7 +21,7 @@ namespace YuLinTu.Component.Dictionary
         Image = "pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/Dictionary78.png",
         IsCreateShortcut = true,
         FontIcon = "\uf233",
-        IsNeedAuthenticated = true)]
+        IsNeedAuthenticated = false)]
     public partial class DictFramePage : WorkpageFrame
     {
         #region Fields
@@ -45,7 +30,7 @@ namespace YuLinTu.Component.Dictionary
         /// 命令集合
         /// </summary>
         private DictionaryCommand command;
-        
+
         /// <summary>
         /// 是否需要授权
         /// </summary>

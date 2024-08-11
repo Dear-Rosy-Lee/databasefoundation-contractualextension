@@ -862,29 +862,31 @@ namespace YuLinTu.Library.Business
             vp.Name = selectPerson.Name;
             vp.Number = selectPerson.ICN;
             vp.CardType = selectPerson.CardType;
+            var upvp = vp.Clone() as VirtualPerson;
             //排序
             vp.SharePersonList = SortSharePerson(list, vp.Name);
+            upvp.SharePersonList = SortSharePerson(list, vp.Name, true);
             try
             {
                 switch (virtualType)
                 {
                     case eVirtualType.Land:
-                        landStation.Update(vp);
+                        landStation.Update(upvp);
                         break;
                     case eVirtualType.Yard:
-                        yardStation.Update(vp);
+                        yardStation.Update(upvp);
                         break;
                     case eVirtualType.House:
-                        houseStation.Update(vp);
+                        houseStation.Update(upvp);
                         break;
                     case eVirtualType.Wood:
-                        woodStation.Update(vp);
+                        woodStation.Update(upvp);
                         break;
                     case eVirtualType.CollectiveLand:
-                        colleStation.Update(vp);
+                        colleStation.Update(upvp);
                         break;
                     case eVirtualType.SecondTable:
-                        tableStation.Update(vp);
+                        tableStation.Update(upvp);
                         break;
                 }
 
@@ -2019,13 +2021,28 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 对共有人排序(户主最前面)
         /// </summary>
-        public List<Person> SortSharePerson(List<Person> personCollection, string houseName)
+        public List<Person> SortSharePerson(List<Person> personCollection, string houseName, bool usecode = false)
         {
             List<Person> sharePersonCollection = new List<Person>();
             Person p = personCollection.Find(t => t.Name == houseName);
             if (p != null)
             {
-                sharePersonCollection.Add(p);
+                if (usecode)
+                {
+                    var np = p.Clone() as Person;
+                    if (personCollection.Count > 1)
+                    {
+                        np.Relationship = "02";
+                    }
+                    else
+                        np.Relationship = "01";
+                    np.IsSharedLand = "1";
+                    sharePersonCollection.Add(np);
+                }
+                else
+                {
+                    sharePersonCollection.Add(p);
+                }
             }
             foreach (Person person in personCollection)
             {

@@ -1,25 +1,15 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Xceed.Wpf.Toolkit;
 using YuLinTu.Appwork;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.BusinessProcessWizard
 {
