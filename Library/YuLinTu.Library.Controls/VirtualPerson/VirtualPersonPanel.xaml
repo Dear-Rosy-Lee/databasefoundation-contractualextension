@@ -323,7 +323,7 @@
                                    Stretch="None" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="设置户主"
+                    <MenuItem Header="设置为户主"
                               Name="miSet"
                               Click="miSet_Click">
                         <MenuItem.Icon>

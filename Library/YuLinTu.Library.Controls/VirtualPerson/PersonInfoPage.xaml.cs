@@ -215,6 +215,10 @@ namespace YuLinTu.Library.Controls
             }
             nationList = EnumStore<eNation>.GetListByType();
             relationList = FamilyRelationShip.AllRelation();
+            if (Virtualperson.VirtualType == eVirtualPersonType.Family)
+            {
+                relationList.RemoveAt(0);
+            }
             cbGender.DisplayMemberPath = "Value";
             cbGender.ItemsSource = genderList;
             cbGender.SelectedIndex = 0;
@@ -375,6 +379,13 @@ namespace YuLinTu.Library.Controls
             item = PersonItems.FirstOrDefault(t => t.ID == person.FamilyID);
             if (item == null)
             {
+                return;
+            }
+            var vperson = item.SharePersonList.FirstOrDefault(w => w.Relationship == "户主");
+            if (vperson != null && vperson.Name != person.Name && person.Relationship == "户主")
+            {
+                //if (item.SharePersonList.Where(w => w.Relationship == "户主").Count() > 1) {
+                ShowBox(VirtualPersonInfo.SharePersonProc, "承包方只能有一个户主，如果要修改户主,请右键进行承包方户主设置!");
                 return;
             }
             bool exit = item.SharePersonList.Any(t => t.Name == person.Name && t.ID != person.ID);

@@ -458,7 +458,7 @@
                                    VerticalContentAlignment="Stretch"
                                    x:FieldModifier="public">
                     <cmps:ImageTextItem ImagePosition="Top"
-                                        Text="设置户主"
+                                        Text="设置为户主"
                                         ToolTip="将共有人设置成户主"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/设置户主_32.png" />
                 </metro:MetroButton>
