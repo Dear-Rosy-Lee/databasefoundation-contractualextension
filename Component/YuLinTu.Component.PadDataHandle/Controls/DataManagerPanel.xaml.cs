@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -20,7 +20,7 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 namespace YuLinTu.Component.PadDataHandle
 {
     /// <summary>
-    /// 行政地域管理界面
+    /// 任务包管理界面
     /// </summary>
     public partial class DataManagerPanel : UserControl
     {

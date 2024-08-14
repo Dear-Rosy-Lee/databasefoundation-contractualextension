@@ -23,7 +23,7 @@ namespace YuLinTu.Component.PadDataHandle
         IsLanguageName = false,
         Name = "数据包管理",
         Description = "平板数据包管理",
-        Category = "应用",
+        Category = "工具",
         Icon = "pack://application:,,,/YuLinTu.Resources;component/Images/16/map.png",
         Image = "pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/Zone78.png",
         IsCreateShortcut = true,

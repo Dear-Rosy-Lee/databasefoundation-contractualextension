@@ -1,7 +1,6 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
-using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Component.PadDataHandle
