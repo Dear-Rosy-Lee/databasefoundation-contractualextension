@@ -16,7 +16,7 @@ using YuLinTu.Windows.Wpf.Metro;
 namespace YuLinTu.Component.PadDataHandle
 {
     /// <summary>
-    /// 地域管理主界面
+    /// 任务包管理主界面
     /// </summary>
     [Newable(true,
         Order = 0,
@@ -62,7 +62,8 @@ namespace YuLinTu.Component.PadDataHandle
         {
             InitializeComponent();
             localMgrPanel.MenuEnable += SetControlsEnable;
-            command = new ZoneCommand();
+            command = new ZoneCommand(); 
+            SingleInstance = true;
             deviceHelper = new DeviceHelper();
             deviceHelper.DeviceChage += DeviceChage;
             //_timer = new DispatcherTimer();

@@ -780,7 +780,7 @@
 			</UpdateField>
 			<UpdateField>
 				<FieldName>CJBZ</FieldName>
-				<FieldType>BOOL</FieldType>
+				<FieldType>BOOLEAN</FieldType>
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
@@ -852,7 +852,7 @@
 			</UpdateField>
 			<UpdateField>
 				<FieldName>HTSFKY</FieldName>
-				<FieldType>BOOL</FieldType>
+				<FieldType>BOOLEAN</FieldType>
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>

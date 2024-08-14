@@ -215,7 +215,7 @@ namespace YuLinTu.Library.Controls
             }
             nationList = EnumStore<eNation>.GetListByType();
             relationList = FamilyRelationShip.AllRelation();
-            if (Virtualperson.VirtualType == eVirtualPersonType.Family)
+            if (Virtualperson.FamilyExpand.ContractorType== eContractorType.Farmer)
             {
                 relationList.RemoveAt(0);
             }

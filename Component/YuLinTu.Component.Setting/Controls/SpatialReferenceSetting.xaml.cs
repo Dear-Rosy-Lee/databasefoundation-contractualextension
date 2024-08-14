@@ -518,9 +518,9 @@ namespace YuLinTu.Component.Setting
                     serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
                     tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
                 }
+                var schma = dbContext.CreateSchema();
                 foreach (var item in tableList)
                 {
-                    var schma = dbContext.CreateSchema();
                     if (!schma.AnyElement(null, item.TableName))
                     {
                         Log.WriteWarn(this, "数据库升级模块", $"数据库{item.TableName}表不存在，未进行升级！");
@@ -528,7 +528,6 @@ namespace YuLinTu.Component.Setting
                     }
                     var table = schma.GetElementProperties(null, item.TableName);
                     item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
-
                 }
                 tableList.RemoveAll(t => t.FieldList.Count == 0);
                 //if (serialSuccess)
