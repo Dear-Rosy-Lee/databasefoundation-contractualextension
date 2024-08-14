@@ -2,10 +2,10 @@
 using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
-using System.Diagnostics;
-using YuLinTu.Appwork;
 using YuLinTu.Windows;
-using System.Reflection;
+using YuLinTu.Data;
+using YuLinTu.Library.Business;
+using System.Linq;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -18,6 +18,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class QualityCompressionData : Task
     {
+
         #region Ctor
 
         public QualityCompressionData()
@@ -57,15 +58,19 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             System.Threading.Thread.Sleep(200);
 
             //TODO 加密方式
-            var password = TheApp.Current.GetSystemSection().TryGetValue(
-                Parameters.stringZipPassword,
-                Parameters.stringZipPasswordValue);
+            //var password = TheApp.Current.GetSystemSection().TryGetValue(
+            //    Parameters.stringZipPassword,
+            //    Parameters.stringZipPasswordValue);
             var sourceFolder = argument.CheckFilePath;
             var zipFilePath = $"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}.zip";
             try
             {
                 //进行质检
-                bool flag = ExcuteQuality(sourceFolder);
+                var dcp = new DataCheckProgress();
+                var dbContent = DataBaseSource.GetDataBaseSourceByPath("E:\\WorkSpace\\数据\\数据库\\QCQ - 副本.sqlite");
+                dcp.LocalService = dbContent;
+                dcp.DataArgument = argument;
+                var flag = dcp.Check();
                 if (flag == false)
                 {
                     this.ReportError(string.Format("数据检查时出错!具体错误请查看质检错误报告"));
@@ -77,7 +82,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         using (var zipStream = new ZipOutputStream(fsOut))
                         {
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            zipStream.Password = password;
+                            zipStream.Password = $"{argument.CheckFilePath.Split('\\').Last()}Ylt@dzzw";
                             CompressFolder(sourceFolder, zipStream, sourceFolder.Length);
                         }
                     }
@@ -180,39 +185,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 zipStream.PutNextEntry(newEntry);
                 zipStream.CloseEntry();
             }
-        }
-
-        private bool ExcuteQuality(string arg)
-        {
-            // 外部exe程序路径
-            string assemblyLocation = Assembly.GetEntryAssembly().Location;
-            string installPath = Path.GetDirectoryName(assemblyLocation);
-            string exePath = $"{installPath}\\bin\\StartWithExternal.exe";
-            if (!File.Exists(exePath))
-            {
-                this.ReportError("当前exe可执行文件路径不存在");
-                return false;
-            }
-
-            // 创建进程启动信息
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = exePath;
-            startInfo.Arguments = $"{arg}"; // 参数之间用空格分隔
-
-            // 可选：隐藏执行程序的窗口
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-            // 创建并启动进程
-            Process process = new Process();
-            process.StartInfo = startInfo;
-            var date = DateTime.Now.ToString("MM月dd日HH时mm分");
-            process.Start();
-
-            // 可选：等待进程执行完毕
-            process.WaitForExit();
-
-            //返回质检结果
-            return ReturnResult(arg, date);
         }
 
         private bool ReturnResult(string pathName, string date)

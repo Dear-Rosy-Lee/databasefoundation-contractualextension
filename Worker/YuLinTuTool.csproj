@@ -2834,7 +2834,23 @@ del "$(TargetDir)*.manifest"
 del "$(TargetDir)*.vshost.*"
 del "$(TargetDir)*.dll.config"
 
+md "$(SolutionDir)Workspace\Libraries\x86\GDAL\"
+
 copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Topology"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Search"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Properties"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Measure"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Layers"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Edit"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Draw"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Cancel"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.BusyStatus"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
+rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Appwork.Options"
+
 </PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

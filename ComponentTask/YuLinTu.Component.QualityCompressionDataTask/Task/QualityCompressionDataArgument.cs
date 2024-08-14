@@ -9,8 +9,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         private string checkFilePath;
         private string resultFilePath;
-        private SettingsProfileCenter center;
-        public QualityCompressionDataSetDefine qualityCompressionDataSetDefine;
 
         #endregion Fields
 
@@ -26,8 +24,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             set
             {
                 checkFilePath = value;
-                qualityCompressionDataSetDefine.CheckFilePath = CheckFilePath;
-                SaveExportLastResSetDefine();
+                //qualityCompressionDataSetDefine.CheckFilePath = CheckFilePath;
                 NotifyPropertyChanged("CheckFilePath");
             }
         }
@@ -42,8 +39,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             set
             {
                 resultFilePath = value;
-                qualityCompressionDataSetDefine.ResultFilePath = ResultFilePath;
-                SaveExportLastResSetDefine();
+                //qualityCompressionDataSetDefine.ResultFilePath = ResultFilePath;
                 NotifyPropertyChanged("ResultFilePath");
             }
         }
@@ -57,24 +53,16 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         public QualityCompressionDataArgument()
         {
+            checkFilePath = "";
+            resultFilePath = "";
             //读出配置
-            center = TheApp.Current.GetSystemSettingsProfileCenter();
-            var profile = center.GetProfile<QualityCompressionDataSetDefine>();
-            var section = profile.GetSection<QualityCompressionDataSetDefine>();
-            qualityCompressionDataSetDefine = section.Settings as QualityCompressionDataSetDefine;
-            CheckFilePath = qualityCompressionDataSetDefine.CheckFilePath;
-            ResultFilePath = qualityCompressionDataSetDefine.ResultFilePath;
+            //center = TheApp.Current.GetSystemSettingsProfileCenter();
+            //var profile = center.GetProfile<QualityCompressionDataSetDefine>();
+            //var section = profile.GetSection<QualityCompressionDataSetDefine>();
+            //CheckFilePath = qualityCompressionDataSetDefine.CheckFilePath;
+            //ResultFilePath = qualityCompressionDataSetDefine.ResultFilePath;
         }
 
         #endregion Ctor
-
-        #region Method
-
-        private void SaveExportLastResSetDefine()
-        {
-            center.Save<QualityCompressionDataSetDefine>();
-        }
-
-        #endregion Method
     }
 }

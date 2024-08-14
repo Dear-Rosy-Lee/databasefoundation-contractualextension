@@ -13,26 +13,26 @@ namespace YuLinTu.Component.QualityCompressionDataTask
     {
         #region Properties
 
-        public string CheckFilePath
-        {
-            get { return _checkFilePath; }
-            set { _checkFilePath = value.TrimSafe(); NotifyPropertyChanged("CheckFilePath"); }
-        }
+        //public string CheckFilePath
+        //{
+        //    get { return _checkFilePath; }
+        //    set { _checkFilePath = value.TrimSafe(); NotifyPropertyChanged("CheckFilePath"); }
+        //}
 
-        private string _checkFilePath;
+        //private string _checkFilePath;
 
-        public string ResultFilePath
-        {
-            get { return _resultFilePath; }
-            set { _resultFilePath = value; NotifyPropertyChanged("ResultFilePath"); }
-        }
+        //public string ResultFilePath
+        //{
+        //    get { return _resultFilePath; }
+        //    set { _resultFilePath = value; NotifyPropertyChanged("ResultFilePath"); }
+        //}
 
-        private string _resultFilePath;
+        //private string _resultFilePath;
 
         public QualityCompressionDataSetDefine()
         {
-            CheckFilePath = "";
-            ResultFilePath = "";
+            //CheckFilePath = "";
+            //ResultFilePath = "";
         }
 
         #endregion Properties
