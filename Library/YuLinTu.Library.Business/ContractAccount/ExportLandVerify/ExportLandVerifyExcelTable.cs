@@ -385,7 +385,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteCount()
         {
-            index++;
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
             InitalizeRangeValue("G" + index, "N" + index, $"{peopleCount} 人");
