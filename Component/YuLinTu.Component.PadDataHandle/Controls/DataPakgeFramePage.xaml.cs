@@ -66,6 +66,7 @@ namespace YuLinTu.Component.PadDataHandle
             SingleInstance = true;
             deviceHelper = new DeviceHelper();
             deviceHelper.DeviceChage += DeviceChage;
+            Setpanelvisible();
             //_timer = new DispatcherTimer();
             //_timer.Interval = TimeSpan.FromSeconds(5);
             //_timer.Tick += Timer_Tick;
@@ -93,7 +94,7 @@ namespace YuLinTu.Component.PadDataHandle
 
             deviceHelper.RefreshDeviceList();
             var items = deviceHelper.MediaDevices;
-            view.ItemsSource = items;
+            localMgrPanel.deviceview.ItemsSource = items;
         }
 
         ///// <summary>
@@ -262,15 +263,15 @@ namespace YuLinTu.Component.PadDataHandle
         /// </summary>
         public void DeviceChage()
         {
-            if (view.SelectedItem == null)
+            if (localMgrPanel.view.SelectedItem == null)
             {
-                softview.ItemsSource = null;
+                localMgrPanel.softview.ItemsSource = null;
                 return;
             }
-            MediaDevice mediaDevice = (MediaDevice)view.SelectedItem;
+            MediaDevice mediaDevice = (MediaDevice)localMgrPanel.view.SelectedItem;
             if (!deviceHelper.MediaDevices.Contains(selectmediaDevice))
             {
-                softview.ItemsSource = null;
+                localMgrPanel.softview.ItemsSource = null;
             }
         }
 
@@ -285,39 +286,15 @@ namespace YuLinTu.Component.PadDataHandle
         //    if (mediaDevice == null) return;
         //    var folderlist = deviceHelper.GetFolderList(mediaDevice);
         //    softview.ItemsSource = folderlist;
-        //}
-
-        private void view_SelectedChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (view.SelectedItem == null)
-                return;
-            selectmediaDevice = (MediaDevice)view.SelectedItem;
-            if (selectmediaDevice == null) return;
-            var folderlist = deviceHelper.GetFolderList(selectmediaDevice);
-            softview.ItemsSource = folderlist;
-            //if (folderlist.Count > 0)
-            //    softview.SelectedIndex = 0;
-        }
-
-        private void view_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            var sview = ((System.Windows.Controls.Primitives.Selector)softview);
-            if (sview.SelectedItem == null)
-                return;
-            DeviceFolder deviceFolder = (DeviceFolder)sview.SelectedItem;
-            if (deviceFolder == null) return;
-            var list = deviceHelper.GetDataList(deviceFolder, (MediaDevice)view.SelectedItem);
-            localMgrPanel.view.ItemsSource = list;
-        }
+        //} 
 
         private void mbtnAdd_Checked(object sender, RoutedEventArgs e)
         {
             if (mbtnEdit != null)
             {
                 mbtnEdit.IsChecked = !mbtnAdd.IsChecked.Value;
-                localMgrPanel.Visibility = mbtnAdd.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
-                netdiskMgrPanel.Visibility = mbtnAdd.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
             }
+            Setpanelvisible();
         }
 
         private void mbtnEdit_Checked(object sender, RoutedEventArgs e)
@@ -325,9 +302,20 @@ namespace YuLinTu.Component.PadDataHandle
             if (mbtnAdd != null)
             {
                 mbtnAdd.IsChecked = !mbtnEdit.IsChecked.Value;
-                localMgrPanel.Visibility = mbtnEdit.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
-                netdiskMgrPanel.Visibility = mbtnEdit.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
             }
-        } 
+            Setpanelvisible();
+        }
+
+        /// <summary>
+        /// 设置中间控件可见性
+        /// </summary>
+        public void Setpanelvisible()
+        {
+            var chk = mbtnAdd.IsChecked.Value;
+            if (localMgrPanel != null)
+                localMgrPanel.Visibility = chk ? Visibility.Visible : Visibility.Collapsed;
+            if (netdiskMgrPanel != null)
+                netdiskMgrPanel.Visibility = chk ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }
