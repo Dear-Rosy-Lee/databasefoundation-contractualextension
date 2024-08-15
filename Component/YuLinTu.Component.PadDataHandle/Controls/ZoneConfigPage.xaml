@@ -15,50 +15,32 @@
                 Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/GroupNamedCells.png"
                 Text="基本配置" />
 
-            <cmps:OptionsContainer Text="数据操作设置">
+            <cmps:OptionsContainer Text="缓存数据目录设置">
                 <StackPanel Orientation="Vertical">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="9" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="9" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="9" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="9" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="9" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
 
-                        <CheckBox
-                            Grid.Row="0"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding ClearData, Mode=TwoWay}">
-                            清空数据时只清空图斑数据
-                        </CheckBox>
-                        <!--<CheckBox IsChecked="{Binding IntiallData,Mode=TwoWay}" Grid.Row="2" VerticalAlignment="Center">使用行政区域名称初始发包方</CheckBox>-->
-                        <CheckBox
-                            Grid.Row="2"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding ShapeToBase, Mode=TwoWay}">
-                            空间地域入库时采用更新操作
-                        </CheckBox>
-                        <CheckBox
-                            Grid.Row="4"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding UseStandCode, Mode=TwoWay}">
-                            数据的全编码采用14位标准编码
-                        </CheckBox>
-                        <CheckBox
-                            Grid.Row="6"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding SyncCode, Mode=TwoWay}">
-                            同步修改业务编码
-                        </CheckBox>
+                        </Grid.RowDefinitions>
+                        <!-- 按钮放置在第0行 -->
+                        <Button Grid.Row="0" 
+                                Grid.Column="0"
+                                Content="选择目录" 
+                                Click="SelectDirectory" />
+
+                        <!-- 文本框放置在第2行 -->
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="2"
+                                 IsReadOnly="True" 
+                                 Text="{ Binding DataExchangeDirectory }" />
+
+
 
                     </Grid>
                 </StackPanel>

@@ -1,10 +1,16 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
+using Aspose.Cells.Drawing;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
+using Xceed.Wpf.Toolkit.Core;
 using YuLinTu.Appwork;
 using YuLinTu.Library.Business;
 using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Component.PadDataHandle
 {
@@ -28,24 +34,25 @@ namespace YuLinTu.Component.PadDataHandle
 
         #region Fields
 
-        private ZoneDefine config;
-        private ZoneDefine otherDefine;
+        private SystemSetDefine config;
+        private SystemSetDefine CurrentDefine;
         private SettingsProfileCenter systemCenter;
+
+
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// 当前配置
-        /// </summary>
-        public ZoneDefine CurrentDefine
+        public String DataExchangeDirectory
         {
-            get { return otherDefine; }
-            set
-            {
-                otherDefine = value;
-                this.DataContext = otherDefine;
+            get { return CurrentDefine.DataExchangeDirectory; }
+            set {
+                if (CurrentDefine.DataExchangeDirectory != value)
+                {
+                    CurrentDefine.DataExchangeDirectory = value;
+                    //DataContext = CurrentDefine;
+                }
             }
         }
 
@@ -61,10 +68,11 @@ namespace YuLinTu.Component.PadDataHandle
             Dispatcher.Invoke(new Action(() =>
             {
                 systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
-                var profile = systemCenter.GetProfile<ZoneDefine>();
-                var section = profile.GetSection<ZoneDefine>();
+                var profile = systemCenter.GetProfile<SystemSetDefine>();
+                var section = profile.GetSection<SystemSetDefine>();
                 config = (section.Settings);
-                CurrentDefine = config.Clone() as ZoneDefine;
+                CurrentDefine = config.Clone() as SystemSetDefine;
+                DataContext = CurrentDefine;
             }));
         }
 
@@ -75,14 +83,34 @@ namespace YuLinTu.Component.PadDataHandle
         {
             Dispatcher.Invoke(new Action(() =>
             {
+                // 获取最新系统设置，替换DataExchangeDirectory再存进去。
+                var newDataExchangeDirectory = CurrentDefine.DataExchangeDirectory;
+                var profile = systemCenter.GetProfile<SystemSetDefine>();
+                var section = profile.GetSection<SystemSetDefine>();
+                config = (section.Settings);
+                CurrentDefine = config.Clone() as SystemSetDefine;
+                CurrentDefine.DataExchangeDirectory = newDataExchangeDirectory; 
                 config.CopyPropertiesFrom(CurrentDefine);
-                systemCenter.Save<ZoneDefine>();
+                systemCenter.Save<SystemSetDefine>();
+                // 保存后添加到TheApp的变量中。
+                TheApp.Current.Add("DataExchangeDirectory", DataExchangeDirectory);
             }));
         }
 
         #endregion
 
         #region Events
+        /// <summary>
+        /// 选择目录的事件，弹窗选择目录
+        /// </summary>
+        public void SelectDirectory(object sender, RoutedEventArgs e)
+        {
+            var dlg = new System.Windows.Forms.FolderBrowserDialog();
+            if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
+            string path = dlg.SelectedPath;
+            DataExchangeDirectory = path;
+        }
 
         #endregion
 
