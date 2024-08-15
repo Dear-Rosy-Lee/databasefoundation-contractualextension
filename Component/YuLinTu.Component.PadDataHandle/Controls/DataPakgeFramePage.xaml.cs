@@ -62,7 +62,7 @@ namespace YuLinTu.Component.PadDataHandle
         {
             InitializeComponent();
             localMgrPanel.MenuEnable += SetControlsEnable;
-            command = new ZoneCommand(); 
+            command = new ZoneCommand();
             SingleInstance = true;
             deviceHelper = new DeviceHelper();
             deviceHelper.DeviceChage += DeviceChage;
@@ -309,5 +309,25 @@ namespace YuLinTu.Component.PadDataHandle
             var list = deviceHelper.GetDataList(deviceFolder, (MediaDevice)view.SelectedItem);
             localMgrPanel.view.ItemsSource = list;
         }
+
+        private void mbtnAdd_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mbtnEdit != null)
+            {
+                mbtnEdit.IsChecked = !mbtnAdd.IsChecked.Value;
+                localMgrPanel.Visibility = mbtnAdd.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+                netdiskMgrPanel.Visibility = mbtnAdd.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private void mbtnEdit_Checked(object sender, RoutedEventArgs e)
+        {
+            if (mbtnAdd != null)
+            {
+                mbtnAdd.IsChecked = !mbtnEdit.IsChecked.Value;
+                localMgrPanel.Visibility = mbtnEdit.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+                netdiskMgrPanel.Visibility = mbtnEdit.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        } 
     }
 }

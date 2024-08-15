@@ -206,6 +206,7 @@
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controls\NetdiskManagerPanel.xaml.cs" />
     <Compile Include="Controls\ZoneConfigPage.xaml.cs">
       <DependentUpon>ZoneConfigPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +284,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\NetdiskManagerPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Controls\ZoneConfigPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

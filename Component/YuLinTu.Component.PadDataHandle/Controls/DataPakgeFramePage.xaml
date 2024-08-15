@@ -22,26 +22,27 @@
     <core:WorkpageFrame.Toolbar>
         <DockPanel TextElement.FontSize="12" LastChildFill="False" Height="90">
 
-            <!--<cmps:TabControlItemRibbonContainer Text="基本操作" Name="EditContainer" x:FieldModifier="public">
-                <metro:MetroButton x:Name="mbtnAdd"
+            <cmps:TabControlItemRibbonContainer Text="基本操作" Name="EditContainer" x:FieldModifier="public">
+                <cmps:MetroToggleButton x:Name="mbtnAdd"
                                    Padding="4,2,4,2"
-                                   x:FieldModifier="public"
+                                   x:FieldModifier="public"  IsChecked="True" Checked="mbtnAdd_Checked" Unchecked="mbtnAdd_Checked"
                                    VerticalContentAlignment="Stretch">
                     <cmps:ImageTextItem ImagePosition="Top"
-                                        Text="添加"
-                                        ToolTip="添加当前选择地域的下级地域"
+                                        Text="平板"
+                                        ToolTip="与平板通过数据线进行数据包交换"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
-                </metro:MetroButton>
-                <metro:MetroButton x:Name="mbtnEdit"
+                </cmps:MetroToggleButton>
+                <cmps:MetroToggleButton x:Name="mbtnEdit" 
                                    Padding="4,2,4,2"
-                                   x:FieldModifier="public"
+                                   x:FieldModifier="public" Checked="mbtnEdit_Checked" Unchecked="mbtnEdit_Checked"
                                    VerticalContentAlignment="Stretch">
                     <cmps:ImageTextItem ImagePosition="Top"
-                                        Text="编辑"
-                                        ToolTip="编辑当前选择地域"
+                                        Text="网盘"
+                                        ToolTip="与数据堡通过网络进行数据包交换"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/编辑数据32.png" />
-                </metro:MetroButton>
-                <metro:MetroButton x:Name="mbtnDel"
+                </cmps:MetroToggleButton>
+            </cmps:TabControlItemRibbonContainer>
+            <!--  <metro:MetroButton x:Name="mbtnDel"
                                    Padding="4,2,4,2"
                                    x:FieldModifier="public"
                                    VerticalContentAlignment="Stretch">
@@ -218,5 +219,6 @@
     </core:WorkpageFrame.LeftToolbar>
     <Grid>
         <local:DataManagerPanel  x:Name="localMgrPanel" x:FieldModifier="public"/>
+        <local:NetdiskManagerPanel  x:Name="netdiskMgrPanel" x:FieldModifier="public"/>
     </Grid>
 </core:WorkpageFrame>
