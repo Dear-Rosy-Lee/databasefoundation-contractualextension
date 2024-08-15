@@ -54,6 +54,8 @@ namespace YuLinTu.Library.Business
         private string emptyReplacement;
         private bool statisticsDeadPersonInfo;
 
+        private string dataExchangeDirectory;
+
         #endregion Fields
 
         #region Properties
@@ -342,6 +344,15 @@ namespace YuLinTu.Library.Business
         {
             get { return emptyReplacement; }
             set { emptyReplacement = value; NotifyPropertyChanged("EmptyReplacement"); }
+        }
+
+        /// <summary>
+        /// 数据缓存目录
+        /// </summary>
+        public string DataExchangeDirectory
+        {
+            get { return dataExchangeDirectory; }
+            set { dataExchangeDirectory = value; NotifyPropertyChanged("dataExchangeDirectory"); }
         }
 
         /// <summary>
