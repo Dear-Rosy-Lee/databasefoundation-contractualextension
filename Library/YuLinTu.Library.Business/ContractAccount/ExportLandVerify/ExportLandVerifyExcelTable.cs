@@ -8,6 +8,7 @@ using System.IO;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Data;
 using System.Diagnostics;
+using NPOI.SS.Formula.Functions;
 
 namespace YuLinTu.Library.Business
 {
@@ -274,7 +275,7 @@ namespace YuLinTu.Library.Business
             landCount += lands.Count;
             if (lands.Count == 0)
             {
-                index++;
+                //index++;
             }
             AwareArea += TotalLandAware;
             ActualArea += TotalLandActual;
@@ -294,8 +295,8 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
             InitalizeRangeValue("AH" + index, "AH" + (index + height - 1), "");
             index += height;
-            workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
-            workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
+            //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
+            //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
 
@@ -384,6 +385,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteCount()
         {
+            index++;
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
             InitalizeRangeValue("G" + index, "N" + index, $"{peopleCount} 人");

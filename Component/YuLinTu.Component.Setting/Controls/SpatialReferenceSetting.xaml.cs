@@ -530,8 +530,6 @@ namespace YuLinTu.Component.Setting
                     item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
                 }
                 tableList.RemoveAll(t => t.FieldList.Count == 0);
-                //if (serialSuccess)
-                //tableList = 
                 if (tableList == null || tableList.Count == 0)
                 {
                     var msgPage = new TabMessageBoxDialog

@@ -155,6 +155,10 @@ namespace YuLinTu.Library.Business
                     ReportErrorInfo(this.ExcelName + "表中无数据或数据未按要求制作!");
                     return false;
                 }
+                var lastrow = GetString(allItem[rangeCount-1, 0]);
+                if (lastrow != "合计") {
+                    ReportErrorInfo(this.ExcelName + "表中最后一行第一列请填入 合计 !"); 
+                }
                 existPersons = new SortedList<string, string>();
                 existTablePersons = new SortedList<string, string>();
                 isOk = true;
