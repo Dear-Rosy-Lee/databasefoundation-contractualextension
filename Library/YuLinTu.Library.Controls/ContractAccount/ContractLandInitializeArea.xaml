@@ -74,8 +74,8 @@
                                 Padding="7,5,0,0"
                                 VerticalAlignment="Center"
                                 TabIndex="7">
-                <ComboBoxItem  IsSelected="True">截取</ComboBoxItem>
-                <ComboBoxItem>四舍五入</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">四舍五入</ComboBoxItem>
+                <ComboBoxItem  >截取</ComboBoxItem>
             </cmps:MetroComboBox>
 
             <Label x:Name="lbMeasureWay" Content="面积量算方式:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{StaticResource LableStyle}"/>            

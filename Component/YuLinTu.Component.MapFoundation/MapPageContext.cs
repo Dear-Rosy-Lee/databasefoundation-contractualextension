@@ -4802,9 +4802,12 @@ namespace YuLinTu.Component.MapFoundation
         {
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
-            if (graphics.Count == 0)
+            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
+            graphics[0].Layer.Name != "自留地" &&
+                graphics[0].Layer.Name != "机动地" &&
+                graphics[0].Layer.Name != "其他集体地"))
             {
-                ShowBox("信息提示", "请选中矢量要素进行导出！");
+                ShowBox("信息提示", "请选中地块矢量要素进行导出！");
                 return;
             }
             ExportDataPage extPage = new ExportDataPage(currentZone.Name, Workpage, "导出ShapeFile");
@@ -5640,14 +5643,6 @@ namespace YuLinTu.Component.MapFoundation
 
         private void TaskExportSelectedLandShapeFile(string fileName, List<Graphic> graphics)
         {
-            //var Lands = new List<ContractLand>();
-            //graphics.ForEach(x =>
-            //{
-            //    ContractLand land = new ContractLand();
-            //    land.CopyPropertiesFrom(x.Object.Object);
-            //    ContractLand entity = x.Object.Object.ConvertTo<ContractLand>();
-            //});
-
             DictionaryBusiness dictBusiness = new DictionaryBusiness(dbcontext);
             TaskExportSelectedLandShapeArgument argument = new TaskExportSelectedLandShapeArgument();
             argument.DbContext = dbcontext;

@@ -461,7 +461,7 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
-        /// 截取小数位数
+        /// 四舍五入小数位数
         /// </summary>
         /// <param name="value">数值</param>
         /// <param name="digits">位数</param>
@@ -508,7 +508,7 @@ namespace YuLinTu.Library.Business
         public static double SetNumericFormat(double value, int digits, int mode)
         {   //验证过两个方法都是对的
             double numeric = value;
-            if (mode == 0)
+            if (mode == 1)
             {
                 numeric = CutNumericFormat(value, digits);
             }
