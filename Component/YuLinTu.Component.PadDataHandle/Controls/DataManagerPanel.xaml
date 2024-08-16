@@ -96,8 +96,7 @@
                                 BorderThickness="0"
                                 BorderBrush="LightGray"
                                 EnabledAsyncLoading="False"
-                                ExpandItemWhenLeftMouseDoubleClick="False"
-                                HasItemsGetter="view_HasItemsGetter"  Grid.ColumnSpan="2">
+                                ExpandItemWhenLeftMouseDoubleClick="False" Grid.ColumnSpan="2">
                 <cmps:MetroTreeListView.View>
                     <GridView >
                         <GridViewColumn Header="数据包名称" Width="450">

@@ -5,15 +5,20 @@
              xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro" xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="YuLinTu.Component.PadDataHandle.NetdiskManagerPanel"
              av:DesignHeight="400" av:DesignWidth="800">
     <Grid>
-        <cmps:MetroTreeListView x:Name="view"  x:FieldModifier="public"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="350*"/>
+        </Grid.RowDefinitions>
+        <cmps:MetroTreeListView Grid.Row="1" x:Name="localview"  x:FieldModifier="public"
                                 HeaderVisibility="Visible"
                                 HeaderBorderThickness="0"
                                 HeaderThumbBorderWidth="0"
                                 ItemAutoExpand="False"
                                 ItemPadding="2,4"
                                 BorderThickness="0"
-                                BorderBrush="LightGray"
-                                Grid.Row="1"
+                                BorderBrush="LightGray" 
                                 EnabledAsyncLoading="False"
                                 ExpandItemWhenLeftMouseDoubleClick="False"
                                 HasItemsGetter="view_HasItemsGetter"
@@ -39,6 +44,69 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="数据包大小1" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding DataSize}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="时间" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding FolderDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="操作" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Code}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </cmps:MetroTreeListView.View>
+        </cmps:MetroTreeListView>
+
+        <cmps:MetroTreeListView Grid.Row="3" x:Name="netview"  x:FieldModifier="public"
+                         HeaderVisibility="Visible"
+                         HeaderBorderThickness="0"
+                         HeaderThumbBorderWidth="0"
+                         ItemAutoExpand="False"
+                         ItemPadding="2,4"
+                         BorderThickness="0"
+                         BorderBrush="LightGray" 
+                         EnabledAsyncLoading="False"
+                         ExpandItemWhenLeftMouseDoubleClick="False"
+                         HasItemsGetter="view_HasItemsGetter"
+                         SelectedItemChanged="view_SelectedChanged"
+                         MouseDoubleClick="view_MouseDoubleClick">
+            <cmps:MetroTreeListView.View>
+                <GridView >
+                    <GridViewColumn Header="数据包名称2" Width="450">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel LastChildFill="True">
+                                    <cmps:MetroTreeListViewItemToggleButton DockPanel.Dock="Left"/>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <cmps:ImageTextItem 
+                                     Image="{Binding Img}"
+                                     HorizontalAlignment="Left" 
+                                     Margin="0,0,5,0" 
+                                     Text="{Binding FolderName}" 
+                                     VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="数据包大小2" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
