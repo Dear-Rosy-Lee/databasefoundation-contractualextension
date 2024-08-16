@@ -4,7 +4,7 @@
              xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
              xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro" xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="YuLinTu.Component.PadDataHandle.NetdiskManagerPanel"
              av:DesignHeight="400" av:DesignWidth="800">
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="350*"/>
@@ -124,7 +124,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="操作" Width="200">
+                    <GridViewColumn Header="操作" Width="300">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
