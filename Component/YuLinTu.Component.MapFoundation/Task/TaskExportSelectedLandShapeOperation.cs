@@ -16,6 +16,8 @@ namespace YuLinTu.Component.MapFoundation
 
         private bool returnValue = false;
 
+        private int exportway = 1;
+
         #endregion Fields
 
         #region Propertys
@@ -46,8 +48,9 @@ namespace YuLinTu.Component.MapFoundation
             var metadata = Argument as TaskExportSelectedLandShapeArgument;
             Folder = metadata.SaveFilePath;
             CurrentZone = metadata.CurrentZone;
+            exportway = metadata.ExportWay;
             ExportLandShapeBusiness business = new ExportLandShapeBusiness();
-            ExportZoneShape(CurrentZone, Folder);
+            ExportSelectShapeToFile(CurrentZone, Folder);
             if (returnValue)
             {
                 CanOpenResult = true;
@@ -55,7 +58,7 @@ namespace YuLinTu.Component.MapFoundation
             this.ReportProgress(100, "完成");
         }
 
-        public void ExportZoneShape(Zone zone, string fileName)
+        public void ExportSelectShapeToFile(Zone zone, string fileName)
         {
             try
             {
@@ -81,6 +84,7 @@ namespace YuLinTu.Component.MapFoundation
                     export.ListGeoLand = listGeoLand;
                     export.DictList = metadata.DictList;
                     export.Lang = eLanguage.CN;
+                    export.Exportway = exportway == 0 ? 1 : 0;
                     export.ProgressChanged += ReportPercent;
                     export.Alert += ReportInfo;
                     export.ExportToShape();

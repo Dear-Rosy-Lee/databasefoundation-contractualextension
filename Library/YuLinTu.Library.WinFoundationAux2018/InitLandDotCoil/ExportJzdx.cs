@@ -651,10 +651,7 @@ namespace YuLinTu.Library.Aux
             /// </summary>
             public double SCMJ
             {
-                get
-                {
-                    return SCMJM * 10000 / 15.0;
-                }
+                get; set;
             }
 
             public string DKDZ;
@@ -1456,6 +1453,8 @@ namespace YuLinTu.Library.Aux
                             {
                                 en.dicJzdh[c] = null;
                             }
+                            if (en.wkb != null)
+                                en.SCMJ = RoundNumericFormat(Spatial.Geometry.FromBytes(en.wkb).Area(), 2);
                         });
                     foreach (var item in cache)
                     {
@@ -1534,6 +1533,45 @@ namespace YuLinTu.Library.Aux
         private void reportProgress(int nCurrShapeID, string msg = "导出界址点")
         {
             ProgressHelper.ReportProgress(ReportProgress, msg, _progressCount, nCurrShapeID, ref _oldProgress);
+        }
+
+        /// <summary>
+        /// 四舍五入小数位数
+        /// </summary>
+        /// <param name="value">数值</param>
+        /// <param name="digits">位数</param>
+        /// <returns></returns>
+        public double RoundNumericFormat(double value, int digits)
+        {
+            double number = value + 0.00000001;
+            //   double numeric = Math.Round(number, digits);
+
+            double numeric = Convert.ToUInt64(number * 100) / 100.0;
+            switch (digits)
+            {
+                case 2:
+                    numeric = Convert.ToUInt64(number * 100) / 100.0;
+                    break;
+                case 3:
+                    numeric = Convert.ToUInt64(number * 1000) / 1000.0;
+                    break;
+                case 4:
+                    numeric = Convert.ToUInt64(number * 10000) / 10000.0;
+                    break;
+                case 5:
+                    numeric = Convert.ToUInt64(number * 100000) / 100000.0;
+                    break;
+                case 6:
+                    numeric = Convert.ToUInt64(number * 1000000) / 1000000.0;
+                    break;
+                case 7:
+                    numeric = Convert.ToUInt64(number * 10000000) / 10000000.0;
+                    break;
+                case 8:
+                    numeric = Convert.ToUInt64(number * 100000000) / 100000000.0;
+                    break;
+            }
+            return numeric;
         }
     }
 

@@ -338,6 +338,9 @@
     <Compile Include="Controls\DoubleDateSettingPage.xaml.cs">
       <DependentUpon>DoubleDateSettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExportDataTypePage.xaml.cs">
+      <DependentUpon>ExportDataTypePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LandSelectedPage.xaml.cs">
       <DependentUpon>LandSelectedPage.xaml</DependentUpon>
     </Compile>
@@ -699,6 +702,10 @@
     <Page Include="Controls\DoubleDateSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ExportDataTypePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LandSelectedPage.xaml">
       <Generator>MSBuild:Compile</Generator>
