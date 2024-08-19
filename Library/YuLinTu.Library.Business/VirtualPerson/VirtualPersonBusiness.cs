@@ -865,28 +865,28 @@ namespace YuLinTu.Library.Business
             var upvp = vp.Clone() as VirtualPerson;
             //排序
             vp.SharePersonList = SortSharePerson(list, vp.Name);
-            upvp.SharePersonList = SortSharePerson(list, vp.Name, true);
+            //upvp.SharePersonList = SortSharePerson(list, vp.Name);
             try
             {
                 switch (virtualType)
                 {
                     case eVirtualType.Land:
-                        landStation.Update(upvp);
+                        landStation.Update(vp);
                         break;
                     case eVirtualType.Yard:
-                        yardStation.Update(upvp);
+                        yardStation.Update(vp);
                         break;
                     case eVirtualType.House:
-                        houseStation.Update(upvp);
+                        houseStation.Update(vp);
                         break;
                     case eVirtualType.Wood:
-                        woodStation.Update(upvp);
+                        woodStation.Update(vp);
                         break;
                     case eVirtualType.CollectiveLand:
-                        colleStation.Update(upvp);
+                        colleStation.Update(vp);
                         break;
                     case eVirtualType.SecondTable:
-                        tableStation.Update(upvp);
+                        tableStation.Update(vp);
                         break;
                 }
 
@@ -2021,28 +2021,20 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 对共有人排序(户主最前面)
         /// </summary>
-        public List<Person> SortSharePerson(List<Person> personCollection, string houseName, bool usecode = false)
+        public List<Person> SortSharePerson(List<Person> personCollection, string houseName)
         {
             List<Person> sharePersonCollection = new List<Person>();
             Person p = personCollection.Find(t => t.Name == houseName);
             if (p != null)
-            {
-                if (usecode)
+            { 
+                if (personCollection.Count > 1)
                 {
-                    var np = p.Clone() as Person;
-                    if (personCollection.Count > 1)
-                    {
-                        np.Relationship = "02";
-                    }
-                    else
-                        np.Relationship = "01";
-                    np.IsSharedLand = "1";
-                    sharePersonCollection.Add(np);
+                    p.Relationship = "户主";
                 }
                 else
-                {
-                    sharePersonCollection.Add(p);
-                }
+                    p.Relationship = "本人";
+                p.IsSharedLand = "是";
+                sharePersonCollection.Add(p);
             }
             foreach (Person person in personCollection)
             {
@@ -2051,7 +2043,6 @@ namespace YuLinTu.Library.Business
                     sharePersonCollection.Add(person);
                 }
             }
-            personCollection.Clear();
             return sharePersonCollection;
         }
 
