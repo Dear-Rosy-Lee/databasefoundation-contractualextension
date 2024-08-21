@@ -89,7 +89,7 @@ namespace YuLinTu.Component.PadDataHandle
                 var section = profile.GetSection<SystemSetDefine>();
                 config = (section.Settings);
                 CurrentDefine = config.Clone() as SystemSetDefine;
-                CurrentDefine.DataExchangeDirectory = newDataExchangeDirectory; 
+                CurrentDefine.DataExchangeDirectory = newDataExchangeDirectory;
                 config.CopyPropertiesFrom(CurrentDefine);
                 systemCenter.Save<SystemSetDefine>();
                 // 保存后添加到TheApp的变量中。
