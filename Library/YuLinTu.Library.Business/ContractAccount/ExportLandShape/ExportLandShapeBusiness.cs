@@ -3,23 +3,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Unity;
-using YuLinTu;
-using YuLinTu.Data;
-using YuLinTu.Library.Repository;
-using System.ComponentModel;
-using System.Threading;
-using System.Diagnostics;
-using YuLinTu.Library.WorkStation;
-using YuLinTu.Library.Office;
 using System.IO;
+using YuLinTu.Data;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

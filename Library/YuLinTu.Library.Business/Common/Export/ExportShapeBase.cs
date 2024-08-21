@@ -54,7 +54,7 @@ namespace YuLinTu.Library.Business
         public ExportShapeBase(object exportSet = null)
         {
             FileFieldSet = GetExportSetting(exportSet);
-            dbaseFileHeader = CreateHeader(null, 0);
+            //dbaseFileHeader = CreateHeader(null, 0);
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(OnPostProgress);
         }
@@ -87,7 +87,7 @@ namespace YuLinTu.Library.Business
             ClearExistFiles(provider, elementName);
             var writer = provider.CreateShapefileDataWriter(elementName);
             var hedear = CreateHeader(list[0], list.Count);
-            writer.Header = dbaseFileHeader == null ? hedear : dbaseFileHeader;
+            writer.Header = dbaseFileHeader == null ? hedear : dbaseFileHeader; 
             writer.Header.NumRecords = list.Count;
             writer.Write(list);
             if (sr != null)

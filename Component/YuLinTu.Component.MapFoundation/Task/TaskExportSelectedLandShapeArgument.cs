@@ -23,6 +23,11 @@ namespace YuLinTu.Component.MapFoundation
 
         public string SaveFilePath { get; set; }
 
+        /// <summary>
+        /// 导出方式
+        /// </summary>
+        public int ExportWay { get; set; }
+
         public TaskExportSelectedLandShapeArgument()
         {
         }

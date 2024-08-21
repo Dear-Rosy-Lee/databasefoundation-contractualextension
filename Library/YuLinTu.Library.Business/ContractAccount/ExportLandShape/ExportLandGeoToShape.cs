@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  */
 
 using NetTopologySuite.Features;
@@ -15,6 +15,8 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private Zone currentZone;
+
+        private int bsmindex;
 
         #endregion Fields
 
@@ -54,6 +56,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public eLanguage Lang { get; set; }
 
+        public int Exportway { get; set; }
+
         /// <summary>
         /// 地域描述
         /// </summary>
@@ -76,6 +80,7 @@ namespace YuLinTu.Library.Business
         public ExportLandGeoToShape(ExportContractLandShapeDefine exportSet)
             : base(exportSet)
         {
+            bsmindex = 100000;
         }
 
         #endregion Ctor
@@ -98,7 +103,16 @@ namespace YuLinTu.Library.Business
                 try
                 {
                     toolProgress.DynamicProgress(ZoneDesc);
-                    AttributesTable attributes = CreateAttributesTable<ContractLand>(item);
+                    AttributesTable attributes = null;
+
+                    if (Exportway == 1)
+                    {
+                        attributes = CreateAttributesTableStand(item);
+                    }
+                    else
+                    {
+                        attributes = CreateAttributesTable<ContractLand>(item);
+                    }
                     YuLinTu.Spatial.Geometry geometry = item.Shape as YuLinTu.Spatial.Geometry;
                     if (geometry == null || geometry.Instance == null)
                     {
@@ -158,6 +172,10 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public override DbaseFileHeader CreateHeader(IFeature feature = null, int count = 0)
         {
+            if (Exportway == 1)
+            {
+                return CreateStandHeader(feature);
+            }
             if (exportContractLandShapeDefine == null) return null;
             DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
             if (Lang == eLanguage.CN)
@@ -213,6 +231,36 @@ namespace YuLinTu.Library.Business
 
             return header;
         }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary>
+        public DbaseFileHeader CreateStandHeader(IFeature feature = null, int count = 0)
+        {
+            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
+            header.AddColumn(DKFiled.CBSM, 'N', 10, 0);
+            header.AddColumn(DKFiled.CYSDM, 'C', 6, 0);
+            header.AddColumn(DKFiled.CDKBM, 'C', 19, 0);
+            header.AddColumn(DKFiled.CDKMC, 'C', 50, 0);
+            header.AddColumn(DKFiled.CSYQXZ, 'C', 2, 0);
+            header.AddColumn(DKFiled.CDKLB, 'C', 2, 0);
+            header.AddColumn(DKFiled.CDLDJ, 'C', 2, 0);
+            header.AddColumn(DKFiled.CTDLYLX, 'C', 3, 0);
+            header.AddColumn(DKFiled.CSFJBNT, 'C', 1, 0);
+            header.AddColumn(DKFiled.CSCMJ, 'F', 15, 2);
+            header.AddColumn(DKFiled.CSCMJM, 'F', 15, 2);
+            header.AddColumn(DKFiled.CTDYT, 'C', 1, 0);
+            header.AddColumn(DKFiled.CDKDZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKXZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKNZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKBZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CZJRXM, 'C', 100, 0);
+            header.AddColumn(DKFiled.CDKBZXX, 'C', 254, 0);
+            header.AddColumn(DKFiled.CKJZB, 'C', 254, 0);
+
+            return header;
+        }
+
 
         ///<summary>
         ///创建属性表
@@ -387,6 +435,151 @@ namespace YuLinTu.Library.Business
             return attributes;
         }
 
-        #endregion Methods
+        ///<summary>
+        ///创建属性表
+        ///</summary> 
+        public AttributesTable CreateAttributesTableStand(ContractLand en)
+        {
+            AttributesTable attributes = new AttributesTable();
+            bsmindex++;
+
+            attributes.AddAttribute(DKFiled.CBSM, bsmindex);
+            attributes.AddAttribute(DKFiled.CYSDM, "211011");
+            attributes.AddAttribute(DKFiled.CDKBM, en.LandNumber);
+            attributes.AddAttribute(DKFiled.CDKMC, en.LandName);
+            attributes.AddAttribute(DKFiled.CSYQXZ, en.OwnRightType);
+            attributes.AddAttribute(DKFiled.CDKLB, en.LandCategory);
+            attributes.AddAttribute(DKFiled.CDLDJ, en.LandLevel);
+            attributes.AddAttribute(DKFiled.CTDLYLX, en.LandCode);
+            attributes.AddAttribute(DKFiled.CSFJBNT, en.IsFarmerLand == null ? "" : (en.IsFarmerLand.Value ? "1" : "2"));
+            attributes.AddAttribute(DKFiled.CSCMJ, ToolMath.RoundNumericFormat(en.Shape.Area(), 2));
+            attributes.AddAttribute(DKFiled.CSCMJM, en.ActualArea);
+            attributes.AddAttribute(DKFiled.CTDYT, en.Purpose);
+            attributes.AddAttribute(DKFiled.CDKDZ, en.NeighborEast);
+            attributes.AddAttribute(DKFiled.CDKXZ, en.NeighborWest);
+            attributes.AddAttribute(DKFiled.CDKNZ, en.NeighborSouth);
+            attributes.AddAttribute(DKFiled.CDKBZ, en.NeighborNorth);
+
+            if (en.LandCategory == "10" && string.IsNullOrEmpty(en.LandExpand.ReferPerson))
+                attributes.AddAttribute(DKFiled.CZJRXM, en.OwnerName);
+            else
+                attributes.AddAttribute(DKFiled.CZJRXM, en.LandExpand.ReferPerson);
+            attributes.AddAttribute(DKFiled.CDKBZXX, en.Comment);
+            attributes.AddAttribute(DKFiled.CKJZB, " ");
+            return attributes;
+        }
+        #endregion
+    }
+
+    public class DKFiled
+    {
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public const string TableName = "DK";
+
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public const string TableNameCN = "地块";
+
+        /// <summary>
+        /// 标识码(M)
+        /// </summary>
+        public const string CBSM = "BSM";
+
+        /// <summary>
+        /// 要素代码(M)(eFeatureType)
+        /// </summary>
+        public const string CYSDM = "YSDM";
+
+        /// <summary>
+        /// 地块代码
+        /// </summary>
+        public const string CDKBM = "DKBM";
+
+        /// <summary>
+        /// 地块名称
+        /// </summary>
+        public const string CDKMC = "DKMC";
+
+        /// <summary>
+        /// 地块类别
+        /// </summary>
+        public const string CDKLB = "DKLB";
+
+        /// <summary>
+        /// 所有权性质
+        /// </summary>
+        public const string CSYQXZ = "SYQXZ";
+
+        /// <summary>
+        /// 土地利用类型
+        /// </summary>
+        public const string CTDLYLX = "TDLYLX";
+
+        /// <summary>
+        /// 地力等级
+        /// </summary>
+        public const string CDLDJ = "DLDJ";
+
+        /// <summary>
+        /// 土地用途
+        /// </summary>
+        public const string CTDYT = "TDYT";
+
+        /// <summary>
+        /// 是否基本农田
+        /// </summary>
+        public const string CSFJBNT = "SFJBNT";
+
+        /// <summary>
+        /// 实测面积
+        /// </summary>
+        public const string CSCMJ = "SCMJ";
+
+        /// <summary>
+        /// 实测面积亩
+        /// </summary>
+        public const string CSCMJM = "SCMJM";
+
+        /// <summary>
+        /// 东至
+        /// </summary>
+        public const string CDKDZ = "DKDZ";
+        /// <summary>
+        /// 西至
+        /// </summary>
+        public const string CDKXZ = "DKXZ";
+
+        /// <summary>
+        /// 南至
+        /// </summary>
+        public const string CDKNZ = "DKNZ";
+
+        /// <summary>
+        /// 北至
+        /// </summary>
+        public const string CDKBZ = "DKBZ";
+
+        /// <summary>
+        /// 备注信息
+        /// </summary>
+        public const string CDKBZXX = "DKBZXX";
+
+        /// <summary>
+        /// 指界人姓名
+        /// </summary>
+        public const string CZJRXM = "ZJRXM";
+
+        /// <summary>
+        /// 空间坐标
+        /// </summary>
+        public const string CKJZB = "KJZB";
+
+        /// <summary>
+        /// 空间坐标
+        /// </summary>
+        public const string CShape = "Shape";
     }
 }

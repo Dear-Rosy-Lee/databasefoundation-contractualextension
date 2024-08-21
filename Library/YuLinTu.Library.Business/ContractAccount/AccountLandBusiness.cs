@@ -4371,8 +4371,8 @@ namespace YuLinTu.Library.Business
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
                     //var areaNew = Math.Round((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
                     // var areaDraw = Math.Round(landGeo.Area() * projectionUnit, 4);
-                    var landgeoareamu = landGeo.Area() * 0.0015;
-                    var areaDraw = ToolMath.SetNumericFormat(landgeoareamu, metadata.ToAreaNumeric, metadata.ToAreaModule);
+                    var landgeoarea = landGeo.Area();
+                    var areaDraw = ToolMath.SetNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric, metadata.ToAreaModule);
                     if (metadata.ToActualArea)
                     {
                         //把图形面积赋值给实测面积
@@ -4383,6 +4383,9 @@ namespace YuLinTu.Library.Business
                         //把图形面积赋值给确权面积
                         land.AwareArea = areaDraw;
                     }
+                    var expad = land.LandExpand;
+                    expad.MeasureArea = ToolMath.SetNumericFormat(landgeoarea, 2, metadata.ToAreaModule);
+                    land.LandExpand = expad;
                     int upCount = landStation.Update(land);
                     if (upCount > 0)
                         successCount++;

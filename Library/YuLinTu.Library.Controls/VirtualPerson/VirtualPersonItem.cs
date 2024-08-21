@@ -1,13 +1,9 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Controls

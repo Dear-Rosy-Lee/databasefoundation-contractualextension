@@ -4810,7 +4810,7 @@ namespace YuLinTu.Component.MapFoundation
                 ShowBox("信息提示", "请选中地块矢量要素进行导出！");
                 return;
             }
-            ExportDataPage extPage = new ExportDataPage(currentZone.Name, Workpage, "导出ShapeFile");
+            var extPage = new ExportDataTypePage(currentZone.Name, Workpage, "导出ShapeFile");
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (b, r) =>
             {
@@ -4819,7 +4819,7 @@ namespace YuLinTu.Component.MapFoundation
                 {
                     return;
                 }
-                TaskExportSelectedLandShapeFile(saveFilePath, graphics);
+                TaskExportSelectedLandShapeFile(saveFilePath, graphics, extPage.EportType);
             });
         }
 
@@ -5641,7 +5641,7 @@ namespace YuLinTu.Component.MapFoundation
             });
         }
 
-        private void TaskExportSelectedLandShapeFile(string fileName, List<Graphic> graphics)
+        private void TaskExportSelectedLandShapeFile(string fileName, List<Graphic> graphics, int exportway)
         {
             DictionaryBusiness dictBusiness = new DictionaryBusiness(dbcontext);
             TaskExportSelectedLandShapeArgument argument = new TaskExportSelectedLandShapeArgument();
@@ -5651,6 +5651,7 @@ namespace YuLinTu.Component.MapFoundation
             argument.VPS = VPS;
             argument.DictList = dictBusiness.GetAll();
             argument.CurrentZone = currentZone;
+            argument.ExportWay = exportway;
             var operation = new TaskExportSelectedLandShapeOperation(dbcontext);
             operation.Argument = argument;
             operation.Name = "导出矢量文件";
@@ -6100,7 +6101,9 @@ namespace YuLinTu.Component.MapFoundation
             land.LandLevel = keyValues.FirstOrDefault(x => x.Key.Equals("DLDJ")).Value;
             land.PlantType = keyValues.FirstOrDefault(x => x.Key.Equals("GBLX")).Value;
             land.OwnRightType = keyValues.FirstOrDefault(x => x.Key.Equals("QSXZ")).Value;
-            land.TableArea = double.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("TZMJ")).Value);
+            var tzmj = keyValues.FirstOrDefault(x => x.Key.Equals("TZMJ")).Value;
+            if (!string.IsNullOrEmpty(tzmj))
+                land.TableArea = double.Parse(tzmj);
             land.IsFarmerLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT")).Value);
             land.Purpose = keyValues.FirstOrDefault(x => x.Key.Equals("TDYT")).Value;
             land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Equals("JYFS")).Value;
