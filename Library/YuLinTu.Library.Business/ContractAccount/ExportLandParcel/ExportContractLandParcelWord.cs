@@ -667,8 +667,8 @@ namespace YuLinTu.Library.Business
                 {
                     if (SettingDefine.IsFixedViewOfAllLandGeoWordExtend)
                     {
-                        ViewOfAllMultiParcel.Paper.Model.Width = 230;
-                        ViewOfAllMultiParcel.Paper.Model.Height = 320;
+                        ViewOfAllMultiParcel.Paper.Model.Width = 240;
+                        ViewOfAllMultiParcel.Paper.Model.Height = 260;
                     }
                     else
                     {
