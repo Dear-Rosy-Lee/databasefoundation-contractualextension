@@ -87,7 +87,7 @@
             </ScrollViewer>
         </Border>
         <Grid Grid.Column="1">
-            <cmps:MetroTreeListView x:Name="view"  x:FieldModifier="public"
+            <cmps:MetroTreeListView x:Name="dataview"  x:FieldModifier="public"
                                 HeaderVisibility="Visible"
                                 HeaderBorderThickness="0"
                                 HeaderThumbBorderWidth="0"

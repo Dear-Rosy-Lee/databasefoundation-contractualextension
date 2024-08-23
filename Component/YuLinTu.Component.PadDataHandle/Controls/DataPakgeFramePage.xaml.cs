@@ -3,8 +3,6 @@
  */
 using MediaDevices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -66,11 +64,7 @@ namespace YuLinTu.Component.PadDataHandle
             SingleInstance = true;
             deviceHelper = new DeviceHelper();
             deviceHelper.DeviceChage += DeviceChage;
-            Setpanelvisible();
-            //_timer = new DispatcherTimer();
-            //_timer.Interval = TimeSpan.FromSeconds(5);
-            //_timer.Tick += Timer_Tick;
-            //_timer.Start();
+            Setpanelvisible(); 
         }
 
         #endregion
@@ -82,81 +76,19 @@ namespace YuLinTu.Component.PadDataHandle
         /// </summary>
         protected override void OnInstallComponents()
         {
-            SetCommandToControl();
-            //zoneMgrPanel.ThePage = Workpage;
-            //zoneMgrPanel.ShowTaskViewer += () =>
-            //{
-            //    Workpage.Message.Send(this, new MsgEventArgs(EdCore.langRequestShowTaskViewer));
-            //};
-            string rootZone = NavigateZone.GetRootZoneCode();
-            //zoneMgrPanel.RootZoneCode = rootZone;
-            //zoneMgrPanel.SetControlData();
-
+            SetCommandToControl(); 
+            string rootZone = NavigateZone.GetRootZoneCode(); 
             deviceHelper.RefreshDeviceList();
             var items = deviceHelper.MediaDevices;
             localMgrPanel.deviceview.ItemsSource = items;
             netdiskMgrPanel.Workpage= this.Workpage;
-        }
-
-        ///// <summary>
-        ///// 加载左侧内容栏
-        ///// </summary>
-        //protected override void OnInstalLeftSidebarTabItems(object sender, InstallUIElementsEventArgs e)
-        //{
-        //    if (Navigator == null)
-        //    {
-        //        return;
-        //    }
-        //    Navigator.RootItemAutoExpand = false;
-        //    panel.TheWorkPage = Workpage;
-        //    panel.OwerShipPanel.CurrentMapControl = MapControl;
-
-        //    LandPanelControl = panel.OwerShipPanel.LandPanelControl;
-        //    LandPanelControl.CurrentMapControl = MapControl;
-
-        //    e.Items.Add(new MetroListTabItem()
-        //    {
-        //        Name = "",
-        //        Header = new ImageTextItem()
-        //        {
-        //            ImagePosition = eDirection.Top,
-        //            Text = "权属",
-        //            ToolTip = "权属",  //LanguageAttribute.GetLanguage("lang3070005")
-        //            Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Resources;component/Images/32/Population32.png"))
-        //        },
-        //        Content = panel,
-        //    });
-
-        //    OnInstallDotTabItems(e);
-        //    OnInstallCoilTabItem(e);
-        //    OnInstallPointTabItem(e);
-        //    OnInstallToolTabItem(e);
-
-        //    var dic = new ResourceDictionary() { Source = new Uri("pack://application:,,,/YuLinTu.Library.Controls;component/Navigation/Res.xaml") };
-        //    var key = new DataTemplateKey(typeof(NavigateZoneItem));
-        //    if (Navigator != null)
-        //    {
-        //        Navigator.RegisterItemTemplate(typeof(NavigateZoneItem), dic[key] as DataTemplate);
-        //    }
-        //    var menu = dic["TreeViewNavigator_Menu_Zone"] as ContextMenu;
-        //    Navigator.RegisterContextMenu(typeof(Zone), menu);
-        //    Navigator.AddCommandBinding(ZoneNavigatorCommands.CopyCommandBinding);
-        //}
+        } 
 
         /// <summary>
         /// 绑定命令到控件上
         /// </summary>
         private void SetCommandToControl()
-        {
-            //SetCommandBinding(mbtnAdd, command.Add, command.AddBind);
-            //SetCommandBinding(mbtnDel, command.Del, command.DelBind);
-            //SetCommandBinding(mbtnEdit, command.Edit, command.EditBind);
-            //SetCommandBinding(mbtnExportData, command.ExportData, command.ExportDataBind);
-            //SetCommandBinding(mbtnExportPackage, command.ExportPackage, command.ExportPackageBind);
-            //SetCommandBinding(mbtnExportShape, command.ExportShape, command.ExportShapeBind);
-            //SetCommandBinding(mbtnImportShape, command.ImportShape, command.ImportShapeBind);
-            //SetCommandBinding(mbtnImportData, command.ImportData, command.ImportDataBind);
-            //SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
+        { 
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
             SetCommandBinding(mbtnUpToService, command.UpToService, command.UpToServiceBind);
         }
@@ -194,67 +126,14 @@ namespace YuLinTu.Component.PadDataHandle
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            //if (zoneMgrPanel == null)
-            //{
-            //    return;
-            //}
-            string parameter = e.Parameter.ToString();
-            switch (parameter)
-            {
-                //case ZoneCommand.AddName:
-                //    zoneMgrPanel.Add();
-                //    break;
-                //case ZoneCommand.EditName:
-                //    zoneMgrPanel.Edit();
-                //    break;
-                //case ZoneCommand.DelName:
-                //    zoneMgrPanel.Del();
-                //    break;
-                //case ZoneCommand.ImportDataName:
-                //    zoneMgrPanel.ImportData();
-                //    break;
-                //case ZoneCommand.ImportShapeName:
-                //    zoneMgrPanel.ImportShape();
-                //    break;
-                //case ZoneCommand.ExportDataName:
-                //    zoneMgrPanel.ExportData();
-                //    break;
-                //case ZoneCommand.ExportShapeName:
-                //    zoneMgrPanel.ExportShape();
-                //    break;
-                //case ZoneCommand.ExportPackageName:
-                //    zoneMgrPanel.ExportPackage();
-                //    break;
-                //case ZoneCommand.ClearName:
-                //    zoneMgrPanel.Clear();
-                //    break;
-                //case ZoneCommand.RefreshName:
-                //    zoneMgrPanel.Refresh();
-                //    break;
-                //case ZoneCommand.UpToServiceName:
-                //    zoneMgrPanel.UpdateToServie();
-                //    break;
-            }
+        { 
         }
 
         /// <summary>
         /// 设置控件可用性
         /// </summary>
         public void SetControlsEnable(bool isEnable = true)
-        {
-            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                //mbtnAdd.IsEnabled = isEnable;
-                //mbtnEdit.IsEnabled = isEnable;
-                //mbtnDel.IsEnabled = isEnable;
-                //mbtnClear.IsEnabled = isEnable;
-                //mbtnExportData.IsEnabled = isEnable;
-                //mbtnExportPackage.IsEnabled = isEnable;
-                //mbtnExportShape.IsEnabled = isEnable;
-                //mbtnImportShape.IsEnabled = isEnable;
-                //mbtnImportData.IsEnabled = isEnable;
-            }));
+        { 
         }
 
         #endregion
@@ -264,30 +143,17 @@ namespace YuLinTu.Component.PadDataHandle
         /// </summary>
         public void DeviceChage()
         {
-            if (localMgrPanel.view.SelectedItem == null)
+            if (localMgrPanel.deviceview.SelectedItem==null)
             {
                 localMgrPanel.softview.ItemsSource = null;
                 return;
             }
-            MediaDevice mediaDevice = (MediaDevice)localMgrPanel.view.SelectedItem;
+            MediaDevice mediaDevice = (MediaDevice)localMgrPanel.deviceview.SelectedItem;
             if (!deviceHelper.MediaDevices.Contains(selectmediaDevice))
             {
                 localMgrPanel.softview.ItemsSource = null;
             }
-        }
-
-        //private void Timer_Tick(object sender, EventArgs e)
-        //{
-        //    if (view.SelectedItem == null)
-        //    {
-        //        softview.ItemsSource = null;
-        //        return;
-        //    }
-        //    MediaDevice mediaDevice = (MediaDevice)view.SelectedItem;
-        //    if (mediaDevice == null) return;
-        //    var folderlist = deviceHelper.GetFolderList(mediaDevice);
-        //    softview.ItemsSource = folderlist;
-        //} 
+        } 
 
         private void mbtnAdd_Checked(object sender, RoutedEventArgs e)
         {

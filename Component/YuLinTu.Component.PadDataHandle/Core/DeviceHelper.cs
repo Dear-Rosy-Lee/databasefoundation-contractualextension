@@ -87,6 +87,11 @@ namespace YuLinTu.Component.PadDataHandle
             });
         }
 
+        /// <summary>
+        /// 获取软件列表
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
         public List<DeviceFolder> GetFolderList(MediaDevice device)
         {
             var list = new List<DeviceFolder>();
@@ -137,6 +142,12 @@ namespace YuLinTu.Component.PadDataHandle
             return list;
         }
 
+        /// <summary>
+        /// 获取数据包列表
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="device"></param>
+        /// <returns></returns>
         public List<DeviceFolder> GetDataList(DeviceFolder folder, MediaDevice device)
         {
             var list = new List<DeviceFolder>();

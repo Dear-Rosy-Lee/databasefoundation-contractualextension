@@ -24,10 +24,6 @@ namespace YuLinTu.Component.PadDataHandle
         #region Fields
 
         /// <summary>
-        /// 定义后台线程
-        /// </summary>
-        private BackgroundWorker worker;
-        /// <summary>
         /// 定义委托
         /// </summary>
         public delegate void TaskViewerShowDelegate();
@@ -44,7 +40,7 @@ namespace YuLinTu.Component.PadDataHandle
         public IWorkpage ThePage { get; set; }
 
 
-        public DeviceHelper DeviceHelper { get; set; }
+        public DeviceHelper DvcHelper { get; set; }
 
         /// <summary>
         /// 显示任务
@@ -74,47 +70,7 @@ namespace YuLinTu.Component.PadDataHandle
                 return;
             LanguageAttribute.AddLanguage(YuLinTu.Library.Entity.Properties.Resources.langChs_eZoneLevel);
             LanguageAttribute.AddLanguage(YuLinTu.Library.Entity.Properties.Resources.langChs_Zone);
-            worker = new BackgroundWorker();
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-        }
-
-        /// <summary>
-        /// 任务完成
-        /// </summary>
-        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            try
-            {
-                MenuEnable();
-                view.ItemsSource = null;
-                view.Items.Clear();
-                List<Zone> zoneList = e.Result as List<Zone>;
-                if (zoneList != null && zoneList.Count > 0)
-                {
-                    InitializeControl(zoneList);
-                }
-                else
-                {
-                    view.Items.Add(new
-                    {
-                        Name = "未能显示数据,请检查数据源连接及数据库数据!",
-                        Img = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Identify16.png"))
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                YuLinTu.Library.Log.Log.WriteException(ex.Source, "行政地域获取", ex.StackTrace);
-            }
-        }
-
-        /// <summary>
-        /// 执行任务
-        /// </summary>
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            MenuEnable(false);
+            DvcHelper = new DeviceHelper();
         }
 
         #endregion Ctor
@@ -134,25 +90,8 @@ namespace YuLinTu.Component.PadDataHandle
             var section = profile.GetSection<CommonBusinessDefine>();
             var config = section.Settings as CommonBusinessDefine;
             string code = config.CurrentZoneFullCode;
-            RefreshContent(code);
         }
 
-        /// <summary>
-        /// 刷新内容
-        /// </summary>
-        /// <param name="zoneCode"></param>
-        public void RefreshContent(string code = "")
-        {
-            if (worker == null)
-            {
-                return;
-            }
-            if (worker.IsBusy)
-            {
-                return;
-            }
-            worker.RunWorkerAsync(string.IsNullOrEmpty(code) ? "" : code);
-        }
 
         #endregion Method-public
 
@@ -218,32 +157,26 @@ namespace YuLinTu.Component.PadDataHandle
         }
 
         #endregion Helper 
-        private void view_SelectedChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void deviceview_SelectedChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (view.SelectedItem == null)
+            if (deviceview.SelectedItem == null)
                 return;
-            selectmediaDevice = (MediaDevice)view.SelectedItem;
+            selectmediaDevice = (MediaDevice)deviceview.SelectedItem;
             if (selectmediaDevice == null) return;
-            var folderlist = DeviceHelper.GetFolderList(selectmediaDevice);
+            var folderlist = DvcHelper.GetFolderList(selectmediaDevice);
             softview.ItemsSource = folderlist;
             //if (folderlist.Count > 0)
             //    softview.SelectedIndex = 0;
         }
 
-        private void view_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void deviceview_SelectedChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            var sview = ((System.Windows.Controls.Primitives.Selector)softview);
-            if (sview.SelectedItem == null)
+        private void view_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { 
+            if (softview.SelectedItems.Count == 0)
                 return;
-            DeviceFolder deviceFolder = (DeviceFolder)sview.SelectedItem;
+            DeviceFolder deviceFolder = (DeviceFolder)softview.SelectedItems[0];
             if (deviceFolder == null) return;
-            var list = DeviceHelper.GetDataList(deviceFolder, (MediaDevice)view.SelectedItem);
-            view.ItemsSource = list;
+            var list = DvcHelper.GetDataList(deviceFolder, (MediaDevice)deviceview.SelectedItem);
+            dataview.ItemsSource = list;
         }
     }
 }
