@@ -104,7 +104,7 @@ namespace YuLinTu.Component.PadDataHandle
             //拆分路径、分步进入
             string[] pathParts = folderPath.Split('\\');
             var enumfolders = currentFolder.EnumerateDirectories();
-            if (enumfolders.Count() == 1)
+            if (enumfolders.Count() > 1)
                 enumfolders = enumfolders.ToList()[0].EnumerateDirectories();
             foreach (var part in enumfolders)
             {
