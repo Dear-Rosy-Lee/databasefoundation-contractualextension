@@ -901,8 +901,8 @@ namespace YuLinTu.Library.Business
 
             if (isViewOfAllScaleUse)
             {
-                diagram.Model.X = view.Paper.Model.Width / 2 - 10;
-                diagram.Model.Y = view.Paper.Model.Height - 20;
+                diagram.Model.X = view.Paper.Model.Width / 2 - 30;
+                diagram.Model.Y = view.Paper.Model.Height - 60;
             }
 
             return diagram;
