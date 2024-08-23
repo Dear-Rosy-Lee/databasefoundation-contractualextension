@@ -95,6 +95,7 @@ namespace YuLinTu.Component.PadDataHandle
             deviceHelper.RefreshDeviceList();
             var items = deviceHelper.MediaDevices;
             localMgrPanel.deviceview.ItemsSource = items;
+            netdiskMgrPanel.Workpage= this.Workpage;
         }
 
         ///// <summary>

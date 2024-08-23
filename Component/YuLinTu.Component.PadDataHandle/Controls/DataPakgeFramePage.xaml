@@ -30,7 +30,7 @@
                     <cmps:ImageTextItem ImagePosition="Top"
                                         Text="平板"
                                         ToolTip="与平板通过数据线进行数据包交换"
-                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/移动设备32.png" />
                 </cmps:MetroToggleButton>
                 <cmps:MetroToggleButton x:Name="mbtnEdit" 
                                    Padding="4,2,4,2"
@@ -39,7 +39,7 @@
                     <cmps:ImageTextItem ImagePosition="Top"
                                         Text="网盘"
                                         ToolTip="与数据堡通过网络进行数据包交换"
-                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/编辑数据32.png" />
+                                        Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/网络32.png" />
                 </cmps:MetroToggleButton>
             </cmps:TabControlItemRibbonContainer>
             <!--  <metro:MetroButton x:Name="mbtnDel"

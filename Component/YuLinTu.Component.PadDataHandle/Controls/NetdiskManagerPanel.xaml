@@ -15,31 +15,31 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="350*"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="45"/>
             <RowDefinition Height="350*"/>
         </Grid.RowDefinitions>
         <!--本地数据包列表-->
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal"
                     Margin="0,0,0,15">
-            <Image
-                Width="30"
-                Height="30"
-                Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png">
-            </Image>
-            <Label  
-                Margin="18,0,0,0"
+            <cmps:ImageTextItem
                 FontSize="18"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
-                HorizontalContentAlignment="Left" >本地数据包列表</Label>
+                HorizontalContentAlignment="Left"
+                ImageTextSpacing="18"
+                Text="本地数据包列表"
+                Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表32.png"
+                ></cmps:ImageTextItem>
         </StackPanel>
         <cmps:MetroTreeListView Grid.Row="1" x:Name="localview"  x:FieldModifier="public"
-                                HeaderVisibility="Collapsed"
+                                HeaderVisibility="Visible"
                                 HeaderBorderThickness="0"
                                 HeaderThumbBorderWidth="0"
                                 ItemAutoExpand="False"
                                 ItemPadding="2,4"
+                                ItemBorderBrushDefault="LightGray"
+                                ItemBorderThickness="0,1,0,0"
                                 BorderThickness="0"
                                 BorderBrush="LightGray" 
                                 EnabledAsyncLoading="False"
@@ -49,27 +49,27 @@
                                 SelectedItemChanged="view_SelectedChanged"
                                 MouseDoubleClick="view_MouseDoubleClick"
             -->
-
             <cmps:MetroTreeListView.View>
                 <GridView>
-                    <GridViewColumn Header="数据包名称1" Width="450">
+                    <GridViewColumn Header="数据包名称" Width="450">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel LastChildFill="True">
-                                        <cmps:MetroTreeListViewItemToggleButton DockPanel.Dock="Left"/>
+                                    <cmps:MetroTreeListViewItemToggleButton DockPanel.Dock="Left"/>
                                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                         <cmps:ImageTextItem 
-                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"
-                                     HorizontalAlignment="Left" 
-                                     Margin="0,0,5,0" 
-                                     Text="{Binding Name}" 
-                                     VerticalAlignment="Center"/>
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/文件夹32.png"
+                                    HorizontalAlignment="Left" 
+                                    Margin="0,0,5,0" 
+                                    Text="{Binding Name}" 
+                                    VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    </DockPanel>
+                                </DockPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="数据包大小1" Width="200">
+
+                    <GridViewColumn Header="数据包大小" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
@@ -78,6 +78,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+
                     <GridViewColumn Header="时间" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -97,7 +98,9 @@
                                         Click="Upload_Click"
                                         ToolTip="上传"
                                         HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png" />
+                                        <Image
+                                        Width="24"
+                                        Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/上传32.png"/>
                                     </metro:MetroButton>
 
                                     <metro:MetroButton
@@ -106,7 +109,9 @@
                                         Click="Delete_Click"
                                         ToolTip="删除"
                                             HorizontalAlignment="Right" VerticalAlignment="Center">
-                                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png" />
+                                        <Image
+                                            Width="24"
+                                            Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/删除32.png"/>
                                     </metro:MetroButton>
                                 </DockPanel>
                             </DataTemplate>
@@ -118,26 +123,29 @@
             
         
         <!--云盘数据包列表-->
-        <StackPanel Grid.Row="2"
+        <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="0,1,0,0">
+            <StackPanel 
                     Orientation="Horizontal">
-            <Image
-                Width="30"
-                Height="30"
-                Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png">
-            </Image>
-            <Label  
-            Margin="18,0,0,0"
-            FontSize="18"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Left"
-            HorizontalContentAlignment="Left" >云盘数据包列表</Label>
-        </StackPanel>
+            <Border />
+                <cmps:ImageTextItem
+                FontSize="18"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Left"
+                ImageTextSpacing="18"
+                Text="云盘数据包列表"
+                Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表32.png"
+                ></cmps:ImageTextItem>
+            </StackPanel>
+        </Border>
         <cmps:MetroTreeListView Grid.Row="3" x:Name="netview"  x:FieldModifier="public"
                          HeaderVisibility="Collapsed"
                          HeaderBorderThickness="0"
                          HeaderThumbBorderWidth="0"
                          ItemAutoExpand="False"
                          ItemPadding="2,4"
+                         ItemBorderBrushDefault="LightGray"
+                         ItemBorderThickness="0,1,0,0"
                          BorderThickness="0"
                          BorderBrush="LightGray" 
                          EnabledAsyncLoading="False"
@@ -156,7 +164,7 @@
                                     <cmps:MetroTreeListViewItemToggleButton DockPanel.Dock="Left"/>
                                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                         <cmps:ImageTextItem 
-                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"
+                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/文件夹32.png"
                                      HorizontalAlignment="Left" 
                                      Margin="0,0,5,0" 
                                      Text="{Binding name}" 
@@ -194,7 +202,10 @@
                                     Click="Download_Click"
                                     ToolTip="下载"
                                     HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/plus.png" />
+                                        <Image
+                                            Width="24"
+                                            Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/下载32.png"/>
+
                                     </metro:MetroButton>
                                 </DockPanel>
                             </DataTemplate>

@@ -443,6 +443,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\JzxWZandQLR.png" />
+    <Resource Include="Resources\移动设备32.png" />
+    <Resource Include="Resources\网络32.png" />
+    <Resource Include="Resources\文件夹16.png" />
+    <Resource Include="Resources\文件夹32.png" />
+    <Resource Include="Resources\上传16.png" />
+    <Resource Include="Resources\下载16.png" />
+    <Resource Include="Resources\删除16.png" />
+    <Resource Include="Resources\上传32.png" />
+    <Resource Include="Resources\下载32.png" />
+    <Resource Include="Resources\删除32.png" />
+    <Resource Include="Resources\管理列表32.png" />
     <Resource Include="Resources\女16.jpg" />
     <Resource Include="Resources\男16.jpg" />
     <Resource Include="Resources\population24.png" />
