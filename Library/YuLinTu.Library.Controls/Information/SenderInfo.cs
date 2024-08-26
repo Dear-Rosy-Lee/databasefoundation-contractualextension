@@ -31,6 +31,11 @@ namespace YuLinTu.Library.Controls
         public const string SenderNameRepeat = "该发包方名称已在系统中存在!";
 
         /// <summary>
+        /// 发包方名称重复
+        /// </summary>
+        public const string SenderNameCodeRepeat = "该发包方名称或编码已在系统中存在!";
+
+        /// <summary>
         /// 添加组下级发包方
         /// </summary>
         public const string AddZoneError = "只能在镇、村、组地域下添加数据!";

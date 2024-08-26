@@ -21,7 +21,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         ///  合并发包方
         /// </summary>
-        public const string SENDER_COMBINE= "Sender_Combine";
+        public const string SENDER_COMBINE = "Sender_Combine";
 
         /// <summary>
         /// 添加发包方
@@ -122,6 +122,12 @@ namespace YuLinTu.Library.Business
         /// 发包方名称是否重复
         /// </summary>
         public const string SENDER_NAMEEXIT = "Sender_NameExit";
+
+        /// <summary>
+        /// 发包方名称或编码是否重复
+        /// </summary>
+        public const string SENDER_NAMECODEEXIT = "Sender_NameCodeExit";
+
 
         /// <summary>
         /// 获取指定编码的发包方

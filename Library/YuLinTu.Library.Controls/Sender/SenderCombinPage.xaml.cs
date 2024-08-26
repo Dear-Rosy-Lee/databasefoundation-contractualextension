@@ -267,6 +267,7 @@ namespace YuLinTu.Library.Controls
                 ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
                 return;
             }
+            tempTissue.Code = pageContent.mtbCode.Text;
             isdel = cb_recode.IsChecked == null ? false : cb_recode.IsChecked.Value;
             MenueEnable(false);
             if (!worker.IsBusy)

@@ -350,6 +350,20 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 发包方名称是否重复
+        /// </summary>
+        public bool SenderNameOrCodeRepeat(CollectivityTissue currentTissue)
+        {
+            bool result = false;
+            if (!CanContinue())
+            {
+                return result;
+            }
+            result = Station.Any(t => t.ID != currentTissue.ID && (t.Name == currentTissue.Name || t.Code == currentTissue.Code));
+            return result;
+        }
+
+        /// <summary>
         /// 发包方是否默认
         /// </summary>
         public bool IsDefaultSender(CollectivityTissue currentTissue)

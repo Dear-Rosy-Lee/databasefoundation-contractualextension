@@ -233,6 +233,18 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 发包方名称是否重复
+        /// </summary>
+        [MessageHandler(Name = SenderMessage.SENDER_NAMECODEEXIT)]
+        private void OnSenderNameOrCodeRepeat(object sender, ModuleMsgArgs e)
+        {
+            CollectivityTissue currentTissue = e.Parameter as CollectivityTissue;
+            IDbContext db = e.Datasource;
+            SenderDataBusiness business = CreateBusiness(e.Datasource);
+            e.ReturnValue = business.SenderNameOrCodeRepeat(currentTissue);
+        }
+
+        /// <summary>
         /// 是否是默认发包方
         /// </summary>
         [MessageHandler(Name = SenderMessage.SENDER_ISDEFAULT)]

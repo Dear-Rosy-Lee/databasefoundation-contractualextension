@@ -138,7 +138,7 @@ namespace YuLinTu.Library.Controls
                 }
                 if (IsNameRepeat(currentTissue))
                 {
-                    ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
+                    ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameCodeRepeat, eMessageGrade.Error);
                     //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
                     //{
                     //    Header = SenderInfo.SenderAdd,
@@ -169,6 +169,7 @@ namespace YuLinTu.Library.Controls
             try
             {
                 GetComboxSelect();
+                tempTissue.Code = pageContent.mtbCode.Text;
                 if (!pageContent.CheckEntity(tempTissue, isAdd))
                 {
                     return;
@@ -279,7 +280,7 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
-        /// 名称是否重复
+        /// 名称或编码是否重复
         /// </summary>
         private bool IsNameRepeat(CollectivityTissue tissue)
         {
@@ -288,7 +289,7 @@ namespace YuLinTu.Library.Controls
             {
                 ModuleMsgArgs argsAdd = new ModuleMsgArgs();
                 argsAdd.Datasource = DataBaseSourceWork.GetDataBaseSource();
-                argsAdd.Name = SenderMessage.SENDER_NAMEEXIT;
+                argsAdd.Name = SenderMessage.SENDER_NAMECODEEXIT;
                 argsAdd.Parameter = tissue;
                 TheBns.Current.Message.Send(this, argsAdd);
                 exit = (bool)argsAdd.ReturnValue;
