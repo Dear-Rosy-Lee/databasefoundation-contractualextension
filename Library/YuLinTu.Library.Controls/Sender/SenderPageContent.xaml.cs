@@ -1,16 +1,13 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Windows.Controls;
 using System.Windows.Input;
-using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace YuLinTu.Library.Controls
 {
@@ -266,6 +263,7 @@ namespace YuLinTu.Library.Controls
                 }
                 var selectzone = zoneSelectorPanel.RootZone.ConvertTo<Zone>();
                 senderzonetxt.Text = selectZoneCode = selectzone.FullCode;
+                mtbCode.Text = selectzone.FullCode.PadRight(14, '0');
             });
         }
     }

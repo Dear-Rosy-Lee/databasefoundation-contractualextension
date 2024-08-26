@@ -1,20 +1,9 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Windows.Media;
-using Xceed.Wpf.Toolkit;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using System.Windows;
 using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.ExportDataSummaryTask
 {

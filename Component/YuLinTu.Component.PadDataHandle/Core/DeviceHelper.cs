@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Windows.Documents;
 using System.Windows.Threading;
 using YuLinTu.Library.Business;
 
@@ -90,22 +91,47 @@ namespace YuLinTu.Component.PadDataHandle
         /// <summary>
         /// 获取软件列表
         /// </summary>
-        /// <param name="device"></param>
-        /// <returns></returns>
         public List<DeviceFolder> GetFolderList(MediaDevice device)
         {
             var list = new List<DeviceFolder>();
             if (device == null)
                 return list;
             device.Connect();
-            string folderPath = @"内部存储设备\SysSetting";
             //创建目录对象
             MediaDirectoryInfo currentFolder = device.GetRootDirectory();
-            //拆分路径、分步进入
-            string[] pathParts = folderPath.Split('\\');
             var enumfolders = currentFolder.EnumerateDirectories();
-            if (enumfolders.Count() > 1)
-                enumfolders = enumfolders.ToList()[0].EnumerateDirectories();
+            if (enumfolders.Count() == 0)
+                return list;
+            foreach (var item in enumfolders.ToList())
+            {
+                var ef = item.EnumerateDirectories();
+                bool hasylt = false;
+                foreach (var part in enumfolders)
+                {
+                    if (part.Name.StartsWith("."))
+                        continue;
+                    if (part.Name == "YuLinTu")
+                    {
+                        hasylt = true;
+                    }
+                }
+                if (hasylt)
+                {
+                    enumfolders = ef;
+                    break;
+                }
+            }
+            if (enumfolders != null)
+                GetSoftList(list, enumfolders);
+            device.Disconnect();
+            return list;
+        }
+
+        /// <summary>
+        /// 获取软列表
+        /// </summary>
+        private void GetSoftList(List<DeviceFolder> list, IEnumerable<MediaDirectoryInfo> enumfolders)
+        {
             foreach (var part in enumfolders)
             {
                 if (part.Name.StartsWith("."))
@@ -138,8 +164,6 @@ namespace YuLinTu.Component.PadDataHandle
                     }
                 }
             }
-            device.Disconnect();
-            return list;
         }
 
         /// <summary>

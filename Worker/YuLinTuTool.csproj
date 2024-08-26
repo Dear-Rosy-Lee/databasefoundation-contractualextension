@@ -27,7 +27,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{30B6B23A-3DFA-4495-A50E-0FC239DD4A47}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Product.YuLinTuTool</RootNamespace>
     <AssemblyName>YuLinTuLandDelayTool</AssemblyName>
@@ -2417,28 +2417,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Tracker\Binary\YuLinTu.Appwork.Tracker.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Components\YuLinTu.Appwork.Core\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Host\Binary\YuLinTu.Appwork.Host.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Host\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Tracker\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
@@ -2462,8 +2440,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArcGISExplorer.ico" />
-    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Binary\YuLinTu.Appwork.Apps.Extensions.dll" />
-    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Config.xml" />
     <None Include="Config\DivisionCodeDictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2488,33 +2464,7 @@
     <Content Include="Data\tGIS\Samples\California\Rivers.shp.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Binary\YuLinTu.Appwork.ProcessHandler.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Binary\YuLinTu.Appwork.Task.Installer.dll" />
-    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Config.xml" />
-    <None Include="Components\YuLinTu.Components.tGIS.Topology\Binary\YuLinTu.Components.tGIS.Topology.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Topology\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Template\MeataTemplate.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.Diagrams\Binary\YuLinTu.Components.Diagrams.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.Diagrams\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.BusyStatus\Binary\YuLinTu.Appwork.BusyStatus.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.BusyStatus\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Token\EnterSafe\ET199\ConfigTool_et199.exe">
@@ -2532,239 +2482,15 @@
     <None Include="Token\EnterSafe\ET199\et199csp11_s.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Appwork.Plugins\Binary\YuLinTu.Appwork.Plugins.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Plugins\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Template\DataBase.mdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Binary\YuLinTu.Appwork.Task.Viewer.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Measure\Binary\YuLinTu.Components.tGIS.Measure.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Measure\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Search\Binary\YuLinTu.Components.tGIS.Search.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Search\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.New\Binary\YuLinTu.Appwork.Task.New.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.New\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Binary\YuLinTu.Appwork.ConnectionStrings.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Options\Binary\YuLinTu.Appwork.Options.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Options\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.UndoRedo\Binary\YuLinTu.Appwork.UndoRedo.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.UndoRedo\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.BusyStatus\Binary\YuLinTu.Components.tGIS.BusyStatus.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.BusyStatus\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Cancel\Binary\YuLinTu.Components.tGIS.Cancel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Cancel\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Draw\Binary\YuLinTu.Components.tGIS.Draw.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Draw\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Edit\Binary\YuLinTu.Components.tGIS.Edit.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Edit\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Layers\Binary\YuLinTu.Components.tGIS.Layers.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Layers\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Properties\Binary\YuLinTu.Components.tGIS.Properties.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS.Properties\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS\Binary\YuLinTu.Components.tGIS.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Components.tGIS\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Binary\YuLinTu.Appwork.TaskWatcher.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Authenticate\Binary\YuLinTu.Appwork.Authenticate.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Authenticate\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="zh-Hans\Microsoft.Data.ConnectionUI.Dialog.resources.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Appwork.Starting\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Starting\Binary\YuLinTu.Appwork.Starting.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Data\Languages\Default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Language\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Language\Binary\YuLinTu.Appwork.Language.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Binary\YuLinTu.Appwork.WorkpageInstaller.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ThemeSync\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ThemeSync\Binary\YuLinTu.Appwork.ThemeSync.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.AccountSync\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.AccountSync\Binary\YuLinTu.Appwork.AccountSync.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.SystemSettings\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.SystemSettings\Binary\YuLinTu.Appwork.SystemSettings.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Binary\YuLinTu.Appwork.WindowStateHandler.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Network\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Network\Binary\YuLinTu.Appwork.Network.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Account\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Account\Binary\YuLinTu.Appwork.Account.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.InformationBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.InformationBar\Binary\YuLinTu.Appwork.InformationBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Information\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.FileIO\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Information\Binary\YuLinTu.Appwork.Information.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.FileIO\Binary\YuLinTu.Appwork.FileIO.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Exit\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Exit\Binary\YuLinTu.Appwork.Exit.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.StartTabControl\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.StartTabControl\Binary\YuLinTu.Appwork.StartTabControl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Binary\YuLinTu.Appwork.MdiTabControl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.New\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.HelpBar\Binary\YuLinTu.Appwork.HelpBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.HelpBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.QuickBar\Binary\YuLinTu.Appwork.QuickBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.QuickBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Theme\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Theme\Binary\YuLinTu.Appwork.Theme.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

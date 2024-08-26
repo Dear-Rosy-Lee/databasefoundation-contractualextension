@@ -111,7 +111,7 @@ namespace YuLinTu.Library.Controls
             pageContent.ThePage = page;
             pageContent.Visibility = Visibility.Hidden;
             loadIcon.Visibility = Visibility.Visible;
-            pageContent.mtbCode.IsEnabled = true;
+            //pageContent.mtbCode.IsEnabled = true;
             db = DataBaseSourceWork.GetDataBaseSource();
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;

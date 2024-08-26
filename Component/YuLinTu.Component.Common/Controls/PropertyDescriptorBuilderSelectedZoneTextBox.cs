@@ -377,7 +377,7 @@ namespace YuLinTu.Component.Common
                     try
                     {
                         var isBatch = pd.Object.GetPropertyValue<bool>("IsBatchCombination");
-                        if (isBatch)
+                        /*if (isBatch) 2024年8月23  这里不清楚有什么左右，又引起了界面上bug 先注释了if (isBatch)
                         {
                             grid.Children[0].Visibility = Visibility.Collapsed;
                             grid.Children[1].Visibility = Visibility.Visible;
@@ -386,7 +386,7 @@ namespace YuLinTu.Component.Common
                         {
                             grid.Children[0].Visibility = Visibility.Visible;
                             grid.Children[1].Visibility = Visibility.Collapsed;
-                        }
+                        }*/
                         //var sft0 = grid.Children[0] as SelectedFileTextBox;
                         //sft0.Text = "";
                         //var sft1 = grid.Children[1] as SelectedFolderTextBox;
@@ -414,7 +414,7 @@ namespace YuLinTu.Component.Common
                     try
                     {
                         var isBatch = pd.Object.GetPropertyValue<bool>("IsBatchCombination");
-                        if (isBatch)
+                        /*if (isBatch) 2024年8月23  这里不清楚有什么左右，又引起了界面上bug 先注释了if (isBatch)
                         {
                             grid.Children[0].Visibility = Visibility.Collapsed;
                             grid.Children[1].Visibility = Visibility.Visible;
@@ -423,11 +423,11 @@ namespace YuLinTu.Component.Common
                         {
                             grid.Children[0].Visibility = Visibility.Visible;
                             grid.Children[1].Visibility = Visibility.Collapsed;
-                        }
+                        }*/
                         var sft0 = grid.Children[0] as SelectedFileTextBox;
                         sft0.Text = "";
-                        var sft1 = grid.Children[1] as SelectedFolderTextBox;
-                        sft1.Text = "";
+                        //var sft1 = grid.Children[1] as SelectedFolderTextBox;
+                        //sft1.Text = "";
                     }
                     catch { }
                 }));
