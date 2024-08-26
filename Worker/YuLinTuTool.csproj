@@ -27,7 +27,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{30B6B23A-3DFA-4495-A50E-0FC239DD4A47}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Product.YuLinTuTool</RootNamespace>
     <AssemblyName>YuLinTuLandDelayTool</AssemblyName>
