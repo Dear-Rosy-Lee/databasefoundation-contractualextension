@@ -199,14 +199,14 @@ namespace YuLinTu.Library.Controls
         #region Methods
 
         /// <summary>
-        /// 转换
+        /// 转换s
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null)
-                return Brushes.Black;
+                return Brushes.DimGray ;
             bool gender = (bool)value;
-            return gender ? Brushes.Brown : Brushes.Black;
+            return gender ? Brushes.Brown : Brushes.DimGray;
         }
 
         /// <summary>

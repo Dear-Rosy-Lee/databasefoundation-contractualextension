@@ -4585,7 +4585,7 @@ namespace YuLinTu.Library.Controls
                     var zoneStation = DbContext.CreateZoneWorkStation();
                     zoneName = zoneStation.GetVillageName(zone);
                 }
-                var tablePersonStation = DbContext.CreateVirtualPersonStation<TableVirtualPerson>();
+                var tablePersonStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 List<VirtualPerson> tableVps = tablePersonStation.GetByZoneCode(zone.FullCode);
                 List<ContractLand> landArrays = ContractAccountBusiness.GetPersonCollection(selectVirtualPerson.ID);
                 landArrays.LandNumberFormat(SystemSetDefine);
@@ -4615,6 +4615,7 @@ namespace YuLinTu.Library.Controls
             catch (Exception ex)
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportDataExcel(导出数据到Excel表)", ex.Message + ex.StackTrace);
+                ShowBox("错误", "导出失败,错误详情请查看日志！");
             }
         }
 
