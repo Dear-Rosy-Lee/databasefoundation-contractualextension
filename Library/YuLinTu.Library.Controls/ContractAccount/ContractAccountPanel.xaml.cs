@@ -7215,6 +7215,35 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 检索字段为空的地块
+        /// </summary>
+        private void SetFieldCodeReateVisibleTool(TaskGoEventArgs arg)
+        {
+            if (accountLandItems == null || accountLandItems.Count == 0)
+                return;
+            HashSet<string> codeset = new HashSet<string>();
+            List<string> repeatCode = new List<string>();
+            foreach (var item in accountLandItems)
+            {
+                foreach (var land in item.Children)
+                {
+                    if (!codeset.Contains(land.LandNumber))
+                        codeset.Add(land.LandNumber);
+                    else
+                        repeatCode.Add(land.LandNumber);
+                }
+            }
+            view.Filter(obj =>
+            {
+                var landBind = obj as ContractLandBinding;
+                if (landBind == null)
+                    return false;
+                return repeatCode.Contains(landBind.LandNumber);
+            }, true);
+        }
+
+
+        /// <summary>
         /// 根据检索类型进行检索
         /// </summary>
         /// <param name="type">检索类型</param>
@@ -7575,6 +7604,27 @@ namespace YuLinTu.Library.Controls
             //if (IsUnderTabHeader(e.OriginalSource as DependencyObject))
             //if(TheWorkPage.Page.IsBusy)
             //    CommitTables(this.view);
+        }
+
+        private void miSearchLandCodeRepeat_Click(object sender, RoutedEventArgs e)
+        {
+            queueFilter.Cancel();
+            queueFilter.DoWithInterruptCurrent(
+                go =>
+                {
+                    Dispatcher.Invoke(new Action(() => { SetFieldCodeReateVisibleTool(go); }));
+                },
+                completed =>
+                {
+                    DataCount();
+                },
+                terminated =>
+                {
+                    ShowBox("提示", "请检查数据库是否为最新的数据库，否则请升级数据库!");
+                },
+                progressChanged =>
+                {
+                }, null, null, null, null, "地块编码重复");
         }
 
         //private bool IsUnderTabHeader(DependencyObject control)

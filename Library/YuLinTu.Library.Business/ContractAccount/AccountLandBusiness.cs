@@ -4154,6 +4154,12 @@ namespace YuLinTu.Library.Business
                                 {
                                     land.LandNumber = sender.Code + land.LandNumber.PadLeft(5, '0');
                                 }
+                                if (land.LandNumber.Length == 19 &&
+                                    !land.LandNumber.StartsWith(land.SenderCode))
+                                {
+                                    land.SurveyNumber = land.LandNumber.Substring(14);
+                                    land.LandNumber = sender.Code + land.SurveyNumber;
+                                }
                             }
                         }
                         else

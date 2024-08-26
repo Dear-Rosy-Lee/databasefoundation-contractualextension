@@ -10,6 +10,7 @@
         <local:ContractAccountImgConvert x:Key="ImgConvert" />
         <local:GenderValueConvert x:Key="GenderConvert" />
         <local:BoolConvert x:Key="boolConvert" />
+        <local:ColorValueConvert x:Key="colorConvert" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -325,7 +326,7 @@
                     Width="80"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
                     Header="地力等级"
-                    SortMemberPath="LandLevelUI">
+                    SortMemberPath="LandLevelUI" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DockPanel>
@@ -344,14 +345,15 @@
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
                     Header="是否确股地块"
                     SortMemberPath="LandLevelUI"
-                    Visibility="Collapsed">
+                    Visibility="Visible">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DockPanel>
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.IsStockLand, Converter={StaticResource boolConvert}}" />
+                                    Text="{Binding Object.IsStockLand, Converter={StaticResource boolConvert}}" 
+                                    Foreground="{Binding Object.IsStockLand,Converter={StaticResource colorConvert}}" />
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -509,6 +511,19 @@
                                     Stretch="Uniform" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem    Name="miSearchLandCodeRepeat"
+                                     Click="miSearchLandCodeRepeat_Click"
+                                     Header="地块编码重复">
+                            <MenuItem.Icon>
+                                <Image 
+                                    Height="16"
+                                    RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                    SnapsToDevicePixels="True"
+                                    Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/miLand.png"
+                                    Stretch="Uniform" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
                         <MenuItem
                             Name="miSearchTableAreaNull"
                             Click="miSearchTableAreaNull_Click"

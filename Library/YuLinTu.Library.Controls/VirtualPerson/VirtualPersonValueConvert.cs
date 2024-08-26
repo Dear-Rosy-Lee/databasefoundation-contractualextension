@@ -3,11 +3,12 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.ObjectModel; 
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using YuLinTu.Library.Entity;
 
@@ -96,7 +97,7 @@ namespace YuLinTu.Library.Controls
     public class GenderImageConvert : IValueConverter
     {
         #region Fields
-                
+
         /// <summary>
         /// 男
         /// </summary>
@@ -177,6 +178,35 @@ namespace YuLinTu.Library.Controls
                     break;
             }
             return sex;
+        }
+
+        /// <summary>
+        /// 转换回来
+        /// </summary>
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 颜色数据转换类
+    /// </summary>
+    public class ColorValueConvert : IValueConverter
+    {
+        #region Methods
+
+        /// <summary>
+        /// 转换
+        /// </summary>
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+                return Brushes.Black;
+            bool gender = (bool)value;
+            return gender ? Brushes.Brown : Brushes.Black;
         }
 
         /// <summary>

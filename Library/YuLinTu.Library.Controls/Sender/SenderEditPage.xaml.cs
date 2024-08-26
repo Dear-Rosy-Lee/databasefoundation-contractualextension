@@ -174,10 +174,9 @@ namespace YuLinTu.Library.Controls
                 {
                     return;
                 }
-                if (IsNameRepeat(tempTissue) && currentTissue.ZoneCode == tempTissue.ZoneCode &&
-                    currentTissue.Code == tempTissue.Code)
+                if (IsNameRepeat(tempTissue))
                 {
-                    ShowBox(SenderInfo.SenderEdit, "该地域下已存在此发包方名称!", eMessageGrade.Error);
+                    ShowBox(SenderInfo.SenderEdit, "该地域下已存在同名或同编码的发包方!", eMessageGrade.Error);
 
                     //Workpage.Page.ShowMessageBox(new TabMessageBoxDialog()
                     //{
