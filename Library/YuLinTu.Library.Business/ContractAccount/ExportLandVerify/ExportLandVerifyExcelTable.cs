@@ -318,8 +318,11 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
             InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
             InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
-            Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
-            InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+            if (land.IsFarmerLand != null)
+            {
+                Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
+                InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+            }
             InitalizeRangeValue("Y" + index, "Y" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AA" + index, "AA" + index, (land.ActualArea > 0.0) ? ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");

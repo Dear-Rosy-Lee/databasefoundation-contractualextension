@@ -356,7 +356,7 @@ namespace YuLinTu.Component.ContractAccount
             //btnParcelLand.IsOpen = false;
             btnLandImage.IsOpen = false;
             btnExportData.IsOpen = false;
-            btnTemplate.IsOpen = false;
+            btnTemplate.IsOpen = false; 
             string parameter = e.Parameter.ToString();
             switch (parameter)
             {
