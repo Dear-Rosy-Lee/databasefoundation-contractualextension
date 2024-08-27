@@ -186,10 +186,6 @@
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Appwork.New">
-      <HintPath>..\..\Worker\Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="YuLinTu.Appwork.Task">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
       <Private>False</Private>
