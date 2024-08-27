@@ -413,7 +413,7 @@ namespace YuLinTu.Library.Business
                 concordNumber = warrantNumber;
             }
 
-            SetBookmarkValue("ConcordNumber", concordNumber);//合同编号
+            SetBookmarkValue("SecondConcordNumber", concordNumber);//二轮合同编号
             SetBookmarkValue("LandCount", cLandList.Count > 0 ? cLandList.Count.ToString() : "");
             SetBookmarkValue("ActualAreaCount", cArea.AreaFormat());
             SetBookmarkValue("TableAreaCount", tArea.AreaFormat());
