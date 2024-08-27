@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" />
+  <Import Project="..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.props" Condition="Exists('..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.props')" />
+  <Import Project="..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.props" Condition="Exists('..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" />
@@ -171,11 +174,6 @@
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="YuLinTu.Appwork.New, Version=5.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Worker\Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
@@ -314,12 +312,21 @@ if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(Solution
     <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.targets" Condition="Exists('..\..\packages\YuLinTu.Security.6.8.2.1\build\YuLinTu.Security.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.targets" Condition="Exists('..\..\packages\YuLinTu.Common.Services.6.8.2.1\build\YuLinTu.Common.Services.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

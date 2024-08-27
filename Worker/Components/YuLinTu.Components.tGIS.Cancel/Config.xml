@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <Order>123</Order>
-    <EntranceType>YuLinTu.Components.tGIS.Cancel.ApplicationContext</EntranceType>
-    <EntrancePath>.\Components\YuLinTu.Components.tGIS.Cancel\Binary\YuLinTu.Components.tGIS.Cancel.dll</EntrancePath>
-</WinComponent>

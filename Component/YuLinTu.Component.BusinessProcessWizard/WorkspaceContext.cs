@@ -1,20 +1,12 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using YuLinTu.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using YuLinTu.Appwork;
-using YuLinTu.Appwork.New;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.BusinessProcessWizard
 {
-   public class WorkspaceContext : TheWorkspaceContext
+    public class WorkspaceContext : TheWorkspaceContext
     {
         #region Ctor
 
