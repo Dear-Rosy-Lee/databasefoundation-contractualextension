@@ -318,6 +318,13 @@
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
+			<UpdateField>
+				<FieldName>YCBFBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<FieldLength>20</FieldLength>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>
