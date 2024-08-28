@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Wetlands</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0.9</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FFFFFFFF</StrokeColor>
+          <StrokeThickness>0.4</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FFFFFFFF</BackgroundColor>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF6DBB43</StrokeColor>
+          <StrokeThickness>1.6</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF6DBB43</BackgroundColor>
+        <Border type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </Border>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="SimpleFillSymbol">
+        <BackgroundColor>#FF97DBF2</BackgroundColor>
+        <Border type="SimpleLineSymbol">
+          <StrokeColor>#FF6E6E6E</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Style>Solid</Style>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

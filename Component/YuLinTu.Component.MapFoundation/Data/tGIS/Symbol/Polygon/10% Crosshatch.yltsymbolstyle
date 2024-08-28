@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>10% Crosshatch</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>135</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0.5</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF000000</BackgroundColor>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0.5</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF000000</BackgroundColor>
+        <Border type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

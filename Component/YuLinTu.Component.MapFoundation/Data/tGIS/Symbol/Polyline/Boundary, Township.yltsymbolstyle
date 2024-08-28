@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>Boundary, Township</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerLineSymbol">
+    <Layer>
+      <Symbol type="CartographicLineSymbol">
+        <StrokeColor>#FFC7516A</StrokeColor>
+        <StrokeThickness>0.4</StrokeThickness>
+        <Offset>0</Offset>
+        <Template>
+          <Interval>1</Interval>
+          <Mark>6</Mark>
+          <Gap>1</Gap>
+          <Mark>2</Mark>
+          <Gap>1</Gap>
+          <Mark>2</Mark>
+          <Gap>1</Gap>
+          <Mark>2</Mark>
+          <Gap>1</Gap>
+        </Template>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>

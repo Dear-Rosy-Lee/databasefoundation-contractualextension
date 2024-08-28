@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SymbolStyle>
+  <Name>500 Year Flood Overlay</Name>
+  <Category>默认</Category>
+  <Symbol type="MultiLayerFillSymbol">
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>0</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FF6B7E93</StrokeColor>
+          <StrokeThickness>1</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FF6B7E93</BackgroundColor>
+      </Symbol>
+    </Layer>
+    <Layer>
+      <Symbol type="LineFillSymbol">
+        <Offset>1.25</Offset>
+        <Separation>5</Separation>
+        <Angle>45</Angle>
+        <LineSymbol type="CartographicLineSymbol">
+          <StrokeColor>#FFD2D2D2</StrokeColor>
+          <StrokeThickness>2</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+            <Mark>6</Mark>
+            <Gap>3</Gap>
+          </Template>
+        </LineSymbol>
+        <BackgroundColor>#FFD2D2D2</BackgroundColor>
+        <Border type="CartographicLineSymbol">
+          <StrokeColor>#FF000000</StrokeColor>
+          <StrokeThickness>0</StrokeThickness>
+          <Offset>0</Offset>
+          <Template>
+            <Interval>1</Interval>
+          </Template>
+        </Border>
+      </Symbol>
+    </Layer>
+  </Symbol>
+</SymbolStyle>
