@@ -1309,7 +1309,7 @@ namespace YuLinTu.Library.Controls
                     }
                     else
                     {
-                        mainPerson.Relationship = "";
+                        //mainPerson.Relationship = "";
                         UpdateItems(currentItem.Tag, false);
                     }
                     ModuleMsgArgs arg = MessageExtend.VirtualPersonMsg(CreateDb(), VirtualPersonMessage.VIRTUALPERSON_SET_COMPLATE, currentItem.Tag);
