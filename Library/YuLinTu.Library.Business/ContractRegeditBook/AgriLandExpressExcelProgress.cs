@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Busines;
-using YuLinTu.Library.Entity;
-
-using YuLinTu.Library.Office;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
 
 namespace YuLinTu.Library.Business
 {

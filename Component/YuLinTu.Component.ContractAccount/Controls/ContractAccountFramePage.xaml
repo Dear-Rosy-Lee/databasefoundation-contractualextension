@@ -12,7 +12,7 @@
     xmlns:viewer="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
     Title="承包台账"
     d:DesignHeight="480"
-    d:DesignWidth="800"
+    d:DesignWidth="1500"
     Category="应用"
     Description="承包方和承包地块管理"
     Icon="pack://application:,,,/YuLinTu.Component.ContractAccount;component/Resources/map.png"
@@ -23,6 +23,7 @@
     <core:WorkpageFrame.Toolbar>
         <DockPanel
             x:Name="toolDockPanel"
+            x:FieldModifier="public"
             Height="90"
             LastChildFill="False"
             TextElement.FontSize="12">
@@ -1174,35 +1175,7 @@
                         Text="查找四至"
                         ToolTip="查找宗地四至" />
                 </metro:MetroButton>
-                <!--<tk:DropDownButton  Name="btnCadastralData"
-                                    x:FieldModifier="public"
-                                    Padding="4,2"
-                                    VerticalContentAlignment="Top"
-                                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
-                                    cmps:DropDownButtonAttacher.Orientation="Vertical"
-                                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
-                                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
-                    <tk:DropDownButton.Content>
-                        <cmps:ImageTextItem ImagePosition="Top"
-                                            Text="查找四至"
-                                            ToolTip="查找宗地四至"
-                                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/SearchNeighor.png" />
-                    </tk:DropDownButton.Content>
-                    <tk:DropDownButton.DropDownContent>
-                        <StackPanel>
-                            <metro:MetroButton x:Name="btnSearchNeighor"
-                                               Padding="8,4"
-                                               VerticalContentAlignment="Stretch"
-                                               HorizontalContentAlignment="Left"
-                                               x:FieldModifier="public">
-                                <cmps:ImageTextItem ImagePosition="Left"
-                                                    Text="查找四至"
-                                                    ToolTip="自动查找宗地四至"
-                                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/查找数据_32.png" />
-                            </metro:MetroButton>
-                        </StackPanel>
-                    </tk:DropDownButton.DropDownContent>
-                </tk:DropDownButton>-->
+
                 <metro:MetroButton
                     x:Name="mbtnFind"
                     Padding="4,2,4,2"
@@ -1236,6 +1209,28 @@
                         Text="下载数据"
                         ToolTip="下载数据至本地数据库" />
                 </metro:MetroButton>
+
+                <tk:DropDownButton  Name="btnExpandFunction"
+                    x:FieldModifier="public" Visibility="Collapsed"
+                    Padding="4,2"
+                    VerticalContentAlignment="Top"
+                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                    cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
+                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    <tk:DropDownButton.Content>
+                        <cmps:ImageTextItem ImagePosition="Top"
+                            Text="扩展功能"
+                            ToolTip="定制扩展功能"
+                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/SearchNeighor.png" />
+                    </tk:DropDownButton.Content>
+                    <tk:DropDownButton.DropDownContent>
+                        <StackPanel>
+                        </StackPanel>
+                    </tk:DropDownButton.DropDownContent>
+                </tk:DropDownButton>
+
+
                 <metro:MetroButton
                     x:Name="mbtnClear"
                     Padding="4,2,4,2"

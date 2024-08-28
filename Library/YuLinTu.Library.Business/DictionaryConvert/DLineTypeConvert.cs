@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity;
+﻿using YuLinTu.Library.Entity;
 
-namespace YuLinTu.Library.Busines
+namespace YuLinTu.Library.Business
 {
     /// <summary>
     /// 界址线类型D代表地理
