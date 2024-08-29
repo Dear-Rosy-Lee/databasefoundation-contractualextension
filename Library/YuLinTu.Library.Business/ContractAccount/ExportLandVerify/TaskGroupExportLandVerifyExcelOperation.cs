@@ -59,8 +59,15 @@ namespace YuLinTu.Library.Business
             try
             {
                 var zoneStation = dbContext.CreateZoneWorkStation();
-                selfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.Subs);
+                selfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
+                var valiages = selfAndSubsZones.Where(x => x.Level == eZoneLevel.Village).ToList();
                 selfAndSubsZones = selfAndSubsZones.Where(x => x.Level == eZoneLevel.Group).ToList();
+                foreach (var item in valiages)
+                {
+                    var count = selfAndSubsZones.Count(t => t.FullCode.StartsWith(item.FullCode) && item.FullCode != t.FullCode);
+                    if (count == 0)
+                        selfAndSubsZones.Add(item);
+                }
                 allZones = zoneStation.GetAllZones(currentZone);
             }
             catch (Exception ex)
