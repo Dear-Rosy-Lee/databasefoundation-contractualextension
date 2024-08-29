@@ -335,7 +335,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             foreach (var item in group)
             {
                 var bs = item.Key == "0" ? "" : item.Key;
-                var file = files.Find(t => t.Name == "DK" && t.FullName.Contains((bs == "" ? "" : "-" + bs)));
+                var file = files.Find(t => t.Name.StartsWith("DK") && t.FullName.Contains((bs == "" ? "" : "-" + bs)));
+                if (file == null)
+                    file = files.Find(t => t.Name.StartsWith("DK") && t.FullName.Contains((bs == "" ? "" : "_" + bs)));
                 var recodeList = item.ToList();
                 var list = InitiallDataList<DK, DKST>(file, recodeList);
                 dkList.AddRange(list);
@@ -736,20 +738,16 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             FileInfo info = new FileInfo(dbPath);
             if (info.Length > 44490400)
             {
-                //isindexExists = true;
+                //isindexExists = tsrue;
                 return;
             }
             var query = sqliteDb.CreateQuery<DKST>();
             var jzdquery = sqliteDb.CreateQuery<JZDST>();
             var jzxquery = sqliteDb.CreateQuery<JZXST>();
-            var dks = files.FindAll(t => t.Name == DK.TableName);
+            var dks = files.FindAll(t => t.Name.StartsWith(DK.TableName));
             foreach (var fnp in dks)
             {
-                var layeIndex = "";
-                var index = -1;
-                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
-                if ((index = name.IndexOf("-")) > 0)
-                    layeIndex = name.Substring(index + 1);
+                var layeIndex = GetIndex(fnp.FullName);
                 DataToBase<DKST>(fnp, query, layeIndex);
             }
             if (!containsjzdx)
@@ -757,33 +755,38 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             var jzds = files.FindAll(t => t.Name == JZD.TableName);
             foreach (var fnp in jzds)
             {
-                var layeIndex = "";
-                var index = -1;
-                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
-                if ((index = name.IndexOf("-")) > 0)
-                    layeIndex = name.Substring(index + 1);
+                var layeIndex = GetIndex(fnp.FullName);
                 DataToBase<JZDST>(fnp, jzdquery, layeIndex);
             }
 
             var jzxs = files.FindAll(t => t.Name == JZX.TableName);
             foreach (var fnp in jzxs)
             {
-                var layeIndex = "";
-                var index = -1;
-                string name = Path.GetFileNameWithoutExtension(fnp.FullName);
-                if ((index = name.IndexOf("-")) > 0)
-                    layeIndex = name.Substring(index + 1);
-                DataToBase<JZXST>(fnp, jzxquery, layeIndex);
+                var layeIndex = GetIndex(fnp.FullName);
+                DataToBase<DKST>(fnp, query, layeIndex);
             }
+        }
+
+        private string GetIndex(string fullname)
+        {
+            var index = -1;
+            string name = Path.GetFileNameWithoutExtension(fullname);
+            index = name.IndexOf("-");
+            if (index > 0)
+                return name.Substring(index + 1);
+            index = name.IndexOf("_");
+            if (index > 0)
+                return name.Substring(index + 1);
+            return index.ToString();
         }
 
         private string dataBasePath(string tempPath)
         {
-            var span = DateTime.Now.ToString("yyyyMMddHH").GetHashCode();
+            var span = DateTime.Now.ToString("yyyyMMddHHmm").GetHashCode();
             var name = Convert.ToInt64(Math.Abs(span)).ToString();
             var newpath = Path.Combine(Path.GetTempPath(), name + ".sqlite");
-            if (!File.Exists(newpath))
-                File.Copy(tempPath, newpath, true);
+            if (!System.IO.File.Exists(newpath))
+                System.IO.File.Copy(tempPath, newpath, true);
             return newpath;
         }
 
@@ -865,8 +868,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public IEnumerable<T> InitiallDataEnum<T, P>(FileCondition fnp, List<P> bsList)
             where T : class, new() where P : BSST
         {
-            //if(fnp==null)
-            //    yield break;
             var dkList = new List<DKEX>();
             var infoArray = typeof(T).GetProperties();
             var fieldIndex = new Dictionary<string, int>();
