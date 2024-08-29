@@ -39,6 +39,7 @@ namespace YuLinTu.Library.Business
             zoneBusiness = new ZoneDataBusiness();
             zoneBusiness.DbContext = dbContext;
             zoneBusiness.Station = dbContext.CreateZoneWorkStation();
+            ExportLandParcel = true;
         }
 
         #endregion Ctor
@@ -100,6 +101,8 @@ namespace YuLinTu.Library.Business
             get { return virtualPerson; }
             set { virtualPerson = value; }
         }
+
+        public bool ExportLandParcel { get; set; }
 
         #endregion Properties
 
@@ -498,6 +501,38 @@ namespace YuLinTu.Library.Business
                 date = ((DateTime)Concord.ArableLandStartTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "至"
                     + ((DateTime)Concord.ArableLandEndTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "。";
             }
+            ProcessLandParcel();
+            //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.SenderCode + "-" + Contractor.Name + ".jpg", 180, 250);
+            SetBookmarkValue("SocialCode", Tissue.SocialCode);
+            SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
+            SetBookmarkValue(AgricultureBookMark.ConcordDate, Concord.Flag ? "" : date);                                // 承包时间
+            SetBookmarkValue(AgricultureBookMark.ConcordNumber, concord.ConcordNumber.IsNullOrEmpty() ? string.Empty : concord.ConcordNumber);  // 合同编码
+            var senderName = GetSettingSenderName(concord.ZoneCode) ?? concord.SenderName;
+            var contractorAddress = GetSettingContractorName(concord.ZoneCode) ?? virtualPerson.Address;
+            for (int i = 0; i < 6; i++)
+            {
+                SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
+                SetBookmarkValue("ContractorAddress" + (i == 0 ? "" : i.ToString()), contractorAddress);     // 承包方地址
+            }
+
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerName, Tissue.LawyerName.IsNullOrEmpty() ? string.Empty : Tissue.LawyerName);     // 发包方法人名称（即发包方负责人）
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, Tissue.LawyerCartNumber);//发包方法人证件号码
+            SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone, Tissue.LawyerTelephone);//发包方法人联系方式
+            SetBookmarkValue(AgricultureBookMark.ContractorTelephone, Contractor.Telephone.IsNullOrEmpty() ? "/" : Contractor.Telephone);//承包方电话号码
+            SetBookmarkValue(AgricultureBookMark.ContractorIdentifyNumber, Contractor.Number.IsNullOrEmpty() ? "/" : Contractor.Number);//承包方身份证号码
+
+            // 以下代码注释，当主版本需要时再启用，现在实际情况，手签名和盖章比较好，故暂时隐藏
+            //SetBookmarkValue("SenderName1", concord.SenderName.IsNullOrEmpty() ? string.Empty : concord.SenderName);     // 发包方名称（章）
+            //SetBookmarkValue("SenderLawyerName1", Tissue.LawyerName.IsNullOrEmpty() ? string.Empty : Tissue.LawyerName); // 发包方法人名称（即发包方负责人）（章）
+            //SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone, Tissue.LawyerTelephone.IsNullOrEmpty() ? string.Empty : Tissue.LawyerTelephone);  // 发包方法人联系方式
+            //SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, Tissue.LawyerCartNumber.IsNullOrEmpty() ? string.Empty : Tissue.LawyerCartNumber);    // 发包方法人证件号码
+        }
+
+        /// <summary>
+        /// 处理的地块示意图
+        /// </summary>
+        private void ProcessLandParcel()
+        {
             DiagramsView ViewOfAllMultiParcel = null;
             DiagramsView ViewOfNeighorParcels = null;
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -548,31 +583,6 @@ namespace YuLinTu.Library.Business
             propertyInfo6.SetValue(instance, Contractor); // 设置属性值
             fieldInfo.SetValue(instance, listGeoLand);
             object result = methodInfo.Invoke(instance, null);
-
-            //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.SenderCode + "-" + Contractor.Name + ".jpg", 180, 250);
-            SetBookmarkValue("SocialCode", Tissue.SocialCode);
-            SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
-            SetBookmarkValue(AgricultureBookMark.ConcordDate, Concord.Flag ? "" : date);                                // 承包时间
-            SetBookmarkValue(AgricultureBookMark.ConcordNumber, concord.ConcordNumber.IsNullOrEmpty() ? string.Empty : concord.ConcordNumber);  // 合同编码
-            var senderName = GetSettingSenderName(concord.ZoneCode) ?? concord.SenderName;
-            var contractorAddress = GetSettingContractorName(concord.ZoneCode) ?? virtualPerson.Address;
-            for (int i = 0; i < 6; i++)
-            {
-                SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
-                SetBookmarkValue("ContractorAddress" + (i == 0 ? "" : i.ToString()), contractorAddress);     // 承包方地址
-            }
-
-            SetBookmarkValue(AgricultureBookMark.SenderLawyerName, Tissue.LawyerName.IsNullOrEmpty() ? string.Empty : Tissue.LawyerName);     // 发包方法人名称（即发包方负责人）
-            SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, Tissue.LawyerCartNumber);//发包方法人证件号码
-            SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone, Tissue.LawyerTelephone);//发包方法人联系方式
-            SetBookmarkValue(AgricultureBookMark.ContractorTelephone, Contractor.Telephone.IsNullOrEmpty() ? "/" : Contractor.Telephone);//承包方电话号码
-            SetBookmarkValue(AgricultureBookMark.ContractorIdentifyNumber, Contractor.Number.IsNullOrEmpty() ? "/" : Contractor.Number);//承包方身份证号码
-
-            // 以下代码注释，当主版本需要时再启用，现在实际情况，手签名和盖章比较好，故暂时隐藏
-            //SetBookmarkValue("SenderName1", concord.SenderName.IsNullOrEmpty() ? string.Empty : concord.SenderName);     // 发包方名称（章）
-            //SetBookmarkValue("SenderLawyerName1", Tissue.LawyerName.IsNullOrEmpty() ? string.Empty : Tissue.LawyerName); // 发包方法人名称（即发包方负责人）（章）
-            //SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone, Tissue.LawyerTelephone.IsNullOrEmpty() ? string.Empty : Tissue.LawyerTelephone);  // 发包方法人联系方式
-            //SetBookmarkValue(AgricultureBookMark.SenderLawyerCredentNumber, Tissue.LawyerCartNumber.IsNullOrEmpty() ? string.Empty : Tissue.LawyerCartNumber);    // 发包方法人证件号码
         }
 
         public Zone GetParent(Zone zone)

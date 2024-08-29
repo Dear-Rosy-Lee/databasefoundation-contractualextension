@@ -27,6 +27,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public IWorkpage Workpage { get; set; }
 
+
         #endregion Properties
 
         #region ctor
@@ -84,7 +85,7 @@ namespace YuLinTu.Library.Business
                 operation.Name = "批量导出摸底核实表";
                 operation.Description = zone.FullName;
                 Add(operation);
-             
+
             }
             CanOpenResult = true;
             base.OnGo();

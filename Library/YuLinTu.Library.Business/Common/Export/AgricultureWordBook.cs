@@ -203,24 +203,16 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         protected override bool OnSetParamValue(object data)
         {
-            try
-            {
-                InitialEntity(data);
-                WriteZoneInformation();
-                WriteContractorInformaion();
-                WriteLandInformation();
-                WriteSenderInformation();
-                WriteConcordInformation();
-                WriteBookInformation();
-                WriteDateTimeInformation();
-                //WriteParcelInformation();
-                WriteOtherInformation();
-            }
-            catch (SystemException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-                return false;
-            }
+            InitialEntity(data);
+            WriteZoneInformation();
+            WriteContractorInformaion();
+            WriteLandInformation();
+            WriteSenderInformation();
+            WriteConcordInformation();
+            WriteBookInformation();
+            WriteDateTimeInformation();
+            //WriteParcelInformation();
+            WriteOtherInformation();
             return true;
         }
 
@@ -1400,7 +1392,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.DayName + (i == 0 ? "" : i.ToString()), (DateValue != null && DateValue.HasValue) ? DateValue.Value.Day.ToString() : "");
                 SetBookmarkValue(AgricultureBookMark.CheckDayName + (i == 0 ? "" : i.ToString()), (DateChecked != null && DateChecked.HasValue) ? DateChecked.Value.Day.ToString() : "");
                 //SetBookmarkValue(AgricultureBookMark.FullDate + (i == 0 ? "" : i.ToString()), ToolDateTime.GetLongDateString(DateTime.Now));
-                SetBookmarkValue(AgricultureBookMark.FullDate + (i == 0 ? "" : i.ToString()), ToolDateTime.GetLongDateString((DateTime)DateValue));
+                SetBookmarkValue(AgricultureBookMark.FullDate + (i == 0 ? "" : i.ToString()), (DateValue != null && DateValue.HasValue) ? ToolDateTime.GetLongDateString((DateTime)DateValue) : "");
                 string year = ToolMath.GetChineseLowNumber(DateTime.Now.Year.ToString());
                 SetBookmarkValue(AgricultureBookMark.ChineseYearName + (i == 0 ? "" : i.ToString()), year);
                 string month = ToolMath.GetChineseLowNumber(DateTime.Now.Month.ToString());

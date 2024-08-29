@@ -152,6 +152,7 @@ namespace YuLinTu.Library.Business
             colleStation = db == null ? null : db.CreateVirtualPersonStation<CollectiveLandVirtualPerson>();
             tableStation = db == null ? null : db.CreateVirtualPersonStation<TableVirtualPerson>();
             contractLandStation = db == null ? null : dbContext.CreateContractLandWorkstation();
+            virtualType = eVirtualType.Land;
         }
 
         #endregion
@@ -2026,7 +2027,7 @@ namespace YuLinTu.Library.Business
             List<Person> sharePersonCollection = new List<Person>();
             Person p = personCollection.Find(t => t.Name == houseName);
             if (p != null)
-            { 
+            {
                 if (personCollection.Count > 1)
                 {
                     p.Relationship = "户主";

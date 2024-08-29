@@ -1,16 +1,9 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Data;
 using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity;
 using YuLinTu.Spatial;
-using YuLinTu.Component.StockRightBase.Helper;
-using YuLinTu.Component.StockRightBase.Model;
 
 namespace YuLinTu.Component.StockRightBase
 {
@@ -61,7 +54,6 @@ namespace YuLinTu.Component.StockRightBase
                 rowIndex++;
             }
         }
-
 
         private void WriteLandInfo()
         {

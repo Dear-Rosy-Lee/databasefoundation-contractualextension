@@ -376,7 +376,7 @@ namespace YuLinTu.Library.WorkStation
                 if (childrenZones != null)
                     allZones.AddRange(childrenZones);
             }
-            else if (zone.Level == eZoneLevel.Town)
+            else if (zone.Level >= eZoneLevel.Town)
             {
                 //选择为镇
                 if (childrenZones != null)
