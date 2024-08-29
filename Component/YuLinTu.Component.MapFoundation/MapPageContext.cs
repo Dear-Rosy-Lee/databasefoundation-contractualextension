@@ -2,43 +2,38 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
+using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Windows.Media;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Windows.Wpf.Metro;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using YuLinTu.Spatial;
-using YuLinTu.Appwork;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using YuLinTu.tGIS.Client;
-using YuLinTu.Components.tGIS;
 using Xceed.Wpf.Toolkit;
+using YuLinTu;
+using YuLinTu.Appwork;
+using YuLinTu.Component.MapFoundation.Configuration;
+using YuLinTu.Component.MapFoundation.Controls;
+using YuLinTu.Components.tGIS;
+using YuLinTu.Components.tGIS.Edit;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
-using YuLinTu.tGIS.Data;
-using YuLinTu;
-using YuLinTu.Library.WorkStation;
 using YuLinTu.Library.Repository;
-using System.Threading;
-using YuLinTu.Data.Dynamic;
-using System.Windows.Input;
-using System.Collections;
-using YuLinTu.Data.Shapefile;
+using YuLinTu.Library.WorkStation;
+using YuLinTu.Spatial;
 using YuLinTu.tGIS;
-using YuLinTu.Components.tGIS.Edit;
-using YuLinTu.Component.MapFoundation.Controls;
-using YuLinTu.Component.MapFoundation.Configuration;
-using Microsoft.Win32;
+using YuLinTu.tGIS.Client;
+using YuLinTu.tGIS.Data;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -1295,6 +1290,20 @@ namespace YuLinTu.Component.MapFoundation
             };
             数据操作.Items.Insert(8, LandAssignment);
             LandAssignment.Click += ExportSelectedShape;
+
+            var LandBoundaryCalc = new MetroButton();
+            LandBoundaryCalc.ToolTip = "计算更新选中地块的四至";
+            LandBoundaryCalc.Padding = new Thickness(4, 2, 4, 2);
+            LandBoundaryCalc.VerticalAlignment = VerticalAlignment.Stretch;
+            LandBoundaryCalc.VerticalContentAlignment = VerticalAlignment.Top;
+            LandBoundaryCalc.Content = new ImageTextItem()
+            {
+                ImagePosition = eDirection.Top,
+                Text = "四至计算",
+                Image = BitmapFrame.Create(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/SearchNeighor.png")),
+            };
+            数据操作.Items.Insert(8, LandBoundaryCalc);
+            LandBoundaryCalc.Click += CalcLandBundary;
 
             #endregion 导出选中Shape
 
@@ -4825,6 +4834,94 @@ namespace YuLinTu.Component.MapFoundation
 
         #endregion 导出选中Shape
 
+        #region 四至计算
+
+        private void CalcLandBundary(object sender, RoutedEventArgs e)
+        {
+            var map = MapControl;
+            var graphics = map.SelectedItems.ToList();
+            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
+            graphics[0].Layer.Name != "自留地" &&
+                graphics[0].Layer.Name != "机动地" &&
+                graphics[0].Layer.Name != "其他集体地"))
+            {
+                ShowBox("信息提示", "请选中地块矢量要素进行计算！");
+                return;
+            }
+            var lands = InitializeGeoLand(graphics);
+
+            var landcount = new AccountLandBusiness(dbcontext).CountLandByZone(currentZone.FullCode);
+            if (landcount == 0)
+            {
+                ShowBox("信息提示", "选中的地域下未获取到其他地块数据！");
+                return;
+            }
+            if (currentZone.Level > eZoneLevel.Village)
+            {
+                ShowBox("信息提示", "选中的发包方级别地域才能进行四至计算！");
+                return;
+            }
+            var seekLandNeighborSet = new SeekLandNeighborSetting();
+            var skNbSPage = SeekLandNeighborSetPage.Getinstence(Workpage);
+            Workpage.Page.ShowMessageBox(skNbSPage, (b, r) =>
+            {
+                if (!(bool)b)
+                {
+                    return;
+                }
+                IDbContext dbContext = CreateDb();
+                DictionaryBusiness dictBusiness = new DictionaryBusiness(dbContext);
+                List<Dictionary> dictList = dictBusiness.GetAll();
+                seekLandNeighborSet.BufferDistance = skNbSPage.BufferDistance;
+                //seekLandNeighborSet.SetLandBufferDistance = skNbSPage.SetLandBufferDistance;
+                seekLandNeighborSet.FillEmptyNeighbor = skNbSPage.FillEmptyNeighbor;
+                seekLandNeighborSet.LandIdentify = skNbSPage.LandIdentify;
+                seekLandNeighborSet.LandType = skNbSPage.LandType;
+                seekLandNeighborSet.SearchLandName = skNbSPage.SearchLandName;
+                seekLandNeighborSet.BufferDistance = skNbSPage.BufferDistance;
+                seekLandNeighborSet.UseGroupName = skNbSPage.UseGroupName;
+                seekLandNeighborSet.UseGroupNameContext = skNbSPage.UseGroupNameContext;
+                seekLandNeighborSet.SimplePositionQuery = skNbSPage.SimplePositionQuery;
+                seekLandNeighborSet.IsQueryXMzdw = skNbSPage.IsQueryXMzdw;
+                seekLandNeighborSet.SearchDeteilRule = skNbSPage.SearchDeteilRule;
+                seekLandNeighborSet.IsDeleteSameDWMC = skNbSPage.IsDeleteSameDWMC;
+                seekLandNeighborSet.QueryThreshold = skNbSPage.QueryThreshold;
+
+                //执行单个任务
+                TaskSeekLandNeighborArgument meta = new TaskSeekLandNeighborArgument();
+                meta.CurrentZone = currentZone;
+                meta.Database = dbContext;
+                meta.CurrentZoneLandList = lands;
+                meta.UpdateLandList = lands;
+                meta.DicList = dictList;
+                meta.seekLandNeighborSet = seekLandNeighborSet;
+
+                TaskSeekLandNeighborOperation Seek = new TaskSeekLandNeighborOperation();
+                Seek.Argument = meta;
+                Seek.Description = ContractAccountInfo.SeekLandNeighbor;
+                Seek.Name = ContractAccountInfo.SeekLandNeighbor;
+                Seek.Completed += new TaskCompletedEventHandler((o, t) =>
+                {
+                    ModuleMsgArgs args = MessageExtend.ContractAccountMsg(CreateDb(), ContractAccountMessage.CONTRACTACCOUNT_SEEKLANDNEIGHBOR_COMPLETE, "", currentZone.FullCode);
+                    TheBns.Current.Message.Send(this, args);
+                });
+                Workpage.TaskCenter.Add(Seek);
+                if (ShowTaskViewer != null)
+                    ShowTaskViewer();
+                Seek.StartAsync();
+            });
+        }
+
+        /// <summary>
+        /// 创建数据库
+        /// </summary>
+        private IDbContext CreateDb()
+        {
+            return DataBaseSource.GetDataBaseSource();
+        }
+
+        #endregion 导出选中Shape
+
         #region 区域界线生成
 
         private void GenerateDataClick(object sender, RoutedEventArgs e)
@@ -6107,7 +6204,9 @@ namespace YuLinTu.Component.MapFoundation
             land.IsFarmerLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT")).Value);
             land.Purpose = keyValues.FirstOrDefault(x => x.Key.Equals("TDYT")).Value;
             land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Equals("JYFS")).Value;
-            land.ConcordId = Guid.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("HTID")).Value);
+            var htid = keyValues.FirstOrDefault(x => x.Key.Equals("HTID")).Value;
+            if (!string.IsNullOrEmpty(htid))
+                land.ConcordId = Guid.Parse(htid);
             land.Founder = keyValues.FirstOrDefault(x => x.Key.Equals("CJZ")).Value;
             land.CreationTime = DateTime.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("CJSJ")).Value);
             land.Modifier = keyValues.FirstOrDefault(x => x.Key.Equals("ZHXGZ")).Value;

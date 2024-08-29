@@ -8,7 +8,7 @@
                  xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
                  xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                  Height="auto"
-                 Width="430"
+                 Width="450"
                  Header="利用宗地空间关系自动查找四至">
     <StackPanel>
         <Grid>

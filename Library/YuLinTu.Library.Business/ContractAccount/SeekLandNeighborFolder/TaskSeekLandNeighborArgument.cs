@@ -29,12 +29,17 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 当前地域
         /// </summary>
-        public Zone CurrentZone { get; set; }       
+        public Zone CurrentZone { get; set; }
 
         /// <summary>
         /// 当前地域下的含空间数据地块集合
         /// </summary>
-        public List<ContractLand> CurrentZoneLandList { get; set; }       
+        public List<ContractLand> CurrentZoneLandList { get; set; }
+
+        /// <summary>
+        /// 需要更新四至的地块集合
+        /// </summary>
+        public List<ContractLand> UpdateLandList { get; set; }
 
         /// <summary>
         /// 查找四至
