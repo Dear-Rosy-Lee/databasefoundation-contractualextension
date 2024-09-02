@@ -561,7 +561,7 @@ namespace YuLinTu.Library.Business
             valueString = value != 0 ? value.ToString() : "    ";
             SetBookmarkValue("bmDay2", valueString);
 
-            value = (RequireDate != null && RequireDate.HasValue) ? RequireDate.Value.Year : 0;
+            value = (CheckDate != null && CheckDate.HasValue) ? CheckDate.Value.Year : 0;
             valueString = value != 0 ? value.ToString() : "    ";
             SetBookmarkValue("bmYear3", valueString);
             value = (CheckDate != null && CheckDate.HasValue) ? CheckDate.Value.Month : 0;
