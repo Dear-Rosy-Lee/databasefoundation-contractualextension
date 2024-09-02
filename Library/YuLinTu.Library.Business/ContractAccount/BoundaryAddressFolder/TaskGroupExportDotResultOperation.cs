@@ -61,7 +61,7 @@ namespace YuLinTu.Library.Business
             foreach (var person in listPerson)
             {
                 List<ContractLand> currentListLand = listGeoLand.FindAll(c => c.OwnerId == person.ID);
-                string savePath = fileName + @"\" + person.Name;
+                string savePath = fileName + @"\" + person.FamilyNumber + person.Name;
                 if (!System.IO.Directory.Exists(savePath) && currentListLand != null && currentListLand.Count > 0)
                     System.IO.Directory.CreateDirectory(savePath);
                 TaskExportDotResultArgument meta = new TaskExportDotResultArgument();
