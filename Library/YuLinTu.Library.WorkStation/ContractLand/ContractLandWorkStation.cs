@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
@@ -238,6 +236,34 @@ namespace YuLinTu.Library.WorkStation
             DefaultRepository.Update(ownerId, ownerName);
             return TrySaveChanges(DefaultRepository);
         }
+
+        /// <summary>
+        /// 修改户主更新关联数据
+        /// </summary> 
+        public int UpdateRelationData(Guid ownerId, string name, string icn, VirtualPerson vp)
+        {
+            var vplands = DefaultRepository.GetCollection(ownerId);
+            if (vplands != null)
+                foreach (var item in vplands)
+                {
+                    item.OwnerName = name;
+                    DefaultRepository.Update(item);
+                }
+
+            var concords = ConcordRepository.GetContractsByFamilyID(vp.ID);
+            if (concords != null)
+                foreach (var item in concords)
+                {
+                    item.ContracterName = name;
+                    item.ContracterIdentifyNumber = icn;
+                    ConcordRepository.Update(item);
+                }
+            VirtualPersonRepository.Update(vp);
+            TrySaveChanges(VirtualPersonRepository);
+            TrySaveChanges(ConcordRepository);
+            return TrySaveChanges(DefaultRepository);
+        }
+
 
         /// <summary>
         /// 获取对象

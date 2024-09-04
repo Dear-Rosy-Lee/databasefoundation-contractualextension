@@ -211,8 +211,15 @@ namespace YuLinTu.Component.Common
                 fileTextBox.WorkPage = defaultValue.PropertyGrid.Properties["Workpage"] as IWorkpage;
                 fileTextBox.SetBinding(SelectedFileTextBox.FileNameProperty, bind);
                 var grid = new Grid();
-                grid.Children.Add(fileTextBox);
 
+                var folderTextBox = new SelectedFolderTextBox();
+                folderTextBox.IsReadOnly = true;
+                folderTextBox.Visibility = Visibility.Collapsed;
+                folderTextBox.WorkPage = defaultValue.PropertyGrid.Properties["Workpage"] as IWorkpage;
+                folderTextBox.SetBinding(SelectedFolderTextBox.FolderNameProperty, bind);
+
+                grid.Children.Add(fileTextBox);
+                grid.Children.Add(folderTextBox);
                 defaultValue.Designer = grid;
             }));
             return defaultValue;
@@ -377,16 +384,19 @@ namespace YuLinTu.Component.Common
                     try
                     {
                         var isBatch = pd.Object.GetPropertyValue<bool>("IsBatchCombination");
-                        /*if (isBatch) 2024年8月23  这里不清楚有什么左右，又引起了界面上bug 先注释了if (isBatch)
+                        if (grid.Children.Count == 2)
                         {
-                            grid.Children[0].Visibility = Visibility.Collapsed;
-                            grid.Children[1].Visibility = Visibility.Visible;
+                            if (isBatch)
+                            {
+                                grid.Children[0].Visibility = Visibility.Collapsed;
+                                grid.Children[1].Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                grid.Children[0].Visibility = Visibility.Visible;
+                                grid.Children[1].Visibility = Visibility.Collapsed;
+                            }
                         }
-                        else
-                        {
-                            grid.Children[0].Visibility = Visibility.Visible;
-                            grid.Children[1].Visibility = Visibility.Collapsed;
-                        }*/
                         //var sft0 = grid.Children[0] as SelectedFileTextBox;
                         //sft0.Text = "";
                         //var sft1 = grid.Children[1] as SelectedFolderTextBox;
@@ -414,16 +424,19 @@ namespace YuLinTu.Component.Common
                     try
                     {
                         var isBatch = pd.Object.GetPropertyValue<bool>("IsBatchCombination");
-                        /*if (isBatch) 2024年8月23  这里不清楚有什么左右，又引起了界面上bug 先注释了if (isBatch)
+                        if (grid.Children.Count == 2)
                         {
-                            grid.Children[0].Visibility = Visibility.Collapsed;
-                            grid.Children[1].Visibility = Visibility.Visible;
+                            if (isBatch)
+                            {
+                                grid.Children[0].Visibility = Visibility.Collapsed;
+                                grid.Children[1].Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                grid.Children[0].Visibility = Visibility.Visible;
+                                grid.Children[1].Visibility = Visibility.Collapsed;
+                            }
                         }
-                        else
-                        {
-                            grid.Children[0].Visibility = Visibility.Visible;
-                            grid.Children[1].Visibility = Visibility.Collapsed;
-                        }*/
                         var sft0 = grid.Children[0] as SelectedFileTextBox;
                         sft0.Text = "";
                         //var sft1 = grid.Children[1] as SelectedFolderTextBox;
@@ -462,15 +475,18 @@ namespace YuLinTu.Component.Common
                         var dbcontext = DataBaseSource.GetDataBaseSource();
                         var zoneStation = dbcontext.CreateZoneWorkStation();
                         var zone = zoneStation.Get(zonecode);
-                        if (zone.Level == Library.Entity.eZoneLevel.Group)
+                        if (grid.Children.Count == 2)
                         {
-                            grid.Children[0].Visibility = Visibility.Collapsed;
-                            grid.Children[1].Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            grid.Children[0].Visibility = Visibility.Visible;
-                            grid.Children[1].Visibility = Visibility.Collapsed;
+                            if (zone.Level == Library.Entity.eZoneLevel.Group)
+                            {
+                                grid.Children[0].Visibility = Visibility.Collapsed;
+                                grid.Children[1].Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                grid.Children[0].Visibility = Visibility.Visible;
+                                grid.Children[1].Visibility = Visibility.Collapsed;
+                            }
                         }
                     }
                     catch { }

@@ -31,12 +31,12 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             get { return isBatchCombination; }
             set { isBatchCombination = value; NotifyPropertyChanged("IsBatchCombination"); }
         }
-        
+
 
         [DisplayLanguage("SQLite数据库路径")]
         [DescriptionLanguage("请选择合并SQLite数据库所在路径")]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBoxSqlite),
-            Trigger = typeof(PropertyTriggerFile),
+          Trigger = typeof(PropertyTriggerFile),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string DatabaseFilePath
         {
@@ -65,7 +65,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
             set { isCoverDataByZoneLevel = value; NotifyPropertyChanged("IsCoverDataByZoneLevel"); }
         }
 
-      
+
 
         #endregion
 

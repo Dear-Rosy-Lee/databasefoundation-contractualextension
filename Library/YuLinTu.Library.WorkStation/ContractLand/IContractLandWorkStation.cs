@@ -54,6 +54,15 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(Guid ownerId, string ownerName);
 
+
+        /// <summary>
+        ///  根据承包方id更新关联数据的承包方名称
+        /// </summary>
+        /// <param name="ownerId">承包方id</param>
+        /// <param name="ownerName">承包方名称</param>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        int UpdateRelationData(Guid ownerId, string name, string icn, VirtualPerson vp);
+
         /// <summary>
         /// 获取对象
         /// </summary>

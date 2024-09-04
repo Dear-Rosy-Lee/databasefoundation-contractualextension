@@ -837,22 +837,22 @@ namespace YuLinTu.Library.Business
 
             //更新地块信息
             var vplandstation = dbContext.CreateContractLandWorkstation();
-            var vplands = vplandstation.GetCollection(vp.ID);
+            //var vplands = vplandstation.GetCollection(vp.ID);
 
-            foreach (var item in vplands)
-            {
-                item.OwnerName = selectPerson.Name;
-            }
-            vplandstation.UpdateRange(vplands);
+            //foreach (var item in vplands)
+            //{
+            //    item.OwnerName = selectPerson.Name;
+            //}
+            //vplandstation.UpdateRange(vplands);
 
-            var concordStation = dbContext.CreateConcordStation();
-            var concords = concordStation.GetContractsByFamilyID(vp.ID);
-            foreach (var item in concords)
-            {
-                item.ContracterName = selectPerson.Name;
-                item.ContracterIdentifyNumber = selectPerson.ICN;
-                concordStation.Update(item);
-            }
+            //var concordStation = dbContext.CreateConcordStation();
+            //var concords = concordStation.GetContractsByFamilyID(vp.ID);
+            //foreach (var item in concords)
+            //{
+            //    item.ContracterName = selectPerson.Name;
+            //    item.ContracterIdentifyNumber = selectPerson.ICN;
+            //    concordStation.Update(item);
+            //}
 
             selectPerson.ID = vp.ID;
             selectPerson.Relationship = "户主";
@@ -866,30 +866,32 @@ namespace YuLinTu.Library.Business
             var upvp = vp.Clone() as VirtualPerson;
             //排序
             vp.SharePersonList = SortSharePerson(list, vp.Name);
+
             //upvp.SharePersonList = SortSharePerson(list, vp.Name);
             try
             {
-                switch (virtualType)
-                {
-                    case eVirtualType.Land:
-                        landStation.Update(vp);
-                        break;
-                    case eVirtualType.Yard:
-                        yardStation.Update(vp);
-                        break;
-                    case eVirtualType.House:
-                        houseStation.Update(vp);
-                        break;
-                    case eVirtualType.Wood:
-                        woodStation.Update(vp);
-                        break;
-                    case eVirtualType.CollectiveLand:
-                        colleStation.Update(vp);
-                        break;
-                    case eVirtualType.SecondTable:
-                        tableStation.Update(vp);
-                        break;
-                }
+                vplandstation.UpdateRelationData(vp.ID, selectPerson.Name, selectPerson.ICN, vp);
+                //    switch (virtualType)
+                //    {
+                //        case eVirtualType.Land:
+                //            landStation.Update(vp);
+                //            break;
+                //        case eVirtualType.Yard:
+                //            yardStation.Update(vp);
+                //            break;
+                //        case eVirtualType.House:
+                //            houseStation.Update(vp);
+                //            break;
+                //        case eVirtualType.Wood:
+                //            woodStation.Update(vp);
+                //            break;
+                //        case eVirtualType.CollectiveLand:
+                //            colleStation.Update(vp);
+                //            break;
+                //        case eVirtualType.SecondTable:
+                //            tableStation.Update(vp);
+                //            break;
+                //   }
 
             }
             catch (Exception ex)
