@@ -1136,7 +1136,7 @@ namespace YuLinTu.Library.Business
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
                 #endregion
-
+                export.ZoneList = dbContext.CreateZoneWorkStation().Get();
                 export.MarkDesc = MarkDesc;
                 export.CurrentZone = zone;
                 export.DictList = DictList;
@@ -1429,6 +1429,7 @@ namespace YuLinTu.Library.Business
                 string familyNuber = ToolString.ExceptSpaceString(vp.FamilyNumber);
                 string templatePath = TemplateHelper.WordTemplate(TemplateFile.VirtualPersonIdeaBook);
                 ExportIdeaBook exportDelegate = new ExportIdeaBook(vp);
+                exportDelegate.ZoneList = dbContext.CreateZoneWorkStation().Get();
                 exportDelegate.Date = time;       //声明日期
                 exportDelegate.PubDate = pubTime;  //公示日期
                 exportDelegate.CurrentZone = zone;

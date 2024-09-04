@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
+using System.Windows.Forms;
 
 namespace YuLinTu.Library.Business
 {
@@ -163,9 +164,18 @@ namespace YuLinTu.Library.Business
                                              $"{ZoneList.Where(x => x.Level == eZoneLevel.County).FirstOrDefault().Name}");
             SetBookmarkValue("ZoneName", sysset.ExportAddressToTown ? AddressExporthHelper.GetNewAddressToTown(ZoneName) : ZoneName);
             SetBookmarkValue("RightType", RightName);
-            SetBookmarkValue("Date", (Date != null && Date.HasValue) ? string.Format("{0: yyyy 年 MM 月 dd 日}", Date) : "    年    月    日");
 
+            //SetBookmarkValue("Date", (Date != null && Date.HasValue) ? string.Format("{0: yyyy 年 MM 月 dd 日}", Date) : "    年    月    日");
 
+            int value = (Date != null && Date.HasValue) ? Date.Value.Year : 0;
+            string valueString = value != 0 ? value.ToString() : "    ";
+            SetBookmarkValue("bmYear", valueString);
+            value = (Date != null && Date.HasValue) ? Date.Value.Month : 0;
+            valueString = value != 0 ? value.ToString() : "    ";
+            SetBookmarkValue("bmMonth", valueString);
+            value = (Date != null && Date.HasValue) ? Date.Value.Day : 0;
+            valueString = value != 0 ? value.ToString() : "    ";
+            SetBookmarkValue("bmDay", valueString);
 
             base.Destroyed();
             Disponse();

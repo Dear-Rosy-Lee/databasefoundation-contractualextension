@@ -126,7 +126,7 @@ namespace YuLinTu.Library.Business
                         templatePath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
                     #endregion
-
+                    exportFamily.ZoneList = argument.DbContext.CreateZoneWorkStation().Get();
                     exportFamily.Date = argument.Time == null ? DateTime.Now : argument.Time;       //获取日期
                     exportFamily.ZoneName = zoneName;
                     exportFamily.CurrentZone = argument.CurrentZone;
