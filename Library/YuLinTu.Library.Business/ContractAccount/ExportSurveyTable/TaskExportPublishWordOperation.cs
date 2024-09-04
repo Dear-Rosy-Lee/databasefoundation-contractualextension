@@ -65,12 +65,12 @@ namespace YuLinTu.Library.Business
                 var listDict = dictStation.Get();
                 var sender = senderStation.Get(zone.ID); //发包方
                 if (sender == null)
-                {                  
+                {
                     var tissues = senderStation.GetTissues(zone.FullCode, eLevelOption.Self);
                     if (tissues != null && tissues.Count > 0)
                         sender = tissues[0];
                 }
-               
+
                 if (listPerson == null || listPerson.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -78,7 +78,7 @@ namespace YuLinTu.Library.Business
                     return;
                 }
                 var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
-               
+
                 if (listLand == null || listLand.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -132,14 +132,14 @@ namespace YuLinTu.Library.Business
                 openFilePath = argument.FileName;
 
                 List<Zone> allZones = zoneStation.GetAllZones(argument.CurrentZone);
-                string savePath = CreateDirectoryHelper.CreateDirectory(allZones, argument.CurrentZone);               
-                 openFilePath = openFilePath + @"\" + savePath;                
+                string savePath = CreateDirectoryHelper.CreateDirectory(allZones, argument.CurrentZone);
+                openFilePath = openFilePath + @"\" + savePath;
                 var concordStation = argument.DbContext.CreateConcordStation();
-                
+                var concordlist = concordStation.GetByZoneCode(argument.CurrentZone.FullCode);
                 //var landStocks = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 foreach (VirtualPerson family in listPerson)
                 {
-                    var concords = concordStation.GetAllConcordByFamilyID(family.ID);
+                    var concords = concordlist.FindAll(t => t.ContracterId == family.ID);
                     var landsOfFamily = listLand.FindAll(c => c.OwnerId == family.ID);
                     string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
                     ExportPublicityWordTable export = new ExportPublicityWordTable();
@@ -155,14 +155,14 @@ namespace YuLinTu.Library.Business
                         tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                     }
                     #endregion
-
+                    export.ZoneList = allZones;
                     export.CurrentZone = argument.CurrentZone;
                     export.Contractor = family;
                     export.DictList = listDict == null ? new List<Dictionary>() : listDict;
                     export.LandCollection = landsOfFamily == null ? new List<ContractLand>() : landsOfFamily;  //地块集合
                     //if(family.IsStockFarmer)
                     //    export.LandCollection.AddRange(landStocks);
-                    if (SystemSetDefine.ExportTableSenderDesToVillage) 
+                    if (SystemSetDefine.ExportTableSenderDesToVillage)
                     {
                         tissue.Name = GetVillageLevelDesc(argument.CurrentZone, argument.DbContext);
                     }
@@ -172,7 +172,7 @@ namespace YuLinTu.Library.Business
                     }
                     export.Tissue = tissue; //发包方
                     export.OpenTemplate(tempPath);
-                    string fileName = openFilePath + @"\" +family.FamilyNumber+"-"+ family.Name + "-" + TemplateFile.PublicityWord;
+                    string fileName = openFilePath + @"\" + family.FamilyNumber + "-" + family.Name + "-" + TemplateFile.PublicityWord;
                     export.SaveAs(family, fileName);
                     string strDesc = string.Format("{0}", markDesc + family.Name);
                     this.ReportProgress((int)(1 + vpPercent * indexOfVp), strDesc);
@@ -186,7 +186,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 result = false;
-                this.ReportError("导出公示结果归户表失败");
+                this.ReportError($"导出公示结果归户表失败：{ex.Message}  详情请查看日志");
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportLandWord(导出公示结果归户表表)", ex.Message + ex.StackTrace);
             }
             return result;

@@ -58,23 +58,14 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         protected override bool OnSetParamValue(object data)
         {
-            try
+            base.OnSetParamValue(data);
+            if (!CheckDataInformation(data))
             {
-                base.OnSetParamValue(data);
-                if (!CheckDataInformation(data))
-                {
-                    return false;
-                }
-                WriteTitleInformation();
-                WriteConcordInformations();
-                WritePublicyInformation();
-                //Disponse();
-            }
-            catch (SystemException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
                 return false;
             }
+            WriteTitleInformation();
+            WriteConcordInformations();
+            WritePublicyInformation();
             return true;
         }
 
@@ -538,10 +529,10 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(0, row, colBase + 1, canumber);
 
                 SetTableCellValue(0, row, colBase + 2, InitalizeLandNeightors(LandCollection[i]));// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
-                                                                                                 //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
-                                                                                                 //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
-                                                                                                 //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
-                                                                                                 //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
+                                                                                                  //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
+                                                                                                  //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
+                                                                                                  //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
+                                                                                                  //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
 
                 SetTableCellValue(0, row, colBase + 3, (tableArea == null || !tableArea.HasValue || tableArea.Value <= 0.0) ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(tableArea.Value.ToString(), 2));
                 SetTableCellValue(0, row, colBase + 4, actualArea == 0 ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(actualArea.ToString(), 2));

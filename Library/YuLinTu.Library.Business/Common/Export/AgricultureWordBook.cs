@@ -1294,13 +1294,18 @@ namespace YuLinTu.Library.Business
             Zone village = ZoneList != null ? ZoneList.Find(t => t.FullCode == viliiageCode) : null;
             string unitName = string.Empty;
             unitName = county != null ? (CurrentZone.FullName != null ? CurrentZone.FullName.Replace(county.FullName, "") : CurrentZone.FullName) : "";
+            var cvillageName = "";
+            if (town != null && village != null)
+                cvillageName = $"{town.Name}{village.Name}";
+            if (county != null)
+                cvillageName = county.Name + cvillageName;
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.ZoneName + (i == 0 ? "" : i.ToString()), CurrentZone.FullName);
                 SetBookmarkValue(AgricultureBookMark.LocationName + (i == 0 ? "" : i.ToString()), CurrentZone.FullName);
                 SetBookmarkValue(AgricultureBookMark.TownUnitName + (i == 0 ? "" : i.ToString()), unitName);
                 SetBookmarkValue(AgricultureBookMark.CountyUnitName + (i == 0 ? "" : i.ToString()), county != null ? (county.Name + unitName) : unitName);
-                SetBookmarkValue(AgricultureBookMark.CountyVillageName + (i == 0 ? "" : i.ToString()), $"{county.Name}{town.Name}{village.Name}");
+                SetBookmarkValue(AgricultureBookMark.CountyVillageName + (i == 0 ? "" : i.ToString()), cvillageName);
             }
             string zoneName = InitalizeZoneName(CurrentZone.FullCode, Zone.ZONE_COUNTY_LENGTH);
             for (int i = 0; i < BookMarkCount; i++)

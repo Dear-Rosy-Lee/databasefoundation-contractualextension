@@ -75,7 +75,7 @@ namespace YuLinTu.Library.Business
             foreach (var zone in selfAndSubsZones)
             {
                 var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
-                              
+
                 TaskExportPublishWordArgument argument = new TaskExportPublishWordArgument();
                 argument.SelectedPersons = listPersons == null ? new List<VirtualPerson>() : listPersons;
                 argument.CurrentZone = zone;
@@ -88,27 +88,6 @@ namespace YuLinTu.Library.Business
                 Add(operation);
             }
             base.OnGo();
-        }
-
-        #endregion
-
-        #region Method - 辅助
-
-        /// <summary>
-        /// 消息显示框
-        /// </summary>
-        private void ShowBox(string header, string msg, eMessageGrade type = eMessageGrade.Error)
-        {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                Workpage.Page.ShowMessageBox(new TabMessageBoxDialog
-                {
-                    Header = header,
-                    Message = msg,
-                    MessageGrade = type,
-                    CancelButtonText = "取消",
-                });
-            })); ;
         }
 
         #endregion

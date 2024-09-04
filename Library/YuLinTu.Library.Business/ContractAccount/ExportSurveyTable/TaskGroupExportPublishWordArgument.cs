@@ -32,7 +32,10 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string FileName { get; set; }
 
-     
+        /// <summary>
+        /// 地域集合
+        /// </summary>
+        public List<Zone> ZoneList { get; set; }
 
         #endregion
 
@@ -42,7 +45,7 @@ namespace YuLinTu.Library.Business
         /// 构造函数
         /// </summary>
         public TaskGroupExportPublishWordArgument()
-        {  }
+        { }
 
         #endregion
     }
