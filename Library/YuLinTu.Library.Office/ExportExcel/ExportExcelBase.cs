@@ -262,7 +262,8 @@ namespace YuLinTu.Library.Office
         {
             if (PostErrorInfoEvent != null)
                 PostErrorInfoEvent(message);
-
+            else
+                throw new Exception(message);
             return false;
         }
 

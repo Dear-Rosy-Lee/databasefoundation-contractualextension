@@ -3,6 +3,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,7 +62,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 家庭关系
         /// </summary>
-        private List<string> relationList;
+        private List<FamilyRelationShip> relationList;
 
         /// <summary>
         /// 当前选择项
@@ -214,8 +215,8 @@ namespace YuLinTu.Library.Controls
                 genderList = new KeyValueList<string, string>();
             }
             nationList = EnumStore<eNation>.GetListByType();
-            relationList = FamilyRelationShip.AllRelation();
-            if (Virtualperson.FamilyExpand.ContractorType== eContractorType.Farmer)
+            relationList = FamilyRelationShip.AllRelationEn();
+            if (Virtualperson.FamilyExpand.ContractorType == eContractorType.Farmer)
             {
                 relationList.RemoveAt(0);
             }
@@ -336,6 +337,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var cardType = cbCardType.SelectedItem as KeyValue<string, string>;
+            person.Relationship = cbRelationship.SelectedValue==null?"": cbRelationship.SelectedValue.ToString();
             bool right = ToolICN.Check(person.ICN);
             string errorMsg = string.Empty;
             if (string.IsNullOrEmpty(person.Name))
@@ -630,16 +632,44 @@ namespace YuLinTu.Library.Controls
 
         private void txt_Birthday_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //if (txt_Birthday == null || txt_Birthday.Value == null)
+            //if (txt_Birthday == null || txt_Birthday.Name == null)
             //{
             //    txt_Age.Text = "";
             //    return;
             //}
-            //DateTime? ds = txt_Birthday.Value;
+            //DateTime? ds = txt_Birthday.Name;
             //DateTime now = DateTime.Now;
-            //int age = now.Year - ds.Value.Year;
-            //if (now.Month < ds.Value.Month || (now.Month == ds.Value.Month && now.Day < ds.Value.Day)) age--;
+            //int age = now.Year - ds.Name.Year;
+            //if (now.Month < ds.Name.Month || (now.Month == ds.Name.Month && now.Day < ds.Name.Day)) age--;
             //txt_Age.Text = age.ToString();
+        }
+
+        private void autoCities_PatternChanged(object sender, Utils.Controls.AutoComplete.AutoCompleteArgs args)
+        {
+            args.DataSource = GetCities(args.Pattern);
+        }
+
+
+        private ObservableCollection<FamilyRelationShip> GetCities(string Pattern)
+        {
+            if (!string.IsNullOrEmpty(Pattern.Trim()))
+            {
+                return new ObservableCollection<FamilyRelationShip>(relationList.Where((city, match) => city.Code.ToLower().Contains(Pattern.ToLower())));
+            }
+            else
+            {
+                var oc = new ObservableCollection<FamilyRelationShip>();
+                foreach (var item in relationList)
+                {
+                    oc.Add(item);
+                }
+                return oc;
+            }
+        }
+
+        private void InfoPageBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbRelationship.Focus();
         }
     }
 }

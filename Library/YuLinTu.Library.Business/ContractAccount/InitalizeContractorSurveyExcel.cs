@@ -20,15 +20,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void BeginWrite(DateTime? time, DateTime? pubTime)
         {
-            try
-            {
-                WriteTitle(time, pubTime);//写标题信息
-                WriteContent();//开始写内容
-            }
-            catch (SystemException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-            }
+            WriteTitle(time, pubTime);//写标题信息
+            WriteContent();//开始写内容 
         }
 
         /// <summary>
@@ -651,7 +644,7 @@ namespace YuLinTu.Library.Business
                 tempActualAreaAllCount += land.ActualArea;
                 tempContractDelayCount += land.ContractDelayArea;
                 tempAwareAreaCount += land.AwareArea;
-                //tempMotorizeLandAreaCount += land.MotorizeLandArea == null ? land.ActualArea - land.AwareArea : land.MotorizeLandArea.Value;
+                //tempMotorizeLandAreaCount += land.MotorizeLandArea == null ? land.ActualArea - land.AwareArea : land.MotorizeLandArea.Name;
                 tempMotorizeLandAreaCount += land.MotorizeLandArea == null ? 0 : land.MotorizeLandArea.Value;
                 tempTotalTableAreaCount += land.TableArea == null ? 0.0 : land.TableArea.Value;
                 if (contractLandOutputSurveyDefine.LandNameValue)

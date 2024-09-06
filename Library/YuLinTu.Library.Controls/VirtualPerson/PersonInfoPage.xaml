@@ -8,10 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
     xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:ctr="clr-namespace:Utils.Controls;assembly=Utils.Controls"
     MinWidth="550"
     MinHeight="150"
-    Header="共有人信息"
+    Header="共有人信息" Loaded="InfoPageBase_Loaded"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png">
+    <am:InfoPageBase.Resources>
+        <ResourceDictionary Source="/Utils.Controls;component/Styles/AutoComplete.Styles.xaml" />
+    </am:InfoPageBase.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -37,9 +42,9 @@
                 </Grid.BindingGroup>-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="215" />
+                    <ColumnDefinition Width="225" />
                     <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="215" />
+                    <ColumnDefinition Width="225" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -192,15 +197,17 @@
                     Style="{StaticResource LableStyle}"
                     Visibility="{Binding ElementName=txt_Relationship, Path=Visibility}" />
                 <cmps:MetroComboBox
-                    Name="cbRelationship"
+                    Name="cbRelationship2"
                     Grid.Row="8"
                     Grid.Column="3"
                     Height="30"
                     VerticalAlignment="Center"
-                    IsEditable="False"
-                    MaxDropDownHeight="150"
-                    Text="{Binding Relationship, Mode=TwoWay}" />
-
+                    IsEditable="True"
+                    IsTextSearchEnabled="False"
+                    MaxDropDownHeight="150"  Visibility="Collapsed" />
+                <ctr:AutoComplete x:Name="cbRelationship" Grid.Row="8" Grid.Column="3" SelectedValuePath="Code" DisplayMemberPath="Code"
+           PatternChanged="autoCities_PatternChanged" Style="{StaticResource AutoCompleteComboBox}"
+           Delay="300" SelectedValue="2" Height="32" MaxDropDownHeight="150"  Width="225"/>
                 <Label
                     Grid.Row="10"
                     Content="是否共有人:"
