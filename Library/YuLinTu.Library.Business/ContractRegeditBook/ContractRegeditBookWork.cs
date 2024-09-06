@@ -408,7 +408,7 @@ namespace YuLinTu.Library.Business
                     SetTableCellValue(landSection, tableIndex, startRow, 3, tableArea);
                     SetTableCellValue(landSection, tableIndex, startRow, 4, actualArea);
                     SetTableCellValue(landSection, tableIndex, startRow, 5, isFarmerLand);
-                    SetTableCellValue(landSection, tableIndex, startRow, 6, "东：" + east + "\n" + "南：" + south + "\n" + "西：" + west + "\n" + "北：" + east);
+                    SetTableCellValue(landSection, tableIndex, startRow, 6, "东：" + east + "\n" + "南：" + south + "\n" + "西：" + west + "\n" + "北：" + north);
 
                     startRow++;
                 }
