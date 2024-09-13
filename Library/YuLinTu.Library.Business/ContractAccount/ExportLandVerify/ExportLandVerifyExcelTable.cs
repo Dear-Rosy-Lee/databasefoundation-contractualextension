@@ -308,16 +308,21 @@ namespace YuLinTu.Library.Business
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
             Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
-
             Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
             Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
             InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
-            InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
-            InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
-            InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
-            InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
-            InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+            if (syqxz != null)
+                InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+            if (dklb!=null)
+                InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+            if (tdlylx != null)
+                InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
+            if (dldj != null)
+                InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
+            if (tdyt!=null)
+                InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+
             if (land.IsFarmerLand != null)
             {
                 Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
