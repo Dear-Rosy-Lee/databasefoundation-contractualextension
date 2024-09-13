@@ -23,7 +23,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Library.Business</RootNamespace>
     <AssemblyName>YuLinTu.Library.Business</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -94,6 +94,15 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\Dependencies\Aspose\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=6.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.DynamicProxy.6.0.1\lib\netstandard2.0\Autofac.Extras.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ContractLand.Exchange2">
       <HintPath>..\..\Dependencies\Exchange\ContractLand.Exchange2.dll</HintPath>
     </Reference>
@@ -115,6 +124,9 @@
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.dll</HintPath>
     </Reference>
@@ -123,6 +135,12 @@
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -178,14 +196,33 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -230,6 +267,7 @@
     </Compile>
     <Compile Include="Common\DataBase\DataBaseSource.cs" />
     <Compile Include="Common\DataBase\UpgradeDatabase.cs" />
+    <Compile Include="Common\Db.cs" />
     <Compile Include="Common\Export\AddressExporthHelper.cs" />
     <Compile Include="Common\Export\ExportDataSummarySelectTable.cs" />
     <Compile Include="Common\Export\LandNumericFormatHelper.cs" />
@@ -579,6 +617,12 @@
     <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskDataSummaryExportOperation.cs" />
     <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskGroupDataSummaryExportArgument.cs" />
     <Compile Include="DataSummaryExport\TaskDataSummaryExport\TaskGroupDataSummaryExportOperation.cs" />
+    <Compile Include="DependencyInjection\AutofacRegistration.cs" />
+    <Compile Include="DependencyInjection\ContainerProvider.cs" />
+    <Compile Include="DependencyInjection\IScopedDependency.cs" />
+    <Compile Include="DependencyInjection\ISingletonDependency.cs" />
+    <Compile Include="DependencyInjection\ITransientDependency.cs" />
+    <Compile Include="DependencyInjection\NamedAttribute.cs" />
     <Compile Include="DictionaryConvert\BoolDicConvert.cs" />
     <Compile Include="DictionaryConvert\ContractorTypeConvert.cs" />
     <Compile Include="DictionaryConvert\ContractWayConvert.cs" />
@@ -629,8 +673,11 @@
     <Compile Include="SecondTableLand\TaskSecondTableOperation.cs" />
     <Compile Include="SecondTableLand\VerifyLandInformation.cs" />
     <Compile Include="ContractRegeditBook\SettingEntity.cs" />
+    <Compile Include="Security\AccountService.cs" />
+    <Compile Include="Security\IAccountService.cs" />
     <Compile Include="Setting\AgriculturePrintSetting.cs" />
     <Compile Include="Task\DataProcess.cs" />
+    <Compile Include="Tool\DateTimeExtensions.cs" />
     <Compile Include="Tool\ToolChinese.cs" />
     <Compile Include="Tool\ToolCoding.cs" />
     <Compile Include="Tool\ToolFile.cs" />
@@ -679,6 +726,12 @@
     <Compile Include="Tool\ToolProgress.cs" />
     <Compile Include="Tool\ToolSerialization.cs" />
     <Compile Include="Tool\ToolString.cs" />
+    <Compile Include="Uow\DynamicProxyIgnoreTypes.cs" />
+    <Compile Include="Uow\IUnitOfWorkEnabled.cs" />
+    <Compile Include="Uow\UnitOfWorkAttribute.cs" />
+    <Compile Include="Uow\UnitOfWorkHelper.cs" />
+    <Compile Include="Uow\UnitOfWorkInterceptor.cs" />
+    <Compile Include="Uow\UnitOfWorkInterceptorRegistrar.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorTable.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportApplyBook.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorExcel.cs" />

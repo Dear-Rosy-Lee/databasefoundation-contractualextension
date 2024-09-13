@@ -22,11 +22,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Component.QualityCompressionDataTask</RootNamespace>
     <AssemblyName>YuLinTu.Component.QualityCompressionDataTask</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -193,14 +194,6 @@
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
-      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
-      <Name>YuLinTu.Library.Command</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
-      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
-      <Name>YuLinTu.Library.Controls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
       <Name>YuLinTu.Library.Entity</Name>
@@ -208,14 +201,6 @@
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
       <Name>YuLinTu.Library.Log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
-      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
-      <Name>YuLinTu.Library.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
-      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
-      <Name>YuLinTu.Library.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>

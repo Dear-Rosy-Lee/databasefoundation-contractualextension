@@ -16,15 +16,15 @@ namespace YuLinTu.Component.QualityCompressionDataTask
     {
         #region Propertys
 
-        /// <summary>
-        /// 地域选择
-        /// </summary>
-        public ZoneSelectInfo ZoneInfo { get; set; }
+        ///// <summary>
+        ///// 地域选择
+        ///// </summary>
+        //public ZoneSelectInfo ZoneInfo { get; set; }
 
-        /// <summary>
-        /// 根级地域选择
-        /// </summary>
-        public ZoneSelectInfo RootZoneInfo { get; set; }
+        ///// <summary>
+        ///// 根级地域选择
+        ///// </summary>
+        //public ZoneSelectInfo RootZoneInfo { get; set; }
 
         /// <summary>
         /// 导入文件配置
@@ -127,18 +127,18 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         #region Override
 
-        public override object Clone()
-        {
-            var fic = new FileImportConfig();
-            fic.CopyPropertiesFrom(this);
-            if (fic.ZoneInfo != null)
-                fic.ZoneInfo = this.ZoneInfo.Clone() as ZoneSelectInfo;
-            if (fic.RootZoneInfo != null)
-                fic.RootZoneInfo = this.RootZoneInfo.Clone() as ZoneSelectInfo;
-            if (fic.ImportFile != null)
-                fic.ImportFile = this.ImportFile as ImportFileEntity;
-            return fic;
-        }
+        //public override object Clone()
+        //{
+        //    var fic = new FileImportConfig();
+        //    fic.CopyPropertiesFrom(this);
+        //    if (fic.ZoneInfo != null)
+        //        fic.ZoneInfo = this.ZoneInfo.Clone() as ZoneSelectInfo;
+        //    if (fic.RootZoneInfo != null)
+        //        fic.RootZoneInfo = this.RootZoneInfo.Clone() as ZoneSelectInfo;
+        //    if (fic.ImportFile != null)
+        //        fic.ImportFile = this.ImportFile as ImportFileEntity;
+        //    return fic;
+        //}
 
         public override bool Equals(object obj)
         {

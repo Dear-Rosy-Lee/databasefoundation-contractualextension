@@ -4,8 +4,9 @@ using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using YuLinTu.Windows;
 using YuLinTu.Data;
-using YuLinTu.Library.Business;
+
 using System.Linq;
+using YuLinTu.Library.Business;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -18,7 +19,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class QualityCompressionData : Task
     {
-
         #region Ctor
 
         public QualityCompressionData()
