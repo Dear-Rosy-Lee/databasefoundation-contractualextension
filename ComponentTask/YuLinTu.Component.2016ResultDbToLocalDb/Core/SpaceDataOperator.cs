@@ -777,7 +777,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             index = name.IndexOf("_");
             if (index > 0)
                 return name.Substring(index + 1);
-            return index.ToString();
+            return index == -1 ? "0" : index.ToString();
         }
 
         private string dataBasePath(string tempPath)
