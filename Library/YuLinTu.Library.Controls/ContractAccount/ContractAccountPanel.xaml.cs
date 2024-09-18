@@ -4083,7 +4083,7 @@ namespace YuLinTu.Library.Controls
             argument.FileName = fileName;
             argument.VirtualType = VirtualType;
             argument.IsShow = true;
-            TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+            TaskExportLandVerifyPrintExcelOperation operation = new TaskExportLandVerifyPrintExcelOperation();
             operation.Argument = argument;
             operation.Description = taskDes;
             operation.Name = taskName;
@@ -7251,7 +7251,6 @@ namespace YuLinTu.Library.Controls
                 return repeatCode.Contains(landBind.LandNumber);
             }, true);
         }
-
 
         /// <summary>
         /// 根据检索类型进行检索
