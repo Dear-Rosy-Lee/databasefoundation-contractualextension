@@ -38,6 +38,7 @@ namespace YuLinTu.Library.Controls
         private SeekLandNeighborSetting seekLandNeighborSet;//用于记录弹出查找四至的选择条件
         private bool isBatch;//是否批量
         private bool _isStockLand = true;
+        private object lockobj = new object();
 
         /// <summary>
         /// 当前选择承包方绑定实体(界面实体)
@@ -62,7 +63,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 当前地域下的所有确股地块集合
         /// </summary>
-        private List<ContractLand> landStockAll = new List<ContractLand>();
+        //private List<ContractLand> landStockAll = new List<ContractLand>();
 
         /// <summary>
         /// 当前地域下的所有确股地块集合
@@ -391,7 +392,7 @@ namespace YuLinTu.Library.Controls
             landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self);
             if (IsStockLand)
             {
-                landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
+                //landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
                 ralations = DataBaseSource.GetDataBaseSource().CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(CurrentZone == null ? "" : CurrentZone.FullCode, eLevelOption.Self);
             }
             dictList = DictBusiness.GetAll();
@@ -409,28 +410,36 @@ namespace YuLinTu.Library.Controls
 
             if (currentPersonList != null && currentPersonList.Count > 0 && landList != null)
             {
+                ChangeDataAndSend(arg);
+            }
+        }
+
+        private void ChangeDataAndSend(TaskGoEventArgs arg)
+        {
+            if (arg == null)
+            {
                 foreach (var item in currentPersonList)
                 {
-                    if (arg != null)
+                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
                     {
-                        if (arg.Instance.IsStopPending)
-                            break;
-                        var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
-                        arg.Instance.ReportProgress(50, svpi);
+                        continue;
                     }
-                    else//业务向导调用DoWork同步查询数据
+                    else
                     {
-                        var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
-                        if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            if (svpi.Children.Count > 0)
-                                accountLandItems.Add(svpi);
-                        }
+                        if (svpi.Children.Count > 0)
+                            accountLandItems.Add(svpi);
                     }
+                }
+            }
+            else
+            {
+                foreach (var item in currentPersonList)
+                {
+                    if (arg.Instance.IsStopPending)
+                        break;
+                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    arg.Instance.ReportProgress(50, svpi);
                 }
             }
         }
@@ -517,14 +526,14 @@ namespace YuLinTu.Library.Controls
                 if (CurrentZone != null)
                 {
                     var landStock = new List<ContractLand>();
-                    landStockAll.ForEach(l =>
+                    landList.ForEach(l =>
                     {
                         if (ralations.Any(r => r.LandID == l.ID))
                         {
                             landStock.Add(l);
                         }
                     });
-                    if (landStockAll.Count > 0 && landStock.Count > 0)
+                    if (landStock.Count > 0)
                     {
                         landCount = landCount + landStock.Count;
                         summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
@@ -575,14 +584,14 @@ namespace YuLinTu.Library.Controls
                 if (CurrentZone != null)
                 {
                     var landStock = new List<ContractLand>();
-                    landStockAll.ForEach(l =>
+                    landList.ForEach(l =>
                     {
                         if (ralations.Any(r => r.LandID == l.ID))
                         {
                             landStock.Add(l);
                         }
                     });
-                    if (landStockAll.Count > 0 && landStock.Count > 0)
+                    if (landStock.Count > 0)
                     {
                         summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
                         summaryActualArea = summaryActualArea + Convert.ToDouble(landStock.Sum(o => o.ActualArea));

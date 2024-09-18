@@ -442,6 +442,7 @@ namespace YuLinTu.Library.Controls
             Comment = land.Comment;
             Img = land.Shape != null ? 1 : 2;
             IsStockLand = land.IsStockLand;
+            //Tag.Shape = null;
             //if (land.Shape != null)
             //{
             //    Img = 1;

@@ -155,9 +155,11 @@ namespace YuLinTu.Library.Business
                     ReportErrorInfo(this.ExcelName + "表中无数据或数据未按要求制作!");
                     return false;
                 }
-                var lastrow = GetString(allItem[rangeCount-1, 0]);
-                if (lastrow != "合计") {
-                    ReportErrorInfo(this.ExcelName + "表中最后一行第一列请填入 合计 !"); 
+                var lastrow = GetString(allItem[rangeCount - 1, 0]);
+                if (lastrow != "合计")
+                {
+                    ReportErrorInfo(this.ExcelName + $"表中最后一行({rangeCount})第一列请填入 合计 !");
+                    return false;
                 }
                 existPersons = new SortedList<string, string>();
                 existTablePersons = new SortedList<string, string>();
@@ -165,36 +167,43 @@ namespace YuLinTu.Library.Business
                 InitalizeSender();
                 for (int index = calIndex; index < rangeCount; index++)
                 {
-                    currentIndex = index;//当前行数
-                    string rowValue = GetString(allItem[index, 0]);//编号栏数据
-                    if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                    try
                     {
-                        if (!SetFamilyInfo(landFamily))
-                            isOk = false;
-                        break;
-                    }
-                    string familyName = GetString(allItem[currentIndex, 1]);
-                    string change = GetString(allItem[currentIndex, 34]);
-                    if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
-                    {
-                        if (!SetFamilyInfo(landFamily))
-                            isOk = false;
-                        originalValue = int.Parse(rowValue);
-                        landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
-                        landFamily.CurrentFamily.Name = familyName;
-                        var expand = landFamily.CurrentFamily.FamilyExpand;
-                        expand.ChangeComment = change;
-                        landFamily.CurrentFamily.FamilyExpand = expand;
-                        AddLandFamily(landFamily);
-                        concordIndex++;
-                    }
+                        currentIndex = index;//当前行数
+                        string rowValue = GetString(allItem[index, 0]);//编号栏数据
+                        if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                        {
+                            if (!SetFamilyInfo(landFamily))
+                                isOk = false;
+                            break;
+                        }
+                        string familyName = GetString(allItem[currentIndex, 1]);
+                        string change = GetString(allItem[currentIndex, 34]);
+                        if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
+                        {
+                            if (!SetFamilyInfo(landFamily))
+                                isOk = false;
+                            originalValue = int.Parse(rowValue);
+                            landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
+                            landFamily.CurrentFamily.Name = familyName;
+                            var expand = landFamily.CurrentFamily.FamilyExpand;
+                            expand.ChangeComment = change;
+                            landFamily.CurrentFamily.FamilyExpand = expand;
+                            AddLandFamily(landFamily);
+                            concordIndex++;
+                        }
 
-                    if (string.IsNullOrEmpty(rowValue) && !string.IsNullOrEmpty(familyName))
-                    {
-                        ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
-                        continue;
+                        if (string.IsNullOrEmpty(rowValue) && !string.IsNullOrEmpty(familyName))
+                        {
+                            ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
+                            continue;
+                        }
+                        GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
                     }
-                    GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
+                    catch (Exception ex)
+                    {
+                        this.ReportErrorInfo($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
+                    }
                 }
             }
             catch (Exception ex)

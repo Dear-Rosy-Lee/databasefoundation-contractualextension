@@ -29,7 +29,7 @@ namespace YuLinTu.Library.Controls
             item.Tag = tableVp;
             // 先获取非股地，再获取股地
             List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand);
-            if (isStockLand)
+            if (isStockLand && ralationList.Count > 0)
             {
                 // 股地里，“权属关系”表里必有对应信息
                 var ralations = ralationList.FindAll(o => o.VirtualPersonID == tableVp.ID);

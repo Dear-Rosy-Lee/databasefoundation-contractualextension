@@ -87,7 +87,7 @@ namespace YuLinTu.Library.Business
                 argument.IsShow = false;
                 Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
-                TaskExportLandVerifyExcelOperation operation = new TaskExportLandVerifyExcelOperation();
+                var operation = new TaskExportLandVerifyExcelOperation();
                 operation.Argument = argument;
                 operation.Name = "批量导出摸底核实表";
                 operation.Description = zone.FullName;
