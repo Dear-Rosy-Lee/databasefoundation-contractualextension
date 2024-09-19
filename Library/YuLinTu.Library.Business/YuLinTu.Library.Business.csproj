@@ -265,6 +265,7 @@
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Builder\PropertyDescriptorBuilderFileBrowserShp.cs" />
     <Compile Include="Common\DataBase\DataBaseSource.cs" />
     <Compile Include="Common\DataBase\UpgradeDatabase.cs" />
     <Compile Include="Common\Db.cs" />

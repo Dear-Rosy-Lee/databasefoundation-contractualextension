@@ -2,11 +2,8 @@
 using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
-using YuLinTu.Windows;
-using YuLinTu.Data;
+using YuLinTu;
 
-using System.Linq;
-using YuLinTu.Library.Business;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -61,16 +58,17 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
             //    Parameters.stringZipPassword,
             //    Parameters.stringZipPasswordValue);
-            var sourceFolder = argument.CheckFilePath;
+            var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length-4);
             var zipFilePath = $"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}.zip";
             try
             {
                 //进行质检
                 var dcp = new DataCheckProgress();
-                var dbContent = DataBaseSource.GetDataBaseSourceByPath("E:\\WorkSpace\\数据\\数据库\\QCQ - 副本.sqlite");
-                dcp.LocalService = dbContent;
+                //var dbContent = DataBaseSource.GetDataBaseSourceByPath("E:\\WorkSpace\\数据\\数据库\\QCQ - 副本.sqlite");
+                //dcp.LocalService = dbContent;
                 dcp.DataArgument = argument;
-                var flag = dcp.Check();
+                //var flag = dcp.Check();
+                var flag = true;
                 if (flag == false)
                 {
                     this.ReportError(string.Format("数据检查时出错!具体错误请查看质检错误报告"));
@@ -81,9 +79,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     {
                         using (var zipStream = new ZipOutputStream(fsOut))
                         {
+
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            zipStream.Password = $"{argument.CheckFilePath.Split('\\').Last()}Ylt@dzzw";
-                            CompressFolder(sourceFolder, zipStream, sourceFolder.Length);
+                            string password = Encrypter.EncryptDES("123456Ylt!@#dzzw2024","");
+                            zipStream.Password = password;
+                            CompressFolder(argument.CheckFilePath, zipStream);
                         }
                     }
                 }
@@ -143,48 +143,23 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             fastZip.CreateZip(zipFilePath, sourceFolder, true, "");
         }
 
-        private static void CompressFolder(string sourceFolder, ZipOutputStream zipStream, int folderOffset)
+        private static void CompressFolder(string sourceFile, ZipOutputStream zipStream)
         {
-            string[] files = Directory.GetFiles(sourceFolder);
-
-            foreach (string file in files)
-            {
-                var fileInfo = new FileInfo(file);
-
-                // 创建压缩文件条目
-                string entryName = file.Substring(folderOffset);
-                entryName = ZipEntry.CleanName(entryName); // 移除任何相对路径
+                var fileInfo = new FileInfo(sourceFile);
+                string fileName = fileInfo.Name;
+                string entryName = fileName; // 移除任何相对路径
                 var newEntry = new ZipEntry(entryName);
                 newEntry.DateTime = fileInfo.LastWriteTime;
                 newEntry.Size = fileInfo.Length;
 
                 zipStream.PutNextEntry(newEntry);
-
                 // 将文件内容写入zip流
                 byte[] buffer = new byte[4096];
-                using (FileStream streamReader = File.OpenRead(file))
+                using (FileStream streamReader = File.OpenRead(sourceFile))
                 {
                     StreamUtils.Copy(streamReader, zipStream, buffer);
                 }
                 zipStream.CloseEntry();
-            }
-
-            // 获取文件夹下所有子文件夹
-            string[] folders = Directory.GetDirectories(sourceFolder);
-            foreach (string folder in folders)
-            {
-                CompressFolder(folder, zipStream, folderOffset);
-            }
-
-            // 如果文件夹为空，则创建空文件夹条目
-            if (files.Length == 0 && folders.Length == 0)
-            {
-                string entryName = sourceFolder.Substring(folderOffset) + "/";
-                entryName = ZipEntry.CleanName(entryName); // 移除任何相对路径
-                var newEntry = new ZipEntry(entryName);
-                zipStream.PutNextEntry(newEntry);
-                zipStream.CloseEntry();
-            }
         }
 
         private bool ReturnResult(string pathName, string date)

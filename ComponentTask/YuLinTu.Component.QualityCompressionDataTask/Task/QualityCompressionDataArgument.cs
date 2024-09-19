@@ -1,5 +1,6 @@
 ﻿using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Windows;
+using YuLinTu.Library.Business;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -16,7 +17,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         [DisplayLanguage("待检数据路径", IsLanguageName = false)]
         [DescriptionLanguage("待检查数据文件的路径", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string CheckFilePath
         {

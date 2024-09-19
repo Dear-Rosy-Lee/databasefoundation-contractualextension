@@ -8,15 +8,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Documents;
-using Xceed.Wpf.DataGrid;
-using YuLinTu.Appwork;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
-using ZoneDto = YuLinTu.Library.Entity.Zone;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -30,11 +23,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         private bool flag = true;
 
         private string filePath;
-
-        /// <summary>
-        /// 文件路径
-        /// </summary>
-        private FilePathInfo currentPath;
 
         /// <summary>
         /// 服务
