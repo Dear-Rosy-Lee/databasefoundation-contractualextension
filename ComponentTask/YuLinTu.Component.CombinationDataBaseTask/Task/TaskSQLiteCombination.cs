@@ -370,7 +370,7 @@ namespace YuLinTu.Component.CombinationDataBaseTask
         {
             UpdateDatabase upDatabase = new UpdateDatabase();
             List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContextTarget, tableList, dbContextTarget);
+            return upDatabase.UpgradeDatabase(dbContextTarget, tableList);
         }
 
         /// <summary>

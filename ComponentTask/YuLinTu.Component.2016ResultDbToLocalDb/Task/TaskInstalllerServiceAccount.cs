@@ -2,10 +2,17 @@
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
+using NPOI.SS.Formula.Functions;
 using Quality.Business.TaskBasic;
 using System;
 using System.Configuration;
 using System.IO;
+using YuLinTu.Data.SQLite;
+using YuLinTu.Data;
+using YuLinTu.Library.Business;
+using System.Collections.Generic;
+using YuLinTu.Component.Common;
+using YuLinTu.Spatial;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
 {
@@ -57,13 +64,14 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 var dep = new DataImportProgress();
                 dep.FileZone = argument.FileZone;
                 dep.Alert += Report_Alert;
+                dep.CreatDataBase = argument.CreatDataBase;
                 dep.GenerateCoilDot = argument.GenerateCoilDot;
                 dep.ProgressChanged += Report_ProgressChanged;
                 dep.QualityAlert += QualityInofAlert;
                 dep.FilePath = argument.ImportFilePath;
                 dep.LocalService = Library.Business.DataBaseSource.GetDataBaseSource();
                 dep.ID = this.ID;
-                dep.NeedCheck = false;
+                //dep.NeedCheck = argument.NeedCheck;
                 dep.VolumeValue = volumeValue;
                 dep.IsStandCode = IsStandCode == "True" ? true : false;
                 dep.CreatUnit = argument.CreatUnit;

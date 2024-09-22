@@ -544,7 +544,7 @@ namespace YuLinTu.Component.Setting
                     return;
                 }
                 UpdateDatabase upDatabase = new UpdateDatabase();
-                var result = upDatabase.UpgradeDatabase(dbContext, tableList, dbContext);
+                var result = upDatabase.UpgradeDatabase(dbContext, tableList);
                 if (result)
                 {
                     var successPage = new TabMessageBoxDialog

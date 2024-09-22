@@ -1212,7 +1212,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 升级数据库
         /// </summary>
-        public bool UpgradeDatabase(IDbContext dbContext, List<UpgradeDatabase> tableList, IDataSource dataSource)
+        public bool UpgradeDatabase(IDbContext dbContext, List<UpgradeDatabase> tableList)
         {
             try
             {

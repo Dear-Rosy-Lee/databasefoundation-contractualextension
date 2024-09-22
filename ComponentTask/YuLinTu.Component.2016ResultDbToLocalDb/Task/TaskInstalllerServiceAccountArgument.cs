@@ -1,20 +1,13 @@
 ﻿/*
- * (C) 2014  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using YuLinTu.Software;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
 {
     /// <summary>
-    /// 图表检查工具参数类
+    /// 成果导入参数类
     /// </summary>
     public class TaskInstalllerServiceAccountArgument : TaskArgument
     {
@@ -65,6 +58,25 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         }
         private bool _CreatUnit;
 
+
+        //[DisplayLanguage("导入前检查数据")]
+        //[DescriptionLanguage("导入前检查数据")]
+        //public bool NeedCheck
+        //{
+        //    get { return _NeedCheck; }
+        //    set { _NeedCheck = value; NotifyPropertyChanged("NeedCheck"); }
+        //}
+        //private bool _NeedCheck;
+
+        [DisplayLanguage("自动创建数据库")]
+        [DescriptionLanguage("创建数据库并设置为数据源")]
+        public bool CreatDataBase
+        {
+            get { return _CreatDataBase; }
+            set { _CreatDataBase = value; NotifyPropertyChanged("CreatDataBase"); }
+        }
+        private bool _CreatDataBase;
+
         #endregion
 
         #region Ctor
@@ -78,6 +90,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             //Enable32 = true;
             GenerateCoilDot = false;
             CreatUnit = false;
+            CreatDataBase = false;
         }
 
         #endregion

@@ -252,7 +252,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
         {
             UpdateDatabase upDatabase = new UpdateDatabase();
             List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContext, tableList, dbContext);
+            return upDatabase.UpgradeDatabase(dbContext, tableList);
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
         {
             UpdateDatabase upDatabase = new UpdateDatabase();
             List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
-            return upDatabase.UpgradeDatabase(dbContextTarget, tableList, dbContextTarget);
+            return upDatabase.UpgradeDatabase(dbContextTarget, tableList);
         }
 
         /// <summary>

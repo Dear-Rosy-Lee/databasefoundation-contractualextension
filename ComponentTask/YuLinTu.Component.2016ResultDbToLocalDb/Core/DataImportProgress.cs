@@ -14,9 +14,13 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Windows.Documents;
+using YuLinTu.Component.Common;
 using YuLinTu.Data;
+using YuLinTu.Data.SQLite;
 using YuLinTu.Library.Business;
+using YuLinTu.Spatial;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
@@ -117,6 +121,11 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
         public bool CreatUnit { get; set; }
 
+        /// <summary>
+        /// 自动创建数据库
+        /// </summary>
+        public bool CreatDataBase { get; set; }
+
         private Dictionary<string, Library.Entity.Dictionary> dicLandType;
 
         #endregion Propertys
@@ -157,8 +166,18 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
             this.ReportProgress(0, "开始导入数据任务");
             this.ReportInfomation("导入过程将根据数据量的不同，耗时几分钟到几十分钟不等。请在此过程中不要进行任何操作，耐心等待导入的完成。");
-            srid = GetSrid(LocalService);
-
+            currentPath = FileImportConfig.GetCurrent(FilePath, ginfo.ZoneCode + ginfo.Year);
+            if (CreatDataBase)
+            {
+                SpatialReference sr = GetSridFromDK();
+                CreateaDataBase(ginfo.UnitName + ginfo.ZoneCode, sr);
+                DataBaseHelper.SetDefaulZone(ginfo.ZoneCode, ginfo.UnitName);
+                srid = sr.WKID;
+            }
+            else
+            {
+                srid = GetSrid(LocalService);
+            }
             dicLandType = new Dictionary<string, Library.Entity.Dictionary>();
             var dics = LocalService.CreateZoneWorkStation().Get<Library.Entity.Dictionary>(c => c.GroupCode == "C26" && c.Code != string.Empty && c.Code != null);
             foreach (var item in dics)
@@ -454,7 +473,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <returns></returns>
         private bool ProecessZoneData(GainInfo ginfo, IDbContext localService)
         {
-            currentPath = FileImportConfig.GetCurrent(FilePath, ginfo.ZoneCode + ginfo.Year);
             currentPath.YearCode = ginfo.Year;
             currentPath.ZoneCode = ginfo.ZoneCode;
             if (!FileZone.ImportFile.VictorZone.IsExport)
@@ -473,6 +491,37 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 hasError = true;
             }
             return zone == null ? false : true;
+        }
+
+        /// <summary>
+        /// 创建数据库
+        /// </summary>
+        private void CreateaDataBase(string name, SpatialReference sr)
+        {
+            string databasepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, name + ".sqlite");
+            bool filecanread = true;
+            if (File.Exists(databasepath))
+            {
+                using (var stream = File.OpenRead(databasepath))
+                {
+                    if (stream.Length < 1024 * 1024)
+                        filecanread = false;
+                }
+            }
+            if ((!File.Exists(databasepath) || !filecanread) && sr != null)
+            {
+                var ds = DataBaseHelper.TryCreateDatabase(databasepath, sr);
+                if (ds != null)
+                {
+                    DataBaseHelper.TryUpdateDatabase(ds);
+                    DataBaseHelper.SetDefaultDatabaseName(databasepath, true);
+                    LocalService = ds;
+                }
+            }
+            else
+            {
+                LocalService = ProviderDbCSQLite.CreateDataSourceByFileName(databasepath) as IDbContext;
+            }
         }
 
         /// <summary>
@@ -1604,6 +1653,66 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 throw new Exception("无法获取到本地是数据库表ZD_CBD的坐标信息");
             return targetSpatialReference.WKID;
         }
+
+        private SpatialReference GetSridFromDK()
+        {
+            var landfile = currentPath.ShapeFileList.Find(t => t.Name == "DK");
+            var landprj = Path.ChangeExtension(landfile.FilePath, ".prj");
+            if (File.Exists(landprj))
+            {
+                var filebytes = File.ReadAllBytes(landprj);
+                var gstr = Encoding.Default.GetString(filebytes);
+                if (gstr.StartsWith("PROJCS["))
+                {
+                    string epsgstr = GetContentFromString(gstr, "AUTHORITY", "\"]");
+                    epsgstr = epsgstr.Length > 10 ? epsgstr.Substring(6, 4) : "";
+                    int epsgint = 0;
+                    int.TryParse(epsgstr, out epsgint);
+                    if (epsgint > 0)
+                    {
+                        return new SpatialReference(epsgint);
+                    }
+                    else
+                    {
+                        throw new Exception("地块矢量数据的坐标文件EPSG值不正确：" + gstr);
+                    }
+                }
+                else
+                {
+                    throw new Exception("地块矢量数据的坐标文件内容无法解析：" + gstr);
+                }
+            }
+            else
+            {
+                throw new Exception("未找到地块矢量数据的坐标文件：" + landprj);
+            }
+            return null;
+        }
+
+        protected string GetContentFromString(string complateString, string compareString, string splitString)
+        {
+            if (string.IsNullOrEmpty(complateString))
+            {
+                return string.Empty;
+            }
+            int indexstart = complateString.LastIndexOf(compareString);
+            if (indexstart == -1)
+            {
+                return string.Empty;
+            }
+            string shootStr = string.Empty;
+            if (complateString.Length > 10)
+            {
+                shootStr = complateString.Substring(indexstart + compareString.Length + 2);
+                int indexend = shootStr.IndexOf(splitString);
+                if (indexend != -1)
+                {
+                    shootStr = shootStr.Substring(0, indexend);
+                }
+            }
+            return shootStr;
+        }
+
 
         /// <summary>
         /// 循环获取空间记录
