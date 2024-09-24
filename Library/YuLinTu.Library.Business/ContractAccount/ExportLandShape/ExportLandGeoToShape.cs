@@ -446,7 +446,7 @@ namespace YuLinTu.Library.Business
             attributes.AddAttribute(DKFiled.CBSM, bsmindex);
             attributes.AddAttribute(DKFiled.CYSDM, "211011");
             attributes.AddAttribute(DKFiled.CDKBM, en.LandNumber);
-            attributes.AddAttribute(DKFiled.CDKMC, en.LandName);
+            attributes.AddAttribute(DKFiled.CDKMC, en.Name);
             attributes.AddAttribute(DKFiled.CSYQXZ, en.OwnRightType);
             attributes.AddAttribute(DKFiled.CDKLB, en.LandCategory);
             attributes.AddAttribute(DKFiled.CDLDJ, en.LandLevel);

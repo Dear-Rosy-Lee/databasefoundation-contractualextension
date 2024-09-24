@@ -249,7 +249,7 @@ namespace YuLinTu.Library.Business
             Tissue = null;
             Book = null;
             DateValue = null;
-            GC.Collect();
+            //GC.Collect();
         }
 
         #endregion Override
@@ -650,6 +650,14 @@ namespace YuLinTu.Library.Business
             {
                 return;
             }
+            var dldjdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.DLDJ).ToDictionary(d => d.Code);
+            var qdfsdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.CBJYQQDFS).ToDictionary(d => d.Code);
+            var dklbdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.DKLB).ToDictionary(d => d.Code);
+            var jyfsdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.JYFS).ToDictionary(d => d.Code);
+            var tdytdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.TDYT).ToDictionary(d => d.Code);
+            var zzlxdic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.ZZLX).ToDictionary(d => d.Code);
+            var gbzldic = DictList.FindAll(d => d.GroupCode == DictionaryTypeInfo.GBZL).ToDictionary(d => d.Code);
+
             int index = 1;
             LandCollection = SortLandCollection(LandCollection);
             foreach (var land in LandCollection)
@@ -663,7 +671,17 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.AgricultureTableArea + index, land.TableArea.AreaFormat(2, true));//台帐面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureModoArea + index, land.MotorizeLandArea.AreaFormat());//地块机动地面积
                 InitalizeSmallNumber(index, ContractLand.GetLandNumber(land.CadastralNumber));
-                var level = land.LandLevel.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.DLDJ && d.Code == land.LandLevel);
+
+                Dictionary level, mode, callog, manager, plant, plat, purpose = null;
+                dldjdic.TryGetValue(land.LandLevel == null ? "" : land.LandLevel, out level);
+                qdfsdic.TryGetValue(land.ConstructMode == null ? "" : land.ConstructMode, out mode);
+                dklbdic.TryGetValue(land.LandCategory == null ? "" : land.LandCategory, out callog);
+                jyfsdic.TryGetValue(land.ManagementType == null ? "" : land.ManagementType, out manager);
+                gbzldic.TryGetValue(land.PlantType == null ? "" : land.PlantType, out plant);
+                zzlxdic.TryGetValue(land.PlatType == null ? "" : land.PlatType, out plat);
+                tdytdic.TryGetValue(land.Purpose == null ? "" : land.Purpose, out purpose);
+
+                //land.LandLevel.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.DLDJ && d.Code == land.LandLevel);
                 string levelString = level != null ? level.Name : "";
                 levelString = levelString == "未知" ? "" : levelString;
                 levelString = AgricultureSetting.UseSystemLandLevelDescription ? levelString : InitalizeLandLevel(land.LandLevel);
@@ -688,15 +706,15 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.AgricultureNoPreNeighbor + index, SystemSet.NergionbourSet ? InitalizeLandNeightor1(land) : "见附图");//四至
                 SetBookmarkValue(AgricultureBookMark.AgricultureNeighborFigure + index, "见附图");//四至见附图
                 SetBookmarkValue(AgricultureBookMark.AgricultureComment + index, land.Comment);//地块备注
-                var mode = land.ConstructMode.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.CBJYQQDFS && d.Code == land.ConstructMode);
+                //Dictionary mode = land.ConstructMode.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.CBJYQQDFS && d.Code == land.ConstructMode);
                 SetBookmarkValue(AgricultureBookMark.AgricultureConstructMode + index, mode != null ? mode.Name : "");//承包方式
-                var callog = land.LandCategory.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.DKLB && d.Code == land.LandCategory);
+                //Dictionary callog = land.LandCategory.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.DKLB && d.Code == land.LandCategory);
                 SetBookmarkValue(AgricultureBookMark.AgricultureConstractType + index, callog != null ? callog.Name : "");//地块类别
                 SetBookmarkValue(AgricultureBookMark.AgriculturePlotNumber + index, land.PlotNumber);//地块畦数
-                var manager = land.ManagementType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.JYFS && d.Code == land.ManagementType);
+                //Dictionary manager = land.ManagementType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.JYFS && d.Code == land.ManagementType);
                 SetBookmarkValue(AgricultureBookMark.AgricultureManagerType + index, manager != null ? manager.Name : "");//地块经营方式
                 SetBookmarkValue(AgricultureBookMark.AgricultureSourceFamilyName + index, land.FormerPerson);//原户主姓名
-                var plant = land.PlantType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.GBZL && d.Code == land.PlantType);
+                //Dictionary plant = land.PlantType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.GBZL && d.Code == land.PlantType);
                 string plantType = plant != null ? plant.Name : "";
                 SetBookmarkValue(AgricultureBookMark.AgriculturePlantType + index, plantType == "未知" ? "" : plantType);//耕保类型
                 if (land.IsTransfer)
@@ -706,10 +724,10 @@ namespace YuLinTu.Library.Business
                     SetBookmarkValue(AgricultureBookMark.AgricultureTransterTerm + index, land.TransferTime);//流转期限
                     SetBookmarkValue(AgricultureBookMark.AgricultureTransterArea + index, land.PertainToArea.AreaFormat());//流转面积
                 }
-                var plat = land.PlatType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.ZZLX && d.Code == land.PlatType);
+                //Dictionary plat = land.PlatType.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.ZZLX && d.Code == land.PlatType);
                 string platType = plat != null ? plat.Name : "";
                 SetBookmarkValue(AgricultureBookMark.AgriculturePlatType + index, platType == "未知" ? "" : platType);//种植类型
-                var purpose = land.Purpose.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.TDYT && d.Code == land.Purpose);
+                //Dictionary purpose = land.Purpose.IsNullOrEmpty() ? null : DictList.Find(d => d.GroupCode == DictionaryTypeInfo.TDYT && d.Code == land.Purpose);
                 string landPurpose = purpose != null ? purpose.Name : "";
                 SetBookmarkValue(AgricultureBookMark.AgriculturePurpose + index, (string.IsNullOrEmpty(landPurpose) || ToolMath.MatchEntiretyNumber(landPurpose)) ? "种植业" : landPurpose);//土地用途
                 SetBookmarkValue(AgricultureBookMark.AgricultureUseSituation + index, expand.UseSituation);//土地利用情况
@@ -924,6 +942,7 @@ namespace YuLinTu.Library.Business
             othLandawareArea = awareArea - conLandawareArea;
             othLandtableArea = tableArea - conLandtableArea;
             othLandmodoArea = modoArea - conLandmodoArea;
+            var sumarea = LandCollection.Sum(o => Convert.ToDouble(o.ShareArea)).AreaFormat();
             for (int j = 0; j < BookMarkCount; j++)
             {
                 SetBookmarkValue(AgricultureBookMark.AgricultureCount + (j == 0 ? "" : j.ToString()), LandCollection.Count > 0 ? LandCollection.Count.ToString() : string.Empty);//地块总数
@@ -935,7 +954,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.AgricultureModoAreaCount + (j == 0 ? "" : j.ToString()), modoArea.AreaFormat());//地块总机动地面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureContractLandActualAreaCount + (j == 0 ? "" : j.ToString()), conLandActualArea.AreaFormat());//承包地块总实测面积
                 if (IsStockLand != null && (bool)IsStockLand)
-                    SetBookmarkValue("ContractLandActualAreaCount", LandCollection.Sum(o => Convert.ToDouble(o.ShareArea)).AreaFormat());
+                    SetBookmarkValue("ContractLandActualAreaCount", sumarea);
                 SetBookmarkValue(AgricultureBookMark.AgricultureContractLandAwareAreaCount + (j == 0 ? "" : j.ToString()), conLandawareArea.AreaFormat());//承包地块总确权面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureContractLandTableAreaCount + (j == 0 ? "" : j.ToString()), conLandtableArea.AreaFormat());//承包地块总二轮台账面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureContractLandModoAreaCount + (j == 0 ? "" : j.ToString()), conLandmodoArea.AreaFormat());//承包地块总机动地面积

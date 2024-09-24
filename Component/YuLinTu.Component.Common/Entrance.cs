@@ -50,6 +50,7 @@ namespace YuLinTu.Component.Common
             if (cntString != null)
             {
                 var filepath = cntString.ConnectionString.Replace("data source=", "");
+                filepath = filepath.Replace("Data Source=", "");
                 if (File.Exists(filepath))
                 {
                     TryBackupDatabase();
