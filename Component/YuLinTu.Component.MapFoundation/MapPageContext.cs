@@ -6201,7 +6201,9 @@ namespace YuLinTu.Component.MapFoundation
             var tzmj = keyValues.FirstOrDefault(x => x.Key.Equals("TZMJ")).Value;
             if (!string.IsNullOrEmpty(tzmj))
                 land.TableArea = double.Parse(tzmj);
-            land.IsFarmerLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT")).Value);
+            var sfjbnt = keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT")).Value;
+            if (!string.IsNullOrEmpty(sfjbnt))
+                land.IsFarmerLand = bool.Parse(sfjbnt);
             land.Purpose = keyValues.FirstOrDefault(x => x.Key.Equals("TDYT")).Value;
             land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Equals("JYFS")).Value;
             var htid = keyValues.FirstOrDefault(x => x.Key.Equals("HTID")).Value;
