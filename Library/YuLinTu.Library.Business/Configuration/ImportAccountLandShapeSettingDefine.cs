@@ -1,10 +1,6 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -19,7 +15,7 @@ namespace YuLinTu.Library.Business
         ///承包方名称
         /// </summary>
         [DisplayLanguage("承包方名称", IsLanguageName = false)]
-        [DescriptionLanguage("承包方名称", IsLanguageName = false)]
+        [DescriptionLanguage("CBFMC", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string NameIndex
@@ -33,7 +29,7 @@ namespace YuLinTu.Library.Business
         ///承包方户号
         /// </summary>
         [DisplayLanguage("承包方户号", IsLanguageName = false)]
-        [DescriptionLanguage("承包方户号", IsLanguageName = false)]
+        [DescriptionLanguage("CBFHH", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string VpFamilyNumberIndex
@@ -47,7 +43,7 @@ namespace YuLinTu.Library.Business
         ///地块名称
         /// </summary>
         [DisplayLanguage("地块名称", IsLanguageName = false)]
-        [DescriptionLanguage("地块名称", IsLanguageName = false)]
+        [DescriptionLanguage("DKMC", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandNameIndex
@@ -61,7 +57,7 @@ namespace YuLinTu.Library.Business
         ///地块编码
         /// </summary>
         [DisplayLanguage("地块编码", IsLanguageName = false)]
-        [DescriptionLanguage("地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("DKBM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string CadastralNumberIndex
@@ -75,7 +71,7 @@ namespace YuLinTu.Library.Business
         ///原地块编码
         /// </summary>
         [DisplayLanguage("原地块编码", IsLanguageName = false)]
-        [DescriptionLanguage("原地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("YDKBM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string YCadastralNumberIndex
@@ -89,7 +85,7 @@ namespace YuLinTu.Library.Business
         ///调查编码
         /// </summary>
         [DisplayLanguage("调查编码", IsLanguageName = false)]
-        [DescriptionLanguage("调查编码", IsLanguageName = false)]
+        [DescriptionLanguage("DCBM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string SurveyNumberIndex
@@ -103,7 +99,7 @@ namespace YuLinTu.Library.Business
         ///图幅编号
         /// </summary>
         [DisplayLanguage("图幅编号", IsLanguageName = false)]
-        [DescriptionLanguage("图幅编号", IsLanguageName = false)]
+        [DescriptionLanguage("TFBH", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ImageNumberIndex
@@ -117,7 +113,7 @@ namespace YuLinTu.Library.Business
         ///二轮合同面积
         /// </summary>
         [DisplayLanguage("二轮合同面积", IsLanguageName = false)]
-        [DescriptionLanguage("二轮合同面积", IsLanguageName = false)]
+        [DescriptionLanguage("YHTMJM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string TableAreaIndex
@@ -131,7 +127,7 @@ namespace YuLinTu.Library.Business
         ///实测面积
         /// </summary>
         [DisplayLanguage("实测面积", IsLanguageName = false)]
-        [DescriptionLanguage("实测面积", IsLanguageName = false)]
+        [DescriptionLanguage("SCMJ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ActualAreaIndex
@@ -145,7 +141,7 @@ namespace YuLinTu.Library.Business
         ///四至东
         /// </summary>
         [DisplayLanguage("四至东", IsLanguageName = false)]
-        [DescriptionLanguage("四至东", IsLanguageName = false)]
+        [DescriptionLanguage("DKDZ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string EastIndex
@@ -159,7 +155,7 @@ namespace YuLinTu.Library.Business
         ///四至南
         /// </summary>
         [DisplayLanguage("四至南", IsLanguageName = false)]
-        [DescriptionLanguage("四至南", IsLanguageName = false)]
+        [DescriptionLanguage("DKNZ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string SourthIndex
@@ -173,7 +169,7 @@ namespace YuLinTu.Library.Business
         ///四至西
         /// </summary>
         [DisplayLanguage("四至西", IsLanguageName = false)]
-        [DescriptionLanguage("四至西", IsLanguageName = false)]
+        [DescriptionLanguage("DKXZ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string WestIndex
@@ -187,7 +183,7 @@ namespace YuLinTu.Library.Business
         ///四至北
         /// </summary>
         [DisplayLanguage("四至北", IsLanguageName = false)]
-        [DescriptionLanguage("四至北", IsLanguageName = false)]
+        [DescriptionLanguage("DKBZ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string NorthIndex
@@ -201,7 +197,7 @@ namespace YuLinTu.Library.Business
         ///土地用途
         /// </summary>
         [DisplayLanguage("土地用途", IsLanguageName = false)]
-        [DescriptionLanguage("土地用途", IsLanguageName = false)]
+        [DescriptionLanguage("TDYT", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandPurposeIndex
@@ -215,7 +211,7 @@ namespace YuLinTu.Library.Business
         ///地力等级
         /// </summary>
         [DisplayLanguage("地力等级", IsLanguageName = false)]
-        [DescriptionLanguage("地力等级", IsLanguageName = false)]
+        [DescriptionLanguage("DLDJ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandLevelIndex
@@ -229,7 +225,7 @@ namespace YuLinTu.Library.Business
         ///土地利用类型
         /// </summary>
         [DisplayLanguage("土地利用类型", IsLanguageName = false)]
-        [DescriptionLanguage("土地利用类型", IsLanguageName = false)]
+        [DescriptionLanguage("TDLYLX", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandTypeIndex
@@ -243,7 +239,7 @@ namespace YuLinTu.Library.Business
         ///是否基本农田
         /// </summary>
         [DisplayLanguage("是否基本农田", IsLanguageName = false)]
-        [DescriptionLanguage("是否基本农田", IsLanguageName = false)]
+        [DescriptionLanguage("SFJBNT", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string IsFarmerLandIndex
@@ -257,7 +253,7 @@ namespace YuLinTu.Library.Business
         ///指界人
         /// </summary>
         [DisplayLanguage("指界人", IsLanguageName = false)]
-        [DescriptionLanguage("指界人", IsLanguageName = false)]
+        [DescriptionLanguage("ZJRXM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ReferPersonIndex
@@ -271,7 +267,7 @@ namespace YuLinTu.Library.Business
         ///地块类别
         /// </summary>
         [DisplayLanguage("地块类别", IsLanguageName = false)]
-        [DescriptionLanguage("地块类别", IsLanguageName = false)]
+        [DescriptionLanguage("DKLB", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ArableTypeIndex
@@ -313,7 +309,7 @@ namespace YuLinTu.Library.Business
         ///确权面积
         /// </summary>
         [DisplayLanguage("确权面积", IsLanguageName = false)]
-        [DescriptionLanguage("确权面积", IsLanguageName = false)]
+        [DescriptionLanguage("HTMJ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string AwareAreaIndex
@@ -370,7 +366,7 @@ namespace YuLinTu.Library.Business
         ///承包方式
         /// </summary>
         [DisplayLanguage("承包方式", IsLanguageName = false)]
-        [DescriptionLanguage("承包方式", IsLanguageName = false)]
+        [DescriptionLanguage("CBJYQQDFS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ConstructModeIndex
@@ -384,7 +380,7 @@ namespace YuLinTu.Library.Business
         ///畦数
         /// </summary>
         [DisplayLanguage("畦数", IsLanguageName = false)]
-        [DescriptionLanguage("畦数", IsLanguageName = false)]
+        [DescriptionLanguage("WS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string PlotNumberIndex
@@ -398,7 +394,7 @@ namespace YuLinTu.Library.Business
         ///种植类型
         /// </summary>
         [DisplayLanguage("种植类型", IsLanguageName = false)]
-        [DescriptionLanguage("种植类型", IsLanguageName = false)]
+        [DescriptionLanguage("ZZLX", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string PlatTypeIndex
@@ -412,7 +408,7 @@ namespace YuLinTu.Library.Business
         ///经营方式
         /// </summary>
         [DisplayLanguage("经营方式", IsLanguageName = false)]
-        [DescriptionLanguage("经营方式", IsLanguageName = false)]
+        [DescriptionLanguage("JYFS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string ManagementTypeIndex
@@ -426,7 +422,7 @@ namespace YuLinTu.Library.Business
         ///耕保类型
         /// </summary>
         [DisplayLanguage("耕保类型", IsLanguageName = false)]
-        [DescriptionLanguage("耕保类型", IsLanguageName = false)]
+        [DescriptionLanguage("GBLX", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandPlantIndex
@@ -440,7 +436,7 @@ namespace YuLinTu.Library.Business
         ///原户主姓名
         /// </summary>
         [DisplayLanguage("原户主姓名", IsLanguageName = false)]
-        [DescriptionLanguage("原户主姓名", IsLanguageName = false)]
+        [DescriptionLanguage("YHZXM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string SourceNameIndex
@@ -454,7 +450,7 @@ namespace YuLinTu.Library.Business
         ///座落方位
         /// </summary>
         [DisplayLanguage("座落方位", IsLanguageName = false)]
-        [DescriptionLanguage("座落方位", IsLanguageName = false)]
+        [DescriptionLanguage("ZLFW", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandLocationIndex
@@ -510,7 +506,7 @@ namespace YuLinTu.Library.Business
         ///是否流转
         /// </summary>
         [DisplayLanguage("是否流转", IsLanguageName = false)]
-        [DescriptionLanguage("是否流转", IsLanguageName = false)]
+        [DescriptionLanguage("SFLZ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string IsTransterIndex
@@ -524,7 +520,7 @@ namespace YuLinTu.Library.Business
         ///流转方式
         /// </summary>
         [DisplayLanguage("流转方式", IsLanguageName = false)]
-        [DescriptionLanguage("流转方式", IsLanguageName = false)]
+        [DescriptionLanguage("LZFS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string TransterModeIndex
@@ -538,7 +534,7 @@ namespace YuLinTu.Library.Business
         ///流转期限
         /// </summary>
         [DisplayLanguage("流转期限", IsLanguageName = false)]
-        [DescriptionLanguage("流转期限", IsLanguageName = false)]
+        [DescriptionLanguage("LZQX", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string TransterTermIndex
@@ -552,7 +548,7 @@ namespace YuLinTu.Library.Business
         ///流转面积
         /// </summary>
         [DisplayLanguage("流转面积", IsLanguageName = false)]
-        [DescriptionLanguage("流转面积", IsLanguageName = false)]
+        [DescriptionLanguage("LZMJ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string TransterAreaIndex
@@ -566,7 +562,7 @@ namespace YuLinTu.Library.Business
         ///调查员
         /// </summary>
         [DisplayLanguage("调查员", IsLanguageName = false)]
-        [DescriptionLanguage("调查员", IsLanguageName = false)]
+        [DescriptionLanguage("DCY", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandSurveyPersonIndex
@@ -580,7 +576,7 @@ namespace YuLinTu.Library.Business
         ///调查日期
         /// </summary>
         [DisplayLanguage("调查日期", IsLanguageName = false)]
-        [DescriptionLanguage("调查日期", IsLanguageName = false)]
+        [DescriptionLanguage("DCRQ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandSurveyDateIndex
@@ -594,7 +590,7 @@ namespace YuLinTu.Library.Business
         ///调查记事
         /// </summary>
         [DisplayLanguage("调查记事", IsLanguageName = false)]
-        [DescriptionLanguage("调查记事", IsLanguageName = false)]
+        [DescriptionLanguage("DCJS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandSurveyChronicleIndex
@@ -608,7 +604,7 @@ namespace YuLinTu.Library.Business
         ///审核人
         /// </summary>
         [DisplayLanguage("审核人", IsLanguageName = false)]
-        [DescriptionLanguage("审核人", IsLanguageName = false)]
+        [DescriptionLanguage("SHY", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandCheckPersonIndex
@@ -622,7 +618,7 @@ namespace YuLinTu.Library.Business
         ///审核日期
         /// </summary>
         [DisplayLanguage("审核日期", IsLanguageName = false)]
-        [DescriptionLanguage("审核日期", IsLanguageName = false)]
+        [DescriptionLanguage("SHRQ", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandCheckDateIndex
@@ -636,7 +632,7 @@ namespace YuLinTu.Library.Business
         ///审核意见
         /// </summary>
         [DisplayLanguage("审核意见", IsLanguageName = false)]
-        [DescriptionLanguage("审核意见", IsLanguageName = false)]
+        [DescriptionLanguage("SHJS", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string LandCheckOpinionIndex
@@ -650,8 +646,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         ///备注
         /// </summary>
-        [DisplayLanguage("备注", IsLanguageName = false)]
-        [DescriptionLanguage("备注", IsLanguageName = false)]
+        [DisplayLanguage("地块备注", IsLanguageName = false)]
+        [DescriptionLanguage("DKBZXX", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string CommentIndex
@@ -675,7 +671,7 @@ namespace YuLinTu.Library.Business
         }
         private string isRegisterIndex;
 
-        
+
 
         public ImportAccountLandShapeSettingDefine()
         {

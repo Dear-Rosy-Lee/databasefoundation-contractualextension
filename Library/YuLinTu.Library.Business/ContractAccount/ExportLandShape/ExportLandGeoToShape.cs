@@ -226,7 +226,7 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckPersonIndex) header.AddColumn("审核人", 'C', 150, 0);
                 if (exportContractLandShapeDefine.LandCheckDateIndex) header.AddColumn("审核日期", 'C', 150, 0);
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) header.AddColumn("审核意见", 'C', 150, 0);
-                if (exportContractLandShapeDefine.CommentIndex) header.AddColumn("备注", 'C', 250, 0);
+                if (exportContractLandShapeDefine.CommentIndex) header.AddColumn("地块备注", 'C', 250, 0);
             }
 
             return header;
@@ -422,7 +422,7 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckPersonIndex) attributes.AddAttribute("审核人", geoland.LandExpand != null ? geoland.LandExpand.CheckPerson : "");
                 if (exportContractLandShapeDefine.LandCheckDateIndex) attributes.AddAttribute("审核日期", geoland.LandExpand != null ? geoland.LandExpand.CheckDate : null);
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) attributes.AddAttribute("审核意见", geoland.LandExpand != null ? geoland.LandExpand.CheckOpinion : "");
-                if (exportContractLandShapeDefine.CommentIndex) attributes.AddAttribute("备注", geoland.Comment);
+                if (exportContractLandShapeDefine.CommentIndex) attributes.AddAttribute("地块备注", geoland.Comment);
                 if (vp != null)
                 {
                     attributes.AddAttribute("承包方户号", vp.FamilyNumber);

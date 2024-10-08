@@ -4,29 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Library.Business;
-using YuLinTu.Windows;
-using System.Threading;
-using YuLinTu.Library.Controls;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Data.Shapefile;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
-using System.Collections;
-using System.Reflection;
-using YuLinTu.Spatial;
+using YuLinTu.Data.Shapefile;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
+using YuLinTu.Spatial;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.MapFoundation
 {

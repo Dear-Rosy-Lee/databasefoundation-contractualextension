@@ -739,7 +739,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         ///备注
         /// </summary>
-        [DisplayLanguage("备注", IsLanguageName = false)]
+        [DisplayLanguage("地块备注", IsLanguageName = false)]
         [DescriptionLanguage("备注", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBoolean))]

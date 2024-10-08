@@ -411,6 +411,7 @@ namespace YuLinTu.Library.Controls
             {
                 PropertyInfo info = infos[i];
                 var display = info.GetAttribute<DisplayLanguageAttribute>();
+                var description = info.GetAttribute<DescriptionLanguageAttribute>();
                 if (!allCheck.IsChecked.Value)
                 {
                     info.SetValue(ImportLandShapeInfoDefine, "None", null);
@@ -423,9 +424,16 @@ namespace YuLinTu.Library.Controls
                 {
                     info.SetValue(ImportLandShapeInfoDefine, display.Name, null);
                 }
+                else
+                {
+                    fvalue = indexKv.Any(t => t.Value == description.Description);
+                    if (fvalue)
+                    {
+                        info.SetValue(ImportLandShapeInfoDefine, description.Description, null);
+                    }
+                }
             }
         }
-
     }
 
     #region Class
