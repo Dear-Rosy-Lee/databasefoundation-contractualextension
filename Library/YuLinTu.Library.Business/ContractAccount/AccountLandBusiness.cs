@@ -1263,7 +1263,13 @@ namespace YuLinTu.Library.Business
             {
                 try
                 {
-                    addPerson = zonePersonList.Find(t => t.FamilyNumber == (ObjectExtensions.GetPropertyValue(shpLandItem, allGetSelectColList[1]) as string));
+                    var fnum = ObjectExtensions.GetPropertyValue(shpLandItem, allGetSelectColList[1]) as string;
+                    addPerson = zonePersonList.Find(t => t.FamilyNumber == fnum);
+                    if (fnum != null && fnum.Length == 18 && addPerson == null)
+                    {
+                        var nfnum = fnum.Substring(14, 4).TrimStart('0');
+                        addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                    }
                 }
                 catch
                 {
