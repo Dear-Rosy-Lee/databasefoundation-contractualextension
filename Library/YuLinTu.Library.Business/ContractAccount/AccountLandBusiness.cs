@@ -1001,10 +1001,13 @@ namespace YuLinTu.Library.Business
             dbContext.BeginTransaction();
             try
             {
+                var dicTDYT = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDYT);
+                var dicDLDJ = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DLDJ);
+                var dicTDLYLX = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);
                 for (int i = 0; i < modifyLandList.Count; i++)
                 {
                     var resLand = new ContractLand();
-                    resLand = modifyContractLandinfo(modifyLandList[i], modifyData[i], allGetSelectColList, zoneNameInfo, i);
+                    resLand = modifyContractLandinfo(modifyLandList[i], modifyData[i], allGetSelectColList, zoneNameInfo, i);//, dicTDYT, dicDLDJ, dicTDYT);
                     if (resLand == null)
                     {
                         //dbContext.RollbackTransaction(); return 0;
@@ -1265,10 +1268,18 @@ namespace YuLinTu.Library.Business
                 {
                     var fnum = ObjectExtensions.GetPropertyValue(shpLandItem, allGetSelectColList[1]) as string;
                     addPerson = zonePersonList.Find(t => t.FamilyNumber == fnum);
-                    if (fnum != null && fnum.Length == 18 && addPerson == null)
+                    if (fnum != null && addPerson == null)
                     {
-                        var nfnum = fnum.Substring(14, 4).TrimStart('0');
-                        addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                        if (fnum.Length == 18)
+                        {
+                            var nfnum = fnum.Substring(14, 4).TrimStart('0');
+                            addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                        }
+                        if (fnum.Length == 4)
+                        {
+                            var nfnum = fnum.TrimStart('0');
+                            addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                        }
                     }
                 }
                 catch
@@ -1425,11 +1436,12 @@ namespace YuLinTu.Library.Business
                     if (tableArea == null)
                         getTableArea = 0.0;
                     else
-                        getTableArea = (double)tableArea;
+                        getTableArea = Convert.ToDouble(tableArea);
                 }
                 catch
                 {
-                    this.ReportError(string.Format("第" + i + "条Shape数据台账面积'{0}'错误，无法转换", ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[6]).ToString()));
+                    this.ReportError(string.Format("第" + i + "条Shape数据台账面积'{0}'错误，无法转换",
+                        ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[7]).ToString()));
                     falg = false;
                 }
                 targetLand.TableArea = getTableArea;
@@ -1447,12 +1459,13 @@ namespace YuLinTu.Library.Business
                     }
                     else
                     {
-                        getActualArea = (double)actualArea;
+                        getActualArea = Convert.ToDouble(actualArea);
                     }
                 }
                 catch
                 {
-                    this.ReportError(string.Format("第" + i + "条Shape数据实测面积'{0}'错误，无法转换", ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[7]).ToString()));
+                    this.ReportError(string.Format("第" + i + "条Shape数据实测面积'{0}'错误，无法转换",
+                        ObjectExtensions.GetPropertyValue(shapeData, selectColNameList[8]).ToString()));
                     falg = false;
                 }
                 targetLand.ActualArea = getActualArea;
@@ -1499,10 +1512,9 @@ namespace YuLinTu.Library.Business
             {
                 var fieldvalue = GetproertValue(shapeData, selectColNameList[14]);
 
-                var dictDLDJ = DictList.Find(c => (c.Name.IsNullOrEmpty() ? "" : c.Name.ToString().Trim()) == fieldvalue && c.GroupCode == DictionaryTypeInfo.DLDJ);
+                var dictDLDJ = DictList.Find(c => c.GroupCode == DictionaryTypeInfo.DLDJ && (c.Name == fieldvalue || c.Code == fieldvalue));
                 if (dictDLDJ == null)
                 {
-                    //targetLand.LandLevel = "";
                     this.ReportError(string.Format("第" + i + "条Shape数据地力等级名称{0}，无法入库", fieldvalue.IsNullOrEmpty() ? "为空" : fieldvalue + "错误"));
                     falg = false;
                 }
@@ -1510,7 +1522,6 @@ namespace YuLinTu.Library.Business
                 {
                     targetLand.LandLevel = dictDLDJ.Code;
                 }
-                //}
             }
             if ((string)infoList[15].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {
@@ -1688,15 +1699,7 @@ namespace YuLinTu.Library.Business
             {
                 string s = GetproertValue(shapeData, selectColNameList[28]);
                 bool boolValue = s == "是" || s == "true" || s == "True" || s == "TRUE" ? true : false;
-                if (s.IsNullOrEmpty())
-                {
-                    this.ReportError(string.Format("第" + i + "条Shape数据是否流转名称{0}，无法入库", s.IsNullOrEmpty() ? "为空" : s + "错误"));
-                    falg = false;
-                }
-                else
-                {
-                    targetLand.IsTransfer = boolValue;
-                }
+                targetLand.IsTransfer = boolValue;
             }
             if ((string)infoList[29].GetValue(ImportLandShapeInfoDefine, null) != "None")
             {

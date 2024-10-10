@@ -548,7 +548,7 @@ namespace YuLinTu.Library.Controls
         //                return;
         //            }
         //            var meta = dotCoilPage.GetArgument();
-        //            var importDot = new InitializeLandDotCoil();
+        //            var importDot = new InitializeLandDotCoilTask();
         //            importDot.Argument = meta;
         //            importDot.ContractLandInitialTool();
 

@@ -42,15 +42,15 @@ namespace YuLinTu.Library.Business
             {
                 return;
             }
-            var importDot = new InitializeLandDotCoil();
+            var importDot = new InitializeLandDotCoilTask();
 
             #region 通过反射等机制定制化具体的业务处理类
             var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes().Where(t => t.BaseType != null && t.BaseType.Equals(typeof(InitializeLandDotCoil))))
+                .SelectMany(a => a.GetTypes().Where(t => t.BaseType != null && t.BaseType.Equals(typeof(InitializeLandDotCoilTask))))
                 .ToArray();
             if (types.Length > 0)
             {
-                importDot = Activator.CreateInstance(types[0]) as InitializeLandDotCoil;
+                importDot = Activator.CreateInstance(types[0]) as InitializeLandDotCoilTask;
             }
 
             #endregion
@@ -90,7 +90,7 @@ namespace YuLinTu.Library.Business
         #endregion
     }
 
-    //public class InitializeLandDotCoilSS : InitializeLandDotCoil
+    //public class InitializeLandDotCoilSS : InitializeLandDotCoilTask
     //{
     //    public override void EvaluateDotCoils(TaskInitializeLandDotCoilArgument meta, string zoneCode,
     //         IDbContext db, IBuildLandBoundaryAddressCoilWorkStation coilStation)

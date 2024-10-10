@@ -213,7 +213,7 @@
                                 <Label Content="至" VerticalAlignment="Center" Style="{StaticResource LableStyle}"/>
                                 <wpftoolkit:DoubleUpDown x:Name="wtMaxAngle"  Height="30" Width="100" Padding="7,0,0,0" Margin="0,0,0,0" Maximum="180.0" Minimum="0.0" 
                                               IsEnabled="{Binding ElementName=cbFilterDot, Path=IsChecked}" Value="120"/>
-                                <CheckBox Name="cbUseArgorithm" Content="补充查找明显拐点" IsEnabled="{Binding ElementName=cbFilterDot, Path=IsChecked}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="40,0,0,0"/>
+                                <CheckBox Name="cbUseArgorithm" IsChecked="True" Content="补充查找明显拐点" IsEnabled="{Binding ElementName=cbFilterDot, Path=IsChecked}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="40,0,0,0"/>
                             </StackPanel>
                             <!--<Label x:Name="lbFilterDot" Content="过滤界址点:" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{StaticResource LableStyle}" Margin="0,10,0,0"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,10,0,0">
@@ -389,7 +389,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>                                
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
@@ -480,13 +480,13 @@
 
                         <Label Content="替换为" VerticalAlignment="Center"/>
                         <cmps:MetroTextBox  IsEnabled="{Binding ElementName=lbAddressPointPrefix4,Path=IsChecked}" x:Name="cmbAddressPointPrefix6"  Width="100" Height="30" Padding="7,0,0,0" x:FieldModifier="public"/>
-                                                               
+
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="40" Grid.ColumnSpan="4" Grid.Row="9"  Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" >
-                        
+
                         <CheckBox x:Name="lbAddressPointPrefix5"  Margin="5,0,0,0" Content="赋值内部有环多面其中界址线毗邻地物权利人  " VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"  />
-                      
+
                         <cmps:MetroTextBox  IsEnabled="{Binding ElementName=lbAddressPointPrefix5,Path=IsChecked}" x:Name="cmbAddressPointPrefix7"  Width="100" Height="30" Padding="7,0,0,0"/>
 
                     </StackPanel>

@@ -17,7 +17,7 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 初始化界址点线信息任务
     /// </summary>
-    public class InitializeLandDotCoil : Task
+    public class InitializeLandDotCoilTask : Task
     {
         #region Field
         public const string POSITIONOUT = "3";

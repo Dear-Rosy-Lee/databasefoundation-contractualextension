@@ -1858,7 +1858,10 @@ namespace YuLinTu.Library.Controls
             queueFilter.DoWithInterruptCurrent(
                 go =>
                 {
-                    this.Dispatcher.Invoke(new Action(() => { SetItemVisible(go); }));
+                    this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        SetItemVisible(go);
+                    }));
                 },
                 completed =>
                 {
@@ -5779,7 +5782,7 @@ namespace YuLinTu.Library.Controls
                 try
                 {
                     var arg = CreateArgumentBySet(dotCoilPage, true, null, dotCoilPage.CurrentLand);
-                    var importDot = new InitializeLandDotCoil();
+                    var importDot = new InitializeLandDotCoilTask();
                     importDot.Argument = arg;
                     importDot.SingleContractLandInitialTool();
                     ShowBox("初始化单个地块界址信息", string.Format("成功初始化地块编码：{0}的界址信息", CurrentLandBinding.Tag.LandNumber), eMessageGrade.Infomation);

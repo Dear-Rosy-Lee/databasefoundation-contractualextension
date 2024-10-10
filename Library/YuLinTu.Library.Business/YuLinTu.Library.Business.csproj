@@ -488,7 +488,7 @@
     <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskGroupInitializeLandCoilOperation.cs" />
     <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskInitializeLandCoilArgument.cs" />
     <Compile Include="ContractAccount\InitializeLandCoilFolder\TaskInitializeLandCoilOperation.cs" />
-    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\InitializeLandDotCoil.cs" />
+    <Compile Include="ContractAccount\InitializeLandDotCoilFolder\InitializeLandDotCoilTask.cs" />
     <Compile Include="ContractAccount\InitializeLandDotCoilFolder\InitialJZXInfoUseSN.cs" />
     <Compile Include="ContractAccount\InitializeLandDotCoilFolder\TaskInitializeLandDotCoilArgument.cs" />
     <Compile Include="ContractAccount\InitializeLandDotCoilFolder\TaskInitializeLandDotCoilOperation.cs" />
