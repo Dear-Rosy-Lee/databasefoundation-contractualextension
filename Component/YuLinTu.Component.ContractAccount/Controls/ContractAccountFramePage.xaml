@@ -380,6 +380,7 @@
                                     Text="界址信息调查表"
                                     ToolTip="导出(批量)界址信息调查表Excel" />
                             </metro:MetroButton>
+                            <cmps:SeparatorV    Height="1"    Margin="3,0,3,0"    BorderBrush="LightGray"    BorderThickness="0,1,0,0" />
                             <metro:MetroButton
                                 x:Name="btnExportPublishExcel"
                                 Padding="8,4"
@@ -403,6 +404,18 @@
                                     ImagePosition="Left"
                                     Text="摸底调查核实表"
                                     ToolTip="导出(批量)摸底调查核实表Excel" />
+                            </metro:MetroButton>
+                            <metro:MetroButton
+                                x:Name="btnExportVerifyExcelSingle"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
+                                    ImagePosition="Left"
+                                    Text="摸底调查核实表-单户"
+                                    ToolTip="导出(批量)单户摸底调查核实表Excel" />
                             </metro:MetroButton>
                             <metro:MetroButton
                                 x:Name="btnExportVerifyExcelPrint"

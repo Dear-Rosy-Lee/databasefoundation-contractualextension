@@ -300,6 +300,10 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />
+    <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelArgument.cs" />
+    <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelOperation.cs" />
+    <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskGroupExportLandVerifySingleExcel.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelPrintTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\ExportLandVerifyExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerify\LandVerifyDefine.cs" />
@@ -630,6 +634,7 @@
     <Compile Include="SecondTableLand\VerifyLandInformation.cs" />
     <Compile Include="ContractRegeditBook\SettingEntity.cs" />
     <Compile Include="Setting\AgriculturePrintSetting.cs" />
+    <Compile Include="Task\TaskGroupExportArgument.cs" />
     <Compile Include="Task\DataProcess.cs" />
     <Compile Include="Tool\ToolChinese.cs" />
     <Compile Include="Tool\ToolCoding.cs" />

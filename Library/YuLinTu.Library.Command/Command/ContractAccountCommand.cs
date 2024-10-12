@@ -387,6 +387,11 @@ namespace YuLinTu.Library.Command
         public const string RefreshName = "refresh";
 
         /// <summary>
+        /// 导出单户摸底调查命令名称
+        /// </summary>
+        public const string ExportVerifyExcelSingleName = "exportverifyexcelsingle";
+
+        /// <summary>
         /// 下载数据命令名称
         /// </summary>
         public const string DownLoadName = "download";
@@ -787,6 +792,12 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public RoutedCommand Refresh = new RoutedCommand(RefreshName, typeof(Button));
 
+        /// <summary>
+        /// 导出单户摸底调查表
+        /// </summary>
+        public RoutedCommand ExportVerifyExcelSingle = new RoutedCommand(ExportVerifyExcelSingleName, typeof(Button));
+
+
         #endregion Files - Command
 
         #region Files - Binding
@@ -1036,6 +1047,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding MultiParcelExportBind = new CommandBinding();
 
         /// <summary>
+        /// 导出单户摸底调查表
+        /// </summary>
+        public CommandBinding ExportVerifyExcelSingleBind = new CommandBinding();
+
+        /// <summary>
         /// 导出确权确股地块示意图绑定
         /// </summary>
         public CommandBinding MultiParcelStockExportBind = new CommandBinding();
@@ -1208,6 +1224,7 @@ namespace YuLinTu.Library.Command
             ExportVectorDotShapeBind.Command = ExportVectorDotShape;
             ExportVectorCoilShapeBind.Command = ExportVectorCoilShape;
             SenderExcelTemplateBind.Command = SenderExcelTemplate;
+            ExportVerifyExcelSingleBind.Command = ExportVerifyExcelSingle;
             VPExcelTemplateBind.Command = VPExcelTemplate;
             LandExcelTemplateBind.Command = LandExcelTemplate;
             BoundaryExcelTemplateBind.Command = BoundaryExcelTemplate;

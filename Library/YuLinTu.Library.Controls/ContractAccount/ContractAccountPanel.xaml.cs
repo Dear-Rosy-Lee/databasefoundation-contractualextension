@@ -914,6 +914,25 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 导出方法
+        /// </summary>
+        public void ExportDataCommonMethod(string zoneName, string header, Action<string> ActMethod)
+        {
+            ExportDataPage extPage = new ExportDataPage(zoneName, TheWorkPage, header);
+            extPage.Workpage = TheWorkPage;
+            TheWorkPage.Page.ShowMessageBox(extPage, (b, r) =>
+            {
+                string saveFilePath = extPage.FileName;
+                if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                {
+                    return;
+                }
+                if (ActMethod != null)
+                    ActMethod(saveFilePath);
+            });
+        }
+
+        /// <summary>
         /// 单进度导出台账5个表
         /// </summary>
         /// <param name="type"></param>
@@ -3778,21 +3797,14 @@ namespace YuLinTu.Library.Controls
             import.StartAsync();
         }
 
-        /// <summary>
-        /// 多进度导出界址信息Excel
-        /// </summary>
-        private void TaskGroupExportBoundaryInfoExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "")
+        private void TaskGroupExportExcelByType(eContractAccountType type, string taskName, string taskDes, string filePath,
+            Type argtype, Type opraType)
         {
-            //DateTime? date = SetPublicyTableDate();
-            //if (date == null)
-            //{
-            //    return;
-            //}
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
             List<Zone> allZones = zoneStation.GetAllZones(currentZone);
-            TaskGroupExportBoundaryInfoExcelArgument meta = new TaskGroupExportBoundaryInfoExcelArgument();
+            var meta = Activator.CreateInstance(argtype, true) as TaskGroupExportArgument;
             meta.FileName = filePath;
             meta.ArgType = type;
             meta.Database = DbContext;
@@ -3800,7 +3812,40 @@ namespace YuLinTu.Library.Controls
             meta.SelfAndSubsZones = SelfAndSubsZones;
             meta.AllZones = allZones;
             meta.DictList = DictList;
-            TaskGroupExportBoundaryInfoExcelOperation import = new TaskGroupExportBoundaryInfoExcelOperation();
+            var import = Activator.CreateInstance(opraType, true) as TaskGroup;
+            import.Argument = meta;
+            import.Description = taskDes;
+            import.Name = taskName;
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
+        }
+
+
+        /// <summary>
+        /// 多进度导出界址信息Excel
+        /// </summary>
+        private void TaskGroupExportBoundaryInfoExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "")
+        {
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
+            List<Zone> allZones = zoneStation.GetAllZones(currentZone);
+            var meta = new TaskGroupExportBoundaryInfoExcelArgument();
+            meta.FileName = filePath;
+            meta.ArgType = type;
+            meta.Database = DbContext;
+            meta.CurrentZone = currentZone;
+            meta.SelfAndSubsZones = SelfAndSubsZones;
+            meta.AllZones = allZones;
+            meta.DictList = DictList;
+            var import = new TaskGroupExportBoundaryInfoExcelOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -4214,6 +4259,33 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 导出单户摸底调查表
+        /// </summary>
+        public void ExportVerifyExcelSingle()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            //批量导出
+            if (currentZone.Level > eZoneLevel.Town)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.VolumnExportZoneError);
+                return;
+            }
+            string markDesc = $"批量导出{currentZone.FullName}的单户摸底调查表";
+            string taskName = "导出单户摸底调查表";
+
+            ExportDataCommonMethod(currentZone.FullName, taskName,
+                (filepath) =>
+                {
+                    TaskGroupExportExcelByType(eContractAccountType.ExportLandVerifySingeExcel,
+                       taskName, markDesc, filepath, typeof(TaskGroupExportArgument), typeof(TaskGroupExportLandVerifySingleExcel));
+                });
+        }
+
+        /// <summary>
         /// 导出台账调查表-土地承包经营权台账调查表
         /// </summary>
         public void ExportAccountLandNameExcel(bool isAccountExcel)
@@ -4261,6 +4333,8 @@ namespace YuLinTu.Library.Controls
                 ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
             }
         }
+
+
 
         /// <summary>
         /// 导出台账调查表-土地承包经营权登记公示表

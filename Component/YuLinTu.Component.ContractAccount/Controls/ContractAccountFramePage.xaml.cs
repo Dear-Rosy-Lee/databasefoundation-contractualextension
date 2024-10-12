@@ -278,7 +278,7 @@ namespace YuLinTu.Component.ContractAccount
             //SetCommandBinding(btnParcelSetting, command.ParcelSetting, command.ParcelSettingBind);
             //SetCommandBinding(btnMutiParcelExportSamll, command.MultiParcelSmallExport, command.MultiParcelExportSmallBind);
             SetCommandBinding(btnMultiParcelExport, command.MultiParcelExport, command.MultiParcelExportBind);
-
+            SetCommandBinding(btnExportVerifyExcelSingle, command.ExportVerifyExcelSingle, command.ExportVerifyExcelSingleBind);
             // 确权确股命令绑定
             SetCommandBinding(btnMultiParcelStockImage, command.MultiParcelStockExport, command.MultiParcelStockExportBind);
 
@@ -594,6 +594,10 @@ namespace YuLinTu.Component.ContractAccount
 
                 case ContractAccountCommand.AreaNumericFormatName:
                     contractAccountPanel.SetAreaNumericFormat();
+                    break;
+
+                case ContractAccountCommand.ExportVerifyExcelSingleName:
+                    contractAccountPanel.ExportVerifyExcelSingle();
                     break;
 
                 case ContractAccountCommand.FarmerLandName:

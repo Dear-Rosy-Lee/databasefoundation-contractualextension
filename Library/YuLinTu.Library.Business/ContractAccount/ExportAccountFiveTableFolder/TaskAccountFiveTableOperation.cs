@@ -4,23 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
 using YuLinTu;
 using YuLinTu.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Collections;
-using YuLinTu.Data.Dynamic;
-using YuLinTu.Data.Shapefile;
-using YuLinTu.Library.Office;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
-using Microsoft.Scripting.Actions;
 
 namespace YuLinTu.Library.Business
 {
