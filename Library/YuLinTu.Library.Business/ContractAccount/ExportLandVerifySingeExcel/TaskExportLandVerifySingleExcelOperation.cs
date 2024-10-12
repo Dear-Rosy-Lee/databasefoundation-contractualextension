@@ -110,8 +110,6 @@ namespace YuLinTu.Library.Business
                     return result;
                 }
 
-
-                string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
                 string tempPath = TemplateHelper.ExcelTemplate("土地延包农户基本情况摸底调查表");
                 var zoneStation = argument.DbContext.CreateZoneWorkStation();
                 var tissueStation = argument.DbContext.CreateSenderWorkStation();
@@ -151,18 +149,16 @@ namespace YuLinTu.Library.Business
                         }
                     }
                     var export = new ExportLandVerifySingleExcelTable();
-                    export.SaveFilePath = Path.Combine(openFilePath, $"{vp.FamilyNumber}-{vp.Name} 单户摸底调查表.xls");
+                    export.SaveFilePath = Path.Combine(openFilePath, $"{vp.FamilyNumber}-{vp.Name}-单户摸底调查表.xls");
                     export.CurrentZone = argument.CurrentZone;
                     export.DbContext = argument.DbContext;
                     export.TemplateFile = tempPath;
                     export.AccountLandFamily = accountLandFamily;
                     export.Tissue = tissue;
-                    export.ZoneDesc = excelName;
                     export.PostProgressEvent += export_PostProgressEvent;
                     export.PostErrorInfoEvent += export_PostErrorEvent;
                     result = export.BeginToZone(tempPath);
                     export.SaveAs(export.SaveFilePath);
-                    string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
                 }
 
                 if (result)
