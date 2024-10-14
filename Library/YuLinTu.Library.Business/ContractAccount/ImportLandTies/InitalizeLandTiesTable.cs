@@ -190,6 +190,7 @@ namespace YuLinTu.Library.Business
                             expand.ChangeComment = change;
                             landFamily.CurrentFamily.FamilyExpand = expand;
                             AddLandFamily(landFamily);
+                            InitalizeFamilyInformation(landFamily, vps);
                             concordIndex++;
                         }
 
@@ -198,7 +199,9 @@ namespace YuLinTu.Library.Business
                             ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
                             continue;
                         }
-                        GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
+                        //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
+                        AddPerson(landFamily);
+                        InitalizeLandInformation(landFamily, contractLands);
                     }
                     catch (Exception ex)
                     {
@@ -343,7 +346,7 @@ namespace YuLinTu.Library.Business
                 expand.ConstructMode = eConstructMode.OtherContractType;
             }
             landFamily.CurrentFamily.FamilyExpand = expand;
-            AddPerson(landFamily);
+            //AddPerson(landFamily);
         }
 
         private void RecordErrorInformation(string errorInfo)
@@ -497,6 +500,11 @@ namespace YuLinTu.Library.Business
             if (!string.IsNullOrEmpty(person.Name))
             {
                 landFamily.Persons.Add(person);
+            }
+            string addresstring = GetString(allItem[currentIndex, 5]);
+            if (!string.IsNullOrEmpty(addresstring.Trim()))
+            {
+                landFamily.CurrentFamily.Address = addresstring.Trim();
             }
             if (person.Name == landFamily.CurrentFamily.Name)
             {

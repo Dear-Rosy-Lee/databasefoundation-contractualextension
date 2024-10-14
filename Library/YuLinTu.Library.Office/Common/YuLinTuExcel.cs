@@ -1,11 +1,8 @@
 ﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+using Aspose.Cells;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Aspose.Cells;
 
 namespace YuLinTu.Library.Office
 {
