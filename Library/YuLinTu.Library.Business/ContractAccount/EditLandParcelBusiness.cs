@@ -195,7 +195,7 @@ namespace YuLinTu.Library.Business
             }
             try
             {
-                list = ContractLandHeler.GetParcelLands(zoneCode, dbContext);
+                list = ContractLandHeler.GetParcelLands(zoneCode, dbContext, false);
                 //list = landStation.GetCollection(zoneCode, option);
             }
             catch (Exception ex)

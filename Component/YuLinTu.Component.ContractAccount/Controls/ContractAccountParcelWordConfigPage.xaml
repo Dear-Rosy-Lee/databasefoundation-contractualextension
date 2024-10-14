@@ -581,6 +581,7 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -762,6 +763,18 @@
                                         IsEnabled="{Binding ElementName=cbIsShowViewOfAllScale, Path=IsChecked}"
                                         Style="{StaticResource doubleupdown}"
                                         Value="{Binding ViewOfAllScaleWH, Mode=TwoWay}" />
+                                </DockPanel>
+                                <DockPanel
+                                    Grid.Row="10"
+                                    Grid.Column="0"
+                                    Style="{DynamicResource grid_item}">
+                                    <CheckBox 
+                                        Grid.Row="9"
+                                        Grid.Column="0"
+                                        IsChecked="{Binding ContainsOtherZoneLand, Mode=TwoWay}"
+                                        Style="{StaticResource checkBox}">
+                                        以村为单位搜索地块
+                                    </CheckBox>
                                 </DockPanel>
                             </Grid>
                         </cmps:OptionsContainer>

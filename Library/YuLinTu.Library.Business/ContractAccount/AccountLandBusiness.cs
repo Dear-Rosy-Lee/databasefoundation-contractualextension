@@ -1272,13 +1272,11 @@ namespace YuLinTu.Library.Business
                     {
                         if (fnum.Length == 18)
                         {
-                            var nfnum = fnum.Substring(14, 4).TrimStart('0');
-                            addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                            addPerson = zonePersonList.Find(t => (t.ZoneCode + t.FamilyNumber.PadLeft(4, '0')) == fnum);
                         }
                         if (fnum.Length == 4)
                         {
-                            var nfnum = fnum.TrimStart('0');
-                            addPerson = zonePersonList.Find(t => t.FamilyNumber == nfnum);
+                            addPerson = zonePersonList.Find(t => t.FamilyNumber.PadLeft(4, '0') == fnum);
                         }
                     }
                 }
@@ -3561,9 +3559,9 @@ namespace YuLinTu.Library.Business
         /// <param name="person">当前户</param>
         /// <param name="filePath">保存文件路径</param>
         /// <param name="save">是否保存</param>
-        public void ExportMultiParcelWord(Zone currentZone, VirtualPerson person, string filePath, bool save = false, string imageSavePath = "", bool? isStockLand = false)
+        public void ExportMultiParcelWord(Zone currentZone, List<ContractLand> listLand, VirtualPerson person, string filePath, bool save = false, string imageSavePath = "", bool? isStockLand = false)
         {
-            List<ContractLand> listLand = new List<ContractLand>();
+            //List<ContractLand> listLand = new List<ContractLand>();
             List<ContractLand> listGeoLand = new List<ContractLand>(1000);
             List<XZDW> listLine = new List<XZDW>(1000);
             List<DZDW> listPoint = new List<DZDW>(1000);
@@ -3596,7 +3594,7 @@ namespace YuLinTu.Library.Business
                 string savePathOfImage = string.IsNullOrEmpty(imageSavePath) ? filePath : imageSavePath;
                 string savePathOfWord = InitalizeLandImageName(filePath, person); // filePath + @"\" + familyNuber + "-" + person.Name + "-" + TemplateFile.ParcelWord + ".doc";
 
-                listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
+                //listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
                 var VillageZone = GetParent(currentZone);
                 if (isStockLand != null)
                 {
@@ -3725,8 +3723,7 @@ namespace YuLinTu.Library.Business
                 }));
 
                 GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
+                GC.WaitForFullGCComplete();
             }
         }
 

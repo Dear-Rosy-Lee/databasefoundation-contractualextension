@@ -5359,7 +5359,7 @@ namespace YuLinTu.Library.Controls
                         return;
                     }
                     var landStation = DbContext.CreateContractLandWorkstation();
-                    var geoLands = ContractLandHeler.GetParcelLands(currentZone.FullCode, DbContext);// landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
+                    var geoLands = ContractLandHeler.GetParcelLands(currentZone.FullCode, DbContext, ParcelWordSettingDefine.ContainsOtherZoneLand);// landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
                     if (geoLands == null || geoLands.Count == 0)
                     {
                         //当前地域没有空间地块数据
@@ -5386,7 +5386,7 @@ namespace YuLinTu.Library.Controls
                         try
                         {
                             string fileName = SystemSet.DefaultPath;
-                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, CurrentAccountItem.Tag, fileName, false);
+                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, geoLands, CurrentAccountItem.Tag, fileName, false);
                         }
                         catch (Exception ex)
                         {
@@ -5515,7 +5515,7 @@ namespace YuLinTu.Library.Controls
                         try
                         {
                             string fileName = SystemSet.DefaultPath;
-                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, CurrentAccountItem.Tag, fileName, false, "", null);
+                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, landList, CurrentAccountItem.Tag, fileName, false, "", null);
                         }
                         catch (Exception ex)
                         {

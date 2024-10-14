@@ -287,6 +287,7 @@ namespace YuLinTu.Library.Business
             IsFixedExtendLandGeoWord = true;
             ExtendLandGeoWordWidth = 115;
             ExtendLandGeoWordHeight = 180;
+            containsOtherZoneLand = true;
         }
 
         #endregion Ctor

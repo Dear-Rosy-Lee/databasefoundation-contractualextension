@@ -19,6 +19,7 @@ using System.Windows;
 using YuLinTu.NetAux.CglLib;
 using System.Text.RegularExpressions;
 using System.IO;
+using static YuLinTu.tGISCNet.SmallAngleCheckWKB;
 
 namespace YuLinTu.Library.Business
 {
@@ -456,7 +457,7 @@ namespace YuLinTu.Library.Business
             {
                 if (SettingDefine.IsFixedViewOfAllLandGeoWordExtend)
                 {
-                    InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, fileName, 278, 280);
+                    InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, fileName, 250, 280);
                 }
                 else
                 {
@@ -667,8 +668,8 @@ namespace YuLinTu.Library.Business
                 {
                     if (SettingDefine.IsFixedViewOfAllLandGeoWordExtend)
                     {
-                        ViewOfAllMultiParcel.Paper.Model.Width = 240;
-                        ViewOfAllMultiParcel.Paper.Model.Height = 260;
+                        ViewOfAllMultiParcel.Paper.Model.Width = 700;
+                        ViewOfAllMultiParcel.Paper.Model.Height = 800;
                     }
                     else
                     {
@@ -694,8 +695,8 @@ namespace YuLinTu.Library.Business
                         ViewOfAllMultiParcel.Items.Add(diagram);
                         if (SettingDefine.IsFixedViewOfAllLandGeoWordExtend)
                         {
-                            diagram.Model.Width = 190;
-                            diagram.Model.Height = 210;
+                            diagram.Model.Width = 680;
+                            diagram.Model.Height = 780;
                         }
                         else
                         {
@@ -774,7 +775,21 @@ namespace YuLinTu.Library.Business
                     exportLandParcelMainOperation.AddMainCompass(ViewOfAllMultiParcel, diagram, itemindex++);    //添加主视图指北针
                     if (SettingDefine.IsShowViewOfAllScale)
                     {
-                        exportLandParcelMainOperation.AddScaleText(ViewOfAllMultiParcel, diagram, env, itemindex++, SettingDefine.ViewOfAllScaleWH, true);    //添加比例尺文本标注
+                        if (SettingDefine.ViewOfAllScaleWH == 0)
+                        {
+                            var mapscale = map.MapControl.Scale;
+                            var res = Math.Max(env.Width / 680, env.Height / 780);
+
+                            var result = res * 96 * 0.3937008 * 100;
+                            var integer = Math.Truncate(result * 0.01);
+                            if (integer == 0)
+                                result = 100;
+                            else
+                                result = integer * 100;
+                            exportLandParcelMainOperation.AddScaleText(ViewOfAllMultiParcel, diagram, env, itemindex++, result, true);    //添加比例尺文本标注
+                        }
+                        else
+                            exportLandParcelMainOperation.AddScaleText(ViewOfAllMultiParcel, diagram, env, itemindex++, SettingDefine.ViewOfAllScaleWH, true);    //添加比例尺文本标注
                     }
 
                     //保存为图片
@@ -966,8 +981,8 @@ namespace YuLinTu.Library.Business
 
                     //var tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
                     // 避免每次获取相交地块，都去读整个地块的数据，只去和本村的数据作比较
-                    //var tempLands = GetIntersectLands(geoLand, geolandbuffershape);
-                    List<ContractLand> tempLands = new List<ContractLand>();
+                    var tempLands = GetIntersectLands(geoLand, geolandbuffershape);
+                    //List<ContractLand> tempLands = new List<ContractLand>();
                     if (geoLand.AliasNameD.IsNullOrEmpty() == false && geoLand.AliasNameD.Length > 0)
                     {
                         var landids = geoLand.AliasNameD.Split(',');
@@ -981,10 +996,10 @@ namespace YuLinTu.Library.Business
                             tempLands.Add(itemland);
                         }
                     }
-                    //else
-                    //{
-                    //    tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
-                    //}
+                    else
+                    {
+                        tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
+                    }
                     Dictionary<string, bool> landneighborhasland = new Dictionary<string, bool>();
                     if (SettingDefine.ShowlandneighborLabel && SettingDefine.NeighborlandSearchUseUserAlgorithm == false)
                     {

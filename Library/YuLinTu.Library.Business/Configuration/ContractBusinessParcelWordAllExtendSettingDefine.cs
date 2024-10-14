@@ -1,13 +1,6 @@
 ﻿/*
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
-
 namespace YuLinTu.Library.Business
 {
     /// <summary>
@@ -26,7 +19,7 @@ namespace YuLinTu.Library.Business
         private bool isShowOtherVPallLands;
         private System.Windows.Media.Color viewOfAllOthervpLandColor;
         private double viewOfAllOthervpLandBorderWidth;
-            
+
         private bool isShowVillageZoneBoundary;
         private bool isShowGroupZoneBoundary;
         private double groupBoundaryBorderWidth;
@@ -36,7 +29,7 @@ namespace YuLinTu.Library.Business
 
         private bool isShowViewOfAllScale;
         private double viewOfAllScaleWH;
-
+        private bool containsOtherZoneLand;
         private string ownerLandBufferType;
         private bool isFixedViewOfAllLandGeoWordExtend;
 
@@ -133,7 +126,7 @@ namespace YuLinTu.Library.Business
             get { return viewOfAllOthervpLandBorderWidth; }
             set { viewOfAllOthervpLandBorderWidth = value; NotifyPropertyChanged("ViewOfAllOthervpLandBorderWidth"); }
         }
-              
+
 
         /// <summary>
         /// 显示村级区域边界
@@ -187,7 +180,7 @@ namespace YuLinTu.Library.Business
         {
             get { return villageBoundaryBorderColor; }
             set { villageBoundaryBorderColor = value; NotifyPropertyChanged("VillageZoneBoundaryBorderColor"); }
-        }    
+        }
 
         /// <summary>
         /// 是否显示比例尺
@@ -205,6 +198,14 @@ namespace YuLinTu.Library.Business
         {
             get { return viewOfAllScaleWH; }
             set { viewOfAllScaleWH = value; NotifyPropertyChanged("ViewOfAllScaleWH"); }
+        }
+        /// <summary>
+        /// 比例尺大小分母设置
+        /// </summary>
+        public bool ContainsOtherZoneLand
+        {
+            get { return containsOtherZoneLand; }
+            set { containsOtherZoneLand = value; NotifyPropertyChanged("ContainsOtherZoneLand"); }
         }
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace YuLinTu.Library.Business
         public bool IsShowViewOfAllLabel
         {
             get { return isShowViewOfAllLabel; }
-            set { isShowViewOfAllLabel = value;NotifyPropertyChanged("IsShowViewOfAllLabel"); }
+            set { isShowViewOfAllLabel = value; NotifyPropertyChanged("IsShowViewOfAllLabel"); }
         }
         /// <summary>
         /// 全域地块标注字体

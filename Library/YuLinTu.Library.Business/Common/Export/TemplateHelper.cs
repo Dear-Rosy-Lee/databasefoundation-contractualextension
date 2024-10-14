@@ -128,43 +128,90 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 获取导出地块示意图的地块
         /// </summary>
-        public static List<ContractLand> GetParcelLands(string zoneCode, IDbContext db)
+        public static List<ContractLand> GetParcelLands(string zoneCode, IDbContext db, bool containsOtherZoneLand)
         {
             var lands = new List<ContractLand>();
             if (string.IsNullOrEmpty(zoneCode) || db == null)
                 return lands;
 
-            lands = db.CreateQuery<ContractLand>().
-                Where(c => c.ZoneCode.Equals(zoneCode) && c.Shape != null).
-                Select(c => new ContractLand()
-                {
-                    Shape = c.Shape,
-                    ID = c.ID,
-                    LandNumber = c.LandNumber,
-                    OwnerName = c.OwnerName,
-                    ActualArea = c.ActualArea,
-                    AwareArea = c.AwareArea,
-                    TableArea = c.TableArea,
-                    // Comment = c.Comment,
-                    LandCategory = c.LandCategory,
-                    ConcordArea = c.ConcordArea,
-                    ConcordId = c.ConcordId,
-                    //ConstructMode = c.ConstructMode,
-                    //IsStockLand = c.IsStockLand,
-                    LandCode = c.LandCode,
-                    LandLevel = c.LandLevel,
-                    //LandName = c.LandName,
-                    SenderName = c.SenderName,
-                    SenderCode = c.SenderCode,
-                    Name = c.Name,
-                    NeighborEast = c.NeighborEast,
-                    NeighborNorth = c.NeighborNorth,
-                    NeighborSouth = c.NeighborSouth,
-                    NeighborWest = c.NeighborWest,
-                    OwnerId = c.OwnerId,
-                    //Purpose = c.Purpose,
-                    //PlatType = c.PlatType,
-                }).ToList();
+            var qy = db.CreateQuery<ContractLand>().Where(c => c.ZoneCode.Equals(zoneCode) && c.Shape != null);
+            if (containsOtherZoneLand && zoneCode.Length == 14)//是否按村来搜索地块
+            {
+                string vz = zoneCode.Substring(0, 12);
+                qy = db.CreateQuery<ContractLand>().Where(c => c.ZoneCode.StartsWith(vz) && c.Shape != null);
+            }
+
+            lands = qy.Select(c => new ContractLand()
+            {
+                Shape = c.Shape,
+                ID = c.ID,
+                LandNumber = c.LandNumber,
+                OwnerName = c.OwnerName,
+                ActualArea = c.ActualArea,
+                AwareArea = c.AwareArea,
+                TableArea = c.TableArea,
+                // Comment = c.Comment,
+                LandCategory = c.LandCategory,
+                ConcordArea = c.ConcordArea,
+                ConcordId = c.ConcordId,
+                //ConstructMode = c.ConstructMode,
+                //IsStockLand = c.IsStockLand,
+                LandCode = c.LandCode,
+                LandLevel = c.LandLevel,
+                //LandName = c.LandName,
+                SenderName = c.SenderName,
+                SenderCode = c.SenderCode,
+                Name = c.Name,
+                NeighborEast = c.NeighborEast,
+                NeighborNorth = c.NeighborNorth,
+                NeighborSouth = c.NeighborSouth,
+                NeighborWest = c.NeighborWest,
+                OwnerId = c.OwnerId,
+                //Purpose = c.Purpose,
+                //PlatType = c.PlatType,
+            }).ToList();
+
+            //if (containsOtherZoneLand && lands.Count > 0)
+            //{
+            //    Geometry eg = null;
+            //    foreach (var item in lands)
+            //    {
+            //        if (item.Shape == null)
+            //            continue;
+            //        eg = eg == null ? item.Shape.Envelope() : eg.Union(item.Shape.Envelope());
+            //    }
+            //    lands = db.CreateQuery<ContractLand>().
+            //    Where(c => (c.ZoneCode.Equals(zoneCode) && c.Shape != null) || c.Shape.Intersects(eg)).
+            //    Select(c => new ContractLand()
+            //    {
+            //        Shape = c.Shape,
+            //        ID = c.ID,
+            //        LandNumber = c.LandNumber,
+            //        OwnerName = c.OwnerName,
+            //        ActualArea = c.ActualArea,
+            //        AwareArea = c.AwareArea,
+            //        TableArea = c.TableArea,
+            //        // Comment = c.Comment,
+            //        LandCategory = c.LandCategory,
+            //        ConcordArea = c.ConcordArea,
+            //        ConcordId = c.ConcordId,
+            //        //ConstructMode = c.ConstructMode,
+            //        //IsStockLand = c.IsStockLand,
+            //        LandCode = c.LandCode,
+            //        LandLevel = c.LandLevel,
+            //        //LandName = c.LandName,
+            //        SenderName = c.SenderName,
+            //        SenderCode = c.SenderCode,
+            //        Name = c.Name,
+            //        NeighborEast = c.NeighborEast,
+            //        NeighborNorth = c.NeighborNorth,
+            //        NeighborSouth = c.NeighborSouth,
+            //        NeighborWest = c.NeighborWest,
+            //        OwnerId = c.OwnerId,
+            //        //Purpose = c.Purpose,
+            //        //PlatType = c.PlatType,
+            //    }).ToList();
+            //}
             return lands;
         }
     }
