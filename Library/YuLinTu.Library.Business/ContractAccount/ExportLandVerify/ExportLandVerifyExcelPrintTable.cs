@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
 using System.IO;
-using YuLinTu.Library.WorkStation;
+using System.Linq;
 using YuLinTu.Data;
-using System.Diagnostics;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
 
 namespace YuLinTu.Library.Business
 {
@@ -19,24 +16,24 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private ToolProgress toolProgress;//进度条
-        private int index;//下标
-        private string templatePath;
-        private int familyCount;//户数
-        private int peopleCount;//家人数
-        private int landCount;//总地块数
-        private double AwareArea;//颁证面积
-        private double TableArea = 0;//合同面积
-        private double ActualArea;//实测面积
-        private List<Dictionary> dictCBFLX;
-        private List<Dictionary> dictXB;
-        private List<Dictionary> dictZJLX;
-        private List<Dictionary> dictTDYT;
-        private List<Dictionary> dictDLDJ;
-        private List<Dictionary> dicSF;
-        private List<Dictionary> dictSYQXZ;
-        private List<Dictionary> dictDKLB;
-        private List<Dictionary> dictTDLYLX;
+        protected ToolProgress toolProgress;//进度条
+        protected int index;//下标
+        protected string templatePath;
+        protected int familyCount;//户数
+        protected int peopleCount;//家人数
+        protected int landCount;//总地块数
+        protected double AwareArea;//颁证面积
+        protected double TableArea = 0;//合同面积
+        protected double ActualArea;//实测面积
+        protected List<Dictionary> dictCBFLX;
+        protected List<Dictionary> dictXB;
+        protected List<Dictionary> dictZJLX;
+        protected List<Dictionary> dictTDYT;
+        protected List<Dictionary> dictDLDJ;
+        protected List<Dictionary> dicSF;
+        protected List<Dictionary> dictSYQXZ;
+        protected List<Dictionary> dictDKLB;
+        protected List<Dictionary> dictTDLYLX;
 
         #endregion Fields
 
@@ -170,7 +167,7 @@ namespace YuLinTu.Library.Business
 
         #region 开始生成Excel
 
-        private bool BeginWrite()
+        virtual public bool BeginWrite()
         {
             var dictStation = DbContext.CreateDictWorkStation();
             var DictList = dictStation.Get();
@@ -217,7 +214,6 @@ namespace YuLinTu.Library.Business
                 WriteInformation(landFamily);
             }
             WriteTempLate();
-            SetLineType("A7", "AI" + index, false);
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -227,7 +223,7 @@ namespace YuLinTu.Library.Business
         /// 书写每个承包户信息
         /// </summary>
         /// <param name="virtualPerson"></param>
-        private void WriteInformation(ContractAccountLandFamily landFamily)
+        virtual public void WriteInformation(ContractAccountLandFamily landFamily)
         {
             if (landFamily == null)
                 return;
@@ -301,7 +297,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写当前地域信息
         /// </summary>
-        private void WriteCurrentZoneInformation(ContractLand land, int index)
+        virtual public void WriteCurrentZoneInformation(ContractLand land, int index)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
@@ -327,7 +323,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
         }
 
-        private void WritePersonInformation(Person person, int index, bool flag)
+        virtual public void WritePersonInformation(Person person, int index, bool flag)
         {
             Dictionary gender = dictXB.Find(c => c.Code.Equals(person.Gender == eGender.Male ? "1" : "2"));
             var code = GetCardTypeNumber(person.CardType);
@@ -356,7 +352,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写模板
         /// </summary>
-        private void WriteTempLate()
+        virtual public void WriteTempLate()
         {
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
@@ -380,12 +376,14 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AI" + 3, "AI" + 3, surveyDate.ToString("yyyy年MM月dd日"));
 
             WriteCount();
+
+            SetLineType("A7", "AI" + index, false);
         }
 
         /// <summary>
         /// 书写合计信息
         /// </summary>
-        private void WriteCount()
+        virtual public void WriteCount()
         {
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
@@ -405,7 +403,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AI" + index, "AI" + index, "\\");
         }
 
-        private int GetCardTypeNumber(eCredentialsType type)
+        protected int GetCardTypeNumber(eCredentialsType type)
         {
             switch (type)
             {
@@ -430,7 +428,7 @@ namespace YuLinTu.Library.Business
             return 0;
         }
 
-        private int GetCBFLXNumber(eContractorType type)
+        protected int GetCBFLXNumber(eContractorType type)
         {
             switch (type)
             {

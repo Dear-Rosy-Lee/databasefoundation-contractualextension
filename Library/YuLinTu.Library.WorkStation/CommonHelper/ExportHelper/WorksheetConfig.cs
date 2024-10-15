@@ -31,7 +31,7 @@ namespace YuLinTu.Library.WorkStation
                 // 必须是Enabled的Region,并且Module、Template的名称和Type完全匹配
                 var region = _worksheet.Regions.Find(r => r.IsEnabled);
                 Template temp = region.Templates.Find(t => t.Name.Equals(target.TemplateName) && t.Type.Equals(target.TemplateType.ToString()));
-                    
+
                 if (temp.ClassName != null)
                 {
                     var assembly = Assembly.LoadFrom(Path.Combine(TheApp.GetApplicationPath(), region.AssemblyName));
@@ -57,6 +57,39 @@ namespace YuLinTu.Library.WorkStation
                 else
                     template.Tag = false;
                 template.TemplatePath = temp.Path;
+            }
+            catch (Exception e)
+            {
+                YuLinTu.Library.Log.Log.WriteException("", "配置文件未配置完整!", e.Message + e.StackTrace);
+            }
+            return template;
+        }
+
+
+        /// <summary>
+        /// 任务类型
+        /// </summary>
+        public static Task GetInstance(Task target)
+        {
+            var configPath = Path.Combine(TheApp.GetApplicationPath(), @"Template\WorksheetConfig.xml");
+            if (!File.Exists(configPath))
+                return null;
+            Task template = null;
+            try
+            {
+                if (_worksheet == null)
+                {
+                    _worksheet = Serializer.DeserializeFromXmlFile<WorksheetConfig>(Path.Combine(TheApp.GetApplicationPath(), @"Template\WorksheetConfig.xml"));
+                }
+
+                // 必须是Enabled的Region,并且Module、Template的名称和Type完全匹配
+                var region = _worksheet.Regions.Find(r => r.IsEnabled);
+                Template temp = region.Templates.Find(t => t.Type.Equals("Task") && t.Name.Equals(target.GetType().Name));
+                if (temp != null && temp.ClassName != null)
+                {
+                    var assembly = Assembly.LoadFrom(Path.Combine(TheApp.GetApplicationPath(), region.AssemblyName));
+                    template = (Task)assembly.CreateInstance(region.Namespace + "." + temp.ClassName);
+                }
             }
             catch (Exception e)
             {

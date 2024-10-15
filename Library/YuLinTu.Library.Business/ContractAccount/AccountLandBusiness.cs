@@ -847,35 +847,47 @@ namespace YuLinTu.Library.Business
             isErrorRecord = false;
             try
             {
-                using (ImportLandTiesTable landTableImport = new ImportLandTiesTable())
+                ImportLandTiesTable landTableImport = new ImportLandTiesTable();
+
+                #region 通过反射等机制定制化具体的业务处理类
+
+                var temp = WorksheetConfigHelper.GetInstance(landTableImport);
+                if (temp != null)
                 {
-                    //List<VirtualPerson> persons = GetByZone(zone.FullCode);
-                    string excelName = GetMarkDesc(zone);
-                    landTableImport.ProgressChanged += ReportPercent; //进度条
-                    landTableImport.Alert += ReportInfo;              //记录错误信息
-                    landTableImport.CurrentZone = zone;
-                    landTableImport.ExcelName = excelName;
-                    landTableImport.TableType = TableType;
-                    landTableImport.DbContext = this.dbContext;
-                    landTableImport.Percent = 95.0;
-                    landTableImport.CurrentPercent = 5.0;
-                    landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
-                    landTableImport.ImportType = eImport;
-                    //landTableImport.ListPerson = persons;
-                    this.ReportProgress(1, "开始读取数据");
-                    bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
-                    ErrorInformation = landTableImport.ErrorInformation;
-                    //landTableImport.MergeHouseData();
-                    this.ReportProgress(3, "开始检查数据");
-                    //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
-                    bool canImport = true;
-                    if (isReadSuccess && canImport && !isErrorRecord)
+                    if (temp is ImportLandTiesTable)
                     {
-                        this.ReportProgress(5, "开始处理数据");
-                        landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
-                        this.ReportProgress(100, "完成");
-                        isSuccess = true;
+                        landTableImport = (ImportLandTiesTable)temp;
                     }
+                }
+
+                #endregion
+
+                //List<VirtualPerson> persons = GetByZone(zone.FullCode);
+                string excelName = GetMarkDesc(zone);
+                landTableImport.ProgressChanged += ReportPercent; //进度条
+                landTableImport.Alert += ReportInfo;              //记录错误信息
+                landTableImport.CurrentZone = zone;
+                landTableImport.ExcelName = excelName;
+                landTableImport.TableType = TableType;
+                landTableImport.DbContext = this.dbContext;
+                landTableImport.Percent = 95.0;
+                landTableImport.CurrentPercent = 5.0;
+                landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
+                landTableImport.ImportType = eImport;
+                //landTableImport.ListPerson = persons;
+                this.ReportProgress(1, "开始读取数据");
+                bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName);  //读取承包台账调查表数据
+                ErrorInformation = landTableImport.ErrorInformation;
+                //landTableImport.MergeHouseData();
+                this.ReportProgress(3, "开始检查数据");
+                //bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
+                bool canImport = true;
+                if (isReadSuccess && canImport && !isErrorRecord)
+                {
+                    this.ReportProgress(5, "开始处理数据");
+                    landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
+                    this.ReportProgress(100, "完成");
+                    isSuccess = true;
                 }
             }
             catch (Exception ex)

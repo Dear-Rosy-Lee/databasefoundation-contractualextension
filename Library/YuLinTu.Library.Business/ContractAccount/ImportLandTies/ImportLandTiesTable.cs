@@ -12,29 +12,25 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private ToolProgress toolProgress;
-        private int familyCount;//承包方数
-        private int personCount;//共有人数
-        private int landCount;//地块数
-
-        //private CollectivityTissue tissue;//集体经济组织
-        private CollectivityTissue sender;//集体经济组织
-        private VirtualPersonBusiness personBusiness;
-        private AccountLandBusiness landBusiness;
-        private DictionaryBusiness dictBusiness;
-        private ConcordBusiness concordBusiness;
-        private ContractRegeditBookBusiness contractRegeditBookBusiness;
-        private IBuildLandBoundaryAddressCoilWorkStation coilStation;
-        private IBuildLandBoundaryAddressDotWorkStation dotStation;
-
-        private List<VirtualPerson> remainVps = new List<VirtualPerson>();
-        private List<ContractLand> remainLands = new List<ContractLand>();
-        private List<ContractConcord> remainConcords = new List<ContractConcord>();
-        private List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>();
-
-        private List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
-        private ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
-        private InitalizeLandTiesTable landInfo;//初始化承包台账调查表信息
+        protected ToolProgress toolProgress;
+        protected int familyCount;//承包方数
+        protected int personCount;//共有人数
+        protected int landCount;//地块数 
+        protected CollectivityTissue sender;//集体经济组织
+        protected VirtualPersonBusiness personBusiness;
+        protected AccountLandBusiness landBusiness;
+        protected DictionaryBusiness dictBusiness;
+        protected ConcordBusiness concordBusiness;
+        protected ContractRegeditBookBusiness contractRegeditBookBusiness;
+        protected IBuildLandBoundaryAddressCoilWorkStation coilStation;
+        protected IBuildLandBoundaryAddressDotWorkStation dotStation;
+        protected List<VirtualPerson> remainVps = new List<VirtualPerson>();
+        protected List<ContractLand> remainLands = new List<ContractLand>();
+        protected List<ContractConcord> remainConcords = new List<ContractConcord>();
+        protected List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>();
+        protected List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
+        protected ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
+        protected InitalizeLandTiesTable landInfo;//初始化承包台账调查表信息
 
         #endregion Fields
 
@@ -110,7 +106,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 读取户籍信息
         /// </summary>
-        public bool ReadLandTableInformation(string fileName)
+        virtual public bool ReadLandTableInformation(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
             {
@@ -140,7 +136,7 @@ namespace YuLinTu.Library.Business
             return success;
         }
 
-        public void ImportLandEntity()
+        virtual public void ImportLandEntity()
         {
             try
             {
@@ -176,18 +172,17 @@ namespace YuLinTu.Library.Business
                         landBusiness.Update(landFamily.CurrentFamily.ID, landFamily.CurrentFamily.Name);
                     }
                     familyIndex++;
-
                     string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
                     toolProgress.DynamicProgress(info);
                 }
-                if (familyCount == landInfo.LandFamilyCollection.Count)
-                {
-                    this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录!", ExcelName, landInfo.LandFamilyCollection.Count, landInfo.LandFamilyCollection.Count, personCount, landCount));
-                }
-                else
-                {
-                    this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录,其中{5}户承包方数据被锁定!", ExcelName, landInfo.LandFamilyCollection.Count, familyCount, personCount, landCount, landInfo.LandFamilyCollection.Count - familyCount));
-                }
+                //if (familyCount == landInfo.LandFamilyCollection.Count)
+                //{
+                this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录!", ExcelName, landInfo.LandFamilyCollection.Count, landInfo.LandFamilyCollection.Count, personCount, landCount));
+                //}
+                //else
+                //{
+                //    this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录,其中{5}户承包方数据被锁定!", ExcelName, landInfo.LandFamilyCollection.Count, familyCount, personCount, landCount, landInfo.LandFamilyCollection.Count - familyCount));
+                //}
                 DbContext.CommitTransaction();
                 //DbContext.RollbackTransaction();
                 //zone = null;
@@ -204,7 +199,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        public Zone GetParent(Zone zone)
+        virtual public Zone GetParent(Zone zone)
         {
             ModuleMsgArgs arg = new ModuleMsgArgs();
             arg.Datasource = DbContext;
@@ -322,7 +317,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 内存设置更新地块信息
         /// </summary>
-        private List<ContractLand> CombinationLand(List<ContractLand> lands, VirtualPerson vp)
+        virtual public List<ContractLand> CombinationLand(List<ContractLand> lands, VirtualPerson vp)
         {
             if (lands == null || lands.Count < 1)
                 return lands;
@@ -643,12 +638,12 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 进度提示
         /// </summary>
-        private void toolProgress_OnPostProgress(int progress, string info = "")
+        protected void toolProgress_OnPostProgress(int progress, string info = "")
         {
             this.ReportProgress(progress, info);
         }
 
-        private bool ReportErrorInfo(string message)
+        protected bool ReportErrorInfo(string message)
         {
             this.ReportError(message);
             return false;
