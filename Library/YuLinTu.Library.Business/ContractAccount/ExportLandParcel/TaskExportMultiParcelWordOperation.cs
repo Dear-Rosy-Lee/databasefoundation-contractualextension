@@ -314,8 +314,7 @@ namespace YuLinTu.Library.Business
                     if (indexOfVp % 10 == 0)
                     {
                         GC.Collect();
-                        GC.WaitForPendingFinalizers();
-                        GC.Collect();
+                        GC.WaitForFullGCComplete();
                     }
 
                 }

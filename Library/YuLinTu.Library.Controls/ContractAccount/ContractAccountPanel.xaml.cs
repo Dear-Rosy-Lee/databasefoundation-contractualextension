@@ -5410,13 +5410,7 @@ namespace YuLinTu.Library.Controls
                     {
                         //仅导出当前选择地域下的数据(选择地域为组级地域或者当为大于组级地域同时没有子级地域)
                         var landStation = DbContext.CreateContractLandWorkstation();
-                        var geoLands = landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
-                        if (geoLands == null || geoLands.Count == 0)
-                        {
-                            //当前地域没有空间地块数据
-                            ShowBox(ContractAccountInfo.ExportMultiParcelOfFamily, ContractAccountInfo.CurrentZoneNoGeoLand);
-                            return;
-                        }
+
                         List<VirtualPerson> listPerson = new List<VirtualPerson>();
                         //界面上没有选择承包方项(此时弹出承包方选择界面)
                         ContractRegeditBookPersonLockPage selectPage = new ContractRegeditBookPersonLockPage();
@@ -5430,6 +5424,13 @@ namespace YuLinTu.Library.Controls
                         {
                             if (!(bool)b)
                             {
+                                return;
+                            }
+                            var geoLands = landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
+                            if (geoLands == null || geoLands.Count == 0)
+                            {
+                                //当前地域没有空间地块数据
+                                ShowBox(ContractAccountInfo.ExportMultiParcelOfFamily, ContractAccountInfo.CurrentZoneNoGeoLand);
                                 return;
                             }
                             if (selectPage.SelectedPersons == null || selectPage.SelectedPersons.Count == 0)

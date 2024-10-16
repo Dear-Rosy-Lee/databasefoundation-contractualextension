@@ -51,6 +51,7 @@ namespace YuLinTu.Component.Common
             {
                 var filepath = cntString.ConnectionString.Replace("data source=", "");
                 filepath = filepath.Replace("Data Source=", "");
+                filepath = filepath.Replace("\"", "");
                 if (File.Exists(filepath))
                 {
                     TryBackupDatabase();

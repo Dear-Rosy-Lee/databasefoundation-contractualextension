@@ -9,7 +9,7 @@
                              xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="承包方列表"
-                            MinHeight="450" MinWidth="650">
+                            MinHeight="300" MinWidth="650">
     <am:InfoPageBase.Resources>
         <am:LockValueConvert x:Key="LockValueConvert"/>
     </am:InfoPageBase.Resources>
@@ -34,7 +34,11 @@
                               VerticalAlignment="Center"
                               Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
                               RenderOptions.BitmapScalingMode="NearestNeighbor"></cmps:LoadingIcon>
-            <cmps:MetroListBox x:Name="lbItem" Width="630" Margin="10,5,10,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}" >
+            <cmps:MetroListBox x:Name="lbItem" Width="630" MaxHeight="600" Margin="10,5,10,10"
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                               VirtualizingPanel.IsVirtualizing="True"
+                               VirtualizingPanel.VirtualizationMode="Recycling"
+                               Visibility="{Binding Path=IsBusy, Converter={StaticResource NotBoolToVisibilityConverter}}" >
                 <cmps:MetroListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
