@@ -118,22 +118,7 @@ namespace YuLinTu.Component.Common
                 {
                     TryAddTables(db);
                     return db;
-                }
-
-                //var dlg = new tGIS.Client.Controls.SpatialReferenceSelectWindow();
-                //dlg.RootDirectory = Path.Combine(TheApp.Current.GetDataPath(), "SpatialReferences");
-                //dlg.WindowTitle = null;
-                //dlg.Topmost = true;
-
-                //var settings = TheApp.Current.TryLoadUserSection("Guest@yulintu.com");
-                //var index = settings.GetSection("ThemeColor").TryGetValue("ThemeColor", 1);
-                //dlg.SetTheme(new ResourceDictionary() { Source = new Uri(string.Format("pack://application:,,,/YuLinTu.Windows.Wpf.Metro;component/Themes/{0:D2}/WindowColor.xaml", index)) });
-
-                //var val = dlg.ShowDialog();
-                //if (val == null || !val.Value)
-                //    return null;
-
-                //var sr = dlg.GetSelectedSpatialReference();
+                } 
 
                 var action = TheApp.Current["ApplicationStartupProgressReporter"] as Action<double, string, object>;
                 if (action != null)
