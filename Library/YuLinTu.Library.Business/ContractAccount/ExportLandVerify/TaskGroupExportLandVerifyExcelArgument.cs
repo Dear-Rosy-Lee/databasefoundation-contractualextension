@@ -27,6 +27,11 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string FileName { get; set; }
 
+        /// <summary>
+        /// 导出方式
+        /// </summary>
+        public int ExportWay { get; set; }
+
         #endregion Properties
 
         #region Ctor

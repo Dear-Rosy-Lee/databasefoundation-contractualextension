@@ -128,7 +128,7 @@
                                     </cmps:MetroListBox.ItemsPanel>
                                     <cmps:MetroListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding Status}" Width="100" BorderThickness="0"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding Status}" Width="100" BorderThickness="0.5"/>
                                         </DataTemplate>
                                     </cmps:MetroListBox.ItemTemplate>
                                 </cmps:MetroListBox>

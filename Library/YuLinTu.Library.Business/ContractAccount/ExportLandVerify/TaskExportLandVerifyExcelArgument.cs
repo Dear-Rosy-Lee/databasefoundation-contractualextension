@@ -35,8 +35,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 是否预览
         /// </summary>
-
-        public bool IsShow { get; set; }
+        public bool IsShow { get; set; } 
 
         #endregion Properties
 

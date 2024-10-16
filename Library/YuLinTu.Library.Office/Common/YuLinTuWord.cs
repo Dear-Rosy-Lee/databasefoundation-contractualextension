@@ -1585,7 +1585,6 @@ namespace YuLinTu.Library.Office
                         table.Rows.Insert(table.Rows.Count, node);
                     }
                 }
-                node = null;
                 table = null;
                 tables = null;
             }
@@ -1678,11 +1677,8 @@ namespace YuLinTu.Library.Office
                 for (int index = 0; index < rowCount; index++)
                 {
                     Node node = table.Rows[startRow].Clone(false);
-                    table.Rows.Add(node);
-                    node = null;
+                    table.Rows.Add(node); 
                 }
-                table = null;
-                tables = null;
             }
             catch (SystemException ex)
             {
