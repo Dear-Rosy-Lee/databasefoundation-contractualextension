@@ -72,7 +72,14 @@ namespace YuLinTu.Library.Business
                     return;
                 }
 
-                var listLand = landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                var settingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
+                if (VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
+                {
+                    VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
+                }
+                var listLand = VillageContractLands.FindAll(t => t.LandCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                if (settingDefine.ContainsOtherZoneLand)
+                    listLand = VillageContractLands;
                 if (listLand == null || listLand.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -91,12 +98,6 @@ namespace YuLinTu.Library.Business
                                 listLand.Add(stockLand);
                         }
                     }
-                }
-
-                if (VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
-                {
-                    var settingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
-                    VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
                 }
                 bool canOpen = ExportLandMultiParcelWord(argument, listPerson, listLand, listDict);
                 if (canOpen)
@@ -152,7 +153,7 @@ namespace YuLinTu.Library.Business
                     return result;
                 }
                 this.ReportProgress(1, "开始");
-                var zonelist = GetParentZone(argument.CurrentZone,argument.DbContext);
+                var zonelist = GetParentZone(argument.CurrentZone, argument.DbContext);
                 var concordStation = argument.DbContext.CreateConcordStation();
                 var bookStation = argument.DbContext.CreateRegeditBookStation();
                 var senderStation = argument.DbContext.CreateSenderWorkStation();
@@ -167,7 +168,7 @@ namespace YuLinTu.Library.Business
                 listBook = bookStation.GetByZoneCode(argument.CurrentZone.FullCode, eSearchOption.Precision);
                 listTissue = landStation.GetTissuesByConcord(argument.CurrentZone);
                 if (listTissue.Count == 0)
-                {                   
+                {
                     var tissue = senderStation.Get(argument.CurrentZone.ID);
 
                     if (tissue == null)
@@ -187,7 +188,7 @@ namespace YuLinTu.Library.Business
                 listGeoLand = InitalizeAgricultureLandSortValue(listGeoLands);
                 if (listGeoLand.Count == 0)
                 {
-                    this.ReportInfomation("当前地域"+ argument.CurrentZone.FullName+ "没有地块进行导出，请检查配置选项!");                  
+                    this.ReportInfomation("当前地域" + argument.CurrentZone.FullName + "没有地块进行导出，请检查配置选项!");
                 }
                 listLine = lineStation.GetByZoneCode(argument.CurrentZone.FullCode);
                 listPoint = PointStation.GetByZoneCode(argument.CurrentZone.FullCode);
@@ -415,7 +416,7 @@ namespace YuLinTu.Library.Business
             }
             return geoLandCollection;
         }
-        
+
         /// <summary>
         /// 初始化地块示意图名称
         /// </summary>
@@ -431,7 +432,7 @@ namespace YuLinTu.Library.Business
             {
                 Directory.CreateDirectory(imagePath);
             }
-            
+
             string imageName = imagePath + "\\" + "DKSYT" + family.ZoneCode.PadRight(14, '0');
             int number = 0;
             Int32.TryParse(family.FamilyNumber, out number);

@@ -253,8 +253,8 @@ namespace YuLinTu.Library.Business
                     templatePath = TemplateHelper.WordTemplate(TemplateFile.ParcelWord);
                 string savePathOfImage = string.IsNullOrEmpty(imageSavePath) ? filePath : imageSavePath;
                 string savePathOfWord = InitalizeLandImageName(filePath, person); // filePath + @"\" + familyNuber + "-" + person.Name + "-" + TemplateFile.ParcelWord + ".doc";
-
-                listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
+                listLand = ContractLandHeler.GetParcelLands(currentZone.FullCode, dbContext, ParcelWordSettingDefine.ContainsOtherZoneLand);
+                //listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
                 var VillageZone = GetParent(currentZone);
                 if (isStockLand != null)
                 {

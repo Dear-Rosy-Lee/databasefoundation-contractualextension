@@ -793,7 +793,7 @@ namespace YuLinTu.Library.Controls
         /// <param name="TableType">表格类型(适用于台账报表中4个公用底层的表格)</param>
         /// <param name="listPerson">承包方集合</param>
         public void ExportDataCommonOperate(string zoneName, string header, eContractAccountType type, string taskDes, string taskName,
-           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false)
+           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false, List<ContractLand> vcontractLands = null)
         {
             ExportDataPage extPage = new ExportDataPage(zoneName, TheWorkPage, header);
             extPage.Workpage = TheWorkPage;
@@ -871,7 +871,7 @@ namespace YuLinTu.Library.Controls
                         break;
 
                     case eContractAccountType.ExportMultiParcelOfFamily: //地块示意图
-                        ExportMultiParcelTask(saveFilePath, listPerson, taskDes, taskName, isStockLand);
+                        ExportMultiParcelTask(saveFilePath, listPerson, taskDes, taskName, isStockLand, vcontractLands);
                         break;
 
                     case eContractAccountType.VolumnExportMultiParcelOfFamily:  //批量导出地块示意图
@@ -5426,7 +5426,8 @@ namespace YuLinTu.Library.Controls
                             {
                                 return;
                             }
-                            var geoLands = landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
+                            var geoLands = ContractLandHeler.GetParcelLands(currentZone.FullCode, DbContext, ParcelWordSettingDefine.ContainsOtherZoneLand);
+                            // landStation.GetShapeCollection(currentZone.FullCode, eLevelOption.Self);
                             if (geoLands == null || geoLands.Count == 0)
                             {
                                 //当前地域没有空间地块数据
@@ -5439,7 +5440,7 @@ namespace YuLinTu.Library.Controls
                                 return;
                             }
                             ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportMultiParcelOfFamily, eContractAccountType.ExportMultiParcelOfFamily,
-                         ContractAccountInfo.ExportMultiParcelOfFamilyDesc, ContractAccountInfo.ExportMultiParcelOfFamily, 1, selectPage.SelectedPersons);
+                         ContractAccountInfo.ExportMultiParcelOfFamilyDesc, ContractAccountInfo.ExportMultiParcelOfFamily, 1, selectPage.SelectedPersons, false, geoLands);
                         });
                     }
                     else
@@ -5628,9 +5629,10 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
-        /// 导出地块示意图(单个任务)
+        /// 导出地块示意图
         /// </summary>
-        private void ExportMultiParcelTask(string fileName, List<VirtualPerson> selectedPersons, string taskDes, string taskName, bool? isStockLand)
+        private void ExportMultiParcelTask(string fileName, List<VirtualPerson> selectedPersons, string taskDes,
+            string taskName, bool? isStockLand, List<ContractLand> vlands)
         {
             TaskExportMultiParcelWordArgument argument = new TaskExportMultiParcelWordArgument();
             argument.DbContext = DbContext;
@@ -5640,6 +5642,7 @@ namespace YuLinTu.Library.Controls
             TaskExportMultiParcelWordOperation operation = new TaskExportMultiParcelWordOperation();
             operation.Argument = argument;
             operation.Description = taskDes;
+            operation.VillageContractLands = vlands;
             if (isStockLand != null)
                 operation.Name = (bool)isStockLand ? "导出确股地块示意图" : taskName;
             else

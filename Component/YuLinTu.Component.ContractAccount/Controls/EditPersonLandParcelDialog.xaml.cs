@@ -212,7 +212,7 @@ namespace YuLinTu.Component.ContractAccount
                 exportLandParcelMainOperation.mapW = mapW;
 
                 var visibleBounds = new CglEnvelope(0, 0, mapW, mapH);
-                                
+
                 ListLineFeature = lineStation.GetByZoneCode(SelectedLand.ZoneCode);
                 ListPointFeature = PointStation.GetByZoneCode(SelectedLand.ZoneCode);
                 ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.ZoneCode);
@@ -630,6 +630,8 @@ namespace YuLinTu.Component.ContractAccount
 
         private void btnToPager_Click(object sender, RoutedEventArgs e)
         {
+            if (view == null)
+                return;
             var exent = view.Paper.GetBounds();
             exent.Inflate(10, 10);
             view.ZoomTo(exent);
