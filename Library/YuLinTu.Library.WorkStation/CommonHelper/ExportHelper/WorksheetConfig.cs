@@ -32,7 +32,7 @@ namespace YuLinTu.Library.WorkStation
                 var region = _worksheet.Regions.Find(r => r.IsEnabled);
                 Template temp = region.Templates.Find(t => t.Name.Equals(target.TemplateName) && t.Type.Equals(target.TemplateType.ToString()));
 
-                if (temp.ClassName != null)
+                if (temp != null && temp.ClassName != null)
                 {
                     var assembly = Assembly.LoadFrom(Path.Combine(TheApp.GetApplicationPath(), region.AssemblyName));
                     if (target.Tags != null && target.Tags.Length > 0)
@@ -49,6 +49,7 @@ namespace YuLinTu.Library.WorkStation
                 {
                     // 只需要更改模板的
                     template = new TemplateBase();
+                    temp = new Template();
                 }
 
                 // 需要特殊处理
