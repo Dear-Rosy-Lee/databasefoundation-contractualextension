@@ -367,7 +367,7 @@ namespace YuLinTu.Library.Business
             List<Dictionary> listTDYT = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDYT);
             List<Dictionary> listDKLYLX = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);
             List<Dictionary> listDKLB = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB);
-            var landNumber = GetString(allItem[currentIndex, 17]);
+            var landNumber = GetString(allItem[currentIndex, 16]);
             if (landNumber != "")
             {
                 var entity = contractLands.Where(x => x.LandNumber == landNumber).FirstOrDefault();
@@ -394,25 +394,25 @@ namespace YuLinTu.Library.Business
                     entity.ActualArea = 0;
                     entity.LandNumber = landNumber;
                 }
-                entity.Name = GetString(allItem[currentIndex, 16]);
-                entity.OwnRightType = GetString(allItem[currentIndex, 18]);
-                entity.LandCategory = GetString(allItem[currentIndex, 19]);
-                entity.LandCode = GetString(allItem[currentIndex, 20]);
-                var dj = GetString(allItem[currentIndex, 21]);
-                var yt = GetString(allItem[currentIndex, 22]);
+                entity.Name = GetString(allItem[currentIndex, 15]);
+                entity.OwnRightType = GetString(allItem[currentIndex, 17]);
+                entity.LandCategory = GetString(allItem[currentIndex, 18]);
+                entity.LandCode = GetString(allItem[currentIndex, 19]);
+                var dj = GetString(allItem[currentIndex, 20]);
+                var yt = GetString(allItem[currentIndex, 21]);
                 entity.LandLevel = listDLDJ.Find(c => c.Name == dj || c.Code == dj)?.Code;
                 entity.Purpose = listTDYT.Find(c => c.Name == yt || c.Code == yt)?.Code;
                 entity.LandCategory = listDKLB.Find(c => c.Name == entity.LandCategory || c.Code == entity.LandCategory)?.Code;
                 entity.LandCode = listDKLYLX.Find(c => c.Name == entity.LandCode || c.Code == entity.LandCode)?.Code;
-                entity.IsFarmerLand = (GetString(allItem[currentIndex, 23]) == "是") ? true : false;
-                entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
-                entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 25])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 25]));
-                entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 27])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 27]));
-                entity.NeighborEast = GetString(allItem[currentIndex, 29]);
-                entity.NeighborSouth = GetString(allItem[currentIndex, 30]);
-                entity.NeighborWest = GetString(allItem[currentIndex, 31]);
-                entity.NeighborNorth = GetString(allItem[currentIndex, 32]);
-                entity.Comment = GetString(allItem[currentIndex, 33]);
+                entity.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
+                entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
+                entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
+                entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+                entity.NeighborEast = GetString(allItem[currentIndex, 28]);
+                entity.NeighborSouth = GetString(allItem[currentIndex, 29]);
+                entity.NeighborWest = GetString(allItem[currentIndex, 30]);
+                entity.NeighborNorth = GetString(allItem[currentIndex, 31]);
+                entity.Comment = GetString(allItem[currentIndex, 32]);
 
                 entity.OwnerName = landFamily.CurrentFamily.Name;
                 entity.OwnerId = landFamily.CurrentFamily.ID;
