@@ -166,7 +166,7 @@
 
                             <StackPanel Orientation="Horizontal" Margin="10,0">
                                 <Label Content="导出路径：" VerticalAlignment="Center" Padding="2,3,5,3"/>
-                                <cmps:FolderBrowserTextBox Name="txt_Out" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,5,0"/>                                
+                                <cmps:FolderBrowserTextBox Name="txt_Out" Width="250" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,5,0"/>
                             </StackPanel>
                         </cmps:TabControlItemRibbonContainer>
 

@@ -49,6 +49,8 @@ namespace YuLinTu.Component.ContractAccount
         /// </summary>
         public List<BuildLandBoundaryAddressDot> ListValidDot { get; set; }
 
+        public Action<Exception> ExceptionAct { get; set; }
+
         public ContractBusinessParcelWordSettingDefine SettingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
         private ContractBusinessParcelWordSettingDefine ParcelWordSettingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
         #endregion
@@ -69,6 +71,7 @@ namespace YuLinTu.Component.ContractAccount
         private DiagramsView view = null;
         private int page = 1;
         private int pageMax = 1;
+
         #endregion
 
         #region Ctor
@@ -76,14 +79,13 @@ namespace YuLinTu.Component.ContractAccount
         public EditPersonLandParcelDialog(int imagecount)
         {
             InitializeComponent();
-
+            txt_Out.Text = SystemSetDefine.GetIntence().DefaultPath;
             DataContext = this;
             int row = 0;
             int clum = 0;
             LstViewOfNeighorParcels = new List<DiagramsView>();
             for (row = 0; row < 8; row++)
             {
-
                 DiagramsView ViewOfNeighorParcels = new DiagramsView();
                 ViewOfNeighorParcels.Paper.Model.BorderWidth = 1;
                 ViewOfNeighorParcels.Paper.Model.BorderColor = Color.FromArgb(255, 255, 255, 255);
@@ -104,7 +106,7 @@ namespace YuLinTu.Component.ContractAccount
                         dp.Install(ViewOfNeighorParcels);
                 }
                 LstViewOfNeighorParcels.Add(ViewOfNeighorParcels);
-
+                ViewOfNeighorParcels.ScrollViewer.RenderSize = new Size(mapW - 40, mapH - 40);
                 //exportLandParcelMainOperation = new ExportLandParcelMainOperation();
                 clum++;
 
@@ -130,7 +132,12 @@ namespace YuLinTu.Component.ContractAccount
             if (imagecount <= 8)
                 btnNext.IsEnabled = false;
             btnUp.IsEnabled = false;
+            if (view == null)
+                return;
+            if (view.Action is DiagramsViewActionSelect)
+                return;
 
+            view.Action = new DiagramsViewActionSelect(null);
         }
 
         private void ViewOfNeighorParcels_MouseClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -152,16 +159,6 @@ namespace YuLinTu.Component.ContractAccount
         #endregion
 
         #region Methods
-
-        protected override void OnInitializeStarted()
-        {
-            if (view == null)
-                return;
-            if (view.Action is DiagramsViewActionSelect)
-                return;
-
-            view.Action = new DiagramsViewActionSelect(null);
-        }
 
         protected override void OnInitializeGo()
         {
@@ -189,6 +186,10 @@ namespace YuLinTu.Component.ContractAccount
             ListGeoLand = landStation.GetCollection(SelectedLand.ZoneCode, eLevelOption.Self).Where(c => c.Shape != null).ToList();
             geoLandCollection = ListGeoLand.FindAll(c => c.OwnerId == SelectedLand.OwnerId);
 
+
+            var targetSpatialReference = DbContext.CreateSchema().GetElementSpatialReference(
+                ObjectContext.Create(typeof(ContractLand)).Schema,
+                ObjectContext.Create(typeof(ContractLand)).TableName);
             geoLandCollection = InitalizeAgricultureLandSortValue(geoLandCollection);
             foreach (var ViewOfNeighorParcels in LstViewOfNeighorParcels)
             {
@@ -210,9 +211,7 @@ namespace YuLinTu.Component.ContractAccount
                 }));
                 exportLandParcelMainOperation.mapH = mapH;
                 exportLandParcelMainOperation.mapW = mapW;
-
                 var visibleBounds = new CglEnvelope(0, 0, mapW, mapH);
-
                 ListLineFeature = lineStation.GetByZoneCode(SelectedLand.ZoneCode);
                 ListPointFeature = PointStation.GetByZoneCode(SelectedLand.ZoneCode);
                 ListPolygonFeature = PolygonStation.GetByZoneCode(SelectedLand.ZoneCode);
@@ -225,10 +224,6 @@ namespace YuLinTu.Component.ContractAccount
 
                 MapShapeUI map = null;
                 List<FeatureObject> listFeature = new List<FeatureObject>();
-
-                var targetSpatialReference = DbContext.CreateSchema().GetElementSpatialReference(
-                    ObjectContext.Create(typeof(ContractLand)).Schema,
-                    ObjectContext.Create(typeof(ContractLand)).TableName);
 
                 exportLandParcelMainOperation.targetSpatialReference = targetSpatialReference;
 
@@ -346,10 +341,10 @@ namespace YuLinTu.Component.ContractAccount
                             tempLands.Add(itemland);
                         }
                     }
-                    //else
-                    //{
-                    //    tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
-                    //}
+                    else
+                    {
+                        tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
+                    }
                     Dictionary<string, bool> landneighborhasland = new Dictionary<string, bool>();
                     if (SettingDefine.ShowlandneighborLabel && SettingDefine.NeighborlandSearchUseUserAlgorithm == false)
                     {
@@ -570,15 +565,14 @@ namespace YuLinTu.Component.ContractAccount
                             if (m != null)
                                 m.Text = null;
                         }
-
-                        var exent = ViewOfNeighorParcels.Paper.GetBounds();
-                        try
+                        var rect = ViewOfNeighorParcels.Paper.GetBounds();
+                        if (ViewOfNeighorParcels.ScrollViewer.ActualWidth == 0 ||
+                        ViewOfNeighorParcels.ScrollViewer.ActualHeight == 0)
                         {
-                            ViewOfNeighorParcels.ZoomTo(exent);
-                            ViewOfNeighorParcels.ZoomTo(1);
+                            ViewOfNeighorParcels.ScrollViewer.RenderSize = new Size(mapW, mapH);
                         }
-                        catch
-                        { }
+                        ViewOfNeighorParcels.ZoomTo(rect);
+                        ViewOfNeighorParcels.ZoomTo(1);
 
                     }));
 
@@ -833,16 +827,22 @@ namespace YuLinTu.Component.ContractAccount
             {
                 filePath = outpath;
             }
-
-            var editBusiness = new EditLandParcelBusiness(DbContext);
-            editBusiness.ExportLandParcelWord(contractAccountPanel.CurrentZone, personItem.Tag, filePath, LstViewOfNeighorParcels, true, "", false);
-            Owner.ShowDialog(new MessageDialog()
+            try
             {
-                Header = "导出地块示意图",
-                Message = string.Format("导出地块示意图完成，路径为: {0}", filePath),
-                MessageGrade = eMessageGrade.Infomation
-            });
-
+                var editBusiness = new EditLandParcelBusiness(DbContext);
+                editBusiness.ExportLandParcelWord(contractAccountPanel.CurrentZone, personItem.Tag, filePath, LstViewOfNeighorParcels, true, "", false);
+                Owner.ShowDialog(new MessageDialog()
+                {
+                    Header = "导出地块示意图",
+                    Message = string.Format("导出地块示意图完成，路径为: {0}", filePath),
+                    MessageGrade = eMessageGrade.Infomation
+                });
+            }
+            catch (Exception ex)
+            {
+                if (ExceptionAct != null)
+                    ExceptionAct(ex);
+            }
         }
 
         /// <summary>
@@ -885,6 +885,5 @@ namespace YuLinTu.Component.ContractAccount
             }
             return geoLandCollection;
         }
-
     }
 }

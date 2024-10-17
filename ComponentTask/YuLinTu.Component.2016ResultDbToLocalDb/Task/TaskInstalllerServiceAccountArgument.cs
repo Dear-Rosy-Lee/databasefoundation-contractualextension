@@ -69,7 +69,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         //private bool _NeedCheck;
 
         [DisplayLanguage("自动创建数据库")]
-        [DescriptionLanguage("创建数据库并设置为数据源")]
+        [DescriptionLanguage("自动创建新的数据库,数据将导入到新创建的库中，并设置为数据源")]
         public bool CreatDataBase
         {
             get { return _CreatDataBase; }

@@ -29,12 +29,9 @@ namespace YuLinTu.Product.YuLinTuTool
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
+            GC.WaitForFullGCComplete();
             Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
-        }
-     
+        }     
     }
 }
 

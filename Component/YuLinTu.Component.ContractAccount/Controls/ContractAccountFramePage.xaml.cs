@@ -356,7 +356,7 @@ namespace YuLinTu.Component.ContractAccount
             //btnParcelLand.IsOpen = false;
             btnLandImage.IsOpen = false;
             btnExportData.IsOpen = false;
-            btnTemplate.IsOpen = false; 
+            btnTemplate.IsOpen = false;
             string parameter = e.Parameter.ToString();
             switch (parameter)
             {
@@ -767,11 +767,19 @@ namespace YuLinTu.Component.ContractAccount
                 if (person != null)
                 {
                     if (pdlg == null)
+                    {
                         pdlg = new EditPersonLandParcelDialog(person.Children.Count);
+                        pdlg.ExceptionAct += (ex) =>
+                        {
+                            Workpage.Page.ShowMessageBox($"保存地块示意图发生错误:" + ex.Message);
+                            Log.WriteException(this, "EditPersonLandParcelDialog", ex.ToString());
+                        };
+                    }
 
                     pdlg.SelectedLand = person.Children[0].Tag;
-
-                    if (!isPersonFirst)
+                    if (pdlg.personItem == null)
+                        pdlg.personItem = person;
+                    // if (!isPersonFirst)
                     {
                         if (pdlg.personItem.Tag == person.Tag)
                         {
@@ -786,8 +794,8 @@ namespace YuLinTu.Component.ContractAccount
                             pdlg.personItem = person;
                         }
                     }
-                    else
-                        pdlg.personItem = person;
+                    // else
+                    //     pdlg.personItem = person;
 
                     pdlg.contractAccountPanel = contractAccountPanel;
                     Workpage.Page.ShowDialog(pdlg);
