@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
-    public class Parameters
+    public static class Parameters
     {
         public const string stringZipPassword = "ZipPassword";
         public const string stringZipPasswordValue = "ylt123";
+
+        public static string PassWord {  get; set; }
     }
 }

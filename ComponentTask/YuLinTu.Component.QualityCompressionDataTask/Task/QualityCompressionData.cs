@@ -81,7 +81,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         {
 
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            string password = Encrypter.EncryptDES("123456Ylt!@#dzzw2024","");
+                            string password = "SM2test";
+                            var EncryptPassword = Parameters.PassWord;
                             zipStream.Password = password;
                             CompressFolder(argument.CheckFilePath, zipStream);
                         }

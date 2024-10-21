@@ -13,6 +13,7 @@ using Org.BouncyCastle.Crypto.Digests;
 using System.IO;
 using Org.BouncyCastle.OpenSsl;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -49,21 +50,37 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             ECPublicKeyParameters publicKey = KeyReader.ReadPublicKeyFromPem("publicKey.pem");
 
             // 3. 待加密数据
-            byte[] dataToEncrypt = System.Text.Encoding.UTF8.GetBytes("Hello, SM2 Encryption!");
+            byte[] dataToEncrypt = System.Text.Encoding.UTF8.GetBytes("SM2test");
 
             // 4. 加密数据
             SM2Engine sm2Engine = new SM2Engine();
             sm2Engine.Init(true, new ParametersWithRandom(publicKey, new SecureRandom()));
             byte[] encryptedData = sm2Engine.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
+            
+
 
             Console.WriteLine("Encrypted Data: " + BitConverter.ToString(encryptedData));
+            Parameters.PassWord = BitConverter.ToString(encryptedData);
 
+            var encryptedData2 = StringToByteArray(Parameters.PassWord);
             // 5. 解密数据
             sm2Engine.Init(false, privateKey);
-            byte[] decryptedData = sm2Engine.ProcessBlock(encryptedData, 0, encryptedData.Length);
+            byte[] decryptedData = sm2Engine.ProcessBlock(encryptedData2, 0, encryptedData.Length);
             var res = System.Text.Encoding.UTF8.GetString(decryptedData);
             Console.WriteLine("Decrypted Data: " + System.Text.Encoding.UTF8.GetString(decryptedData));
 
+        }
+
+        public static byte[] StringToByteArray(string hex)
+        {
+            // 移除分隔符 "-"
+            hex = hex.Replace("-", "");
+
+            // 转换为 byte[]
+            return Enumerable.Range(0, hex.Length)
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                             .ToArray();
         }
 
         public static AsymmetricCipherKeyPair LoadKeysFromPem()
