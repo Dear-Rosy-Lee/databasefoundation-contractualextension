@@ -197,6 +197,17 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
+        public int UpdateOldLandCode(ContractLand entity)
+        {
+            DefaultRepository.UpdateOldLandCode(entity);
+            return TrySaveChanges(DefaultRepository);
+        }
+
+        public int UpdateLandBoundary(ContractLand entity)
+        {
+            DefaultRepository.UpdateLandBoundary(entity);
+            return TrySaveChanges(DefaultRepository);
+        }
         /// <summary>
         /// 批量更新承包地块
         /// </summary>

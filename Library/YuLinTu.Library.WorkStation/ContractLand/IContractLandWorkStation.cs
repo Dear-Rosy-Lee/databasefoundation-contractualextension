@@ -39,6 +39,10 @@ namespace YuLinTu.Library.WorkStation
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int UpdateShape(ContractLand entity);
 
+        int UpdateLandBoundary(ContractLand entity);
+
+        int UpdateOldLandCode(ContractLand entity);
+
         /// <summary>
         /// 批量更新承包地块
         /// </summary>

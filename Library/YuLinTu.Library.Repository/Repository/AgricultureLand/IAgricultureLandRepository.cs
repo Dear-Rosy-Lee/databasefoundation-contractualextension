@@ -43,6 +43,8 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(T entity);
 
+        int UpdateOldLandsCode(T entity);
+
         /// <summary>
         /// 根据承包方id更新承包方名称
         /// </summary>

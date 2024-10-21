@@ -20,5 +20,9 @@ namespace YuLinTu.Library.Repository
         /// <param name="entity">地块实体对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int UpdateShape(ContractLand entity);
+
+        int UpdateOldLandCode(ContractLand entity);
+
+        int UpdateLandBoundary(ContractLand entity);
     }
 }

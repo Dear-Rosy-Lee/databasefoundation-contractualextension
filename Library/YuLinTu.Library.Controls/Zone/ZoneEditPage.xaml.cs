@@ -473,6 +473,7 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+
         private void MetroTextBox_UpCodeChanged(object sender, TextChangedEventArgs e)
         {
             currentZone.UpLevelCode = mtbUpCode.Text.Trim();

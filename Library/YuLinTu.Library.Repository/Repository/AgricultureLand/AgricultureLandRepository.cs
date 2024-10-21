@@ -127,6 +127,20 @@ namespace YuLinTu.Library.Repository
             return base.Update(entity, c => c.ID.Equals(entity.ID));
         }
 
+        public int UpdateOldLandsCode(T entity)
+        {
+            if (entity == null)
+                return -1;
+
+            int cnt = 0;
+            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
+                Update(s => new ContractLand()
+                {
+                    OldLandNumber = entity.OldLandNumber
+                }));
+            return cnt;
+        }
+
         /// <summary>
         /// 根据承包方id更新承包方名称
         /// </summary>

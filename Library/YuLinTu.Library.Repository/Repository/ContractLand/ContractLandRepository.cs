@@ -45,5 +45,37 @@ namespace YuLinTu.Library.Repository
                 }));
             return cnt;
         }
+
+        public int UpdateOldLandCode(ContractLand entity)
+        {
+            if (entity == null)
+                return -1;
+
+            int cnt = 0;
+            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
+                Update(s => new ContractLand()
+                {
+                    OldLandNumber = entity.OldLandNumber
+                }));
+            return cnt;
+        }
+
+        public int UpdateLandBoundary(ContractLand entity)
+        {
+            if (entity == null)
+                return -1;
+
+            int cnt = 0;
+            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
+                Update(s => new ContractLand()
+                {
+                    NeighborEast = entity.NeighborEast,
+                    NeighborWest = entity.NeighborWest,
+                    NeighborSouth = entity.NeighborSouth,
+                    NeighborNorth = entity.NeighborNorth,
+                    LandName = entity.LandName
+                })); ; ;
+            return cnt;
+        }
     }
 }
