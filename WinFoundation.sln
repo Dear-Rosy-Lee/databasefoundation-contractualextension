@@ -799,8 +799,8 @@ Global
 		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x64.ActiveCfg = Release|Any CPU
 		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x64.Build.0 = Release|Any CPU
-		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x86.ActiveCfg = Release|Any CPU
-		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x86.Build.0 = Release|Any CPU
+		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x86.ActiveCfg = Release|x86
+		{35F37702-D347-4911-9965-7CCB1F8377D3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
