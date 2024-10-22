@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using YuLinTu.Data;
-using YuLinTu.Data.SQLite;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Repository;
 
 namespace YuLinTu.Component.AssociateLandCode
 {

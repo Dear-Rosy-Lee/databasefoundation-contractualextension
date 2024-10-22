@@ -196,8 +196,14 @@ namespace YuLinTu.Library.Business
             toolProgress.DynamicProgress(ZoneDesc + AccountLandFamily.CurrentFamily.Name);
             WriteInformation(AccountLandFamily);
             InitalizeRangeValue("A" + 2, "E" + 2, $"单位:{Tissue.Name}");
+            //index++;
+            SetLineType("A7", "Q" + (index - 1), false);
+            InitalizeRangeValue("A" + index, "C" + index, $"户主签名(按印)：");
+            InitalizeRangeValue("D" + index, "E" + index, $"");
+            InitalizeRangeValue("F" + index, "J" + index, $"联系电话：{AccountLandFamily.CurrentFamily.Telephone}");
+            InitalizeRangeValue("K" + index, "M" + index, $"是否同意延包：");
+            InitalizeRangeValue("N" + index, "Q" + index, $"日期:{DateTime.Now.ToString("yyyy年MM月dd日")}");
             //WriteTempLate();
-            SetLineType("A7", "P" + index, false);
             AccountLandFamily = null;
             return true;
         }
@@ -264,9 +270,9 @@ namespace YuLinTu.Library.Business
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
-            InitalizeRangeValue("G" + index, "G" + (index + height - 1), landinfo);
-            InitalizeRangeValue("O" + index, "O" + (index + height - 1), "");
-            InitalizeRangeValue("P" + index, "P" + (index + height - 1), "");
+            InitalizeRangeValue("I" + index, "I" + (index + height - 1), landinfo);
+            //InitalizeRangeValue("O" + index, "O" + (index + height - 1), "");
+            //InitalizeRangeValue("P" + index, "P" + (index + height - 1), "");
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
@@ -278,13 +284,13 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteCurrentZoneInformation(ContractLand land, int index)
         {
-            InitalizeRangeValue("H" + index, "H" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
-            InitalizeRangeValue("I" + index, "I" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
-            InitalizeRangeValue("J" + index, "J" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
-            InitalizeRangeValue("K" + index, "K" + index, land.NeighborEast != null ? land.NeighborEast : "/");
-            InitalizeRangeValue("L" + index, "L" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
-            InitalizeRangeValue("M" + index, "M" + index, land.NeighborWest != null ? land.NeighborWest : "/");
-            InitalizeRangeValue("N" + index, "N" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
+            InitalizeRangeValue("J" + index, "J" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
+            InitalizeRangeValue("K" + index, "K" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
+            InitalizeRangeValue("L" + index, "L" + index, (land.AwareArea > 0.0) ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("M" + index, "M" + index, land.NeighborEast != null ? land.NeighborEast : "/");
+            InitalizeRangeValue("N" + index, "N" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
+            InitalizeRangeValue("O" + index, "O" + index, land.NeighborWest != null ? land.NeighborWest : "/");
+            InitalizeRangeValue("P" + index, "P" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
         }
 
         private void WritePersonInformation(Person person, int index, bool flag)
@@ -303,82 +309,6 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("F" + index, "F" + index, person.Relationship);
         }
 
-        /// <summary>
-        /// 填写模板
-        /// </summary>
-        private void WriteTempLate()
-        {
-            string title = GetRangeToValue("A1", "AH2").ToString();
-            title = $"{ZoneDesc}{title}";
-            InitalizeRangeValue("A" + 1, "AH" + 2, title);
-            InitalizeRangeValue("C" + 3, "D" + 3, Tissue.Name);
-            InitalizeRangeValue("F" + 3, "F" + 3, Tissue.Code);
-            InitalizeRangeValue("I" + 3, "J" + 3, Tissue.LawyerName);
-            var code = GetCardTypeNumber(Tissue.LawyerCredentType);
-            Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
-            InitalizeRangeValue("L" + 3, "L" + 3, cardtype.Name);
-            InitalizeRangeValue("N" + 3, "P" + 3, Tissue.LawyerCartNumber);
-            InitalizeRangeValue("R" + 3, "S" + 3, Tissue.LawyerTelephone);
-            InitalizeRangeValue("W" + 3, "Z" + 3, Tissue.LawyerAddress);
-            InitalizeRangeValue("AB" + 3, "AB" + 3, Tissue.LawyerPosterNumber);
-            InitalizeRangeValue("AD" + 3, "AE" + 3, Tissue.SurveyPerson);
-            DateTime surveyDate = new DateTime();
-            if (Tissue.SurveyDate != null)
-            {
-                surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
-            }
-            InitalizeRangeValue("AG" + 3, "AH" + 3, surveyDate.ToString("yyyy年MM月dd日"));
-
-            WriteCount();
-        }
-
-        /// <summary>
-        /// 书写合计信息
-        /// </summary>
-        private void WriteCount()
-        {
-            SetRange("A" + index, "A" + index, 42.25, "合计");
-            InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
-            InitalizeRangeValue("G" + index, "N" + index, $"{peopleCount} 人");
-            InitalizeRangeValue("P" + index, "W" + index, $"{landCount} 块");
-            InitalizeRangeValue("X" + index, "X" + index, $"{TableArea}亩");
-            InitalizeRangeValue("Y" + index, "Y" + index, $"{AwareArea}亩");
-            InitalizeRangeValue("Z" + index, "Z" + index, $"{AwareArea}亩");
-            InitalizeRangeValue("AA" + index, "AA" + index, $"{ActualArea}亩");
-            InitalizeRangeValue("AB" + index, "AB" + index, $"{ActualArea}亩");
-            InitalizeRangeValue("AC" + index, "AC" + index, "\\");
-            InitalizeRangeValue("AD" + index, "AD" + index, "\\");
-            InitalizeRangeValue("AE" + index, "AE" + index, "\\");
-            InitalizeRangeValue("AF" + index, "AF" + index, "\\");
-            InitalizeRangeValue("AG" + index, "AG" + index, "\\");
-            InitalizeRangeValue("AH" + index, "AH" + index, "\\");
-            InitalizeRangeValue("AI" + index, "AI" + index, "\\");
-        }
-
-        private int GetCardTypeNumber(eCredentialsType type)
-        {
-            switch (type)
-            {
-                case eCredentialsType.IdentifyCard:
-                    return 1;
-
-                case eCredentialsType.AgentCard:
-                    return 3;
-
-                case eCredentialsType.OfficerCard:
-                    return 2;
-
-                case eCredentialsType.Other:
-                    return 9;
-
-                case eCredentialsType.Passport:
-                    return 5;
-
-                case eCredentialsType.ResidenceBooklet:
-                    return 4;
-            }
-            return 0;
-        }
 
         private int GetCBFLXNumber(eContractorType type)
         {
