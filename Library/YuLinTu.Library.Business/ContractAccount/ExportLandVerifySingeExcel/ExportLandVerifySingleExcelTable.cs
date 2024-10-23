@@ -202,7 +202,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("D" + index, "E" + index, $"");
             InitalizeRangeValue("F" + index, "J" + index, $"联系电话：{AccountLandFamily.CurrentFamily.Telephone}");
             InitalizeRangeValue("K" + index, "M" + index, $"是否同意延包：");
-            InitalizeRangeValue("N" + index, "Q" + index, $"日期:{DateTime.Now.ToString("yyyy年MM月dd日")}");
+            InitalizeRangeValue("N" + index, "Q" + index, $"日期:");
             //WriteTempLate();
             AccountLandFamily = null;
             return true;

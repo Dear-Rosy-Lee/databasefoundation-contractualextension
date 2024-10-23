@@ -6176,7 +6176,8 @@ namespace YuLinTu.Component.MapFoundation
                 land = LandDataProcessing(entity, keyValues);
                 vp = VpDataProcessing(keyValues);
                 lands.Add(land);
-                vps.Add(vp);
+                if (vp != null)
+                    vps.Add(vp);
             }
             VPS = vps;
             return lands;
@@ -6185,9 +6186,11 @@ namespace YuLinTu.Component.MapFoundation
         private VirtualPerson VpDataProcessing(KeyValueList<string, string> keyValues)
         {
             //var vpname = keyValues.FirstOrDefault(x => x.Key == "QLRMC").Value;
-            var vpid = Guid.Parse(keyValues.FirstOrDefault(x => x.Key == "QLRBS").Value);
+            var vpid = keyValues.FirstOrDefault(x => x.Key == "QLRBS").Value;
+            if (string.IsNullOrEmpty(vpid))
+                return null;
             IVirtualPersonWorkStation<LandVirtualPerson> vpStation = dbcontext.CreateVirtualPersonStation<LandVirtualPerson>();
-            var vp = vpStation.Get(vpid);
+            var vp = vpStation.Get(Guid.Parse(vpid));
             return vp;
         }
 
@@ -6226,7 +6229,9 @@ namespace YuLinTu.Component.MapFoundation
             land.SenderName = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWMC")).Value;
             land.SenderCode = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWDM")).Value;
             land.OwnerName = keyValues.FirstOrDefault(x => x.Key.Equals("QLRMC")).Value;
-            land.OwnerId = Guid.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("QLRBS")).Value);
+            var qlrid = keyValues.FirstOrDefault(x => x.Key.Equals("QLRBS")).Value;
+            if (!string.IsNullOrEmpty(qlrid))
+                land.OwnerId = Guid.Parse(qlrid);
             land.LandCode = keyValues.FirstOrDefault(x => x.Key.Equals("TDLYLX")).Value;
             land.LandName = keyValues.FirstOrDefault(x => x.Key.Equals("TDLYLXMC")).Value;
             land.ActualArea = double.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SCMJ")).Value);

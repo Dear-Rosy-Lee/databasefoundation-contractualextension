@@ -103,7 +103,7 @@ namespace YuLinTu.Component.MapFoundation
             try
             {
                 Zone tempZone = zoneStation.Get(zone.UpLevelCode);
-                while (tempZone.Level <= eZoneLevel.Village)
+                while (tempZone != null && tempZone.Level <= eZoneLevel.Village)
                 {
                     name = tempZone.Name + name;
                     tempZone = zoneStation.Get(tempZone.UpLevelCode);
