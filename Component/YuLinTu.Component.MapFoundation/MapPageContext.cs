@@ -4854,15 +4854,15 @@ namespace YuLinTu.Component.MapFoundation
             }
             var lands = InitializeGeoLand(graphics);
 
+            if (currentZone == null || currentZone.Level > eZoneLevel.Village)
+            {
+                ShowBox("信息提示", "选中的发包方级别地域(村、组)才能进行四至计算！");
+                return;
+            }
             var landcount = new AccountLandBusiness(dbcontext).CountLandByZone(currentZone.FullCode);
             if (landcount == 0)
             {
                 ShowBox("信息提示", "选中的地域下未获取到其他地块数据！");
-                return;
-            }
-            if (currentZone.Level > eZoneLevel.Village)
-            {
-                ShowBox("信息提示", "选中的发包方级别地域才能进行四至计算！");
                 return;
             }
             var seekLandNeighborSet = new SeekLandNeighborSetting();

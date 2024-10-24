@@ -4,22 +4,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using YuLinTu.Data;
+using YuLinTu.Diagrams;
 using YuLinTu.Library.Entity;
+using YuLinTu.NetAux.CglLib;
 using YuLinTu.Spatial;
 using YuLinTu.tGIS;
 using YuLinTu.tGIS.Client;
 using YuLinTu.tGIS.Data;
 using YuLinTu.Windows.Wpf;
-using YuLinTu.Diagrams;
-using System.Windows;
-using YuLinTu.NetAux.CglLib;
-using System.Text.RegularExpressions;
-using System.IO;
-using static YuLinTu.tGISCNet.SmallAngleCheckWKB;
 
 namespace YuLinTu.Library.Business
 {

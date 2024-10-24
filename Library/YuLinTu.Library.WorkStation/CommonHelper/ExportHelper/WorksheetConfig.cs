@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Xml;
 using YuLinTu.Library.Office;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.WorkStation
 {
