@@ -2571,12 +2571,11 @@ md "$(SolutionDir)Workspace\Libraries\x86\"
 md "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
 md "$(SolutionDir)Workspace\Libraries\x86\Quality\"
 md "$(SolutionDir)Workspace\Libraries\x86\Thought\"
-md "$(SolutionDir)Workspace\Libraries\x86\GDAL\"
 
 copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
 copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Quality\"
 copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Thought\"
-copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\Libraries\x86\GDAL\" 
+copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\Libraries\libs\" 
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.exe" "$(SolutionDir)Workspace\Libraries\libs\"
 
@@ -2590,8 +2589,7 @@ del "$(TargetDir)*.manifest"
 del "$(TargetDir)*.vshost.*"
 del "$(TargetDir)*.dll.config"
 
-copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
-</PostBuildEvent>
+copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

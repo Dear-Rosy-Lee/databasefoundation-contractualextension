@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
@@ -8,6 +9,17 @@ namespace YuLinTu.Product.YuLinTuTool
         [STAThread]
         static void Main(string[] args)
         {
+            // 设置环境变量
+            string variableName = "Path";
+            // 获取环境变量
+            string value = Environment.GetEnvironmentVariable(variableName);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Libraries\libs");
+            //string sppath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Libraries\x86\Spatialite");
+            if (!value.Contains(path))
+            {
+                value = value + ";" + path;
+                Environment.SetEnvironmentVariable(variableName, value);
+            }
             //string progressName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
             //int produceNumber = 0;
             //foreach (System.Diagnostics.Process progress in System.Diagnostics.Process.GetProcesses())
@@ -31,7 +43,7 @@ namespace YuLinTu.Product.YuLinTuTool
             GC.WaitForPendingFinalizers();
             GC.WaitForFullGCComplete();
             Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
-        }     
+        }
     }
 }
 

@@ -4839,6 +4839,10 @@ namespace YuLinTu.Component.MapFoundation
         private void CalcLandBundary(object sender, RoutedEventArgs e)
         {
             var map = MapControl;
+            if (map != null && map.SelectedItems.Count == 0)
+            {
+                return;
+            }
             var graphics = map.SelectedItems.ToList();
             if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
             graphics[0].Layer.Name != "自留地" &&
