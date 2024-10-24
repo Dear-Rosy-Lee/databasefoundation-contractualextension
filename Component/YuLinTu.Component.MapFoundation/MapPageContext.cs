@@ -4844,8 +4844,9 @@ namespace YuLinTu.Component.MapFoundation
                 return;
             }
             var graphics = map.SelectedItems.ToList();
-            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
-            graphics[0].Layer.Name != "自留地" &&
+            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" && 
+                graphics[0].Layer.Name != "自留地" &&
+                graphics[0].Layer.Name != "开荒地" &&
                 graphics[0].Layer.Name != "机动地" &&
                 graphics[0].Layer.Name != "其他集体地"))
             {
