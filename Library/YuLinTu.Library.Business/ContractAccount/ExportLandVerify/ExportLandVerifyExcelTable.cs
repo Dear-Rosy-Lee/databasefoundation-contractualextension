@@ -21,6 +21,7 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private ToolProgress toolProgress;//进度条
+        private int cindex;
         private int index;//下标
         private string templatePath;
         private int familyCount;//户数
@@ -214,11 +215,13 @@ namespace YuLinTu.Library.Business
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
+                cindex++;
                 toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);
                 WriteInformation(landFamily);
             }
             WriteTempLate();
-            SetLineType("A7", "AH" + index, false);
+            SetLineType("A7", "AI" + index, false);
+            
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -283,17 +286,17 @@ namespace YuLinTu.Library.Business
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
-            InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
+            InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{CurrentZone.FullCode.PadRight(14, '0')}{result}");
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
-            InitalizeRangeValue("AH" + index, "AH" + (index + height - 1), "");
+            InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "");
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
@@ -334,7 +337,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
             InitalizeRangeValue("AF" + index, "AF" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
-            InitalizeRangeValue("AG" + index, "AG" + index, land.Comment);
+            InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
         }
 
         private void WritePersonInformation(Person person, int index, bool flag)
@@ -364,26 +367,26 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void WriteTempLate()
         {
-            string title = GetRangeToValue("A1", "AH2").ToString();
-            title = $"{ZoneDesc}{title}";
-            InitalizeRangeValue("A" + 1, "AH" + 2, title);
-            InitalizeRangeValue("C" + 3, "D" + 3, Tissue.Name);
-            InitalizeRangeValue("F" + 3, "F" + 3, Tissue.Code);
-            InitalizeRangeValue("I" + 3, "J" + 3, Tissue.LawyerName);
+            string title = GetRangeToValue("A1", "AI2").ToString();
+            title = $"{ZoneDesc}{title}（建库工具版）";
+            InitalizeRangeValue("A" + 1, "AI" + 2, title);
+            InitalizeRangeValue("C" + 3, "E" + 3, Tissue.Name);
+            InitalizeRangeValue("G" + 3, "G" + 3, Tissue.Code);
+            InitalizeRangeValue("J" + 3, "K" + 3, Tissue.LawyerName);
             var code = GetCardTypeNumber(Tissue.LawyerCredentType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
-            InitalizeRangeValue("L" + 3, "L" + 3, cardtype.Name);
-            InitalizeRangeValue("N" + 3, "P" + 3, Tissue.LawyerCartNumber);
-            InitalizeRangeValue("R" + 3, "S" + 3, Tissue.LawyerTelephone);
-            InitalizeRangeValue("W" + 3, "Z" + 3, Tissue.LawyerAddress);
-            InitalizeRangeValue("AB" + 3, "AB" + 3, Tissue.LawyerPosterNumber);
-            InitalizeRangeValue("AD" + 3, "AE" + 3, Tissue.SurveyPerson);
+            InitalizeRangeValue("M" + 3, "N" + 3, cardtype.Name);
+            InitalizeRangeValue("P" + 3, "S" + 3, Tissue.LawyerCartNumber);
+            InitalizeRangeValue("U" + 3, "V" + 3, Tissue.LawyerTelephone);
+            InitalizeRangeValue("Z" + 3, "AB" + 3, Tissue.LawyerAddress);
+            InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
+            InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
             DateTime surveyDate = new DateTime();
             if (Tissue.SurveyDate != null)
             {
                 surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
             }
-            InitalizeRangeValue("AG" + 3, "AH" + 3, surveyDate.ToString("yyyy年MM月dd日"));
+            InitalizeRangeValue("AI" + 3, "AI" + 3, surveyDate.ToString("yyyy年MM月dd日"));
 
             WriteCount();
         }

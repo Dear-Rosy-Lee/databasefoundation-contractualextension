@@ -60,6 +60,38 @@ namespace YuLinTu.Library.Repository
             return cnt;
         }
 
+        public int UpdateLandCode(List<ContractLand> entitys)
+        {
+            if (entitys == null)
+                return -1;
+
+            int cnt = 0;
+            foreach(var entity in entitys)
+            {
+                cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
+                Update(s => new ContractLand()
+                {
+                    LandNumber = entity.LandNumber
+                }));
+            }
+            
+            return cnt;
+        }
+
+        public int UpdateZoneCode(ContractLand entity)
+        {
+            if (entity == null)
+                return -1;
+
+            int cnt = 0;
+            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
+                Update(s => new ContractLand()
+                {
+                    ZoneCode = entity.ZoneCode
+                }));
+            return cnt;
+        }
+
         public int UpdateLandBoundary(ContractLand entity)
         {
             if (entity == null)

@@ -203,6 +203,18 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
+        public int UpdateLandCode(List<ContractLand> entity)
+        {
+            DefaultRepository.UpdateLandCode(entity);
+            return TrySaveChanges(DefaultRepository);
+        }
+
+        public int UpdateZoneCode(ContractLand entity)
+        {
+            DefaultRepository.UpdateZoneCode(entity);
+            return TrySaveChanges(DefaultRepository);
+        }
+
         public int UpdateLandBoundary(ContractLand entity)
         {
             DefaultRepository.UpdateLandBoundary(entity);

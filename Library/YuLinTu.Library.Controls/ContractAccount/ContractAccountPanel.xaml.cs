@@ -6520,6 +6520,29 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 自动编码
+        /// </summary>
+        public void GetLandCode()
+        {
+            var landStation = DbContext.CreateContractLandWorkstation();
+            var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.GetByZoneCode(currentZone.FullCode);
+            var lands = landStation.GetCollection(currentZone.FullCode, eLevelOption.SelfAndSubs);
+            var index = 1;
+            foreach (var vp in vps)
+            {
+                var vplands = lands.Where(x => x.OwnerId == vp.ID).ToList();
+                vplands.ForEach(x =>
+                {
+                    x.LandNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
+                    index++;
+                    
+                });
+                landStation.UpdateLandCode(vplands);
+            }
+        }
+
+        /// <summary>
         /// 检索地块名称为空
         /// </summary>
         public void LandNameNullSearch()

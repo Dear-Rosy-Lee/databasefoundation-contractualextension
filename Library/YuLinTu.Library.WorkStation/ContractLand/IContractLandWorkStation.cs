@@ -44,6 +44,15 @@ namespace YuLinTu.Library.WorkStation
         int UpdateOldLandCode(ContractLand entity);
 
         /// <summary>
+        /// 批量更新地块编码
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        int UpdateLandCode(List<ContractLand> entity);
+
+        int UpdateZoneCode(ContractLand entity);
+
+        /// <summary>
         /// 批量更新承包地块
         /// </summary>
         /// <param name="entities">合同集合</param>

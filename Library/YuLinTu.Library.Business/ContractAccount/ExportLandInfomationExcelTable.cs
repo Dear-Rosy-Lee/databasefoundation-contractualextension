@@ -22,6 +22,7 @@ namespace YuLinTu.Library.Business
 
         private ToolProgress toolProgress;//进度条
         private int index;//下标
+        private int cindex;
         private string templatePath;
         private string contracteeName;
         private bool showContractee;
@@ -263,11 +264,12 @@ namespace YuLinTu.Library.Business
 
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
+                cindex++;
                 toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);
                 WriteInformation(landFamily);
             }
             WriteTempLate();
-            SetLineType("A5", "M" + (index - 1), false);
+            SetLineType("A5", "N" + (index - 1), false);
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -295,9 +297,9 @@ namespace YuLinTu.Library.Business
             foreach (ContractLand land in lands)
             {
                 landAreaCount += land.ActualArea;
-                landtableCount += (land.TableArea != null && land.TableArea.HasValue && land.TableArea.Value > 0) ? land.TableArea.Value : 0;
+                landtableCount += land.AwareArea;
                 WriteCurrentZoneInformation(land, index);
-                tableLandCount += (land.TableArea != null && land.TableArea.HasValue && land.TableArea.Value > 0) ? 1 : 0;
+                tableLandCount += (land.AwareArea  > 0) ? 1 : 0;
                 actualLandCount+= (land.ActualArea > 0) ? 1 : 0;
                 index++;
             }
@@ -309,9 +311,9 @@ namespace YuLinTu.Library.Business
             }
             tableArea += landtableCount;
             actualArea += landAreaCount;
-            InitalizeRangeValue("A" + startrow, "A" + (index - 1), landFamily.CurrentFamily.FamilyNumber);
+            InitalizeRangeValue("A" + startrow, "A" + (index - 1), cindex);
             InitalizeRangeValue("B" + startrow, "B" + (index - 1), landFamily.CurrentFamily.Name.InitalizeFamilyName(SystemDefine.KeepRepeatFlag));
-
+            InitalizeRangeValue("N" + startrow, "N" + (index - 1), "");
             string htareainfostring = string.Empty;
             string scareainfostring = string.Empty;
 
@@ -366,6 +368,7 @@ namespace YuLinTu.Library.Business
 
                 SetRangPublishExcelUse("D" + startrow, "D" + (index - 1), 42.25, htareainfostring, 7, landcountstringlength, 9 + landcountstringlength, htareastringlength);
                 SetRangPublishExcelUse("C" + startrow, "C" + (index - 1), 42.25, scareainfostring, 7, uselandcount, 9 + uselandcount, scareastringlength);
+                
             }
 
             lands.Clear();
@@ -388,7 +391,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("H" + index, "H" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("I" + index, "I" + index, land.NeighborWest != null ? land.NeighborWest : "/");
             InitalizeRangeValue("J" + index, "J" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
-            InitalizeRangeValue("K" + index, "K" + index, (land.TableArea != null && land.TableArea.HasValue && land.TableArea.Value > 0.0) ? ToolMath.SetNumbericFormat(land.TableArea.Value.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("K" + index, "K" + index, land.AwareArea == 0 ? SystemDefine.InitalizeAreaString() : ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2));
             InitalizeRangeValue("L" + index, "L" + index, land.ActualArea == 0 ? SystemDefine.InitalizeAreaString() : ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2));
             InitalizeRangeValue("M" + index, "M" + index, land.LandExpand.PublicityComment);
         }
