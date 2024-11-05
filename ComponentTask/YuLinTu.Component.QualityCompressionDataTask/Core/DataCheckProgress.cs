@@ -1,120 +1,269 @@
-﻿using GeoAPI.CoordinateSystems;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using YuLinTu.Data;
-using YuLinTu.Library.Business;
+using Newtonsoft.Json;
+using Quality.Business.Entity;
+using YuLinTu.Spatial;
+using Quality.Business.TaskBasic;
+using YuLinTu.tGISCNet;
+using System.Reflection;
+using File = System.IO.File;
+using YuLinTu.Data.Dynamic;
+using YuLinTu.Data.Shapefile;
+using System.Net.Http;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
-    public class DataCheckProgress : Task
+    public class DataCheckProgress
     {
         /// <summary>
         /// 图形SRID
         /// </summary>
         private int srid;
 
-        private bool flag = true;
+        private Dictionary<string, int> codeIndex;
 
-        private string filePath;
-
-        /// <summary>
-        /// 服务
-        /// </summary>
-        public IDbContext LocalService { get; set; }
+        private string dkShapeFilePath;//用于判断是否读取了不同的地块shp
 
         /// <summary>
         /// 参数
         /// </summary>
         public QualityCompressionDataArgument DataArgument { get; set; }
 
-        public bool Check()
+        public async Task<bool> Check()
         {
-            var zoneStation = LocalService.CreateZoneWorkStation();
-            var landStation = LocalService.CreateContractLandWorkstation();
-            var countyZoneCode = zoneStation.GetByZoneLevel(Library.Entity.eZoneLevel.County).FirstOrDefault().FullCode;
-            var villageZoneCode = DataArgument.CheckFilePath.Split('\\').Last();
-            srid = GetSrid(LocalService);
+            //获取当前路径下shape数据
 
-            var currentPath = new FilePathInfo();
-            currentPath.ShapeFileList = new List<FileCondition>();
-            var shapeFileCondition = new FileCondition();
-            shapeFileCondition.FilePath = $"{DataArgument.CheckFilePath}\\DK{countyZoneCode}2024.shp";
-            currentPath.ShapeFileList.Add(shapeFileCondition);
-            var shpProcess = new SpaceDataOperator(srid, currentPath.ShapeFileList);
-
-            var shpLands = shpProcess.InitiallLandList(currentPath.ShapeFileList, villageZoneCode);
-            var lands = landStation.GetCollection(villageZoneCode);
-            CreateLog();
-
-            foreach (var shpLand in shpLands)
+            string filepath;
+            string filename;
+            IDbContext ds;
+            try
             {
-                if (shpLand.YDKBM == "")
+                filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
+                filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
+                SpatialReference shpReference = ReferenceHelper.GetShapeReference(DataArgument.CheckFilePath);
+                var token = Parameters.Token.ToString();
+                if (Parameters.Token.Equals(Guid.Empty))
                 {
-                    lands.ForEach(x =>
-                    {
-                        var res = x.Shape.Intersects(shpLand.Shape as Spatial.Geometry);
-                        if (res == true)
-                        {
-                            WriteLog($"错误，新增地块{shpLand.QLRMC}地块编码为{shpLand.DKBM}；" +
-                                     $"与{x.OwnerName}，地块编码为{x.LandNumber}地块有重叠部分。");
-                            flag = false;
-                        }
-                    });
+                    Parameters.ErrorInfo = "请先登录后，再进行检查";
+                    return false;
                 }
-                else
+                ds = ProviderShapefile.CreateDataSource(filepath, false) as IDbContext;
+                var dq = new DynamicQuery(ds);
+             
+                List<LandEntity> ls = new List<LandEntity>();
+                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, "");
+                if (landShapeList.IsNullOrEmpty())
                 {
-                    var land = lands.Where(x => x.LandNumber == shpLand.YDKBM).FirstOrDefault();
-                    var geo = shpLand.Shape as Spatial.Geometry;
-                    var res = land.Shape.Contains(geo);
-                    if (res == false)
-                    {
-                        var intersectionArea = land.Shape.Intersection(geo).Area();
-                        if (intersectionArea < 1)
-                        {
-                            WriteLog($"错误，地块编码为{shpLand.DKBM}的地块未与原地块相交，且相交面积少于1平方米");
-                            flag = false;
-                        }
-                    }
+                    Parameters.ErrorInfo = "读取shp文件错误，请检查shp文件";
+                    return false;
                 }
+                foreach (var item in landShapeList)
+                {
+                    var land = new LandEntity();
+                    land.dkbm = item.DKBM;
+
+                    var landShape = item.Shape as Geometry;
+                    land.ewkt = $"SRID={4490};{landShape.GeometryText}"; 
+                    ls.Add(land);
+                }
+                ApiCaller apiCaller = new ApiCaller();
+                apiCaller.client = new HttpClient();
+                string baseUrl = "http://192.168.20.83:8981";
+                string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
+                // 发送 GET 请求
+                //res = await apiCaller.GetDataAsync(postUrl);
+                // 发送 POST 请求
+                string jsonData = JsonConvert.SerializeObject(ls);  
+                var getTaskID = await apiCaller.PostGetTaskIDAsync(token,postGetTaskIdUrl, jsonData);
+                string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
+                var getResult = await apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
+                if (!getResult.IsNullOrEmpty())
+                {
+                    var folderPath = CreateLog();
+                    WriteLog(folderPath , getResult);
+                    Parameters.ErrorInfo="shp存在拓扑错误，详情请查看txt文件";
+                    return false;
+                }
+                return true;
             }
-            if (flag == true)
-                WriteLog($"检查通过！{DateTime.Now}");
-            return flag;
+            catch(Exception ex)
+            {
+                Parameters.ErrorInfo = ex.Message;
+                return false;
+            }
+           
         }
 
-        /// <summary>
-        /// 获取Srid
-        /// </summary>
-        private int GetSrid(IDbContext localService)
-        {
-            var targetSpatialReference = localService.CreateSchema().GetElementSpatialReference(
-                    ObjectContext.Create(typeof(Library.Entity.ContractLand)).Schema,
-                    ObjectContext.Create(typeof(Library.Entity.ContractLand)).TableName);
-            if (targetSpatialReference == null)
-                throw new Exception("无法获取到本地是数据库表ZD_CBD的坐标信息");
-            return targetSpatialReference.WKID;
-        }
-
-        private void CreateLog()
+        public string CreateLog()
         {
             // 指定文件夹路径
             string folderPath = DataArgument.ResultFilePath;
-            string fileName = "检查结果.txt";
+            string fileName = $"检查结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
             // 合成完整文件路径
-            filePath = Path.Combine(folderPath, fileName);
-            File.WriteAllText(filePath, "检查结果记录:");
+            folderPath = Path.Combine(folderPath, fileName);
+            File.WriteAllText(folderPath, "检查结果记录:\n");
+            return folderPath;
         }
 
-        private void WriteLog(string mes)
+        public void WriteLog(string path,KeyValueList<string, string> mes)
         {
-            File.AppendAllText(filePath, mes + Environment.NewLine);
+            foreach (var item in mes)
+            {
+                IEnumerable<string> stringCollection = new[] { item.Value.Substring(0, item.Value.Length - 2) };
+                File.AppendAllLines(path, stringCollection );
+            }
+        }
+
+        public List<DKEX> InitiallShapeLandList(string filePath, string zoneCode = "")
+        {
+            var dkList = new List<DKEX>();
+
+            if (filePath == null || string.IsNullOrEmpty(filePath))
+            {
+                return dkList;
+            }
+            //codeIndex.Clear();
+            using (var shp = new ShapeFile())
+            {
+                var err = shp.Open(filePath);
+                if (!string.IsNullOrEmpty(err))
+                {
+                    LogWrite.WriteErrorLog("读取地块Shape文件发生错误" + err);
+                    return null;
+                }
+                codeIndex = new Dictionary<string, int>();
+                foreach (var dk in ForEnumRecord<DKEX>(shp, filePath, codeIndex, DK.CDKBM, zoneCode))
+                {
+                    dkList.Add(dk);
+                }
+            }
+            return dkList;
+        }
+
+        public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
+            string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
+        {
+            bool isSameDkShp = true;
+            if (dkShapeFilePath.IsNullOrEmpty())
+            {
+                dkShapeFilePath = fileName;
+            }
+            else if (dkShapeFilePath.Equals(fileName) == false)
+            {
+                isSameDkShp = false;
+            }
+
+            var infoArray = typeof(T).GetProperties();
+            var fieldIndex = new Dictionary<string, int>();
+            bool isSelect = (mainField != "" && zoneCode != "") ? true : false;
+
+            int dkbmindex = -1;
+            for (int i = 0; i < infoArray.Length; i++)
+            {
+                var info = infoArray[i];
+                var index = shp.FindField(info.Name);
+                if (index >= 0)
+                {
+                    fieldIndex.Add(info.Name, index);
+                }
+
+                if (info.Name == mainField)
+                {
+                    dkbmindex = index;
+                }
+            }
+
+            if (codeIndex.Count > 0 && isSameDkShp)
+            {
+                foreach (var item in codeIndex)
+                {
+                    if (isSelect)
+                    {
+                        if (dkbmindex < 0)
+                            continue;
+
+                        if (!item.Key.StartsWith(zoneCode))
+                            continue;
+                    }
+                    var en = new T();
+                    for (int i = 0; i < infoArray.Length; i++)
+                    {
+                        var info = infoArray[i];
+                        if (!fieldIndex.ContainsKey(info.Name))
+                            continue;
+                        info.SetValue(en, FieldValue(item.Value, fieldIndex[info.Name], shp, info), null);
+                    }
+                    ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(item.Value, srid));
+                    yield return en;
+                }
+            }
+            else
+            {
+                var shapeCount = shp.GetRecordCount();
+                for (int i = 0; i < shapeCount; i++)
+                {
+                    var en = new T();
+
+                    if (isSelect)
+                    {
+                        if (dkbmindex < 0)
+                            continue;
+
+                        var strValue = shp.GetFieldString(i, dkbmindex);
+                        if (strValue == null)
+                        {
+                            continue;
+                        }
+                        if (!codeIndex.ContainsKey(strValue))
+                            codeIndex.Add(strValue, i);
+                        if (!strValue.StartsWith(zoneCode))
+                            continue;
+                    }
+                    for (int j = 0; j < infoArray.Length; j++)
+                    {
+                        var info = infoArray[j];
+                        if (!fieldIndex.ContainsKey(info.Name))
+                            continue;
+                        var value = FieldValue(i, fieldIndex[info.Name], shp, info);
+                        info.SetValue(en, value, null);
+
+                    }
+                    if (setGeo)
+                        ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(i, srid));
+                    yield return en;
+                }
+            }
+
+        }
+        /// <summary>
+        /// 字段值获取
+        /// </summary>
+        private object FieldValue(int row, int colum, ShapeFile dataReader, PropertyInfo info)
+        {
+            object value = null;
+            if (info.Name == "BSM")
+            {
+                int bsm = 0;
+                int.TryParse(dataReader.GetFieldString(row, colum), out bsm);
+                value = bsm;
+            }
+            else if (info.Name.EndsWith("MJ") || info.Name.EndsWith("MJM") || info.Name == "CD" || info.Name == ZJ.CKD || info.Name == JZD.CXZBZ || info.Name == JZD.CYZBZ ||
+                 info.Name == KZD.CX80 || info.Name == KZD.CY80 || info.Name == KZD.CY2000 || info.Name == KZD.CX2000)
+            {
+                double scmj = 0;
+                var mjstr = dataReader.GetFieldString(row, colum);
+                double.TryParse(mjstr.IsNullOrEmpty() ? "0" : mjstr, out scmj);
+                value = scmj;
+            }
+            else
+            {
+                value = dataReader.GetFieldString(row, colum);
+                value = value == null ? "" : value;
+            }
+            return value;
         }
     }
 }

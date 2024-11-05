@@ -7,6 +7,7 @@ using YuLinTu.Component.Account.Models;
 using YuLinTu.Security;
 using YuLinTu.Windows;
 using Newtonsoft.Json;
+using YuLinTu.Component.QualityCompressionDataTask;
 
 namespace YuLinTu.Component.Account.Services
 {
@@ -178,6 +179,7 @@ namespace YuLinTu.Component.Account.Services
                 Guid session;
                 if (Guid.TryParse(token, out session))
                 {
+                    Parameters.Token = session;
                     return session;
                 }
                 else
@@ -194,6 +196,7 @@ namespace YuLinTu.Component.Account.Services
         public bool Logout(Guid sessionCode)
         {
             var result = Api.LogoutAsync().Result;
+            Parameters.Token = Guid.Empty;
             return result.Success;
         }
 

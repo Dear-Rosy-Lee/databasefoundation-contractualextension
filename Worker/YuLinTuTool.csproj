@@ -217,6 +217,9 @@
       <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
@@ -309,8 +312,8 @@
       <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.ShapeFile.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.dll</HintPath>
@@ -2256,147 +2259,6 @@
     <None Include="Template\yltmdPriStyle.yltmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Template\公示无异议声明书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地二轮承包到期后再延长三十年摸底核实表%28打印版%29.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地二轮承包到期后再延长三十年摸底核实表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权二轮台帐摸底调查公示确认表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权二轮台帐摸底调查公示表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权二轮台帐摸底调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权公示结果归户表.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权公示表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权单户确认表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权单户签字表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权单户调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权调查表.xls">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权勘界确权调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权单户摸底调查公示确认表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权单户登记申请书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权发包方调查表.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权发包方调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权合同信息表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包合同.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包地块调查表.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包地块调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包地块调查表2页.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包地块调查表3页.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包地块调查表其它.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包方调查表.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权数据统计表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权村组公示公告.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权标准地块示意图.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权界址信息表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权界址点成果表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权登记簿.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证共有人扩展.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证共有人扩展.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证其他登记申请书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证地块扩展.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权证地块扩展.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权调查信息公示表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权集体登记申请书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权颁证清册.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\地块类别汇总表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\委托代理声明书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\户主代表声明书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\数据库字典.doc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\测绘申请书.dot">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Template\农村土地承包经营权承包方调查表.xlt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Token\Driver\YuLinTuRootCA.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2795,63 +2657,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
-      <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
+      <Project>{08AC55A7-5A0D-4A50-8EE7-93148A22250A}</Project>
       <Name>YuLinTu.Library.Business</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
-      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
-      <Name>YuLinTu.Library.Command</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
-      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
-      <Name>YuLinTu.Library.Controls</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
-      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
-      <Name>YuLinTu.Library.Entity</Name>
-      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
       <Name>YuLinTu.Library.Log</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Map\YuLinTu.Library.Map.csproj">
-      <Project>{d8d1be49-252f-4167-8245-53285e47e8a0}</Project>
-      <Name>YuLinTu.Library.Map</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
-      <Project>{d52b9ce3-8d34-4a2a-9823-d9208f846d97}</Project>
-      <Name>YuLinTu.Library.Office</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
-      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
-      <Name>YuLinTu.Library.Repository</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
-      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
-      <Name>YuLinTu.Library.Resources</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.Result\YuLinTu.Library.Result.csproj">
-      <Project>{87e62c5a-6ec3-4034-a2b7-96f0e0327dff}</Project>
-      <Name>YuLinTu.Library.Result</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
-      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.Aux</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
-      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
-      <Name>YuLinTu.Library.WorkStation</Name>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

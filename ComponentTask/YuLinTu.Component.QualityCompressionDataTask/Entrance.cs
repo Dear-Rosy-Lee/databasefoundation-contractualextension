@@ -42,32 +42,33 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             //AsymmetricCipherKeyPair keyPair = LoadKeysFromPem();
             //SaveKeysToPem(keyPair);
 
+            //todo:后续再进行加密
 
             // 获取公钥和私钥
             // 读取私钥
-            ECPrivateKeyParameters privateKey = KeyReader.ReadPrivateKeyFromPem("privateKey.pem");
-            // 读取公钥
-            ECPublicKeyParameters publicKey = KeyReader.ReadPublicKeyFromPem("publicKey.pem");
+            //ECPrivateKeyParameters privateKey = KeyReader.ReadPrivateKeyFromPem("privateKey.pem");
+            //// 读取公钥
+            //ECPublicKeyParameters publicKey = KeyReader.ReadPublicKeyFromPem("publicKey.pem");
 
-            // 3. 待加密数据
-            byte[] dataToEncrypt = System.Text.Encoding.UTF8.GetBytes("SM2test");
+            //// 3. 待加密数据
+            //byte[] dataToEncrypt = System.Text.Encoding.UTF8.GetBytes("SM2test");
 
-            // 4. 加密数据
-            SM2Engine sm2Engine = new SM2Engine();
-            sm2Engine.Init(true, new ParametersWithRandom(publicKey, new SecureRandom()));
-            byte[] encryptedData = sm2Engine.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
+            //// 4. 加密数据
+            //SM2Engine sm2Engine = new SM2Engine();
+            //sm2Engine.Init(true, new ParametersWithRandom(publicKey, new SecureRandom()));
+            //byte[] encryptedData = sm2Engine.ProcessBlock(dataToEncrypt, 0, dataToEncrypt.Length);
             
 
 
-            Console.WriteLine("Encrypted Data: " + BitConverter.ToString(encryptedData));
-            Parameters.PassWord = BitConverter.ToString(encryptedData);
+            //Console.WriteLine("Encrypted Data: " + BitConverter.ToString(encryptedData));
+            //Parameters.PassWord = BitConverter.ToString(encryptedData);
 
-            var encryptedData2 = StringToByteArray(Parameters.PassWord);
-            // 5. 解密数据
-            sm2Engine.Init(false, privateKey);
-            byte[] decryptedData = sm2Engine.ProcessBlock(encryptedData2, 0, encryptedData.Length);
-            var res = System.Text.Encoding.UTF8.GetString(decryptedData);
-            Console.WriteLine("Decrypted Data: " + System.Text.Encoding.UTF8.GetString(decryptedData));
+            //var encryptedData2 = StringToByteArray(Parameters.PassWord);
+            //// 5. 解密数据
+            //sm2Engine.Init(false, privateKey);
+            //byte[] decryptedData = sm2Engine.ProcessBlock(encryptedData2, 0, encryptedData.Length);
+            //var res = System.Text.Encoding.UTF8.GetString(decryptedData);
+            //Console.WriteLine("Decrypted Data: " + System.Text.Encoding.UTF8.GetString(decryptedData));
 
         }
 

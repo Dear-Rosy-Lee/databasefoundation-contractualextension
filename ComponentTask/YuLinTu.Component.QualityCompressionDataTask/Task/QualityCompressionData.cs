@@ -8,10 +8,10 @@ using YuLinTu;
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
     /// <summary>
-    /// 质检、加密、压缩汇交成果任务
+    /// 质检、加密、压缩矢量数据成果任务
     /// </summary>
-    [TaskDescriptor(IsLanguageName = false, Name = "加密汇交成果",
-        Gallery = "汇交成果处理",
+    [TaskDescriptor(IsLanguageName = false, Name = "加密矢量数据成果",
+        Gallery = "矢量数据成果处理",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class QualityCompressionData : Task
@@ -20,8 +20,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public QualityCompressionData()
         {
-            Name = "质检、加密、压缩汇交成果";
-            Description = "质检、加密、压缩汇交成果";
+            Name = "质检、加密、压缩矢量数据成果";
+            Description = "质检、加密、压缩矢量数据成果";
         }
 
         #endregion Ctor
@@ -39,7 +39,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// <summary>
         /// 开始执行任务
         /// </summary>
-        protected override void OnGo()
+        protected override async void OnGo()
         {
             this.ReportProgress(0, "开始验证检查数据参数...");
             this.ReportInfomation("开始验证检查数据参数...");
@@ -64,14 +64,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             {
                 //进行质检
                 var dcp = new DataCheckProgress();
-                //var dbContent = DataBaseSource.GetDataBaseSourceByPath("E:\\WorkSpace\\数据\\数据库\\QCQ - 副本.sqlite");
-                //dcp.LocalService = dbContent;
                 dcp.DataArgument = argument;
-                //var flag = dcp.Check();
-                var flag = true;
-                if (flag == false)
+                bool falg = await dcp.Check();
+                if (falg == false)
                 {
-                    this.ReportError(string.Format("数据检查时出错!具体错误请查看质检错误报告"));
+                    this.ReportError(string.Format(Parameters.ErrorInfo));
                 }
                 else
                 {
@@ -79,26 +76,29 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     {
                         using (var zipStream = new ZipOutputStream(fsOut))
                         {
-
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            string password = "SM2test";
-                            var EncryptPassword = Parameters.PassWord;
-                            zipStream.Password = password;
+                            zipStream.Password = Parameters.UserCode;
                             CompressFolder(argument.CheckFilePath, zipStream);
                         }
                     }
+                    var path= dcp.CreateLog();
+                    dcp.WriteLog(path, new KeyValueList<string, string>
+                    {
+                        new KeyValue<string, string>("", "已通过数据质检！")
+                    });
+                    this.ReportProgress(100);
+                    this.ReportInfomation("检查通过。");
                 }
                 //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "OnGo(数据检查失败!)", ex.Message + ex.StackTrace);
+                Library.Log.Log.WriteException(this, "OnGo(数据检查失败!)", ex.Message + ex.StackTrace);
                 this.ReportError(string.Format("数据检查时出错!"));
                 return;
             }
 
-            this.ReportProgress(100);
-            this.ReportInfomation("检查完成。");
+            
         }
 
         #endregion Method - Override
@@ -137,13 +137,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return true;
         }
 
-        private void CompressAndEncryptFolder(string sourceFolder, string zipFilePath, string password)
-        {
-            FastZip fastZip = new FastZip();
-            fastZip.Password = password;
-            fastZip.CreateZip(zipFilePath, sourceFolder, true, "");
-        }
-
         private static void CompressFolder(string sourceFile, ZipOutputStream zipStream)
         {
                 var fileInfo = new FileInfo(sourceFile);
@@ -161,14 +154,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     StreamUtils.Copy(streamReader, zipStream, buffer);
                 }
                 zipStream.CloseEntry();
-        }
-
-        private bool ReturnResult(string pathName, string date)
-        {
-            //拼写检查路径
-            string fileName = $"{pathName + "检查结果"}\\自定义检查检查信息{date}\\检查结果记录(1).txt";
-            string fileContent = File.ReadAllText(fileName);
-            return !fileContent.Contains("错误");
         }
 
         #endregion Method - Private

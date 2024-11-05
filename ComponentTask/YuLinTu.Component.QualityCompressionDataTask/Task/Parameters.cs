@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RTools_NTS.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 {
     public static class Parameters
     {
-        public const string stringZipPassword = "ZipPassword";
-        public const string stringZipPasswordValue = "ylt123";
+        public static Guid Token { get; set; } 
 
-        public static string PassWord {  get; set; }
+        public static string UserCode { get; set; }
+
+        public static string ErrorInfo { get; set; }
     }
 }

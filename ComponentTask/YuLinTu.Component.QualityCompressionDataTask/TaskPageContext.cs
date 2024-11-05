@@ -1,7 +1,6 @@
 ﻿using YuLinTu.Windows;
 using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
-using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {

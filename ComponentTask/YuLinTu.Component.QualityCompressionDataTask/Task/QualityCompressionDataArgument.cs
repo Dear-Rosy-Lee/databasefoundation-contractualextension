@@ -1,6 +1,4 @@
 ﻿using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Windows;
-using YuLinTu.Library.Business;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
