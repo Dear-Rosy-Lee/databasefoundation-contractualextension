@@ -175,6 +175,9 @@ namespace YuLinTu.Component.Account.Services
             {
                 var jsonString = result.Data.ToString();
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
+                string region = jsonObject.region;
+                if(!region.IsNullOrEmpty())
+                    Parameters.Region = region;
                 string token = jsonObject.token;
                 Guid session;
                 if (Guid.TryParse(token, out session))

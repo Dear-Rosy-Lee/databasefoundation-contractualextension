@@ -13,6 +13,11 @@ using File = System.IO.File;
 using YuLinTu.Data.Dynamic;
 using YuLinTu.Data.Shapefile;
 using System.Net.Http;
+using System.Data;
+using Microsoft.Scripting.Actions;
+using OSGeo.OSR;
+using SpatialReference = YuLinTu.Spatial.SpatialReference;
+using DotSpatial.Projections;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -32,27 +37,25 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         public QualityCompressionDataArgument DataArgument { get; set; }
 
+        public IDataSource Source { get; set; }
+
         public async Task<bool> Check()
         {
             //获取当前路径下shape数据
 
             string filepath;
             string filename;
-            IDbContext ds;
             try
-            {
+            {   
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
-                SpatialReference shpReference = ReferenceHelper.GetShapeReference(DataArgument.CheckFilePath);
+                var sr = GetByFile(filepath + "\\" + filename);
                 var token = Parameters.Token.ToString();
                 if (Parameters.Token.Equals(Guid.Empty))
                 {
                     Parameters.ErrorInfo = "请先登录后，再进行检查";
                     return false;
                 }
-                ds = ProviderShapefile.CreateDataSource(filepath, false) as IDbContext;
-                var dq = new DynamicQuery(ds);
-             
                 List<LandEntity> ls = new List<LandEntity>();
                 var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, "");
                 if (landShapeList.IsNullOrEmpty())
@@ -64,9 +67,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 {
                     var land = new LandEntity();
                     land.dkbm = item.DKBM;
-
                     var landShape = item.Shape as Geometry;
-                    land.ewkt = $"SRID={4490};{landShape.GeometryText}"; 
+                    land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}"; 
                     ls.Add(land);
                 }
                 ApiCaller apiCaller = new ApiCaller();
@@ -87,6 +89,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     Parameters.ErrorInfo="shp存在拓扑错误，详情请查看txt文件";
                     return false;
                 }
+                if (getResult == null)
+                {
+                    return false;
+                }
                 return true;
             }
             catch(Exception ex)
@@ -95,6 +101,26 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 return false;
             }
            
+        }
+        public static SpatialReference GetByFile(string fileName)
+        {
+            var prjFile = Path.ChangeExtension(fileName, ".prj");
+            if (!File.Exists(prjFile))
+                throw new FileNotFoundException("获取坐标系失败", prjFile);
+            var result = new SpatialReference(File.ReadAllText(prjFile));
+            if (result.WKID == 0)
+            {
+                var pi = ProjectionInfo.Open(prjFile);
+                var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                    "Data/SpatialReferences/Projected Coordinate Systems/Gauss Kruger/CGCS2000",
+                    pi.Name.Replace("_", " ") + ".prj");
+                if (File.Exists(file))
+                {
+                    return new SpatialReference(File.ReadAllText(file));
+                }
+            }
+
+            return result;
         }
 
         public string CreateLog()

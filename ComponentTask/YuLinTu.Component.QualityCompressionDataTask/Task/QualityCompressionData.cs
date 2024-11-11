@@ -77,14 +77,14 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         using (var zipStream = new ZipOutputStream(fsOut))
                         {
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            zipStream.Password = Parameters.UserCode;
+                            zipStream.Password = Parameters.Region + "Ylt@dzzw";
                             CompressFolder(argument.CheckFilePath, zipStream);
                         }
                     }
                     var path= dcp.CreateLog();
                     dcp.WriteLog(path, new KeyValueList<string, string>
                     {
-                        new KeyValue<string, string>("", "已通过数据质检！")
+                        new KeyValue<string, string>("", "已通过数据质检!\r")
                     });
                     this.ReportProgress(100);
                     this.ReportInfomation("检查通过。");
