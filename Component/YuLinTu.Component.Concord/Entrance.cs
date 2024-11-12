@@ -76,7 +76,7 @@ namespace YuLinTu.Component.Concord
                     x.ConcordNumber = zdiNew.FullCode + x.ConcordNumber.Substring(zdiNew.FullCode.Length);
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 3000)
+                if (uplist.Count == 1000)
                 {
                     UpContractConcord(dbContext, uplist);
                     uplist.Clear();

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Utils.Tool;
 using YuLinTu.Appwork;
 using YuLinTu.Component.MapFoundation;
 using YuLinTu.Data;
@@ -122,18 +123,49 @@ namespace YuLinTu.Component.ContractAccount
             {
                 e.Instance.Items.AddRange(nav.GetChildren(e.Instance.Root));
             }
-            catch
+            catch (Exception ex)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 { //此时当前工作空间中没有打开鱼鳞图地图模块(工作页)
                     var message = new TabMessageBoxDialog
                     {
                         Header = "提示",
-                        Message = "访问数据库失败，请检查数据库是否为最新数据库!",
+                        Message = ex.Message + " 请检查数据库是否为最新数据库!",
                         MessageGrade = eMessageGrade.Error,
                         CancelButtonText = "取消",
                     };
                     Workpage.Page.ShowMessageBox(message);
+                }));
+            }
+            try
+            {
+                ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
+            }
+            catch (Exception ex)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                { //此时当前工作空间中没有打开鱼鳞图地图模块(工作页)
+                    var message = new TabMessageBoxDialog
+                    {
+                        Header = "错误",
+                        Message = "异常：" + ex.Message + ", 请修复计算机时间！" +
+                        "  修复时间后点击确定继续运行或点击取消关闭软件！",
+                        MessageGrade = eMessageGrade.Error,
+                        CancelButtonText = "取消",
+                    };
+                    Workpage.Page.ShowDialog(message, (b, c) =>
+                    {
+                        if (!(bool)b)
+                        {
+                            Application.Current.Shutdown();
+                        }
+                        else
+                        {
+                            var ctime = ToolRegEdit.GetRegProduceTime("YuLinTuLandDelayTool");
+                            if (DateTime.Parse(ctime) > DateTime.Now)
+                                Application.Current.Shutdown();
+                        }
+                    });
                 }));
             }
         }
@@ -273,41 +305,41 @@ namespace YuLinTu.Component.ContractAccount
         {
             Workpage.Workspace.Window.Dispatcher.Invoke(new Action(() =>
             {
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "常规",
-                Editor = new ContractAccountConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "常规",
+                    Editor = new ContractAccountConfigPage(Workpage),
+                });
 
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "导入调查表",
-                Editor = new ContractAccountImportSurveyConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "导入调查表",
+                    Editor = new ContractAccountImportSurveyConfigPage(Workpage),
+                });
 
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "导出调查表",
-                Editor = new ContractAccountOutputSurveyConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "导出调查表",
+                    Editor = new ContractAccountOutputSurveyConfigPage(Workpage),
+                });
 
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "公示确认表",
-                Editor = new ContractAccountPublicityConfirmConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "公示确认表",
+                    Editor = new ContractAccountPublicityConfirmConfigPage(Workpage),
+                });
 
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "单户调查表",
-                Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "单户调查表",
+                    Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
+                });
 
-            e.Editors.Add(new WorkpageOptionsEditorMetadata()
-            {
-                Name = "摸底核实表",
-                Editor = new ContractAccountLandVerifyConfigPage(Workpage),
-            });
+                e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                {
+                    Name = "摸底核实表",
+                    Editor = new ContractAccountLandVerifyConfigPage(Workpage),
+                });
 
                 e.Editors.Add(new WorkpageOptionsEditorMetadata()
                 {

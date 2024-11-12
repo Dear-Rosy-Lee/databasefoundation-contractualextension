@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
+using Utils.Tool;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;

@@ -70,7 +70,7 @@ namespace YuLinTu.Component.VirtualPerson
                     x.OldVirtualCode = x.ZoneCode.PadRight(14, '0') + x.FamilyNumber.PadLeft(4, '0');
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 3000)
+                if (uplist.Count == 1000)
                 {
                     UpVirtualPerson(dbContext, uplist);
                     uplist.Clear();

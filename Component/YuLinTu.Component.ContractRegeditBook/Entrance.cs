@@ -79,7 +79,7 @@ namespace YuLinTu.Component.ContractRegeditBook
                 }
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 3000)
+                if (uplist.Count == 1000)
                 {
                     UpRegeditBook(dbContext, uplist);
                     uplist.Clear();

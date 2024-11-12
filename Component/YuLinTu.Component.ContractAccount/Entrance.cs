@@ -72,7 +72,7 @@ namespace YuLinTu.Component.ContractAccount
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 x.SenderCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 3000)
+                if (uplist.Count == 1000)
                 {
                     UpContractLand(dbContext, uplist);
                     uplist.Clear();
