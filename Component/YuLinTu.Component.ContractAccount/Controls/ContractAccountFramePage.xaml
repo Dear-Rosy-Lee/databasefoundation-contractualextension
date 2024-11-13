@@ -23,8 +23,8 @@
     <core:WorkpageFrame.Toolbar>
         <DockPanel
             x:Name="toolDockPanel"
-            x:FieldModifier="public"
             Height="90"
+            x:FieldModifier="public"
             LastChildFill="False"
             TextElement.FontSize="12">
             <cmps:TabControlItemRibbonContainer
@@ -380,7 +380,11 @@
                                     Text="界址信息调查表"
                                     ToolTip="导出(批量)界址信息调查表Excel" />
                             </metro:MetroButton>
-                            <cmps:SeparatorV    Height="1"    Margin="3,0,3,0"    BorderBrush="LightGray"    BorderThickness="0,1,0,0" />
+                            <cmps:SeparatorV
+                                Height="1"
+                                Margin="3,0,3,0"
+                                BorderBrush="LightGray"
+                                BorderThickness="0,1,0,0" />
                             <metro:MetroButton
                                 x:Name="btnExportPublishExcel"
                                 Padding="8,4"
@@ -1064,6 +1068,18 @@
                                     Text="基本农田"
                                     ToolTip="利用选择地域下地块图斑数据与基本农田数据计算地块是否为基本农田" />
                             </metro:MetroButton>
+                            <metro:MetroButton
+                                x:Name="btnGetLandCode"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Resources;component/images/32/inkingstart.png"
+                                    ImagePosition="Left"
+                                    Text="自动编码"
+                                    ToolTip="自动对当前地域的地块进行重新编码" />
+                            </metro:MetroButton>
                         </StackPanel>
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>
@@ -1223,23 +1239,25 @@
                         ToolTip="下载数据至本地数据库" />
                 </metro:MetroButton>
 
-                <tk:DropDownButton  Name="btnExpandFunction"
-                    x:FieldModifier="public" Visibility="Collapsed"
+                <tk:DropDownButton
+                    Name="btnExpandFunction"
                     Padding="4,2"
                     VerticalContentAlignment="Top"
-                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
-                    cmps:DropDownButtonAttacher.Orientation="Vertical"
                     cmps:DropDownButtonAttacher.ArrowHorizontalAlignment="Center"
-                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom">
+                    cmps:DropDownButtonAttacher.ArrowMargin="0,0,0,3"
+                    cmps:DropDownButtonAttacher.ArrowVerticalAlignment="Bottom"
+                    cmps:DropDownButtonAttacher.Orientation="Vertical"
+                    x:FieldModifier="public"
+                    Visibility="Collapsed">
                     <tk:DropDownButton.Content>
-                        <cmps:ImageTextItem ImagePosition="Top"
+                        <cmps:ImageTextItem
+                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/SearchNeighor.png"
+                            ImagePosition="Top"
                             Text="扩展功能"
-                            ToolTip="定制扩展功能"
-                            Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/SearchNeighor.png" />
+                            ToolTip="定制扩展功能" />
                     </tk:DropDownButton.Content>
                     <tk:DropDownButton.DropDownContent>
-                        <StackPanel>
-                        </StackPanel>
+                        <StackPanel />
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>
 

@@ -226,6 +226,11 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
+        public int UpdateZoneCode(VirtualPerson virtualPerson)
+        {
+            DefaultRepository.UpdateZoneCode(virtualPerson);
+            return TrySaveChanges(DefaultRepository);
+        }
         /// <summary>
         /// 批量更新承包方
         /// </summary>

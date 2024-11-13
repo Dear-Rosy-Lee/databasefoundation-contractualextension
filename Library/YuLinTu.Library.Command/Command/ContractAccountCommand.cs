@@ -337,6 +337,11 @@ namespace YuLinTu.Library.Command
         public const string FarmerLandName = "farmerLand";
 
         /// <summary>
+        /// 自动编码命令名称
+        /// </summary>
+        public const string GetLandCodeName = "getLandCode";
+
+        /// <summary>
         /// 地块名称空值命令名称
         /// </summary>
         public const string LandNameNullName = "landNameNull";
@@ -743,6 +748,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand FarmerLand = new RoutedCommand(FarmerLandName, typeof(Button));
 
         /// <summary>
+        /// 自动编码命令
+        /// </summary>
+        public RoutedCommand GetLandCode = new RoutedCommand(GetLandCodeName, typeof(Button));
+
+        /// <summary>
         /// 地块名称空值命令
         /// </summary>
         public RoutedCommand LandNameNull = new RoutedCommand(LandNameNullName, typeof(Button));
@@ -1137,6 +1147,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding FarmerLandBind = new CommandBinding();
 
         /// <summary>
+        /// 自动编码绑定
+        /// </summary>
+        public CommandBinding GetLandCodeBind = new CommandBinding();
+
+        /// <summary>
         /// 地块名称空值绑定
         /// </summary>
         public CommandBinding LandNameNullBind = new CommandBinding();
@@ -1273,6 +1288,7 @@ namespace YuLinTu.Library.Command
             AreaMeasurementBind.Command = AreaMeasurement;
             AreaNumericFormatBind.Command = AreaNumericFormat;
             FarmerLandBind.Command = FarmerLand;
+            GetLandCodeBind.Command = GetLandCode;
             LandNameNullBind.Command = LandNameNull;
             ContractAreaNullBind.Command = ContractAreaNull;
             ActualAreaNullBind.Command = ActualAreaNull;

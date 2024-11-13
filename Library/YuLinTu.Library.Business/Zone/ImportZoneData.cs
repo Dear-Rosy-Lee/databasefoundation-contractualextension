@@ -15,6 +15,8 @@ using YuLinTu.Data;
 using YuLinTu.Library.Repository;
 using System.Diagnostics;
 using YuLinTu.Library.WorkStation;
+using NPOI.SS.Formula.Functions;
+using System.Data.SqlTypes;
 
 namespace YuLinTu.Library.Business
 {
@@ -619,6 +621,10 @@ namespace YuLinTu.Library.Business
                 IZoneWorkStation station = factroy.CreateWorkstation<IZoneWorkStation, IZoneRepository>();
                 int index = 1;
                 double step = 80 / (double)zones.Count;
+                var vpStation = DataInstance.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DataInstance.CreateContractLandWorkstation();
+                var vps = new List<VirtualPerson>();
+                var lands = new List<ContractLand>();
                 foreach (Zone zone in zones)
                 {
                     string alertName = GetZoneName(zone, zones);
@@ -629,10 +635,32 @@ namespace YuLinTu.Library.Business
                     }
                     if (AddZone(zone, desZone))
                     {
+                        if (zone.AliasCode.IsNotNullOrEmpty() && zone.AliasName.IsNotNullOrEmpty())
+                        {
+                            var oldNumber = zone.AliasCode.Split('/');
+                            for (int i = 0; i < oldNumber.Length; i++)
+                            {
+                                var oldCBFs = vpStation.GetByZoneCode(oldNumber[i]);
+                                oldCBFs.ForEach(t => { t.OldZoneCode = t.ZoneCode; t.ZoneCode = zone.FullCode; vps.Add(t); });
+                                var oldLands = landStation.GetShapeCollection(oldNumber[i], eLevelOption.SelfAndSubs);
+                                oldLands.ForEach(t => { t.ZoneCode = zone.FullCode; lands.Add(t); });
+                            }
+                            var senderStation = DataInstance.CreateSenderWorkStation();
+                            var sender = senderStation.GetByCode(zone.FullCode);
+                            if (sender == null)
+                            {
+                                var newsender = new CollectivityTissue();
+                                newsender.Name = GetNmaeToCounty(zone);
+                                newsender.Code = zone.FullCode;
+                                senderStation.Add(newsender);
+                            }
+                        }
                         this.ReportProgress(20 + (int)(step * index), "导入" + alertName);
                         index++;
                     }
                 }
+                vps.ForEach(x => { vpStation.UpdateZoneCode(x); });
+                lands.ForEach(x => { landStation.UpdateZoneCode(x); });
                 multiArg.ParameterB = dbZoneList;
                 GC.Collect();
             }
@@ -672,6 +700,7 @@ namespace YuLinTu.Library.Business
             zone.CreateTime = DateTime.Now;
             zone.CreateUser = "Admin";
             zone.LastModifyTime = DateTime.Now;
+            
             if (desZone != null)
             {
                 zone.ID = desZone.ID;
@@ -701,7 +730,13 @@ namespace YuLinTu.Library.Business
             }
             return true;
         }
-
+        private string GetNmaeToCounty(Zone zone)
+        {
+            var zoneStation = DataInstance.CreateZoneWorkStation();
+            var name = zoneStation.GetZoneNameByLevel(zone.FullCode, eZoneLevel.County) + zoneStation.GetTownZoneName(zone);
+            
+            return name;
+        }
         #endregion Methods - Import
     }
 }

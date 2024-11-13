@@ -23,6 +23,10 @@ namespace YuLinTu.Library.Repository
 
         int UpdateOldLandCode(ContractLand entity);
 
+        int UpdateLandCode(List<ContractLand> entity);
+
+        int UpdateZoneCode(ContractLand entity);
+
         int UpdateLandBoundary(ContractLand entity);
     }
 }

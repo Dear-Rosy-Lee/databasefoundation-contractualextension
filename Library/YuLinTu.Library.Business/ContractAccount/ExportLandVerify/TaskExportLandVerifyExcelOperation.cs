@@ -138,7 +138,7 @@ namespace YuLinTu.Library.Business
                 var zoneStation = argument.DbContext.CreateZoneWorkStation();
                 var tissueStation = argument.DbContext.CreateSenderWorkStation();
                 string zoneName = zoneStation.GetZoneName(argument.CurrentZone);
-                CollectivityTissue tissue = tissueStation.Get(zone.ID);
+                CollectivityTissue tissue = tissueStation.GetByCode(zone.FullCode);
                 if (tissue == null)
                 {
                     var tis = tissueStation.GetTissues(zone.FullCode);

@@ -463,7 +463,25 @@ namespace YuLinTu.Library.Repository
                      }));
             }
         }
-
+        public int UpdateZoneCode(VirtualPerson virtualPerson)
+        {
+            if (!CheckTableExist())
+            {
+                throw new ArgumentNullException("数据库不存在表："
+                    + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            }
+            if (virtualPerson == null || !CheckRule.CheckGuidNullOrEmpty(virtualPerson.ID))
+                return -1;
+            virtualPerson.ModifiedTime = DateTime.Now;
+            int cnt = 0;
+            cnt = AppendEdit(DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ID == virtualPerson.ID).
+                Update(s => new LandVirtualPerson()
+                {
+                    ZoneCode = virtualPerson.ZoneCode,
+                    OldZoneCode = virtualPerson.OldZoneCode
+                }));
+            return cnt;
+        }
         /// <summary>
         /// 根据id删除承包方信息
         /// </summary>
