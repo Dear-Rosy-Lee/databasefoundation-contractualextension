@@ -83,7 +83,7 @@ namespace YuLinTu.Library.Repository
         /// 更新农村土地承包经营权登记薄对象
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        public int Update(ContractRegeditBook entity)
+        public int Update(ContractRegeditBook entity, bool onlycode = false)
         {
             if (!CheckTableExist())
             {
@@ -93,7 +93,22 @@ namespace YuLinTu.Library.Repository
             if (entity == null || !CheckRule.CheckGuidNullOrEmpty(entity.ID))
                 return 0;
             entity.ModifiedTime = DateTime.Now;
-            return Update(entity, c => c.ID.Equals(entity.ID));
+            if (!onlycode)
+            {
+                return Update(entity, c => c.ID.Equals(entity.ID));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractRegeditBook>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractRegeditBook
+                     {
+                         Number = entity.Number,
+                         RegeditNumber = entity.Number,
+                         ZoneCode = entity.ZoneCode,
+                         ModifiedTime = entity.ModifiedTime
+                     }));
+            }
+
         }
 
         /// <summary>

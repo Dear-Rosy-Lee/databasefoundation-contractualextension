@@ -167,6 +167,17 @@ namespace YuLinTu.Library.WorkStation
         }
 
         /// <summary>
+        /// 根据id更新地域对象
+        /// </summary>
+        /// <param name="zone">实体</param>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        public int UpdateCodeName(Zone zone)
+        {
+            DefaultRepository.UpdateCodeName(zone);
+            return TrySaveChanges(DefaultRepository);
+        }
+
+        /// <summary>
         /// 获取全部地域
         /// </summary>
         /// <returns></returns>

@@ -438,7 +438,7 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="virtualPerson">承包方对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        public int Update(VirtualPerson virtualPerson)
+        public int Update(VirtualPerson virtualPerson, bool onlycode = false)
         {
             if (!CheckTableExist())
             {
@@ -448,9 +448,20 @@ namespace YuLinTu.Library.Repository
             if (virtualPerson == null || !CheckRule.CheckGuidNullOrEmpty(virtualPerson.ID))
                 return -1;
             virtualPerson.ModifiedTime = DateTime.Now;
-            int cnt = 0;
-            cnt = Update(virtualPerson, c => c.ID.Equals(virtualPerson.ID));
-            return cnt;
+            if (!onlycode)
+            {
+                return Update(virtualPerson, c => c.ID.Equals(virtualPerson.ID));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ID.Equals(virtualPerson.ID)).Update(
+                     c => new LandVirtualPerson
+                     {
+                         OldVirtualCode = virtualPerson.OldVirtualCode,
+                         ZoneCode = virtualPerson.ZoneCode,
+                         ModifiedTime = DateTime.Now
+                     }));
+            }
         }
 
         /// <summary>

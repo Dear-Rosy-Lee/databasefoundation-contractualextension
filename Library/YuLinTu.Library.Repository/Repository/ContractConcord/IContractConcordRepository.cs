@@ -43,7 +43,7 @@ namespace YuLinTu.Library.Repository
         /// 更新对象
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        int Update(ContractConcord entity);
+        int Update(ContractConcord entity, bool onlycode = false);
 
         /// <summary>
         /// 批量更新实体集合

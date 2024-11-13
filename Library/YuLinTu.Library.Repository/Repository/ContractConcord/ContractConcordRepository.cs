@@ -193,7 +193,7 @@ namespace YuLinTu.Library.Repository
         /// 更新对象
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        public int Update(ContractConcord entity)
+        public int Update(ContractConcord entity, bool onlycode = false)
         {
             if (!CheckTableExist())
             {
@@ -203,7 +203,20 @@ namespace YuLinTu.Library.Repository
             if (entity == null || !CheckRule.CheckGuidNullOrEmpty(entity.ID))
                 return -1;
             entity.ModifiedTime = DateTime.Now;
-            return Update(entity, c => c.ID.Equals(entity.ID));
+            if (!onlycode)
+            {
+                return Update(entity, c => c.ID.Equals(entity.ID));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractConcord>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractConcord
+                     {
+                         ConcordNumber = entity.ConcordNumber,
+                         ZoneCode = entity.ZoneCode,
+                         ModifiedTime = entity.ModifiedTime
+                     }));
+            }
         }
 
         /// <summary>

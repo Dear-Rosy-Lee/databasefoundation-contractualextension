@@ -14,7 +14,7 @@ namespace YuLinTu.Library.Repository
     /// <summary>
     /// 用于(ContractLand、SeondTableLand)地块的数据访问类
     /// </summary>
-    public class AgricultureLandRepository<T> : RepositoryDbContext<T>, IAgricultureLandRepository<T> where T : ContractLand
+    public class AgricultureLandRepository<T> : RepositoryDbContext<T>, IAgricultureLandRepository<T> where T : ContractLand, new()
     {
         #region Ctor
 
@@ -110,11 +110,7 @@ namespace YuLinTu.Library.Repository
             return base.Delete(c => c.OwnerId.Equals(guid));
         }
 
-        /// <summary>
-        /// 更新对象
-        /// </summary>
-        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        public int Update(T entity)
+        public int Update(T entity, bool onlycode = false)
         {
             //if (!CheckTableExist())
             //{
@@ -124,7 +120,22 @@ namespace YuLinTu.Library.Repository
             if (entity == null)
                 return 0;
             entity.ModifiedTime = DateTime.Now;
-            return base.Update(entity, c => c.ID.Equals(entity.ID));
+            if (!onlycode)
+            {
+                return base.Update(entity, c => c.ID.Equals(entity.ID));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractLand
+                     {
+                         LandNumber = entity.LandNumber,
+                         ZoneCode = entity.ZoneCode,
+                         SenderCode = entity.SenderCode,
+                         CadastralNumber = entity.CadastralNumber,
+                         ModifiedTime = entity.ModifiedTime
+                     }));
+            }
         }
 
         public int UpdateOldLandsCode(T entity)
@@ -1101,7 +1112,7 @@ namespace YuLinTu.Library.Repository
                 cnt = Delete(c => c.ZoneCode.StartsWith(zoneCode) && c.ZoneCode != zoneCode);
 
             return cnt;
-        } 
+        }
 
         /// <summary>
         /// 按地域获取地块集合

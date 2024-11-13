@@ -33,7 +33,7 @@ namespace YuLinTu.Library.Repository
         /// 更新农村土地承包经营权登记薄对象
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        int Update(ContractRegeditBook entity);
+        int Update(ContractRegeditBook entity, bool onlycode = false);
 
         /// <summary>
         /// 根据ID获取农村土地承包经营权登记薄对象
