@@ -2,10 +2,6 @@
  * (C) 2024 鱼鳞图公司版权所有,保留所有权利
 */
 
-using NetTopologySuite.Geometries;
-using NetTopologySuite.IO;
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +11,11 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Windows.Documents;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
+using NPOI.Util;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using YuLinTu.Component.Common;
 using YuLinTu.Data;
 using YuLinTu.Data.SQLite;
@@ -64,6 +64,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
         private bool hasError = false;
 
+        private DataSummary summary;
         #endregion Fields
 
         #region Propertys
@@ -135,6 +136,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public DataImportProgress()
         {
             landCodeSet = new List<string>();
+            summary = new DataSummary();
         }
 
         #endregion Ctor
@@ -655,6 +657,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             //按地域导入数据
             bool sucess = ImportDataByZoneCode(currentZoneList, dbProcess, shpProcess);
             currentZoneList.Clear();
+            this.ReportInfomation("共导入" + summary.ToSumString());
             GC.Collect();
             return sucess;
         }
@@ -673,12 +676,12 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             foreach (var town in townList)
             {
                 var townCodeList = town.ToList();
-                var groupList = townCodeList.GroupBy(t => t.Substring(0, 12)).ToList();
+                var vallegList = townCodeList.GroupBy(t => t.Substring(0, 12)).ToList();//按村分组
                 var fnps = currentPath.ShapeFileList.FindAll(t => t.FullName.ToLower().StartsWith(DK.TableName.ToLower() + extentName));
                 var towndataCollection = dbProcess.GetCollection(town.Key);//按乡镇获取属性数据
-                foreach (var group in groupList)
+                foreach (var vallge in vallegList)
                 {
-                    var keyCode = group.Key;
+                    var keyCode = vallge.Key;
                     var dataCollection = dbProcess.FileterDataCollection(towndataCollection, keyCode);
                     if (dataCollection.CBFJH == null || dataCollection.CBFJH.Count == 0)
                     {
@@ -686,8 +689,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     }
                     //var valligelandList = shpProcess.InitiallLandList(fnps, keyCode);//按村组获取空间地块
                     var valligelandList = shpProcess.GetLandFromDatabase(keyCode, GenerateCoilDot);
-
-                    foreach (var z in group)//按组处理导入
+                    var groupList = vallge.OrderBy(o => o).ToList();//村下的所有发包方处理导入
+                    foreach (var z in groupList)
                     {
                         index++;
 
@@ -698,8 +701,10 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                             if (!dkDic.ContainsKey(t.DKBM))
                                 dkDic.Add(t.DKBM, t);
                         });
-                        var rest = ExecuteImport(dkDic, z, codeList.Count, dicCodeName,
-                            dataCollection, dbProcess, index, percent);
+                        bool vgsplit = false;
+                        if (z.Length == 12 && groupList.Any(t => t.StartsWith(z) && t.Length == 14))
+                            vgsplit = true;
+                        var rest = ExecuteImport(dkDic, z, codeList.Count, dicCodeName, dataCollection, dbProcess, index, percent, vgsplit);
                         sucess = (!rest) ? rest : sucess;
                     }
                 }
@@ -723,7 +728,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <param name="percent">处理百分比</param>
         /// <returns></returns>
         private bool ExecuteImport(Dictionary<string, DKEX> dkDic, string searchCode, int zoneListCount, Dictionary<string, string> dicCodeName,
-            DataCollectionDb townCollection, DbDataProcess dbProcess, int index, double percent)
+            DataCollectionDb townCollection, DbDataProcess dbProcess, int index, double percent, bool splite)
         {
             bool sucess = true;
 
@@ -747,6 +752,11 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             var entityList = dbProcess.GetRightCollectionByZone(searchCode, zoneCode, dkDic, townCollection,
                 dicCodeName, creList, landCodeSet);
             var entityfbf = townCollection.FBFJH.Find(fbf => fbf.FBFBM == standCode.PadRight(14, '0'));
+            if (entityfbf != null && splite && entityList.Count > 0)
+            {
+                entityList.RemoveAll(t => t.VirtualPersonCode != null && !t.VirtualPersonCode.StartsWith(entityfbf.FBFBM));
+                landCodeSet.RemoveAll(t => !t.StartsWith(entityfbf.FBFBM));
+            }
             var localfbf = LocalComplexRightEntity.InitalizeSenderData(entityfbf, zone.FullCode);
             if (localfbf != null)
             {
@@ -800,7 +810,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             entityList = null;
             creList.Clear();
             creList = null;
-            GC.Collect();
             return sucess;
         }
 
@@ -811,34 +820,36 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         {
             if (entityList == null)
                 return;
-            int dkNumber = 0;
-            int cyNumber = 0;
-            int lzNumber = 0;
-            int bfNumber = 0;
-            int hfNumber = 0;
-            int djbNumber = 0;
-            int htNumber = 0;
-            int cbfNumber = 0;
-            int zxNumber = 0;
-            int fjNumber = 0;
-            int qzNumner = 0;
+            var ds = new DataSummary();
+            //int dkNumber = 0;
+            //int cyNumber = 0;
+            //int lzNumber = 0;
+            //int bfNumber = 0;
+            //int hfNumber = 0;
+            //int djbNumber = 0;
+            //int htNumber = 0;
+            //int cbfNumber = 0;
+            //int zxNumber = 0;
+            //int fjNumber = 0;
+            //int qzNumner = 0;
             foreach (var entity in entityList)
             {
-                djbNumber += (entity.DJB == null ? 0 : entity.CBJYQZ.Count);
-                qzNumner += (entity.CBJYQZ == null ? 0 : entity.CBJYQZ.Count);
-                htNumber += (entity.HT == null ? 0 : entity.HT.Count);
-                cbfNumber += (entity.CBF == null ? 0 : 1);
-                zxNumber += (entity.QZZX == null ? 0 : entity.QZZX.Count);
-                fjNumber += (entity.FJ == null ? 0 : entity.FJ.Count);
-                dkNumber += entity.DKXX == null ? 0 : entity.DKXX.Count;
-                cyNumber += entity.JTCY == null ? 0 : entity.JTCY.Count;
-                lzNumber += entity.LZHT == null ? 0 : entity.LZHT.Count;
-                bfNumber += entity.QZBF == null ? 0 : entity.QZBF.Count;
-                hfNumber += entity.QZHF == null ? 0 : entity.QZHF.Count;
+                ds.djbNumber += (entity.DJB == null ? 0 : entity.CBJYQZ.Count);
+                ds.qzNumner += (entity.CBJYQZ == null ? 0 : entity.CBJYQZ.Count);
+                ds.htNumber += (entity.HT == null ? 0 : entity.HT.Count);
+                ds.cbfNumber += (entity.CBF == null ? 0 : 1);
+                ds.zxNumber += (entity.QZZX == null ? 0 : entity.QZZX.Count);
+                ds.fjNumber += (entity.FJ == null ? 0 : entity.FJ.Count);
+                ds.dkNumber += entity.DKXX == null ? 0 : entity.DKXX.Count;
+                ds.cyNumber += entity.JTCY == null ? 0 : entity.JTCY.Count;
+                ds.lzNumber += entity.LZHT == null ? 0 : entity.LZHT.Count;
+                ds.bfNumber += entity.QZBF == null ? 0 : entity.QZBF.Count;
+                ds.hfNumber += entity.QZHF == null ? 0 : entity.QZHF.Count;
             }
-            this.ReportInfomation("成功导入" + name + "下发包方1个,承包方" + cbfNumber + "个,家庭成员" + cyNumber + "条,合同" +
-                htNumber + "条,登记簿" + djbNumber + "条,权证" + qzNumner + "条,地块" + dkNumber + "条,权证注销数据" + zxNumber +
-                "条,权证补发数据" + bfNumber + "条,权证换发数据" + hfNumber + "条,流转合同数据" + lzNumber + "条,附件数据" + fjNumber + "条,非承包地" + nccount + "块");
+            ds.nccount = nccount;
+            summary.Add(ds);
+
+            this.ReportInfomation($"成功导入{name}下{ds.ToSumString()}");
             entityList = null;
         }
 
@@ -1657,6 +1668,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         private SpatialReference GetSridFromDK()
         {
             var landfile = currentPath.ShapeFileList.Find(t => t.Name == "DK");
+            if (landfile == null)
+                throw new Exception("未找到dk矢量文件，请检查dk矢量是否存在或命名是否规范！");
             var landprj = Path.ChangeExtension(landfile.FilePath, ".prj");
             if (File.Exists(landprj))
             {
@@ -1966,5 +1979,43 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         #endregion 辅助方法
 
         #endregion Methods
+    }
+
+    public class DataSummary
+    {
+        public int dkNumber = 0;
+        public int cyNumber = 0;
+        public int lzNumber = 0;
+        public int bfNumber = 0;
+        public int hfNumber = 0;
+        public int djbNumber = 0;
+        public int htNumber = 0;
+        public int cbfNumber = 0;
+        public int zxNumber = 0;
+        public int fjNumber = 0;
+        public int qzNumner = 0;
+        public int nccount = 0;
+
+
+        public void Add(DataSummary ds)
+        {
+            this.dkNumber += ds.dkNumber;
+            this.cyNumber += ds.cyNumber;
+            this.lzNumber += ds.lzNumber;
+            this.bfNumber += ds.bfNumber;
+            this.hfNumber += ds.hfNumber;
+            this.djbNumber += ds.djbNumber;
+            this.htNumber += ds.htNumber;
+            this.cbfNumber += ds.cbfNumber;
+            this.zxNumber += ds.zxNumber;
+            this.fjNumber += ds.fjNumber;
+            this.qzNumner += ds.qzNumner;
+            this.nccount += ds.nccount;
+        }
+
+        public string ToSumString()
+        {
+            return $"发包方1个,承包方{cbfNumber}个,家庭成员{cyNumber}条,合同{htNumber}条,登记簿{djbNumber}条,权证{qzNumner}条,地块{dkNumber}条,权证注销数据{zxNumber}条,权证补发数据{bfNumber}条,权证换发数据{hfNumber}条,流转合同数据{lzNumber}条,附件数据{fjNumber}条,非承包地{nccount}块";
+        }
     }
 }
