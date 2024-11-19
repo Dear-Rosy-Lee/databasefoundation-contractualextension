@@ -554,6 +554,7 @@
     <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskExportFamilyConfirmOperation.cs" />
     <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskGroupExportFamilyConfirmArgument.cs" />
     <Compile Include="ContractRegeditBook\ExportFamilyConfirm\TaskGroupExportFamilyConfirmOperation.cs" />
+    <Compile Include="ContractRegeditBook\ImportRelationTask\TaskImportRelationOperation.cs" />
     <Compile Include="ContractRegeditBook\WarrantNumberCheck\TaskWarrantCheckArgument.cs" />
     <Compile Include="ContractRegeditBook\WarrantNumberCheck\TaskWarrantCheckOperation.cs" />
     <Compile Include="ContractRegeditBook\ExportWarrantSummary\TaskExportWarrantSummaryArgument.cs" />

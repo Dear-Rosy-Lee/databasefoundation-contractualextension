@@ -846,6 +846,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 ds.bfNumber += entity.QZBF == null ? 0 : entity.QZBF.Count;
                 ds.hfNumber += entity.QZHF == null ? 0 : entity.QZHF.Count;
             }
+            ds.fbfNumber = 1;
             ds.nccount = nccount;
             summary.Add(ds);
 
@@ -1983,6 +1984,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
     public class DataSummary
     {
+        public int fbfNumber = 0;
         public int dkNumber = 0;
         public int cyNumber = 0;
         public int lzNumber = 0;
@@ -1999,6 +2001,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
         public void Add(DataSummary ds)
         {
+            this.fbfNumber += 1;
             this.dkNumber += ds.dkNumber;
             this.cyNumber += ds.cyNumber;
             this.lzNumber += ds.lzNumber;
@@ -2015,7 +2018,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
         public string ToSumString()
         {
-            return $"发包方1个,承包方{cbfNumber}个,家庭成员{cyNumber}条,合同{htNumber}条,登记簿{djbNumber}条,权证{qzNumner}条,地块{dkNumber}条,权证注销数据{zxNumber}条,权证补发数据{bfNumber}条,权证换发数据{hfNumber}条,流转合同数据{lzNumber}条,附件数据{fjNumber}条,非承包地{nccount}块";
+            return $"发包方{fbfNumber}个,承包方{cbfNumber}个,家庭成员{cyNumber}条,合同{htNumber}条,登记簿{djbNumber}条,权证{qzNumner}条,地块{dkNumber}条,权证注销数据{zxNumber}条,权证补发数据{bfNumber}条,权证换发数据{hfNumber}条,流转合同数据{lzNumber}条,附件数据{fjNumber}条,非承包地{nccount}块";
         }
     }
 }

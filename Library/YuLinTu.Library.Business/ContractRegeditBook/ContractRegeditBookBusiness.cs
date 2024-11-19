@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 
@@ -132,6 +134,8 @@ namespace YuLinTu.Library.Business
         /// 系统信息常规设置
         /// </summary>
         public SystemSetDefine SystemSet { get; set; }
+
+        public List<string> ErrorInformation { get; set; }
 
         #endregion
 
@@ -769,6 +773,89 @@ namespace YuLinTu.Library.Business
                 this.ReportError("统计存在承包权证的地域集合失败" + ex.Message);
             }
             return zones;
+        }
+
+
+        public bool ImportLandTies(Zone zone, string fileName, eImportTypes eImport)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                this.ReportProgress(100, null);
+                this.ReportWarn(zone.FullName + "未获取EXCEL表,或选择表格路径不正确,请检查执行导入操作!");
+                return false;
+            }
+            var eb = new InitalizeLandTiesTable();
+            eb.FileName = fileName;
+            if (!eb.CheckValue())
+            {
+                ErrorInformation = eb.ErrorInformation;
+                return false;
+            }
+            this.ReportProgress(1, "开始获取数据");
+            int calIndex = 1;//获取数据开始行数  
+            var lunberDic = new Dictionary<string, string>();
+            for (int index = calIndex; index < eb.rangeCount; index++)
+            {
+                try
+                {
+                    string qzNumber = eb.GetString(eb.allItem[index, 0]);//编号栏数据                         
+                    string lxnumber = eb.GetString(eb.allItem[index, 1]);
+                    if (lxnumber.Contains("第") && lxnumber.EndsWith("号"))
+                    {
+                        var indexof = lxnumber.IndexOf("第");
+                        if (indexof == -1)
+                            continue;
+
+                        var lsh = lxnumber.Substring(indexof + 1);
+                        if (lsh.Length > 6 && lsh.EndsWith("号"))
+                            lsh = lsh.Replace("号", "");
+                        if (!lunberDic.ContainsKey(qzNumber))
+                        {
+                            lunberDic.Add(qzNumber, lsh);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this.ReportError($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
+                }
+            }
+            this.ReportProgress(5, "获取数据完成");
+            if (lunberDic.Count == 0)
+            {
+                this.ReportError($"未获取到可导入的数据,请检查流水号格式 X(XXXX)XX县农村土地承包经营权证第XXXXXX号");
+                return false;
+            }
+            var bookquery = dbContext.CreateQuery<ContractRegeditBook>().Where(t => t.ZoneCode.StartsWith(zone.FullCode))
+                //.Select(s => new { s.ID, s.RegeditNumber, s.SerialNumber })
+                .ToList();
+            try
+            {
+                var uplist = new List<ContractRegeditBook>();
+                foreach (var book in bookquery)
+                {
+                    if (lunberDic.ContainsKey(book.RegeditNumber))
+                    {
+                        book.SerialNumber = lunberDic[book.RegeditNumber];
+                        uplist.Add(book);
+                        if (uplist.Count == 5000)
+                        {
+                            regeditBookStation.UpdataList(uplist);
+                            uplist.Clear();
+                        }
+                    }
+                }
+                if (uplist.Count > 0)
+                    regeditBookStation.UpdataList(uplist);
+                //dbContext.CommitTransaction();
+                this.ReportProgress(99, "更新数据完成");
+            }
+            catch (Exception ex)
+            {
+                //dbContext.RollbackTransaction();
+                return false;
+            }
+            return true;
         }
 
         #endregion
