@@ -150,7 +150,7 @@ namespace YuLinTu.Library.Business
                     tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
                 }
                 #endregion
-
+                export.Tissue = tissue;
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
                 export.TemplateFile = tempPath;

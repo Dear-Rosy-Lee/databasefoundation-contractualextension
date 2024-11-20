@@ -155,6 +155,8 @@
     <Compile Include="Repository\ConstructionLand\IConstructionLandRepository.cs" />
     <Compile Include="Repository\ContractCheckTable\IContractCheckTableRepository.cs" />
     <Compile Include="Repository\ContractConcord\IContractConcordRepository.cs" />
+    <Compile Include="Repository\ContractLandDelete\ContractLandDeleteRepository.cs" />
+    <Compile Include="Repository\ContractLandDelete\IContractLandDeleteRepository.cs" />
     <Compile Include="Repository\ContractLandMark\ContractLandMarkRepository.cs" />
     <Compile Include="Repository\ContractLandMark\IContractLandMarkRepository.cs" />
     <Compile Include="Repository\ContractRegeditBook\IContractRegeditBookRepository.cs" />
@@ -248,10 +250,8 @@
     <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
       <Name>YuLinTu.Library.Entity</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

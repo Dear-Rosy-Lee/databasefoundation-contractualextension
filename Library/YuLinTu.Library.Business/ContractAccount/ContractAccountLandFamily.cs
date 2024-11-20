@@ -24,6 +24,7 @@ namespace YuLinTu.Library.Business
         private VirtualPerson currentFamily;//承包方
         private List<Person> persons;// 共有人集合
         private List<ContractLand> landCollection; //地块集合
+        private List<ContractLand_Del> landDels;
         private int personCount; //共有人个数
         private int landCount;//地块数目
 
@@ -41,6 +42,12 @@ namespace YuLinTu.Library.Business
         {
             get { return landCollection ;} 
             set { landCollection = value; }
+        }
+
+        public List<ContractLand_Del> LandDelCollection
+        {
+            get { return landDels; }
+            set { landDels = value; }
         }
 
         public int PersonCount

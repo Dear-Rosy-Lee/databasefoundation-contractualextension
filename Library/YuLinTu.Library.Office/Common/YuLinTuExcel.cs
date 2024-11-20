@@ -1,5 +1,6 @@
 ﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
 using Aspose.Cells;
+using Aspose.Cells.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -481,7 +482,21 @@ namespace YuLinTu.Library.Office
             //cell.PutValue(value);
             SetCellValue(cell, value);
         }
-
+        public void InitalizeSheet2CellValue(int start, int end, object value,Worksheet sheet2)
+        {
+            if (workbook == null || workSheet == null)
+            {
+                return;
+            }
+            Cell cell = sheet2.Cells[start, end];
+            cell = cell == null ? InitalizeSheetCell(start, end) : cell;
+            //if (cell == null)
+            //{
+            //    return;
+            //}
+            //cell.PutValue(value);
+            SetCellValue(cell, value);
+        }
         /// <summary>
         /// 初始化范围值
         /// </summary>
@@ -535,6 +550,28 @@ namespace YuLinTu.Library.Office
             Cell cell = range[0, 0];
             SetCellValue(cell, value);
         }
+        public void InitalizeSheet2RangeValue(string start, string end, object value, Worksheet sheet2)
+        {
+            int startRow = InitalizeIndex(start);
+            int startColumn = InitalizeLetter(start);
+            int endRow = InitalizeIndex(end);
+            int endColumn = InitalizeLetter(end);
+            if (startRow == endRow && startColumn == endColumn)
+            {
+                InitalizeSheet2CellValue(startRow, startColumn, value, sheet2);
+                return;
+            }
+            int rowCount = Math.Abs(endRow - startRow);
+            int columnCount = Math.Abs(endColumn - startColumn);
+            Range range = SetRangeSheet2Merge(start, end, true, sheet2);
+            if (range == null)
+            {
+                return;
+            }
+            range.Merge();
+            Cell cell = range[0, 0];
+            SetCellValue(cell, value);
+        }
 
         /// <summary>
         /// 设置单元格值
@@ -561,8 +598,7 @@ namespace YuLinTu.Library.Office
                 cell.PutValue(value);
             }
         }
-
-
+        
         /// <summary>
         /// 初始化范围值
         /// </summary>
@@ -1021,6 +1057,29 @@ namespace YuLinTu.Library.Office
             }
             return range;
         }
+        public Range SetRangeSheet2Merge(string start, string end, bool isMerge, Worksheet workSheet2)
+        {
+            int startRow = InitalizeIndex(start);
+            int startColumn = InitalizeLetter(start);
+            int endRow = InitalizeIndex(end);
+            int endColumn = InitalizeLetter(end);
+            if (startRow == endRow && startColumn == endColumn)
+            {
+                return null;
+            }
+            int rowCount = Math.Abs(endRow - startRow);
+            int columnCount = Math.Abs(endColumn - startColumn);
+            rowCount += 1;
+            columnCount += 1;
+            Range range = workSheet2.Cells.CreateRange(startRow, startColumn, rowCount, columnCount);
+            if (range != null)
+            {
+                range.UnMerge();
+                range.Merge();
+            }
+            return range;
+        }
+
 
         /// <summary>
         /// 设置是否合并

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
 using System.IO;
-using YuLinTu.Library.WorkStation;
 using YuLinTu.Data;
-using System.Diagnostics;
-using NPOI.SS.Formula.Functions;
+using Aspose.Cells;
 
 namespace YuLinTu.Library.Business
 {
@@ -82,6 +79,8 @@ namespace YuLinTu.Library.Business
         public string ZoneDesc { get; set; }
 
         public IDbContext DbContext { get; set; }
+
+        public Worksheet Worksheet2 { get; set; }
 
         #endregion Properties
 
@@ -213,6 +212,11 @@ namespace YuLinTu.Library.Business
             }
             familyCount = AccountLandFamily.Count;
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
+            Worksheet2 = workbook.Worksheets.Add("Sheet2");
+            Worksheet2.Cells.SetColumnWidth(0, 21);
+            Worksheet2.Cells.SetColumnWidth(1, 21);
+            Worksheet2.Cells.SetColumnWidth(2, 25);
+            Worksheet2.Cells.SetColumnWidth(3, 25);
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
                 cindex++;
@@ -221,7 +225,7 @@ namespace YuLinTu.Library.Business
             }
             WriteTempLate();
             SetLineType("A7", "AI" + index, false);
-            
+            Worksheet2.IsVisible = false;
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -236,7 +240,7 @@ namespace YuLinTu.Library.Business
             if (landFamily == null)
                 return;
 
-            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count : landFamily.Persons.Count;
+            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count + landFamily.LandDelCollection.Count : landFamily.Persons.Count;
             double TotalLandAware = 0;
             double TotalLandActual = 0;
             double TotalLandTable = 0;
@@ -244,6 +248,7 @@ namespace YuLinTu.Library.Business
             int bindex = index;
 
             List<ContractLand> lands = landFamily.LandCollection;
+            List<ContractLand_Del> landDels = landFamily.LandDelCollection;
             List<Person> peoples = landFamily.Persons;
 
             var hz = peoples.FirstOrDefault(f => f.Relationship == "01" || f.Relationship == "02"
@@ -261,7 +266,9 @@ namespace YuLinTu.Library.Business
                 flag = true;
             foreach (Person person in peoples)
             {
+                SetRowHeight(bindex-1, 27.75);
                 WritePersonInformation(person, bindex, flag);
+                SetRowHeight(bindex, 27.75);
                 bindex++;
             }
 
@@ -272,10 +279,21 @@ namespace YuLinTu.Library.Business
                 TotalLandAware += land.AwareArea;
                 TotalLandActual += land.ActualArea;
                 WriteCurrentZoneInformation(land, aindex);
+                SetRowHeight(aindex, 27.75);
+                aindex++;
+            }
+            foreach(ContractLand_Del landDel in landDels)
+            {
+                
+                TotalLandTable += 0;
+                TotalLandAware += landDel.QQMJ;
+                TotalLandActual += landDel.SCMJ;
+                SetRowHeight(aindex, 27.75);
+                WriteCurrentZoneInformation(landDel, aindex);
                 aindex++;
             }
 
-            landCount += lands.Count;
+            landCount += lands.Count + landDels.Count;
             if (lands.Count == 0)
             {
                 //index++;
@@ -290,6 +308,8 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
             InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
+            InitalizeSheet2RangeValue("A" + (index-6), "A" + (index + height - 1 - 6), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}",Worksheet2);
+            InitalizeSheet2RangeValue("B" + (index-6), "B" + (index + height - 1 - 6), $"{landFamily.CurrentFamily.OldZoneCode}",Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
@@ -302,10 +322,23 @@ namespace YuLinTu.Library.Business
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
-
-        /// <summary>
-        /// 书写当前地域信息
-        /// </summary>
+        private void WriteCurrentZoneInformation(ContractLand_Del landDel, int index)
+        {
+            InitalizeRangeValue("P" + index, "P" + index, landDel.DKMC.IsNullOrEmpty() ? "/" : landDel.DKMC);
+            InitalizeRangeValue("Q" + index, "Q" + index, landDel.DKBM.IsNullOrEmpty() ? "/" : landDel.DKBM);
+            InitalizeSheet2RangeValue("C" + (index - 6), "C" + (index - 6), landDel.DKBM.IsNullOrEmpty() ? "/" : landDel.DKBM, Worksheet2);
+            InitalizeSheet2RangeValue("D" + (index - 6), "D" + (index - 6), landDel.YDKBM.IsNullOrEmpty() ? "/" : landDel.YDKBM, Worksheet2);
+            InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "/");
+            InitalizeRangeValue("AD" + index, "AD" + index, landDel.DKNZ != null ? landDel.DKNZ : "/");
+            InitalizeRangeValue("AE" + index, "AE" + index, landDel.DKXZ != null ? landDel.DKXZ : "/");
+            InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "/");
+            InitalizeRangeValue("AG" + index, "AH" + index, "删除");
+        }
+            /// <summary>
+            /// 书写当前地域信息
+            /// </summary>
         private void WriteCurrentZoneInformation(ContractLand land, int index)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
@@ -315,6 +348,8 @@ namespace YuLinTu.Library.Business
             Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
             InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
+            InitalizeSheet2RangeValue("C" + (index-6), "C" + (index-6), land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber,Worksheet2);
+            InitalizeSheet2RangeValue("D" + (index-6), "D" + (index-6), land.OldLandNumber.IsNullOrEmpty() ? "/" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
             if (dklb!=null)
@@ -345,6 +380,7 @@ namespace YuLinTu.Library.Business
             Dictionary gender = dictXB.Find(c => c.Code.Equals(person.Gender == eGender.Male ? "1" : "2"));
             var code = GetCardTypeNumber(person.CardType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
+            
             InitalizeRangeValue("H" + index, "H" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
             if (gender != null)
             {
@@ -368,7 +404,7 @@ namespace YuLinTu.Library.Business
         private void WriteTempLate()
         {
             string title = GetRangeToValue("A1", "AI2").ToString();
-            title = $"{ZoneDesc}{title}（建库工具版）";
+            title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);
             InitalizeRangeValue("C" + 3, "E" + 3, Tissue.Name);
             InitalizeRangeValue("G" + 3, "G" + 3, Tissue.Code);

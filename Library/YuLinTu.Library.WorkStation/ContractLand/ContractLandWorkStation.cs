@@ -109,6 +109,8 @@ namespace YuLinTu.Library.WorkStation
 
         public IBelongRelationRespository BelongRelationRespository { get; set; }
 
+        public IContractLandDeleteRepository ContractLandDeleteRepository { get; set; }
+
         #endregion
 
         #region Ctor
@@ -123,7 +125,7 @@ namespace YuLinTu.Library.WorkStation
             IVirtualPersonWorkStation<LandVirtualPerson> workVirtualPerson = null, IContractConcordRepository repConcord = null,
            IConcordWorkStation workConcord = null, IContractRegeditBookRepository repBook = null, IContractRegeditBookWorkStation workBook = null,
             IBuildLandBoundaryAddressDotRepository repDot = null, IBuildLandBoundaryAddressDotWorkStation workDot = null,
-           IBuildLandBoundaryAddressCoilRepository repCoil = null, IBuildLandBoundaryAddressCoilWorkStation workCoil = null, IBelongRelationRespository belongRep = null)
+           IBuildLandBoundaryAddressCoilRepository repCoil = null, IBuildLandBoundaryAddressCoilWorkStation workCoil = null, IBelongRelationRespository belongRep = null, IContractLandDeleteRepository landdelrep = null)
         {
             DefaultRepository = rep;
             ZoneRepository = repZone;
@@ -140,6 +142,7 @@ namespace YuLinTu.Library.WorkStation
             CoilRepository = repCoil;
             CoilWorkStation = workCoil;
             BelongRelationRespository = belongRep;
+            ContractLandDeleteRepository = landdelrep;
         }
 
         #endregion
@@ -1090,6 +1093,17 @@ namespace YuLinTu.Library.WorkStation
             }
             VirtualPersonRepository.Update(virtualPerson);
             return TrySaveChanges(DefaultRepository);
+        }
+
+        public int AddDelLand(ContractLand_Del contractLand_Del)
+        {
+            ContractLandDeleteRepository.Add(contractLand_Del);
+            return TrySaveChanges(ContractLandDeleteRepository);
+        }
+
+        public List<ContractLand_Del> GetDelLandByZone(string zoneCode)
+        {
+            return ContractLandDeleteRepository.GetDelLandByZone(zoneCode);
         }
 
         /// <summary>

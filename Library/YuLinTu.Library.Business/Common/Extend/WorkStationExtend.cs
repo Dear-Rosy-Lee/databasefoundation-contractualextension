@@ -196,6 +196,7 @@ namespace YuLinTu.Library.Business
             var dotWork = factory.CreateWorkstation<IBuildLandBoundaryAddressDotWorkStation, IBuildLandBoundaryAddressDotRepository>();
             var coilWork = factory.CreateWorkstation<IBuildLandBoundaryAddressCoilWorkStation, IBuildLandBoundaryAddressCoilRepository>();
             var belongRep = factory.CreateRepository<IBelongRelationRespository>();
+            var landDelRep = factory.CreateRepository<IContractLandDeleteRepository>();
             IContractLandWorkStation station = new ContainerFactory(db).CreateWorkstation<IContractLandWorkStation>(
                 new ParameterOverride("rep", landRep),
                 new ParameterOverride("repZone", zoneWork.DefaultRepository),
@@ -211,7 +212,8 @@ namespace YuLinTu.Library.Business
                 new ParameterOverride("workDot", dotWork),
                 new ParameterOverride("repCoil", coilWork.DefaultRepository),
                 new ParameterOverride("workCoil", coilWork),
-                new ParameterOverride("belongRep", belongRep)
+                new ParameterOverride("belongRep", belongRep),
+                new ParameterOverride("landdelrep", landDelRep)
                 );
             return station;
         }

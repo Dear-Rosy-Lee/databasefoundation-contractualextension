@@ -341,6 +341,7 @@ namespace YuLinTu.Component.Setting
             var schema = ds.CreateSchema();
 
             schema.Export(typeof(Zone), sr.WKID);
+            schema.Export(typeof(ContractLand_Del), sr.WKID);
             schema.Export(typeof(CollectivityTissue), sr.WKID);
 
             schema.Export(typeof(BuildLandBoundaryAddressDot), sr.WKID);
@@ -387,10 +388,12 @@ namespace YuLinTu.Component.Setting
             schema.CreateIndex(null, ObjectContext.Create(typeof(StockConcord)).TableName, "ID", null, true);
             schema.CreateIndex(null, ObjectContext.Create(typeof(StockWarrant)).TableName, "ID", null, true);
 
+
             schema.CreateIndex(null, ObjectContext.Create(typeof(Zone)).TableName, "DYQBM", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "DKLB", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "ZLDM", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand)).TableName, "QLRBS", null);
+            schema.CreateIndex(null, ObjectContext.Create(typeof(ContractLand_Del)).TableName, "DKBM", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(LandVirtualPerson)).TableName, "DYBM", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "DKBS", null);
             schema.CreateIndex(null, ObjectContext.Create(typeof(BuildLandBoundaryAddressCoil)).TableName, "DYDM", null);

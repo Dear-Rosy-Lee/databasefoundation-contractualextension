@@ -106,7 +106,7 @@ namespace YuLinTu.Library.Repository
             }
             if (!CheckRule.CheckGuidNullOrEmpty(guid))
                 return 0;
-
+            //AddLand_DelByPersonID(guid);
             return base.Delete(c => c.OwnerId.Equals(guid));
         }
 
@@ -587,7 +587,8 @@ namespace YuLinTu.Library.Repository
                 return -1;
 
             int delAppend = 0;
-
+            
+            var lands = DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).ToList();
             //删除地块
             delAppend = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).Delete());
             //删除界址点
@@ -1558,4 +1559,5 @@ namespace YuLinTu.Library.Repository
 
         #endregion
     }
+    
 }
