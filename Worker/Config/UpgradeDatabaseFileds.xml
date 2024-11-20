@@ -371,7 +371,13 @@
         <IsNull>true</IsNull>
         <IsAdd>true</IsAdd>
       </UpdateField>
-    </FieldList>
+		<UpdateField>
+			<FieldName>BHQK</FieldName>
+			<FieldType>TEXT</FieldType>
+			<IsNull>true</IsNull>
+			<IsAdd>true</IsAdd>
+		</UpdateField>		
+	</FieldList>
   </UpgradeDatabase>
   <UpgradeDatabase>
     <TableName>QLR_ELTZ</TableName>

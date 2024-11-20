@@ -477,8 +477,7 @@ namespace YuLinTu.Library.Repository
             cnt = AppendEdit(DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ID == virtualPerson.ID).
                 Update(s => new LandVirtualPerson()
                 {
-                    ZoneCode = virtualPerson.ZoneCode,
-                    OldZoneCode = virtualPerson.OldZoneCode
+                    OldVirtualCode = s.ZoneCode.PadRight(14, '0') + s.FamilyNumber.PadLeft(4, '0')
                 }));
             return cnt;
         }

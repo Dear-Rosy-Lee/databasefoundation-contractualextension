@@ -398,16 +398,16 @@ namespace YuLinTu.Library.Entity
         }
         private string oldVirtualCode;
 
-        /// <summary>
-        ///原地域编码
-        /// </summary>
-        [DataColumn("YDYBM")]
-        public string OldZoneCode
-        {
-            get { return oldZoneCode; }
-            set { oldZoneCode = value; NotifyPropertyChanged("OldZoneCode"); }
-        }
-        private string oldZoneCode;
+        ///// <summary>
+        /////原地域编码
+        ///// </summary>
+        //[DataColumn("YDYBM")]
+        //public string OldZoneCode
+        //{
+        //    get { return oldZoneCode; }
+        //    set { oldZoneCode = value; NotifyPropertyChanged("OldZoneCode"); }
+        //}
+        //private string oldZoneCode;
 
         /// <summary>
         ///变化情况

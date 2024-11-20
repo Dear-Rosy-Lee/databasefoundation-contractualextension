@@ -641,7 +641,7 @@ namespace YuLinTu.Library.Business
                             for (int i = 0; i < oldNumber.Length; i++)
                             {
                                 var oldCBFs = vpStation.GetByZoneCode(oldNumber[i]);
-                                oldCBFs.ForEach(t => { t.OldZoneCode = t.ZoneCode; t.ZoneCode = zone.FullCode; vps.Add(t); });
+                                oldCBFs.ForEach(t => { t.OldVirtualCode = t.ZoneCode.PadRight(14, '0') + t.FamilyNumber.PadLeft(4, '0'); ; t.ZoneCode = zone.FullCode; vps.Add(t); });
                                 var oldLands = landStation.GetShapeCollection(oldNumber[i], eLevelOption.SelfAndSubs);
                                 oldLands.ForEach(t => { t.ZoneCode = zone.FullCode; lands.Add(t); });
                             }
@@ -700,7 +700,7 @@ namespace YuLinTu.Library.Business
             zone.CreateTime = DateTime.Now;
             zone.CreateUser = "Admin";
             zone.LastModifyTime = DateTime.Now;
-            
+
             if (desZone != null)
             {
                 zone.ID = desZone.ID;
@@ -734,7 +734,7 @@ namespace YuLinTu.Library.Business
         {
             var zoneStation = DataInstance.CreateZoneWorkStation();
             var name = zoneStation.GetZoneNameByLevel(zone.FullCode, eZoneLevel.County) + zoneStation.GetTownZoneName(zone);
-            
+
             return name;
         }
         #endregion Methods - Import
