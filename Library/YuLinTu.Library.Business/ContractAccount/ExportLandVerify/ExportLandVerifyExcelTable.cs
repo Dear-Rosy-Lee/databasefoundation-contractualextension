@@ -309,7 +309,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
             InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
             InitalizeSheet2RangeValue("A" + (index-6), "A" + (index + height - 1 - 6), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}",Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index-6), "B" + (index + height - 1 - 6), $"{landFamily.CurrentFamily.OldZoneCode}",Worksheet2);
+            InitalizeSheet2RangeValue("B" + (index-6), "B" + (index + height - 1 - 6), $"{landFamily.CurrentFamily.OldVirtualCode}",Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
