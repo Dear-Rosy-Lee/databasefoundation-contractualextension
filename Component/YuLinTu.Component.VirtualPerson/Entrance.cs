@@ -59,10 +59,34 @@ namespace YuLinTu.Component.VirtualPerson
             List<Zone> oldZoneList = new List<Zone>();
             GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
             GetZoneList(zdiNew as ZoneDataItem, newZoneList);
-         
+
             var ListPerson = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
-            ListPerson.ForEach(x => x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length));
-            UpVirtualPerson(dbContext, ListPerson);
+            var cbfquery = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));
+
+            var uplist = new List<LandVirtualPerson>();
+            cbfquery.ForEach((i, p, x) =>
+            {
+                if (string.IsNullOrEmpty(x.OldVirtualCode))
+                    x.OldVirtualCode = x.ZoneCode.PadRight(14, '0') + x.FamilyNumber.PadLeft(4, '0');
+                x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                uplist.Add(x);
+                if (uplist.Count == 1000)
+                {
+                    UpVirtualPerson(dbContext, uplist);
+                    uplist.Clear();
+                }
+                return true;
+            });
+
+
+            //ListPerson.ForEach(x =>
+            //{
+            //    if (string.IsNullOrEmpty(x.OldVirtualCode))
+            //        x.OldVirtualCode = x.ZoneCode.PadRight(14, '0') + x.FamilyNumber.PadLeft(4, '0');
+            //    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+            //});
+            if (uplist.Count > 0)
+                UpVirtualPerson(dbContext, uplist);
         }
 
         private void UpVirtualPerson(IDbContext dbContext, List<LandVirtualPerson> ListPerson)
@@ -71,7 +95,7 @@ namespace YuLinTu.Component.VirtualPerson
             var virtualPersonRep = factory.CreateRepository<IVirtualPersonRepository<LandVirtualPerson>>();
             foreach (var entity in ListPerson)
             {
-                virtualPersonRep.Update(entity);
+                virtualPersonRep.Update(entity, true);
             }
             virtualPersonRep.SaveChanges();
         }

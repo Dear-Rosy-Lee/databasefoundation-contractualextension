@@ -15,9 +15,6 @@ namespace YuLinTu.Library.Business
         private const double PRECISION = 0.000001;//精度
         private Zone currentZone;
         private IDbContext dbContext;
-        private object[,] allItem;
-        private int rangeCount;//行数
-        private int columnCount;//列数
         private bool isOk;
 
         //private bool contractorClear = true;//是否清空承包方
@@ -40,7 +37,9 @@ namespace YuLinTu.Library.Business
         private List<string> errorArray = new List<string>();//错误信息
         private List<string> warnArray = new List<string>();//警告信息
         private int originalValue = -1;
-
+        public object[,] allItem;
+        public int rangeCount;//行数
+        public int columnCount;//列数
         #endregion Fields
 
         #region Propertys
@@ -145,7 +144,7 @@ namespace YuLinTu.Library.Business
             string totalInfo = string.Empty;
             try
             {
-                int calIndex = GetStartRow();//获取数据开始行数
+                int calIndex = 1;
                 if (calIndex == -1)
                 {
                     ReportErrorInfo(this.ExcelName + "表中无数据或数据未按要求制作!");
@@ -589,7 +588,7 @@ namespace YuLinTu.Library.Business
             return eGender.Unknow;
         }
 
-        private bool CheckValue()
+        public bool CheckValue()
         {
             if (!OpenExcel())
                 return false;

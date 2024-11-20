@@ -207,6 +207,29 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 更新地域数据
+        /// </summary>
+        public bool UpdateZoneCodeName(Zone zone)
+        {
+            if (!CanContinue())
+            {
+                return false;
+            }
+            bool result = true;
+            try
+            {
+                result = (Station.UpdateCodeName(zone) == 1) ? true : false; ;
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "UpdateZone(更新地域数据)", ex.Message + ex.StackTrace);
+                this.ReportError("更新地域出错," + ex.Message);
+                result = false;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 上传地域数据到服务
         /// </summary>
         /// <param name="cZone">当前地域</param>
@@ -445,7 +468,7 @@ namespace YuLinTu.Library.Business
                     export.CurrentZone = zone;
                     export.ZoneList = listZones;
                     export.IsStandCode = Define == null ? true : Define.UseStandCode;
-                    export.PostProgressEvent +=export_PostProgressEvent;
+                    export.PostProgressEvent += export_PostProgressEvent;
                     export.BeginExcel();
                     export.SaveAs(export.SaveFilePath);
                     //System.Diagnostics.Process.Start(export.SaveFilePath);

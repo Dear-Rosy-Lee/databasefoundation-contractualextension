@@ -416,6 +416,24 @@ namespace YuLinTu.Library.Repository
             return cnt;
         }
 
+        public int UpdateCodeName(Zone zone)
+        {
+            if (zone == null || zone.ID == Guid.Empty)
+                return -1;
+
+            return AppendEdit(DataSource.CreateQuery<Zone>().Where(c => c.ID == zone.ID).
+                Update(c => new Zone
+                {
+                    Name = zone.Name,
+                    Code = zone.Code,
+                    FullCode = zone.FullCode,
+                    FullName = zone.FullName,
+                    UpLevelCode = zone.UpLevelCode,
+                    UpLevelName = zone.UpLevelName,
+                    LastModifyTime = DateTime.Now
+                }));
+        }
+
         /// <summary>
         /// 根据地域全编码更新地域对象
         /// </summary>

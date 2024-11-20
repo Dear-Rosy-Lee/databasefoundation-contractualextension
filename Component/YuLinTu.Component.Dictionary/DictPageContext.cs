@@ -31,6 +31,7 @@ namespace YuLinTu.Component.Dictionary
 
         #region Methods 接收消息
 
+
         /// <summary>
         /// 删除属性组消息提示
         /// </summary>

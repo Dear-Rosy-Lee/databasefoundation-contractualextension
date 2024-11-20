@@ -176,6 +176,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Utils">
+      <HintPath>..\..\Dependencies\Exchange\Utils.dll</HintPath>
+    </Reference>
     <Reference Include="Utils.Controls">
       <HintPath>..\..\Dependencies\Exchange\Utils.Controls.dll</HintPath>
     </Reference>

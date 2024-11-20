@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
+using Utils.Tool;
 using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
@@ -36,13 +38,24 @@ namespace YuLinTu.Product.YuLinTuTool
             //    Application.Exit();
             //    return;
             //}
-            AppShellWpf shell = new AppShellWpf();
-            shell.Run(args);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.WaitForFullGCComplete();
-            Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
+            try
+            {
+                ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
+                AppShellWpf shell = new AppShellWpf();
+                shell.Run(args);
+                shell.Shutdown += (s, e) =>
+                {
+                    ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
+                };
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.WaitForFullGCComplete();
+                Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
+            }
+            catch
+            {
+                MessageBox.Show("检查时间出现异常，请修正计算机时间或重新安装程序!", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

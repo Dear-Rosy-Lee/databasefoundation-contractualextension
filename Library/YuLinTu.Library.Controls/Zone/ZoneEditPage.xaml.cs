@@ -41,6 +41,8 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private int index;
 
+        private int upindex;
+
         /// <summary>
         /// 业务处理
         /// </summary>
@@ -354,7 +356,7 @@ namespace YuLinTu.Library.Controls
                 if (alterCode || alterName)
                 {
                     Zone zone = zoneItem.ConvertTo<Zone>();
-                    if (!business.UpdateZone(zone))
+                    if (!business.UpdateZoneCodeName(zone))
                         Result = false;
                 }
                 if (zoneItem.Level < eZoneLevel.Province)//如果当前选择的是国家，只需修改省级地域上级编码
@@ -362,7 +364,7 @@ namespace YuLinTu.Library.Controls
                     UpdateChildren(zoneItem, alterCode, alterName, itemCount);
                 }
             }
-            if (!business.UpdateZone(curZone))
+            if (!business.UpdateZoneCodeName(curZone))
                 Result = false;
             SetLableInvoke(string.Format("({0}/{1})", index, itemCount));
             GC.Collect();
@@ -375,7 +377,8 @@ namespace YuLinTu.Library.Controls
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                lbTip.Text = "正在更新数据，请等待..." + info;
+                upindex++;
+                lbTip.Text = $"正在更新数据，请等待" + (upindex % 2 == 0 ? ".   " : "... ") + info;
             }));
         }
 

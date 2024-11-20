@@ -65,25 +65,40 @@ namespace YuLinTu.Component.Concord
             List<Zone> oldZoneList = new List<Zone>();
             GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
             GetZoneList(zdiNew as ZoneDataItem, newZoneList);
-            var ContractConcords = dbContext.CreateQuery<ContractConcord>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
-
-            if (ZoneDefine.SyncCode == true)
+            //var ContractConcords = dbContext.CreateQuery<ContractConcord>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
+            var htQuery = dbContext.CreateQuery<ContractConcord>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));
+            var uplist = new List<ContractConcord>();
+            //if (ZoneDefine.SyncCode == true)
+            //{
+            htQuery.ForEach((i, p, x) =>
             {
-                ContractConcords.ForEach(x =>
-                {
+                if (ZoneDefine.SyncCode == true)
                     x.ConcordNumber = zdiNew.FullCode + x.ConcordNumber.Substring(zdiNew.FullCode.Length);
-                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
-                });
-                UpContractConcord(dbContext, ContractConcords);
-            }
-            else
-            {
-                ContractConcords.ForEach(x =>
+                x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                uplist.Add(x);
+                if (uplist.Count == 1000)
                 {
-                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
-                });
-                UpContractConcord(dbContext, ContractConcords);
-            }
+                    UpContractConcord(dbContext, uplist);
+                    uplist.Clear();
+                }
+                return true;
+            });
+            //    ContractConcords.ForEach(x =>
+            //{
+            //    x.ConcordNumber = zdiNew.FullCode + x.ConcordNumber.Substring(zdiNew.FullCode.Length);
+            //    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+            //});
+            if (uplist.Count > 0)
+                UpContractConcord(dbContext, uplist);
+            //}
+            //else
+            //{
+            //    ContractConcords.ForEach(x =>
+            //    {
+            //        x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+            //    });
+            //    UpContractConcord(dbContext, ContractConcords);
+            //}
         }
 
         private void UpContractConcord(IDbContext dbContext, List<ContractConcord> ContractConcords)
@@ -93,7 +108,7 @@ namespace YuLinTu.Component.Concord
 
             foreach (var entity in ContractConcords)
             {
-                concordRep.Update(entity);
+                concordRep.Update(entity, true);
             }
             concordRep.SaveChanges();
         }

@@ -101,11 +101,12 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public const string RefreshName = "Refresh";
 
-
         /// <summary>
         /// 重置流水号
         /// </summary>
         public const string ResetSerialNumberName = "ResetSerialNumber";
+
+        public const string RelationSerialNumberName = "RelationSerialNumber";
 
         #endregion
 
@@ -201,6 +202,11 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public RoutedCommand ResetSerialNumber = new RoutedCommand(ResetSerialNumberName, typeof(Button));
 
+        /// <summary>
+        /// 流水号关联
+        /// </summary>
+        public RoutedCommand RelationSerialNumber = new RoutedCommand(RelationSerialNumberName, typeof(Button));
+
         #endregion
 
         #region Files - Binding
@@ -295,6 +301,10 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public CommandBinding ResetSerialNumberBinding = new CommandBinding();
 
+        /// <summary>
+        /// 重置流水号
+        /// </summary>
+        public CommandBinding RelationSerialNumberBinding = new CommandBinding();
         #endregion
 
         #region Properties
@@ -338,6 +348,7 @@ namespace YuLinTu.Library.Command
             ClearBind.Command = Clear;
             RefreshBind.Command = Refresh;
             ResetSerialNumberBinding.Command = ResetSerialNumber;
+            RelationSerialNumberBinding.Command = RelationSerialNumber;
         }
         #endregion
     }

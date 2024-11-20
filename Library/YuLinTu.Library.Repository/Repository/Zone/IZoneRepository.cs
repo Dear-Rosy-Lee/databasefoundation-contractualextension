@@ -200,6 +200,8 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(Zone zone);
 
+        int UpdateCodeName(Zone zone);
+
         /// <summary>
         /// 根据地域全编码更新地域对象
         /// </summary>

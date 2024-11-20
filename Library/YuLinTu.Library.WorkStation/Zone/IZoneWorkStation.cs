@@ -109,6 +109,8 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         int Update(Zone zone);
 
+        int UpdateCodeName(Zone zone);
+
         /// <summary>
         /// 获取指定区域下指定地域等级的地域
         /// </summary>

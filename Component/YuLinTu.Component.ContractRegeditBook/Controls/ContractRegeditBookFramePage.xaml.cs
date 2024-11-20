@@ -137,7 +137,7 @@ namespace YuLinTu.Component.ContractRegeditBook
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
 
             SetCommandBinding(mbtnResetSerialNumber, command.ResetSerialNumber, command.ResetSerialNumberBinding);
-
+            SetCommandBinding(mbtnRelationSerialNumber, command.RelationSerialNumber, command.RelationSerialNumberBinding);
         }
 
         /// <summary>
@@ -222,6 +222,10 @@ namespace YuLinTu.Component.ContractRegeditBook
                     break;
                 case ContractRegeditBookCommand.ResetSerialNumberName:
                     contractRegeditBookPanel.ResetSerialNumber();
+                    break;
+
+                case ContractRegeditBookCommand.RelationSerialNumberName:
+                    contractRegeditBookPanel.ImportRelaitonExcel();
                     break;
             }
         }

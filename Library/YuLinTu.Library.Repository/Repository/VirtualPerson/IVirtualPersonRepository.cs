@@ -136,7 +136,7 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="virtualPerson">承包方对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        int Update(VirtualPerson virtualPerson);
+        int Update(VirtualPerson virtualPerson, bool onlycode = false);
 
         int UpdateZoneCode(VirtualPerson virtualPerson);
         /// <summary>

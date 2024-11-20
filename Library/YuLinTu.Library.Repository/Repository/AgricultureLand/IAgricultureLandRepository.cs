@@ -41,7 +41,7 @@ namespace YuLinTu.Library.Repository
         /// 更新对象
         /// </summary>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
-        int Update(T entity);
+        int Update(T entity, bool onlycode = false);
 
         int UpdateOldLandsCode(T entity);
 
@@ -294,7 +294,7 @@ namespace YuLinTu.Library.Repository
         /// <param name="searchOption">匹配等级</param>
         /// <returns>地块集合</returns>
         List<T> GetCollection(string zoneCode, eLevelOption searchOption);
-         
+
         /// <summary>
         /// 获取指定地域下的所有空间地块集合
         /// </summary>

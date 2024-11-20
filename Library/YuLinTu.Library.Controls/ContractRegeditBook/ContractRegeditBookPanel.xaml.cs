@@ -8,21 +8,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Win32;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
-using YuLinTu.Library.Business;
 using YuLinTu.Data;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
@@ -2221,6 +2214,69 @@ namespace YuLinTu.Library.Controls
         }
 
         #endregion 重置流水号
+
+        #region 挂接流水号
+
+        /// <summary>
+        /// 挂接流水号
+        /// </summary>
+        public void ImportRelaitonExcel()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ImportZone, ContractAccountInfo.ImportZone);
+                return;
+            }
+            List<Zone> childrenZones = AccountLandBusiness.GetChildrenZone(currentZone);
+            if (currentZone.Level <= eZoneLevel.County)
+            {
+                //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
+                var importLand = new ImportDataPage(ThePage, "导入流水号表");
+                ThePage.Page.ShowMessageBox(importLand, (b, r) =>
+                {
+                    if (string.IsNullOrEmpty(importLand.FileName) || b == false)
+                    {
+                        return;
+                    }
+                    ImportLandTiesTask(importLand.FileName, importLand.ImportType);
+                });
+            }
+            else
+            {
+                //此时选择地域大于村
+                ShowBox("导入流水号表", "请选择区县及下级进行挂接");
+                return;
+            }
+        }
+
+        public void ImportLandTiesTask(string fileName, eImportTypes eImport = eImportTypes.Over)
+        {
+            var meta = new TaskImportLandTiesTableArgument();
+            meta.DbContext = DbContext;       //当前使用的数据库
+            meta.CurrentZone = currentZone;    //当前地域
+            meta.FileName = fileName;
+            meta.ImportType = eImport;
+            var import = new TaskImportRelationOperation();
+            import.Argument = meta;
+            import.Description = $"导入流水号表-{Path.GetFileName(fileName)}";
+            import.Name = $"导入流水号表-{currentZone.Name}";
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                Dispatcher.Invoke(new Action(() => { Refresh(); }), null);
+            });
+            import.Terminated += new TaskTerminatedEventHandler((o, t) =>
+            {
+                ShowBox("导入流水号表", "导入失败!");
+            });
+            ThePage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
+        }
+
+        #endregion
 
         #region Methods - Private
 

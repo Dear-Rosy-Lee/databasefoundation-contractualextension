@@ -18,7 +18,7 @@ namespace YuLinTu.Component.ContractRegeditBook
     /// <summary>
     /// 插件入口
     /// </summary>
-   public class Entrance : EntranceBase
+    public class Entrance : EntranceBase
     {
         #region Methods
 
@@ -63,35 +63,56 @@ namespace YuLinTu.Component.ContractRegeditBook
             List<Zone> oldZoneList = new List<Zone>();
             GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
             GetZoneList(zdiNew as ZoneDataItem, newZoneList);
-            var ContractRegeditBooks = dbContext.CreateQuery<Library.Entity.ContractRegeditBook>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
 
-            if (ZoneDefine.SyncCode == true)
+            var uplist = new List<Library.Entity.ContractRegeditBook>();
+            //var ContractRegeditBooks = dbContext.CreateQuery<Library.Entity.ContractRegeditBook>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
+            var djbquery = dbContext.CreateQuery<Library.Entity.ContractRegeditBook>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));
+
+            //if (ZoneDefine.SyncCode == true)
+            //{
+            djbquery.ForEach((i, p, x) =>
             {
-                ContractRegeditBooks.ForEach(x =>
+                if (ZoneDefine.SyncCode == true)
                 {
                     x.Number = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
                     x.RegeditNumber = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
-                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
-                });
-                UpRegeditBook(dbContext, ContractRegeditBooks);
-            }
-            else
-            {
-                ContractRegeditBooks.ForEach(x =>
+                }
+                x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+                uplist.Add(x);
+                if (uplist.Count == 1000)
                 {
-                    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
-                });
-                UpRegeditBook(dbContext, ContractRegeditBooks);
-            }
+                    UpRegeditBook(dbContext, uplist);
+                    uplist.Clear();
+                }
+                return true;
+            });
+
+            //    ContractRegeditBooks.ForEach(x =>
+            //{
+            //    x.Number = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
+            //    x.RegeditNumber = zdiNew.FullCode + x.Number.Substring(zdiNew.FullCode.Length);
+            //    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+            //});
+            if (uplist.Count > 0)
+                UpRegeditBook(dbContext, uplist);
+            //}
+            //else
+            //{
+            //    ContractRegeditBooks.ForEach(x =>
+            //    {
+            //        x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
+            //    });
+            //    UpRegeditBook(dbContext, ContractRegeditBooks);
+            //}
         }
 
-        private void UpRegeditBook(IDbContext dbContext,List<Library.Entity.ContractRegeditBook> ContractRegeditBooks)
+        private void UpRegeditBook(IDbContext dbContext, List<Library.Entity.ContractRegeditBook> ContractRegeditBooks)
         {
             ContainerFactory factory = new ContainerFactory(dbContext);
             var regeditBookRep = factory.CreateRepository<IContractRegeditBookRepository>();
             foreach (var entity in ContractRegeditBooks)
             {
-                regeditBookRep.Update(entity);
+                regeditBookRep.Update(entity,true);
             }
             regeditBookRep.SaveChanges();
         }
