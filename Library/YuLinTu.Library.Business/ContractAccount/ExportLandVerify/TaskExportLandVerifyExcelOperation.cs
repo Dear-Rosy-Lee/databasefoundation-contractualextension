@@ -112,13 +112,17 @@ namespace YuLinTu.Library.Business
                 List<ContractAccountLandFamily> accountFamilyCollection = new List<ContractAccountLandFamily>();
                 var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
+                var delLands = argument.DbContext.CreateContractLandWorkstation().GetDelLandByZone(zone.FullCode);
+
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);
+                    var landDelCollection = delLands == null ? new List<ContractLand_Del>() : delLands.FindAll(c => c.CBFID == vp.ID);
                     ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                     accountLandFamily.CurrentFamily = vp;
                     accountLandFamily.Persons = vp.SharePersonList;
                     accountLandFamily.LandCollection = landCollection;
+                    accountLandFamily.LandDelCollection = landDelCollection;
                     accountFamilyCollection.Add(accountLandFamily);
                     var ralations = qglands.FindAll(o => o.VirtualPersonID == vp.ID);
                     if (ralations.Count > 0)

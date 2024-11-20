@@ -16,6 +16,7 @@ using YuLinTu.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Library.WorkStation;
 using System.IO;
+using NetTopologySuite.Triangulate;
 
 namespace YuLinTu.Library.Controls
 {
@@ -2368,7 +2369,11 @@ namespace YuLinTu.Library.Controls
                 try
                 {
                     Guid[] landIds = new Guid[] { land.ID };
+                    //var landDelStation = DbContext.CreateContractLandDeleteWorkstation();
+                    //landDelStation.Add(land);
                     var landStation = DbContext.CreateContractLandWorkstation();
+                    var landdel = GetLandDel(land);
+                    landStation.AddDelLand(landdel);
                     landStation.DeleteRelationDataByLand(landIds);
                 }
                 catch (Exception)
@@ -2401,7 +2406,7 @@ namespace YuLinTu.Library.Controls
             });
             ShowBox(ContractAccountInfo.ContractLandDel, ContractAccountInfo.CurrentLandDelSure, eMessageGrade.Infomation, action);
         }
-
+        
         /// <summary>
         /// 修改地块所有人名称
         /// </summary>
@@ -6786,6 +6791,25 @@ namespace YuLinTu.Library.Controls
                  if (!(bool)b)
                      return;
              });
+        }
+
+        private ContractLand_Del GetLandDel(ContractLand land)
+        {
+            var landDel = new ContractLand_Del();
+            landDel.ID = land.ID;
+            landDel.DKBM = land.LandNumber;
+            landDel.YDKBM = land.OldLandNumber;
+            landDel.DKMC = land.LandName;
+            landDel.QQMJ = land.AwareArea;
+            landDel.SCMJ = land.ActualArea;
+            landDel.CBFID = (Guid)land.OwnerId;
+            landDel.DKDZ = land.NeighborEast;
+            landDel.DKNZ = land.NeighborSouth;
+            landDel.DKXZ = land.NeighborEast;
+            landDel.DKBZ = land.NeighborNorth;
+            landDel.BZXX = land.Comment;
+            landDel.DYBM = land.ZoneCode;
+            return landDel;
         }
 
         /// <summary>

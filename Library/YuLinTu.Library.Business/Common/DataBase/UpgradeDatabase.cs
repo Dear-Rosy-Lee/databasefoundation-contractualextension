@@ -40,6 +40,7 @@ namespace YuLinTu.Library.Business
                     Directory.CreateDirectory(Path.GetDirectoryName(fileName));
                 }
                 List<UpgradeDatabase> upList = new List<UpgradeDatabase>();
+                var upCBD_Delete = AddCBD_DeleteFields();
                 var upJZD = AddJZDFields();
                 var upQZ = AddQZFields();
                 var upCBD = AddCBDFields(true);
@@ -54,6 +55,7 @@ namespace YuLinTu.Library.Business
                 var fbf = AddFBFFields();
                 var QGQZ = AddQGQZFields();
                 var QGHT = AddQGHTFields();
+                upList.Add(upCBD_Delete);
                 upList.Add(upJZD);
                 upList.Add(upQZ);
                 upList.Add(upCBD);
@@ -75,6 +77,100 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
+        }
+
+        private static UpgradeDatabase AddCBD_DeleteFields()
+        {
+            UpgradeDatabase upCBD_Delete = new UpgradeDatabase();
+            upCBD_Delete.TableName = "TZ_SCDKB";
+            List<UpdateField> upCBD_DeleteFields = new List<UpdateField>();
+
+            UpdateField DKMC = new UpdateField();
+            DKMC.FieldName = "DKMC";
+            DKMC.FieldType = "TEXT";
+            DKMC.IsNull = true;
+            DKMC.IsAdd = true;
+            upCBD_DeleteFields.Add(DKMC);
+
+            UpdateField DKBM = new UpdateField();
+            DKBM.FieldName = "DKBM";
+            DKBM.FieldType = "TEXT";
+            DKBM.IsNull = true;
+            DKBM.IsAdd = true;
+            upCBD_DeleteFields.Add(DKBM);
+
+            UpdateField YDKBM = new UpdateField();
+            YDKBM.FieldName = "YDKBM";
+            YDKBM.FieldType = "TEXT";
+            YDKBM.IsNull = true;
+            YDKBM.IsAdd = true;
+            upCBD_DeleteFields.Add(YDKBM);
+
+            UpdateField SCMJ = new UpdateField();
+            SCMJ.FieldName = "SCMJ";
+            SCMJ.FieldType = "DECIMAL";
+            SCMJ.IsNull = true;
+            SCMJ.IsAdd = true;
+            upCBD_DeleteFields.Add(SCMJ);
+
+            UpdateField QQMJ = new UpdateField();
+            QQMJ.FieldName = "QQMJ";
+            QQMJ.FieldType = "DECIMAL";
+            QQMJ.IsNull = true;
+            QQMJ.IsAdd = true;
+            upCBD_DeleteFields.Add(QQMJ);
+
+            UpdateField CBFID = new UpdateField();
+            CBFID.FieldName = "CBFID";
+            CBFID.FieldType = "TEXT";
+            CBFID.IsNull = true;
+            CBFID.IsAdd = true;
+            upCBD_DeleteFields.Add(CBFID);
+
+            UpdateField DKDZ = new UpdateField();
+            DKDZ.FieldName = "DKDZ";
+            DKDZ.FieldType = "TEXT";
+            DKDZ.IsNull = true;
+            DKDZ.IsAdd = true;
+            upCBD_DeleteFields.Add(DKDZ);
+
+            UpdateField DKNZ = new UpdateField();
+            DKNZ.FieldName = "DKNZ";
+            DKNZ.FieldType = "TEXT";
+            DKNZ.IsNull = true;
+            DKNZ.IsAdd = true;
+            upCBD_DeleteFields.Add(DKNZ);
+
+            UpdateField DKXZ = new UpdateField();
+            DKXZ.FieldName = "DKXZ";
+            DKXZ.FieldType = "TEXT";
+            DKXZ.IsNull = true;
+            DKXZ.IsAdd = true;
+            upCBD_DeleteFields.Add(DKXZ);
+
+            UpdateField DKBZ = new UpdateField();
+            DKBZ.FieldName = "DKBZ";
+            DKBZ.FieldType = "TEXT";
+            DKBZ.IsNull = true;
+            DKBZ.IsAdd = true;
+            upCBD_DeleteFields.Add(DKBZ);
+
+            UpdateField BZXX = new UpdateField();
+            BZXX.FieldName = "BZXX";
+            BZXX.FieldType = "TEXT";
+            BZXX.IsNull = true;
+            BZXX.IsAdd = true;
+            upCBD_DeleteFields.Add(BZXX);
+
+            UpdateField DYBM = new UpdateField();
+            DYBM.FieldName = "DYBM";
+            DYBM.FieldType = "TEXT";
+            DYBM.IsNull = true;
+            DYBM.IsAdd = true;
+            upCBD_DeleteFields.Add(DYBM);
+
+            upCBD_Delete.FieldList = upCBD_DeleteFields;
+            return upCBD_Delete;
         }
 
         /// <summary>
@@ -902,6 +998,13 @@ namespace YuLinTu.Library.Business
             sfgnField.IsNull = true;
             sfgnField.IsAdd = true;
             upCBFFields.Add(sfgnField);
+
+            UpdateField YCBFBM = new UpdateField();
+            YCBFBM.FieldName = "YCBFBM";
+            YCBFBM.FieldType = "TEXT";
+            YCBFBM.IsNull = true;
+            YCBFBM.IsAdd = true;
+            upCBFFields.Add(YCBFBM);
 
             upCBF.FieldList = upCBFFields;
             return upCBF;
