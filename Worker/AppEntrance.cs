@@ -41,21 +41,23 @@ namespace YuLinTu.Product.YuLinTuTool
             try
             {
                 ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
-                AppShellWpf shell = new AppShellWpf();
-                shell.Run(args);
-                shell.Shutdown += (s, e) =>
-                {
-                    ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
-                };
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-                Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
             }
             catch
             {
                 MessageBox.Show("检查时间出现异常，请修正计算机时间或重新安装程序!", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            AppShellWpf shell = new AppShellWpf();
+            shell.Run(args);
+            shell.Shutdown += (s, e) =>
+            {
+                ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
+            };
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
+            Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
+
         }
     }
 }

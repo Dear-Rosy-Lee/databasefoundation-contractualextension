@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Office;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 

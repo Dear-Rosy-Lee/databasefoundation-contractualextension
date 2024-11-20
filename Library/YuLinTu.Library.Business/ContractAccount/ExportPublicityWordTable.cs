@@ -5,11 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
 using YuLinTu;
-using YuLinTu.Data;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -460,7 +457,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 设置地块
         /// </summary>
-        private int WritLandInfo(List<ContractLand> landCollection)
+        public virtual int WritLandInfo(List<ContractLand> landCollection)
         {
             List<Dictionary> listDLDJ = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DLDJ);
             List<Dictionary> listTDYT = DictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDYT);
@@ -562,7 +559,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="neighbor"></param>
         /// <returns></returns>
-        private string InitalizeLandNeightors(ContractLand land)
+        protected string InitalizeLandNeightors(ContractLand land)
         {
             string neighbor = string.Format("东：{0}\n南：{1}\n西：{2} \n北：{3}", land.NeighborEast, land.NeighborSouth, land.NeighborWest, land.NeighborNorth);
             if (!SystemSet.NergionbourSortSet)
@@ -577,7 +574,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="tableIndex"></param>
         /// <param name="row"></param>
-        private void InsertTableTitle(int tableIndex, int row, int column)
+        protected void InsertTableTitle(int tableIndex, int row, int column)
         {
             SetTableCellValue(tableIndex, row, column, "地块名称");
             SetTableCellValue(tableIndex, row, column + 1, "地块编码");
