@@ -794,7 +794,8 @@ namespace YuLinTu.Library.Controls
         /// <param name="TableType">表格类型(适用于台账报表中4个公用底层的表格)</param>
         /// <param name="listPerson">承包方集合</param>
         public void ExportDataCommonOperate(string zoneName, string header, eContractAccountType type, string taskDes, string taskName,
-           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false, List<ContractLand> vcontractLands = null)
+           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false, List<ContractLand> vcontractLands = null,
+           Action<string> ExportMethods = null)
         {
             ExportDataPage extPage = new ExportDataPage(zoneName, TheWorkPage, header);
             extPage.Workpage = TheWorkPage;
@@ -883,6 +884,7 @@ namespace YuLinTu.Library.Controls
                     //    break;
                     case eContractAccountType.ExportSingleFamilyConfirmExcel:
                         TaskExportContractAccountExcel(type, null, null, taskDes, taskName, saveFilePath, listPerson, TableType);
+
                         break;
 
                     case eContractAccountType.ExportSendTableExcel:   //发包方调查表Excel
@@ -890,11 +892,18 @@ namespace YuLinTu.Library.Controls
                         break;
 
                     case eContractAccountType.VolumnExportContractAccountExcel:
-                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, taskDes, taskName, saveFilePath, TableType);
+                        if (ExportMethods != null)
+                        {
+                            ExportMethods(saveFilePath);
+                        }
+                        else
+                        {
+                            TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, taskDes, taskName, null, null, saveFilePath, TableType);
+                        }
                         break;
 
                     case eContractAccountType.VolumnExportSingleFamilyConfirmExcel:
-                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportSingleFamilyConfirmExcel, taskDes, taskName, saveFilePath, TableType);
+                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportSingleFamilyConfirmExcel, taskDes, taskName, null, null, saveFilePath, TableType);
                         break;
 
                     case eContractAccountType.ExportVillageDeclare:   //导出村组公示表
@@ -1062,8 +1071,8 @@ namespace YuLinTu.Library.Controls
         /// <param name="filePath"></param>
         /// <param name="listPerson"></param>
         /// <param name="TableType"></param>
-        private void TaskGroupExportContractAccountExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "",
-           int TableType = 1)
+        private void TaskGroupExportContractAccountExcel(eContractAccountType type, string taskDes, string taskName,
+           DateTime? time, DateTime? pubTime, string filePath = "", int TableType = 1)
         {
             DateTime? date = SetPublicyTableDate();
             if (date == null)
@@ -1087,6 +1096,8 @@ namespace YuLinTu.Library.Controls
             meta.TableType = TableType;
             meta.SelfAndSubsZones = SelfAndSubsZones;
             meta.AllZones = allZones;
+            meta.DelcTime = time;
+            meta.PubTime = pubTime;
             //if (TableType == 4)
             //{
             //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
@@ -1098,7 +1109,7 @@ namespace YuLinTu.Library.Controls
             //}
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
-            TaskGroupAccountFiveTableOperation import = new TaskGroupAccountFiveTableOperation();
+            var import = new TaskGroupAccountFiveTableOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -2406,7 +2417,7 @@ namespace YuLinTu.Library.Controls
             });
             ShowBox(ContractAccountInfo.ContractLandDel, ContractAccountInfo.CurrentLandDelSure, eMessageGrade.Infomation, action);
         }
-        
+
         /// <summary>
         /// 修改地块所有人名称
         /// </summary>
@@ -4449,7 +4460,14 @@ namespace YuLinTu.Library.Controls
                 }
                 else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
                 {
-                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
+                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable,
+                        ContractAccountInfo.ExportTable, TableType, null, null, null, (saveFilePath) =>
+                        {
+                            TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportTable, ContractAccountInfo.ExportVillageGroupTable,
+                                delcTime, pubTime, saveFilePath, TableType);
+                            //TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, delcTime, pubTime, ContractAccountInfo.ExportTable,
+                            //    ContractAccountInfo.ExportVillageGroupTable, saveFilePath, null, TableType);
+                        });
                 }
             });
         }
@@ -6541,7 +6559,7 @@ namespace YuLinTu.Library.Controls
                 {
                     x.LandNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
                     index++;
-                    
+
                 });
                 landStation.UpdateLandCode(vplands);
             }

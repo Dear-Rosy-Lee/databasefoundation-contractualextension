@@ -69,6 +69,8 @@ namespace YuLinTu.Library.Business
                 meta.SelfAndSubsZones = groupMeta.SelfAndSubsZones;
                 meta.IsBatch = groupMeta.IsBatch;
                 meta.DictList = groupMeta.DictList;
+                meta.DelcTime = groupMeta.DelcTime;
+                meta.PubTime = groupMeta.PubTime;
                 var import = new TaskAccountFiveTableOperation();
                 import.Argument = meta;
                 import.Description = "导出" + zone.FullName;

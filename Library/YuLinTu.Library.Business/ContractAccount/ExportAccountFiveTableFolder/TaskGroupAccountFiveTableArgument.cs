@@ -420,7 +420,15 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<Zone> AllZones { get; set; }
 
+        /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? DelcTime { get; set; }
 
+        /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? PubTime { get; set; }
         #endregion
 
         #region Ctor

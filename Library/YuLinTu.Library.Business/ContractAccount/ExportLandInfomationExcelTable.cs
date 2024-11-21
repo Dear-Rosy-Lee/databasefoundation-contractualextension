@@ -23,12 +23,12 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private ToolProgress toolProgress;//进度条
-        private int index;//下标
-        private int cindex;
-        private string templatePath;
-        private string contracteeName;
-        private bool showContractee;
+        protected ToolProgress toolProgress;//进度条
+        protected int index;//下标
+        protected int cindex;
+        protected string templatePath;
+        protected string contracteeName;
+        protected bool showContractee;
         private int familyCount;//户数
         private int tableCount;//总地块数
         private int landCount;//总地块数
