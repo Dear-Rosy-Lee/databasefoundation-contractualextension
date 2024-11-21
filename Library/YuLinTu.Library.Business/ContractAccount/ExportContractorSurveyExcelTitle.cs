@@ -49,14 +49,15 @@ namespace YuLinTu.Library.Business
 
             string delctime = time?.ToString("yyyy年M月dd日");
             string pubtime = pubTime?.ToString("yyyy年M月d日");
-
+            string timestr = (delctime == null || pubtime == null) ? "" : $"{pubtime}-{delctime}";
             InitalizeRangeValue("A3", "A5", "承包方编号");
             SetRange("A3", "A5", "承包方编号");
             InitalizeRangeValue("B3", "B5", "承包方名称");
             SetRange("B3", "B5", "承包方名称");
             if (TableType == 4)
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, $"日期：{pubtime}-{delctime}");
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2",
+                    21.75, 11, false, 3, 2, $"日期：{timestr}");
             }
             else
             {
