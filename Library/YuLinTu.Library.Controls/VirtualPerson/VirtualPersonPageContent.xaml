@@ -38,6 +38,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -88,13 +89,14 @@
                     <wpftoolkit:DateTimeUpDown Name="txt_Birthday" Height="30" IsEnabled="False" Format="ShortDate" Grid.Row="5" Grid.Column="3" VerticalAlignment="Center"
                                                AllowSpin="True"                                              
                                                ValueChanged="txt_Birthday_ValueChanged" />
+                    <Label Grid.Row="6" Content="变化情况:" Grid.Column="0" Style="{StaticResource LableStyle}" />
+                    <cmps:MetroComboBox Name="cbBHQK" Grid.Row="6" Grid.Column="1" Height="30" Padding="7,0,0,0" VerticalAlignment="Center" SelectionChanged="cbBHQK_SelectionChanged" />
+                    <Label Content="联系电话:" Grid.Row="7" Style="{StaticResource LableStyle}" Visibility="{Binding ElementName=txt_Phone,Path=Visibility}"/>
+                    <cmps:MetroTextBox Height="30" Name="txt_Phone" Text="{Binding Contractor.Telephone,Mode=TwoWay}" MaxLength="40"   Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" TabIndex="8"/>
 
-                    <Label Content="联系电话:" Grid.Row="6" Style="{StaticResource LableStyle}" Visibility="{Binding ElementName=txt_Phone,Path=Visibility}"/>
-                    <cmps:MetroTextBox Height="30" Name="txt_Phone" Text="{Binding Contractor.Telephone,Mode=TwoWay}" MaxLength="40"   Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" TabIndex="8"/>
-
-                    <Label Content="备注:"  Grid.Row="7"  Style="{StaticResource LableStyle}" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                    <Label Content="备注:"  Grid.Row="8"  Style="{StaticResource LableStyle}" VerticalAlignment="Top" Margin="0,10,0,0"/>
                     <cmps:MetroTextBox Name="txt_Comment"  AcceptsReturn="True" Text="{Binding Contractor.Comment,Mode=TwoWay}" MaxLength="200" TextWrapping="Wrap" VerticalContentAlignment="Top"                            
-                                       VerticalAlignment="Stretch" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0" TabIndex="9"/>
+                                       VerticalAlignment="Stretch" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,5,0,0" TabIndex="9"/>
                 </Grid>
             </cmps:MetroListTabItem>
             <cmps:MetroListTabItem Header="调查信息" x:FieldModifier="public" x:Name="tbitemExpand">

@@ -51,6 +51,11 @@ namespace YuLinTu.Library.Controls
         private List<EnumStore<eNation>> nationList;
 
         /// <summary>
+        /// 变化情况
+        /// </summary>
+        private List<EnumStore<eBHQK>> bhqkList;
+
+        /// <summary>
         /// 承包方类型
         /// </summary>
         private KeyValueList<string, string> contractorTypeList;  //eContractorType
@@ -79,6 +84,9 @@ namespace YuLinTu.Library.Controls
         /// 当前承包方式
         /// </summary>
         private eConstructMode eMode;
+
+        private eBHQK eBHQK;
+
         private string cMode;
 
         /// <summary>
@@ -343,6 +351,7 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
                 List<Person> plist = vp.SharePersonList;
+                cbBHQK.SelectedItem = bhqkList.Find(t => t.Value == vp.ChangeSituation);
                 Person p = (plist == null) ? null : (plist.Find(t => t.Name == vp.Name));
                 if (p != null)
                 {
@@ -409,6 +418,10 @@ namespace YuLinTu.Library.Controls
             cbContractWay.DisplayMemberPath = "Value";
             cbContractWay.ItemsSource = constructModeList;
             cbContractWay.SelectedIndex = 0;
+            
+            cbBHQK.DisplayMemberPath = "DisplayName";
+            bhqkList = EnumStore<eBHQK>.GetListByType();
+            cbBHQK.ItemsSource = bhqkList;
         }
 
         /// <summary>
@@ -467,6 +480,7 @@ namespace YuLinTu.Library.Controls
             }
             FamilyExpand.ConstructMode = eMode;
             contractor.CardType = eCard;
+            contractor.ChangeSituation = eBHQK;
             contractor.SharePersonList = personList;
             FamilyExpand.ContractorType = eType;
             FamilyExpand.BusinessStatus = eBusinessStatus.End;
@@ -791,6 +805,21 @@ namespace YuLinTu.Library.Controls
             int age = now.Year - ds.Value.Year;
             if (now.Month < ds.Value.Month || (now.Month == ds.Value.Month && now.Day < ds.Value.Day)) age--;
             txt_Age.Text = age.ToString();           
+        }
+
+        private void cbBHQK_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectItem = cbBHQK.SelectedItem;
+            if (selectItem == null)
+            {
+                return;
+            }
+            EnumStore<eBHQK> eValue = selectItem as EnumStore<eBHQK>;
+            if (eValue == null)
+            {
+                return;
+            }
+            eBHQK = eValue.Value;
         }
     }
 }

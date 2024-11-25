@@ -413,12 +413,12 @@ namespace YuLinTu.Library.Entity
         ///变化情况
         /// </summary>
         [DataColumn("BHQK")]
-        public string ChangeSituation
+        public eBHQK ChangeSituation
         {
             get { return changeSituation; }
             set { changeSituation = value; NotifyPropertyChanged("ChangeSituation"); }
         }
-        private string changeSituation;
+        private eBHQK changeSituation;
 
         #endregion
         private VirtualPersonExpand expand;
