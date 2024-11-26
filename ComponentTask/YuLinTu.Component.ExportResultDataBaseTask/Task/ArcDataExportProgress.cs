@@ -28,38 +28,38 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
     {
         #region Fields
 
-        private int currentIndex = 1;//当前索引号
-        private string zoneName;//地域名称
-        private List<string> relationList;//家庭关系列表
-        private YuLinTu.Library.Entity.Zone county;//区县地域
-        private bool showInformation;//是否显示信息
-        private List<Guid> filterLandIDs;//检查后筛选出来最终与界址点线挂钩的地块集合ID
-        private string serNumberTemp;
+        protected int currentIndex = 1;//当前索引号
+        protected string zoneName;//地域名称
+        protected List<string> relationList;//家庭关系列表
+        protected YuLinTu.Library.Entity.Zone county;//区县地域
+        protected bool showInformation;//是否显示信息
+        protected List<Guid> filterLandIDs;//检查后筛选出来最终与界址点线挂钩的地块集合ID
+        protected string serNumberTemp;
         //private int currentZoneJZDs;//当前地域下界址点线数量
         // private int currentZoneJZXs;
         //private int dkbsm = QuantityValue.Land;
         //private int jzdbsm = QuantityValue.Point;
         //private int jzxbsm = QuantityValue.Line;
-        private int currentZoneLandCount = 0;//当前地域下地块个数
+        protected int currentZoneLandCount = 0;//当前地域下地块个数
 
-        private IZoneWorkStation zoneStation;
-        private IContractLandWorkStation contractLandWorkStation;//承包台账地块业务逻辑层
-        private IVirtualPersonWorkStation<LandVirtualPerson> VirtualPersonStation;//承包台账(承包方)Station
-        private IConcordWorkStation concordStation;
-        private IContractRegeditBookWorkStation contractRegeditBookStation;
-        private IBuildLandBoundaryAddressCoilWorkStation jzxStation;
-        private IBuildLandBoundaryAddressDotWorkStation jzdStation;
-        private ISenderWorkStation senderStation;
-        private IDZDWWorkStation dzdwStation;
-        private IDCZDWorkStation dczdStation;
-        private IXZDWWorkStation xzdwStation;
-        private IMZDWWorkStation mzdwStation;
-        private IControlPointWorkStation kzdStation;
-        private IFarmLandConserveWorkStation jbntbhqStation;
-        private IZoneBoundaryWorkStation qyjxStation;
+        protected IZoneWorkStation zoneStation;
+        protected IContractLandWorkStation contractLandWorkStation;//承包台账地块业务逻辑层
+        protected IVirtualPersonWorkStation<LandVirtualPerson> VirtualPersonStation;//承包台账(承包方)Station
+        protected IConcordWorkStation concordStation;
+        protected IContractRegeditBookWorkStation contractRegeditBookStation;
+        protected IBuildLandBoundaryAddressCoilWorkStation jzxStation;
+        protected IBuildLandBoundaryAddressDotWorkStation jzdStation;
+        protected ISenderWorkStation senderStation;
+        protected IDZDWWorkStation dzdwStation;
+        protected IDCZDWorkStation dczdStation;
+        protected IXZDWWorkStation xzdwStation;
+        protected IMZDWWorkStation mzdwStation;
+        protected IControlPointWorkStation kzdStation;
+        protected IFarmLandConserveWorkStation jbntbhqStation;
+        protected IZoneBoundaryWorkStation qyjxStation;
 
-        private IStockConcordWorkStation stockconcordStation;
-        private IStockWarrantWorkStation stockwarrantStation;
+        protected IStockConcordWorkStation stockconcordStation;
+        protected IStockWarrantWorkStation stockwarrantStation;
 
         #endregion Fields
 
@@ -189,8 +189,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public bool UseUniteNumberExport { get; set; }
 
-        private bool qghttable;
-        private bool qgqztable;
+        protected bool qghttable;
+        protected bool qgqztable;
 
         #endregion Propertys
 
@@ -232,7 +232,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出数据成果
         /// </summary>
         [Obsolete]
-        public void Export()
+        public virtual void Export()
         {
             this.ReportProgress(0, "开始");
             var metadata = Argument as TaskBuildExportResultDataBaseArgument;
@@ -285,7 +285,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="prjString">坐标文件</param>
         /// <param name="excludeDkbm">编码集合</param>
         [Obsolete]
-        private void testExportJzd(IDbContext dataSouce, string shapeFileOutputPath,
+        public virtual void testExportJzd(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand, int numPoint, int numLine)
         {
@@ -373,7 +373,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出地块
         /// </summary>
         [Obsolete]
-        private void ExportLand(IDbContext dataSouce, string shapeFileOutputPath,
+        public virtual void ExportLand(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand)
         {
@@ -441,7 +441,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
         }
 
-        private void DeleteFile(bool del, string path)
+        public virtual void DeleteFile(bool del, string path)
         {
             if (!del)
                 return;
@@ -471,7 +471,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化数据
         /// </summary>
-        private bool InitalizeData(TaskBuildExportResultDataBaseArgument metadata)
+        public virtual bool InitalizeData(TaskBuildExportResultDataBaseArgument metadata)
         {
             if (metadata == null)
             {
@@ -500,7 +500,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 数据处理
         /// </summary>
         [Obsolete]
-        private void ArcDataProgress()
+        public virtual void ArcDataProgress()
         {
             var zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             if (zones == null)
@@ -584,7 +584,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出村/组的数据
         /// </summary>
-        private void ExportCZLevel(List<Library.Entity.Zone> zones, List<DataSummary> summerys, int zonCount,
+        public virtual void ExportCZLevel(List<Library.Entity.Zone> zones, List<DataSummary> summerys, int zonCount,
             DataExportProgress dataProgress, HashSet<string> extendSet, SpatialReference dbReference)
         {
             int processIndex = 1;
@@ -634,7 +634,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出县/镇的数据
         /// </summary>
-        private void ExportXZLevel(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys,
+        public virtual void ExportXZLevel(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys,
             DataExportProgress dataProgress, HashSet<string> extendSet, SpatialReference dbReference)
         {
             int processIndex = 1;
@@ -674,7 +674,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 创建上级统计
         /// </summary>
-        public void CreateUpSummary(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys, bool insert = false)
+        public virtual void CreateUpSummary(Library.Entity.Zone cZone, List<Library.Entity.Zone> zones, List<DataSummary> summerys, bool insert = false)
         {
             CreateSummary(cZone, summerys, insert);
             if (cZone.Level < Library.Entity.eZoneLevel.County)
@@ -691,7 +691,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 创建统计
         /// </summary>
-        private void CreateSummary(Library.Entity.Zone zone, List<DataSummary> summerys, bool insert = false)
+        public virtual void CreateSummary(Library.Entity.Zone zone, List<DataSummary> summerys, bool insert = false)
         {
             var summery = new DataSummary();
             summery.UnitName = zone.FullName;
@@ -713,7 +713,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         /// <param name="datas"></param>
         /// <param name="zone"></param>
-        private void ExportDataByVallige(DataBaseCollection datas, Library.Entity.Zone zone, DataExportProgress dataProgress,
+        public virtual void ExportDataByVallige(DataBaseCollection datas, Library.Entity.Zone zone, DataExportProgress dataProgress,
         List<DataSummary> summerys, List<Library.Entity.Zone> zones, HashSet<string> extendSet)
         {
             bool hasDx = false;
@@ -774,7 +774,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获取数据
         /// </summary> 
-        private DataBaseCollection GetDatasByZone(Library.Entity.Zone zone, DataBaseCollection dbs)
+        public virtual DataBaseCollection GetDatasByZone(Library.Entity.Zone zone, DataBaseCollection dbs)
         {
             var zoneCode = zone.FullCode;
             DataBaseCollection dataBaseCollection = new DataBaseCollection();
@@ -810,7 +810,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出地块、界址点、界址线
         /// </summary>
         [Obsolete]
-        private void ExportLandResultFile(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
+        public virtual void ExportLandResultFile(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var pointquery = DbContext.CreateQuery<BuildLandBoundaryAddressDot>();
             var linequery = DbContext.CreateQuery<BuildLandBoundaryAddressCoil>();
@@ -848,7 +848,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出地块
         /// </summary>
         [Obsolete]
-        private void ExportLandOnly(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
+        public virtual void ExportLandOnly(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var landquery = DbContext.CreateQuery<ContractLand>();
 
@@ -862,7 +862,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出大数据
         /// </summary>
-        private void ExportBigData(int landCount, int jzdcount, int jzxcount, string outpath, string prj)
+        public virtual void ExportBigData(int landCount, int jzdcount, int jzxcount, string outpath, string prj)
         {
             var dbFile = DbContext.DataSource.ConnectionString;
             dbFile = dbFile.Substring(dbFile.IndexOf('=') + 1);
@@ -920,7 +920,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出shape及Excel文件
         /// </summary>
-        private void ExportShapeExcel(List<DataSummary> summerys, ArcSpaceDataProgress spaceProgress,
+        public virtual void ExportShapeExcel(List<DataSummary> summerys, ArcSpaceDataProgress spaceProgress,
            /*SqliteManager manager,*/ List<YuLinTu.Library.Entity.Zone> zones)
         {
             if (!ContainMatrical)
@@ -957,7 +957,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 显示检查信息
         /// </summary>
-        private void ShowChecker(DataExportProgress progress)
+        public virtual void ShowChecker(DataExportProgress progress)
         {
             if (Directory.Exists(progress.ShapeFilePath))
             {
@@ -982,7 +982,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据检查，包括获取当前地域下总的地块开始
         /// </summary>
-        private List<ExchangeRightEntity> DataCheckProgress(YuLinTu.Library.Entity.Zone zone, ref bool hasDx, HashSet<string> extendset,
+        public virtual List<ExchangeRightEntity> DataCheckProgress(YuLinTu.Library.Entity.Zone zone, ref bool hasDx, HashSet<string> extendset,
          List<SqliteDK> sqliteLand, List<BelongRelation> realationList, List<StockConcord> qghts, List<StockWarrant> qgqzs, DataBaseCollection datas = null)
         {
             currentIndex = 1;
@@ -1078,7 +1078,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据检查
         /// </summary>
-        private bool Checkdata(List<VirtualPerson> familyCollection, List<ContractLand> landCollection,
+        public virtual bool Checkdata(List<VirtualPerson> familyCollection, List<ContractLand> landCollection,
           List<ContractLand> landSpaceCollection, List<ContractConcord> concordCollection, List<ContractRegeditBook> bookCollection,
           List<BelongRelation> realationList, List<StockConcord> qghts, List<StockWarrant> qgqzs, CollectivityTissue tissue, Library.Entity.Zone zone)
         {
@@ -1233,7 +1233,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 获取排除掉的地块编码
         /// </summary>
         /// <returns></returns>
-        private HashSet<string> ExtentLandCode(List<ContractLand> allLandCollection,
+        public virtual HashSet<string> ExtentLandCode(List<ContractLand> allLandCollection,
             List<ExchangeRightEntity> ereList)
         {
             if (ereList == null)
@@ -1262,7 +1262,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 构建交换实体
         /// </summary>
-        public List<ExchangeRightEntity> CreateExchangeEntity(List<VirtualPerson> familyCollection, List<ContractConcord> concordCollection,
+        public virtual List<ExchangeRightEntity> CreateExchangeEntity(List<VirtualPerson> familyCollection, List<ContractConcord> concordCollection,
             List<ContractLand> landCollection, CollectivityTissue tissue, YuLinTu.Library.Entity.Zone zone, List<ContractRegeditBook> bookCollection,
             ref bool hasDx, List<BelongRelation> qglands, List<StockConcord> qghts)
         {
@@ -1432,7 +1432,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 处理合同数据
         /// </summary> 
-        private void ProcessConcordData(ExchangeRightEntity entity, ContractConcord concorditem, List<ContractLand> vplands, List<CBDKXX> cbds,
+        public virtual void ProcessConcordData(ExchangeRightEntity entity, ContractConcord concorditem, List<ContractLand> vplands, List<CBDKXX> cbds,
             List<DKEX> spacecdbs, HashSet<string> spacecdbDKBMs, List<BelongRelation> brqglands, VirtualPerson vp, List<ContractLand> landCollection,
             List<CBHT> vphts, List<CBJYQZDJB> vpcbjyqzdjbs, List<ContractRegeditBook> bookCollection, List<CBJYQZ> vpcbjyqzs, int[] landArray, string serNumberTemp)
         {
@@ -1527,7 +1527,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 构建地块示意图
         /// </summary>
-        private string BuildLandMapString(string fbfbm, string qzbm, List<CBDKXX> cbds, int[] array)
+        public virtual string BuildLandMapString(string fbfbm, string qzbm, List<CBDKXX> cbds, int[] array)
         {
             var syt = "";
             var dksty = "图件\\{0}\\DKSYT{1}{2}.jpg";
@@ -1559,7 +1559,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 设置地块示意图数量
         /// </summary>
         /// <returns></returns>
-        private int[] GetLandMapNumberSet()
+        public virtual int[] GetLandMapNumberSet()
         {
             var settings = System.Configuration.ConfigurationManager.AppSettings;
             var numSet = new int[10] { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 };
@@ -1592,7 +1592,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 发包方处理-检查处理
         /// </summary>
-        private bool SenderProgress(CollectivityTissue tissue)
+        public virtual bool SenderProgress(CollectivityTissue tissue)
         {
             bool canExport = true;
             if (tissue == null)
@@ -1747,7 +1747,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 承包方处理
         /// </summary>
-        private bool ContractorProgress(VirtualPerson vp)
+        public virtual bool ContractorProgress(VirtualPerson vp)
         {
             bool canExport = true;
             VirtualPersonExpand expand = vp.FamilyExpand;
@@ -2091,7 +2091,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化家庭关系
         /// </summary>
-        private List<string> InitalizeAllRelation()
+        public virtual List<string> InitalizeAllRelation()
         {
             var list = FamilyRelationShip.AllRelation();
             return list;
@@ -2100,7 +2100,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 共有人排序
         /// </summary>
-        private PersonCollection SortSharePerson(VirtualPerson vp)
+        public virtual PersonCollection SortSharePerson(VirtualPerson vp)
         {
             List<Person> fsp = vp.SharePersonList;
             if (fsp == null || fsp.Count == 0)
@@ -2129,7 +2129,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 承包地块处理
         /// </summary>
-        private bool ContractLandProgress(ContractLand land)
+        public virtual bool ContractLandProgress(ContractLand land)
         {
             var canExport = true;
             string description = string.Format("{0}下承包方:{1}下地块编码为:{2}的地块", zoneName, land.OwnerName, land.LandNumber);
@@ -2301,7 +2301,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 承包方证件号码检查
         /// </summary>
-        private void ContractorNubmerProgress()
+        public virtual void ContractorNubmerProgress()
         {
             List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(currentZone.FullCode, eLevelOption.SelfAndSubs);
             var rePNums = from f in familyCollection
@@ -2339,7 +2339,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获取地域名称
         /// </summary>
-        private string GetZoneName(List<YuLinTu.Library.Entity.Zone> zones, YuLinTu.Library.Entity.Zone cZone)
+        public virtual string GetZoneName(List<YuLinTu.Library.Entity.Zone> zones, YuLinTu.Library.Entity.Zone cZone)
         {
             if (cZone.Level >= YuLinTu.Library.Entity.eZoneLevel.Town)
                 return cZone.Name;
@@ -2524,7 +2524,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化地域代码
         /// </summary>
-        private string InitalizeZoneCode(YuLinTu.Library.Entity.Zone zone)
+        public string InitalizeZoneCode(YuLinTu.Library.Entity.Zone zone)
         {
             string zoneCode = zone.FullCode;
             return zoneCode.PadRight(14, '0');
@@ -2533,7 +2533,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获得承包方编码
         /// </summary>
-        private string InitalizeContractorCode(VirtualPerson contractor, YuLinTu.Library.Entity.Zone zone)
+        public string InitalizeContractorCode(VirtualPerson contractor, YuLinTu.Library.Entity.Zone zone)
         {
             if (contractor == null || zone == null)
             {
@@ -2548,7 +2548,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获得发包方编码
         /// </summary>
-        private string InitalizeSenderCode(CollectivityTissue tissue, YuLinTu.Library.Entity.Zone zone)
+        public string InitalizeSenderCode(CollectivityTissue tissue, YuLinTu.Library.Entity.Zone zone)
         {
             string code = "";
             if (tissue == null)
@@ -2573,7 +2573,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化发包方数据
         /// </summary>
-        private FBF InitalizeSenderData(CollectivityTissue tissue)
+        public FBF InitalizeSenderData(CollectivityTissue tissue)
         {
             if (tissue == null)
             {
@@ -2666,7 +2666,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="vp"></param>
         /// <param name="familyNumber"></param>
         /// <param name="exportAll">导出非农户的家庭成员</param>
-        private List<CBF_JTCY> InitalizeSharePersonData(VirtualPerson vp, string familyNumber, bool exportAll = true)
+        public List<CBF_JTCY> InitalizeSharePersonData(VirtualPerson vp, string familyNumber, bool exportAll = true)
         {
             var persons = new List<CBF_JTCY>();
             if (vp == null)
@@ -2719,7 +2719,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获得 成员备注
         /// </summary>
-        private string InitalizeSharePersonComment(string comment)
+        public string InitalizeSharePersonComment(string comment)
         {
             string value = "9";
             if (comment.Contains("外嫁女") || comment.Contains("外嫁"))
@@ -2758,7 +2758,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获得承包地块实体-确权
         /// </summary>
-        private CBDKXX InitalizeAgricultureLandData(ContractLand land, string senderCode, string familyNumber)
+        public CBDKXX InitalizeAgricultureLandData(ContractLand land, string senderCode, string familyNumber)
         {
             if (land == null)
             {
@@ -2789,7 +2789,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 获得承包地块实体-确股
         /// </summary>
-        private CBDKXX InitalizeQgAgricultureLandData(ContractLand land, BelongRelation qgLand, string senderCode, string familyNumber)
+        public CBDKXX InitalizeQgAgricultureLandData(ContractLand land, BelongRelation qgLand, string senderCode, string familyNumber)
         {
             if (land == null)
             {
@@ -2812,7 +2812,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化空间地块-DKEX
         /// </summary>
-        private DKEX InitalizeSpaceLandData(ContractLand land)//, List<YuLinTu.Library.Entity.BuildLandBoundaryAddressDot> pointList, List<YuLinTu.Library.Entity.BuildLandBoundaryAddressCoil> lineList)
+        public DKEX InitalizeSpaceLandData(ContractLand land)//, List<YuLinTu.Library.Entity.BuildLandBoundaryAddressDot> pointList, List<YuLinTu.Library.Entity.BuildLandBoundaryAddressCoil> lineList)
         {
             if (land == null)
             {
@@ -2870,7 +2870,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 承包合同实体
         /// </summary>
-        private CBHT InitalizeConcordData(ContractConcord concord, int concordlandsCount)
+        public CBHT InitalizeConcordData(ContractConcord concord, int concordlandsCount)
         {
             if (concord == null)
             {
@@ -2913,7 +2913,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化登记簿实体
         /// </summary>
-        private CBJYQZDJB InitalizeRegeditBook(ContractConcord concord, ContractRegeditBook book)
+        public CBJYQZDJB InitalizeRegeditBook(ContractConcord concord, ContractRegeditBook book)
         {
             if (concord == null || book == null)
             {
@@ -2946,7 +2946,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化权证实体
         /// </summary>
-        private CBJYQZ InitalizeWarrantBook(ContractRegeditBook regeditBook, VirtualPerson vp)
+        public CBJYQZ InitalizeWarrantBook(ContractRegeditBook regeditBook, VirtualPerson vp)
         {
             if (regeditBook == null)
             {
@@ -2971,7 +2971,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化权属来源资料附件
         /// </summary>
-        private void InitalizeAccessory(ContractRegeditBook regeditBook, ComplexRightEntity entity)
+        public void InitalizeAccessory(ContractRegeditBook regeditBook, ComplexRightEntity entity)
         {
             if (!ContainMatrical || regeditBook == null || string.IsNullOrEmpty(regeditBook.RegeditNumber))
             {
@@ -2993,7 +2993,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化县级行政区
         /// </summary>
-        private List<XJXZQ> InitalizeCountyData(List<Quality.Business.Entity.Zone> zones)
+        public List<XJXZQ> InitalizeCountyData(List<Quality.Business.Entity.Zone> zones)
         {
             List<XJXZQ> countys = new List<XJXZQ>();
             foreach (var zone in zones)
@@ -3015,7 +3015,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化乡镇级行政区
         /// </summary>
-        private List<XJQY> InitalizeTownData(List<Quality.Business.Entity.Zone> zones)
+        public List<XJQY> InitalizeTownData(List<Quality.Business.Entity.Zone> zones)
         {
             List<XJQY> towns = new List<XJQY>();
             foreach (var zone in zones)
@@ -3037,7 +3037,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化村级行政区
         /// </summary>
-        private List<CJQY> InitalizeVillageData(List<Quality.Business.Entity.Zone> zones)
+        public List<CJQY> InitalizeVillageData(List<Quality.Business.Entity.Zone> zones)
         {
             List<CJQY> villages = new List<CJQY>();
             foreach (var zone in zones)
@@ -3059,7 +3059,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化组级行政区
         /// </summary>
-        private List<ZJQY> InitalizeGroupData(List<Quality.Business.Entity.Zone> zones)
+        public List<ZJQY> InitalizeGroupData(List<Quality.Business.Entity.Zone> zones)
         {
             List<ZJQY> groups = new List<ZJQY>();
             foreach (var zone in zones)
@@ -3081,7 +3081,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化点状地物
         /// </summary>
-        private List<Quality.Business.Entity.DZDW> InitalizePointData()
+        public List<Quality.Business.Entity.DZDW> InitalizePointData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.DZDW> points = new List<YuLinTu.Library.Entity.DZDW>();
@@ -3109,7 +3109,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 初始化线状地物
         /// </summary>
         /// <returns></returns>
-        private List<Quality.Business.Entity.XZDW> InitalizePolylineData()
+        public List<Quality.Business.Entity.XZDW> InitalizePolylineData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.XZDW> roads = new List<YuLinTu.Library.Entity.XZDW>();
@@ -3140,7 +3140,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化面状地物
         /// </summary>
-        private List<Quality.Business.Entity.MZDW> InitalizePolygonData()
+        public List<Quality.Business.Entity.MZDW> InitalizePolygonData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.MZDW> spots = new List<YuLinTu.Library.Entity.MZDW>();
@@ -3169,7 +3169,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化控制点数据
         /// </summary>
-        private List<KZD> InitalizeControlPoint()
+        public List<KZD> InitalizeControlPoint()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.ControlPoint> points = new List<YuLinTu.Library.Entity.ControlPoint>();
@@ -3204,7 +3204,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化区域界线数据
         /// </summary>
-        private List<QYJX> InitalizeRegionData()
+        public List<QYJX> InitalizeRegionData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.ZoneBoundary> points = new List<YuLinTu.Library.Entity.ZoneBoundary>();
@@ -3230,7 +3230,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化基本农田保护区数据
         /// </summary>
-        private List<JBNTBHQ> InitalizeFarmerRegionData()
+        public List<JBNTBHQ> InitalizeFarmerRegionData()
         {
             List<YuLinTu.Library.Entity.Zone> zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
             List<YuLinTu.Library.Entity.FarmLandConserve> points = new List<YuLinTu.Library.Entity.FarmLandConserve>();
@@ -3256,7 +3256,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 点
         /// </summary>
-        private class Point
+        public class Point
         {
             public double X { get; set; }
             public double Y { get; set; }
@@ -3296,7 +3296,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 线
         /// </summary>
-        private class Line
+        public class Line
         {
             public Point Start { get; set; }
             public Point End { get; set; }
@@ -3336,7 +3336,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化农业部目录
         /// </summary>
-        private bool InitalizeAgricultureDirectory(DataExportProgress exportProgress, ArcSpaceDataProgress spaceProgress, ExportFileEntity efe = null)
+        public virtual bool InitalizeAgricultureDirectory(DataExportProgress exportProgress, ArcSpaceDataProgress spaceProgress, ExportFileEntity efe = null)
         {
             exportProgress.IsExportScan = false;//2016-09-23 扫描资料不导出 ContainMatrical;
             county = zoneStation.Get(currentZone.FullCode.Substring(0, 6));
@@ -3371,7 +3371,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化空间坐标系
         /// </summary>
-        private void InitalizeSpatialCoordianteSystem(ArcSpaceDataProgress spaceProgress)
+        public void InitalizeSpatialCoordianteSystem(ArcSpaceDataProgress spaceProgress)
         {
             if (spaceProgress == null)
             {
@@ -3388,7 +3388,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出元数据文件
         /// </summary>
-        private void ExportMataFile(ArcSpaceDataProgress spaceProgress)
+        public void ExportMataFile(ArcSpaceDataProgress spaceProgress)
         {
             VictorData data = new VictorData();
             data.InitiallClass();
@@ -3409,7 +3409,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 地域数据处理
         /// </summary>
-        private void ZoneSpaceDataExport(ArcSpaceDataProgress spaceProgress, List<YuLinTu.Library.Entity.Zone> zoneList)
+        public void ZoneSpaceDataExport(ArcSpaceDataProgress spaceProgress, List<YuLinTu.Library.Entity.Zone> zoneList)
         {
             var zones = ZoneMapping(zoneList);
             TableDataExportProgress(zones);
@@ -3431,7 +3431,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出权属单位代码表
         /// </summary>
-        private bool TableDataExportProgress(List<Quality.Business.Entity.Zone> zones)
+        public bool TableDataExportProgress(List<Quality.Business.Entity.Zone> zones)
         {
             try
             {
@@ -3492,7 +3492,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 地域数据映射
         /// </summary>
-        private List<Quality.Business.Entity.Zone> ZoneMapping(List<YuLinTu.Library.Entity.Zone> zones)
+        public List<Quality.Business.Entity.Zone> ZoneMapping(List<YuLinTu.Library.Entity.Zone> zones)
         {
             List<Quality.Business.Entity.Zone> zoneCollection = new List<Quality.Business.Entity.Zone>();
             // ArcGisZoneCollection arcZones = gisInstance.ArcGisZone.GetByZoneCode(county.FullCode, Library.Data.ConditionOption.Like_LeftFixed);
@@ -3527,7 +3527,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化错误记录文件目录
         /// </summary>
-        private void InitalizeDirectory()
+        public void InitalizeDirectory()
         {
             if (!Directory.Exists(System.Windows.Forms.Application.StartupPath + @"\Error"))
             {
@@ -3543,7 +3543,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 撰写数据记录信息
         /// </summary>
-        private void WriteDataInformation(string message)
+        public void WriteDataInformation(string message)
         {
             string fileName = System.Windows.Forms.Application.StartupPath + @"\Error\DataChecker.txt";
             if (!System.IO.File.Exists(fileName))
@@ -3560,7 +3560,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 获取完整的流水编号，如  川(2016)通川区农村土地承包经营权证第000001号
         /// </summary>
         /// <returns></returns>
-        private string GetFullSerialNumberName(YuLinTu.Library.Entity.Zone CurrentZone, string qznh, string serialNumber)
+        public string GetFullSerialNumberName(YuLinTu.Library.Entity.Zone CurrentZone, string qznh, string serialNumber)
         {
             string fullSerialNumberName = "";
 
@@ -3587,7 +3587,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 设置流水号
         /// </summary>
         /// <returns></returns>
-        private string SetFullSerialNumberName(string serNumberTemp, string qznh, string serialNumber)
+        public string SetFullSerialNumberName(string serNumberTemp, string qznh, string serialNumber)
         {
             string useserialNumber = serialNumber != null ? serialNumber : "      ";
             if (serialNumber != null && serialNumber.Length != 6)
@@ -3603,7 +3603,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 获取完整的流水编号模板，如  川(2016)通川区农村土地承包经营权证第000001号
         /// </summary>
         /// <returns></returns>
-        private string GetFullSerialNumberTemp(YuLinTu.Library.Entity.Zone CurrentZone)
+        public string GetFullSerialNumberTemp(YuLinTu.Library.Entity.Zone CurrentZone)
         {
             string fullSerialNumberName = "";
 
@@ -3625,7 +3625,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 初始化省市简写
         /// </summary>
         /// <returns></returns>
-        private Dictionary<string, string> InitalizeSimpleProvice()
+        public Dictionary<string, string> InitalizeSimpleProvice()
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             dic.Add("北京市", "京");
@@ -3668,7 +3668,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 初始化地域名称
         /// </summary>
-        private string InitalizeZoneName(YuLinTu.Library.Entity.Zone CurrentZone, int length)
+        public string InitalizeZoneName(YuLinTu.Library.Entity.Zone CurrentZone, int length)
         {
             var ZoneList = GetParentZone(CurrentZone, DbContext);
             string zoneName = string.Empty;
