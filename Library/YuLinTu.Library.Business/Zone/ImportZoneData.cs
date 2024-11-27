@@ -635,13 +635,13 @@ namespace YuLinTu.Library.Business
                     }
                     if (AddZone(zone, desZone))
                     {
-                        if (zone.AliasCode.IsNotNullOrEmpty() && zone.AliasName.IsNotNullOrEmpty())
+                        if (zone.AliasCode.IsNotNullOrEmpty() || zone.AliasName.IsNotNullOrEmpty())
                         {
                             var oldNumber = zone.AliasCode.Split('/');
                             for (int i = 0; i < oldNumber.Length; i++)
                             {
                                 var oldCBFs = vpStation.GetByZoneCode(oldNumber[i]);
-                                oldCBFs.ForEach(t => { t.OldVirtualCode = t.ZoneCode.PadRight(14, '0') + t.FamilyNumber.PadLeft(4, '0'); ; t.ZoneCode = zone.FullCode; vps.Add(t); });
+                                oldCBFs.ForEach(t => { t.OldVirtualCode = oldNumber[i] + t.FamilyNumber.PadLeft(4, '0');  t.ZoneCode = zone.FullCode; vps.Add(t); });
                                 var oldLands = landStation.GetShapeCollection(oldNumber[i], eLevelOption.SelfAndSubs);
                                 oldLands.ForEach(t => { t.ZoneCode = zone.FullCode; lands.Add(t); });
                             }

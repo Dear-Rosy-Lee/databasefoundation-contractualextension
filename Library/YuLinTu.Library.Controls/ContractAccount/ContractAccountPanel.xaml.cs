@@ -6557,7 +6557,9 @@ namespace YuLinTu.Library.Controls
                 var vplands = lands.Where(x => x.OwnerId == vp.ID).ToList();
                 vplands.ForEach(x =>
                 {
+                    x.OldLandNumber = x.LandNumber;
                     x.LandNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
+                    x.CadastralNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
                     index++;
 
                 });

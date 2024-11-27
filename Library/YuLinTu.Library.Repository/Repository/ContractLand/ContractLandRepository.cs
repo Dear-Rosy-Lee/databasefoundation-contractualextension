@@ -71,7 +71,9 @@ namespace YuLinTu.Library.Repository
                 cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
                 Update(s => new ContractLand()
                 {
-                    LandNumber = entity.LandNumber
+                    OldLandNumber = entity.OldLandNumber,
+                    LandNumber = entity.LandNumber,
+                    CadastralNumber = entity.CadastralNumber
                 }));
             }
             

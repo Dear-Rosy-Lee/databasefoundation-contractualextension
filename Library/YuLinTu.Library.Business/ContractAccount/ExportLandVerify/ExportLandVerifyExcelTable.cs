@@ -74,6 +74,11 @@ namespace YuLinTu.Library.Business
         public string Information { get; set; }
 
         /// <summary>
+        /// 变化情况
+        /// </summary>
+        private List<EnumStore<eBHQK>> bhqkList;
+
+        /// <summary>
         /// 地域描述
         /// </summary>
         public string ZoneDesc { get; set; }
@@ -217,6 +222,7 @@ namespace YuLinTu.Library.Business
             Worksheet2.Cells.SetColumnWidth(1, 21);
             Worksheet2.Cells.SetColumnWidth(2, 25);
             Worksheet2.Cells.SetColumnWidth(3, 25);
+            bhqkList = EnumStore<eBHQK>.GetListByType();
             foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
             {
                 cindex++;
@@ -316,7 +322,8 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
-            InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "");
+            var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation).DisplayName;
+            InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk);
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
