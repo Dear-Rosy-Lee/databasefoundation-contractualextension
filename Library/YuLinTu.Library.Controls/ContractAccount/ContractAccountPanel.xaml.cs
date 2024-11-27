@@ -524,7 +524,7 @@ namespace YuLinTu.Library.Controls
             //加上确股地块统计信息
             if (IsStockLand)
             {
-                if (CurrentZone != null)
+                if (CurrentZone != null && landList != null)
                 {
                     var landStock = new List<ContractLand>();
                     landList.ForEach(l =>

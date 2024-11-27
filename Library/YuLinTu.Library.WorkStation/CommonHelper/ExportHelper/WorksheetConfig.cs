@@ -60,7 +60,6 @@ namespace YuLinTu.Library.WorkStation
             return template;
         }
 
-
         /// <summary>
         /// 任务类型
         /// </summary>

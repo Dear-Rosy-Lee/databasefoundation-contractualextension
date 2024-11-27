@@ -3,6 +3,7 @@ using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
@@ -90,6 +91,16 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             #region 新版本入口
 
             ArcDataExportProgress dataProgress = new ArcDataExportProgress(dbContext);
+
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(dataProgress);
+            if (temp != null)
+            {
+                if (temp is ArcDataExportProgress)
+                {
+                    dataProgress = (ArcDataExportProgress)temp;
+                } 
+            }
             dataProgress.ProgressChanged += ReportPercent;
             dataProgress.Alert += ReportInfo;
             dataProgress.Argument = args;
