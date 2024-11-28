@@ -50,6 +50,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
                 var sr = GetByFile(filepath + "\\" + filename);
+                srid = sr.WKID;
                 var token = Parameters.Token.ToString();
                 if (Parameters.Token.Equals(Guid.Empty))
                 {
@@ -74,7 +75,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
-                string baseUrl = "http://192.168.20.83:8981";
+                string baseUrl = "https://103.203.217.30:11682";
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
                 //res = await apiCaller.GetDataAsync(postUrl);
