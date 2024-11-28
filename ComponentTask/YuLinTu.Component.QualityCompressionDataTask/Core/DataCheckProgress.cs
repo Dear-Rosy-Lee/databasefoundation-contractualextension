@@ -68,7 +68,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     var land = new LandEntity();
                     land.dkbm = item.DKBM;
                     var landShape = item.Shape as Geometry;
-                    land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}"; 
+                    land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
+                    land.qqdkbm = item.QQDKBM;
                     ls.Add(land);
                 }
                 ApiCaller apiCaller = new ApiCaller();
@@ -111,15 +112,17 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             if (result.WKID == 0)
             {
                 var pi = ProjectionInfo.Open(prjFile);
-                var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                    "Data/SpatialReferences/Projected Coordinate Systems/Gauss Kruger/CGCS2000",
-                    pi.Name.Replace("_", " ") + ".prj");
+                var file = "";
+                if (pi.Name != null)
+                    file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                        "Data/SpatialReferences/Projected Coordinate Systems/Gauss Kruger/CGCS2000",
+                        pi.Name.Replace("_", " ") + ".prj");
                 if (File.Exists(file))
                 {
                     return new SpatialReference(File.ReadAllText(file));
                 }
             }
-
+            result.WKID = 4490;
             return result;
         }
 

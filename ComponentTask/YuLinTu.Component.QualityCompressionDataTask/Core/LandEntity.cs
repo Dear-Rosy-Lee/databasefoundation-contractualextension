@@ -9,6 +9,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public string ewkt { get; set; }
 
+        public string qqdkbm { get; set; }
+
 
     }
 }
