@@ -277,6 +277,10 @@
       <Name>YuLinTu.Library.Log</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
+      <Project>{D52B9CE3-8D34-4A2A-9823-D9208F846D97}</Project>
+      <Name>YuLinTu.Library.Office</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
       <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
       <Name>YuLinTu.Library.Repository</Name>

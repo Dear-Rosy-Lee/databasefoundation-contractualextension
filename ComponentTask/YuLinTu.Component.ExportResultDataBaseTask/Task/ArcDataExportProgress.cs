@@ -60,6 +60,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         protected IStockConcordWorkStation stockconcordStation;
         protected IStockWarrantWorkStation stockwarrantStation;
+        protected DataExportProgress dataProgress;
 
         #endregion Fields
 
@@ -73,7 +74,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据源上下文
         /// </summary>
-        public IDbContext DbContext { get; set; }
+        public IDbContext DbContext
+        {
+            get { return dbContext; }
+            set
+            {
+                dbContext = value;
+                InitallStation();
+            }
+        }
+        private IDbContext dbContext;
+
 
         /// <summary>
         /// 目标文件夹
@@ -196,10 +207,18 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         #region Ctor
 
+        public ArcDataExportProgress()
+        {
+        }
+
         public ArcDataExportProgress(IDbContext db)
         {
             this.Name = "导出确权登记数据库成果";
             DbContext = db;
+        }
+
+        private void InitallStation()
+        {
             zoneStation = DbContext.CreateZoneWorkStation();
             VirtualPersonStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             contractLandWorkStation = DbContext.CreateContractLandWorkstation();
@@ -222,6 +241,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
             qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
             qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
+            dataProgress = new DataExportProgress();
         }
 
         #endregion Ctor
@@ -260,6 +280,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     System.IO.File.Copy(dbName, System.Windows.Forms.Application.StartupPath + @"\Data.sqlite", true);
                 }
                 ArcDataProgress();
+                ExporOther();
             }
             catch (System.Exception ex)
             {
@@ -272,6 +293,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 return;
             }
             this.ReportProgress(100, "完成");
+        }
+
+        public virtual void ExporOther()
+        {
         }
 
         /// <summary>
@@ -513,7 +538,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 return;
             }
-            var dataProgress = new DataExportProgress();
+            //var dataProgress = new DataExportProgress();
             var spaceProgress = new ArcSpaceDataProgress();
             var extendSet = new HashSet<string>();
             spaceProgress.Alert += (s, e) => { this.ReportAlert(e.Grade, e.UserState, e.Description); };

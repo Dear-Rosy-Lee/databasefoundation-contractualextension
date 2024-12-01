@@ -251,7 +251,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写调查信息
         /// </summary>
-        private void WritePublicyInformation()
+        public virtual void WritePublicyInformation()
         {
             if (Concord == null)
             {

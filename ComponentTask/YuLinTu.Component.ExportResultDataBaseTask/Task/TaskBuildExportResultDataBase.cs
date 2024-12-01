@@ -99,8 +99,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 if (temp is ArcDataExportProgress)
                 {
                     dataProgress = (ArcDataExportProgress)temp;
-                } 
+                    dataProgress.DbContext = dbContext;
+                }
             }
+
+            #endregion
+
             dataProgress.ProgressChanged += ReportPercent;
             dataProgress.Alert += ReportInfo;
             dataProgress.Argument = args;
