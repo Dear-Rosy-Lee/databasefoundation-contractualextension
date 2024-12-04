@@ -113,6 +113,7 @@ namespace YuLinTu.Library.Business
                 }
 
                 this.ReportProgress(1, "开始");
+                var zonelist = argument.DbContext.CreateZoneWorkStation().GetParentsToProvince(argument.CurrentZone);
                 string markDesc = GetMarkDesc(argument.CurrentZone, argument.DbContext);
                 string tempPath = TemplateHelper.WordTemplate(TemplateFile.VirtualPersonSurveyWord);
                 int index = 1;
@@ -151,6 +152,7 @@ namespace YuLinTu.Library.Business
                     export.Tissue = tissue;
                     export.DictList = argument.DictList;
                     export.ConcordNumber = concordnumber;
+                    export.ZoneList = zonelist;
                     export.OpenTemplate(tempPath);
                     string familyNuber = ToolString.ExceptSpaceString(family.FamilyNumber);
                     export.SaveAs(family, openFilePath + @"\" + familyNuber + "-" + family.Name + "-农村土地承包经营权承包方调查表.doc");
