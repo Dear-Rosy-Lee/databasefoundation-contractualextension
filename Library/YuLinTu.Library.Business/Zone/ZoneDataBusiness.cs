@@ -218,7 +218,7 @@ namespace YuLinTu.Library.Business
             bool result = true;
             try
             {
-                result = (Station.UpdateCodeName(zone) == 1) ? true : false; ;
+                result = (Station.UpdateCodeName(zone) >0) ? true : false; 
             }
             catch (Exception ex)
             {

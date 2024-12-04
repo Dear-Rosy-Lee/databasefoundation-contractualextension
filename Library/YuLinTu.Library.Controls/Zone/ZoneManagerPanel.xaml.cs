@@ -290,10 +290,7 @@ namespace YuLinTu.Library.Controls
                 {
                      UpDataToItem(selectItem, editPage.CurrentItem);
                      UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
-                }
-                ModuleMsgArgs arg = MessageExtend.ZoneMsg(db, ZoneMessage.ZONE_UPDATE_COMPLETE, (editPage.Result ? new MultiObjectArg() { ParameterA = selectItem, ParameterB = srcItem } : null));
-                ThePage.Workspace.Message.Send(this, arg);
-                TheApp.Current.Message.Send(ThePage, arg);
+                }                
             });
         }
 

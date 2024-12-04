@@ -438,6 +438,33 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="virtualPerson">承包方对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        public void UpdateListZoneCode(List<LandVirtualPerson> virtualPersons)
+        {
+            if (!CheckTableExist())
+            {
+                throw new ArgumentNullException("数据库不存在表："
+                    + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            }
+            if (virtualPersons == null)
+                return;
+            var q = DataSource.CreateQuery<LandVirtualPerson>();
+            foreach (var vp in virtualPersons)
+            {
+                AppendEdit(q.Where(c => c.ID.Equals(vp.ID)).Update(
+                      c => new LandVirtualPerson
+                      {
+                          OldVirtualCode = vp.OldVirtualCode,
+                          ZoneCode = vp.ZoneCode,
+                          ModifiedTime = DateTime.Now
+                      }));
+            }
+        }
+
+        /// <summary>
+        /// 更新承包方对象
+        /// </summary>
+        /// <param name="virtualPerson">承包方对象</param>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         public int Update(VirtualPerson virtualPerson, bool onlycode = false)
         {
             if (!CheckTableExist())

@@ -574,7 +574,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="tableIndex"></param>
         /// <param name="row"></param>
-        protected void InsertTableTitle(int tableIndex, int row, int column)
+        protected virtual void InsertTableTitle(int tableIndex, int row, int column)
         {
             SetTableCellValue(tableIndex, row, column, "地块名称");
             SetTableCellValue(tableIndex, row, column + 1, "地块编码");

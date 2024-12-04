@@ -47,6 +47,8 @@ namespace YuLinTu.Library.Business
         public const string ContractorPublicityPerson = "PublicityChroniclePerson";//承包方记事人
         public const string ContractorPublicityDate = "PublicityDate";//承包方审核日期
         public const string ContractorPublicityChronicle = "PublicityChronicle";//承包方审核意见
+        public const string ContractorConcordNumber = "ContractorConcordNumber";//承包方 合同编码
+
 
         public const string ConcordStartYear = "ConcordStartYear";//承包起始年
         public const string ConcordStartMonth = "ConcordStartMonth";//承包起始月
@@ -162,7 +164,7 @@ namespace YuLinTu.Library.Business
 
         //发包方
         public const string SenderName = "SenderName";//发包方名称
-
+        public const string SenderLawyerCode = "SenderLawyerCode";//发包方社会信用编码
         public const string SenderNameExpress = "SenderNameExpress";//发包方名称扩展如(第一村民小组)。
         public const string SenderLawyerName = "SenderLawyerName";//发包方法人名称
         public const string SenderLawyerTelephone = "SenderLawyerTelephone";//发包方法人联系方式

@@ -43,6 +43,8 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(T entity, bool onlycode = false);
 
+        void UpdateListZoneCode(List<T> entitys);
+
         int UpdateOldLandsCode(T entity);
 
         /// <summary>
@@ -416,5 +418,5 @@ namespace YuLinTu.Library.Repository
 
         #endregion
     }
-    
+
 }
