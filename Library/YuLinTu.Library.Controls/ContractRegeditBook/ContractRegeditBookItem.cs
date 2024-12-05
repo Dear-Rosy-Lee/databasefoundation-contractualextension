@@ -303,9 +303,9 @@ namespace YuLinTu.Library.Controls
             {
                 int sernumber = 0;
                 int.TryParse(regeditBook.SerialNumber, out sernumber);
-                SerialNumber = sernumber == 0 ? regeditBook.SerialNumber : serialNumber.ToString();
+                SerialNumber = sernumber == 0 ? regeditBook.SerialNumber : sernumber.ToString();
             }
-            //RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
+            RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
             SenderName = concord.SenderName != null ? concord.SenderName : "";
             CountActualArea = ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2);
             CountAwareArea = ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2);

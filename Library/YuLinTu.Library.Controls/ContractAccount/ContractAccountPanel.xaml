@@ -139,7 +139,7 @@
             MouseDoubleClick="view_MouseDoubleClick"
             MouseRightButtonDown="view_MouseRightButtonDown"
             PreviewMouseDown="view_PreviewMouseDown"
-            SelectionChanged="view_SelectionChanged"
+            SelectionChanged="view_SelectionChanged" 
             VirtualizingStackPanel.IsVirtualizing="True" 
             VirtualizingStackPanel.VirtualizationMode="Recycling">
             <cmps:MetroTreeGrid.Columns>
