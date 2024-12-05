@@ -75,6 +75,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double queryThreshold { set; get; }
 
+        public bool onlyCurrentZone { get; set; }
+
         private List<Dictionary> DKLBdics;
         private List<Dictionary> TDLYLXdics;
 
@@ -204,6 +206,7 @@ namespace YuLinTu.Library.Business
             isQueryXMzdw = meta.seekLandNeighborSet.IsQueryXMzdw;
             queryThreshold = meta.seekLandNeighborSet.QueryThreshold;
             SearchDeteilRule = meta.seekLandNeighborSet.SearchDeteilRule;
+            onlyCurrentZone = meta.seekLandNeighborSet.OnlyCurrentZone;
 
             TDLYLXdics = meta.DicList.FindAll(d => d.GroupCode == DictionaryTypeInfo.TDLYLX);
             DKLBdics = meta.DicList.FindAll(d => d.GroupCode == DictionaryTypeInfo.DKLB);
@@ -614,8 +617,9 @@ namespace YuLinTu.Library.Business
                     Guid landid = Guid.NewGuid();
                     Guid.TryParse(targetlandid, out landid);
                     targetLand = currentZoneQueryLandList.Find(cf => cf.ID == landid);
-                    if (targetLand == null || targetLand.ZoneCode == null ||
-                        !targetLand.ZoneCode.StartsWith(currentZone.FullCode))
+                    if (targetLand == null || targetLand.ZoneCode == null)
+                        continue;
+                    if (onlyCurrentZone && !targetLand.ZoneCode.StartsWith(currentZone.FullCode))
                         continue;
                 }
 
@@ -646,10 +650,11 @@ namespace YuLinTu.Library.Business
                 updateLands.Add(targetLand);
                 this.ReportProgress(40 + (int)(landPercent * index), string.Format("更新{0}的地块四至信息", markDesc + targetLand.OwnerName));
             }
-
-            this.ReportProgress(98, "查找完成，开始上传");
-            landStation.UpdateRange(updateLands);
-
+            if (updateLands.Count > 0)
+            {
+                this.ReportProgress(98, "查找完成，开始更新数据库");
+                landStation.UpdateRange(updateLands);
+            }
             this.ReportInfomation(string.Format("在{0}下共查找{1}个地块", markDesc, currentZoneLandList.Count));
         }
 

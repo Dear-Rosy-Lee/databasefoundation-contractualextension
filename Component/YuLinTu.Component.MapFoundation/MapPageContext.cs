@@ -4844,7 +4844,7 @@ namespace YuLinTu.Component.MapFoundation
                 return;
             }
             var graphics = map.SelectedItems.ToList();
-            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" && 
+            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
                 graphics[0].Layer.Name != "自留地" &&
                 graphics[0].Layer.Name != "开荒地" &&
                 graphics[0].Layer.Name != "机动地" &&
@@ -4874,8 +4874,8 @@ namespace YuLinTu.Component.MapFoundation
                 {
                     return;
                 }
-                IDbContext dbContext = CreateDb();
-                DictionaryBusiness dictBusiness = new DictionaryBusiness(dbContext);
+                //IDbContext dbContext = CreateDb();
+                DictionaryBusiness dictBusiness = new DictionaryBusiness(dbcontext);
                 List<Dictionary> dictList = dictBusiness.GetAll();
                 seekLandNeighborSet.BufferDistance = skNbSPage.BufferDistance;
                 //seekLandNeighborSet.SetLandBufferDistance = skNbSPage.SetLandBufferDistance;
@@ -4891,17 +4891,18 @@ namespace YuLinTu.Component.MapFoundation
                 seekLandNeighborSet.SearchDeteilRule = skNbSPage.SearchDeteilRule;
                 seekLandNeighborSet.IsDeleteSameDWMC = skNbSPage.IsDeleteSameDWMC;
                 seekLandNeighborSet.QueryThreshold = skNbSPage.QueryThreshold;
+                seekLandNeighborSet.OnlyCurrentZone = skNbSPage.OnlyCurrentZone;
 
                 //执行单个任务
-                TaskSeekLandNeighborArgument meta = new TaskSeekLandNeighborArgument();
+                var meta = new TaskSeekLandNeighborArgument();
                 meta.CurrentZone = currentZone;
-                meta.Database = dbContext;
+                meta.Database = dbcontext;
                 meta.CurrentZoneLandList = lands;
                 meta.UpdateLandList = lands;
                 meta.DicList = dictList;
                 meta.seekLandNeighborSet = seekLandNeighborSet;
 
-                TaskSeekLandNeighborOperation Seek = new TaskSeekLandNeighborOperation();
+                var Seek = new TaskSeekLandNeighborOperation();
                 Seek.Argument = meta;
                 Seek.Description = ContractAccountInfo.SeekLandNeighbor;
                 Seek.Name = ContractAccountInfo.SeekLandNeighbor;
