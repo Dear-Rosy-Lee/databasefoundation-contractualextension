@@ -201,7 +201,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写合同信息
         /// </summary>
-        private void WriteConcordInformations()
+        protected virtual void WriteConcordInformations()
         {
             WitePersonInformaion();
 
@@ -368,7 +368,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 写表头信息
         /// </summary>
-        private void WriteTitleInformation()
+        protected virtual void WriteTitleInformation()
         {
             int familyNumber = 0;
             Int32.TryParse(Contractor.FamilyNumber, out familyNumber);
@@ -640,7 +640,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private bool CheckDataInformation(object data)
+        protected virtual bool CheckDataInformation(object data)
         {
             var dbContext = DataBaseSource.GetDataBaseSource();
             if (dbContext == null)

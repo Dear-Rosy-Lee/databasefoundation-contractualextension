@@ -289,7 +289,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     return;
                 LogWrite.WriteErrorLog(ex.ToString());
 
-                this.ReportError("导出成果库出错:" + ex.ToString());
+                this.ReportError("导出成果库出错:" + ex.Message);
                 this.ReportProgress(100, "完成");
                 return;
             }
@@ -1058,7 +1058,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     tissue = senderStation.GetByCode(zone.FullCode.PadRight(14, '0'));
                 }
             }
-
+            if (tissue == null)
+            {
+                this.ReportError($"未找到{zone.FullName}下的编码为{zone.FullCode.PadRight(14, '0')}的发包方！");
+                return null;
+            }
             List<ContractLand> landCollection = FilterLandType(familyCollection, AllLandCollection);//根据设置筛选地块
             List<ContractLand> landSpaceCollection = landCollection.FindAll(l => l.Shape != null);
 
@@ -1371,6 +1375,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 {
                     ProcessConcordData(entity, concorditem, vplands, cbds, spacecdbs, spacecdbDKBMs, brqglands,
                         vp, landCollection, vphts, vpcbjyqzdjbs, bookCollection, vpcbjyqzs, landArray, serNumberTemp);
+
                 }
                 if (qghttable && qgqztable)
                 {
