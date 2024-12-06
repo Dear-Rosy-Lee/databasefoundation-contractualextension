@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
@@ -791,7 +792,7 @@ namespace YuLinTu.Library.Business
             }
             this.ReportProgress(1, "开始获取数据");
             int calIndex = 1;//获取数据开始行数  
-            var lunberDic = new Dictionary<string, string>();
+            var lunberDic = new Dictionary<string, ContractRegeditBook>();
             for (int index = calIndex; index < eb.rangeCount; index++)
             {
                 try
@@ -807,9 +808,24 @@ namespace YuLinTu.Library.Business
                         var lsh = lxnumber.Substring(indexof + 1);
                         if (lsh.Length > 6 && lsh.EndsWith("号"))
                             lsh = lsh.Replace("号", "");
+                        var year = "";
+                        if (lxnumber.Contains("(") && lxnumber.Contains(")") || lxnumber.Contains("（") && lxnumber.Contains("）"))
+                        {
+                            var indexkhs = lxnumber.IndexOf("(");
+                            if (indexkhs == -1)
+                            {
+                                indexkhs = lxnumber.IndexOf("（");
+                            }
+                            if (indexkhs > 0 && indexkhs > 0)
+                            {
+                                year = lxnumber.Substring(indexkhs + 1, 4);
+                            }
+                        }
+
+                        var qz = new ContractRegeditBook { SerialNumber = lsh, Year = year };
                         if (!lunberDic.ContainsKey(qzNumber))
                         {
-                            lunberDic.Add(qzNumber, lsh);
+                            lunberDic.Add(qzNumber, qz);
                         }
                     }
                 }
@@ -824,34 +840,38 @@ namespace YuLinTu.Library.Business
                 this.ReportError($"未获取到可导入的数据,请检查流水号格式 X(XXXX)XX县农村土地承包经营权证第XXXXXX号");
                 return false;
             }
-            var bookquery = dbContext.CreateQuery<ContractRegeditBook>().Where(t => t.ZoneCode.StartsWith(zone.FullCode))
-                //.Select(s => new { s.ID, s.RegeditNumber, s.SerialNumber })
-                .ToList();
-            try
+            var q = dbContext.CreateQuery<ContractRegeditBook>();
+            var valliagelist = lunberDic.Keys.Select(s => s.Substring(0, 12)).Distinct().ToList();
+            foreach (var vcode in valliagelist)
             {
-                var uplist = new List<ContractRegeditBook>();
-                foreach (var book in bookquery)
+                var booklist = q.Where(t => t.Number.StartsWith(vcode)).ToList();
+                try
                 {
-                    if (lunberDic.ContainsKey(book.RegeditNumber))
+                    var uplist = new List<ContractRegeditBook>();
+                    foreach (var book in booklist)
                     {
-                        book.SerialNumber = lunberDic[book.RegeditNumber];
-                        uplist.Add(book);
-                        if (uplist.Count == 5000)
+                        if (lunberDic.ContainsKey(book.RegeditNumber))
                         {
-                            regeditBookStation.UpdataList(uplist);
-                            uplist.Clear();
+                            book.SerialNumber = lunberDic[book.RegeditNumber].SerialNumber;
+                            book.Year = lunberDic[book.RegeditNumber].Year;
+                            uplist.Add(book);
+                            if (uplist.Count == 5000)
+                            {
+                                regeditBookStation.UpdataList(uplist);
+                                uplist.Clear();
+                            }
                         }
                     }
+                    if (uplist.Count > 0)
+                        regeditBookStation.UpdataList(uplist);
+                    //dbContext.CommitTransaction();
+                    this.ReportProgress(99, "更新数据完成");
                 }
-                if (uplist.Count > 0)
-                    regeditBookStation.UpdataList(uplist);
-                //dbContext.CommitTransaction();
-                this.ReportProgress(99, "更新数据完成");
-            }
-            catch (Exception ex)
-            {
-                //dbContext.RollbackTransaction();
-                return false;
+                catch (Exception ex)
+                {
+                    //dbContext.RollbackTransaction();
+                    return false;
+                }
             }
             return true;
         }
