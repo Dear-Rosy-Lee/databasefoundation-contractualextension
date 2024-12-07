@@ -148,12 +148,17 @@ namespace YuLinTu.Library.Business
                     var tis = tissueStation.GetTissues(zone.FullCode);
                     tissue = tis.FirstOrDefault(t => t.Code.Equals(zone.FullCode.PadRight(14, '0')));
                 }
+                if (tissue == null)
+                {
+                    this.ReportError($"未获取到{zone.FullName}下的发包方数据！");
+                    return false;
+                }
                 if (tissue != null)
                     zoneName = tissue.Name;
 
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
-                ExportLandVerifyExcelTable export = new ExportLandVerifyExcelTable();
+                var export = new ExportLandVerifyExcelTable();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
                 string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
 
