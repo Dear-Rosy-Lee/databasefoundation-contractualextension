@@ -144,7 +144,7 @@ namespace YuLinTu.Library.Business
             string totalInfo = string.Empty;
             try
             {
-                int calIndex = 1;
+                int calIndex = GetStartRow();
                 if (calIndex == -1)
                 {
                     ReportErrorInfo(this.ExcelName + "表中无数据或数据未按要求制作!");
