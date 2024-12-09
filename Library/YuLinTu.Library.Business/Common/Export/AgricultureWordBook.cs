@@ -328,9 +328,9 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartYear + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartMonth + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartDay + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartYear + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartMonth + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartDay + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
                 }
                 if (endTime != null)
                 {
@@ -340,9 +340,9 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndYear + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndMonth + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndDay + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndYear + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndMonth + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndDay + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
                 }
             }
             WriteCredentialsInformation();
