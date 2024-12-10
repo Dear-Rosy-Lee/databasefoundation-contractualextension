@@ -145,30 +145,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </components:MetroTreeGrid.Columns>
-            <!--<components:MetroTreeGrid.ContextMenu>
+
+            <components:MetroTreeGrid.ContextMenu>
                 <ContextMenu FontSize="13"
                              x:Name="aContextMenu">
-                    <MenuItem Header="新增承包方"
-                              Name="miAdd"
-                              Click="miAdd_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加户主16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="Uniform"
-                                   Height="16" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="新增共有人"
-                              Name="miAddSharePerson"
-                              Click="miAddSharePerson_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/添加书记16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
                     <MenuItem Header="编辑"
                               Name="miEdit"
                               Click="miEdit_Click">
@@ -179,7 +159,7 @@
                                    Stretch="None" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="删除"
+                    <!--<MenuItem Header="删除"
                               Name="miDel"
                               Click="miDel_Click">
                         <MenuItem.Icon>
@@ -188,120 +168,9 @@
                                    SnapsToDevicePixels="True"
                                    Stretch="None" />
                         </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="设置承包方"
-                              Name="miSet"
-                              Click="miSet_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/自然人16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="锁定/解锁承包方"
-                              x:Name="miLock"
-                              Click="miLock_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="初始数据"
-                              Name="miInitall"
-                              Click="miInitall_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/管理列表16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                   <MenuItem Header="分户"
-                              Name="miSplit"
-                              Click="miSplit_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/分割16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="None" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="合户"
-                              Name="miCombine"
-                              Click="miCombine_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/人口管理16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="Uniform"
-                                   Height="16" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
-                    <MenuItem Header="户号详情"
-                              Name="miNumber"
-                              Click="miNumber_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户号详情.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="Uniform"
-                                   Height="16" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
-                    <MenuItem Header="清空"
-                              Name="miClear"
-                              Click="miClear_Click">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/清空16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="Uniform"
-                                   Height="16" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="设置"
-                              x:Name="setMenu"
-                              Visibility="Collapsed">
-                        <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
-                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   SnapsToDevicePixels="True"
-                                   Stretch="Uniform"
-                                   Height="16" />
-                        </MenuItem.Icon>
-                        <MenuItem Header="导入调查表设置"
-                                  Name="miDataImport"
-                                  Click="miDataImport_Click"
-                                  Visibility="Collapsed">
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
-                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                       SnapsToDevicePixels="True"
-                                       Stretch="Uniform"
-                                       Height="16" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="导出表格内容设置"
-                                  Name="miDataOutput"
-                                  Click="miDataOutput_Click"
-                                  Visibility="Collapsed">
-                            <MenuItem.Icon>
-                                <Image Source="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/数据库文件16.png"
-                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                       SnapsToDevicePixels="True"
-                                       Stretch="Uniform"
-                                       Height="16" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </MenuItem>
+                    </MenuItem>-->
                 </ContextMenu>
-            </components:MetroTreeGrid.ContextMenu>-->
-
+            </components:MetroTreeGrid.ContextMenu>
         </components:MetroTreeGrid>
     </Grid>
 </UserControl>

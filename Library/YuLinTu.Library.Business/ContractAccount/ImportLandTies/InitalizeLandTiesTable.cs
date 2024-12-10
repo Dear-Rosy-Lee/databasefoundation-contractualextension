@@ -127,7 +127,6 @@ namespace YuLinTu.Library.Business
 
         public bool ReadTableInformation()
         {
-            bool isAdd = false;
             int concordIndex = 1;
             if (!CheckValue())
             {

@@ -9,7 +9,7 @@
                             xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="初始化基本信息"
-                            MinHeight="150" MinWidth="500">
+                            MinHeight="150" MinWidth="520">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -24,7 +24,7 @@
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
         </Grid.Resources>
-        <ScrollViewer Margin="10" HorizontalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Margin="20,10" HorizontalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -41,7 +41,7 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <CheckBox Content="承包方编码" Click="cbCheckBox_Click" Name="cbNumber"  VerticalAlignment="Center"/>
+                    <CheckBox Content="承包方编码（重新进行编码）" Click="cbCheckBox_Click" Name="cbNumber" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
                     <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Margin="5,0,0,0" Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left" Width="110" VerticalAlignment="Center" Grid.ColumnSpan="2" />
                     <CheckBox Content="性别" Grid.Column="3"  VerticalAlignment="Center" x:Name="cbSex" Margin="0,0,5,0" HorizontalAlignment="Right" Click="cbSex_Click"/>
 

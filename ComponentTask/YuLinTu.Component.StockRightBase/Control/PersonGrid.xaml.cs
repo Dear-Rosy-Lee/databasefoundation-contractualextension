@@ -45,5 +45,10 @@ namespace YuLinTu.Component.StockRightBase.Control
         {
             SelectChangedAction?.Invoke();
         }
+
+        private void miEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

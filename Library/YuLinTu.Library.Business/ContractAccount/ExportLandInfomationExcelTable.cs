@@ -29,16 +29,16 @@ namespace YuLinTu.Library.Business
         protected string templatePath;
         protected string contracteeName;
         protected bool showContractee;
-        private int familyCount;//户数
-        private int tableCount;//总地块数
-        private int landCount;//总地块数
-        private double tableArea;//合同面积
-        private double actualArea;//实测面积
-        private bool useTableArea;//使用台账面积
-        private int peopleCount;//家人数
-        private double AwareArea;//颁证面积
-        private double TableArea = 0;//合同面积
-        private double ActualArea;//实测面积
+        protected int familyCount;//户数
+        protected int tableCount;//总地块数
+        protected int landCount;//总地块数
+        protected double tableArea;//合同面积
+        protected double actualArea;//实测面积
+        protected bool useTableArea;//使用台账面积
+        protected int peopleCount;//家人数
+        protected double AwareArea;//颁证面积
+        protected double TableArea = 0;//合同面积
+        protected double ActualArea;//实测面积
 
         #endregion
 

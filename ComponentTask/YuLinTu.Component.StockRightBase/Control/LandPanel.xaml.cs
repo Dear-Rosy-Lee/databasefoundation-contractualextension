@@ -1,24 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Data;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Controls;
-using YuLinTu.Library.Entity;
-using YuLinTu.Component.StockRightBase.Bussiness;
-using YuLinTu.Component.StockRightBase.Entity;
-using YuLinTu.Windows;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using YuLinTu.Data;
+using YuLinTu.Library.Entity;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.StockRightBase.Control
 {
@@ -52,7 +37,8 @@ namespace YuLinTu.Component.StockRightBase.Control
         public ObservableCollection<ContractLand> Items
         {
             get { return LandGrid.Items; }
-        } 
+        }
+
         public Bussiness.BussinessData Bussiness
         {
             get { return _bussiness; }
@@ -156,7 +142,6 @@ namespace YuLinTu.Component.StockRightBase.Control
             }
 
             LandGrid.view.Roots = value.ContractLands;
-
             LandStatistics.GetData(value.ContractLands.Count, actualAreaTotal, stockAreaTotal,value.CurrentZone.Name);
 
         }
@@ -165,7 +150,5 @@ namespace YuLinTu.Component.StockRightBase.Control
         {
             InlitialControl(_currentZone == null ? "" : _currentZone.FullCode);
         }
-
-
     }
 }

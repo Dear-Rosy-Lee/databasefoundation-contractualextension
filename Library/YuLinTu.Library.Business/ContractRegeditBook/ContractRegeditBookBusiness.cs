@@ -845,34 +845,25 @@ namespace YuLinTu.Library.Business
             foreach (var vcode in valliagelist)
             {
                 var booklist = q.Where(t => t.Number.StartsWith(vcode)).ToList();
-                try
+                var uplist = new List<ContractRegeditBook>();
+                foreach (var book in booklist)
                 {
-                    var uplist = new List<ContractRegeditBook>();
-                    foreach (var book in booklist)
+                    if (lunberDic.ContainsKey(book.RegeditNumber))
                     {
-                        if (lunberDic.ContainsKey(book.RegeditNumber))
+                        book.SerialNumber = lunberDic[book.RegeditNumber].SerialNumber;
+                        book.Year = lunberDic[book.RegeditNumber].Year;
+                        uplist.Add(book);
+                        if (uplist.Count == 5000)
                         {
-                            book.SerialNumber = lunberDic[book.RegeditNumber].SerialNumber;
-                            book.Year = lunberDic[book.RegeditNumber].Year;
-                            uplist.Add(book);
-                            if (uplist.Count == 5000)
-                            {
-                                regeditBookStation.UpdataList(uplist);
-                                uplist.Clear();
-                            }
+                            regeditBookStation.UpdataList(uplist);
+                            uplist.Clear();
                         }
                     }
-                    if (uplist.Count > 0)
-                        regeditBookStation.UpdataList(uplist);
-                    //dbContext.CommitTransaction();
-                    this.ReportProgress(99, "更新数据完成");
                 }
-                catch (Exception ex)
-                {
-                    //dbContext.RollbackTransaction();
-                    return false;
-                }
+                if (uplist.Count > 0)
+                    regeditBookStation.UpdataList(uplist);
             }
+            this.ReportProgress(99, "更新数据完成");
             return true;
         }
 
