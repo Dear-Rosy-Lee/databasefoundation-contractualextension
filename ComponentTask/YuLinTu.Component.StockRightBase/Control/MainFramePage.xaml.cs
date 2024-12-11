@@ -63,6 +63,7 @@ namespace YuLinTu.Component.StockRightBase.Control
                 _dbContext = value;
                 personPanel.DbContext = _dbContext;
                 landPanel.DbContext = _dbContext;
+                personPanel.personGrid.DataSource = _dbContext;
                 if (_dbContext != null)
                 {
                     new UpdateDatabaseHelper().AddTable(DbContext);
@@ -102,7 +103,6 @@ namespace YuLinTu.Component.StockRightBase.Control
             landPanel.ItemDoubleClick += ItemDoubleClick;
             landPanel.SelectChangedAction += SelectChangeAction;
             personPanel.personGrid.view.SelectionChanged += Selector_OnSelectionChanged;
-
             personPanel.Initlized();
             landPanel.Initlized();
             //ImportLandBussness = new ImportLandBussness(DbContext, CurrentZone);
@@ -126,7 +126,6 @@ namespace YuLinTu.Component.StockRightBase.Control
                     if (person != null && data.ContractLands != null)
                     {
                         var currentPersonID = person.ID;
-
                         var personRelations = belongRelations.FindAll(f => f.VirtualPersonID == currentPersonID);
                         //belongRelationWorkStation.Get().Where(p => p.VirtualPersonID == currentPersonID).ToList();
                         var personLands = belongRelationWorkStation.GetLandByPerson(currentPersonID, _currentZone.FullCode)?.Where(s => s.IsStockLand).ToList();//获取人的确股地
@@ -141,6 +140,10 @@ namespace YuLinTu.Component.StockRightBase.Control
                                 landList.Add(land);
                             }
                         }
+                        personPanel.personGrid.LandList = landList.ToList();
+                        personPanel.personGrid.PersonbelongRelations = personRelations;
+                        personPanel.personGrid.CurrentZone = CurrentZone;
+                        personPanel.personGrid.VirPerson = person;
                     }
                     landPanel.LandGrid.view.Roots = landList;
                 }
@@ -164,6 +167,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             base.OnWorkpageChanged();
             personPanel.Workpage = Workpage;
             landPanel.Workpage = Workpage;
+            personPanel.personGrid.TheWorkpage = Workpage;
         }
 
         /// <summary>

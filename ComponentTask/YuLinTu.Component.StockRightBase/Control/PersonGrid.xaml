@@ -149,7 +149,7 @@
             <components:MetroTreeGrid.ContextMenu>
                 <ContextMenu FontSize="13"
                              x:Name="aContextMenu">
-                    <MenuItem Header="编辑"
+                    <MenuItem Header="编 辑"
                               Name="miEdit"
                               Click="miEdit_Click">
                         <MenuItem.Icon>

@@ -399,9 +399,17 @@ namespace YuLinTu.Library.Business
                 entity.LandCategory = listDKLB.Find(c => c.Name == entity.LandCategory || c.Code == entity.LandCategory)?.Code;
                 entity.LandCode = listDKLYLX.Find(c => c.Name == entity.LandCode || c.Code == entity.LandCode)?.Code;
                 entity.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
-                entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
-                entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
-                entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+                try
+                {
+                    entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
+                    entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
+                    entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"处理地块面积时错误,{ex.Message}");
+                }
                 entity.NeighborEast = GetString(allItem[currentIndex, 28]);
                 entity.NeighborSouth = GetString(allItem[currentIndex, 29]);
                 entity.NeighborWest = GetString(allItem[currentIndex, 30]);

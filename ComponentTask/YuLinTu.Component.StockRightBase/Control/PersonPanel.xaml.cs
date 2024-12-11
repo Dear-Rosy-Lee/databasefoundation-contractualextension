@@ -1,23 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Component.StockRightBase.Bussiness;
-using YuLinTu.Component.StockRightBase.Entity;
 using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Data;
-using YuLinTu.Library.Business;
-using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 
@@ -88,7 +73,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         public void Initlized()
         {
             InlitialControl(_currentZone == null ? "" : _currentZone.FullCode);
-            personGrid.SelectChangedAction += SelectChangedAction;
+            personGrid.SelectChangedAction += SelectChangedAction; 
         }
 
         /// <summary>

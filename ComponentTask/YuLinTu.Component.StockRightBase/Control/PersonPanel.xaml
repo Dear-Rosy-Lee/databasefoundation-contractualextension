@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:YuLinTu.Component.StockRightBase.Control"
              mc:Ignorable="d" 
-             >           
+             >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:PersonStatistics x:Name="personStatistics" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Stretch" Grid.Row="0"/>
-        <local:PersonGrid x:Name="personGrid" Grid.Row="1"/>
+        <local:PersonGrid x:Name="personGrid" Grid.Row="1" x:FieldModifier="public"/>
     </Grid>
 </UserControl>

@@ -213,7 +213,7 @@
                                 Grid.Column="4"
                                 Height="30"
                                 VerticalContentAlignment="Center"
-                                IsEnabled="{Binding ElementName=txtLandNameAlise, Path=IsChecked}"
+                                IsEnabled="{Binding ElementName=cbLandNameAlise, Path=IsChecked}"
                                 MaxLength="25"
                                 TabIndex="9" />
 

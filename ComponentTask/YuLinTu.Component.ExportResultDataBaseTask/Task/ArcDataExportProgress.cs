@@ -617,7 +617,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             bool hasDx = false;
             foreach (var zone in zones)
             {
-                zoneName = string.Format("({0}/{1})", processIndex, zonCount) + GetZoneName(zones, zone);
+                zoneName = GetZoneName(zones, zone);
                 var summery = new DataSummary();
                 summery.UnitName = zone.FullName;
                 summery.UnitCode = InitalizeZoneCode(zone);
@@ -644,10 +644,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 try
                 {
-                    dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
+                    var info = dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
                         county.Name, county.FullCode, 0, county.FullCode + county.Name, summery,
                         /*ContainDotLine,*/ CBDKXXAwareAreaExportSet, sqllandList);
-                    this.ReportAlert(eMessageGrade.Infomation, null, zoneName + "下属性成果数据导出完毕!");
+                    this.ReportAlert(eMessageGrade.Infomation, null, $"{zoneName}下属性成果数据导出完成:{info}");
                 }
                 catch (Exception ex)
                 {
@@ -778,7 +778,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         this.ReportAlert(eMessageGrade.Warn, null, zoneName + "下没有数据可供操作!");
                         continue;
                     }
-                    var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
+                    var entityCollection = DataCheckProgress(cz, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
                     if ((entityCollection == null || entityCollection.Count == 0) && sqllandList.Count == 0)
                     {
                         continue;
@@ -1107,7 +1107,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             concordCollection = null;
             landCollection = null;
             familyCollection = null;
-            GC.Collect();
             return entityCollection;
         }
 
@@ -2383,7 +2382,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             string name = cZone.Name;
             var pZone = zones.Find(t => t.FullCode == cZone.UpLevelCode);
             if (pZone == null)
-                return name;
+            {
+                if (zones.Count == 1)
+                    return cZone.FullName;
+                else
+                    return name;
+            }
             while (pZone != null && pZone.Level <= YuLinTu.Library.Entity.eZoneLevel.County)
             {
                 name = pZone.Name + name;

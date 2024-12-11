@@ -428,6 +428,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:LandPanel x:Name="landPanel" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <local:PersonPanel x:Name="personPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <local:PersonPanel x:Name="personPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </core:NavigatableWorkpageFrame>
