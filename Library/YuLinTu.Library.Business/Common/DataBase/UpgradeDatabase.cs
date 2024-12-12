@@ -99,12 +99,12 @@ namespace YuLinTu.Library.Business
             DKBM.IsAdd = true;
             upCBD_DeleteFields.Add(DKBM);
 
-            UpdateField YDKBM = new UpdateField();
-            YDKBM.FieldName = "YDKBM";
-            YDKBM.FieldType = "TEXT";
-            YDKBM.IsNull = true;
-            YDKBM.IsAdd = true;
-            upCBD_DeleteFields.Add(YDKBM);
+            UpdateField QQDKBM = new UpdateField();
+            QQDKBM.FieldName = "QQDKBM";
+            QQDKBM.FieldType = "TEXT";
+            QQDKBM.IsNull = true;
+            QQDKBM.IsAdd = true;
+            upCBD_DeleteFields.Add(QQDKBM);
 
             UpdateField SCMJ = new UpdateField();
             SCMJ.FieldName = "SCMJ";
@@ -959,13 +959,13 @@ namespace YuLinTu.Library.Business
             upCBDFields.Add(ybmj);
             upCBD.FieldList = upCBDFields;
 
-            UpdateField ydkbm = new UpdateField(); // 权属性质
-            ydkbm.FieldName = "YDKBM";
-            ydkbm.FieldType = "TEXT";
-            ydkbm.IsNull = true;
-            ydkbm.IsAdd = true;
-            ydkbm.FieldLength = "100";
-            upCBDFields.Add(ydkbm);
+            UpdateField qqdkbm = new UpdateField(); // 权属性质
+            qqdkbm.FieldName = "QQDKBM";
+            qqdkbm.FieldType = "TEXT";
+            qqdkbm.IsNull = true;
+            qqdkbm.IsAdd = true;
+            qqdkbm.FieldLength = "100";
+            upCBDFields.Add(qqdkbm);
             upCBD.FieldList = upCBDFields;
             return upCBD;
         }

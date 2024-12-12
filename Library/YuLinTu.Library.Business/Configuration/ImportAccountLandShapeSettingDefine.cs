@@ -70,8 +70,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         ///原地块编码
         /// </summary>
-        [DisplayLanguage("原地块编码", IsLanguageName = false)]
-        [DescriptionLanguage("YDKBM", IsLanguageName = false)]
+        [DisplayLanguage("确权地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("QQDKBM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string YCadastralNumberIndex

@@ -56,17 +56,17 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("DKBM");
             }
         }
-        [DataColumn("YDKBM")]
-        public string YDKBM
+        [DataColumn("QQDKBM")]
+        public string QQDKBM
         {
-            get { return ydkbm; }
+            get { return qqdkbm; }
             set
             {
-                ydkbm = value;
+                qqdkbm = value;
                 NotifyPropertyChanged("DKBM");
             }
         }
-        private string ydkbm;
+        private string qqdkbm;
         /// <summary>
         /// 实测面积
         /// </summary>

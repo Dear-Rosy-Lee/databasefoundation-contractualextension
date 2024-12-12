@@ -6818,7 +6818,7 @@ namespace YuLinTu.Library.Controls
             var landDel = new ContractLand_Del();
             landDel.ID = land.ID;
             landDel.DKBM = land.LandNumber;
-            landDel.YDKBM = land.OldLandNumber;
+            landDel.QQDKBM = land.OldLandNumber;
             landDel.DKMC = land.LandName;
             landDel.QQMJ = land.AwareArea;
             landDel.SCMJ = land.ActualArea;

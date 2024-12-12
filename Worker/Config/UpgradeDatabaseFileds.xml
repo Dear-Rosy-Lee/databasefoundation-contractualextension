@@ -16,7 +16,7 @@
         <IsAdd>true</IsAdd>
       </UpdateField>
       <UpdateField>
-        <FieldName>YDKBM</FieldName>
+        <FieldName>QQDKBM</FieldName>
         <FieldType>TEXT</FieldType>
         <IsNull>true</IsNull>
         <IsAdd>true</IsAdd>
@@ -230,7 +230,7 @@
         <IsAdd>true</IsAdd>
       </UpdateField>
       <UpdateField>
-        <FieldName>YDKBM</FieldName>
+        <FieldName>QQDKBM</FieldName>
         <FieldType>TEXT</FieldType>
         <FieldLength>100</FieldLength>
         <IsNull>true</IsNull>
@@ -336,7 +336,7 @@
         <IsAdd>true</IsAdd>
       </UpdateField>
       <UpdateField>
-        <FieldName>YDKBM</FieldName>
+        <FieldName>QQDKBM</FieldName>
         <FieldType>TEXT</FieldType>
         <FieldLength>100</FieldLength>
         <IsNull>true</IsNull>

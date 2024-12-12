@@ -483,7 +483,7 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         /// 原地块编码
         /// </summary>
-        [DataColumn("YDKBM")]
+        [DataColumn("QQDKBM")]
         public string OldLandNumber
         {
             get { return oldLandNumber; }
