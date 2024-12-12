@@ -113,12 +113,20 @@ namespace YuLinTu.Component.ResultDbToLocalDb
     [Serializable]
     public class CBDKXXSC : CBDKXX
     {
+        public const string TableName = "CBDKXX";
+
+        public const string TableNameCN = "承包地块信息";
+
         public string DKLB { get; set; }
     }
 
     [Serializable]
     public class CBFSC : CBF
     {
+        public const string TableName = "CBF";
+
+        public const string TableNameCN = "承包方";
+
         public const string FXZDYBM = "XZDYBM";
 
         public string XZDYBM { get; set; }
