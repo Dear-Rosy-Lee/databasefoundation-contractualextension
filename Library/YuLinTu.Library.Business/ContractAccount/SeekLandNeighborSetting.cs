@@ -75,6 +75,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public double QueryThreshold { set; get; }
 
+        public bool OnlyCurrentZone { get; set; }
+
     }
 
     #endregion

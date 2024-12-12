@@ -59,6 +59,8 @@ namespace YuLinTu.Component.ContractAccount
             List<Zone> newZoneList = new List<Zone>();
             List<Zone> oldZoneList = new List<Zone>();
 
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var landRep = factory.CreateRepository<IContractLandRepository>();
             //var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
             var dkquery = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));//.ToList();
             var uplist = new List<ContractLand>();
@@ -67,20 +69,24 @@ namespace YuLinTu.Component.ContractAccount
                 if (ZoneDefine.SyncCode == true)
                 {
                     x.LandNumber = zdiNew.FullCode + x.LandNumber.Substring(zdiNew.FullCode.Length);
-                    x.CadastralNumber = x.CadastralNumber == null ? "" : zdiNew.FullCode + x.CadastralNumber.Substring(zdiNew.FullCode.Length);
+                    x.CadastralNumber = string.IsNullOrEmpty(x.CadastralNumber) ? "" : zdiNew.FullCode + x.CadastralNumber.Substring(zdiNew.FullCode.Length);
                 }
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 x.SenderCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 1000)
+                if (uplist.Count == 1500)
                 {
-                    UpContractLand(dbContext, uplist);
+                    landRep.UpdateListZoneCode(uplist);
+                    landRep.SaveChanges();
                     uplist.Clear();
                 }
                 return true;
             });
             if (uplist.Count > 0)
-                UpContractLand(dbContext, uplist);
+            {
+                landRep.UpdateListZoneCode(uplist);
+                landRep.SaveChanges();
+            }
 
             //if (ZoneDefine.SyncCode == true)
             //{
@@ -102,17 +108,6 @@ namespace YuLinTu.Component.ContractAccount
             //    });
             //    UpContractLand(dbContext, ContractLands);
             //}
-        }
-
-        private void UpContractLand(IDbContext dbContext, List<ContractLand> ContractLands)
-        {
-            ContainerFactory factory = new ContainerFactory(dbContext);
-            var landRep = factory.CreateRepository<IContractLandRepository>();
-            foreach (var entity in ContractLands)
-            {
-                landRep.Update(entity, true);
-            }
-            landRep.SaveChanges();
         }
 
         #endregion

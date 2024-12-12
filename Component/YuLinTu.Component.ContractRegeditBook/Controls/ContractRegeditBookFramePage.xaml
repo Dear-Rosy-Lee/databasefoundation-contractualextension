@@ -204,7 +204,7 @@
                                    Visibility="Visible">
                     <cmps:ImageTextItem ImagePosition="Top" 
                                         Text="关联流水号"
-                                        ToolTip="通过excel关联流水号,excel包含两列，第一列权证编号，第二列流水号"
+                                        ToolTip="通过excel关联流水号,excel包含两列，第一列权证编号，第二列流水号(例： X(XXXX)XXX农村土地承包经营权证第XXXXXX号)"
                                         Margin="0,5,0,10"
                                         Image="pack://application:,,,/YuLinTu.Component.ContractRegeditBook;component/Resources/RelateNumber.png"   />
                 </metro:MetroButton>

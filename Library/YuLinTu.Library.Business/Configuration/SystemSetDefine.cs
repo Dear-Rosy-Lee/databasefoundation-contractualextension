@@ -366,35 +366,36 @@ namespace YuLinTu.Library.Business
                 return Name;
             var dbContext = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
             var zoneStation = dbContext.CreateZoneWorkStation();
+            var zonelist = zoneStation.GetParentsToProvince(currentZone);
             if (currentZone.Level == eZoneLevel.Group)
             {
                 if (groupTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.Village)
             {
                 if (countryTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.Town)
             {
                 if (townTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.County)
             {
                 if (countTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.City)
             {
                 if (cityTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             return Name;
         }

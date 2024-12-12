@@ -110,6 +110,31 @@ namespace YuLinTu.Library.Repository
             return base.Delete(c => c.OwnerId.Equals(guid));
         }
 
+        public void UpdateListZoneCode(List<T> entitys)
+        {
+            //if (!CheckTableExist())
+            //{
+            //    throw new ArgumentNullException("数据库不存在表："
+            //        + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            //}
+            if (entitys == null)
+                return;
+            var q = DataSource.CreateQuery<ContractLand>();
+            foreach (var entity in entitys)
+            {
+                AppendEdit(q.Where(c => c.ID.Equals(entity.ID)).Update(
+                   c => new ContractLand
+                   {
+                       LandNumber = entity.LandNumber,
+                       ZoneCode = entity.ZoneCode,
+                       SenderCode = entity.SenderCode,
+                       CadastralNumber = entity.CadastralNumber,
+                       ModifiedTime = entity.ModifiedTime
+                   }));
+            }
+        }
+
+
         public int Update(T entity, bool onlycode = false)
         {
             //if (!CheckTableExist())
@@ -598,7 +623,7 @@ namespace YuLinTu.Library.Repository
                 return -1;
 
             int delAppend = 0;
-            
+
             var lands = DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).ToList();
             //删除地块
             delAppend = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).Delete());
@@ -1570,5 +1595,5 @@ namespace YuLinTu.Library.Repository
 
         #endregion
     }
-    
+
 }

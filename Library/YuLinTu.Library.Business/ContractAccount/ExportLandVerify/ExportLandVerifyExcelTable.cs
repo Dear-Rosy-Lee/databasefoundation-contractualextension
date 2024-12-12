@@ -272,7 +272,7 @@ namespace YuLinTu.Library.Business
                 flag = true;
             foreach (Person person in peoples)
             {
-                SetRowHeight(bindex-1, 27.75);
+                SetRowHeight(bindex - 1, 27.75);
                 WritePersonInformation(person, bindex, flag);
                 SetRowHeight(bindex, 27.75);
                 bindex++;
@@ -288,9 +288,9 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(aindex, 27.75);
                 aindex++;
             }
-            foreach(ContractLand_Del landDel in landDels)
+            foreach (ContractLand_Del landDel in landDels)
             {
-                
+
                 TotalLandTable += 0;
                 TotalLandAware += landDel.QQMJ;
                 TotalLandActual += landDel.SCMJ;
@@ -324,8 +324,9 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
-            var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation).DisplayName;
-            InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk);
+            var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
+            if (bhqk != null)
+                InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
@@ -347,9 +348,9 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "/");
             InitalizeRangeValue("AG" + index, "AH" + index, "删除");
         }
-            /// <summary>
-            /// 书写当前地域信息
-            /// </summary>
+        /// <summary>
+        /// 书写当前地域信息
+        /// </summary>
         private void WriteCurrentZoneInformation(ContractLand land, int index)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
@@ -365,13 +366,13 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("D" + (index-5), "D" + (index-5), land.OldLandNumber.IsNullOrEmpty() ? "/" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
-            if (dklb!=null)
+            if (dklb != null)
                 InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
             if (tdlylx != null)
                 InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
             if (dldj != null)
                 InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
-            if (tdyt!=null)
+            if (tdyt != null)
                 InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
 
             if (land.IsFarmerLand != null)
@@ -394,7 +395,7 @@ namespace YuLinTu.Library.Business
             Dictionary gender = dictXB.Find(c => c.Code.Equals(person.Gender == eGender.Male ? "1" : "2"));
             var code = GetCardTypeNumber(person.CardType);
             Dictionary cardtype = dictZJLX.Find(c => c.Code.Equals(code.ToString()));
-            
+
             InitalizeRangeValue("H" + index, "H" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
             if (gender != null)
             {
@@ -420,6 +421,8 @@ namespace YuLinTu.Library.Business
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
             InitalizeRangeValue("A" + 1, "AI" + 2, title);
+            if (Tissue == null)
+                return;
             InitalizeRangeValue("C" + 3, "E" + 3, Tissue.Name);
             InitalizeRangeValue("G" + 3, "G" + 3, Tissue.Code);
             InitalizeRangeValue("J" + 3, "K" + 3, Tissue.LawyerName);

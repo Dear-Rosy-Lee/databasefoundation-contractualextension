@@ -10,6 +10,7 @@ using System.Windows.Input;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
+using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
@@ -163,6 +164,7 @@ namespace YuLinTu.Library.Controls
             {
                 e.Parameter = false;
                 YuLinTu.Library.Log.Log.WriteException(this, "ZoneEditPage_Confirm(更新/添加发包方数据)", ex.Message + ex.StackTrace);
+                throw new Exception("更新数据出错" + ex.Message);
             }
             finally
             {
@@ -290,12 +292,12 @@ namespace YuLinTu.Library.Controls
             SetState();
             Zone curZone = itemZone.ConvertTo<Zone>();
             currentZone = curZone;
-            if (itemZone.Children == null || itemZone.Children.Count == 0)
-            {
-                Result = business.UpdateZone(curZone);
-                SetState(true);
-            }
-            else
+            //if (itemZone.Children == null || itemZone.Children.Count == 0)
+            //{
+            //    Result = business.UpdateZone(curZone);
+            //    SetState(true);
+            //}
+            //else
             {
                 UpdateZoneEntryInformation(itemZone);
             }
@@ -335,6 +337,7 @@ namespace YuLinTu.Library.Controls
             foreach (ZoneDataItem zoneItem in item.Children)
             {
                 index++;
+                var oldzone = zoneItem.Clone();
                 SetLableInvoke(string.Format("({0}/{1})", index, itemCount));
                 sourceCode = zoneItem.FullCode;
                 if (zoneItem.FullCode == curZone.FullCode && zoneItem.Name == curZone.Name)
@@ -356,18 +359,38 @@ namespace YuLinTu.Library.Controls
                 if (alterCode || alterName)
                 {
                     Zone zone = zoneItem.ConvertTo<Zone>();
-                    if (!business.UpdateZoneCodeName(zone))
+                    if (business.UpdateZoneCodeName(zone))
+                    {
+                        if (zoneItem.Children.Count == 0)
+                        {
+                            ModuleMsgArgs arg = MessageExtend.ZoneMsg(business.DbContext, ZoneMessage.ZONE_UPDATE_COMPLETE,
+                                new MultiObjectArg() { ParameterA = oldzone, ParameterB = zoneItem });
+                            Workpage.Workspace.Message.Send(this, arg);
+                            TheApp.Current.Message.Send(Workpage, arg);
+                        }
+                    }
+                    else
+                    {
                         Result = false;
+                    }
                 }
                 if (zoneItem.Level < eZoneLevel.Province)//如果当前选择的是国家，只需修改省级地域上级编码
                 {
                     UpdateChildren(zoneItem, alterCode, alterName, itemCount);
                 }
             }
-            if (!business.UpdateZoneCodeName(curZone))
+            if (business.UpdateZoneCodeName(curZone))
+            {
+                ModuleMsgArgs arg = MessageExtend.ZoneMsg(business.DbContext, ZoneMessage.ZONE_UPDATE_COMPLETE,
+                    new MultiObjectArg() { ParameterA = item, ParameterB = sourceZone.ConvertTo<ZoneDataItem>() });
+                Workpage.Workspace.Message.Send(this, arg);
+                TheApp.Current.Message.Send(Workpage, arg);
+            }
+            else
+            {
                 Result = false;
+            }
             SetLableInvoke(string.Format("({0}/{1})", index, itemCount));
-            GC.Collect();
         }
 
         /// <summary>
@@ -418,6 +441,7 @@ namespace YuLinTu.Library.Controls
             foreach (ZoneDataItem di in parentItem.Children)
             {
                 index++;
+                var oldezone = di.Clone();
                 SetLableInvoke(string.Format("({0}/{1})", index, itemCount));
                 sourceCode = di.FullCode;
                 if (alterCode)
@@ -435,7 +459,16 @@ namespace YuLinTu.Library.Controls
                 if (alterCode || alterName)
                 {
                     Zone zone = di.ConvertTo<Zone>();
-                    business.UpdateZone(zone);
+                    if (business.UpdateZone(zone))
+                    {
+                        if (di.Children.Count == 0)
+                        {
+                            ModuleMsgArgs arg = MessageExtend.ZoneMsg(business.DbContext, ZoneMessage.ZONE_UPDATE_COMPLETE,
+                            new MultiObjectArg() { ParameterA = di, ParameterB = oldezone });
+                            Workpage.Workspace.Message.Send(this, arg);
+                            TheApp.Current.Message.Send(Workpage, arg);
+                        }
+                    }
                 }
                 UpdateChildren(di, alterCode, alterName, itemCount);
             }

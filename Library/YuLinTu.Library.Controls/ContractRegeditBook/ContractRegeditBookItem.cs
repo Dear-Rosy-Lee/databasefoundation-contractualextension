@@ -299,8 +299,13 @@ namespace YuLinTu.Library.Controls
             Name = regeditBook.Year != null ? regeditBook.Year : "";
             Name += SNumber;
             Number = regeditBook.Number != null ? regeditBook.Number : "";
-            SerialNumber = regeditBook.SerialNumber != null ? int.Parse(regeditBook.SerialNumber).ToString() : "";
-            //RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
+            if (regeditBook.SerialNumber != null)
+            {
+                int sernumber = 0;
+                int.TryParse(regeditBook.SerialNumber, out sernumber);
+                SerialNumber = sernumber == 0 ? regeditBook.SerialNumber : sernumber.ToString();
+            }
+            RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
             SenderName = concord.SenderName != null ? concord.SenderName : "";
             CountActualArea = ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2);
             CountAwareArea = ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2);

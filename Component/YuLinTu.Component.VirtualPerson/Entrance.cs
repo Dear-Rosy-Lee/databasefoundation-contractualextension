@@ -1,18 +1,15 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024 鱼鳞图公司版权所有,保留所有权利
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Repository;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VirtualPerson
 {
@@ -60,8 +57,11 @@ namespace YuLinTu.Component.VirtualPerson
             GetZoneList(zdiOld as ZoneDataItem, oldZoneList);
             GetZoneList(zdiNew as ZoneDataItem, newZoneList);
 
-            var ListPerson = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
+            //var ListPerson = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
             var cbfquery = dbContext.CreateQuery<LandVirtualPerson>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));
+
+            ContainerFactory factory = new ContainerFactory(dbContext);
+            var virtualPersonRep = factory.CreateRepository<IVirtualPersonRepository<LandVirtualPerson>>();
 
             var uplist = new List<LandVirtualPerson>();
             cbfquery.ForEach((i, p, x) =>
@@ -70,9 +70,10 @@ namespace YuLinTu.Component.VirtualPerson
                     x.OldVirtualCode = x.ZoneCode.PadRight(14, '0') + x.FamilyNumber.PadLeft(4, '0');
                 x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
                 uplist.Add(x);
-                if (uplist.Count == 1000)
+                if (uplist.Count == 1500)
                 {
-                    UpVirtualPerson(dbContext, uplist);
+                    virtualPersonRep.UpdateListZoneCode(uplist);
+                    virtualPersonRep.SaveChanges();
                     uplist.Clear();
                 }
                 return true;
@@ -86,19 +87,11 @@ namespace YuLinTu.Component.VirtualPerson
             //    x.ZoneCode = zdiNew.FullCode + x.ZoneCode.Substring(zdiNew.FullCode.Length);
             //});
             if (uplist.Count > 0)
-                UpVirtualPerson(dbContext, uplist);
-        }
-
-        private void UpVirtualPerson(IDbContext dbContext, List<LandVirtualPerson> ListPerson)
-        {
-            ContainerFactory factory = new ContainerFactory(dbContext);
-            var virtualPersonRep = factory.CreateRepository<IVirtualPersonRepository<LandVirtualPerson>>();
-            foreach (var entity in ListPerson)
             {
-                virtualPersonRep.Update(entity, true);
+                virtualPersonRep.UpdateListZoneCode(uplist);
+                virtualPersonRep.SaveChanges();
             }
-            virtualPersonRep.SaveChanges();
-        }
+        } 
 
         /// <summary>
         /// 列表中获取集合

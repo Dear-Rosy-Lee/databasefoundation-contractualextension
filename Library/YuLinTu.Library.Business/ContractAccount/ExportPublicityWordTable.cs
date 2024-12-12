@@ -201,7 +201,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写合同信息
         /// </summary>
-        private void WriteConcordInformations()
+        protected virtual void WriteConcordInformations()
         {
             WitePersonInformaion();
 
@@ -251,7 +251,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写调查信息
         /// </summary>
-        private void WritePublicyInformation()
+        public virtual void WritePublicyInformation()
         {
             if (Concord == null)
             {
@@ -368,7 +368,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 写表头信息
         /// </summary>
-        private void WriteTitleInformation()
+        protected virtual void WriteTitleInformation()
         {
             int familyNumber = 0;
             Int32.TryParse(Contractor.FamilyNumber, out familyNumber);
@@ -574,7 +574,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="tableIndex"></param>
         /// <param name="row"></param>
-        protected void InsertTableTitle(int tableIndex, int row, int column)
+        protected virtual void InsertTableTitle(int tableIndex, int row, int column)
         {
             SetTableCellValue(tableIndex, row, column, "地块名称");
             SetTableCellValue(tableIndex, row, column + 1, "地块编码");
@@ -640,7 +640,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private bool CheckDataInformation(object data)
+        protected virtual bool CheckDataInformation(object data)
         {
             var dbContext = DataBaseSource.GetDataBaseSource();
             if (dbContext == null)

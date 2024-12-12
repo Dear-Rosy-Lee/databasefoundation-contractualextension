@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Aux;
@@ -60,6 +61,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         protected IStockConcordWorkStation stockconcordStation;
         protected IStockWarrantWorkStation stockwarrantStation;
+        protected DataExportProgress dataProgress;
 
         #endregion Fields
 
@@ -73,7 +75,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据源上下文
         /// </summary>
-        public IDbContext DbContext { get; set; }
+        public IDbContext DbContext
+        {
+            get { return dbContext; }
+            set
+            {
+                dbContext = value;
+                InitallStation();
+            }
+        }
+        private IDbContext dbContext;
+
 
         /// <summary>
         /// 目标文件夹
@@ -196,10 +208,18 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         #region Ctor
 
+        public ArcDataExportProgress()
+        {
+        }
+
         public ArcDataExportProgress(IDbContext db)
         {
             this.Name = "导出确权登记数据库成果";
             DbContext = db;
+        }
+
+        private void InitallStation()
+        {
             zoneStation = DbContext.CreateZoneWorkStation();
             VirtualPersonStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             contractLandWorkStation = DbContext.CreateContractLandWorkstation();
@@ -222,6 +242,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
             qghttable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_HT");
             qgqztable = DbContext.DataSource.CreateSchema().AnyElement(null, "QGCBJYQ_QZ");
+            dataProgress = new DataExportProgress();
         }
 
         #endregion Ctor
@@ -260,6 +281,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     System.IO.File.Copy(dbName, System.Windows.Forms.Application.StartupPath + @"\Data.sqlite", true);
                 }
                 ArcDataProgress();
+                ExporOther();
             }
             catch (System.Exception ex)
             {
@@ -267,11 +289,15 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     return;
                 LogWrite.WriteErrorLog(ex.ToString());
 
-                this.ReportError("导出成果库出错:" + ex.ToString());
+                this.ReportError("导出成果库出错:" + ex.Message);
                 this.ReportProgress(100, "完成");
                 return;
             }
             this.ReportProgress(100, "完成");
+        }
+
+        public virtual void ExporOther()
+        {
         }
 
         /// <summary>
@@ -513,7 +539,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 return;
             }
-            var dataProgress = new DataExportProgress();
+            //var dataProgress = new DataExportProgress();
             var spaceProgress = new ArcSpaceDataProgress();
             var extendSet = new HashSet<string>();
             spaceProgress.Alert += (s, e) => { this.ReportAlert(e.Grade, e.UserState, e.Description); };
@@ -591,7 +617,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             bool hasDx = false;
             foreach (var zone in zones)
             {
-                zoneName = string.Format("({0}/{1})", processIndex, zonCount) + GetZoneName(zones, zone);
+                zoneName = GetZoneName(zones, zone);
                 var summery = new DataSummary();
                 summery.UnitName = zone.FullName;
                 summery.UnitCode = InitalizeZoneCode(zone);
@@ -618,10 +644,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 try
                 {
-                    dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
+                    var info = dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
                         county.Name, county.FullCode, 0, county.FullCode + county.Name, summery,
                         /*ContainDotLine,*/ CBDKXXAwareAreaExportSet, sqllandList);
-                    this.ReportAlert(eMessageGrade.Infomation, null, zoneName + "下属性成果数据导出完毕!");
+                    this.ReportAlert(eMessageGrade.Infomation, null, $"{zoneName}下属性成果数据导出完成:{info}");
                 }
                 catch (Exception ex)
                 {
@@ -717,13 +743,27 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         List<DataSummary> summerys, List<Library.Entity.Zone> zones, HashSet<string> extendSet)
         {
             bool hasDx = false;
+            var qgcbfs = VirtualPersonStation.GetRelationByZone(zone.FullCode, eLevelOption.Subs);
+            var qghts = stockconcordStation.Get(sv => sv.ZoneCode.StartsWith(zone.FullCode));
+            var qgqzs = stockwarrantStation.GetByZoneCode(zone.FullCode, eLevelOption.SelfAndSubs);
+
+            DataCollection collection = new DataCollection();
+            var sqllandList = new List<SqliteDK>();
             var czones = zones.FindAll(t => t.UpLevelCode == zone.FullCode);
-            if (czones.Count > 0)
+            if (czones.Count == 0)
             {
-                var qgcbfs = VirtualPersonStation.GetRelationByZone(zone.FullCode, eLevelOption.Subs);
-                var qghts = stockconcordStation.Get(sv => sv.ZoneCode.StartsWith(zone.FullCode));
-                var qgqzs = stockwarrantStation.GetByZoneCode(zone.FullCode, eLevelOption.SelfAndSubs);
-                DataCollection collection = new DataCollection();
+                var summary = new DataSummary();
+                summary.UnitName = zone.FullName;
+                summary.UnitCode = InitalizeZoneCode(zone);
+                summary.Level = (Quality.Business.Entity.eZoneLevel)((int)(zone.Level));
+                summary.ZoneCode = zone.FullCode;
+                summerys.Add(summary);
+                var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
+                var pdata = dataProgress.SetDataToProgress(entityCollection);
+                collection.Add(pdata);
+            }
+            else
+            {
                 foreach (var cz in czones)
                 {
                     var summary = new DataSummary();
@@ -732,21 +772,13 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     summary.Level = (Quality.Business.Entity.eZoneLevel)((int)(cz.Level));
                     summary.ZoneCode = cz.FullCode;
                     summerys.Add(summary);
-                    var count = datas.FamilyCollection.Count(t => t.ZoneCode == cz.FullCode);
-                    if (count <= 0 && cz.Level == Library.Entity.eZoneLevel.Group)
+                    var dcount = datas.FamilyCollection.Count(t => t.ZoneCode == cz.FullCode);
+                    if (dcount <= 0 && cz.Level == Library.Entity.eZoneLevel.Group)
                     {
                         this.ReportAlert(eMessageGrade.Warn, null, zoneName + "下没有数据可供操作!");
                         continue;
                     }
-                    var sqllandList = new List<SqliteDK>();
-
-
-                    var qgcbfdata = qgcbfs.FindAll(f => f.ZoneCode == cz.FullCode);
-                    var qghtdata = qghts.FindAll(f => f.ZoneCode == cz.FullCode);
-                    var qgqzdata = qgqzs.FindAll(f => f.ZoneCode == cz.FullCode);
-
-
-                    var entityCollection = DataCheckProgress(cz, ref hasDx, extendSet, sqllandList, qgcbfdata, qghts, qgqzs, datas);
+                    var entityCollection = DataCheckProgress(cz, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
                     if ((entityCollection == null || entityCollection.Count == 0) && sqllandList.Count == 0)
                     {
                         continue;
@@ -756,17 +788,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     collection.Add(pdata);
                     entityCollection.Clear();
                 }
-                try
-                {
-                    var info = dataProgress.ExportDataFile(collection, "", 1);
-                    //var info = dataProgress.ExportDataFile(entityCollection, county.Name, county.FullCode, 0, county.FullCode + county.Name,
-                    //    summery, CBDKXXAwareAreaExportSet, sqllandList);
-                    this.ReportAlert(eMessageGrade.Infomation, null, $"导出{zone.FullName}下数据:{info}");
-                }
-                catch (Exception ex)
-                {
-                    this.ReportAlert(eMessageGrade.Error, null, ex.Message + ",详细信息请查看日志");
-                }
+            }
+            try
+            {
+                var info = dataProgress.ExportDataFile(collection, "", 1);
+                //var info = dataProgress.ExportDataFile(entityCollection, county.Name, county.FullCode, 0, county.FullCode + county.Name,
+                //    summery, CBDKXXAwareAreaExportSet, sqllandList);
+                this.ReportAlert(eMessageGrade.Infomation, null, $"导出{zone.FullName}下数据:{info}");
+            }
+            catch (Exception ex)
+            {
+                this.ReportAlert(eMessageGrade.Error, null, ex.Message + ",详细信息请查看日志");
             }
         }
 
@@ -1026,7 +1058,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     tissue = senderStation.GetByCode(zone.FullCode.PadRight(14, '0'));
                 }
             }
-
+            if (tissue == null)
+            {
+                this.ReportError($"未找到{zone.FullName}下的编码为{zone.FullCode.PadRight(14, '0')}的发包方！");
+                return null;
+            }
             List<ContractLand> landCollection = FilterLandType(familyCollection, AllLandCollection);//根据设置筛选地块
             List<ContractLand> landSpaceCollection = landCollection.FindAll(l => l.Shape != null);
 
@@ -1071,7 +1107,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             concordCollection = null;
             landCollection = null;
             familyCollection = null;
-            GC.Collect();
             return entityCollection;
         }
 
@@ -1339,6 +1374,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 {
                     ProcessConcordData(entity, concorditem, vplands, cbds, spacecdbs, spacecdbDKBMs, brqglands,
                         vp, landCollection, vphts, vpcbjyqzdjbs, bookCollection, vpcbjyqzs, landArray, serNumberTemp);
+
                 }
                 if (qghttable && qgqztable)
                 {
@@ -2346,7 +2382,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             string name = cZone.Name;
             var pZone = zones.Find(t => t.FullCode == cZone.UpLevelCode);
             if (pZone == null)
-                return name;
+            {
+                if (zones.Count == 1)
+                    return cZone.FullName;
+                else
+                    return name;
+            }
             while (pZone != null && pZone.Level <= YuLinTu.Library.Entity.eZoneLevel.County)
             {
                 name = pZone.Name + name;

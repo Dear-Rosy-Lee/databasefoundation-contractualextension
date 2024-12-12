@@ -2584,8 +2584,8 @@ namespace YuLinTu.Library.Controls
             meta.ImportType = eImport;
             var import = new TaskImportLandTiesTableOperation();
             import.Argument = meta;
-            import.Description = $"导入承包关系表中地块数据-{Path.GetFileName(fileName)}";
-            import.Name = $"导入承包关系表-{currentZone.Name}";
+            import.Description = $"导入摸底调查核实表中的数据-{Path.GetFileName(fileName)}";
+            import.Name = $"导入摸底调查表-{currentZone.Name}";
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
                 Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);

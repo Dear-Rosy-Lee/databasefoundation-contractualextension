@@ -138,6 +138,8 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(VirtualPerson virtualPerson, bool onlycode = false);
 
+        void UpdateListZoneCode(List<LandVirtualPerson> virtualPersons);
+
         int UpdateZoneCode(VirtualPerson virtualPerson);
         /// <summary>
         /// 根据id删除承包方信息

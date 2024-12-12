@@ -1700,7 +1700,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             {
                 throw new Exception("未找到地块矢量数据的坐标文件：" + landprj);
             }
-            return null;
         }
 
         protected string GetContentFromString(string complateString, string compareString, string splitString)

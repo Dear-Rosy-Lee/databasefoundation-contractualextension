@@ -2558,7 +2558,7 @@ namespace YuLinTu.Library.Controls
             meta.VirtualType = virtualType;
             meta.FamilyOtherSet = FamilyOtherSet;
             meta.SystemSet = SystemSet;
-            TaskExportVirtualPersonWordOperation import = new TaskExportVirtualPersonWordOperation();
+            var import = new TaskExportVirtualPersonWordOperation();
             import.Argument = meta;
             import.Description = VirtualPersonInfo.ExportDataWord;
             import.Name = VirtualPersonInfo.ExportTable;

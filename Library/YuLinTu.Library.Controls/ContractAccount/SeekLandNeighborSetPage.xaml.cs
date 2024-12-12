@@ -95,6 +95,10 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public double QueryThreshold { set; get; }
 
+        /// <summary>
+        /// 限制当前地域
+        /// </summary>
+        public bool OnlyCurrentZone { set; get; }
 
         public SeekLandNeighborSetPage(IWorkpage page)
         {

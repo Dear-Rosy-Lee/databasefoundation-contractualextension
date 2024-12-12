@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 
@@ -292,51 +290,7 @@ namespace YuLinTu.Component.StockRightBase
             SetBookmarkValue(AgricultureBookMark.BookWarrantNumber, number);//权证编号
 
         }
-
-        /// <summary>
-        /// 初始化省市简写
-        /// </summary>
-        /// <returns></returns>
-        private Dictionary<string, string> InitalizeSimpleProvice()
-        {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("北京市", "京");
-            dic.Add("天津市", "津");
-            dic.Add("河北省", "冀");
-            dic.Add("山西省", "晋");
-            dic.Add("内蒙古自治区", "内蒙古");
-            dic.Add("辽宁省", "辽");
-            dic.Add("吉林省", "吉");
-            dic.Add("黑龙江省", "黑");
-            dic.Add("上海市", "沪");
-            dic.Add("江苏省", "苏");
-            dic.Add("浙江省", "浙");
-            dic.Add("安徽省", "皖");
-            dic.Add("福建省", "闽");
-            dic.Add("江西省", "赣");
-            dic.Add("山东省", "鲁");
-            dic.Add("河南省", "豫");
-            dic.Add("湖北省", "鄂");
-            dic.Add("湖南省", "湘");
-            dic.Add("广东省", "粤");
-            dic.Add("广西壮族自治区", "桂");
-            dic.Add("海南省", "琼");
-            dic.Add("重庆市", "渝");
-            dic.Add("四川省", "川");
-            dic.Add("贵州省", "贵");
-            dic.Add("云南省", "云");
-            dic.Add("西藏自治区", "藏");
-            dic.Add("陕西省", "陕");
-            dic.Add("甘肃省", "甘");
-            dic.Add("青海省", "青");
-            dic.Add("宁夏回族自治区", "宁");
-            dic.Add("新疆维吾尔自治区", "新");
-            dic.Add("香港特别行政区", "港");
-            dic.Add("澳门特别行政区", "澳");
-            dic.Add("台湾省", "台");
-            return dic;
-        }
-
+         
         /// <summary>
         /// 注销
         /// </summary>
@@ -550,46 +504,7 @@ namespace YuLinTu.Component.StockRightBase
 
             landCollection.Clear();
             GC.Collect();
-        }
-
-        /// <summary>
-        /// 宗地排序
-        /// </summary>
-        /// <param name="lands"></param>
-        /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
-        {
-            if (lands == null || lands.Count == 0)
-            {
-                return new List<ContractLand>();
-            }
-            var orderdVps = lands.OrderBy(ld =>
-            {
-                int num = 0;
-                string landNumber = ContractLand.GetLandNumber(ld.CadastralNumber);
-                int index = landNumber.IndexOf("J");
-                if (index < 0)
-                {
-                    index = landNumber.IndexOf("Q");
-                }
-                if (index > 0)
-                {
-                    landNumber = landNumber.Substring(index + 1);
-                }
-                Int32.TryParse(landNumber, out num);
-                if (num == 0)
-                {
-                    num = 10000;
-                }
-                return num;
-            });
-            List<ContractLand> landCollection = new List<ContractLand>();
-            foreach (var land in orderdVps)
-            {
-                landCollection.Add(land);
-            }
-            return landCollection;
-        }
+        } 
 
         /// <summary>
         /// 设置共有人信息
