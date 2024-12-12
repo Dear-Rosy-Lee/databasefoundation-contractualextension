@@ -552,6 +552,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         {
             landPanel.Refresh();
             personPanel.Refresh();
+            belongRelations = belongRelationWorkStation.GetdDataByZoneCode(_currentZone.FullCode, eLevelOption.Self);
             RefreshContractAcount();
         }
 

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using YuLinTu.Appwork;
 using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Data;
+using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 
@@ -66,7 +67,19 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void Updata()
         {
+            ModuleMsgArgs moduleMsg = new ModuleMsgArgs();
+            moduleMsg.Set("StockRightBase_Refresh", CurrentZone);
+            SendMessasge(moduleMsg);
+        }
 
+        /// <summary>
+        /// 发送消息(三种)
+        /// </summary>
+        private void SendMessasge(ModuleMsgArgs args)
+        {
+            //TheWorkpage.Message.Send(this, args);
+            TheWorkpage.Workspace.Message.Send(this, args);
+            //TheBns.Current.Message.Send(this, args);
         }
     }
 }
