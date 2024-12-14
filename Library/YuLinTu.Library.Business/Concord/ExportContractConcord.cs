@@ -511,7 +511,7 @@ namespace YuLinTu.Library.Business
             var contractorAddress = GetSettingContractorName(concord.ZoneCode) ?? virtualPerson.Address;
             for (int i = 0; i < 6; i++)
             {
-                SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
+                SetBookmarkValue("ConcordSenderName" + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
                 SetBookmarkValue("ContractorAddress" + (i == 0 ? "" : i.ToString()), contractorAddress);     // 承包方地址
             }
 

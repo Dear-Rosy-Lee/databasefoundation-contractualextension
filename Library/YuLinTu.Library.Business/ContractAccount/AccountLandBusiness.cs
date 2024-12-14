@@ -427,7 +427,7 @@ namespace YuLinTu.Library.Business
         /// <param name="zoneCode">地域编码</param>
         /// <param name="option">匹配等级</param>
         /// <returns>地块集合</returns>
-        public List<ContractLand> GetCollection(string zoneCode, eLevelOption option)
+        public List<ContractLand> GetCollection(string zoneCode, eLevelOption option, bool thr = false)
         {
             List<ContractLand> list = null;
             if (!CanContinue() || string.IsNullOrEmpty(zoneCode))
@@ -442,6 +442,10 @@ namespace YuLinTu.Library.Business
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "GetCollection(获取承包台账地块集合)", ex.Message + ex.StackTrace);
                 this.ReportError("获取承包台账地块集合失败," + ex.Message);
+                if (thr)
+                {
+                    throw new Exception("获取承包台账地块集合失败，请检查或升级数据库");
+                }
             }
             return list;
         }

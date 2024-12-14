@@ -25,13 +25,13 @@
                             Width="100"
                             VerticalAlignment="Center"
                             DockPanel.Dock="Left"
-                            Text="安全服务器地址:" />
+                            Text="更新服务器地址:" />
                         <cmps:MetroTextBox
                             Height="30"
                             VerticalAlignment="Center"
                             Text="{Binding ServiceSettingDefine.BusinessSecurityAddress, Mode=TwoWay}" />
                     </DockPanel>
-                    <DockPanel
+                    <!--<DockPanel
                         Grid.Row="1"
                         Margin="0,5,0,0"
                         LastChildFill="True"
@@ -41,11 +41,11 @@
                             VerticalAlignment="Center"
                             DockPanel.Dock="Left"
                             Text="登录服务器地址:" />
-                        <cmps:MetroTextBox
+                        <cmps:MetroTextBox Name="mtb"
                             Height="30"
                             VerticalAlignment="Center"
                             Text="{Binding ServiceSettingDefine.BusinessLoadAddress, Mode=TwoWay}" />
-                    </DockPanel>
+                    </DockPanel>-->
                     <DockPanel
                         Grid.Row="1"
                         Margin="0,5,0,0"
@@ -60,13 +60,13 @@
                             VerticalAlignment="Center"
                             Text="{Binding ServiceSettingDefine.BusinessDataAddress, Mode=TwoWay}" />
                     </DockPanel>
-                    <CheckBox
+                    <!--<CheckBox
                         Grid.Row="2"
                         Margin="0,8,0,0"
                         VerticalAlignment="Center"
                         Content="启用安全服务验证"
                         IsChecked="{Binding ServiceSettingDefine.UseSafeConfirm, Mode=TwoWay}"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed" />-->
                 </Grid>
             </StackPanel>
         </cmps:OptionsContainer>
@@ -94,24 +94,25 @@
                             IsReadOnly="True" />
                     </DockPanel>
 
-                    <metro:MetroButton
+                    <metro:MetroButton HorizontalAlignment="Left"
                         Name="btnCheckUpdate"
-                        Grid.Row="1"
-                        Margin="-7,10,0,0"
+                        Grid.Row="1" Width="85"
+                        Margin="-10,10,0,0" 
                         HorizontalContentAlignment="Left"
                         VerticalContentAlignment="Stretch"
                         x:FieldModifier="public"
                         Click="CheckUpdate_Click">
                         <cmps:ImageTextItem
-                            Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/connectedtoolsyncmenu.png"
-                            ImagePosition="Left"
+                            Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/connectedtoolsyncmenu.png" 
+                            SnapsToDevicePixels="True"
+                            ImagePosition="Bottom"
                             Text="检查更新" />
                     </metro:MetroButton>
                 </Grid>
             </StackPanel>
         </cmps:OptionsContainer>
 
-        <cmps:OptionsContainer Text="土地调查" Visibility="Hidden">
+        <!-- <cmps:OptionsContainer Text="土地调查" Visibility="Hidden">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -122,11 +123,11 @@
                         <TextBlock
                             Width="100"
                             DockPanel.Dock="Left"
-                            Text="安全服务器地址:" />
+                            Text="更新服务器地址:" />
                         <cmps:MetroTextBox
                             Height="30"
                             VerticalAlignment="Center"
-                            Text="{Binding ServiceSettingDefine.SurveySecurityAddress, Mode=TwoWay}" />
+                            Text="{Binding ServiceSettingDefine.BusinessSecurityAddress, Mode=TwoWay}" />
                     </DockPanel>
                     <DockPanel
                         Grid.Row="1"
@@ -143,6 +144,6 @@
                     </DockPanel>
                 </Grid>
             </StackPanel>
-        </cmps:OptionsContainer>
+        </cmps:OptionsContainer>-->
     </StackPanel>
 </appCore:OptionsEditor>

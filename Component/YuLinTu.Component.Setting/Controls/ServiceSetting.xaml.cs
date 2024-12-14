@@ -3,31 +3,16 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Appwork;
-
-using YuLinTu.Library.Business;
-using AutoUpdaterDotNET;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net;
+using System.Reflection;
+using System.Threading;
+using System.Windows;
 using System.Windows.Forms;
+using AutoUpdaterDotNET;
+using YuLinTu.Appwork;
+using YuLinTu.Library.Business;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.Setting
 {
@@ -64,6 +49,7 @@ namespace YuLinTu.Component.Setting
         {
             InitializeComponent();
             InitializeData();
+            ServiceSettingDefine = ServiceSettingDefine == null ? ServiceSetDefine.GetIntence() : ServiceSettingDefine;
             DataContext = this;
         }
 
@@ -112,25 +98,27 @@ namespace YuLinTu.Component.Setting
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            string updateUrl = "http://192.168.20.16:8080/view/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E7%A1%AE%E6%9D%83%E5%B7%A5%E5%85%B7/job/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E5%BB%B6%E5%8C%85%E5%BB%BA%E5%BA%93%E5%B7%A5%E5%85%B7/ws/update.xml";
+            AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
+            AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
+            AutoUpdater.AppTitle = "升级更新";
+            string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/pf/update.xml";
             await VerifyLink(updateUrl);
         }
 
         private async System.Threading.Tasks.Task VerifyLink(string updateUrl)
         {
             string username = "admin";
-            string password = "jenkins@Admin2023";
+            string password = "yltadmin";
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
-
             HttpResponseMessage response = await client.GetAsync(updateUrl);
-
             if (response.IsSuccessStatusCode)
             {
+                AutoUpdater.InstallationPath = AppDomain.CurrentDomain.BaseDirectory;
                 BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                 AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
-
                 AutoUpdater.Start(updateUrl);
             }
         }
@@ -147,12 +135,16 @@ namespace YuLinTu.Component.Setting
                         AutoUpdater.DownloadUpdate(args);
                     }
                 }
-           
             }
             else
             {
                 Console.WriteLine("Your application is up to date.");
             }
+        }
+
+        private void AutoUpdater_ApplicationExitEvent()
+        {
+
         }
     }
 

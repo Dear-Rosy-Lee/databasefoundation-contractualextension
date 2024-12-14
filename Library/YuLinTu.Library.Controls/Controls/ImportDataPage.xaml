@@ -69,8 +69,8 @@
                                 VerticalAlignment="Center"
                                 Height="30"
                                 Padding="5,0,0,0">
-                <ComboBoxItem IsSelected="True"
-                              Tag="Ignore">覆盖全部数据</ComboBoxItem>
+                <ComboBoxItem IsSelected="True" Tag="IgnorePart">覆盖属性保留图形数据</ComboBoxItem>
+                <ComboBoxItem Tag="Ignore">覆盖全部数据</ComboBoxItem>
                 <ComboBoxItem Tag="Over">只覆盖承包方数据</ComboBoxItem>
                 <!--<ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
             </cmps:MetroComboBox>

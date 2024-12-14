@@ -4,6 +4,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Controls
@@ -26,6 +27,11 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public string FileName { get; private set; }
 
+        /// <summary>
+        /// 导入类型
+        /// </summary>
+        public eImportTypes ImportType { get; private set; }
+
         #endregion
 
         #region Methods
@@ -34,7 +40,7 @@ namespace YuLinTu.Library.Controls
         /// 构造方法
         /// </summary>
         public ExportDataPage(string Name, IWorkpage page, string header, string desc = "", string btnName = "",
-            string lbPathName = "")
+            string lbPathName = "", bool biptctl = false)
         {
             InitializeComponent();
             DataContext = this;
@@ -47,15 +53,34 @@ namespace YuLinTu.Library.Controls
             if (!string.IsNullOrEmpty(lbPathName))
                 lbPath.Content = lbPathName;
             btnExcuteImport.IsEnabled = false;
+            iptctl.Visibility = biptctl ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        ///// <summary>
-        ///// 执行
-        ///// </summary>
-        //private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Workpage.Page.CloseMessageBox(true);
-        //}
+        /// <summary>
+        /// 执行
+        /// </summary>
+        private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem cbi = cbtype.SelectedItem as ComboBoxItem;
+            string typestr = cbi.Tag.ToString();
+            if (typestr == eImportTypes.Clear.ToString())
+            {
+                ImportType = eImportTypes.Clear;
+            }
+            else if (typestr == eImportTypes.Over.ToString())
+            {
+                ImportType = eImportTypes.Over;
+            }
+            else if (typestr == eImportTypes.Ignore.ToString())
+            {
+                ImportType = eImportTypes.Ignore;
+            }
+            else if (typestr == eImportTypes.IgnorePart.ToString())
+            {
+                ImportType = eImportTypes.IgnorePart;
+            }
+            Workpage.Page.CloseMessageBox(true);
+        }
 
         /// <summary>
         /// 文件浏览

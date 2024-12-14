@@ -162,6 +162,15 @@ namespace YuLinTu.Library.Business
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
                     landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
+                    foreach (var ld in landFamily.LandCollection)
+                    {
+                        var yld = remainLands.Find(t => t.LandNumber == ld.LandNumber);
+                        if (yld != null)
+                        {
+                            ld.Shape = yld.Shape;
+                        }
+                    }
+
                     personStation.Add(landFamily.CurrentFamily);
                     if (ImportType != eImportTypes.Over)//只更新承包方
                     {

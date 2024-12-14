@@ -15,6 +15,7 @@ namespace YuLinTu.Library.Business
     {
         Clear = 0,//清空
         Over,//覆盖
-        Ignore//忽略
+        Ignore,//忽略
+        IgnorePart
     }
 }

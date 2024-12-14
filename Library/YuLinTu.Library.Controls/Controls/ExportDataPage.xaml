@@ -42,7 +42,24 @@
                 </metro:MetroButton>
                 <cmps:MetroTextBox Name="txt_file" Height="30" SnapsToDevicePixels="True" DockPanel.Dock="Left" TextChanged="txt_file_TextChanged_1" BorderThickness="1" VerticalAlignment="Center"/>
             </DockPanel>
-
+            <Label Content="导入类型:"
+       Visibility="Visible"
+       Grid.Row="2"
+       VerticalAlignment="Center"
+       HorizontalAlignment="Left"
+       HorizontalContentAlignment="Left"  x:Name="iptctl"/>
+            <cmps:MetroComboBox Grid.Column="1"
+                    Visibility="{Binding  ElementName=iptctl,Path=Visibility}"
+                    Name="cbtype"
+                    Grid.Row="2"
+                    VerticalAlignment="Center"
+                    Height="30"
+                    Padding="5,0,0,0">
+                <ComboBoxItem IsSelected="True" Tag="IgnorePart">覆盖属性保留图形数据</ComboBoxItem>
+                <ComboBoxItem Tag="Ignore">覆盖全部数据</ComboBoxItem>
+                <ComboBoxItem Tag="Over">只覆盖承包方数据</ComboBoxItem>
+                <!--<ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
+            </cmps:MetroComboBox>
             <!--<Label Content="导出路径:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left"/>
             <TextBlock Name="tbpath" TextWrapping="Wrap" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>-->
         </Grid>
@@ -67,8 +84,8 @@
                 <metro:MetroButton DockPanel.Dock="Right" 
                                    Name="btnExcuteImport"
                                    Padding="5" IsEnabled="{Binding CanClose}"
-                                   Height="30"    
-                                   Command="{x:Static metro:MetroCommands.ConfirmTabMessageBoxCommand}"
+                                   Height="30"   
+                                   Click="btnExcuteImport_Click"
                                    Style="{StaticResource Metro_Button_Paneled_Style}">
                     <StackPanel Orientation="Horizontal">
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"

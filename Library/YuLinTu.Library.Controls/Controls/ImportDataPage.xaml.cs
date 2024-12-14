@@ -31,11 +31,16 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public eImportTypes ImportType { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Multiselect { get; set; }
+
         #endregion
 
         #region Ctor
 
-        public ImportDataPage(IWorkpage page, string header, string desc = "", string filter = "")
+        public ImportDataPage(IWorkpage page, string header, string desc = "", string filter = "", bool multise = false)
         {
             InitializeComponent();
 
@@ -43,6 +48,7 @@ namespace YuLinTu.Library.Controls
             this.Header = header;
             this.Workpage = page;
             this.filter = filter;
+            this.Multiselect = multise;
             if (!header.Contains("摸底核实"))
                 iptctl.Visibility = Visibility.Hidden;
         }
@@ -57,7 +63,7 @@ namespace YuLinTu.Library.Controls
         private void btnFileSelect_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Multiselect = false;
+            ofd.Multiselect = Multiselect;
             ofd.Filter = string.IsNullOrEmpty(filter) ? "文件类型(*.xls,*.xlsx)|*.xls;*.xlsx" : filter;
             var val = ofd.ShowDialog();
             if (val == null || !val.Value)
@@ -96,13 +102,17 @@ namespace YuLinTu.Library.Controls
             {
                 ImportType = eImportTypes.Clear;
             }
-            if (typestr == eImportTypes.Over.ToString())
+            else if (typestr == eImportTypes.Over.ToString())
             {
                 ImportType = eImportTypes.Over;
             }
-            if (typestr == eImportTypes.Ignore.ToString())
+            else if (typestr == eImportTypes.Ignore.ToString())
             {
                 ImportType = eImportTypes.Ignore;
+            }
+            else if (typestr == eImportTypes.IgnorePart.ToString())
+            {
+                ImportType = eImportTypes.IgnorePart;
             }
             Workpage.Page.CloseMessageBox(true);
         }

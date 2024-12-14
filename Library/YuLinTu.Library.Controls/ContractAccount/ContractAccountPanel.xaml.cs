@@ -390,7 +390,7 @@ namespace YuLinTu.Library.Controls
                 arg.Instance.ReportProgress(1, zoneFullName);
             string zoneCode = currentZone.FullCode;
             currentPersonList = PersonBusiness.GetByZone(zoneCode);
-            landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self);
+            landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self, true);
             if (IsStockLand)
             {
                 //landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
@@ -2499,7 +2499,20 @@ namespace YuLinTu.Library.Controls
                     {
                         return;
                     }
-                    ImportLandTiesTask(importLand.FileName, importLand.ImportType);
+                    ImportLandTiesTask(currentZone, importLand.FileName, importLand.ImportType);
+                });
+            }
+            else if (currentZone.Level == eZoneLevel.Village && childrenZones != null && childrenZones.Count > 0)
+            {
+                //选择为村级地域并且地域下有子级地域(多个表格导入)
+                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入摸底核实表", "请选择保存文件路径", "导入", "导入路径:", true);
+                TheWorkPage.Page.ShowMessageBox(batchImportDlg, (b, r) =>
+                {
+                    if (!(bool)b || string.IsNullOrEmpty(batchImportDlg.FileName))
+                    {
+                        return;
+                    }
+                    ImportLandTiesTaskGroup(batchImportDlg.FileName, childrenZones, batchImportDlg.ImportType);
                 });
             }
             else
@@ -2575,21 +2588,24 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        public void ImportLandTiesTask(string fileName, eImportTypes eImport = eImportTypes.Over)
+        /// <summary>
+        /// 导入摸底调查表任务
+        /// </summary>
+        public void ImportLandTiesTask(Zone czone, string fileName, eImportTypes eImport = eImportTypes.Over)
         {
             var meta = new TaskImportLandTiesTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
-            meta.CurrentZone = currentZone;    //当前地域
+            meta.CurrentZone = czone;    //当前地域
             meta.FileName = fileName;
             meta.ImportType = eImport;
             var import = new TaskImportLandTiesTableOperation();
             import.Argument = meta;
             import.Description = $"导入摸底调查核实表中的数据-{Path.GetFileName(fileName)}";
-            import.Name = $"导入摸底调查表-{currentZone.Name}";
+            import.Name = $"导入摸底调查表-{czone.Name}";
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
                 Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
-                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode);
+                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, czone.FullCode);
                 SendMessasge(args);
             });
             import.Terminated += new TaskTerminatedEventHandler((o, t) =>
@@ -2602,6 +2618,36 @@ namespace YuLinTu.Library.Controls
                 ShowTaskViewer();
             }
             import.StartAsync();
+        }
+
+        /// <summary>
+        /// 批量导入摸底调查表任务
+        /// </summary>
+        /// <param name="fileName">选择文件夹路径</param>
+        private void ImportLandTiesTaskGroup(string path, List<Zone> childrenZones, eImportTypes eImport = eImportTypes.Over)
+        {
+            List<string> files = new List<string>();
+            FindAllFile(path, files);
+            foreach (var item in childrenZones)
+            {
+                var filename = files.Find(t => Path.GetFileNameWithoutExtension(t).Contains(item.Name));
+                if (string.IsNullOrEmpty(filename))
+                {
+                    continue;
+                }
+                ImportLandTiesTask(item, filename, eImport);
+            }
+        }
+
+        public void FindAllFile(string path, List<string> files)
+        {
+            var dires = Directory.GetDirectories(path);
+            var fs = Directory.GetFiles(path);
+            files.AddRange(fs.ToList());
+            foreach (var dir in dires)
+            {
+                FindAllFile(dir, files);
+            }
         }
 
         /// <summary>
