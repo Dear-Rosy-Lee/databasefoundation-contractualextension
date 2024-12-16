@@ -169,6 +169,10 @@ namespace YuLinTu.Library.Business
                         {
                             ld.Shape = yld.Shape;
                         }
+                        else 
+                        {
+                            Log.Log.WriteError(this, "ImportLandEntity", $"未在数据中找到{ld.LandNumber}的图形");
+                        }
                     }
 
                     personStation.Add(landFamily.CurrentFamily);

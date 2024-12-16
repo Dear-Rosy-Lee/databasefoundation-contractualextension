@@ -3,12 +3,13 @@
  */
 
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
+using System.Xml;
 using AutoUpdaterDotNET;
 using YuLinTu.Appwork;
 using YuLinTu.Library.Business;
@@ -73,7 +74,7 @@ namespace YuLinTu.Component.Setting
                 var profile = center.GetProfile<ServiceSetDefine>();
                 var section = profile.GetSection<ServiceSetDefine>();
                 serviceSet = (section.Settings as ServiceSetDefine);
-                ServiceSettingDefine = serviceSet.Clone() as ServiceSetDefine;
+                ServiceSettingDefine.CopyPropertiesFrom(serviceSet);//.Clone() as ServiceSetDefine;
             }));
         }
 
@@ -98,11 +99,13 @@ namespace YuLinTu.Component.Setting
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
+
             AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
             AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
             AutoUpdater.AppTitle = "升级更新";
-            string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/pf/update.xml";
+            string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
             await VerifyLink(updateUrl);
         }
 
@@ -119,31 +122,83 @@ namespace YuLinTu.Component.Setting
                 AutoUpdater.InstallationPath = AppDomain.CurrentDomain.BaseDirectory;
                 BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                 AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
-                AutoUpdater.Start(updateUrl);
+                AutoUpdater.OpenDownloadPage = true;
+                AutoUpdater.Start(updateUrl, new NetworkCredential(username, password));
             }
+        }
+
+        /// <summary>
+        /// 更新软件
+        /// </summary>
+        private void AutoUpdaterOnParseUpdateInfoEvent(ParseUpdateInfoEventArgs args)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadFromString(args.RemoteData);
+            var node = xmlDoc.SelectSingleNode("item");
+            //dynamic json = JsonConvert.DeserializeObject(args.RemoteData);
+            args.UpdateInfo = new UpdateInfoEventArgs
+            {
+                CurrentVersion = node.SelectSingleNode("version").InnerText,
+                ChangelogURL = node.SelectSingleNode("changelog").InnerText,//json.changelog,
+                DownloadURL = node.SelectSingleNode("url").InnerText,//json.url,
+                Mandatory = new Mandatory
+                {
+                    Value = false,//json.mandatory.value,
+                    UpdateMode = Mode.ForcedDownload,
+                    MinimumVersion = node.SelectSingleNode("version").InnerText
+                },
+                CheckSum = new CheckSum
+                {
+                    Value = "E5F59E50FC91A9E52634FFCB11F32BD37FE0E2F1",
+                    HashingAlgorithm = "SHA1"
+                }
+            };
         }
 
         private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
-            if (args != null)
+            if (args == null)
             {
-                if (args.IsUpdateAvailable)
-                {
-                    DialogResult result = (DialogResult)System.Windows.MessageBox.Show("当前软件有更新，是否下载", "提示", MessageBoxButton.YesNo);
-                    if (result == DialogResult.Yes)
-                    {
-                        AutoUpdater.DownloadUpdate(args);
-                    }
-                }
+                return;
+            }
+            if (!args.IsUpdateAvailable)
+            {
+                Console.WriteLine("Your application is up to date.");
+                return;
+            }
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh-CN");
+
+            MessageBoxResult dialogResult;
+            if (args.Mandatory.Value)
+            {
+                dialogResult = System.Windows.MessageBox.Show(
+                        $@"当前最新版本 {args.CurrentVersion} 可用. 这是个必要的更新，点击确定开始更新程序...", @"可用更新",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
             }
             else
             {
-                Console.WriteLine("Your application is up to date.");
+                dialogResult = System.Windows.MessageBox.Show(
+                        $@"当前最新版本 {args.CurrentVersion} 可用. 是否要下载更新?\r\n 更新内容：\r\n {args.ChangelogURL}", @"可用更新",
+                        MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Yes);
+            }
+            //AutoUpdater.DownloadUpdate(args);
+
+            //DialogResult result = (DialogResult)System.Windows.MessageBox.Show("当前软件有更新，是否下载", "提示", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes || dialogResult == MessageBoxResult.OK)
+            {
+                if (AutoUpdater.DownloadUpdate(args))
+                {
+                    Thread.Sleep(5000);
+                    System.Windows.Application.Current.Shutdown();
+                }
             }
         }
 
         private void AutoUpdater_ApplicationExitEvent()
         {
+            Thread.Sleep(5000);
+            System.Windows.Application.Current.Shutdown();
 
         }
     }

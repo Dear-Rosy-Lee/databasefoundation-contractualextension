@@ -2591,7 +2591,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 导入摸底调查表任务
         /// </summary>
-        public void ImportLandTiesTask(Zone czone, string fileName, eImportTypes eImport = eImportTypes.Over)
+        public TaskImportLandTiesTableOperation ImportLandTiesTask(Zone czone, string fileName, eImportTypes eImport = eImportTypes.Over, bool syncstart = true)
         {
             var meta = new TaskImportLandTiesTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
@@ -2612,12 +2612,16 @@ namespace YuLinTu.Library.Controls
             {
                 ShowBox(ContractAccountInfo.ImportData, ContractAccountInfo.ImportDataFail);
             });
-            TheWorkPage.TaskCenter.Add(import);
-            if (ShowTaskViewer != null)
+            if (syncstart)
             {
-                ShowTaskViewer();
+                TheWorkPage.TaskCenter.Add(import);
+                if (ShowTaskViewer != null)
+                {
+                    ShowTaskViewer();
+                }
+                import.StartAsync();
             }
-            import.StartAsync();
+            return import;
         }
 
         /// <summary>
@@ -2628,6 +2632,20 @@ namespace YuLinTu.Library.Controls
         {
             List<string> files = new List<string>();
             FindAllFile(path, files);
+            var importgroup = new TaskGroup();
+            importgroup.Argument = null;
+            importgroup.Description = $"批量导入摸底调查核实表";
+            importgroup.Name = $"导入摸底调查表-{currentZone.Name}";
+            importgroup.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
+                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode);
+                SendMessasge(args);
+            });
+            importgroup.Terminated += new TaskTerminatedEventHandler((o, t) =>
+            {
+                ShowBox(ContractAccountInfo.ImportData, ContractAccountInfo.ImportDataFail);
+            });
             foreach (var item in childrenZones)
             {
                 var filename = files.Find(t => Path.GetFileNameWithoutExtension(t).Contains(item.Name));
@@ -2635,8 +2653,14 @@ namespace YuLinTu.Library.Controls
                 {
                     continue;
                 }
-                ImportLandTiesTask(item, filename, eImport);
+                importgroup.Add(ImportLandTiesTask(item, filename, eImport, false));
             }
+            TheWorkPage.TaskCenter.Add(importgroup);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            importgroup.StartAsync();
         }
 
         public void FindAllFile(string path, List<string> files)
