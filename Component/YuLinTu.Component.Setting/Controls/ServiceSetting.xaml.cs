@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -182,16 +183,17 @@ namespace YuLinTu.Component.Setting
             XmlDocument xml = new XmlDocument();
             xml.LoadFromString(content);
             XmlNode node2 = xml.SelectSingleNode("html//body//ul");
-            string changelog = "";
+            StringBuilder stringBuilder = new StringBuilder();
             if (node2 != null)
             {
-
+                int index = 1;
                 foreach (var item in node2.ChildNodes)
                 {
-                    changelog += ((System.Xml.XmlElement)item).InnerText;
+                    stringBuilder.AppendLine($"{index}. {((System.Xml.XmlElement)item).InnerText} ");
+                    index++;
                 }
             }
-             
+
             MessageBoxResult dialogResult;
             if (args.Mandatory.Value)
             {
@@ -203,7 +205,7 @@ namespace YuLinTu.Component.Setting
             {
                 dialogResult = System.Windows.MessageBox.Show($@"当前最新版本 {args.CurrentVersion} 可用. 是否要下载更新?
 更新内容：
-{changelog}", @"可用更新",
+{stringBuilder.ToString()}", @"可用更新",
                         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
             }
             //AutoUpdater.DownloadUpdate(args);
