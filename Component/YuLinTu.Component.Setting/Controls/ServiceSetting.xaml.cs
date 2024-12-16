@@ -7,10 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
 using System.Xml;
 using AutoUpdaterDotNET;
+using OSGeo.GDAL;
 using YuLinTu.Appwork;
 using YuLinTu.Library.Business;
 using YuLinTu.Windows;
@@ -106,6 +109,7 @@ namespace YuLinTu.Component.Setting
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
             AutoUpdater.AppTitle = "升级更新";
             string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
+            string uplogUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/changelog.html";
             await VerifyLink(updateUrl);
         }
 
@@ -163,24 +167,44 @@ namespace YuLinTu.Component.Setting
             }
             if (!args.IsUpdateAvailable)
             {
-                Console.WriteLine("Your application is up to date.");
+                System.Windows.MessageBox.Show($@"当前无可用的更新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh-CN");
 
+            string username = "admin";
+            string password = "yltadmin";
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh-CN");
+            System.Net.WebClient client = new WebClient();
+            string credentials = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(username + ":" + password));
+            client.Headers.Add("Authorization", "Basic " + credentials);
+            byte[] page = client.DownloadData(args.ChangelogURL);
+            string content = System.Text.Encoding.UTF8.GetString(page);
+            XmlDocument xml = new XmlDocument();
+            xml.LoadFromString(content);
+            XmlNode node2 = xml.SelectSingleNode("html//body//ul");
+            string changelog = "";
+            if (node2 != null)
+            {
+
+                foreach (var item in node2.ChildNodes)
+                {
+                    changelog += ((System.Xml.XmlElement)item).InnerText;
+                }
+            }
+             
             MessageBoxResult dialogResult;
             if (args.Mandatory.Value)
             {
-                dialogResult = System.Windows.MessageBox.Show(
-                        $@"当前最新版本 {args.CurrentVersion} 可用. 这是个必要的更新，点击确定开始更新程序...", @"可用更新",
+                dialogResult = System.Windows.MessageBox.Show($@"当前最新版本 {args.CurrentVersion} 可用. 这是个必要的更新，点击确定开始更新程序...", @"可用更新",
                         MessageBoxButton.OK,
-                        MessageBoxImage.Information);
+                        MessageBoxImage.Question);
             }
             else
             {
-                dialogResult = System.Windows.MessageBox.Show(
-                        $@"当前最新版本 {args.CurrentVersion} 可用. 是否要下载更新?\r\n 更新内容：\r\n {args.ChangelogURL}", @"可用更新",
-                        MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Yes);
+                dialogResult = System.Windows.MessageBox.Show($@"当前最新版本 {args.CurrentVersion} 可用. 是否要下载更新?
+更新内容：
+{changelog}", @"可用更新",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
             }
             //AutoUpdater.DownloadUpdate(args);
 

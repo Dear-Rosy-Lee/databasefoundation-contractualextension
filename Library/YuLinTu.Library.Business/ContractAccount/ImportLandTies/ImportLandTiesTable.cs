@@ -168,6 +168,8 @@ namespace YuLinTu.Library.Business
                         if (yld != null)
                         {
                             ld.Shape = yld.Shape;
+                            ld.OwnRightType=yld.OwnRightType;
+                            ld.LandExpand = yld.LandExpand;
                         }
                         else 
                         {
