@@ -76,12 +76,13 @@ namespace YuLinTu.Library.Business
             {
                 var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
 
-                TaskExportPublishWordArgument argument = new TaskExportPublishWordArgument();
+                var argument = new TaskExportPublishWordArgument();
                 argument.SelectedPersons = listPersons == null ? new List<VirtualPerson>() : listPersons;
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.FileName = fileName;
-                TaskExportPublishWordOperation operation = new TaskExportPublishWordOperation();
+                argument.ContractSettingDefine = groupArgument.ContractSettingDefine;
+                var operation = new TaskExportPublishWordOperation();
                 operation.Argument = argument;
                 operation.Name = "批量导出公示结果归户表";
                 operation.Description = zone.FullName;

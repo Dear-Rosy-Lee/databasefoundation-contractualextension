@@ -2,12 +2,7 @@
  * (C) 2015  鱼鳞图公司版权所有,保留所有权利
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Business
 {
@@ -33,6 +28,7 @@ namespace YuLinTu.Library.Business
         private bool surveyLimitFillWay;
         private bool exportCompatibleOldDataExchange;
         private bool exportLandTableUseUnitNumber;
+        private bool exportPublicTableDeleteEmpty;
         private bool _isCheckedRibbing;
         private bool _isCheckedBaulk;
 
@@ -66,13 +62,13 @@ namespace YuLinTu.Library.Business
         public bool WriteRightArea
         {
             get { return writeRightArea; }
-            set { writeRightArea = value; NotifyPropertyChanged("writeRightArea"); }
+            set { writeRightArea = value; NotifyPropertyChanged("WriteRightArea"); }
         }
 
         public bool ContractDelayArea
         {
             get { return contractDelayArea; }
-            set { contractDelayArea = value; NotifyPropertyChanged("contractDelayArea"); }
+            set { contractDelayArea = value; NotifyPropertyChanged("ContractDelayArea"); }
         }
 
         /// <summary>
@@ -150,7 +146,7 @@ namespace YuLinTu.Library.Business
         public bool SurveyLimitFillWay
         {
             get { return surveyLimitFillWay; }
-            set { surveyLimitFillWay = value; NotifyPropertyChanged("surveyLimitFillWay"); }
+            set { surveyLimitFillWay = value; NotifyPropertyChanged("SurveyLimitFillWay"); }
         }
 
         /// <summary>
@@ -159,13 +155,19 @@ namespace YuLinTu.Library.Business
         public bool ExportCompatibleOldDataExchange
         {
             get { return exportCompatibleOldDataExchange; }
-            set { exportCompatibleOldDataExchange = value; NotifyPropertyChanged("exportCompatibleOldDataExchange"); }
+            set { exportCompatibleOldDataExchange = value; NotifyPropertyChanged(nameof(ExportCompatibleOldDataExchange)); }
         }
 
         public bool ExportLandTableUseUnitNumber
         {
             get { return exportLandTableUseUnitNumber; }
-            set { exportLandTableUseUnitNumber = value; NotifyPropertyChanged("exportLandTableUseUnitNumber"); }
+            set { exportLandTableUseUnitNumber = value; NotifyPropertyChanged("ExportLandTableUseUnitNumber"); }
+        }
+
+        public bool ExportPublicTableDeleteEmpty
+        {
+            get { return exportPublicTableDeleteEmpty; }
+            set { exportPublicTableDeleteEmpty = value; NotifyPropertyChanged("ExportPublicTableDeleteEmpty"); }
         }
 
         /// <summary>
@@ -208,6 +210,7 @@ namespace YuLinTu.Library.Business
             ExportLandTableUseUnitNumber = false;
             IsCheckedRibbing = true;
             IsCheckedBaulk = false;
+            ExportPublicTableDeleteEmpty = false;
         }
 
         #endregion Ctor

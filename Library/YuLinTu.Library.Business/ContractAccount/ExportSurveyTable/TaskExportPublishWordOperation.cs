@@ -142,7 +142,7 @@ namespace YuLinTu.Library.Business
                     var concords = concordlist.FindAll(t => t.ContracterId == family.ID);
                     var landsOfFamily = listLand.FindAll(c => c.OwnerId == family.ID);
                     string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
-                    ExportPublicityWordTable export = new ExportPublicityWordTable();
+                    var export = new ExportPublicityWordTable();
 
                     #region 通过反射等机制定制化具体的业务处理类
                     var temp = WorksheetConfigHelper.GetInstance(export);
@@ -160,6 +160,7 @@ namespace YuLinTu.Library.Business
                     export.Contractor = family;
                     export.DictList = listDict == null ? new List<Dictionary>() : listDict;
                     export.LandCollection = landsOfFamily == null ? new List<ContractLand>() : landsOfFamily;  //地块集合
+                    export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
                     //if(family.IsStockFarmer)
                     //    export.LandCollection.AddRange(landStocks);
                     if (SystemSetDefine.ExportTableSenderDesToVillage)

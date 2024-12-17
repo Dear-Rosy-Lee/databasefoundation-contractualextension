@@ -3024,7 +3024,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出公示结果归户表(Word)
         /// </summary>
-        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "")
+        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "", bool exportdelempty = false)
         {
             bool flag = false;
             try
@@ -3059,6 +3059,7 @@ namespace YuLinTu.Library.Business
                 export.DictList = DictList;
                 export.ZoneList = zonelist;
                 export.LandCollection = landItems;  //地块集合
+                export.ExportPublicTableDeleteEmpty = exportdelempty;
                 var sender = GetTissue(zone.ID); //发包方
                 if (sender == null)
                 {

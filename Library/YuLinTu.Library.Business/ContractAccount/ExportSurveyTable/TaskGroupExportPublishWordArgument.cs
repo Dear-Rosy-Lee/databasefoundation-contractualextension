@@ -37,6 +37,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<Zone> ZoneList { get; set; }
 
+        public ContractBusinessSettingDefine ContractSettingDefine { get; set; }
+
         #endregion
 
         #region Ctor

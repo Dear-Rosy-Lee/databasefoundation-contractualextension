@@ -33,6 +33,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string Day { get; set; }
 
+        public bool ExportPublicTableDeleteEmpty { get; set; }
+
         #endregion Properties
 
         #region Ctor
@@ -473,6 +475,13 @@ namespace YuLinTu.Library.Business
                     rowCount = 1;
                 }
                 InsertTableRow(0, row + 2, rowCount * 13);
+            }
+            if (ExportPublicTableDeleteEmpty && addrow < 0)
+            {
+                for (int i = 0; i < Math.Abs(addrow); i++)
+                {
+                    DeleteRow(0, row + 1);
+                }
             }
             int rowValue = 16;//16为第一个插入表头位置
             int increment = 13;//13为增量行数

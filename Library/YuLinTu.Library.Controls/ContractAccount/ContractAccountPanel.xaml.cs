@@ -3550,7 +3550,7 @@ namespace YuLinTu.Library.Controls
                     {
                         List<ContractLand> lands = ContractAccountBusiness.GetPersonCollection(CurrentAccountItem.Tag.ID);
                         lands.LandNumberFormat(SystemSetDefine);
-                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands);   //导出单个
+                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands,"",SettingDefine.ExportPublicTableDeleteEmpty);   //导出单个
                     }
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
@@ -3578,12 +3578,13 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportPublishWordTask(string fileName, string taskDes, string taskName, List<VirtualPerson> selectedPersons)
         {
-            TaskExportPublishWordArgument argument = new TaskExportPublishWordArgument();
+            var  argument = new TaskExportPublishWordArgument();
             argument.DbContext = DbContext;
             argument.CurrentZone = currentZone;
             argument.FileName = fileName;
             argument.SelectedPersons = selectedPersons;
-            TaskExportPublishWordOperation operation = new TaskExportPublishWordOperation();
+            argument.ContractSettingDefine = SettingDefine;
+            var operation = new TaskExportPublishWordOperation();
             operation.Argument = argument;
             operation.Description = taskDes;
             operation.Name = taskName;
@@ -3603,11 +3604,12 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportPublishWordTaskGroup(string fileName, string taskDes, string taskName)
         {
-            TaskGroupExportPublishWordArgument groupArgument = new TaskGroupExportPublishWordArgument();
+            var groupArgument = new TaskGroupExportPublishWordArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.FileName = fileName;
-            TaskGroupExportPublishWordOperation groupOperation = new TaskGroupExportPublishWordOperation();
+            groupArgument.ContractSettingDefine = SettingDefine;
+            var groupOperation = new TaskGroupExportPublishWordOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = taskDes;
             groupOperation.Name = taskName;
