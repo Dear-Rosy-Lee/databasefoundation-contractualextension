@@ -296,7 +296,7 @@ namespace YuLinTu.Library.Business
             {
                 date = string.Format("{0}年{1}月{2}日", startTime.Value.Year, startTime.Value.Month, startTime.Value.Day) + "至";
             }
-            if (string.IsNullOrEmpty(date))
+            if (!string.IsNullOrEmpty(date))
             {
                 if (endTime != null && endTime.HasValue && endTime.Value.Year > 1753)
                 {
