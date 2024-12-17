@@ -94,24 +94,25 @@ namespace YuLinTu.Component.Setting
         private void InitializeData()
         {
             var asm = Assembly.GetEntryAssembly();
-
             var ver = asm.GetAttribute<AssemblyFileVersionAttribute>();
             if (ver != null)
                 txtVer.Text = ver.Version;
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            //AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
+            //AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
+            AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
+            AutoUpdater.AppTitle = "升级更新";
+            AutoUpdater.RemindLaterAt = 2;
+            AutoUpdater.Synchronous = true;
         }
 
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
-
-            AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
-            AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
-            AutoUpdater.AppTitle = "升级更新";
             string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
             string uplogUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/changelog.html";
             await VerifyLink(updateUrl);
+            //("https://yourdomain.com/updates.xml", new TimeSpan(0, 24, 0));
         }
 
         private async System.Threading.Tasks.Task VerifyLink(string updateUrl)
@@ -128,7 +129,7 @@ namespace YuLinTu.Component.Setting
                 BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                 AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
                 AutoUpdater.OpenDownloadPage = true;
-                AutoUpdater.Start(updateUrl, new NetworkCredential(username, password));
+                AutoUpdater.Start(updateUrl);
             }
         }
 
@@ -218,6 +219,10 @@ namespace YuLinTu.Component.Setting
                     Thread.Sleep(5000);
                     System.Windows.Application.Current.Shutdown();
                 }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("稍后更新！");
             }
         }
 
