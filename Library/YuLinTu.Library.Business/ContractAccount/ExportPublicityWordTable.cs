@@ -103,9 +103,9 @@ namespace YuLinTu.Library.Business
             }
             SetBookmarkValue("ContractorName", InitalizeFamilyName(Contractor.Name));//承包方姓名
             SetBookmarkValue("ContractorTelephone", Contractor.Telephone.GetSettingEmptyReplacement());//联系电话
-            SetBookmarkValue("ContractorIdentifyNumber", string.IsNullOrEmpty(Contractor.Number) ? "/" : Contractor.Number);//证件号码
-            SetBookmarkValue("ContractorAddress", string.IsNullOrEmpty(Contractor.Address) ? "/" : Contractor.Address);//地址
-            SetBookmarkValue("ContractorPostNumber", string.IsNullOrEmpty(Contractor.PostalNumber) ? "/" : Contractor.PostalNumber);//邮政编码
+            SetBookmarkValue("ContractorIdentifyNumber", string.IsNullOrEmpty(Contractor.Number) ? "".GetSettingEmptyReplacement() : Contractor.Number);//证件号码
+            SetBookmarkValue("ContractorAddress", string.IsNullOrEmpty(Contractor.Address) ? "".GetSettingEmptyReplacement() : Contractor.Address);//地址
+            SetBookmarkValue("ContractorPostNumber", string.IsNullOrEmpty(Contractor.PostalNumber) ? "".GetSettingEmptyReplacement() : Contractor.PostalNumber);//邮政编码
             string alloctioonPerson = Contractor.FamilyExpand != null ? Contractor.FamilyExpand.AllocationPerson : "";
             if (alloctioonPerson == Contractor.PersonCount)
             {
@@ -284,19 +284,19 @@ namespace YuLinTu.Library.Business
         {
             if (Concord == null)
             {
-                SetBookmarkValue("ConcordDate", "/");//结束时间-日
+                SetBookmarkValue("ConcordDate", "".GetSettingEmptyReplacement());//结束时间-日
                 return;
             }
             //DateTime? startTime = Concord.ArableLandStartTime;
             //DateTime? endTime = Concord.ArableLandEndTime;
             DateTime? startTime = Contractor.FamilyExpand.ConcordStartTime;
             DateTime? endTime = Contractor.FamilyExpand.ConcordEndTime;
-            string date = "/";
+            string date = "";
             if (startTime != null && startTime.HasValue && startTime.Value.Year > 1753)
             {
                 date = string.Format("{0}年{1}月{2}日", startTime.Value.Year, startTime.Value.Month, startTime.Value.Day) + "至";
             }
-            if (date != "/")
+            if (string.IsNullOrEmpty(date))
             {
                 if (endTime != null && endTime.HasValue && endTime.Value.Year > 1753)
                 {
@@ -307,7 +307,7 @@ namespace YuLinTu.Library.Business
                     date += "     年   月   日";
                 }
             }
-            SetBookmarkValue("ConcordDate", date);//结束时间-日
+            SetBookmarkValue("ConcordDate", date.GetSettingEmptyReplacement());//结束时间-日
             if (Concord.ManagementTime == "长久")
             {
                 SetBookmarkValue("ConcordDate", "长久");//结束时间-日
@@ -387,8 +387,8 @@ namespace YuLinTu.Library.Business
             string alloctioonPerson = Contractor.FamilyExpand != null ? Contractor.FamilyExpand.AllocationPerson : "";
             VirtualPersonExpand expand = Contractor.FamilyExpand;
 
-            var concordNumber = string.IsNullOrEmpty(expand.ConcordNumber) ? "/" : expand.ConcordNumber;
-            var warrantNumber = string.IsNullOrEmpty(expand.WarrantNumber) ? "/" : expand.WarrantNumber;
+            var concordNumber = string.IsNullOrEmpty(expand.ConcordNumber) ? "".GetSettingEmptyReplacement() : expand.ConcordNumber;
+            var warrantNumber = string.IsNullOrEmpty(expand.WarrantNumber) ? "".GetSettingEmptyReplacement() : expand.WarrantNumber;
 
             if (string.IsNullOrEmpty(expand.ConcordNumber) == false && string.IsNullOrEmpty(expand.WarrantNumber) == false)
             {
@@ -396,7 +396,7 @@ namespace YuLinTu.Library.Business
             }
             else if (string.IsNullOrEmpty(expand.ConcordNumber) && string.IsNullOrEmpty(expand.WarrantNumber))
             {
-                concordNumber = "/";
+                concordNumber = "".GetSettingEmptyReplacement();
             }
             else if (string.IsNullOrEmpty(expand.ConcordNumber) && string.IsNullOrEmpty(expand.WarrantNumber) == false)
             {
@@ -415,7 +415,7 @@ namespace YuLinTu.Library.Business
             if (SystemSet.PersonTable)
                 persons = persons.FindAll(c => c.IsSharedLand.Equals("是"));
             SetBookmarkValue("SenderName", Tissue != null ? Tissue.Name : Concord.SenderName);
-            SetBookmarkValue("SenderLawyerName", Tissue != null ? Tissue.LawyerName : "/");
+            SetBookmarkValue("SenderLawyerName", Tissue != null ? Tissue.LawyerName : "".GetSettingEmptyReplacement());
             WritLandInfo(LandCollection);
 
             bool isErlun = IsHaveBookmark("SecondFamily");
@@ -452,7 +452,8 @@ namespace YuLinTu.Library.Business
             SetBookmarkValue(cardType, "R");
 
             //二轮合同信息
-            var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ? Contractor.FamilyExpand.ConcordNumber : "") : "/";
+            var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ?
+                Contractor.FamilyExpand.ConcordNumber : "") : "".GetSettingEmptyReplacement();
             SetBookmarkValue("SecondConcordNumber", number);
         }
 
@@ -606,9 +607,17 @@ namespace YuLinTu.Library.Business
                 return;
             }
             int row = 2;
-            if (personList.Count - 15 > 0)
+            var addrow = personList.Count - 15;
+            if (addrow > 0)
             {
-                InsertTableRow(1, 3, personList.Count - 15);
+                InsertTableRow(1, 3, addrow);
+            }
+            if (ExportPublicTableDeleteEmpty && addrow < 0)
+            {
+                for (int i = 0; i < Math.Abs(addrow); i++)
+                {
+                    DeleteRow(1, row + 1);
+                }
             }
             for (int i = 0; i < personList.Count; i++)
             {
