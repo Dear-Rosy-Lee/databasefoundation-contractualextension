@@ -3,8 +3,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Utils.Tool;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -56,6 +58,7 @@ namespace YuLinTu.Library.Controls
         private bool initialAwareArea;  //是否初始化确权面积等于
         private bool initialLandPurpose;  //是否初始化土地用途
         private bool initialLandNumber;   //是否初始化地块编码
+        private bool initialLandOldNumber = true;   //是否初始化确权地块编码
         private bool initialLandNumberByUpDown;//是否初始化地块编码-从上往下，从左到右
         private bool handleContractLand;  //是否只处理承包地块
         private AgricultureLandExpand landExpand = null;
@@ -213,6 +216,15 @@ namespace YuLinTu.Library.Controls
         {
             get { return initialLandNumber; }
             set { initialLandNumber = value; }
+        }
+
+        /// <summary>
+        /// 是否初始化地块编码
+        /// </summary>
+        public bool InitialLandOldNumber
+        {
+            get { return initialLandOldNumber; }
+            set { initialLandOldNumber = value; }
         }
 
         /// <summary>
@@ -462,13 +474,49 @@ namespace YuLinTu.Library.Controls
                 return;
             }
 
-            ConfirmAsync(goCallback =>
+            var lands = LandBusiness.GetCollection(CurrentZone.FullCode,eLevelOption.SelfAndSubs);
+            if(!lands.Any(t=> string.IsNullOrEmpty(t.OldLandNumber)))
             {
-                return SetAndCheckValue();
-            }, completedCallback =>
+                var message = new TabMessageBoxDialog
+                {
+                    Header = "提示",
+                    Message = "当前地域 确权地块编码 已有数据，是否需要覆盖当前编码",
+                    MessageGrade = eMessageGrade.Warn,
+                    ConfirmButtonText = "覆盖",
+                    CancelButtonText = "取消",
+                };
+                Workpage.Page.ShowDialog(message, (b, c) =>
+                {
+                    if ((bool)b)
+                    {
+                        InitialLandOldNumber = true;
+                    }
+                    else
+                    {
+                        InitialLandOldNumber = false;
+                    }
+                    ConfirmAsync(goCallback =>
+                    {
+                        return SetAndCheckValue();
+                    }, completedCallback =>
+                    {
+                        Close(true);
+                    });
+
+                });
+            }
+            else
             {
-                Close(true);
-            });
+                ConfirmAsync(goCallback =>
+                {
+                    return SetAndCheckValue();
+                }, completedCallback =>
+                {
+                    Close(true);
+                });
+            }
+                
+            
 
             // Workpage.Page.CloseMessageBox(true);
         }

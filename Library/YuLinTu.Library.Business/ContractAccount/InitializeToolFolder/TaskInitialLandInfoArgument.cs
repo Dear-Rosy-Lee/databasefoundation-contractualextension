@@ -96,6 +96,11 @@ namespace YuLinTu.Library.Business
         public bool InitialLandNumber { get; set; }
 
         /// <summary>
+        /// 是否初始化确权地块编码
+        /// </summary>
+        public bool InitialLandOldNumber { get; set; }
+
+        /// <summary>
         /// 是否初始化地块编码-从上往下
         /// </summary>
         public bool InitialLandNumberByUpDown { get; set; }

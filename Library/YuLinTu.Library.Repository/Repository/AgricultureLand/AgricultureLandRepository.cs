@@ -158,23 +158,37 @@ namespace YuLinTu.Library.Repository
                          ZoneCode = entity.ZoneCode,
                          SenderCode = entity.SenderCode,
                          CadastralNumber = entity.CadastralNumber,
-                         ModifiedTime = entity.ModifiedTime
+                         ModifiedTime = entity.ModifiedTime,
                      }));
             }
         }
-
-        public int UpdateOldLandsCode(T entity)
+        public int UpdateOldLandsCode(T entity, bool onlycode = false)
         {
+            //if (!CheckTableExist())
+            //{
+            //    throw new ArgumentNullException("数据库不存在表："
+            //        + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            //}
             if (entity == null)
-                return -1;
-
-            int cnt = 0;
-            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
-                Update(s => new ContractLand()
-                {
-                    OldLandNumber = entity.OldLandNumber
-                }));
-            return cnt;
+                return 0;
+            entity.ModifiedTime = DateTime.Now;
+            if (!onlycode)
+            {
+                return base.Update(entity, c => c.ID.Equals(entity.ID));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractLand
+                     {
+                         LandNumber = entity.LandNumber,
+                         ZoneCode = entity.ZoneCode,
+                         SenderCode = entity.SenderCode,
+                         CadastralNumber = entity.CadastralNumber,
+                         ModifiedTime = entity.ModifiedTime,
+                         OldLandNumber = entity.OldLandNumber
+                     }));
+            }
         }
 
         /// <summary>

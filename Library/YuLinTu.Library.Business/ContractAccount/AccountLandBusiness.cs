@@ -4161,7 +4161,63 @@ namespace YuLinTu.Library.Business
                 }
                 if (!isNULL || (isNULL && (land.LandNumber == null || land.LandNumber.Trim() == string.Empty)))
                 {
-                    if (metadata.InitialLandNumber)
+                    if (metadata.InitialLandOldNumber)
+                    {
+                        land.OldLandNumber = land.LandNumber;
+                        land.SourceNumber = land.LandNumber;
+                        if (metadata.IsCombination)
+                        {
+                            //如果地块编码是19位的，不处理。如果调查编码是空的，就用地块编码。
+                            if (land.SurveyNumber.IsNullOrEmpty() == false)
+                            {
+                                land.LandNumber = sender.Code + land.SurveyNumber.PadLeft(5, '0');
+                            }
+                            else
+                            {
+                                if (land.LandNumber != null && land.LandNumber.Length <= 5)
+                                {
+                                    land.LandNumber = sender.Code + land.LandNumber.PadLeft(5, '0');
+                                }
+                                if (land.LandNumber.Length == 19 &&
+                                    !land.LandNumber.StartsWith(land.SenderCode))
+                                {
+                                    land.SurveyNumber = land.LandNumber.Substring(14);
+                                    land.LandNumber = sender.Code + land.SurveyNumber;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (metadata.VillageInlitialSet)
+                            {
+                                //按村发包
+                                string unitCode = string.Empty;
+                                if (currentZone.Level == eZoneLevel.Group)
+                                    unitCode = currentZone.UpLevelCode;
+                                else
+                                    unitCode = currentZone.FullCode;
+                                if (unitCode.Length == 16)
+                                    unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
+                                unitCode = unitCode.PadRight(14, '0');
+                                if (metadata.HandleContractLand)
+                                    metadata.CombinationLandNumber[0] = CheckLandNumber(unitCode, metadata.CombinationLandNumber[0], otherLand);
+                                land.LandNumber = unitCode + metadata.CombinationLandNumber[0].ToString().PadLeft(5, '0');
+                            }
+                            else
+                            {
+                                //按组发包
+                                string unitCode = currentZone.FullCode;
+                                if (unitCode.Length == 16)
+                                    unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
+                                unitCode = unitCode.PadRight(14, '0');
+                                if (metadata.HandleContractLand)
+                                    landIndex = CheckLandNumber(unitCode, landIndex, otherLand);
+                                string landnumber = unitCode + landIndex.ToString().PadLeft(5, '0');
+                                land.LandNumber = landnumber;
+                            }
+                        }
+                    }
+                    else
                     {
                         land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)
@@ -4216,6 +4272,7 @@ namespace YuLinTu.Library.Business
                             }
                         }
                     }
+                   
                 }
                 AgricultureLandExpand landExpand = land.LandExpand;
                 if (!isNULL)
@@ -4288,8 +4345,22 @@ namespace YuLinTu.Library.Business
                             landExpand.ReferPerson = metadata.LandExpand.ReferPerson;
                         }
                     }
-                    land.LandExpand = landExpand;
+                    
                 }
+                land.LandExpand = landExpand;
+                if (metadata.InitialLandOldNumber)
+                {
+                    int upCount = landStation.UpdateOldLandCode(land);
+                    if (upCount > 0)
+                        successCount++;
+                }
+                else
+                {
+                    int upCount = landStation.Update(land);
+                    if (upCount > 0)
+                        successCount++;
+                }
+                
                 //if (metadata.InitialReferPersonByOwner)    //以地块当前承包方为指界人
                 //{
                 //    var vp = zonePersonList.Find(v => land.OwnerId == v.ID);
@@ -4297,9 +4368,7 @@ namespace YuLinTu.Library.Business
                 //    land.LandExpand = metadata.LandExpand;
                 //}
 
-                int upCount = landStation.Update(land);
-                if (upCount > 0)
-                    successCount++;
+
                 //ModifyLand(land);
                 this.ReportProgress((int)(percent + landPercent * index), string.Format("{0}", markDesc + land.OwnerName));
                 if (metadata.VillageInlitialSet)

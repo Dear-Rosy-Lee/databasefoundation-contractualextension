@@ -1068,7 +1068,7 @@
                                     Text="基本农田"
                                     ToolTip="利用选择地域下地块图斑数据与基本农田数据计算地块是否为基本农田" />
                             </metro:MetroButton>
-                            <metro:MetroButton
+                            <!--<metro:MetroButton
                                 x:Name="btnGetLandCode"
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"
@@ -1079,7 +1079,7 @@
                                     ImagePosition="Left"
                                     Text="自动编码"
                                     ToolTip="自动对当前地域的地块进行重新编码" />
-                            </metro:MetroButton>
+                            </metro:MetroButton>-->
                         </StackPanel>
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>

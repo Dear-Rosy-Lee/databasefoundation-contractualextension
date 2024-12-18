@@ -202,7 +202,7 @@ namespace YuLinTu.Library.WorkStation
 
         public int UpdateOldLandCode(ContractLand entity)
         {
-            DefaultRepository.UpdateOldLandCode(entity);
+            DefaultRepository.UpdateOldLandsCode(entity);
             return TrySaveChanges(DefaultRepository);
         }
 
