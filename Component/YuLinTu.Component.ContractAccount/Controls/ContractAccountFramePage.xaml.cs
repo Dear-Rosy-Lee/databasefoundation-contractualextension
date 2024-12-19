@@ -298,7 +298,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnAreaMeasurement, command.AreaMeasurement, command.AreaMeasurementBind);
             SetCommandBinding(btnSetAreaNumericFormat, command.AreaNumericFormat, command.AreaNumericFormatBind);
             SetCommandBinding(btnFarmerLand, command.FarmerLand, command.FarmerLandBind);
-            SetCommandBinding(btnGetLandCode, command.GetLandCode, command.GetLandCodeBind);
+            //SetCommandBinding(btnGetLandCode, command.GetLandCode, command.GetLandCodeBind);
             SetCommandBinding(btnLandNameNull, command.LandNameNull, command.LandNameNullBind);
             SetCommandBinding(btnContractAreaNull, command.ContractAreaNull, command.ContractAreaNullBind);
             SetCommandBinding(btnActualAreaNull, command.ActualAreaNull, command.ActualAreaNullBind);

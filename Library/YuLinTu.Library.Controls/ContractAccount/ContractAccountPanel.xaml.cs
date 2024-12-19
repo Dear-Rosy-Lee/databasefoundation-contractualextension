@@ -17,6 +17,7 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Library.WorkStation;
 using System.IO;
 using NetTopologySuite.Triangulate;
+using Microsoft.Scripting.Actions;
 
 namespace YuLinTu.Library.Controls
 {
@@ -7033,6 +7034,7 @@ namespace YuLinTu.Library.Controls
             argument.InitialNull = initialLand.InitializeNull;
             argument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
+            argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
 
             TaskInitialLandInfoOperation operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
@@ -7151,6 +7153,7 @@ namespace YuLinTu.Library.Controls
             groupArgument.InitialLandLevel = initialLand.InitialLandLevel;
             groupArgument.InitialLandName = initialLand.InitialLandName;
             groupArgument.InitialLandNumber = initialLand.InitialLandNumber;
+            groupArgument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
             groupArgument.InitialLandNumberByUpDown = initialLand.InitialLandNumberByUpDown;
             groupArgument.InitialLandPurpose = initialLand.InitialLandPurpose;
             groupArgument.HandleContractLand = initialLand.HandleContractLand;
