@@ -269,26 +269,22 @@ namespace YuLinTu.Library.Repository
 
             List<VirtualPerson> list = new List<VirtualPerson>();
             List<T> data = new List<T>();
-            try
-            {
-                //2011年1月18日 21:12:49    Roc 修改数据获取方法，增加在查询时的数据排序
-                if (levelOption == eLevelOption.Self)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.Equals(code)
-                            orderby q.Name
-                            select q).ToList();
-                else if (levelOption == eLevelOption.Subs)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.StartsWith(code) && q.ZoneCode != code
-                            orderby q.Name
-                            select q).ToList();
-                else if (levelOption == eLevelOption.SelfAndSubs)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.StartsWith(code)
-                            orderby q.Name
-                            select q).ToList();
-            }
-            catch { }
+            //2011年1月18日 21:12:49    Roc 修改数据获取方法，增加在查询时的数据排序
+            if (levelOption == eLevelOption.Self)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.Equals(code)
+                        orderby q.Name
+                        select q).ToList();
+            else if (levelOption == eLevelOption.Subs)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.StartsWith(code) && q.ZoneCode != code
+                        orderby q.Name
+                        select q).ToList();
+            else if (levelOption == eLevelOption.SelfAndSubs)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.StartsWith(code)
+                        orderby q.Name
+                        select q).ToList();
             if (data != null && data.Count > 0)
             {
                 data.ForEach(t => list.Add(t));

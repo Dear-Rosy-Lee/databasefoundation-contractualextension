@@ -760,6 +760,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 summerys.Add(summary);
                 var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
                 var pdata = dataProgress.SetDataToProgress(entityCollection);
+                ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList);
                 collection.Add(pdata);
             }
             else
@@ -783,8 +784,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     {
                         continue;
                     }
-                    ExportSummaryTable.SummaryData(collection, summary, CBDKXXAwareAreaExportSet, sqllandList);
                     var pdata = dataProgress.SetDataToProgress(entityCollection);
+                    ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList);
                     collection.Add(pdata);
                     entityCollection.Clear();
                 }
@@ -1060,7 +1061,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (tissue == null)
             {
-                this.ReportError($"未找到{zone.FullName}下的编码为{zone.FullCode.PadRight(14, '0')}的发包方！");
+                if (familyCollection.Count > 0)
+                    this.ReportError($"未找到{zone.FullName}下的编码为{zone.FullCode.PadRight(14, '0')}的发包方！");
                 return null;
             }
             List<ContractLand> landCollection = FilterLandType(familyCollection, AllLandCollection);//根据设置筛选地块
