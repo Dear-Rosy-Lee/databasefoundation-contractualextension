@@ -6892,7 +6892,7 @@ namespace YuLinTu.Library.Controls
             landDel.ID = land.ID;
             landDel.DKBM = land.LandNumber;
             landDel.QQDKBM = land.OldLandNumber;
-            landDel.DKMC = land.LandName;
+            landDel.DKMC = land.Name;
             landDel.QQMJ = land.AwareArea;
             landDel.SCMJ = land.ActualArea;
             landDel.CBFID = (Guid)land.OwnerId;
