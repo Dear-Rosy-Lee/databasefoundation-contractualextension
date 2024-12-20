@@ -65,6 +65,7 @@ namespace YuLinTu.Library.Business
 
                         string tissueKey = ranges[i, 0].ToString().TrimSafe();
                         string tissueValue = ranges[i, 1].ToString();
+
                         string zoneKey = ranges[i, 2].ToString();
                         string zoneValue = ranges[i, 3].ToString();
 
@@ -115,6 +116,7 @@ namespace YuLinTu.Library.Business
                             ranges[i, 0] = "";
                         if (ranges[i, 1] == null || ranges[i, 1].ToString().Length < 1)
                             ranges[i, 1] = "";
+
                         if (ranges[i, 2] == null || ranges[i, 2].ToString().Length < 1)
                             ranges[i, 2] = "";
                         if (ranges[i, 3] == null || ranges[i, 3].ToString().Length < 1)

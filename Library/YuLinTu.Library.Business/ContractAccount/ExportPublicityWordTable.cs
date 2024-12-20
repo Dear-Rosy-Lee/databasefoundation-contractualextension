@@ -477,11 +477,21 @@ namespace YuLinTu.Library.Business
                 }
                 InsertTableRow(0, row + 2, rowCount * 13);
             }
-            if (ExportPublicTableDeleteEmpty && addrow < 0)
+            if (ExportPublicTableDeleteEmpty)
             {
-                for (int i = 0; i < Math.Abs(addrow); i++)
+                if (addrow < 0)
                 {
-                    DeleteRow(0, row + 1);
+                    for (int i = 0; i < Math.Abs(addrow); i++)
+                    {
+                        DeleteRow(0, row + 1);
+                    }
+                }
+                else if (addrow > 0)
+                {
+                    for (int i = 0; i < (12 * rowCount - addrow); i++)
+                    {
+                        DeleteRow(0, i + 9);
+                    }
                 }
             }
             int rowValue = 16;//16为第一个插入表头位置
