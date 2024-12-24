@@ -57,7 +57,10 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         protected override bool OnSetParamValue(object data)
         {
-            base.OnSetParamValue(data);
+            //base.OnSetParamValue(data);
+            InitialEntity(data);
+            WriteZoneInformation();
+            WriteContractorInformaion(false);
             if (!CheckDataInformation(data))
             {
                 return false;
@@ -683,15 +686,18 @@ namespace YuLinTu.Library.Business
             else
             {
                 Contractor = data as VirtualPerson;
-                var concordStation = dbContext.CreateConcordStation();
-                var concords = concordStation.GetAllConcordByFamilyID(Contractor.ID);
-                if (concords.Count > 1)
+                if (Concord == null)
                 {
-                    string familyMode = ((int)eConstructMode.Family).ToString();
-                    Concord = concords.Find(c => !string.IsNullOrEmpty(c.ArableLandType) && c.ArableLandType == familyMode);
+                    var concordStation = dbContext.CreateConcordStation();
+                    var concords = concordStation.GetAllConcordByFamilyID(Contractor.ID);
+                    if (concords.Count > 1)
+                    {
+                        string familyMode = ((int)eConstructMode.Family).ToString();
+                        Concord = concords.Find(c => !string.IsNullOrEmpty(c.ArableLandType) && c.ArableLandType == familyMode);
+                    }
+                    else if (concords.Count == 1)
+                        Concord = concords[0];
                 }
-                else if (concords.Count == 1)
-                    Concord = concords[0];
             }
             if (Contractor == null)
             {

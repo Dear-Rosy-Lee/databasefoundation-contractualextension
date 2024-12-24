@@ -259,7 +259,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写承包方信息
         /// </summary>
-        protected virtual void WriteContractorInformaion()
+        protected virtual void WriteContractorInformaion(bool writeperson = true)
         {
             if (Contractor == null)
                 return;
@@ -346,7 +346,8 @@ namespace YuLinTu.Library.Business
                 }
             }
             WriteCredentialsInformation();
-            WriteSharePersonInformation();
+            if (writeperson)
+                WriteSharePersonInformation();
         }
 
         /// <summary>

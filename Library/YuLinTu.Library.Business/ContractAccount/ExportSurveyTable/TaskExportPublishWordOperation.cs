@@ -136,6 +136,10 @@ namespace YuLinTu.Library.Business
                 openFilePath = openFilePath + @"\" + savePath;
                 var concordStation = argument.DbContext.CreateConcordStation();
                 var concordlist = concordStation.GetByZoneCode(argument.CurrentZone.FullCode);
+                if (SystemSetDefine.ExportTableSenderDesToVillage)
+                {
+                    tissue.Name = GetVillageLevelDesc(argument.CurrentZone, argument.DbContext);
+                }
                 //var landStocks = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 foreach (VirtualPerson family in listPerson)
                 {
@@ -163,10 +167,7 @@ namespace YuLinTu.Library.Business
                     export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
                     //if(family.IsStockFarmer)
                     //    export.LandCollection.AddRange(landStocks);
-                    if (SystemSetDefine.ExportTableSenderDesToVillage)
-                    {
-                        tissue.Name = GetVillageLevelDesc(argument.CurrentZone, argument.DbContext);
-                    }
+
                     if (concords != null && concords.Count > 0)
                     {
                         export.Concord = concords.Find(d => d.ArableLandType == "110");
