@@ -18,6 +18,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public HttpClient client { get; set; }
 
+        public string ErrorInfo {  get; set; }
         
 
         public async System.Threading.Tasks.Task<string> PostGetTaskIDAsync(string token,string url, string jsonData)
@@ -89,7 +90,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     }
                     else
                     {
-                        Parameters.ErrorInfo = $"查询任务时出错： {response.StatusCode}";
+                        ErrorInfo = $"查询任务时出错： {response.StatusCode}";
                         break;
                     }
 
@@ -102,11 +103,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
             catch (TaskCanceledException)
             {
-                Parameters.ErrorInfo = "轮询超时，任务未完成。";
+                ErrorInfo = "轮询超时，任务未完成。";
             }
             catch (Exception ex)
             {
-                Parameters.ErrorInfo = "出现异常：" + ex.Message;
+                ErrorInfo = "出现异常：" + ex.Message;
             }
             return null;
         }

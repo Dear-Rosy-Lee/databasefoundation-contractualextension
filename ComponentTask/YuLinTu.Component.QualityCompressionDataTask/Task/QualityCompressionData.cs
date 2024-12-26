@@ -32,6 +32,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         #endregion Fields
 
+        #region Properties
+
+        private string ErrorInfo { get; set; }
+
+        #endregion Properties
+
         #region Methods
 
         #region Method - Override
@@ -65,10 +71,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 //进行质检
                 var dcp = new DataCheckProgress();
                 dcp.DataArgument = argument;
+                
                 bool falg = await dcp.Check();
+                ErrorInfo = dcp.ErrorInfo;
                 if (falg == false)
                 {
-                    this.ReportError(string.Format(Parameters.ErrorInfo));
+                    this.ReportError(ErrorInfo);
+                    return;
                 }
                 else
                 {
@@ -78,7 +87,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         {
                             zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
                             zipStream.Password = Parameters.Region + "Ylt@dzzw";
-                            CompressFolder(argument.CheckFilePath, zipStream);
+                            CompressFolder(sourceFolder, zipStream);
                         }
                     }
                     var path= dcp.CreateLog();
@@ -140,19 +149,24 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         private static void CompressFolder(string sourceFile, ZipOutputStream zipStream)
         {
                 var fileInfo = new FileInfo(sourceFile);
-                string fileName = fileInfo.Name;
-                string entryName = fileName; // 移除任何相对路径
-                var newEntry = new ZipEntry(entryName);
-                newEntry.DateTime = fileInfo.LastWriteTime;
-                newEntry.Size = fileInfo.Length;
-
-                zipStream.PutNextEntry(newEntry);
-                // 将文件内容写入zip流
-                byte[] buffer = new byte[4096];
-                using (FileStream streamReader = File.OpenRead(sourceFile))
+                string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fileInfo.Name}.*", SearchOption.AllDirectories);
+                foreach (string matchingFile in matchingFiles) 
                 {
-                    StreamUtils.Copy(streamReader, zipStream, buffer);
+                     var matchingFileInfo = new FileInfo(matchingFile);
+                     string matchingFileInfoName = matchingFileInfo.Name;
+                     string matchingFileEntryName = matchingFileInfoName; // 移除任何相对路径
+                     var newEntry = new ZipEntry(matchingFileEntryName);
+                     newEntry.DateTime = matchingFileInfo.LastWriteTime;
+                     newEntry.Size = matchingFileInfo.Length;
+                     zipStream.PutNextEntry(newEntry);
+                     // 将文件内容写入zip流
+                     byte[] buffer = new byte[4096];
+                     using (FileStream streamReader = File.OpenRead(matchingFile))
+                     {
+                        StreamUtils.Copy(streamReader, zipStream, buffer);
+                     }
                 }
+                
                 zipStream.CloseEntry();
         }
 

@@ -18,6 +18,8 @@ using Microsoft.Scripting.Actions;
 using OSGeo.OSR;
 using SpatialReference = YuLinTu.Spatial.SpatialReference;
 using DotSpatial.Projections;
+using YuLinTu.Appwork;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -37,6 +39,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         public QualityCompressionDataArgument DataArgument { get; set; }
 
+        public string ErrorInfo { get; set; }
+
         public IDataSource Source { get; set; }
 
         public async Task<bool> Check()
@@ -54,14 +58,14 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var token = Parameters.Token.ToString();
                 if (Parameters.Token.Equals(Guid.Empty))
                 {
-                    Parameters.ErrorInfo = "请先登录后，再进行检查";
+                    ErrorInfo = "请先登录后,再进行检查";
                     return false;
                 }
                 List<LandEntity> ls = new List<LandEntity>();
                 var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, "");
                 if (landShapeList.IsNullOrEmpty())
                 {
-                    Parameters.ErrorInfo = "读取shp文件错误，请检查shp文件";
+                    ErrorInfo = "读取图斑文件错误,请检查图斑文件";
                     return false;
                 }
                 foreach (var item in landShapeList)
@@ -75,7 +79,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
-                string baseUrl = "https://103.203.217.30:11682";
+                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
                 //res = await apiCaller.GetDataAsync(postUrl);
@@ -84,11 +88,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var getTaskID = await apiCaller.PostGetTaskIDAsync(token,postGetTaskIdUrl, jsonData);
                 string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
                 var getResult = await apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
+                ErrorInfo = apiCaller.ErrorInfo;
                 if (!getResult.IsNullOrEmpty())
                 {
                     var folderPath = CreateLog();
                     WriteLog(folderPath , getResult);
-                    Parameters.ErrorInfo="shp存在拓扑错误，详情请查看txt文件";
+                    ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
                     return false;
                 }
                 if (getResult == null)
@@ -99,7 +104,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
             catch(Exception ex)
             {
-                Parameters.ErrorInfo = ex.Message;
+                ErrorInfo = ex.Message;
                 return false;
             }
            
@@ -142,7 +147,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         {
             foreach (var item in mes)
             {
-                IEnumerable<string> stringCollection = new[] { item.Value.Substring(0, item.Value.Length - 2) };
+                IEnumerable<string> stringCollection = new[] { $"{item.Key}:{item.Value.Substring(0, item.Value.Length - 2)}" };
                 File.AppendAllLines(path, stringCollection );
             }
         }

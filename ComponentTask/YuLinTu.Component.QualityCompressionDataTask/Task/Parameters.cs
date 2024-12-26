@@ -13,8 +13,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public static string UserCode { get; set; }
 
-        public static string ErrorInfo { get; set; }
-
         public static string Region { get; set;}
     }
 }
