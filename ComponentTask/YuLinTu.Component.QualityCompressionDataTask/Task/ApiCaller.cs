@@ -19,9 +19,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         public HttpClient client { get; set; }
 
         public string ErrorInfo {  get; set; }
-        
 
-        public async System.Threading.Tasks.Task<string> PostGetTaskIDAsync(string token,string url, string jsonData)
+        public string PostGetTaskIDAsync(string token,string url, string jsonData)
         {
             try
             {
@@ -31,12 +30,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
                 content.Headers.Add("token", token);
                 // 发送 POST 请求
-                HttpResponseMessage response = await client.PostAsync(url, content);
+                HttpResponseMessage response =  client.PostAsync(url, content).GetAwaiter().GetResult();
 
                 response.EnsureSuccessStatusCode();
               
                 // 读取响应内容
-                var responseBody = await response.Content.ReadAsStringAsync();
+                var responseBody =  response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 //
                 using (JsonDocument doc = JsonDocument.Parse(responseBody))
                 {
@@ -53,7 +52,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
         }
 
-        public async System.Threading.Tasks.Task<KeyValueList<string, string>> PostGetResultAsync(string token, string url, string taskID)
+        public  KeyValueList<string, string> PostGetResultAsync(string token, string url, string taskID)
         {
             var cancellationTokenSource = new CancellationTokenSource(Timeout); // 设置超时
             var cancellationToken = cancellationTokenSource.Token;
@@ -66,10 +65,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     client.DefaultRequestHeaders.Add("accept", "*/*");
                     client.DefaultRequestHeaders.Add("token", token);
                     // 发送 Get 请求
-                    HttpResponseMessage response = await client.GetAsync(url1);
+                    HttpResponseMessage response =  client.GetAsync(url1).ConfigureAwait(false).GetAwaiter().GetResult(); 
                     response.EnsureSuccessStatusCode();
                     // 读取响应内容
-                    responseBody = await response.Content.ReadAsStringAsync();
+                    responseBody =  response.Content.ReadAsStringAsync().GetAwaiter().GetResult(); 
                     if (response.IsSuccessStatusCode)
                     {
                         using (JsonDocument doc = JsonDocument.Parse(responseBody))
@@ -95,7 +94,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     }
 
                     // 延迟轮询
-                    await Task<KeyValueList<string, string>>.Delay(PollingInterval, cancellationToken);
+                     Task<KeyValueList<string, string>>.Delay(PollingInterval, cancellationToken);
                     url1 = string.Empty;
                     client.DefaultRequestHeaders.Clear();
                 }

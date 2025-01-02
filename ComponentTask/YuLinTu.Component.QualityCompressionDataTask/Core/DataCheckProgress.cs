@@ -43,7 +43,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public IDataSource Source { get; set; }
 
-        public async Task<bool> Check()
+
+        public bool Check()
         {
             //获取当前路径下shape数据
 
@@ -85,9 +86,9 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 //res = await apiCaller.GetDataAsync(postUrl);
                 // 发送 POST 请求
                 string jsonData = JsonConvert.SerializeObject(ls);  
-                var getTaskID = await apiCaller.PostGetTaskIDAsync(token,postGetTaskIdUrl, jsonData);
+                var getTaskID = apiCaller.PostGetTaskIDAsync(token,postGetTaskIdUrl, jsonData);
                 string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
-                var getResult = await apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
+                var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
                 ErrorInfo = apiCaller.ErrorInfo;
                 if (!getResult.IsNullOrEmpty())
                 {

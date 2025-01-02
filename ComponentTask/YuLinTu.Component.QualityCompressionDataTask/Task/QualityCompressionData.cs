@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using YuLinTu;
+using YuLinTu.Library.Log;
+using NetTopologySuite.Triangulate;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -45,7 +47,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// <summary>
         /// 开始执行任务
         /// </summary>
-        protected override async void OnGo()
+        protected override void OnGo()
         {
             this.ReportProgress(0, "开始验证检查数据参数...");
             this.ReportInfomation("开始验证检查数据参数...");
@@ -72,11 +74,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var dcp = new DataCheckProgress();
                 dcp.DataArgument = argument;
                 
-                bool falg = await dcp.Check();
+                bool falg = dcp.Check();
                 ErrorInfo = dcp.ErrorInfo;
                 if (falg == false)
                 {
                     this.ReportError(ErrorInfo);
+                    Log.WriteError(this, "提示", ErrorInfo);
                     return;
                 }
                 else
@@ -106,14 +109,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 this.ReportError(string.Format("数据检查时出错!"));
                 return;
             }
-
-            
         }
 
         #endregion Method - Override
 
         #region Method - Private
-
         private bool ValidateArgs()
         {
             var args = Argument as QualityCompressionDataArgument;
