@@ -17,25 +17,25 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private ToolProgress toolProgress;//进度条
-        private int cindex;
-        private int index;//下标
-        private string templatePath;
-        private int familyCount;//户数
-        private int peopleCount;//家人数
-        private int landCount;//总地块数
-        private double AwareArea;//颁证面积
-        private double TableArea = 0;//合同面积
-        private double ActualArea;//实测面积
-        private List<Dictionary> dictCBFLX;
-        private List<Dictionary> dictXB;
-        private List<Dictionary> dictZJLX;
-        private List<Dictionary> dictTDYT;
-        private List<Dictionary> dictDLDJ;
-        private List<Dictionary> dicSF;
-        private List<Dictionary> dictSYQXZ;
-        private List<Dictionary> dictDKLB;
-        private List<Dictionary> dictTDLYLX;
+        protected ToolProgress toolProgress;//进度条
+        protected int cindex;
+        protected int index;//下标
+        protected string templatePath;
+        protected int familyCount;//户数
+        protected int peopleCount;//家人数
+        protected int landCount;//总地块数
+        protected double AwareArea;//颁证面积
+        protected double TableArea = 0;//合同面积
+        protected double ActualArea;//实测面积
+        protected List<Dictionary> dictCBFLX;
+        protected List<Dictionary> dictXB;
+        protected List<Dictionary> dictZJLX;
+        protected List<Dictionary> dictTDYT;
+        protected List<Dictionary> dictDLDJ;
+        protected List<Dictionary> dicSF;
+        protected List<Dictionary> dictSYQXZ;
+        protected List<Dictionary> dictDKLB;
+        protected List<Dictionary> dictTDLYLX;
 
         #endregion Fields
 
@@ -176,7 +176,7 @@ namespace YuLinTu.Library.Business
 
         #region 开始生成Excel
 
-        private bool BeginWrite()
+        public virtual bool BeginWrite()
         {
             var dictStation = DbContext.CreateDictWorkStation();
             var DictList = dictStation.Get();
@@ -241,7 +241,7 @@ namespace YuLinTu.Library.Business
         /// 书写每个承包户信息
         /// </summary>
         /// <param name="virtualPerson"></param>
-        private void WriteInformation(ContractAccountLandFamily landFamily)
+        public virtual void WriteInformation(ContractAccountLandFamily landFamily)
         {
             if (landFamily == null)
                 return;
@@ -315,9 +315,9 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
             InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
-            InitalizeSheet2RangeValue("A" + (index-5), "A" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}",Worksheet2);
+            InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}", Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index-5), "B" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.OldVirtualCode}",Worksheet2);
+            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.OldVirtualCode}", Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
@@ -332,7 +332,7 @@ namespace YuLinTu.Library.Business
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
-        private void WriteCurrentZoneInformation(ContractLand_Del landDel, int index)
+        public virtual void WriteCurrentZoneInformation(ContractLand_Del landDel, int index)
         {
             InitalizeRangeValue("P" + index, "P" + index, landDel.DKMC.IsNullOrEmpty() ? "/" : landDel.DKMC);
             InitalizeRangeValue("Q" + index, "Q" + index, landDel.DKBM.IsNullOrEmpty() ? "/" : landDel.DKBM);
@@ -351,7 +351,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写当前地域信息
         /// </summary>
-        private void WriteCurrentZoneInformation(ContractLand land, int index)
+        public virtual void WriteCurrentZoneInformation(ContractLand land, int index)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
@@ -361,9 +361,9 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
             InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber);
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
-            InitalizeSheet2RangeValue("C" + (index-5), "C" + (index-5), land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber,Worksheet2);
+            InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index-5), "D" + (index-5), land.OldLandNumber.IsNullOrEmpty() ? "/" : land.OldLandNumber, Worksheet2);
+            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "/" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
             if (dklb != null)
@@ -380,7 +380,7 @@ namespace YuLinTu.Library.Business
                 Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
-            
+
             InitalizeRangeValue("Y" + index, "Y" + index, Math.Round(land.AwareArea, 2));
             InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
@@ -390,7 +390,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
         }
 
-        private void WritePersonInformation(Person person, int index, bool flag)
+        public virtual void WritePersonInformation(Person person, int index, bool flag)
         {
             Dictionary gender = dictXB.Find(c => c.Code.Equals(person.Gender == eGender.Male ? "1" : "2"));
             var code = GetCardTypeNumber(person.CardType);
@@ -416,7 +416,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写模板
         /// </summary>
-        private void WriteTempLate()
+        public virtual void WriteTempLate()
         {
             string title = GetRangeToValue("A1", "AI2").ToString();
             title = $"{ZoneDesc}{title}";
@@ -447,7 +447,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写合计信息
         /// </summary>
-        private void WriteCount()
+        public virtual void WriteCount()
         {
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "F" + index, $"{familyCount} 户");
