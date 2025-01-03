@@ -22,44 +22,44 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private bool result = true;
-        private Zone currentZone;//当前地域
-        private List<VirtualPerson> familys;//承包方集合
-        private List<VirtualPerson> tablefamilys;//承包方集合
-        private PersonCollection persons;//无户的人口
-        private ContractConcord concord;//承包合同
-        private ContractRegeditBook regeditBook;//承包权证
-        private string zoneCode;//地域代码
-        private string templaePath;//模版文件
-        private int index;//索引值
-        private int high;//单元格合并数量
-        private ToolProgress toolProgress;//进度
+        protected bool result = true;
+        protected Zone currentZone;//当前地域
+        protected List<VirtualPerson> familys;//承包方集合
+        protected List<VirtualPerson> tablefamilys;//承包方集合
+        protected PersonCollection persons;//无户的人口
+        protected ContractConcord concord;//承包合同
+        protected ContractRegeditBook regeditBook;//承包权证
+        protected string zoneCode;//地域代码
+        protected string templaePath;//模版文件
+        protected int index;//索引值
+        protected int high;//单元格合并数量
+        protected ToolProgress toolProgress;//进度
 
         //private PublicityConfirmDefine PublicityConfirmDefine;//自定义地块导出
-        private int columnIndex;//当前列名
+        protected int columnIndex;//当前列名
 
-        private bool exportByFamilyNumber;//是否根据户号导出表格
+        protected bool exportByFamilyNumber;//是否根据户号导出表格
 
         //合计字段
-        private int PersonCount;//人合计
+        protected int PersonCount;//人合计
 
-        private double ActualAreaCount;//单个实测面积
-        private double AwareAreaCount;//总确权面积
-        private double ContractDelayCount;//延包面积
-        private double TotalContractDelayCount;//延包总面积
-        private double MotorizeLandAreaCount;//总机动地面积
-        private double TotalTableAreaCount;//总二轮台账面积
-        private double ActualAreaAllCount;//总实测面积
-        private int landCount;//地块合计
-        private double onlyAwareAreaCount;//单个确权面积
-        private double onlyMotorizeLandAreaCount;//单个机动地
-        private double onlyTotalTableAreaCount;//单个二轮台账
-        private int packageCount;//土地延包份数
-        private double secondTableArea;//二轮面积之和
-        private double secondTotalTableArea;//二轮总面积之和
-        private int secondLandCount;//二轮地块合计
-        private PublicityConfirmDefine contractLandOutputSurveyDefine = PublicityConfirmDefine.GetIntence();
-        private SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
+        protected double ActualAreaCount;//单个实测面积
+        protected double AwareAreaCount;//总确权面积
+        protected double ContractDelayCount;//延包面积
+        protected double TotalContractDelayCount;//延包总面积
+        protected double MotorizeLandAreaCount;//总机动地面积
+        protected double TotalTableAreaCount;//总二轮台账面积
+        protected double ActualAreaAllCount;//总实测面积
+        protected int landCount;//地块合计
+        protected double onlyAwareAreaCount;//单个确权面积
+        protected double onlyMotorizeLandAreaCount;//单个机动地
+        protected double onlyTotalTableAreaCount;//单个二轮台账
+        protected int packageCount;//土地延包份数
+        protected double secondTableArea;//二轮面积之和
+        protected double secondTotalTableArea;//二轮总面积之和
+        protected int secondLandCount;//二轮地块合计
+        protected PublicityConfirmDefine contractLandOutputSurveyDefine = PublicityConfirmDefine.GetIntence();
+        protected SystemSetDefine SystemSet = SystemSetDefine.GetIntence();
 
         #endregion Fields
 
@@ -424,7 +424,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写内容
         /// </summary>
-        private void WriteContent()
+        public virtual void WriteContent()
         {
             toolProgress.InitializationPercent(familys.Count, Percent, CurrentPercent);
             high = 0;//得到每个户中的最大条数
@@ -630,7 +630,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="lands"></param>
         /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
+        public virtual List<ContractLand> SortLandCollection(List<ContractLand> lands)
         {
             if (lands == null || lands.Count == 0)
             {
@@ -674,7 +674,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="lands"></param>
         /// <returns></returns>
-        private List<SecondTableLand> SortTableLandCollection(List<SecondTableLand> lands)
+        public virtual List<SecondTableLand> SortTableLandCollection(List<SecondTableLand> lands)
         {
             if (lands == null || lands.Count == 0)
             {
@@ -751,7 +751,7 @@ namespace YuLinTu.Library.Business
             return list;
         }
 
-        private void WriteSignInformation(int hight, int cindexx)
+        public virtual void WriteSignInformation(int hight, int cindexx)
         {
             int tempIndex = cindexx;
             SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex + 1) + tempIndex, PublicityConfirmDefine.GetColumnValue(columnIndex + 1) + (tempIndex + hight - 1), "");
@@ -760,7 +760,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写最后一栏信息
         /// </summary>
-        private void WriteLastInformation()
+        public virtual void WriteLastInformation()
         {
             index++;
             int count = (contractLandOutputSurveyDefine.ColumnCount + 1) / 3;

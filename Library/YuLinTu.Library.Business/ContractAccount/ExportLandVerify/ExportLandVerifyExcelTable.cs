@@ -36,6 +36,8 @@ namespace YuLinTu.Library.Business
         protected List<Dictionary> dictSYQXZ;
         protected List<Dictionary> dictDKLB;
         protected List<Dictionary> dictTDLYLX;
+        protected List<EnumStore<eBHQK>> bhqkList;//变化情况
+
 
         #endregion Fields
 
@@ -72,11 +74,6 @@ namespace YuLinTu.Library.Business
         public string TemplateFile { get; set; }
 
         public string Information { get; set; }
-
-        /// <summary>
-        /// 变化情况
-        /// </summary>
-        private List<EnumStore<eBHQK>> bhqkList;
 
         /// <summary>
         /// 地域描述
@@ -492,7 +489,7 @@ namespace YuLinTu.Library.Business
             return 0;
         }
 
-        private int GetCBFLXNumber(eContractorType type)
+        protected virtual int GetCBFLXNumber(eContractorType type)
         {
             switch (type)
             {
