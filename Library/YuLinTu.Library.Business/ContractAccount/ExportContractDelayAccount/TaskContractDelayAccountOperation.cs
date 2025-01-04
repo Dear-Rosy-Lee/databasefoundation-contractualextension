@@ -535,7 +535,7 @@ namespace YuLinTu.Library.Business
                 var listConcords = concordStation.GetContractsByZoneCode(zone.FullCode);
                 var listBooks = bookStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
                 string filePath = string.Empty;
-                ExportContractorDelaySurveyExcel export = new ExportContractorDelaySurveyExcel();
+                var export = new ExportContractorDelaySurveyExcel();
 
                 #region 通过反射等机制定制化具体的业务处理类
 
