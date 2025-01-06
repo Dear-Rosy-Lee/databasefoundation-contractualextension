@@ -2455,20 +2455,20 @@ namespace YuLinTu.Library.Controls
                     {
                         return;
                     }
-                    ImportLandInformationTask(importLand.FileName);
+                    ImportLandInformationTask(importLand.FileName, importLand.ImportType);
                 });
             }
             else if (currentZone.Level == eZoneLevel.Village && childrenZones != null && childrenZones.Count > 0)
             {
                 //选择为村级地域并且地域下有子级地域(多个表格导入)
-                ExportDataPage batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入地块数据调查表", "请选择保存文件路径", "导入", "导入路径:");
+                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入地块数据调查表", "请选择保存文件路径", "导入", "导入路径:");
                 TheWorkPage.Page.ShowMessageBox(batchImportDlg, (b, r) =>
                 {
                     if (!(bool)b || string.IsNullOrEmpty(batchImportDlg.FileName))
                     {
                         return;
                     }
-                    ImportLandInformationTaskGroup(batchImportDlg.FileName);
+                    ImportLandInformationTaskGroup(batchImportDlg.FileName, batchImportDlg.ImportType);
                 });
             }
             else
@@ -2494,6 +2494,11 @@ namespace YuLinTu.Library.Controls
             {
                 //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
                 var importLand = new ImportDataPage(TheWorkPage, "导入摸底核实表");
+                importLand.TypeValueList = new List<KeyValue<string, string>>() {
+                    new KeyValue<string, string>("IgnorePart","覆盖属性保留图形数据"),
+                    new KeyValue<string, string>("Ignore","覆盖全部数据"),
+                    new KeyValue<string, string>("Over","只覆盖承包方数据") };
+
                 TheWorkPage.Page.ShowMessageBox(importLand, (b, r) =>
                 {
                     if (string.IsNullOrEmpty(importLand.FileName) || b == false)
@@ -2506,7 +2511,11 @@ namespace YuLinTu.Library.Controls
             else if (currentZone.Level == eZoneLevel.Village && childrenZones != null && childrenZones.Count > 0)
             {
                 //选择为村级地域并且地域下有子级地域(多个表格导入)
-                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入摸底核实表", "请选择保存文件路径", "导入", "导入路径:", true);
+                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入摸底核实表", "请选择保存文件路径", "导入", "导入路径:");
+                batchImportDlg.TypeValueList = new List<KeyValue<string, string>>() {
+                    new KeyValue<string, string>("IgnorePart","覆盖属性保留图形数据"),
+                    new KeyValue<string, string>("Ignore","覆盖全部数据"),
+                    new KeyValue<string, string>("Over","只覆盖承包方数据") };
                 TheWorkPage.Page.ShowMessageBox(batchImportDlg, (b, r) =>
                 {
                     if (!(bool)b || string.IsNullOrEmpty(batchImportDlg.FileName))
@@ -2528,13 +2537,14 @@ namespace YuLinTu.Library.Controls
         /// 导入地块调查表任务
         /// </summary>
         /// <param name="fileName">选择文件路径</param>
-        private void ImportLandInformationTask(string fileName)
+        private void ImportLandInformationTask(string fileName, eImportTypes importType)
         {
-            TaskImportLandTableArgument meta = new TaskImportLandTableArgument();
+            var meta = new TaskImportLandTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
             meta.CurrentZone = currentZone;    //当前地域
             meta.FileName = fileName;
             meta.VirtualType = virtualType;
+            meta.ImportType = importType;
             TaskImportLandTableOperation import = new TaskImportLandTableOperation();
             import.Argument = meta;
             import.Description = ContractAccountInfo.ImportDataComment;
@@ -2561,20 +2571,25 @@ namespace YuLinTu.Library.Controls
         /// 批量导入地块调查表任务
         /// </summary>
         /// <param name="fileName">选择文件夹路径</param>
-        private void ImportLandInformationTaskGroup(string fileName)
+        private void ImportLandInformationTaskGroup(string fileName, eImportTypes importType)
         {
-            TaskGroupImportLandTableArgument groupArgument = new TaskGroupImportLandTableArgument();
+            var groupArgument = new TaskGroupImportLandTableArgument();
             groupArgument.FileName = fileName;
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.VirtualType = virtualType;
-            TaskGroupImportLandTableOperation groupOperation = new TaskGroupImportLandTableOperation();
+            groupArgument.ImportType = importType;
+            var groupOperation = new TaskGroupImportLandTableOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = ContractAccountInfo.ImportDataComment;
             groupOperation.Name = ContractAccountInfo.VolumnImportDataTable;
             groupOperation.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-                Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    Refresh();
+                    RefreshStockRight();
+                }), null);
                 TheBns.Current.Message.Send(this, MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode));
             });
             groupOperation.Terminated += new TaskTerminatedEventHandler((o, t) =>
@@ -3551,7 +3566,7 @@ namespace YuLinTu.Library.Controls
                     {
                         List<ContractLand> lands = ContractAccountBusiness.GetPersonCollection(CurrentAccountItem.Tag.ID);
                         lands.LandNumberFormat(SystemSetDefine);
-                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands,"",SettingDefine.ExportPublicTableDeleteEmpty);   //导出单个
+                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "", SettingDefine.ExportPublicTableDeleteEmpty);   //导出单个
                     }
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
@@ -3579,7 +3594,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportPublishWordTask(string fileName, string taskDes, string taskName, List<VirtualPerson> selectedPersons)
         {
-            var  argument = new TaskExportPublishWordArgument();
+            var argument = new TaskExportPublishWordArgument();
             argument.DbContext = DbContext;
             argument.CurrentZone = currentZone;
             argument.FileName = fileName;

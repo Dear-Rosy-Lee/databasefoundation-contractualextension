@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -32,6 +33,24 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public eImportTypes ImportType { get; private set; }
 
+        public List<KeyValue<string, string>> TypeValueList
+        {
+            set
+            {
+                if (value != null)
+                {
+                    iptctl.Visibility = Visibility.Visible;
+                    var lst = new List<ComboBoxItem>();
+                    foreach (var item in value)
+                    {
+                        lst.Add(new ComboBoxItem() { Tag = item.Key, Content = item.Value });
+                    }
+                    cbtype.ItemsSource = lst;
+                    cbtype.SelectedIndex = 0;
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -40,7 +59,7 @@ namespace YuLinTu.Library.Controls
         /// 构造方法
         /// </summary>
         public ExportDataPage(string Name, IWorkpage page, string header, string desc = "", string btnName = "",
-            string lbPathName = "", bool biptctl = false)
+            string lbPathName = "")
         {
             InitializeComponent();
             DataContext = this;
@@ -53,7 +72,7 @@ namespace YuLinTu.Library.Controls
             if (!string.IsNullOrEmpty(lbPathName))
                 lbPath.Content = lbPathName;
             btnExcuteImport.IsEnabled = false;
-            iptctl.Visibility = biptctl ? Visibility.Visible : Visibility.Collapsed;
+           // iptctl.Visibility = biptctl ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

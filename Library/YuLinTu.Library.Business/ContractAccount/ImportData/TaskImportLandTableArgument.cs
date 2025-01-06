@@ -45,7 +45,10 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string FileName { get; set; }
 
-
+        /// <summary>
+        /// 导出方式
+        /// </summary>
+        public eImportTypes ImportType { get; set; }
 
         public SystemSetDefine SystemSet
         {
@@ -54,7 +57,7 @@ namespace YuLinTu.Library.Business
 
         public ContractBusinessSettingDefine SettingDefine
         {
-            get ;
+            get;
             set;
         }
 

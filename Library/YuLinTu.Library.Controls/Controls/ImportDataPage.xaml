@@ -7,7 +7,7 @@
                  xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
                  xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
                  Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
-                 Height="250"
+                 Height="230"
                  Width="550"
                  Header="导入摸底调查表">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}">
@@ -18,8 +18,7 @@
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="40" /> 
                 <RowDefinition Height="34*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -57,7 +56,7 @@
             </DockPanel>
 
             <Label Content="导入类型:"
-                   Visibility="Visible"
+                   Visibility="Collapsed"
                    Grid.Row="1"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
@@ -69,10 +68,10 @@
                                 VerticalAlignment="Center"
                                 Height="30"
                                 Padding="5,0,0,0">
-                <ComboBoxItem IsSelected="True" Tag="IgnorePart">覆盖属性保留图形数据</ComboBoxItem>
+                <!-- <ComboBoxItem IsSelected="True" Tag="IgnorePart">覆盖属性保留图形数据</ComboBoxItem>
                 <ComboBoxItem Tag="Ignore">覆盖全部数据</ComboBoxItem>
                 <ComboBoxItem Tag="Over">只覆盖承包方数据</ComboBoxItem>
-                <!--<ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
+                <ComboBoxItem Tag="Over">覆盖原有数据</ComboBoxItem>-->
             </cmps:MetroComboBox>
         </Grid>
         <Border BorderBrush="LightGray"

@@ -37,7 +37,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string FileName { get; set; }
 
-     
+        public eImportTypes ImportType { get; set; }
 
         #endregion
 

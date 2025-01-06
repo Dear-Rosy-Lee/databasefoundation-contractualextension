@@ -761,7 +761,7 @@ namespace YuLinTu.Library.Business
             isErrorRecord = false;
             try
             {
-                using (ImportContractAccountLandTable landTableImport = new ImportContractAccountLandTable())
+                using (var landTableImport = new ImportContractAccountLandTable())
                 {
                     //List<VirtualPerson> persons = GetByZone(zone.FullCode);
                     string excelName = GetMarkDesc(zone);

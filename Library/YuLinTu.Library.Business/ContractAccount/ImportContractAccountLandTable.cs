@@ -17,42 +17,38 @@ namespace YuLinTu.Library.Business
     /// 导入承包台账调查表地块数据
     /// </summary>
     [Serializable]
-    internal class ImportContractAccountLandTable : Task
+    public class ImportContractAccountLandTable : Task
     {
         #region Fields
 
-        private ToolProgress toolProgress;
-        private List<string> concrdNumberList;
-        private InitalizeLandSurveyInformation landInfo;//初始化承包台账调查表信息
-        private int familyCount;//承包方数
-        private int personCount;//共有人数
-        private int landCount;//地块数
-        private bool isOk;//导入地块时的验证
-        private CollectivityTissue tissue;//集体经济组织
-        private CollectivityTissue sender;//集体经济组织
-        private VirtualPersonBusiness personBusiness;
-        private AccountLandBusiness landBusiness;
-        private DictionaryBusiness dictBusiness;
-        private ConcordBusiness concordBusiness;
-        private ContractRegeditBookBusiness contractRegeditBookBusiness;
-        private IBuildLandBoundaryAddressCoilWorkStation coilStation;
-        private IBuildLandBoundaryAddressDotWorkStation dotStation;
-
-        private List<VirtualPerson> remainVps = new List<VirtualPerson>();
-        private List<ContractLand> remainLands = new List<ContractLand>();
-        private List<ContractConcord> remainConcords = new List<ContractConcord>();
-        private List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>();
-
-        private List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
-        private ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
+        protected ToolProgress toolProgress;
+        protected List<string> concrdNumberList;
+        protected InitalizeLandSurveyInformation landInfo;//初始化承包台账调查表信息
+        protected int familyCount;//承包方数
+        protected int personCount;//共有人数
+        protected int landCount;//地块数
+        protected bool isOk;//导入地块时的验证
+        protected CollectivityTissue tissue;//集体经济组织
+        protected CollectivityTissue sender;//集体经济组织
+        protected VirtualPersonBusiness personBusiness;
+        protected AccountLandBusiness landBusiness;
+        protected DictionaryBusiness dictBusiness;
+        protected ConcordBusiness concordBusiness;
+        protected ContractRegeditBookBusiness contractRegeditBookBusiness;
+        protected IBuildLandBoundaryAddressCoilWorkStation coilStation;
+        protected IBuildLandBoundaryAddressDotWorkStation dotStation; 
+        protected List<VirtualPerson> remainVps = new List<VirtualPerson>();
+        protected List<ContractLand> remainLands = new List<ContractLand>();
+        protected List<ContractConcord> remainConcords = new List<ContractConcord>();
+        protected List<ContractRegeditBook> remainBooks = new List<ContractRegeditBook>(); 
+        protected List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
+        protected ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
 
         #endregion Fields
-
-
-
+         
         #region Propertys
 
-        //private ContractBusinessSettingDefine _contractBusinessSettingDefine;
+        //protected ContractBusinessSettingDefine _contractBusinessSettingDefine;
 
         /// <summary>
         /// 承包台账常规设置实体
@@ -128,7 +124,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 进度提示
         /// </summary>
-        private void toolProgress_OnPostProgress(int progress, string info = "")
+        protected void toolProgress_OnPostProgress(int progress, string info = "")
         {
             this.ReportProgress(progress, info);
         }
@@ -182,7 +178,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 校验承包台账调查表信息
         /// </summary>
-        public bool VerifyLandTableInformation()
+        public virtual bool VerifyLandTableInformation()
         {
             if (landInfo == null)
             {
@@ -202,7 +198,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 检查地块编码是否重复，主要和确股地块比较，因为确权地块已被清空
         /// </summary>
-        private bool CheckLandNumberRepeat()
+        protected bool CheckLandNumberRepeat()
         {
             bool checkResult = true;
             var stocklands = DbContext.CreateContractLandWorkstation().Get(o => o.IsStockLand == true);
@@ -231,7 +227,7 @@ namespace YuLinTu.Library.Business
         /// 导入实体
         /// </summary>
         /// <returns></returns>
-        public bool ImportLandEntity()
+        public virtual bool ImportLandEntity()
         {
             try
             {
@@ -306,7 +302,7 @@ namespace YuLinTu.Library.Business
         /// 检查合同与权证信息
         /// </summary>
         /// <param name="landFamily">人和地集合</param>
-        private bool CheckConcordRegeditBook(LandFamily landFamily)
+        protected bool CheckConcordRegeditBook(LandFamily landFamily)
         {
             if (landFamily.Concord != null && !string.IsNullOrEmpty(landFamily.Concord.ConcordNumber) && concordBusiness.Exists(landFamily.Concord.ConcordNumber))
             {
@@ -334,7 +330,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入信息
         /// </summary>
-        private void ImportLandFamily(LandFamily landFamily, int familyIndex)
+        public virtual void ImportLandFamily(LandFamily landFamily, int familyIndex)
         {
             VirtualPerson vp = ImportVirtualPersonInformation(landFamily, familyIndex);
             if (vp == null)
@@ -388,7 +384,7 @@ namespace YuLinTu.Library.Business
         /// 导入承包方数据
         /// </summary>
         /// <returns></returns>
-        private VirtualPerson ImportVirtualPersonInformation(LandFamily landFamily, int familyIndex)
+        public virtual VirtualPerson ImportVirtualPersonInformation(LandFamily landFamily, int familyIndex)
         {
             bool contractorClear = ContractBusinessSettingDefine.ClearVirtualPersonData;
             VirtualPerson vp = null;
@@ -447,7 +443,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入承包方
         /// </summary>
-        private VirtualPerson ImportVirtualPerson(LandFamily landFamily, int familyIndex)
+        public virtual VirtualPerson ImportVirtualPerson(LandFamily landFamily, int familyIndex)
         {
             //生成承包方中的共有人信息
             List<Person> personList = new List<Person>();
@@ -513,7 +509,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="landFamily"></param>
         /// <param name="vp"></param>
-        private void ImportConcordAndRegeditBook(LandFamily landFamily, VirtualPerson vp)
+        protected void ImportConcordAndRegeditBook(LandFamily landFamily, VirtualPerson vp)
         {
             if (!isOk)
                 return;
@@ -568,7 +564,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入二轮承包方
         /// </summary>
-        private void ImportTableInformation(LandFamily landFamily, int familyIndex)
+        protected void ImportTableInformation(LandFamily landFamily, int familyIndex)
         {
             if (landInfo.IsContaionTableValue)
             {
@@ -583,7 +579,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入二轮承包方信息
         /// </summary>
-        private void InportTableVirtualPerson(LandFamily landFamily)
+        public virtual void InportTableVirtualPerson(LandFamily landFamily)
         {
             if (landFamily.TablePersons == null)
             {
@@ -635,7 +631,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入二轮承包地块信息
         /// </summary>
-        private void ImportTableLandInformation(LandFamily landFamily)
+        protected void ImportTableLandInformation(LandFamily landFamily)
         {
             if (landFamily.TableLandCollection == null || landFamily.TableLandCollection.Count == 0)
             {
@@ -656,7 +652,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 合并承包地块
         /// </summary>
-        private List<ContractLand> CombinationLand(List<ContractLand> lands, VirtualPerson vp)
+        public virtual List<ContractLand> CombinationLand(List<ContractLand> lands, VirtualPerson vp)
         {
             if (lands == null || lands.Count < 1)
                 return lands;
@@ -698,7 +694,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 初始化地块共享
         /// </summary>
-        private void InitalizeAgricultureLandShare(ContractLand land)
+        protected void InitalizeAgricultureLandShare(ContractLand land)
         {
             //AgricultureLandExpand expand = land.LandExpand;
             //if (expand == null || string.IsNullOrEmpty(expand.ShareInformation))
@@ -745,7 +741,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导入承包地块
         /// </summary>
-        private void ImportContractLand(List<ContractLand> lands)
+        public virtual void ImportContractLand(List<ContractLand> lands)
         {
             bool checkNumber = false;
             string value = ToolConfiguration.GetSpecialAppSettingValue("CheckInnerVillageNumber", "false");
@@ -816,7 +812,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 检查同村下调查编码
         /// </summary>
-        private void CheckSurveyNumber(ContractLand land)
+        protected void CheckSurveyNumber(ContractLand land)
         {
             if (CurrentZone.Level == eZoneLevel.Group)
             {
@@ -879,7 +875,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 删除地块信息
         /// </summary>
-        //private void ClearLandInformtion(List<VirtualPerson> familys, List<VirtualPerson> unLockFamilys)
+        //protected void ClearLandInformtion(List<VirtualPerson> familys, List<VirtualPerson> unLockFamilys)
         //{
         //    bool contractorClear = SettingDefine.ClearVirtualPersonData;
         //    DeleteAllLandDataByZone(unLockFamilys, contractorClear);
@@ -896,7 +892,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 过滤承包方
         /// </summary>
-        private List<VirtualPerson> FilterContractor(List<VirtualPerson> familys, List<VirtualPerson> unLockFamilys)
+        protected List<VirtualPerson> FilterContractor(List<VirtualPerson> familys, List<VirtualPerson> unLockFamilys)
         {
             List<VirtualPerson> personCollection = new List<VirtualPerson>();
             foreach (VirtualPerson person in unLockFamilys)
@@ -913,7 +909,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 清除所有相关数据
         /// </summary>
-        private void ClearAllRelationData(bool vpClear)
+        protected void ClearAllRelationData(bool vpClear)
         {
             try
             {
@@ -957,7 +953,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 删除当前地域下所有未被锁定的数据
         /// </summary>
-        //private bool DeleteAllLandDataByZone(List<VirtualPerson> unLockFamilys, bool vpClear)
+        //protected bool DeleteAllLandDataByZone(List<VirtualPerson> unLockFamilys, bool vpClear)
         //{
         //    List<ContractLand> landCollection = new List<ContractLand>();
         //    List<ContractLand> lands = landBusiness.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
@@ -1015,7 +1011,7 @@ namespace YuLinTu.Library.Business
         /// 删除当前地域下所有未被锁定的数据
         /// </summary>
         /// <param name="vpClear">是否清空承包方数据</param>
-        private bool DeleteAllLandDataByZone(bool vpClear)
+        public virtual bool DeleteAllLandDataByZone(bool vpClear)
         {
             bool isDeleteSuccess = true;
             try
@@ -1046,7 +1042,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 删除承包方所有信息
         /// </summary>
-        //private void DeleteVirtualPerson(ContainerFactory factory, List<VirtualPerson> lockfamilys)
+        //protected void DeleteVirtualPerson(ContainerFactory factory, List<VirtualPerson> lockfamilys)
         //{
         //    IVirtualPersonWorkStation<LandVirtualPerson> vpStation = factory.CreateVirtualPersonStation<LandVirtualPerson>();
         //    var familys = vpStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
@@ -1119,7 +1115,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 报告异常信息
         /// </summary>
-        private bool ReportExcetionInfo(string message)
+        protected bool ReportExcetionInfo(string message)
         {
             this.ReportWarn(message);
             return false;
@@ -1128,7 +1124,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 报告错误信息
         /// </summary>
-        private bool ReportErrorInfo(string message)
+        protected bool ReportErrorInfo(string message)
         {
             this.ReportError(message);
             return false;
@@ -1137,7 +1133,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 显示错误信息
         /// </summary>
-        private void ShowErrowInformation(List<string> errorArray)
+        protected void ShowErrowInformation(List<string> errorArray)
         {
             if (errorArray == null || errorArray.Count == 0)
             {
@@ -1152,7 +1148,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 显示信息
         /// </summary>
-        private void ShowInformation(List<string> inforArray)
+        protected void ShowInformation(List<string> inforArray)
         {
             if (inforArray == null || inforArray.Count == 0)
             {

@@ -1,10 +1,6 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
@@ -74,7 +70,7 @@ namespace YuLinTu.Library.Business
             }
             Zone currentZone = argument.CurrentZone;
             IDbContext dbContext = argument.DbContext;
-            AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
+            var landBusiness = new AccountLandBusiness(dbContext);
             landBusiness.Alert += this.ReportInfo;
             landBusiness.ProgressChanged += this.ReportPercent;
             landBusiness.VirtualType = argument.VirtualType;

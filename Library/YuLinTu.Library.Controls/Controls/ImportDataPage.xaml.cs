@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Library.Business;
@@ -36,6 +37,24 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public bool Multiselect { get; set; }
 
+        public List<KeyValue<string, string>> TypeValueList
+        {
+            set
+            {
+                if (value != null)
+                {
+                    iptctl.Visibility = Visibility.Visible;
+                    var lst = new List<ComboBoxItem>();
+                    foreach (var item in value)
+                    {
+                        lst.Add(new ComboBoxItem() { Tag = item.Key, Content = item.Value });
+                    }
+                    cbtype.ItemsSource = lst;
+                    cbtype.SelectedIndex = 0;
+                }
+            }
+        }
+
         #endregion
 
         #region Ctor
@@ -49,8 +68,6 @@ namespace YuLinTu.Library.Controls
             this.Workpage = page;
             this.filter = filter;
             this.Multiselect = multise;
-            if (!header.Contains("摸底核实"))
-                iptctl.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -97,22 +114,25 @@ namespace YuLinTu.Library.Controls
         private void btnExcuteImport_Click_1(object sender, RoutedEventArgs e)
         {
             ComboBoxItem cbi = cbtype.SelectedItem as ComboBoxItem;
-            string typestr = cbi.Tag.ToString();
-            if (typestr == eImportTypes.Clear.ToString())
+            if (cbi != null)
             {
-                ImportType = eImportTypes.Clear;
-            }
-            else if (typestr == eImportTypes.Over.ToString())
-            {
-                ImportType = eImportTypes.Over;
-            }
-            else if (typestr == eImportTypes.Ignore.ToString())
-            {
-                ImportType = eImportTypes.Ignore;
-            }
-            else if (typestr == eImportTypes.IgnorePart.ToString())
-            {
-                ImportType = eImportTypes.IgnorePart;
+                string typestr = cbi.Tag.ToString();
+                if (typestr == eImportTypes.Clear.ToString())
+                {
+                    ImportType = eImportTypes.Clear;
+                }
+                else if (typestr == eImportTypes.Over.ToString())
+                {
+                    ImportType = eImportTypes.Over;
+                }
+                else if (typestr == eImportTypes.Ignore.ToString())
+                {
+                    ImportType = eImportTypes.Ignore;
+                }
+                else if (typestr == eImportTypes.IgnorePart.ToString())
+                {
+                    ImportType = eImportTypes.IgnorePart;
+                }
             }
             Workpage.Page.CloseMessageBox(true);
         }

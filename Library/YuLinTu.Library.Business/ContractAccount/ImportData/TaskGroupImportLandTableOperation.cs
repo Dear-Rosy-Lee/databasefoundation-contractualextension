@@ -73,12 +73,13 @@ namespace YuLinTu.Library.Business
             }
             foreach (var zone in allZones)
             {
-                TaskImportLandTableArgument argument = new TaskImportLandTableArgument();
+                var argument = new TaskImportLandTableArgument();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.FileName = GetMatchFilePath(fileName, zone, zoneStation);
                 argument.VirtualType = groupArgument.VirtualType;
-                TaskImportLandTableOperation operation = new TaskImportLandTableOperation();
+                argument.ImportType = groupArgument.ImportType;
+                var operation = new TaskImportLandTableOperation();
                 operation.Argument = argument;
                 operation.Name = "批量导入地块调查表";
                 operation.Description = zone.FullName;
