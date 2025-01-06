@@ -761,33 +761,44 @@ namespace YuLinTu.Library.Business
             isErrorRecord = false;
             try
             {
-                using (var landTableImport = new ImportContractAccountLandTable())
+                var landTableImport = new ImportContractAccountLandTable();
+
+                #region 通过反射等机制定制化具体的业务处理类 
+                var temp = WorksheetConfigHelper.GetInstance(landTableImport);
+                if (temp != null)
                 {
-                    //List<VirtualPerson> persons = GetByZone(zone.FullCode);
-                    string excelName = GetMarkDesc(zone);
-                    landTableImport.ProgressChanged += ReportPercent; //进度条
-                    landTableImport.Alert += ReportInfo;              //记录错误信息
-                    landTableImport.CurrentZone = zone;
-                    landTableImport.ExcelName = excelName;
-                    landTableImport.VirtualType = this.VirtualType;
-                    landTableImport.TableType = TableType;
-                    landTableImport.DbContext = this.dbContext;
-                    landTableImport.Percent = 95.0;
-                    landTableImport.CurrentPercent = 5.0;
-                    landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
-                    //landTableImport.ListPerson = persons;
-                    this.ReportProgress(1, "开始读取数据");
-                    bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName, isNotLand);  //读取承包台账调查表数据
-                    //landTableImport.MergeHouseData();
-                    this.ReportProgress(3, "开始检查数据");
-                    bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
-                    if (isReadSuccess && canImport && !isErrorRecord)
+                    if (temp is ImportContractAccountLandTable)
                     {
-                        this.ReportProgress(5, "开始处理数据");
-                        landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
-                        this.ReportProgress(100, "完成");
-                        isSuccess = true;
+                        landTableImport = (ImportContractAccountLandTable)temp;
                     }
+                }
+
+                #endregion 通过反射等机制定制化具体的业务处理类
+
+                //List<VirtualPerson> persons = GetByZone(zone.FullCode);
+                string excelName = GetMarkDesc(zone);
+                landTableImport.ProgressChanged += ReportPercent; //进度条
+                landTableImport.Alert += ReportInfo;              //记录错误信息
+                landTableImport.CurrentZone = zone;
+                landTableImport.ExcelName = excelName;
+                landTableImport.VirtualType = this.VirtualType;
+                landTableImport.TableType = TableType;
+                landTableImport.DbContext = this.dbContext;
+                landTableImport.Percent = 95.0;
+                landTableImport.CurrentPercent = 5.0;
+                landTableImport.IsCheckLandNumberRepeat = IsCheckLandNumberRepeat;
+                //landTableImport.ListPerson = persons;
+                this.ReportProgress(1, "开始读取数据");
+                bool isReadSuccess = landTableImport.ReadLandTableInformation(fileName, isNotLand);  //读取承包台账调查表数据
+                                                                                                     //landTableImport.MergeHouseData();
+                this.ReportProgress(3, "开始检查数据");
+                bool canImport = landTableImport.VerifyLandTableInformation();   //检查承包台账调查表数据
+                if (isReadSuccess && canImport && !isErrorRecord)
+                {
+                    this.ReportProgress(5, "开始处理数据");
+                    landTableImport.ImportLandEntity();   //将检查完毕的数据导入数据库
+                    this.ReportProgress(100, "完成");
+                    isSuccess = true;
                 }
             }
             catch (Exception ex)
@@ -4272,7 +4283,7 @@ namespace YuLinTu.Library.Business
                             }
                         }
                     }
-                   
+
                 }
                 AgricultureLandExpand landExpand = land.LandExpand;
                 if (!isNULL)
@@ -4345,7 +4356,7 @@ namespace YuLinTu.Library.Business
                             landExpand.ReferPerson = metadata.LandExpand.ReferPerson;
                         }
                     }
-                    
+
                 }
                 land.LandExpand = landExpand;
                 if (metadata.InitialLandOldNumber)
@@ -4360,7 +4371,7 @@ namespace YuLinTu.Library.Business
                     if (upCount > 0)
                         successCount++;
                 }
-                
+
                 //if (metadata.InitialReferPersonByOwner)    //以地块当前承包方为指界人
                 //{
                 //    var vp = zonePersonList.Find(v => land.OwnerId == v.ID);
