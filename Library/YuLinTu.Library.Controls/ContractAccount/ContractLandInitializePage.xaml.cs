@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Utils.Tool;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -474,13 +473,13 @@ namespace YuLinTu.Library.Controls
                 return;
             }
 
-            var lands = LandBusiness.GetCollection(CurrentZone.FullCode,eLevelOption.SelfAndSubs);
-            if(!lands.Any(t=> string.IsNullOrEmpty(t.OldLandNumber)))
+            var lands = LandBusiness.GetCollection(CurrentZone.FullCode, eLevelOption.SelfAndSubs);
+            if (!lands.Any(t => string.IsNullOrEmpty(t.OldLandNumber)))
             {
                 var message = new TabMessageBoxDialog
                 {
                     Header = "提示",
-                    Message = "当前地域 确权地块编码 已有数据，是否需要覆盖当前编码",
+                    Message = "当前地域下地块中已有 确权地块编码 数据，若确权地块编码存在错误才需要覆盖，是否覆盖？",
                     MessageGrade = eMessageGrade.Warn,
                     ConfirmButtonText = "覆盖",
                     CancelButtonText = "取消",
@@ -515,8 +514,8 @@ namespace YuLinTu.Library.Controls
                     Close(true);
                 });
             }
-                
-            
+
+
 
             // Workpage.Page.CloseMessageBox(true);
         }
@@ -555,7 +554,7 @@ namespace YuLinTu.Library.Controls
                 initLandComment = (bool)cbLandComment.IsChecked;
             }));
             if (!initialQSXZ && !initialLandName && !initialLandLevel && !initialLandPurpose && !initialLandNumber && !initialIsFamer
-             && !initialAwareArea && !handleContractLand && !initialMapNumber && !initialSurveyPerson && !initialLandNeighbor &&!initialLandNeighborInfo
+             && !initialAwareArea && !handleContractLand && !initialMapNumber && !initialSurveyPerson && !initialLandNeighbor && !initialLandNeighborInfo
              && !initialSurveyDate && !initialSurveyInfo && !initialCheckPerson && !initialCheckDate && !initialCheckInfo && !initialReferPerson && !initLandComment)
             {
                 return false;
@@ -747,7 +746,7 @@ namespace YuLinTu.Library.Controls
         private void cmbQSXZ_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             qsxz = cmbQSXZ.SelectedItem as Dictionary;
-            if(qsxz==null)
+            if (qsxz == null)
             {
                 return;
             }
@@ -756,10 +755,10 @@ namespace YuLinTu.Library.Controls
         private void rbNew_Click(object sender, RoutedEventArgs e)
         {
             RadioButton btn = sender as RadioButton;
-           cbLandNumber.IsChecked = btn.IsChecked;
+            cbLandNumber.IsChecked = btn.IsChecked;
 
         }
-        
+
         //private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         //{
         //    throw new NotImplementedException();
