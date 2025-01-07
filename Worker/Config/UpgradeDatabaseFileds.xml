@@ -1,6 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUpgradeDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<UpgradeDatabase>
+		<TableName>DKLXB</TableName>
+		<FieldList>
+			<UpdateField>
+				<FieldName>YCBHTBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>YDKBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>YCBJYQZLSH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>JZMJBHQK</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QSBHQK</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>SXBHQK</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>XCBHTBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>XDKBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>FGDKZS</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>FGDKXH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>BZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+		</FieldList>
+	</UpgradeDatabase>
+	<UpgradeDatabase>
 		<TableName>TZ_SCDKB</TableName>
 		<FieldList>
 			<UpdateField>
