@@ -81,22 +81,25 @@ namespace YuLinTu.Library.Controls
         private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
         {
             ComboBoxItem cbi = cbtype.SelectedItem as ComboBoxItem;
-            string typestr = cbi.Tag.ToString();
-            if (typestr == eImportTypes.Clear.ToString())
+            if (cbi != null)
             {
-                ImportType = eImportTypes.Clear;
-            }
-            else if (typestr == eImportTypes.Over.ToString())
-            {
-                ImportType = eImportTypes.Over;
-            }
-            else if (typestr == eImportTypes.Ignore.ToString())
-            {
-                ImportType = eImportTypes.Ignore;
-            }
-            else if (typestr == eImportTypes.IgnorePart.ToString())
-            {
-                ImportType = eImportTypes.IgnorePart;
+                string typestr = cbi.Tag.ToString();
+                if (typestr == eImportTypes.Clear.ToString())
+                {
+                    ImportType = eImportTypes.Clear;
+                }
+                else if (typestr == eImportTypes.Over.ToString())
+                {
+                    ImportType = eImportTypes.Over;
+                }
+                else if (typestr == eImportTypes.Ignore.ToString())
+                {
+                    ImportType = eImportTypes.Ignore;
+                }
+                else if (typestr == eImportTypes.IgnorePart.ToString())
+                {
+                    ImportType = eImportTypes.IgnorePart;
+                }
             }
             Workpage.Page.CloseMessageBox(true);
         }
