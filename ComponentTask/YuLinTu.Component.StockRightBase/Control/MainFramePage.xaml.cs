@@ -1006,7 +1006,7 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void ExportSingle(string name, string tempName, AgricultureWordBook book, List<VirtualPerson> persons)
         {
-            ExportDataPage extPage = new ExportDataPage(CurrentZone.FullName, Workpage, name);
+            var extPage = new ExportDataPage(CurrentZone.FullName, Workpage, name);
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (bb, rr) =>
             {

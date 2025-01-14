@@ -1961,7 +1961,7 @@ namespace YuLinTu.Library.Business
             FamilySurveyChronicleIndex = 17;
             FamilyCheckPersonIndex = 18;
             FamilyCheckDateIndex = 19;
-            FamilyCheckOpinionIndex = 120;
+            FamilyCheckOpinionIndex = 20;
             LandNameIndex = 21;
             CadastralNumberIndex = 22;
             ImageNumberIndex = 23;
