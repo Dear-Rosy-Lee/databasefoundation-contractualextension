@@ -45,7 +45,7 @@ namespace YuLinTu.Library.Repository
 
         void UpdateListZoneCode(List<T> entitys);
 
-        int UpdateOldLandsCode(T entity, bool onlycode = false);
+        int UpdateOldLandsCode(T entity, bool onlycode);
 
         /// <summary>
         /// 根据承包方id更新承包方名称

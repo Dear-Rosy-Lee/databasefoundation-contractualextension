@@ -200,11 +200,21 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
-        public int UpdateOldLandCode(ContractLand entity)
+        public int UpdateOldLandCode(ContractLand entity,bool onlycode)
         {
-            DefaultRepository.UpdateOldLandsCode(entity);
+            DefaultRepository.UpdateOldLandsCode(entity, onlycode);
             return TrySaveChanges(DefaultRepository);
         }
+
+        public int UpdateOldLandCode(List<ContractLand> entities, bool onlycode)
+        {
+            foreach(var entity in entities)
+            {
+                DefaultRepository.UpdateOldLandsCode(entity, onlycode);
+            }
+            return TrySaveChanges(DefaultRepository);
+        }
+
 
         public int UpdateLandCode(List<ContractLand> entity)
         {

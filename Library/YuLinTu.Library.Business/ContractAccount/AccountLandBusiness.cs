@@ -4306,7 +4306,7 @@ namespace YuLinTu.Library.Business
                 land.LandExpand = landExpand;
                 if (metadata.InitialLandOldNumber)
                 {
-                    int upCount = landStation.UpdateOldLandCode(land);
+                    int upCount = landStation.UpdateOldLandCode(land,false);
                     if (upCount > 0)
                         successCount++;
                 }

@@ -15,8 +15,8 @@ namespace YuLinTu.Component.AssociateLandCode
 
         #region Properties
 
-        [DisplayLanguage("需要关联原地块编码SQLite数据库")]
-        [DescriptionLanguage("请选择需要关联原地块编码SQLite数据库所在路径")]
+        [DisplayLanguage("新编码SQLite数据库")]
+        [DescriptionLanguage("请选择需要关联原编码SQLite数据库所在路径")]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBoxSqlite),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string DatabaseFilePath
@@ -25,8 +25,8 @@ namespace YuLinTu.Component.AssociateLandCode
             set { databaseFilePath = value; NotifyPropertyChanged("DatabaseFilePath"); }
         }
 
-        [DisplayLanguage("原地块编码SQLite数据库")]
-        [DescriptionLanguage("请选择原地块编码SQLite数据库所在路径")]
+        [DisplayLanguage("原编码SQLite数据库")]
+        [DescriptionLanguage("请选择原编码SQLite数据库所在路径")]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderSelectedFileTextBoxSqlite),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string OldDatabaseFilePath

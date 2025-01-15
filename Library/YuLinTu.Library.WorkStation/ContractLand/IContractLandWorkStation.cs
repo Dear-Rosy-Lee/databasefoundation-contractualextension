@@ -41,7 +41,8 @@ namespace YuLinTu.Library.WorkStation
 
         int UpdateLandBoundary(ContractLand entity);
 
-        int UpdateOldLandCode(ContractLand entity);
+        int UpdateOldLandCode(ContractLand entity, bool onlycode);
+        int UpdateOldLandCode(List<ContractLand> entity,bool onlycode);
 
         /// <summary>
         /// 批量更新地块编码

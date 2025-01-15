@@ -162,7 +162,7 @@ namespace YuLinTu.Library.Repository
                      }));
             }
         }
-        public int UpdateOldLandsCode(T entity, bool onlycode = false)
+        public int UpdateOldLandsCode(T entity, bool onlycode)
         {
             //if (!CheckTableExist())
             //{
@@ -172,9 +172,13 @@ namespace YuLinTu.Library.Repository
             if (entity == null)
                 return 0;
             entity.ModifiedTime = DateTime.Now;
-            if (!onlycode)
+            if (onlycode)
             {
-                return base.Update(entity, c => c.ID.Equals(entity.ID));
+                return AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractLand
+                     {
+                         OldLandNumber = entity.OldLandNumber
+                     }));
             }
             else
             {
