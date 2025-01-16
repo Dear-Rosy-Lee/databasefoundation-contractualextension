@@ -252,10 +252,10 @@ namespace YuLinTu.Library.Controls
             {
                 errorMsg += VirtualPersonInfo.VpCodeNull + ",";
             }
-            if (otherDefine.HasTelephoneNumber && string.IsNullOrEmpty(contractor.Telephone))        //检查承包方电话号码是否填写
-            {
-                errorMsg += VirtualPersonInfo.VpTelNull + ",";
-            }
+            //if (otherDefine.HasTelephoneNumber && string.IsNullOrEmpty(contractor.Telephone))        //检查承包方电话号码是否填写
+            //{
+            //    errorMsg += VirtualPersonInfo.VpTelNull + ",";
+            //}
             EnumStore<eCredentialsType> cardType = cbCardType.SelectedItem as EnumStore<eCredentialsType>;
             bool right = ToolICN.Check(contractor.Number);
             if (otherDefine.IsCheckCardNumber && cardType != null && cardType.Value == eCredentialsType.IdentifyCard && !right)

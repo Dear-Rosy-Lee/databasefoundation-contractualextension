@@ -30,6 +30,7 @@ namespace YuLinTu.Library.Controls
             item.ID = vp.ID;
             item.ICN = vp.Number;
             item.Comment = vp.Comment;
+            item.OldVirtualCode = vp.OldVirtualCode;
             item.Tag = vp;
             item.FamilyNumber = vp.FamilyNumber;
             item.Status = vp.Status;

@@ -65,6 +65,7 @@ namespace YuLinTu.Library.Controls
         private string _quantificitionArea;
         private string _obligateArea;
         private string _landPurpose;
+        private string oldLandCode = "1";
 
         #endregion Fields
 
@@ -89,6 +90,19 @@ namespace YuLinTu.Library.Controls
             {
                 name = value;
                 NotifyPropertyChanged("Name");
+            }
+        }
+
+        /// <summary>
+        /// 原地块编码
+        /// </summary>
+        public string OldLandCode
+        {
+            get { return oldLandCode; }
+            set
+            {
+                oldLandCode = value;
+                NotifyPropertyChanged("OldLandCode");
             }
         }
 
@@ -301,9 +315,25 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private string awareAreaUI;
 
+        private string oldLandCode;
+
         #endregion Fields
 
         #region Properties
+
+        /// <summary>
+        /// 原地块编码
+        /// </summary>
+        public string OldLandCode
+        {
+            get { return oldLandCode; }
+            set
+            {
+                oldLandCode = value;
+                NotifyPropertyChanged("OldLandCode");
+            }
+        }
+
 
         /// <summary>
         /// 地块可见性
@@ -442,6 +472,7 @@ namespace YuLinTu.Library.Controls
             Comment = land.Comment;
             Img = land.Shape != null ? 1 : 2;
             IsStockLand = land.IsStockLand;
+            OldLandCode = land.OldLandNumber;
             //Tag.Shape = null;
             //if (land.Shape != null)
             //{

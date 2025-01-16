@@ -10,6 +10,7 @@ namespace YuLinTu.Component.AssociateLandCode
        
         private string databaseFilePath;   //SQLite数据库路径
         private string olddatabaseFilePath;   //SQLite数据库保存路径
+        private string resultFilePath;   //结果文件保存路径
 
         #endregion Fields
 
@@ -33,6 +34,21 @@ namespace YuLinTu.Component.AssociateLandCode
         {
             get { return olddatabaseFilePath; }
             set { olddatabaseFilePath = value; NotifyPropertyChanged("OldDatabaseFilePath"); }
+        }
+
+        [DisplayLanguage("挂接结果存放路径", IsLanguageName = false)]
+        [DescriptionLanguage("挂接结果存放路径的路径", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
+             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        public string ResultFilePath
+        {
+            get { return resultFilePath; }
+            set
+            {
+                resultFilePath = value;
+                //qualityCompressionDataSetDefine.ResultFilePath = ResultFilePath;
+                NotifyPropertyChanged("ResultFilePath");
+            }
         }
 
         #endregion Properties

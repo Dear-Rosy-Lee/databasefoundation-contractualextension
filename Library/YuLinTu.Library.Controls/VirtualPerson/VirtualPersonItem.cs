@@ -23,6 +23,7 @@ namespace YuLinTu.Library.Controls
         private eVirtualPersonStatus status;
         private string contractorNumber;
         private double? totalTableArea;
+        private string oldVirtualCode;
 
         #endregion
 
@@ -49,6 +50,15 @@ namespace YuLinTu.Library.Controls
         {
             get { return iCN; }
             set { iCN = value; NotifyPropertyChanged("ICN"); }
+        }
+
+        /// <summary>
+        /// 原承包方编码
+        /// </summary>
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
         }
 
         /// <summary>
@@ -189,6 +199,7 @@ namespace YuLinTu.Library.Controls
         private eGender gender;
         private Guid id;
         private Guid fid;
+        private string oldVirtualCode = "1";
 
         #endregion
 
@@ -258,6 +269,19 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        /// <summary>
+        /// 身份证号码
+        /// </summary>
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set
+            {
+                oldVirtualCode = value;
+                NotifyPropertyChanged("OldVirtualCode");
+                
+            }
+        }
         /// <summary>
         /// 关系
         /// </summary>

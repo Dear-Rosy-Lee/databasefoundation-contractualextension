@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.ObjectBuilder2;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using YuLinTu.Data;
@@ -30,6 +31,7 @@ namespace YuLinTu.Component.AssociateLandCode
         private IDbContext oldDbContext;  //本地数据源
         private double averagePercent;  //平均百分比
         private double currentPercent;  //当前百分比
+        private string resfile;
         private int index;
         private int cindex;
 
@@ -83,12 +85,12 @@ namespace YuLinTu.Component.AssociateLandCode
             double vpPercent = 50 / (double)villages.Count;
             double landPercent = 50 / (double)groups.Count;
             this.ReportInfomation("开始挂接原承包方编码");
-            
+            resfile = CreateLog();
             foreach (var town in towns)
             {
                 this.ReportInfomation($"开始挂接{town.Name}原承包方编码");
                 var townVillages = allZones.Where(x => x.Level == eZoneLevel.Village && x.FullCode.StartsWith(town.FullCode)).ToList();
-                AssociateVpCode(town,townVillages, vpPercent, villages.Count);
+                AssociateVpCode(town,townVillages, vpPercent, villages.Count, resfile);
             }
             this.ReportInfomation("开始挂接原地块编码");
             
@@ -102,7 +104,7 @@ namespace YuLinTu.Component.AssociateLandCode
 
             return true;
         }
-        public void AssociateVpCode(Zone currentTown, List<Zone> villages, double vpPercent, int zoneListCount)
+        public void AssociateVpCode(Zone currentTown, List<Zone> villages, double vpPercent, int zoneListCount,string resfile)
         {
             
             var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
@@ -113,7 +115,7 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}原承包方编码", index, zoneListCount, village.FullName));
                 var vps = vpStation.GetByZoneCode(village.FullCode, eLevelOption.Subs);
-                vps = ExecuteUpdateVp(vps, oldVps);
+                vps = ExecuteUpdateVp(vps, oldVps,village);
                 vpStation.UpdatePersonList(vps);
                 index++;
             }
@@ -150,8 +152,8 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 this.ReportProgress(53 + (int)(cindex * landPercent), string.Format("({0}/{1})挂接{2}原地块编码", cindex, zoneListCount, group.FullName));
                 var oldlands = GetOldLands(vp.Where(x => x.ZoneCode.StartsWith(group.FullCode)).ToList(), oldVps, oldLands);
-                var upLands = ExecuteUpdateLand(vp.Where(x => x.ZoneCode.StartsWith(group.FullCode)).ToList(),
-                                  geoLands.Where(x => x.LandNumber.StartsWith(group.FullCode)).ToList(),oldlands);
+                var upLands = ExecuteUpdateLand(vp.Where(x => x.ZoneCode.StartsWith(group.FullCode)).ToList(), oldVps,
+                                  geoLands.Where(x => x.LandNumber.StartsWith(group.FullCode)).ToList(),oldlands,group);
                 landStation.UpdateOldLandCode(upLands,true);
                 cindex++;
             }
@@ -191,25 +193,45 @@ namespace YuLinTu.Component.AssociateLandCode
                 }
             }
         }
-        private List<ContractLand> ExecuteUpdateLand(List<VirtualPerson> vps, List<ContractLand> clands, List<ContractLand> oldlands)
+        public string CreateLog()
+        {
+            // 指定文件夹路径
+            string folderPath = argument.ResultFilePath;
+            string fileName = $"挂接结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
+            // 合成完整文件路径
+            folderPath = Path.Combine(folderPath, fileName);
+            File.WriteAllText(folderPath, "检查结果记录:\n");
+            return folderPath;
+        }
+        public void WriteLog(string path, string mes)
+        {
+             IEnumerable<string> stringCollection = new[] { mes };
+             File.AppendAllLines(path, stringCollection);
+        }
+
+
+        private List<ContractLand> ExecuteUpdateLand(List<VirtualPerson> vps, List<VirtualPerson> oldVps, List<ContractLand> clands, List<ContractLand> oldlands,Zone group)
         {
             var ListLands = new List<ContractLand>();
             foreach (var vp in vps)
             {
+                
                 if (vp.OldVirtualCode != null)
                 {
+                    var oldvpid = oldVps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vp.OldVirtualCode).FirstOrDefault().ID;
+                    var ListOldLands = oldlands.Where(x => x.OwnerId == oldvpid).ToList();
                     var lands = clands.Where(x => x.OwnerId == vp.ID).ToList();
                     
                     lands.ForEach(t =>
                     {
                         if(t.OldLandNumber == null)
                         {
-                            if (oldlands.Where(c => c.ActualArea == t.ActualArea).ToList() != null)
+                            if (ListOldLands.Where(c => c.ActualArea == t.ActualArea).ToList() != null)
                             {
-                                if (oldlands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault() != null)
+                                if (ListOldLands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault() != null)
                                 {
-                                    t.OldLandNumber = oldlands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault().LandNumber;
-                                    oldlands.Remove(oldlands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault());
+                                    t.OldLandNumber = ListOldLands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault().LandNumber;
+                                    ListOldLands.Remove(ListOldLands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault());
                                     ListLands.Add(t);
                                 }
                                 
@@ -217,13 +239,17 @@ namespace YuLinTu.Component.AssociateLandCode
                             
                         }
                         
+                        
                     });
+
+                    CreateLandLogs(vp, oldVps,lands, oldlands,group);
                     
                 }
+
             }
             return ListLands;
         }
-        private List<ContractLand> GetOldLands(List<VirtualPerson> vps, List<VirtualPerson> Oldvps, List<ContractLand> oldclands)
+        private List<ContractLand> GetOldLands(List<VirtualPerson> vps ,List<VirtualPerson> Oldvps, List<ContractLand> oldclands)
         {
             var ListLands = new List<ContractLand>();
             foreach (var vp in vps)
@@ -237,7 +263,7 @@ namespace YuLinTu.Component.AssociateLandCode
             }
             return ListLands;
         }
-        private List<VirtualPerson> ExecuteUpdateVp(List<VirtualPerson> vps, List<VirtualPerson> oldVps)
+        private List<VirtualPerson> ExecuteUpdateVp(List<VirtualPerson> vps, List<VirtualPerson> oldVps,Zone village)
         {
             var ListVps = new List<VirtualPerson>();
             foreach (var vp in vps)
@@ -262,11 +288,47 @@ namespace YuLinTu.Component.AssociateLandCode
                                 }
                             }
                         }
+                      
                     });
+                    
+                }
+                if (vp.OldVirtualCode == null)
+                {
+                    WriteLog(resfile,$"{village.FullName}{village.FullCode}地域下的承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')}" +
+                        $"的农户未成功挂接原承包方编码请进行比对核实");
                 }
             }
             return ListVps;
 
+        }
+        private void CreateLandLogs(VirtualPerson vp, List<VirtualPerson> oldVps, List<ContractLand> clands, List<ContractLand> oldlands,Zone group)
+        {
+            
+            var oldvpid = oldVps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vp.OldVirtualCode).FirstOrDefault().ID;
+            oldlands = oldlands.Where(x => x.OwnerId == oldvpid).ToList();
+            var ListOldLand = oldlands;
+            foreach (var land in clands)
+            {
+                if(!ListOldLand.Where(x => x.LandNumber == land.OldLandNumber).IsNullOrEmpty())
+                    ListOldLand.Remove(ListOldLand.Where(x => x.LandNumber == land.OldLandNumber).FirstOrDefault());
+            }
+            
+            if (!ListOldLand.IsNullOrEmpty())
+            {
+                var cland = clands.Where(x => x.OldLandNumber.IsNullOrEmpty()).ToList();
+                if (cland != null)
+                {
+                    cland.ForEach(t => 
+                    {
+                        var res = string.Join(",", ListOldLand.Select(x => x.LandNumber));
+                        WriteLog(resfile, $"{group.FullName}{group.FullCode}地域下的地块编码为{t.LandNumber}地块，未挂接确权地块编码；" +
+                            $"当前承包方中未挂接的确权地块编码有{res},请进行对比核实");
+
+                    });
+                }
+               
+            }
+            
         }
         private void UpdateLandBoundary()
         {
