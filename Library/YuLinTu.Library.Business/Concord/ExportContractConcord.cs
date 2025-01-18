@@ -481,8 +481,8 @@ namespace YuLinTu.Library.Business
         protected virtual void WriteConcordInfo()
         {
             //WitePersonInformaion();
-            WriteSharePersonValue();
-
+            WriteSharePersonValue(); 
+            ProcessLandParcel();
             WriteLandInfo();
 
             //WriteReclamationInformation();
@@ -501,7 +501,6 @@ namespace YuLinTu.Library.Business
                 date = ((DateTime)Concord.ArableLandStartTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "至"
                     + ((DateTime)Concord.ArableLandEndTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "。";
             }
-            ProcessLandParcel();
             //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.SenderCode + "-" + Contractor.Name + ".jpg", 180, 250);
             SetBookmarkValue("SocialCode", Tissue.SocialCode);
             SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限

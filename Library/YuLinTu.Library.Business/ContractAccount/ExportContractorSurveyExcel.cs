@@ -587,7 +587,7 @@ namespace YuLinTu.Library.Business
                     WriteSecondTableLand(tablelandList, high, tablevp == null ? "" : tablevp.TotalArea);
                 }
                 WriteLandSurveyInformation(cs, cs.Count);
-                if (TableType == 4)
+                if (TableType == 4 || contractLandOutputSurveyDefine.WriteInfoOpinionValue)
                 {
                     WriteSignInformation(high, index);
                 }
