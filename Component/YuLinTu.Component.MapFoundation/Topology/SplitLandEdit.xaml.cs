@@ -36,6 +36,8 @@ namespace YuLinTu.Component.MapFoundation
 
         public List<SplitItem> SplitItems { get; set; }
 
+        public string SelectOldLandNumber { get; set; }
+
         public bool Flag { get; set; }
 
         public string LandCode { get; set; }
@@ -95,6 +97,7 @@ namespace YuLinTu.Component.MapFoundation
             {
                 oldNumber = graphics[0].Object.Object.GetPropertyValue("DKBM").ToString();
             }
+            SelectOldLandNumber = oldNumber;
             oldNumber = oldNumber.Length > 5 ? oldNumber.Substring(oldNumber.Length - 5) : "";
             graphics.ForEach(c =>
             {
