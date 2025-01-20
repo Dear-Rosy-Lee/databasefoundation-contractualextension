@@ -3681,11 +3681,11 @@ namespace YuLinTu.Library.Controls
                 {
                     ShowBox(ContractAccountInfo.ExportSenderDataExcel, "未获取发包方数据!", showConfirm: false);
                 }
-                else
-                {
-                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
-                                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
-                }
+                //else
+                //{
+                //    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
+                //                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
+                //}
             }
             catch (Exception ex)
             {
