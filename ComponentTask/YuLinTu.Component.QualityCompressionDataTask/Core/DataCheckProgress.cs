@@ -56,6 +56,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
+                if(srid == 4490)
+                {
+                    ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
+                    return false;
+                }
                 var token = Parameters.Token.ToString();
                 if (Parameters.Token.Equals(Guid.Empty))
                 {
