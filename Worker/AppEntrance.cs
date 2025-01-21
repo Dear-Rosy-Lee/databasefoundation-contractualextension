@@ -42,9 +42,10 @@ namespace YuLinTu.Product.YuLinTuTool
             {
                 ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("检查时间出现异常，请修正计算机时间或重新安装程序!", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("检查时间出现异常，请修正计算机时间或重新安装程序!" +
+                    $"\n----- {ex.Message}-----", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             AppShellWpf shell = new AppShellWpf();
