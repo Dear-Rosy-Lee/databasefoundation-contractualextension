@@ -35,7 +35,7 @@ namespace YuLinTu.Component.CoordinateTransformTask
         #endregion
 
         #region Fields
-        private ShapeLayer layer;
+        //private ShapeLayer layer;
 
         private ShapeFileExporter<object> writer;
         #endregion
@@ -46,10 +46,11 @@ namespace YuLinTu.Component.CoordinateTransformTask
         {
             OldShapePath = _oldShapePath;
             NewShapePath = _newShapePath;
+            writer = new ShapeFileExporter<object>();
         }
         #endregion
 
-        public void ReadShapeData(Action<object, int> EnumEntity, Action NoData)
+        public void ReadShapeData(Action<ShapeLayer, object, int> EnumEntity, Action NoData)
         {
             //初始化文件名称
             string filepath = System.IO.Path.GetDirectoryName(OldShapePath);
@@ -58,23 +59,17 @@ namespace YuLinTu.Component.CoordinateTransformTask
 
             if (!string.IsNullOrEmpty(OperateShapeFile.DeleteShapeFile(shpFullName)))
                 return;
-
             string oldShpNname = System.IO.Path.GetFileNameWithoutExtension(OldShapePath);
 
-            var writer = new ShapeFileExporter<object>();
-            var layer = writer.OpenLayer(shpFullName);
-            if(layer.GetRecordCount()==0)
+            //var writer = new ShapeFileExporter<object>();
+            var olayer = writer.OpenLayer(OldShapePath);
+            if (olayer.GetRecordCount() == 0)
                 return;
 
             var ds = ProviderShapefile.CreateDataSource(filepath, false) as IDbContext;
             var dq = new DynamicQuery(ds);
             if (dq.Count(null, oldShpNname) == 0)
                 return;
-            //var landShapeList = dq.Get(null, oldShpNname).Result as IList;
-
-            //if (landShapeList.Count == 0)
-            //    return null;
-
             //实例化metedata
             ShapefileDataReader sdr = new ShapefileDataReader(OldShapePath, GeometryFactory.Default);
             if (sdr.RecordCount == 0)
@@ -97,20 +92,28 @@ namespace YuLinTu.Component.CoordinateTransformTask
             }
             //初始化图层
             //var geo = YuLinTu.Spatial.Geometry.FromInstance(sdr.ShapeHeader.ShapeType); 
-            //.GetPropertyValue(landShapeList[0], "Shape") as YuLinTu.Spatial.Geometry;
-
-            layer = writer.InitiallLayer(shpFullName, (EShapeType)shpType, "", fieldList);
-            if (layer == null)
-                return;
-            dq.ForEach(null, oldShpNname, (i, p, en) =>
+            //.GetPropertyValue(landShapeList[0], "Shape") as YuLinTu.Spatial.Geometry; 
+            try
             {
-                EnumEntity(en, sdr.RecordCount);
-                return true;
-            });
+                var layer = writer.InitiallLayer(shpFullName, (EShapeType)shpType, "", fieldList);
+                if (layer == null)
+                    return;
+                dq.ForEach(null, oldShpNname, (i, p, en) =>
+                {
+                    EnumEntity(layer, en, sdr.RecordCount);
+                    return true;
+                });
+                layer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                OperateShapeFile.DeleteShapeFile(shpFullName); 
+                throw ex;
+            }
         }
 
 
-        public bool WriteShapeFile(object shpLandItem, Geometry geometry)
+        public bool WriteShapeFile(ShapeLayer layer, object shpLandItem, Geometry geometry)
         {
             YuLinTu.ObjectExtension.SetPropertyValue(shpLandItem, "Shape", geometry);
             return writer.WriteVectorFile(layer, new List<object>() { shpLandItem });
@@ -139,7 +142,6 @@ namespace YuLinTu.Component.CoordinateTransformTask
 
         public void Dispose()
         {
-            layer.Dispose();
         }
 
 

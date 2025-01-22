@@ -85,41 +85,24 @@ namespace YuLinTu.Component.CoordinateTransformTask
             this.ReportInfomation(string.Format("开始转换Shape文件。"));
 
             this.ReportProgress(30, "数据转换中。。。");
-            operateShape.ReadShapeData((shpLandItem, dataCount) =>
+            operateShape.ReadShapeData((layer, shpLandItem, dataCount) =>
             {
-                try
-                {
-                    var geo = YuLinTu.ObjectExtension.GetPropertyValue(shpLandItem, "Shape") as YuLinTu.Spatial.Geometry;
-                    if (geo == null) return;
+                var geo = YuLinTu.ObjectExtension.GetPropertyValue(shpLandItem, "Shape") as YuLinTu.Spatial.Geometry;
+                if (geo == null) return;
+                Geometry geometry = null;
+                if (geo.GeometryType.ToString().Contains("Polygon"))
+                    geometry = MoveDataPolygon(geo, args);
+                else
+                    geometry = MoveData(geo, args);
 
-                    Geometry geometry = null;
-
-                    if (geo.GeometryType.ToString().Contains("Polygon"))
-                        geometry = MoveDataPolygon(geo, args);
-                    else
-                        geometry = MoveData(geo, args);
-
-                    if (!operateShape.WriteShapeFile(shpLandItem, geometry))
-                    {
-                        operateShape.Dispose();
-                        OperateShapeFile.DeleteShapeFile(args.NewShapePath);
-                        this.ReportError(string.Format("shape数据无效，无法生成shape文件"));
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    operateShape.Dispose();
-                    OperateShapeFile.DeleteShapeFile(args.NewShapePath);
-                    this.ReportError(string.Format("shape数据无效，无法导入"));
-                    return;
-                }
-            }, () =>
-             {
-                 operateShape.Dispose();
-                 OperateShapeFile.DeleteShapeFile(args.NewShapePath);
-                 this.ReportError(string.Format("shape数据无效，无法导入"));
-             });
+                operateShape.WriteShapeFile(layer, shpLandItem, geometry);
+            },
+            () =>
+            {
+                operateShape.Dispose();
+                OperateShapeFile.DeleteShapeFile(args.NewShapePath);
+                this.ReportError(string.Format("shape数据无效，无法导入"));
+            });
             //复制PRJ文件至目标路径
             var errorInfo = operateShape.CopyToPrjFile();
             if (!string.IsNullOrEmpty(errorInfo) &&

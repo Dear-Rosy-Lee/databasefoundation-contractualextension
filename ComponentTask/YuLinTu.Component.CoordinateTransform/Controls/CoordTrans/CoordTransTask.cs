@@ -160,7 +160,7 @@ namespace YuLinTu.Component.CoordinateTransformTask
                 OperateShapeFile operateShape = new OperateShapeFile(filepath, newShapeFileName);
 
                 int trfmCount = 0;
-                operateShape.ReadShapeData((shpLandItem, dataCount) =>
+                operateShape.ReadShapeData((layer, shpLandItem, dataCount) =>
                 {
                     try
                     {
@@ -174,7 +174,7 @@ namespace YuLinTu.Component.CoordinateTransformTask
                         else
                             geometry = Transform4Param(geo.ToCoordinates(), args);
 
-                        if (!operateShape.WriteShapeFile(shpLandItem, geometry))
+                        if (!operateShape.WriteShapeFile(layer, shpLandItem, geometry))
                         {
                             operateShape.Dispose();
                             OperateShapeFile.DeleteShapeFile(newShapeFileName);

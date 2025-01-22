@@ -112,7 +112,7 @@ namespace YuLinTu.Component.CoordinateTransformTask
             this.ReportInfomation(string.Format("开始转换Shape文件。"));
             Geometry geometry = null;
             this.ReportProgress(30, "数据转换中。。。");
-            operateShape.ReadShapeData((shpLandItem, dataCount) =>
+            operateShape.ReadShapeData((layer,shpLandItem, dataCount) =>
             {
                 try
                 {
@@ -124,7 +124,7 @@ namespace YuLinTu.Component.CoordinateTransformTask
                     else
                         geometry = StripDeal(geo, args);
 
-                    if (!operateShape.WriteShapeFile(shpLandItem, geometry))
+                    if (!operateShape.WriteShapeFile(layer, shpLandItem, geometry))
                     {
                         operateShape.Dispose();
                         OperateShapeFile.DeleteShapeFile(args.NewShapePath);
@@ -234,7 +234,6 @@ namespace YuLinTu.Component.CoordinateTransformTask
                     newgeo = newgeo.Union(YuLinTu.Spatial.Geometry.CreatePolygon(newCoordinates, holes));
                 }
             }
-
             return newgeo;
         }
 

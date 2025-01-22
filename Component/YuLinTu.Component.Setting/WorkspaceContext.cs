@@ -108,7 +108,7 @@ namespace YuLinTu.Component.Setting
             }
             if (!args.IsUpdateAvailable)
             {
-                System.Windows.MessageBox.Show($@"当前无可用的更新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Windows.MessageBox.Show($@"当前已是最新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
