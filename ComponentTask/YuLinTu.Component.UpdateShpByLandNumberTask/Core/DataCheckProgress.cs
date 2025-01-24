@@ -46,13 +46,13 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
             string filepath;
             string filename;
             try
-            {   
+            {
                 filepath = Path.GetDirectoryName(DataArgument.UpdateFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.UpdateFilePath);
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
                 var token = Parameters.Token.ToString();
-                if (Parameters.Token.Equals(Guid.Empty))
+                if (token.Equals(Guid.Empty.ToString()))
                 {
                     ErrorInfo = "请先登录后,再进行检查";
                     return false;
@@ -70,12 +70,12 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
                     land.dkbm = item.DKBM;
                     var landShape = item.Shape as Geometry;
                     land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
-                    
+
                     ls.Add(land);
                 }
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
-                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
+                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSecurityService, AppParameters.stringDefaultSecurityServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
                 //res = await apiCaller.GetDataAsync(postUrl);
@@ -85,14 +85,14 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
                 {
                     writer.Write(jsonData);
                 }
-                var getTaskID = apiCaller.PostGetTaskIDAsync(token,postGetTaskIdUrl, jsonData);
+                var getTaskID = apiCaller.PostGetTaskIDAsync(token, postGetTaskIdUrl, jsonData);
                 string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
                 var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
                 ErrorInfo = apiCaller.ErrorInfo;
                 if (!getResult.IsNullOrEmpty())
                 {
                     var folderPath = CreateLog();
-                    WriteLog(folderPath , getResult);
+                    WriteLog(folderPath, getResult);
                     ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
                     return false;
                 }
@@ -102,12 +102,12 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorInfo = ex.Message;
                 return false;
             }
-           
+
         }
         public static SpatialReference GetByFile(string fileName)
         {
@@ -143,12 +143,12 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
             return folderPath;
         }
 
-        public void WriteLog(string path,KeyValueList<string, string> mes)
+        public void WriteLog(string path, KeyValueList<string, string> mes)
         {
             foreach (var item in mes)
             {
                 IEnumerable<string> stringCollection = new[] { $"{item.Key}:{item.Value.Substring(0, item.Value.Length - 2)}" };
-                File.AppendAllLines(path, stringCollection );
+                File.AppendAllLines(path, stringCollection);
             }
         }
 

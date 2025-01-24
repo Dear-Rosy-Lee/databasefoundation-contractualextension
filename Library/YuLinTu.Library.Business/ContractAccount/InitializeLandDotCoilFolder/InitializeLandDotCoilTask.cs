@@ -739,7 +739,6 @@ namespace YuLinTu.Library.Business
                 LandType = land.LandCode,
                 DotType = param.AddressDotType.ToString(),
                 LandMarkType = param.AddressDotMarkType.ToString(),
-
             };
 
             return dot;
