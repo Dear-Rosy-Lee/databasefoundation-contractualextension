@@ -58,7 +58,7 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
             //    Parameters.stringZipPassword,
             //    Parameters.stringZipPasswordValue);
             var sourceFolder = argument.UpdateFilePath.Substring(0, argument.UpdateFilePath.Length - 4);
-            
+
             try
             {
                 //进行质检
@@ -77,9 +77,9 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
                 {
                     var path = dcp.CreateLog();
                     dcp.WriteLog(path, new KeyValueList<string, string>
-            {
-                new KeyValue<string, string>("", "已通过数据质检!\r")
-            });
+                    {
+                        new KeyValue<string, string>("", "已通过数据质检!\r")
+                    });
                     this.ReportProgress(100);
                     this.ReportInfomation("更新成功。");
                 }
@@ -128,7 +128,7 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
             return true;
         }
 
-       
+
         #endregion Method - Private
 
         #endregion Methods

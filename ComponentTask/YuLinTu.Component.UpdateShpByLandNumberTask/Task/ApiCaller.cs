@@ -10,8 +10,7 @@ namespace YuLinTu.Component.UpdateShpByLandNumberTask
     public class ApiCaller
     {
         private const int PollingInterval =5000; // 轮询间隔时间（毫秒）
-        private const int Timeout = 1800000; // 超时时间（毫秒）
-
+        private const int Timeout = 1800000; // 超时时间（毫秒） 
 
         public HttpClient client { get; set; }
 
