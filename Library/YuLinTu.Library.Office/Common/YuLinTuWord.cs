@@ -391,7 +391,7 @@ namespace YuLinTu.Library.Office
         /// <param name="data">数据</param>
         /// <param name="fileName">文件名称</param>
         /// <param name="close">是否关闭</param>
-        public void SaveAsMultiFile(object data, string fileName, bool isSavePcAsPDF = false)
+        public void SaveAsMultiFile(object data, string fileName, bool isSavePcAsPDF = false, bool isSavePcAsJpg = true)
         {
             if (doc == null)
             {
@@ -410,30 +410,32 @@ namespace YuLinTu.Library.Office
             bool success = OnSetParamValue(data);
             if (success)
             {
+                WordOperator.InitalzieDirectory(fileName);
                 if (isSavePcAsPDF)
                 {
-                    WordOperator.InitalzieDirectory(fileName);
-                    //doc.Save(fileName, SaveFormat.Doc);
-
                     fileName = System.IO.Path.ChangeExtension(fileName, ".pdf");
-                    //fileName = fileName.Replace(".doc", ".pdf");//效果一致
                     doc.Save(fileName, SaveFormat.Pdf);
                 }
                 else
                 {
-                    WordOperator.InitalzieDirectory(fileName);
-                    doc.Save(fileName, SaveFormat.Doc);
-                    ImageSaveOptions options = new ImageSaveOptions(SaveFormat.Jpeg);
-                    options.Resolution = 300;
-                    fileName = fileName.Replace(".doc", "");
-                    int order = 1;
-                    string nameFile = fileName + order.ToString() + ".jpg";
-                    for (int i = 0; i < doc.PageCount; i++)
+                    if (isSavePcAsJpg)
                     {
-                        options.PageIndex = i;
-                        doc.Save(nameFile, options);
-                        order++;
-                        nameFile = fileName + order.ToString() + ".jpg";
+                        ImageSaveOptions options = new ImageSaveOptions(SaveFormat.Jpeg);
+                        options.Resolution = 300;
+                        fileName = fileName.Replace(".doc", "");
+                        int order = 1;
+                        string nameFile = fileName + order.ToString() + ".jpg";
+                        for (int i = 0; i < doc.PageCount; i++)
+                        {
+                            options.PageIndex = i;
+                            doc.Save(nameFile, options);
+                            order++;
+                            nameFile = fileName + order.ToString() + ".jpg";
+                        }
+                    }
+                    else
+                    {
+                        doc.Save(fileName, SaveFormat.Doc); 
                     }
                 }
                 Close();
@@ -1677,7 +1679,7 @@ namespace YuLinTu.Library.Office
                 for (int index = 0; index < rowCount; index++)
                 {
                     Node node = table.Rows[startRow].Clone(false);
-                    table.Rows.Add(node); 
+                    table.Rows.Add(node);
                 }
             }
             catch (SystemException ex)

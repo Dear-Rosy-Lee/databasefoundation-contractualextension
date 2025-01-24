@@ -43,6 +43,7 @@ namespace YuLinTu.Component.MapFoundation
                         var landStation = db.CreateContractLandWorkstation();
                         var flag = bool.Parse(s.GetPropertyValue("Flag").ToString());
                         var items = s.GetPropertyValue("SplitItems") as List<SplitItem>;
+                        var oldlandNumber = s.GetPropertyValue("SelectOldLandNumber") as string;
                         var entities = new List<ContractLand>();
                         items.ForEach(x =>
                         {
@@ -54,7 +55,8 @@ namespace YuLinTu.Component.MapFoundation
 
                         if (flag == true)
                         {
-                            var oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;
+                            if (string.IsNullOrEmpty(oldlandNumber))
+                                oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;
                             bool deloldLand = true;
                             for (int i = 0; i < items.Count; i++)
                             {

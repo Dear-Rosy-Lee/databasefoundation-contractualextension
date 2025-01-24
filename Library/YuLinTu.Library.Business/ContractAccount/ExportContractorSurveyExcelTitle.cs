@@ -800,6 +800,11 @@ namespace YuLinTu.Library.Business
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
             }
+            if (contractLandOutputSurveyDefine.WriteInfoOpinionValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主或委托人签字、按手印\r\n附时间", true);
+            }
             //if ((columnIndex - startIndex) >= 0)
             //{
             //    SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地块调查情况", true);
