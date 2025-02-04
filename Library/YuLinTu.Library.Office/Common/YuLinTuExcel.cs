@@ -428,6 +428,11 @@ namespace YuLinTu.Library.Office
             }
             WordOperator.InitalzieDirectory(fileName);
             workbook.Save(fileName, SaveFormat.Excel97To2003);
+            SaveEnd(fileName);
+        }
+
+        protected virtual void SaveEnd(string fileName)
+        {
         }
 
         /// <summary>
@@ -455,6 +460,7 @@ namespace YuLinTu.Library.Office
             }
             WordOperator.InitalzieDirectory(fileName);
             workbook.Save(fileName, SaveFormat.Excel97To2003);
+            SaveEnd(fileName);
         }
 
         #endregion
@@ -482,7 +488,7 @@ namespace YuLinTu.Library.Office
             //cell.PutValue(value);
             SetCellValue(cell, value);
         }
-        public void InitalizeSheet2CellValue(int start, int end, object value,Worksheet sheet2)
+        public void InitalizeSheet2CellValue(int start, int end, object value, Worksheet sheet2)
         {
             if (workbook == null || workSheet == null)
             {
@@ -598,7 +604,7 @@ namespace YuLinTu.Library.Office
                 cell.PutValue(value);
             }
         }
-        
+
         /// <summary>
         /// 初始化范围值
         /// </summary>
