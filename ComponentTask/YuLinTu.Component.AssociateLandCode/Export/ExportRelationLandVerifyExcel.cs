@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aspose.Cells;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.Log;
 
 namespace YuLinTu.Library.Business
 {
@@ -278,5 +280,31 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
         }
 
+        /// <summary>
+        /// 保存完成后
+        /// </summary>
+        protected override void SaveEnd(string fileName)
+        {
+            try
+            {
+                Workbook workbook = new Workbook(fileName);
+                Worksheet sheet = workbook.Worksheets[0];
+                Style unlockStyle = workbook.CreateStyle();
+                unlockStyle.IsLocked = false;
+                StyleFlag styleFlag = new StyleFlag();
+                styleFlag.Locked = true;
+                // 保护工作表
+                sheet.Protect(ProtectionType.All, "ylt", ""); // 设置密码
+                // 创建一个范围，例如A1:C10，然后解锁这个范围
+                Cells cells = sheet.Cells;
+                Range range = cells.CreateRange("AI3:AI" + (index - 1));
+                range.ApplyStyle(unlockStyle, styleFlag); // 应用样式但不锁定范围 
+                workbook.Save(fileName);
+            }
+            catch (Exception ex)
+            {
+                Log.Log.WriteError(this, "SaveEnd", ex.Message);
+            }
+        }
     }
 }
