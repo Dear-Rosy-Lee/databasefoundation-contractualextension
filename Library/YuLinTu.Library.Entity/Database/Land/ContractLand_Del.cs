@@ -12,11 +12,11 @@ namespace YuLinTu.Library.Entity
     {
         #region Fields
         private Guid id;
-        private string dkmc; 
+        private string dkmc;
         private string dkbm;
         private double bzmj;
         private double scmj;
-        private Guid cbfid;
+        private Guid? cbfid;
         private string dkdz;
         private string dknz;
         private string dkxz;
@@ -99,7 +99,7 @@ namespace YuLinTu.Library.Entity
         /// 承包方id
         /// </summary>
         [DataColumn("CBFID")]
-        public Guid CBFID
+        public Guid? CBFID
         {
             get { return cbfid; }
             set
@@ -170,6 +170,43 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("DYBM");
             }
         }
+
+        [DataColumn("SYQXZ")]
+        public string SYQXZ
+        {
+            get; set;
+        }
+
+        [DataColumn("DKLB")]
+        public string DKLB
+        {
+            get; set;
+        }
+
+        [DataColumn("TDLYLX")]
+        public string TDLYLX
+        {
+            get; set;
+        }
+
+        [DataColumn("TDYT")]
+        public string TDYT
+        {
+            get; set;
+        }
+
+        [DataColumn("SFJBNT")]
+        public string SFJBNT
+        {
+            get; set;
+        }
+
+        [DataColumn("DLDJ")]
+        public string DLDJ
+        {
+            get; set;
+        }
+
         #endregion Properties
     }
 }

@@ -1,6 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUpgradeDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<UpgradeDatabase>
+		<TableName>TZ_SCCBF</TableName>
+		<FieldList>
+			<UpdateField>
+				<FieldName>CBFMC</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CBFZJHM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>GYRXX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CBFDZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DYBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CBFLX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CBFZJLX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>LXDH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>YZBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>HH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>RKS</FieldName>
+				<FieldType>NUMERIC</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QTXX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>BZXX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+		</FieldList>
+	</UpgradeDatabase>
+	<UpgradeDatabase>
 		<TableName>DKLXB</TableName>
 		<FieldList>
 			<UpdateField>
@@ -142,6 +225,42 @@
 			</UpdateField>
 			<UpdateField>
 				<FieldName>DYBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>SYQXZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DKLB</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>TDLYLX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>TDYT</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>SFJBNT</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DLDJ</FieldName>
 				<FieldType>TEXT</FieldType>
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>

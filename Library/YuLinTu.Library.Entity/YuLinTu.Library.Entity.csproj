@@ -257,6 +257,7 @@
     <Compile Include="Database\SurveyLandObject\ZoneBoundary.cs" />
     <Compile Include="Database\VirtualPerson\CollectiveLandVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\TableVirtualPerson.cs" />
+    <Compile Include="Database\VirtualPerson\VirtualPerson _Del.cs" />
     <Compile Include="Database\VirtualPerson\WoodVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\YardVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\LandVirtualPerson.cs" />

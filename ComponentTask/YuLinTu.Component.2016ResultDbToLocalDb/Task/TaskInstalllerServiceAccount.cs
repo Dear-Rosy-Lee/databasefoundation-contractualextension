@@ -2,17 +2,10 @@
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
-using NPOI.SS.Formula.Functions;
-using Quality.Business.TaskBasic;
 using System;
 using System.Configuration;
 using System.IO;
-using YuLinTu.Data.SQLite;
-using YuLinTu.Data;
-using YuLinTu.Library.Business;
-using System.Collections.Generic;
-using YuLinTu.Component.Common;
-using YuLinTu.Spatial;
+using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.ResultDbToLocalDb
 {

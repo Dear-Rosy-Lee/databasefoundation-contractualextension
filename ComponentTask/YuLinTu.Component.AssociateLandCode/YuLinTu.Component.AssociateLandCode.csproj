@@ -61,6 +61,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=5.3.1.0, Culture=neutral, PublicKeyToken=9ec0ff091d04b091, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -118,6 +122,8 @@
     <Reference Include="PowerCollections, Version=1.0.5798.18368, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -134,6 +140,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
@@ -143,10 +150,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entrance.cs" />
+    <Compile Include="Export\ExportRelationLandVerifyExcel.cs" />
+    <Compile Include="Export\TaskExportVerifyExcel.cs" />
+    <Compile Include="Export\TaskGroupExportLandVerifyExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskPageContext.cs" />
     <Compile Include="Task\AssociateLandCodeArgument.cs" />
     <Compile Include="Task\AssociateLandCodeTask.cs" />
+    <Compile Include="Task\AssociatePersonAndLandArgument.cs" />
+    <Compile Include="Task\AssociatePersonAndLandTask.cs" />
+    <Compile Include="Task\ZoneExcelReader.cs" />
+    <Compile Include="WorkpageContext.cs" />
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -157,9 +171,17 @@
       <Project>{5D529712-2C25-409C-A865-F832CF5324CC}</Project>
       <Name>YuLinTu.Component.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Component\YuLinTu.Component.ContractAccount\YuLinTu.Component.ContractAccount.csproj">
+      <Project>{e0cd8c20-0480-41d5-8e9a-eb32dae100c8}</Project>
+      <Name>YuLinTu.Component.ContractAccount</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
+      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
+      <Name>YuLinTu.Library.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970C7D36-4259-4CCC-8FF8-835EFE684395}</Project>
@@ -169,6 +191,10 @@
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
       <Name>YuLinTu.Library.Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
+      <Project>{D52B9CE3-8D34-4A2A-9823-D9208F846D97}</Project>
+      <Name>YuLinTu.Library.Office</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
       <Project>{12B9824E-F870-4446-BF10-CC5AE7FA601E}</Project>
       <Name>YuLinTu.Library.Repository</Name>
@@ -177,6 +203,9 @@
       <Project>{91A13749-F1E2-4DF8-901B-9A68369AF8EA}</Project>
       <Name>YuLinTu.Library.WorkStation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Xml\Config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -207,9 +236,10 @@
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>md "$(SolutionDir)Workspace\Components\$(TargetName)\Binary\"
-copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Workspace\Components\$(TargetName)\Binary\"
-if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(SolutionDir)Workspace\Components\$(TargetName)\"</PostBuildEvent>
+    <PostBuildEvent>MD "$(SolutionDir)Workspace\Components\$(ProjectName)\Binary\"
+COPY /Y "$(ProjectDir)Template\*.*" "$(SolutionDir)Workspace\Template\"
+COPY /Y "$(TargetFileName)" "$(SolutionDir)Workspace\Components\$(ProjectName)\Binary\"
+COPY /Y "$(ProjectDir)Xml\Config.xml" "$(SolutionDir)Workspace\Components\$(ProjectName)\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />

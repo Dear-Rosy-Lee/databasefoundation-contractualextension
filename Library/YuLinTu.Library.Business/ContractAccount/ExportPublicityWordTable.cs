@@ -219,6 +219,7 @@ namespace YuLinTu.Library.Business
             {
                 if (Concord != null)
                 {
+                    SetBookmarkValue("ConcordNumber", Concord.ConcordNumber);
                     string mode = GetConstructMode();
                     if (Contractor != null && !string.IsNullOrEmpty(mode))
                     {
@@ -290,10 +291,22 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue("ConcordDate", "".GetSettingEmptyReplacement());//结束时间-日
                 return;
             }
-            //DateTime? startTime = Concord.ArableLandStartTime;
-            //DateTime? endTime = Concord.ArableLandEndTime;
+            DateTime? cstartTime = Concord.ArableLandStartTime;
+            DateTime? cendTime = Concord.ArableLandEndTime;
             DateTime? startTime = Contractor.FamilyExpand.ConcordStartTime;
             DateTime? endTime = Contractor.FamilyExpand.ConcordEndTime;
+            string date = GetConcorDate(startTime, endTime);
+            string cdate = GetConcorDate(cstartTime, cendTime);
+            SetBookmarkValue("SecondConcordDate", date.GetSettingEmptyReplacement());//结束时间-日
+            SetBookmarkValue("ConcordDate", cdate.GetSettingEmptyReplacement());//结束时间-日
+            if (Concord.ManagementTime == "长久")
+            {
+                SetBookmarkValue("ConcordDate", "长久");//结束时间-日
+            }
+        }
+
+        protected string GetConcorDate(DateTime? startTime, DateTime? endTime)
+        {
             string date = "";
             if (startTime != null && startTime.HasValue && startTime.Value.Year > 1753)
             {
@@ -310,11 +323,7 @@ namespace YuLinTu.Library.Business
                     date += "     年   月   日";
                 }
             }
-            SetBookmarkValue("ConcordDate", date.GetSettingEmptyReplacement());//结束时间-日
-            if (Concord.ManagementTime == "长久")
-            {
-                SetBookmarkValue("ConcordDate", "长久");//结束时间-日
-            }
+            return date;
         }
 
         /// <summary>
@@ -454,10 +463,10 @@ namespace YuLinTu.Library.Business
             }
             SetBookmarkValue(cardType, "R");
 
-            //二轮合同信息
-            var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ?
-                Contractor.FamilyExpand.ConcordNumber : "") : "".GetSettingEmptyReplacement();
-            SetBookmarkValue("SecondConcordNumber", number);
+            ////二轮合同信息
+            //var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ?
+            //    Contractor.FamilyExpand.ConcordNumber : "") : "".GetSettingEmptyReplacement();
+            //SetBookmarkValue("SecondConcordNumber", number);
         }
 
         /// <summary>

@@ -3,12 +3,8 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using YuLinTu.Data;
-using System.Xml;
-using YuLinTu;
 using System.ComponentModel.DataAnnotations;
+using YuLinTu.Data;
 
 namespace YuLinTu.Library.Entity
 {

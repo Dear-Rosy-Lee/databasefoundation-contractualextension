@@ -18,6 +18,7 @@ namespace YuLinTu.Component.AssociateLandCode
             : base(workspace)
         {
             Register<TaskPage, TaskPageContext>();
+            Register<ContractAccount.ContractAccountFramePage, WorkpageContext>();
         }
 
         #endregion Ctor
