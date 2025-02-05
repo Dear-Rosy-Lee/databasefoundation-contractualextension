@@ -323,7 +323,13 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
             var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
             if (bhqk != null)
+            {
                 InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
+            }
+            else
+            {
+                InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "");
+            }
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
@@ -431,7 +437,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("Z" + 3, "AB" + 3, Tissue.LawyerAddress);
             InitalizeRangeValue("AD" + 3, "AD" + 3, Tissue.LawyerPosterNumber);
             InitalizeRangeValue("AF" + 3, "AG" + 3, Tissue.SurveyPerson);
-            DateTime surveyDate = new DateTime();
+            DateTime surveyDate = DateTime.Now;
             if (Tissue.SurveyDate != null)
             {
                 surveyDate = Convert.ToDateTime(Tissue.SurveyDate);
