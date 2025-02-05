@@ -151,6 +151,12 @@ namespace YuLinTu.Library.Business
                     this.ReportError($"未获取到{zone.FullName}下的发包方数据！");
                     return false;
                 }
+                if (string.IsNullOrEmpty(tissue.LawyerName) || string.IsNullOrEmpty(tissue.LawyerAddress) ||
+                    string.IsNullOrEmpty(tissue.LawyerTelephone) || string.IsNullOrEmpty(tissue.LawyerCartNumber))
+                {
+                    this.ReportError($"未获取到{zone.FullName}下的发包方数据不完整：代表姓名({tissue.LawyerName} )、代表证件号({tissue.LawyerCartNumber} )、地址({tissue.LawyerAddress} )、电话({tissue.LawyerTelephone} )");
+                    return false;
+                }
                 if (tissue != null)
                     zoneName = tissue.Name;
                 GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
