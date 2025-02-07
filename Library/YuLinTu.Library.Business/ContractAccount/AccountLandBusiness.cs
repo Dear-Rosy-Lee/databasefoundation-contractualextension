@@ -4304,18 +4304,18 @@ namespace YuLinTu.Library.Business
 
                 }
                 land.LandExpand = landExpand;
-                if (metadata.InitialLandOldNumber)
-                {
-                    int upCount = landStation.UpdateOldLandCode(land,false);
-                    if (upCount > 0)
-                        successCount++;
-                }
-                else
-                {
-                    int upCount = landStation.Update(land);
-                    if (upCount > 0)
-                        successCount++;
-                }
+                //if (metadata.InitialLandOldNumber)
+                //{
+                //    int upCount = landStation.UpdateOldLandCode(land,false);
+                //    if (upCount > 0)
+                //        successCount++;
+                //}
+                //else
+                //{
+                //    int upCount = landStation.Update(land);
+                //    if (upCount > 0)
+                //        successCount++;
+                //}
 
                 //if (metadata.InitialReferPersonByOwner)    //以地块当前承包方为指界人
                 //{
@@ -4334,6 +4334,8 @@ namespace YuLinTu.Library.Business
                 index++;
                 landIndex++;
             }
+
+            landStation.UpdateRange(landsOfStatus);
 
             this.ReportProgress(100, null);
             if (successCount == 0)

@@ -6,18 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Library.Business;
 using YuLinTu.Data;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using System.IO;
-using NetTopologySuite.Triangulate;
-using Microsoft.Scripting.Actions;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {

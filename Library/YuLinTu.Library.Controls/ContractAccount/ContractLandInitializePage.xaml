@@ -9,7 +9,7 @@
                              xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="初始化地块基本属性信息"
-                            MinHeight="150" MinWidth="500">
+                            Height="480" Width="610">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -41,11 +41,11 @@
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="7"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="170"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="170"/>
                             </Grid.ColumnDefinitions>
 
 
@@ -98,7 +98,7 @@
                             <CheckBox x:Name="cbLandNumber" Content="地块编码:" Unchecked="ToggleButton_OnUnchecked" Checked="ToggleButton_OnChecked" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="6,7,0,7" Click="cbLandNumber_Checked" Grid.ColumnSpan="2" />
 
                             <DockPanel Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Height="30" LastChildFill="True">
-                                <RadioButton x:Name="rbCombination" Content="发包方编码 + 调查编码" VerticalAlignment="Center"
+                                <RadioButton x:Name="rbCombination" Content="发包方编码 + 调查编码" HorizontalAlignment="Left" Margin="10,0,0,0"
                                              Grid.Row="4"
                                              GroupName="gn_land"
                                              Grid.Column="1"
@@ -149,10 +149,10 @@
                                                 SelectionChanged="cmbQSXZ_SelectionChanged"
                                                 Margin="0,0,0,0" />
 
-                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取地块四至(前的信息"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
+                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取地块四至"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
                                       Checked="ToggleButton_OnChecked"  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3"  VerticalAlignment="Center"  />
 
-                            <CheckBox x:Name="cbInitializeLandNeighborInfo"  Content="获取地块周边相邻地块"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
+                            <CheckBox x:Name="cbInitializeLandNeighborInfo"  Content="获取地块周边相邻地块"  Margin="10,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
                                       Checked="ToggleButton_OnChecked"  Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3"  VerticalAlignment="Center"  />
 
                         </Grid>
@@ -160,11 +160,11 @@
                     <TabItem Header="调查信息">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="95"/>
-                                <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="115"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="105"/>
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="180"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45"/>
