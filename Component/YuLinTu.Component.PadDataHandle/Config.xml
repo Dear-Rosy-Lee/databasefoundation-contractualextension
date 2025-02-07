@@ -4,7 +4,7 @@
     <Order>225</Order>
     <EntranceType>YuLinTu.Component.PadDataHandle.Entrance</EntranceType>
     <EntrancePath>.\Components\YuLinTu.Component.PadDataHandle\Binary\YuLinTu.Component.PadDataHandle.dll</EntrancePath>
-	<IsSystemManaged>false</IsSystemManaged>
+	<IsSystemManaged>true</IsSystemManaged>
 	<IsApplicationDependency>false</IsApplicationDependency>
 	<IsConnected>true</IsConnected>
 	<IsEnabled>true</IsEnabled>

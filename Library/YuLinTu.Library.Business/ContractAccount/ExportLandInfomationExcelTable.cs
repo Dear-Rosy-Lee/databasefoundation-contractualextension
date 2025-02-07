@@ -361,8 +361,9 @@ namespace YuLinTu.Library.Business
 
         private void WritePersonInformation(Person person, int index, bool flag)
         {
+            string icnstr = string.IsNullOrEmpty(person.ICN) ? person.ICN : $"{person.ICN.Substring(0, 6)}*********{person.ICN.Substring(person.ICN.Length - 4)}";
             InitalizeRangeValue("F" + index, "F" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
-            InitalizeRangeValue("G" + index, "G" + index, $"{person.ICN.Substring(0, 6)}*********{person.ICN.Substring(person.ICN.Length - 4)}");
+            InitalizeRangeValue("G" + index, "G" + index, icnstr);
             InitalizeRangeValue("H" + index, "H" + index, person.Relationship);
             InitalizeRangeValue("I" + index, "I" + index, person.Comment);
         }
