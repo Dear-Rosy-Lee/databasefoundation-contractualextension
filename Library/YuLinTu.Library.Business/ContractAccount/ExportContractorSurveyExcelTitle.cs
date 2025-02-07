@@ -803,7 +803,7 @@ namespace YuLinTu.Library.Business
             if (contractLandOutputSurveyDefine.WriteInfoOpinionValue)
             {
                 columnIndex++;
-                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主或委托人签字、按手印\r\n附时间", true);
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主或委托人签字、按手印", true);
             }
             //if ((columnIndex - startIndex) >= 0)
             //{

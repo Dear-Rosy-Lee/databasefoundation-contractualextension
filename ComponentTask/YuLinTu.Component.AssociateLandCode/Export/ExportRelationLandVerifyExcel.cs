@@ -83,15 +83,6 @@ namespace YuLinTu.Library.Business
             if (landFamily == null)
                 return;
 
-            int height = 0;
-            if ((landFamily.LandCollection.Count > landFamily.Persons.Count) || landFamily.LandDelCollection.Count > landFamily.Persons.Count)
-            {
-                height = landFamily.LandCollection.Count + landFamily.LandDelCollection.Count;
-            }
-            else
-            {
-                height = landFamily.Persons.Count;
-            }
             double TotalLandAware = 0;
             double TotalLandActual = 0;
             double TotalLandTable = 0;
@@ -122,6 +113,7 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(bindex, 27.75);
                 bindex++;
             }
+            HashSet<string> setlandnumber = new HashSet<string>();//手动设置关联的地块编码
             foreach (ContractLand land in lands)
             {
                 double tableArea = land.TableArea ?? 0;
@@ -130,11 +122,15 @@ namespace YuLinTu.Library.Business
                 TotalLandActual += land.ActualArea;
                 WriteLandInformation(landFamily.CurrentFamily, land, aindex);
                 SetRowHeight(aindex, 27.75);
+                if (!string.IsNullOrEmpty(land.OldLandNumber) && !setlandnumber.Contains(land.OldLandNumber))
+                {
+                    setlandnumber.Add(land.OldLandNumber);
+                }
                 aindex++;
             }
+            landDels.RemoveAll(t => setlandnumber.Contains(t.DKBM));
             foreach (ContractLand_Del landDel in landDels)
             {
-
                 TotalLandTable += 0;
                 TotalLandAware += landDel.QQMJ;
                 TotalLandActual += landDel.SCMJ;
@@ -142,7 +138,15 @@ namespace YuLinTu.Library.Business
                 WriteDelLandInformation(landFamily.CurrentFamily, landDel, aindex);
                 aindex++;
             }
-
+            int height = 0;
+            if ((landFamily.LandCollection.Count > landFamily.Persons.Count) || landFamily.LandDelCollection.Count > landFamily.Persons.Count)
+            {
+                height = landFamily.LandCollection.Count + landFamily.LandDelCollection.Count;
+            }
+            else
+            {
+                height = landFamily.Persons.Count;
+            }
             landCount += lands.Count + landDels.Count;
             if (lands.Count == 0)
             {
