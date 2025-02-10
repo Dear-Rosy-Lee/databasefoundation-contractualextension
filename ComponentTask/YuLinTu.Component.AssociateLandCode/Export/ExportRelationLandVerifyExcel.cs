@@ -132,8 +132,8 @@ namespace YuLinTu.Library.Business
             foreach (ContractLand_Del landDel in landDels)
             {
                 TotalLandTable += 0;
-                TotalLandAware += landDel.QQMJ;
-                TotalLandActual += landDel.SCMJ;
+                //TotalLandAware += landDel.QQMJ;
+                //TotalLandActual += landDel.SCMJ;
                 SetRowHeight(aindex, 27.75);
                 WriteDelLandInformation(landFamily.CurrentFamily, landDel, aindex);
                 aindex++;
