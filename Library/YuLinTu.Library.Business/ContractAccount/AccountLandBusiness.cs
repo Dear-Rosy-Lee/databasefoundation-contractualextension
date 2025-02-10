@@ -4335,16 +4335,15 @@ namespace YuLinTu.Library.Business
                 landIndex++;
             }
 
-            landStation.UpdateRange(landsOfStatus);
-
-            this.ReportProgress(100, null);
-            if (successCount == 0)
+            var re = landStation.UpdateRange(landsOfStatus);
+            if (re <= 0)
             {
-                this.ReportInfomation(string.Format("没有地块初始化成功，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
+                this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
             }
             else
             {
-                this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, listLandCount, successCount));
+                this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, listLandCount, re));
+                this.ReportProgress(100, null);
             }
         }
 

@@ -6975,7 +6975,7 @@ namespace YuLinTu.Library.Controls
                 bool has = false;
                 if (landBind != null)
                 {
-                    has = landBind.Tag.LandCategory.Equals(landCategory);
+                    has = landBind.Tag.LandCategory != null && landBind.Tag.LandCategory.Equals(landCategory);
                     if (has)
                     {
                         landBind.Visibility = Visibility.Visible;

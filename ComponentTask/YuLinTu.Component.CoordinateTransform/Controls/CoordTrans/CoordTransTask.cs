@@ -19,8 +19,8 @@ namespace YuLinTu.Component.CoordinateTransformTask
     /// 坐标系转换
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "坐标系转换", Gallery = "矢量数据处理",
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/ui-color-picker-default.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/ui-color-picker-default.png")]
     public class CoordTransTask : Task
     {
         #region Fields

@@ -312,9 +312,9 @@
                     </Grid.BindingGroup>-->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="95" />
-                        <ColumnDefinition Width="195" />
-                        <ColumnDefinition Width="95" />
-                        <ColumnDefinition Width="195" />
+                        <ColumnDefinition Width="202" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="203" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

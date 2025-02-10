@@ -6,8 +6,8 @@ namespace YuLinTu.Component.CoordinateTransformTask
     /// 定义坐标系
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "定义坐标系", Gallery = "矢量数据处理",
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/globe.png")]
     public class CoordDefinitionTask : Task
     {
         #region Fields

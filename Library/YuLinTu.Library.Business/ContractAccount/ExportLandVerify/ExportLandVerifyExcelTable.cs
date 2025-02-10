@@ -6,6 +6,7 @@ using YuLinTu.Library.Entity;
 using System.IO;
 using YuLinTu.Data;
 using Aspose.Cells;
+using Microsoft.Scripting.Utils;
 
 namespace YuLinTu.Library.Business
 {
@@ -220,7 +221,27 @@ namespace YuLinTu.Library.Business
             Worksheet2.Cells.SetColumnWidth(2, 25);
             Worksheet2.Cells.SetColumnWidth(3, 25);
             bhqkList = EnumStore<eBHQK>.GetListByType();
-            foreach (ContractAccountLandFamily landFamily in AccountLandFamily)
+            var delvps = AccountLandFamily.FindAll(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad);
+
+            HashSet<Guid> delset = new HashSet<Guid>();
+            foreach (var landFamily in AccountLandFamily)
+            {
+                if (delset.Contains(landFamily.CurrentFamily.ID))
+                    continue;
+                var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
+                if (delvp != null)
+                {
+                    delset.Add(delvp.CurrentFamily.ID);
+                    foreach (var item in delvp.LandDelCollection)
+                    {
+                        if (landFamily.LandCollection.Any(t => t.LandNumber == item.DKBM))
+                            continue;
+                        landFamily.LandDelCollection.Add(item);
+                    }
+                }
+            }
+            AccountLandFamily.RemoveAll(t => delset.Contains(t.CurrentFamily.ID));
+            foreach (var landFamily in AccountLandFamily)
             {
                 cindex++;
                 toolProgress.DynamicProgress(ZoneDesc + landFamily.CurrentFamily.Name);
@@ -275,7 +296,7 @@ namespace YuLinTu.Library.Business
                 bindex++;
             }
 
-            foreach (ContractLand land in lands)
+            foreach (var land in lands)
             {
                 double tableArea = land.TableArea ?? 0;
                 TotalLandTable += tableArea;
@@ -285,9 +306,8 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(aindex, 27.75);
                 aindex++;
             }
-            foreach (ContractLand_Del landDel in landDels)
+            foreach (var landDel in landDels)
             {
-
                 TotalLandTable += 0;
                 TotalLandAware += landDel.QQMJ;
                 TotalLandActual += landDel.SCMJ;

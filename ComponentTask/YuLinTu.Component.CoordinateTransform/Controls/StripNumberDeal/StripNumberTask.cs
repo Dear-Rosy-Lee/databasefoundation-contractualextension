@@ -11,8 +11,8 @@ namespace YuLinTu.Component.CoordinateTransformTask
     /// 带号处理
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "带号处理", Gallery = "矢量数据处理",
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe-green.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/globe-green.png")]
     public class StripNumberTask : Task
     {
         #region Fields

@@ -11,8 +11,8 @@ namespace YuLinTu.Component.CoordinateTransformTask
     /// 数据平移
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "数据平移", Gallery = "矢量数据处理",
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/card-export.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/card-export.png")]
     public class LevelMoveTask : Task
     {
         #region Fields
