@@ -4819,6 +4819,11 @@ namespace YuLinTu.Component.MapFoundation
                 ShowBox("信息提示", "请选中地块矢量要素进行导出！");
                 return;
             }
+            if (currentZone == null)
+            {
+                ShowBox("信息提示", "请选中地域进行数据导出！");
+                return;
+            }
             var extPage = new ExportDataTypePage(currentZone.Name, Workpage, "导出ShapeFile");
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (b, r) =>
