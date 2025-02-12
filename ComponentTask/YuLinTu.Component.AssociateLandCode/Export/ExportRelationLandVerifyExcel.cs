@@ -156,7 +156,7 @@ namespace YuLinTu.Library.Business
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
             string virtualpersonCode = $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}";
-            string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode) ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
+            string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode)&&landFamily.CurrentFamily.Status==eVirtualPersonStatus.Bad ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);

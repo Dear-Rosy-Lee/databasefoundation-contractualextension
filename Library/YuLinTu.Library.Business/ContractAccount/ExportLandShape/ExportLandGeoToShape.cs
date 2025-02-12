@@ -4,6 +4,7 @@
 
 using NetTopologySuite.Features;
 using NetTopologySuite.IO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using YuLinTu.Library.Entity;
@@ -49,7 +50,11 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 当前地域下所有承包方
         /// </summary>
-        public List<VirtualPerson> ListVp { get; set; }
+        public List<VirtualPerson> ListVp
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// 导出表头语言
@@ -105,13 +110,17 @@ namespace YuLinTu.Library.Business
                     toolProgress.DynamicProgress(ZoneDesc);
                     AttributesTable attributes = null;
 
-                    if (Exportway == 1)
+                    switch (Exportway)
                     {
-                        attributes = CreateAttributesTableStand(item);
-                    }
-                    else
-                    {
-                        attributes = CreateAttributesTable<ContractLand>(item);
+                        case 1:
+                            attributes = CreateAttributesTableStand(item);
+                            break;
+                        case 2:
+                            attributes = CreateAttributesSimple(item);
+                            break;
+                        default:
+                            attributes = CreateAttributesTable<ContractLand>(item);
+                            break;
                     }
                     YuLinTu.Spatial.Geometry geometry = item.Shape as YuLinTu.Spatial.Geometry;
                     if (geometry == null || geometry.Instance == null)
@@ -172,12 +181,69 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public override DbaseFileHeader CreateHeader(IFeature feature = null, int count = 0)
         {
-            if (Exportway == 1)
+            DbaseFileHeader header = new DbaseFileHeader();
+            switch (Exportway)
             {
-                return CreateStandHeader(feature);
+                case 1:
+                    header = CreateStandHeader(feature);
+                    break;
+                case 2:
+                    header = CreateSampleHeader(feature);
+                    break;
+                default:
+                    header = CreateDefaultHeader(feature);
+                    break;
             }
-            if (exportContractLandShapeDefine == null) return null;
+            return header;
+        }
+
+        private DbaseFileHeader CreateSampleHeader(IFeature feature = null, int count = 0)
+        {
+            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));  
+            header.AddColumn(DKFiled.CDKBM, 'C', 19, 0);
+            header.AddColumn(DKFiled.CDKMC, 'C', 50, 0);
+            header.AddColumn("QQDKBM", 'C', 19, 0);
+            header.AddColumn("CBFBM", 'C', 18, 0);
+            return header;
+        }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary>
+        private DbaseFileHeader CreateStandHeader(IFeature feature = null, int count = 0)
+        {
             DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
+            header.AddColumn(DKFiled.CBSM, 'N', 10, 0);
+            header.AddColumn(DKFiled.CYSDM, 'C', 6, 0);
+            header.AddColumn(DKFiled.CDKBM, 'C', 19, 0);
+            header.AddColumn(DKFiled.CDKMC, 'C', 50, 0);
+            header.AddColumn(DKFiled.CSYQXZ, 'C', 2, 0);
+            header.AddColumn(DKFiled.CDKLB, 'C', 2, 0);
+            header.AddColumn(DKFiled.CDLDJ, 'C', 2, 0);
+            header.AddColumn(DKFiled.CTDLYLX, 'C', 3, 0);
+            header.AddColumn(DKFiled.CSFJBNT, 'C', 1, 0);
+            header.AddColumn(DKFiled.CSCMJ, 'F', 15, 2);
+            header.AddColumn(DKFiled.CSCMJM, 'F', 15, 2);
+            header.AddColumn(DKFiled.CTDYT, 'C', 1, 0);
+            header.AddColumn(DKFiled.CDKDZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKXZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKNZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CDKBZ, 'C', 50, 0);
+            header.AddColumn(DKFiled.CZJRXM, 'C', 100, 0);
+            header.AddColumn(DKFiled.CDKBZXX, 'C', 254, 0);
+            header.AddColumn(DKFiled.CKJZB, 'C', 254, 0);
+
+            return header;
+        }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary>
+        private DbaseFileHeader CreateDefaultHeader(IFeature feature = null, int count = 0)
+        {
+            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
+            if (exportContractLandShapeDefine == null)
+                return header;
             if (Lang == eLanguage.CN)
             {
                 if (exportContractLandShapeDefine.NameIndex)
@@ -228,39 +294,8 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) header.AddColumn("审核意见", 'C', 150, 0);
                 if (exportContractLandShapeDefine.CommentIndex) header.AddColumn("地块备注", 'C', 250, 0);
             }
-
             return header;
         }
-
-        /// <summary>
-        /// 创建表头
-        /// </summary>
-        public DbaseFileHeader CreateStandHeader(IFeature feature = null, int count = 0)
-        {
-            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));
-            header.AddColumn(DKFiled.CBSM, 'N', 10, 0);
-            header.AddColumn(DKFiled.CYSDM, 'C', 6, 0);
-            header.AddColumn(DKFiled.CDKBM, 'C', 19, 0);
-            header.AddColumn(DKFiled.CDKMC, 'C', 50, 0);
-            header.AddColumn(DKFiled.CSYQXZ, 'C', 2, 0);
-            header.AddColumn(DKFiled.CDKLB, 'C', 2, 0);
-            header.AddColumn(DKFiled.CDLDJ, 'C', 2, 0);
-            header.AddColumn(DKFiled.CTDLYLX, 'C', 3, 0);
-            header.AddColumn(DKFiled.CSFJBNT, 'C', 1, 0);
-            header.AddColumn(DKFiled.CSCMJ, 'F', 15, 2);
-            header.AddColumn(DKFiled.CSCMJM, 'F', 15, 2);
-            header.AddColumn(DKFiled.CTDYT, 'C', 1, 0);
-            header.AddColumn(DKFiled.CDKDZ, 'C', 50, 0);
-            header.AddColumn(DKFiled.CDKXZ, 'C', 50, 0);
-            header.AddColumn(DKFiled.CDKNZ, 'C', 50, 0);
-            header.AddColumn(DKFiled.CDKBZ, 'C', 50, 0);
-            header.AddColumn(DKFiled.CZJRXM, 'C', 100, 0);
-            header.AddColumn(DKFiled.CDKBZXX, 'C', 254, 0);
-            header.AddColumn(DKFiled.CKJZB, 'C', 254, 0);
-
-            return header;
-        }
-
 
         ///<summary>
         ///创建属性表
@@ -466,6 +501,27 @@ namespace YuLinTu.Library.Business
                 attributes.AddAttribute(DKFiled.CZJRXM, en.LandExpand.ReferPerson);
             attributes.AddAttribute(DKFiled.CDKBZXX, en.Comment);
             attributes.AddAttribute(DKFiled.CKJZB, " ");
+            return attributes;
+        }
+
+        ///<summary>
+        ///创建属性表
+        ///</summary> 
+        public AttributesTable CreateAttributesSimple(ContractLand en)
+        {
+            AttributesTable attributes = new AttributesTable();
+            bsmindex++;
+
+            attributes.AddAttribute(DKFiled.CDKBM, en.LandNumber);
+            attributes.AddAttribute(DKFiled.CDKMC, en.Name);
+            attributes.AddAttribute("QQDKBM", en.OldLandNumber);
+            var cbfbm = "";
+            if (ListVp != null)
+            {
+                var vp = ListVp.Find(v => v.ID == en.OwnerId);
+                cbfbm = vp == null ? "" : vp.ZoneCode.PadRight(14, '0') + vp.FamilyNumber.PadLeft(4, '0');
+            }
+            attributes.AddAttribute("CBFBM", cbfbm);
             return attributes;
         }
         #endregion

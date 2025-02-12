@@ -84,7 +84,7 @@ namespace YuLinTu.Component.MapFoundation
                     export.ListGeoLand = listGeoLand;
                     export.DictList = metadata.DictList;
                     export.Lang = eLanguage.CN;
-                    export.Exportway = exportway == 0 ? 1 : 0;
+                    export.Exportway = exportway;
                     export.ProgressChanged += ReportPercent;
                     export.Alert += ReportInfo;
                     export.ExportToShape();

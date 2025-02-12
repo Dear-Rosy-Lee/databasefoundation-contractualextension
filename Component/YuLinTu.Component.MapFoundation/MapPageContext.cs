@@ -4807,34 +4807,59 @@ namespace YuLinTu.Component.MapFoundation
 
         #region 导出选中Shape
 
+        /// <summary>
+        /// 导出选择的地块
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExportSelectedShape(object sender, RoutedEventArgs e)
         {
             var map = MapControl;
+            if (currentZone == null || currentZone.Level > eZoneLevel.Town)
+            {
+                ShowBox("信息提示", "请选中乡镇及以下的地域进行数据导出！");
+                return;
+            }
             var graphics = map.SelectedItems.ToList();
-            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" &&
-            graphics[0].Layer.Name != "自留地" &&
-                graphics[0].Layer.Name != "机动地" &&
-                graphics[0].Layer.Name != "其他集体地"))
-            {
-                ShowBox("信息提示", "请选中地块矢量要素进行导出！");
-                return;
-            }
-            if (currentZone == null)
-            {
-                ShowBox("信息提示", "请选中地域进行数据导出！");
-                return;
-            }
-            var extPage = new ExportDataTypePage(currentZone.Name, Workpage, "导出ShapeFile");
+            var lands = new List<ContractLand>();
+
+            var extPage = new ExportDataTypePage(currentZone.Name, Workpage, "导出Shp矢量文件");
             extPage.Workpage = Workpage;
-            Workpage.Page.ShowMessageBox(extPage, (b, r) =>
+
+            if (graphics.Count == 0 || (graphics[0].Layer.Name != "承包地" && graphics[0].Layer.Name != "自留地" &&
+                graphics[0].Layer.Name != "机动地" && graphics[0].Layer.Name != "其他集体地"))
             {
-                string saveFilePath = extPage.FileName;
-                if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                ShowBox("信息提示", "是否导出选中地域下的全部地块?", eMessageGrade.Infomation, true, true, (ab, ae) =>
                 {
-                    return;
-                }
-                TaskExportSelectedLandShapeFile(saveFilePath, graphics, extPage.EportType);
-            });
+                    if (!(bool)ab)
+                        return;
+                    lands = dbcontext.CreateContractLandWorkstation().GetCollection(currentZone.FullCode, eLevelOption.SelfAndSubs);
+                    VPS = dbcontext.CreateVirtualPersonStation<LandVirtualPerson>().GetByZoneCode(currentZone.FullCode, eLevelOption.SelfAndSubs);
+                    Workpage.Page.ShowMessageBox(extPage, (b, r) =>
+                    {
+                        string saveFilePath = extPage.FileName;
+                        if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                        {
+                            return;
+                        }
+                        TaskExportSelectedLandShapeFile(saveFilePath, lands, extPage.EportType);
+                    });
+                });
+                return;
+            }
+            else
+            {
+                lands = InitializeGeoLand(graphics);
+                Workpage.Page.ShowMessageBox(extPage, (b, r) =>
+                {
+                    string saveFilePath = extPage.FileName;
+                    if (string.IsNullOrEmpty(saveFilePath) || b == false)
+                    {
+                        return;
+                    }
+                    TaskExportSelectedLandShapeFile(saveFilePath, lands, extPage.EportType);
+                });
+            }
         }
 
         #endregion 导出选中Shape
@@ -5749,13 +5774,16 @@ namespace YuLinTu.Component.MapFoundation
             });
         }
 
-        private void TaskExportSelectedLandShapeFile(string fileName, List<Graphic> graphics, int exportway)
+        /// <summary>
+        /// 导出选择的地块
+        /// </summary>
+        private void TaskExportSelectedLandShapeFile(string fileName, List<ContractLand> lands, int exportway)
         {
             DictionaryBusiness dictBusiness = new DictionaryBusiness(dbcontext);
             TaskExportSelectedLandShapeArgument argument = new TaskExportSelectedLandShapeArgument();
             argument.DbContext = dbcontext;
             argument.SaveFilePath = fileName;
-            argument.Lands = InitializeGeoLand(graphics);
+            argument.Lands = lands;// InitializeGeoLand(graphics);
             argument.VPS = VPS;
             argument.DictList = dictBusiness.GetAll();
             argument.CurrentZone = currentZone;
@@ -6208,39 +6236,48 @@ namespace YuLinTu.Component.MapFoundation
         private ContractLand LandDataProcessing(Graphic graphic, KeyValueList<string, string> keyValues)
         {
             ContractLand land = graphic.Object.Object.ConvertTo<ContractLand>();
-            land.LandCategory = keyValues.FirstOrDefault(x => x.Key.Equals("DKLB")).Value;
-            land.LandLevel = keyValues.FirstOrDefault(x => x.Key.Equals("DLDJ")).Value;
-            land.PlantType = keyValues.FirstOrDefault(x => x.Key.Equals("GBLX")).Value;
-            land.OwnRightType = keyValues.FirstOrDefault(x => x.Key.Equals("QSXZ")).Value;
-            var tzmj = keyValues.FirstOrDefault(x => x.Key.Equals("TZMJ")).Value;
+            land.LandCategory = keyValues.FirstOrDefault(x => x.Key.Equals("DKLB"))?.Value;
+            land.LandLevel = keyValues.FirstOrDefault(x => x.Key.Equals("DLDJ"))?.Value;
+            land.PlantType = keyValues.FirstOrDefault(x => x.Key.Equals("GBLX"))?.Value;
+            land.OwnRightType = keyValues.FirstOrDefault(x => x.Key.Equals("QSXZ"))?.Value;
+            var tzmj = keyValues.FirstOrDefault(x => x.Key.Equals("TZMJ"))?.Value;
             if (!string.IsNullOrEmpty(tzmj))
                 land.TableArea = double.Parse(tzmj);
-            var sfjbnt = keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT")).Value;
+            var sfjbnt = keyValues.FirstOrDefault(x => x.Key.Equals("SFJBNT"))?.Value;
             if (!string.IsNullOrEmpty(sfjbnt))
                 land.IsFarmerLand = bool.Parse(sfjbnt);
-            land.Purpose = keyValues.FirstOrDefault(x => x.Key.Equals("TDYT")).Value;
-            land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Equals("JYFS")).Value;
-            var htid = keyValues.FirstOrDefault(x => x.Key.Equals("HTID")).Value;
+            land.Purpose = keyValues.FirstOrDefault(x => x.Key.Equals("TDYT"))?.Value;
+            land.ManagementType = keyValues.FirstOrDefault(x => x.Key.Equals("JYFS"))?.Value;
+            var htid = keyValues.FirstOrDefault(x => x.Key.Equals("HTID"))?.Value;
             if (!string.IsNullOrEmpty(htid))
                 land.ConcordId = Guid.Parse(htid);
-            land.Founder = keyValues.FirstOrDefault(x => x.Key.Equals("CJZ")).Value;
-            land.CreationTime = DateTime.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("CJSJ")).Value);
-            land.Modifier = keyValues.FirstOrDefault(x => x.Key.Equals("ZHXGZ")).Value;
-            land.ModifiedTime = DateTime.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("ZHXGSJ")).Value);
-            land.IsTransfer = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SFLZ")).Value);
-            land.ConstructMode = keyValues.FirstOrDefault(x => x.Key.Equals("CBFS")).Value;
-            land.IsStockLand = bool.Parse(keyValues.FirstOrDefault(x => x.Key.Equals("SFQGDK")).Value);
-            land.Name = keyValues.FirstOrDefault(x => x.Key.Equals("DKMC")).Value;
-            land.ParcelNumber = keyValues.FirstOrDefault(x => x.Key.Equals("ZDBM")).Value;
-            land.SurveyNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DCBM")).Value;
-            land.LandNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DKBM")).Value;
-            land.CadastralNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DJBM")).Value;
-            land.ZoneCode = keyValues.FirstOrDefault(x => x.Key.Equals("ZLDM")).Value;
-            land.ZoneName = keyValues.FirstOrDefault(x => x.Key.Equals("ZLMC")).Value;
-            land.SenderName = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWMC")).Value;
-            land.SenderCode = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWDM")).Value;
-            land.OwnerName = keyValues.FirstOrDefault(x => x.Key.Equals("QLRMC")).Value;
-            var qlrid = keyValues.FirstOrDefault(x => x.Key.Equals("QLRBS")).Value;
+            land.Founder = keyValues.FirstOrDefault(x => x.Key.Equals("CJZ"))?.Value;
+            var ctime = keyValues.FirstOrDefault(x => x.Key.Equals("CJSJ"))?.Value;
+            if (!string.IsNullOrEmpty(ctime))
+                land.CreationTime = DateTime.Parse(ctime);
+            land.Modifier = keyValues.FirstOrDefault(x => x.Key.Equals("ZHXGZ"))?.Value;
+            var mtime = keyValues.FirstOrDefault(x => x.Key.Equals("ZHXGSJ"))?.Value;
+            if (!string.IsNullOrEmpty(mtime))
+                land.ModifiedTime = DateTime.Parse(mtime);
+
+            var istrans = keyValues.FirstOrDefault(x => x.Key.Equals("SFLZ"))?.Value;
+            land.IsTransfer = string.IsNullOrEmpty(istrans) ? false : bool.Parse(istrans);
+            land.ConstructMode = keyValues.FirstOrDefault(x => x.Key.Equals("CBFS"))?.Value;
+
+            var isstock = keyValues.FirstOrDefault(x => x.Key.Equals("SFQGDK"))?.Value;
+            land.IsStockLand = string.IsNullOrEmpty(isstock) ? false : bool.Parse(isstock);
+
+            land.Name = keyValues.FirstOrDefault(x => x.Key.Equals("DKMC"))?.Value;
+            land.ParcelNumber = keyValues.FirstOrDefault(x => x.Key.Equals("ZDBM"))?.Value;
+            land.SurveyNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DCBM"))?.Value;
+            land.LandNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DKBM"))?.Value;
+            land.CadastralNumber = keyValues.FirstOrDefault(x => x.Key.Equals("DJBM"))?.Value;
+            land.ZoneCode = keyValues.FirstOrDefault(x => x.Key.Equals("ZLDM"))?.Value;
+            land.ZoneName = keyValues.FirstOrDefault(x => x.Key.Equals("ZLMC"))?.Value;
+            land.SenderName = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWMC"))?.Value;
+            land.SenderCode = keyValues.FirstOrDefault(x => x.Key.Equals("QSDWDM"))?.Value;
+            land.OwnerName = keyValues.FirstOrDefault(x => x.Key.Equals("QLRMC"))?.Value;
+            var qlrid = keyValues.FirstOrDefault(x => x.Key.Equals("QLRBS"))?.Value;
             if (!string.IsNullOrEmpty(qlrid))
                 land.OwnerId = Guid.Parse(qlrid);
             land.LandCode = keyValues.FirstOrDefault(x => x.Key.Equals("TDLYLX")).Value;

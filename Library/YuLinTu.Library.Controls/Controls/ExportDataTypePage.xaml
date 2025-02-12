@@ -44,9 +44,10 @@
             </DockPanel>
 
             <Label Content="导出方式:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left"/>
-            <cmps:MetroComboBox Name="tbpath"  SelectionChanged="tbpath_SelectionChanged"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <cmps:MetroComboBox Name="tbpath"  SelectionChanged="tbpath_SelectionChanged" Height="30" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <ComboBoxItem Content="标准汇交格式" IsSelected="True"/>
                 <ComboBoxItem Content="数据库格式"/>
+                <ComboBoxItem Content="空间匹配校准格式"/>
             </cmps:MetroComboBox>
         </Grid>
         <Border SnapsToDevicePixels="True" Margin="10,0,10,0" Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,1,0,0">
