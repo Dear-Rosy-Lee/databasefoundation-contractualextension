@@ -76,6 +76,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 
                 bool falg = dcp.Check();
                 ErrorInfo = dcp.ErrorInfo;
+                this.ReportProgress(10);
                 if (falg == false)
                 {
                     this.ReportError(ErrorInfo);

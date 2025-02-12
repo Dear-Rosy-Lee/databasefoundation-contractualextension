@@ -55,7 +55,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             {
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
-                if(!CheckFile(filepath, filename))
+                if (!CheckFile(filepath, filename))
                     return false;
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
@@ -87,6 +87,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
+                string zonecode = Parameters.Region.ToString(); 
                 string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
@@ -139,7 +140,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             result.WKID = 4490;
             return result;
         }
-        public bool CheckFile(string filepath,string filename)
+        public bool CheckFile(string filepath, string filename)
         {
             // 校验文件名称
             if (!Regex.IsMatch(filename, @"^DK\d{10}$"))
@@ -160,7 +161,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
             }
 
-            
+
             return true;
         }
         public string CreateLog()
@@ -176,9 +177,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public void WriteLog(string path, KeyValueList<string, string> mes)
         {
+            int i = 0;
             foreach (var item in mes)
             {
-                IEnumerable<string> stringCollection = new[] { $"{item.Key}:{item.Value.Substring(0, item.Value.Length - 2)}" };
+                i++;
+                IEnumerable<string> stringCollection = new[] { $"{i}. {item.Key}:{item.Value.Substring(0, item.Value.Length - 2)}" };
                 File.AppendAllLines(path, stringCollection);
             }
         }
@@ -188,7 +191,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             var infoArray = typeof(DKEX).GetProperties();
             for (int i = 0; i < infoArray.Length; i++)
             {
-                
+
                 var info = infoArray[i];
                 var index = shp.FindField(info.Name);
                 switch (info.Name)
@@ -197,28 +200,28 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         if (index == -1)
                         {
                             ErrorInfo = "shp文件未包含CBFBM字段；";
-                            
+
                         }
                         break;
                     case "DKBM":
                         if (index == -1)
                         {
                             ErrorInfo += "shp文件未包含DKBM字段；";
-                            
+
                         }
                         break;
                     case "QQDKBM":
                         if (index == -1)
                         {
                             ErrorInfo += "shp文件未包含QQDKBM字段；";
-                            
+
                         }
                         break;
                     case "Shape":
                         //if (index == -1)
                         //{
                         //    ErrorInfo += "shp文件未包含Shape字段；";
-                            
+
                         //}
                         break;
                 }
@@ -230,7 +233,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return true;
         }
 
-            public List<DKEX> InitiallShapeLandList(string filePath, string zoneCode = "")
+        public List<DKEX> InitiallShapeLandList(string filePath, string zoneCode = "")
         {
             var dkList = new List<DKEX>();
 
@@ -251,7 +254,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
                 if (!CheckField(shp))
                     return null;
-                
+
                 foreach (var dk in ForEnumRecord<DKEX>(shp, filePath, codeIndex, DK.CDKBM, zoneCode))
                 {
                     dkList.Add(dk);
@@ -259,131 +262,131 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
             return dkList;
         }
-        
 
-            public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
-                string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
+
+        public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
+            string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
+        {
+            bool isSameDkShp = true;
+            if (dkShapeFilePath.IsNullOrEmpty())
             {
-                bool isSameDkShp = true;
-                if (dkShapeFilePath.IsNullOrEmpty())
-                {
-                    dkShapeFilePath = fileName;
-                }
-                else if (dkShapeFilePath.Equals(fileName) == false)
-                {
-                    isSameDkShp = false;
-                }
+                dkShapeFilePath = fileName;
+            }
+            else if (dkShapeFilePath.Equals(fileName) == false)
+            {
+                isSameDkShp = false;
+            }
 
-                var infoArray = typeof(T).GetProperties();
-                var fieldIndex = new Dictionary<string, int>();
-                bool isSelect = (mainField != "" && zoneCode != "") ? true : false;
+            var infoArray = typeof(T).GetProperties();
+            var fieldIndex = new Dictionary<string, int>();
+            bool isSelect = (mainField != "" && zoneCode != "") ? true : false;
 
-                int dkbmindex = -1;
-                for (int i = 0; i < infoArray.Length; i++)
-                {
-                    var info = infoArray[i];
-                
+            int dkbmindex = -1;
+            for (int i = 0; i < infoArray.Length; i++)
+            {
+                var info = infoArray[i];
+
                 var index = shp.FindField(info.Name);
 
-                    if (index >= 0)
-                    {
-                        fieldIndex.Add(info.Name, index);
-                    }
-
-                    if (info.Name == mainField)
-                    {
-                        dkbmindex = index;
-                    }
-                }
-
-                if (codeIndex.Count > 0 && isSameDkShp)
+                if (index >= 0)
                 {
-                    foreach (var item in codeIndex)
-                    {
-                        if (isSelect)
-                        {
-                            if (dkbmindex < 0)
-                                continue;
-
-                            if (!item.Key.StartsWith(zoneCode))
-                                continue;
-                        }
-                        var en = new T();
-                        for (int i = 0; i < infoArray.Length; i++)
-                        {
-                            var info = infoArray[i];
-                            if (!fieldIndex.ContainsKey(info.Name))
-                                continue;
-                            info.SetValue(en, FieldValue(item.Value, fieldIndex[info.Name], shp, info), null);
-                        }
-                        ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(item.Value, srid));
-                        yield return en;
-                    }
+                    fieldIndex.Add(info.Name, index);
                 }
-                else
+
+                if (info.Name == mainField)
                 {
-                    var shapeCount = shp.GetRecordCount();
-                    for (int i = 0; i < shapeCount; i++)
-                    {
-                        var en = new T();
-
-                        if (isSelect)
-                        {
-                            if (dkbmindex < 0)
-                                continue;
-
-                            var strValue = shp.GetFieldString(i, dkbmindex);
-                            if (strValue == null)
-                            {
-                                continue;
-                            }
-                            if (!codeIndex.ContainsKey(strValue))
-                                codeIndex.Add(strValue, i);
-                            if (!strValue.StartsWith(zoneCode))
-                                continue;
-                        }
-                        for (int j = 0; j < infoArray.Length; j++)
-                        {
-                            var info = infoArray[j];
-                            if (!fieldIndex.ContainsKey(info.Name))
-                                continue;
-                            var value = FieldValue(i, fieldIndex[info.Name], shp, info);
-                            info.SetValue(en, value, null);
-
-                        }
-                        if (setGeo)
-                            ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(i, srid));
-                        yield return en;
-                    }
+                    dkbmindex = index;
                 }
-
             }
-            /// <summary>
-            /// 字段值获取
-            /// </summary>
-            private object FieldValue(int row, int colum, ShapeFile dataReader, PropertyInfo info)
+
+            if (codeIndex.Count > 0 && isSameDkShp)
             {
-                object value = null;
-                if (info.Name == "BSM")
+                foreach (var item in codeIndex)
                 {
-                    int bsm = 0;
-                    int.TryParse(dataReader.GetFieldString(row, colum), out bsm);
-                    value = bsm;
+                    if (isSelect)
+                    {
+                        if (dkbmindex < 0)
+                            continue;
+
+                        if (!item.Key.StartsWith(zoneCode))
+                            continue;
+                    }
+                    var en = new T();
+                    for (int i = 0; i < infoArray.Length; i++)
+                    {
+                        var info = infoArray[i];
+                        if (!fieldIndex.ContainsKey(info.Name))
+                            continue;
+                        info.SetValue(en, FieldValue(item.Value, fieldIndex[info.Name], shp, info), null);
+                    }
+                    ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(item.Value, srid));
+                    yield return en;
                 }
-                else if (info.Name.EndsWith("MJ") || info.Name.EndsWith("MJM") || info.Name == "CD" || info.Name == ZJ.CKD || info.Name == JZD.CXZBZ || info.Name == JZD.CYZBZ ||
-                     info.Name == KZD.CX80 || info.Name == KZD.CY80 || info.Name == KZD.CY2000 || info.Name == KZD.CX2000)
-                {
-                    double scmj = 0;
-                    var mjstr = dataReader.GetFieldString(row, colum);
-                    double.TryParse(mjstr.IsNullOrEmpty() ? "0" : mjstr, out scmj);
-                    value = scmj;
-                }
-                else
-                {
-                    value = dataReader.GetFieldString(row, colum);
-                    value = value == null ? "" : value;
-                }
-                return value;
             }
+            else
+            {
+                var shapeCount = shp.GetRecordCount();
+                for (int i = 0; i < shapeCount; i++)
+                {
+                    var en = new T();
+
+                    if (isSelect)
+                    {
+                        if (dkbmindex < 0)
+                            continue;
+
+                        var strValue = shp.GetFieldString(i, dkbmindex);
+                        if (strValue == null)
+                        {
+                            continue;
+                        }
+                        if (!codeIndex.ContainsKey(strValue))
+                            codeIndex.Add(strValue, i);
+                        if (!strValue.StartsWith(zoneCode))
+                            continue;
+                    }
+                    for (int j = 0; j < infoArray.Length; j++)
+                    {
+                        var info = infoArray[j];
+                        if (!fieldIndex.ContainsKey(info.Name))
+                            continue;
+                        var value = FieldValue(i, fieldIndex[info.Name], shp, info);
+                        info.SetValue(en, value, null);
+
+                    }
+                    if (setGeo)
+                        ObjectExtension.SetPropertyValue(en, "Shape", shp.GetGeometry(i, srid));
+                    yield return en;
+                }
+            }
+
+        }
+        /// <summary>
+        /// 字段值获取
+        /// </summary>
+        private object FieldValue(int row, int colum, ShapeFile dataReader, PropertyInfo info)
+        {
+            object value = null;
+            if (info.Name == "BSM")
+            {
+                int bsm = 0;
+                int.TryParse(dataReader.GetFieldString(row, colum), out bsm);
+                value = bsm;
+            }
+            else if (info.Name.EndsWith("MJ") || info.Name.EndsWith("MJM") || info.Name == "CD" || info.Name == ZJ.CKD || info.Name == JZD.CXZBZ || info.Name == JZD.CYZBZ ||
+                 info.Name == KZD.CX80 || info.Name == KZD.CY80 || info.Name == KZD.CY2000 || info.Name == KZD.CX2000)
+            {
+                double scmj = 0;
+                var mjstr = dataReader.GetFieldString(row, colum);
+                double.TryParse(mjstr.IsNullOrEmpty() ? "0" : mjstr, out scmj);
+                value = scmj;
+            }
+            else
+            {
+                value = dataReader.GetFieldString(row, colum);
+                value = value == null ? "" : value;
+            }
+            return value;
         }
     }
+}
