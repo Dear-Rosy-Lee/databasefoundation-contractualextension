@@ -5,6 +5,7 @@ using ICSharpCode.SharpZipLib.Core;
 using YuLinTu;
 using YuLinTu.Library.Log;
 using NetTopologySuite.Triangulate;
+using System.Diagnostics;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -66,55 +67,41 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
             //    Parameters.stringZipPassword,
             //    Parameters.stringZipPasswordValue);
-            var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length-4);
+            var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length - 4);
             var zipFilePath = $"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}.zip";
-            try
+            //进行质检
+            var dcp = new DataCheckProgress();
+            dcp.DataArgument = argument;
+            if (DataCheck())
             {
-                //进行质检
-                var dcp = new DataCheckProgress();
-                dcp.DataArgument = argument;
-                
-                bool falg = dcp.Check();
-                ErrorInfo = dcp.ErrorInfo;
-                this.ReportProgress(10);
-                if (falg == false)
+                try
                 {
-                    this.ReportError(ErrorInfo);
-                    Log.WriteError(this, "提示", ErrorInfo);
-                    return;
-                }
-                else
-                {
-                    using (var fsOut = File.Create(zipFilePath))
-                    {
-                        using (var zipStream = new ZipOutputStream(fsOut))
-                        {
-                            zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                            zipStream.Password = Parameters.Region + "Ylt@dzzw";
-                            CompressFolder(sourceFolder, zipStream);
-                        }
-                    }
-                    var path= dcp.CreateLog();
+                    CompressFolder(sourceFolder, zipFilePath);
+                    var path = dcp.CreateLog();
                     dcp.WriteLog(path, new KeyValueList<string, string>
                     {
                         new KeyValue<string, string>("", "已通过数据质检!\r")
                     });
                     this.ReportProgress(100);
-                    this.ReportInfomation("检查通过。");
+                    this.ReportInfomation("数据检查、加密成功。");
+                    //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
                 }
-                //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
-            }
-            catch (Exception ex)
-            {
-                Library.Log.Log.WriteException(this, "OnGo(数据检查失败!)", ex.Message + ex.StackTrace);
-                this.ReportError(string.Format("数据检查时出错!"));
-                return;
+                catch (Exception ex)
+                {
+                    Library.Log.Log.WriteException(this, "OnGo(数据压缩失败!)", ex.Message + ex.StackTrace);
+                    this.ReportError(string.Format("数据压缩时出错!" + ex.Message));
+                }
             }
         }
 
         #endregion Method - Override
 
         #region Method - Private
+
+        /// <summary>
+        /// 参数验证
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateArgs()
         {
             var args = Argument as QualityCompressionDataArgument;
@@ -147,28 +134,77 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return true;
         }
 
-        private static void CompressFolder(string sourceFile, ZipOutputStream zipStream)
+        /// <summary>
+        /// 压缩文件
+        /// </summary>
+        /// <param name="sourceFile">待压缩目录</param>
+        /// <param name="zipStream">压缩文件</param>
+        private static void CompressFolder(string sourceFile, string zipFilePath)
         {
-                var fileInfo = new FileInfo(sourceFile);
-                string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fileInfo.Name}.*", SearchOption.AllDirectories);
-                foreach (string matchingFile in matchingFiles) 
+            var fileInfo = new FileInfo(sourceFile);
+            string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fileInfo.Name}.*", SearchOption.AllDirectories);
+
+            using (var fsOut = File.Create(zipFilePath))
+            {
+                using (var zipStream = new ZipOutputStream(fsOut))
                 {
-                     var matchingFileInfo = new FileInfo(matchingFile);
-                     string matchingFileInfoName = matchingFileInfo.Name;
-                     string matchingFileEntryName = matchingFileInfoName; // 移除任何相对路径
-                     var newEntry = new ZipEntry(matchingFileEntryName);
-                     newEntry.DateTime = matchingFileInfo.LastWriteTime;
-                     newEntry.Size = matchingFileInfo.Length;
-                     zipStream.PutNextEntry(newEntry);
-                     // 将文件内容写入zip流
-                     byte[] buffer = new byte[4096];
-                     using (FileStream streamReader = File.OpenRead(matchingFile))
-                     {
-                        StreamUtils.Copy(streamReader, zipStream, buffer);
-                     }
+                    zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
+                    zipStream.Password = Parameters.Region + "Ylt@dzzw";
+                    foreach (string matchingFile in matchingFiles)
+                    {
+                        var matchingFileInfo = new FileInfo(matchingFile);
+                        string matchingFileInfoName = matchingFileInfo.Name;
+                        string matchingFileEntryName = matchingFileInfoName; // 移除任何相对路径
+                        var newEntry = new ZipEntry(matchingFileEntryName);
+                        newEntry.DateTime = matchingFileInfo.LastWriteTime;
+                        newEntry.Size = matchingFileInfo.Length;
+                        zipStream.PutNextEntry(newEntry);
+                        // 将文件内容写入zip流
+                        byte[] buffer = new byte[4096];
+                        using (FileStream streamReader = File.OpenRead(matchingFile))
+                        {
+                            StreamUtils.Copy(streamReader, zipStream, buffer);
+                        }
+                    }
+                    zipStream.CloseEntry();
                 }
-                
-                zipStream.CloseEntry();
+            }
+        }
+
+        /// <summary>
+        /// 数据检查
+        /// </summary>
+        /// <returns></returns>
+        private bool DataCheck()
+        {
+            try
+            {
+                //进行质检
+                var dcp = new DataCheckProgress();
+                dcp.DataArgument = argument;
+
+                bool falg = dcp.Check();
+                ErrorInfo = dcp.ErrorInfo;
+                this.ReportProgress(10);
+                if (falg == false)
+                {
+                    this.ReportError(ErrorInfo);
+                    Log.WriteError(this, "提示", ErrorInfo);
+                    return false;
+                }
+                else
+                {
+                    this.ReportInfomation("数据检查通过。");
+                }
+                //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
+            }
+            catch (Exception ex)
+            {
+                Library.Log.Log.WriteException(this, "OnGo(数据检查失败!)", ex.Message + ex.StackTrace);
+                this.ReportError(string.Format("数据检查时出错!"));
+                return false;
+            }
+            return true;
         }
 
         #endregion Method - Private
