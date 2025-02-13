@@ -226,7 +226,7 @@ namespace YuLinTu.Library.Business
             HashSet<Guid> delset = new HashSet<Guid>();
             foreach (var landFamily in AccountLandFamily)
             {
-                if (delset.Contains(landFamily.CurrentFamily.ID))
+                if (delset.Contains(landFamily.CurrentFamily.ID) || landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
                     continue;
                 var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
                 if (delvp != null)
