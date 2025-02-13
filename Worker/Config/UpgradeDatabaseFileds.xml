@@ -81,6 +81,12 @@
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
+			<UpdateField>
+				<FieldName>YCBFBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField> 
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>

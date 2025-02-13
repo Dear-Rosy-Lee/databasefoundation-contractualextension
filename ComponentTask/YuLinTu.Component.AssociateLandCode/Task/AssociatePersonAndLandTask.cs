@@ -69,7 +69,7 @@ namespace YuLinTu.Component.AssociateLandCode
             catch (Exception ex)
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "OnGo(关联原编码失败!)", ex.Message + ex.StackTrace);
-                this.ReportError(string.Format("关联原编码出错!"));
+                this.ReportError(string.Format("关联原编码出错!" + ex.Message));
                 return;
             }
             this.ReportProgress(100);
@@ -214,7 +214,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     index++;
                     this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count} 地块:{lstlds.Count},未关联地块{deloldldtemp.Count}");
                 }
-                if (true)
+                //if (true)
                 {
                     vpStation.UpdatePersonList(vps);
                     landStation.UpdateOldLandCode(uplands, true);
@@ -225,7 +225,7 @@ namespace YuLinTu.Component.AssociateLandCode
                         //TO 删除承包方入库
                         foreach (var dvp in deloldvps)
                         {
-                            vpdquery.AddRange(dvp).Save();
+                            vpdquery.Add(dvp).Save();
                         }
                         //TO 删除地块入库
                         foreach (var dld in deloldlds)
@@ -239,6 +239,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         Log.WriteException(this, "", ex.ToString());
                         dbContext.RollbackTransaction();
+                        throw new Exception("关联数据出错" + ex.Message);
                     }
                 }
             }
@@ -472,6 +473,7 @@ namespace YuLinTu.Component.AssociateLandCode
             var delvptemp = oldVps.Where(t => !receslist.Contains(t.ID)).ToList().ConvertAll(c => c.ConvertTo<VirtualPerson_Del>());
             foreach (var dvp in delvptemp)
             {
+                dvp.OldVirtualCode = dvp.ZoneCode + dvp.FamilyNumber.PadLeft(4, '0');
                 dvp.ZoneCode = sender.ZoneCode;
                 deloldvps.Add(dvp);
             }

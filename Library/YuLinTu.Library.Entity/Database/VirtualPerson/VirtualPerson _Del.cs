@@ -226,7 +226,18 @@ namespace YuLinTu.Library.Entity
         {
             get { return comment; }
             set { comment = value.TrimSafe(); NotifyPropertyChanged("Comment"); }
-        } 
+        }
+
+        /// <summary>
+        ///原承包方编码
+        /// </summary>
+        [DataColumn("YCBFBM")]
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
+        }
+        private string oldVirtualCode;
 
         #endregion
         private VirtualPersonExpand expand;

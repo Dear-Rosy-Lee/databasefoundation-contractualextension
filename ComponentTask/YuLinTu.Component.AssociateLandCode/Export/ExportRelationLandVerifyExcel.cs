@@ -156,11 +156,15 @@ namespace YuLinTu.Library.Business
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
             string virtualpersonCode = $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}";
-            string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode)&&landFamily.CurrentFamily.Status==eVirtualPersonStatus.Bad ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
+            if (landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
+            {
+                virtualpersonCode = landFamily.CurrentFamily.OldVirtualCode;
+            }
+            string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode) && landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), virtualpersonCode);
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
             InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
@@ -254,7 +258,7 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
             InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? land.LandNumber : land.OldLandNumber, Worksheet2);
+            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
             if (dklb != null)
