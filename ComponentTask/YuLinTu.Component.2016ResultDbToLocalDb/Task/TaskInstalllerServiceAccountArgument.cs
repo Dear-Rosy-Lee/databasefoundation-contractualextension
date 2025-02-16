@@ -59,8 +59,15 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         private bool _CreatUnit;
 
 
-        //[DisplayLanguage("导入前检查数据")]
-        //[DescriptionLanguage("导入前检查数据")]
+        [DisplayLanguage("导入前清空数据库")]
+        [DescriptionLanguage("导入前清空数据库")]
+        public bool DelOldData
+        {
+            get { return _DelOldData; }
+            set { _DelOldData = value; NotifyPropertyChanged("DelOldData"); }
+        }
+        private bool _DelOldData;
+
         //public bool NeedCheck
         //{
         //    get { return _NeedCheck; }
@@ -77,6 +84,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         }
         private bool _CreatDataBase;
 
+
         #endregion
 
         #region Ctor
@@ -91,6 +99,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             GenerateCoilDot = false;
             CreatUnit = false;
             CreatDataBase = false;
+            _DelOldData = true;
         }
 
         #endregion

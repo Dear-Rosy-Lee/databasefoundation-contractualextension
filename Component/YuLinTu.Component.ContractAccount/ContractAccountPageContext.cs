@@ -335,11 +335,11 @@ namespace YuLinTu.Component.ContractAccount
                     Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
                 });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "摸底核实表",
-                    Editor = new ContractAccountLandVerifyConfigPage(Workpage),
-                });
+                //e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                //{
+                //    Name = "摸底核实表",
+                //    Editor = new ContractAccountLandVerifyConfigPage(Workpage),
+                //});
 
                 e.Editors.Add(new WorkpageOptionsEditorMetadata()
                 {

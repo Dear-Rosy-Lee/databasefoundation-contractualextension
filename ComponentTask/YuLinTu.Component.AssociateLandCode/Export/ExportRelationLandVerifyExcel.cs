@@ -13,6 +13,7 @@ namespace YuLinTu.Library.Business
     [Serializable]
     public class ExportRelationLandVerifyExcel : ExportLandVerifyExcelTable
     {
+        private List<string> jtmcs = new List<string>();
         #region Ctor
 
         public ExportRelationLandVerifyExcel()
@@ -21,6 +22,7 @@ namespace YuLinTu.Library.Business
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
             base.TemplateName = "摸底调查核实表";
+            jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" });
         }
 
         /// <summary>
@@ -164,7 +166,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), virtualpersonCode);
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), jtmcs.Contains(landFamily.CurrentFamily.Name) ? "" : virtualpersonCode);
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
             InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);

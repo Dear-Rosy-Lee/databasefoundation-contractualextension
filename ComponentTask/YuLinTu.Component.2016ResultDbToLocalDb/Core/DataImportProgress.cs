@@ -123,6 +123,11 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public bool CreatUnit { get; set; }
 
         /// <summary>
+        /// 删除旧数据
+        /// </summary>
+        public bool DelOldData { get; set; }
+
+        /// <summary>
         /// 自动创建数据库
         /// </summary>
         public bool CreatDataBase { get; set; }
@@ -204,11 +209,13 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
                 this.ReportProgress(1, "开始删除冗余数据...");
                 this.ReportInfomation("开始删除冗余数据...");
-                if (!DeleteOldData(LocalService, ginfo))
-                    return;
+                if (DelOldData)
+                    if (!DeleteOldData(LocalService, ginfo))
+                        return;
 
                 this.ReportProgress(2, "开始优化数据库...");
                 this.ReportInfomation("开始优化数据库...");
+
                 if (!CompressDatabase(LocalService))
                     return;
 
@@ -250,6 +257,11 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
         }
 
+        /// <summary>
+        /// 创建索引
+        /// </summary>
+        /// <param name="localService"></param>
+        /// <returns></returns>
         private bool CreateIndex(IDbContext localService)
         {
             try
@@ -313,6 +325,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
         }
 
+        /// <summary>
+        /// 压缩数据库
+        /// </summary>
         private bool CompressDatabase(IDbContext localService)
         {
             try
@@ -329,6 +344,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
         }
 
+        /// <summary>
+        /// 删除旧数据
+        /// </summary>
         private bool DeleteOldData(IDbContext localService, GainInfo ginfo)
         {
             try
@@ -420,6 +438,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
         }
 
+        /// <summary>
+        /// 删除索引
+        /// </summary>
         private bool DeleteIndex(IDbContext localService)
         {
             try
@@ -854,6 +875,9 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             entityList = null;
         }
 
+        /// <summary>
+        /// 导入带合同信息的相关数据到数据库
+        /// </summary> 
         private void ImportContractLandPropertyRightDatas(IDbContext localService, List<ComplexRightEntity> entityList, string zoneName = null, string zoneCode = null, bool isnormalexport = true)
         {
             var db = localService.CreateZoneWorkStation();
@@ -1725,7 +1749,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             }
             return shootStr;
         }
-
 
         /// <summary>
         /// 循环获取空间记录

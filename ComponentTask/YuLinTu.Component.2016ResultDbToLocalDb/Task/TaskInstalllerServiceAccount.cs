@@ -68,6 +68,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 dep.VolumeValue = volumeValue;
                 dep.IsStandCode = IsStandCode == "True" ? true : false;
                 dep.CreatUnit = argument.CreatUnit;
+                dep.DelOldData = argument.DelOldData;
                 dep.ImportData();
             }
             catch (Exception ex)

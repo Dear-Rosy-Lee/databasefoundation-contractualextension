@@ -412,6 +412,7 @@ namespace YuLinTu.Component.AssociateLandCode
             var receslist = new HashSet<Guid>();
             foreach (var vp in vps)
             {
+                vp.OldVirtualCode = "";
                 foreach (var x in oldVps)
                 {
                     if (receslist.Contains(x.ID))
@@ -464,7 +465,7 @@ namespace YuLinTu.Component.AssociateLandCode
                         break;
                     }
                 }
-                if (vp.OldVirtualCode == null)
+                if (string.IsNullOrEmpty(vp.OldVirtualCode))
                 {
                     WriteLog(resfile, $"发包方：{sender.Name}{sender.Code} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,以当作新增处理！");
                 }
