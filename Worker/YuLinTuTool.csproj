@@ -2656,6 +2656,10 @@
     <Folder Include="Data\ArcGIS\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ComponentTask\YuLinTu.Component.QualityCompressionDataTask\YuLinTu.Component.QualityCompressionDataTask.csproj">
+      <Project>{d55b87e9-2b5b-4abc-9a6a-92323069486c}</Project>
+      <Name>YuLinTu.Component.QualityCompressionDataTask</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08AC55A7-5A0D-4A50-8EE7-93148A22250A}</Project>
       <Name>YuLinTu.Library.Business</Name>

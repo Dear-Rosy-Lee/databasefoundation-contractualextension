@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
-using YuLinTu.Data;
+using System.Net.Http;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using DotSpatial.Projections;
+using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 using Quality.Business.Entity;
-using YuLinTu.Spatial;
 using Quality.Business.TaskBasic;
-using YuLinTu.tGISCNet;
-using System.Reflection;
-using File = System.IO.File;
-using YuLinTu.Data.Dynamic;
-using YuLinTu.Data.Shapefile;
-using System.Net.Http;
-using System.Data;
-using Microsoft.Scripting.Actions;
-using OSGeo.OSR;
-using SpatialReference = YuLinTu.Spatial.SpatialReference;
-using DotSpatial.Projections;
 using YuLinTu.Appwork;
+using YuLinTu.Data;
+using YuLinTu.Spatial;
+using YuLinTu.tGISCNet;
 using YuLinTu.Windows;
-using System.Text.RegularExpressions;
+using File = System.IO.File;
+using SpatialReference = YuLinTu.Spatial.SpatialReference;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {
@@ -31,7 +26,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         private int srid;
 
-        private Dictionary<string, int> codeIndex;
+        //private Dictionary<string, int> codeIndex;
 
         private string dkShapeFilePath;//用于判断是否读取了不同的地块shp
 
@@ -40,12 +35,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         public QualityCompressionDataArgument DataArgument { get; set; }
 
-        public string ErrorInfo { get; set; }
+        public static string ErrorInfo { get; private set; }
 
         public IDataSource Source { get; set; }
 
 
-        public bool Check()
+        public string Check()
         {
             //获取当前路径下shape数据
 
@@ -56,38 +51,38 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
                 if (!CheckFile(filepath, filename))
-                    return false;
+                    return  ErrorInfo;
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
                 if (srid == 4490)
                 {
                     ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
-                    return false;
+                    return ErrorInfo;
                 }
                 var token = Parameters.Token.ToString();
                 if (Parameters.Token.Equals(Guid.Empty))
                 {
                     ErrorInfo = "请先登录后,再进行检查";
-                    return false;
+                    return ErrorInfo;
                 }
                 List<LandEntity> ls = new List<LandEntity>();
-                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, "");
+                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid,"");
                 if (landShapeList.IsNullOrEmpty())
                 {
-                    return false;
+                    return ErrorInfo;
                 }
                 foreach (var item in landShapeList)
                 {
                     var land = new LandEntity();
                     land.dkbm = item.DKBM;
-                    var landShape = item.Shape as Geometry;
+                    var landShape = item.Shape as YuLinTu.Spatial.Geometry;
                     land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
                     land.qqdkbm = item.QQDKBM;
                     ls.Add(land);
                 }
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
-                string zonecode = Parameters.Region.ToString(); 
+                string zonecode = Parameters.Region.ToString();
                 string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
@@ -103,18 +98,18 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     var folderPath = CreateLog();
                     WriteLog(folderPath, getResult);
                     ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
-                    return false;
+                    return ErrorInfo;
                 }
                 if (getResult == null)
                 {
-                    return false;
+                    return ErrorInfo;
                 }
-                return true;
+                return "";
             }
             catch (Exception ex)
             {
                 ErrorInfo = ex.Message;
-                return false;
+                return ErrorInfo;
             }
 
         }
@@ -136,8 +131,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 {
                     return new SpatialReference(File.ReadAllText(file));
                 }
+                result.WKID = 4490;
             }
-            result.WKID = 4490;
             return result;
         }
         public bool CheckFile(string filepath, string filename)
@@ -186,7 +181,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
         }
 
-        private bool CheckField(ShapeFile shp)
+        static private bool CheckField(ShapeFile shp, string ErrorInfo)
         {
             var infoArray = typeof(DKEX).GetProperties();
             for (int i = 0; i < infoArray.Length; i++)
@@ -233,7 +228,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return true;
         }
 
-        public List<DKEX> InitiallShapeLandList(string filePath, string zoneCode = "")
+        static public List<DKEX> InitiallShapeLandList(string filePath, int srid, string zoneCode = "")
         {
             var dkList = new List<DKEX>();
 
@@ -250,12 +245,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     LogWrite.WriteErrorLog("读取地块Shape文件发生错误" + err);
                     return null;
                 }
-                codeIndex = new Dictionary<string, int>();
+                var codeIndex = new Dictionary<string, int>();
 
-                if (!CheckField(shp))
+                if (!CheckField(shp, ErrorInfo))
                     return null;
 
-                foreach (var dk in ForEnumRecord<DKEX>(shp, filePath, codeIndex, DK.CDKBM, zoneCode))
+                foreach (var dk in ForEnumRecord<DKEX>(shp, filePath, codeIndex, srid, DK.CDKBM, zoneCode))
                 {
                     dkList.Add(dk);
                 }
@@ -263,20 +258,9 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return dkList;
         }
 
-
-        public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
-            string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
+        static public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
+          int srid, string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
         {
-            bool isSameDkShp = true;
-            if (dkShapeFilePath.IsNullOrEmpty())
-            {
-                dkShapeFilePath = fileName;
-            }
-            else if (dkShapeFilePath.Equals(fileName) == false)
-            {
-                isSameDkShp = false;
-            }
-
             var infoArray = typeof(T).GetProperties();
             var fieldIndex = new Dictionary<string, int>();
             bool isSelect = (mainField != "" && zoneCode != "") ? true : false;
@@ -299,7 +283,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
             }
 
-            if (codeIndex.Count > 0 && isSameDkShp)
+            if (codeIndex.Count > 0)
             {
                 foreach (var item in codeIndex)
                 {
@@ -364,7 +348,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// <summary>
         /// 字段值获取
         /// </summary>
-        private object FieldValue(int row, int colum, ShapeFile dataReader, PropertyInfo info)
+        static private object FieldValue(int row, int colum, ShapeFile dataReader, PropertyInfo info)
         {
             object value = null;
             if (info.Name == "BSM")
@@ -387,6 +371,73 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 value = value == null ? "" : value;
             }
             return value;
+        }
+
+        /// <summary>
+        /// 坐标转换
+        /// </summary>
+        /// <param name="geo"></param>
+        /// <param name="sreproject"></param>
+        /// <param name="dreproject"></param>
+        /// <param name="srid"></param>
+        /// <returns></returns>
+        public static YuLinTu.Spatial.Geometry ReprojectShape(YuLinTu.Spatial.Geometry geo, ProjectionInfo sreproject, ProjectionInfo dreproject, int srid)
+        {
+            var geos = geo.ToSingleGeometries();
+            YuLinTu.Spatial.Geometry geometry = null;
+            foreach (var g in geos)
+            {
+                GeoAPI.Geometries.Coordinate[] shels = null;
+                GeoAPI.Geometries.ILinearRing[] hols = null;
+                var list = new List<GeoAPI.Geometries.Coordinate>();
+                if (g.Instance is Polygon)
+                {
+                    var pg = g.Instance as Polygon;
+                    shels = pg.Shell.Coordinates;
+                    hols = pg.Holes;
+                }
+                else if (g.Instance is Point)
+                {
+                    var pg = g.Instance as Point;
+                    shels = pg.Coordinates;
+                    hols = new LinearRing[0];
+                }
+                else if (g.Instance is LinearRing)
+                {
+                    var pg = g.Instance as LinearRing;
+                    shels = pg.Coordinates;
+                    hols = new LinearRing[0];
+                }
+                foreach (var sl in shels)
+                {
+                    var xy = new double[] { sl.X, sl.Y };
+                    Reproject.ReprojectPoints(xy, new double[] { 0 }, sreproject, dreproject, 0, 1);
+                    list.Add(new GeoAPI.Geometries.Coordinate(xy[0], xy[1]));
+                }
+                var nholes = new List<GeoAPI.Geometries.ILinearRing>();
+                foreach (var ho in hols)
+                {
+                    var hlist = new List<GeoAPI.Geometries.Coordinate>();
+                    foreach (var h in ho.Coordinates)
+                    {
+                        var xy = new double[] { h.X, h.Y };
+                        Reproject.ReprojectPoints(xy, new double[] { 0 }, sreproject, dreproject, 0, 1);
+                        hlist.Add(new GeoAPI.Geometries.Coordinate(xy[0], xy[1]));
+                    }
+                    var hlinearRing = new LinearRing(hlist.ToArray());
+                    nholes.Add(hlinearRing);
+                }
+                var linearRing = new LinearRing(list.ToArray());
+
+                var polygon = new Polygon(linearRing, nholes.ToArray());
+                if (geometry == null)
+                    geometry = YuLinTu.Spatial.Geometry.FromInstance(polygon);
+                else
+                    geometry = geometry.Union(YuLinTu.Spatial.Geometry.FromInstance(polygon));
+            }
+            if (geometry != null)
+                geometry.SpatialReference = new SpatialReference(srid);
+            return geometry;
         }
     }
 }

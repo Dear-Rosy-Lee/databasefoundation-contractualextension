@@ -12,38 +12,33 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 {
     public class ApiCaller
     {
-        private const int PollingInterval =5000; // 轮询间隔时间（毫秒）
+        private const int PollingInterval = 5000; // 轮询间隔时间（毫秒）
         private const int Timeout = 1800000; // 超时时间（毫秒）
 
 
         public HttpClient client { get; set; }
 
-        public string ErrorInfo {  get; set; }
+        public string ErrorInfo { get; set; }
 
-        public string PostGetTaskIDAsync(string token,string url, string jsonData)
+        public string PostGetTaskIDAsync(string token, string url, string jsonData)
         {
             try
             {
-                
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
                 content.Headers.Add("token", token);
                 // 发送 POST 请求
-                HttpResponseMessage response =  client.PostAsync(url, content).GetAwaiter().GetResult();
-
+                HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
                 response.EnsureSuccessStatusCode();
-              
+
                 // 读取响应内容
-                var responseBody =  response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 //
                 using (JsonDocument doc = JsonDocument.Parse(responseBody))
                 {
                     JsonElement root = doc.RootElement;
                     return root.GetProperty("data").GetString();
                 }
-
-                
             }
             catch (HttpRequestException e)
             {
@@ -52,7 +47,56 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
         }
 
-        public  KeyValueList<string, string> PostGetResultAsync(string token, string url, string taskID)
+        /// <summary>
+        /// 发送请求
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="url"></param>
+        /// <param name="jsonData"></param>
+        /// <returns></returns>
+        public string PostDataAsync(string url, string jsonData)
+        {
+            try
+            {
+                // 将JSON数据转换为HttpContent
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                // 发送 POST 请求
+                HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
+
+                response.EnsureSuccessStatusCode();
+
+                // 读取响应内容
+                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                    {
+                        JsonElement root = doc.RootElement;
+                        JsonElement data = root.GetProperty("result");
+                        JsonElement jsuccess = root.GetProperty("success");
+                        if (jsuccess.ToString().ToLower().Equals("false"))
+                        {
+                            string err = root.GetProperty("errormsg").ToString();
+                            throw new Exception(err);
+                        }
+                        else
+                        {
+                            string points = data.GetProperty("points").ToString();
+                            return points;
+                        }
+                    }
+                }
+                return "";
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public KeyValueList<string, string> PostGetResultAsync(string token, string url, string taskID)
         {
             var cancellationTokenSource = new CancellationTokenSource(Timeout); // 设置超时
             var cancellationToken = cancellationTokenSource.Token;
@@ -65,27 +109,25 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     client.DefaultRequestHeaders.Add("accept", "*/*");
                     client.DefaultRequestHeaders.Add("token", token);
                     // 发送 Get 请求
-                    HttpResponseMessage response =  client.GetAsync(url1).ConfigureAwait(false).GetAwaiter().GetResult(); 
+                    HttpResponseMessage response = client.GetAsync(url1).ConfigureAwait(false).GetAwaiter().GetResult();
                     response.EnsureSuccessStatusCode();
                     // 读取响应内容
-                    responseBody =  response.Content.ReadAsStringAsync().GetAwaiter().GetResult(); 
+                    responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     if (response.IsSuccessStatusCode)
                     {
                         using (JsonDocument doc = JsonDocument.Parse(responseBody))
                         {
                             JsonElement root = doc.RootElement;
                             JsonElement data = root.GetProperty("data");
-                            if (data.ValueKind!= JsonValueKind.Null)
+                            if (data.ValueKind != JsonValueKind.Null)
                             {
                                 string resultsJson = data.GetProperty("results").GetString();
                                 if (!resultsJson.IsNullOrEmpty())
                                 {
                                     break;
                                 }
-                               
                             }
                         }
-                        
                     }
                     else
                     {
@@ -94,7 +136,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     }
 
                     // 延迟轮询
-                     Task<KeyValueList<string, string>>.Delay(PollingInterval, cancellationToken);
+                    Task<KeyValueList<string, string>>.Delay(PollingInterval, cancellationToken);
                     url1 = string.Empty;
                     client.DefaultRequestHeaders.Clear();
                 }
@@ -110,7 +152,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
             return null;
         }
-        private KeyValueList<string,string> GetData(string responseBody)
+
+        private KeyValueList<string, string> GetData(string responseBody)
         {
             KeyValueList<string, string> keyValues = new KeyValueList<string, string>();
             //解析result

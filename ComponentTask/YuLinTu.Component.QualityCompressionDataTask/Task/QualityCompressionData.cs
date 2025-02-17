@@ -183,13 +183,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var dcp = new DataCheckProgress();
                 dcp.DataArgument = argument;
 
-                bool falg = dcp.Check();
-                ErrorInfo = dcp.ErrorInfo;
+                var falg = dcp.Check(); 
                 this.ReportProgress(10);
-                if (falg == false)
+                if (!string.IsNullOrEmpty(falg))
                 {
-                    this.ReportError(ErrorInfo);
-                    Log.WriteError(this, "提示", ErrorInfo);
+                    this.ReportError(falg);
+                    Log.WriteError(this, "提示", falg);
                     return false;
                 }
                 else

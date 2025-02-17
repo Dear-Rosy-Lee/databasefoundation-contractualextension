@@ -219,6 +219,8 @@
     <Compile Include="Task\Parameters.cs" />
     <Compile Include="Task\QualityCompressionData.cs" />
     <Compile Include="Task\QualityCompressionDataArgument.cs" />
+    <Compile Include="Task\SpatialDataMatchingArgument.cs" />
+    <Compile Include="Task\SpatialDataMatchingTask.cs" />
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>
   <ItemGroup>
