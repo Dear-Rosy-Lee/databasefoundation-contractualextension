@@ -174,8 +174,6 @@ namespace YuLinTu.Component.AssociateLandCode
             var vpdquery = dbContext.CreateQuery<VirtualPerson_Del>();
             foreach (var village in villages)
             {
-                //if (village.FullCode != "511602216215")
-                //    continue;
                 var vps = vpStation.GetByZoneCode(village.FullCode, eLevelOption.Subs);
                 var geoLands = landStation.GetCollection(village.FullCode, eLevelOption.Subs);
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode));
@@ -186,10 +184,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 var deloldlds = new List<ContractLand_Del>();
                 foreach (var sd in sds)
                 {
-                    //if (sd.Code != "51160221621506")
-                    //    continue;
                     this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据", index, zoneListCount, sd.Name));
-
                     var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
                     if (nvps.Count == 0)
                         continue;
