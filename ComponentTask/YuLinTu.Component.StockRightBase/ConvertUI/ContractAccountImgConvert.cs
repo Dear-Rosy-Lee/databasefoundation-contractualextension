@@ -16,7 +16,7 @@ namespace YuLinTu.Component.StockRightBase.ConvertUI
         /// <summary>
         /// 地块
         /// </summary>
-        public static BitmapImage imgLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"));
+        public static BitmapImage imgLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"),);
 
         /// <summary>
         /// 空间地块

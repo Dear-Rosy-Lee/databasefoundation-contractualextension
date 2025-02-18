@@ -3,14 +3,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Library.Office;
 
 namespace YuLinTu.Library.Controls
 {
@@ -28,7 +24,7 @@ namespace YuLinTu.Library.Controls
             ContractLandPersonItem item = new ContractLandPersonItem() { ID = tableVp.ID };
             item.Tag = tableVp;
             // 先获取非股地，再获取股地
-            List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand);
+            List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand).OrderBy(s=>s.LandNumber).ToList();
             if (isStockLand && ralationList.Count > 0)
             {
                 // 股地里，“权属关系”表里必有对应信息

@@ -132,6 +132,7 @@
             cmps:DataGridAttacher.ColumnHeaderThumbWidth="1"
             cmps:DataGridAttacher.ContentBorderThickness="0,1,0,0"
             x:FieldModifier="public"
+            RenderOptions.BitmapScalingMode="LowQuality"
             AutoGenerateColumns="False"
             BorderThickness="0"
             ExpandItemWhenLeftMouseDoubleClick="False"

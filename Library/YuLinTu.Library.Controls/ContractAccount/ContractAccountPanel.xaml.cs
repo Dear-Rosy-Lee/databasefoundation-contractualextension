@@ -1888,7 +1888,7 @@ namespace YuLinTu.Library.Controls
             queueFilter.DoWithInterruptCurrent(
                 go =>
                 {
-                    this.Dispatcher.Invoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         SetItemVisible(go);
                     }));
@@ -1913,7 +1913,7 @@ namespace YuLinTu.Library.Controls
         private void SetItemVisible(TaskGoEventArgs arg)
         {
             string whString = arg.Instance.Argument.UserState.ToString();
-
+            view.EnableRowVirtualization = true;
             view.Filter(obj =>
             {
                 if (whString.IsNullOrBlank())
@@ -1970,12 +1970,12 @@ namespace YuLinTu.Library.Controls
                     if (has)
                         return true;
 
-                    txt = landbind.LandLevelUI;
-                    has = (
-                        !txt.IsNullOrBlank() && allCheck && txt.Equals(whString)) || (
-                        !txt.IsNullOrBlank() && !allCheck && txt.Contains(whString));
-                    if (has)
-                        return true;
+                    //txt = landbind.LandLevelUI;
+                    //has = (
+                    //    !txt.IsNullOrBlank() && allCheck && txt.Equals(whString)) || (
+                    //    !txt.IsNullOrBlank() && !allCheck && txt.Contains(whString));
+                    //if (has)
+                    //    return true;
                 }
 
                 return has;
