@@ -1,28 +1,9 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Appwork;
-using YuLinTu.Library.Business;
 using YuLinTu.Library.Command;
-using YuLinTu.Library.Controls;
-using YuLinTu.Library.Entity;
-using YuLinTu.Library.Log;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.BusinessProcessWizard
@@ -39,7 +20,7 @@ namespace YuLinTu.Component.BusinessProcessWizard
         Icon = "pack://application:,,,/YuLinTu.Component.Concord;component/Resources/map.png",
         Image = "pack://application:,,,/YuLinTu.Resources;component/Images/Galleries/Apps/Wizzard78.png",
         IsNeedAuthenticated = true)]
-    public partial class BusinessProcessWizardFramePage:NavigatableWorkpageFrame
+    public partial class BusinessProcessWizardFramePage : NavigatableWorkpageFrame
     {
         #region Fields
 
@@ -87,7 +68,7 @@ namespace YuLinTu.Component.BusinessProcessWizard
 
         public BusinessProcessWizardFramePage()
         {
-            InitializeComponent();          
+            InitializeComponent();
             SingleInstance = true;
             NavigatorType = eNavigatorType.TreeView;
         }
@@ -109,14 +90,14 @@ namespace YuLinTu.Component.BusinessProcessWizard
                 Workpage.Message.Send(this, new MsgEventArgs(EdCore.langRequestShowTaskViewer));
             };
         }
-              
+
         /// <summary>
         /// 设置控件可用性
         /// </summary>
         public void SetControlsEnable(bool isEnable = true)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-           {             
+           {
 
            }));
         }

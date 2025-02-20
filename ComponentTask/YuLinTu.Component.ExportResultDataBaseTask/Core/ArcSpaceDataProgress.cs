@@ -164,7 +164,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 XmlDocument doc = new XmlDocument();
                 doc.Load(tempFileName);    //加载Xml文件   
                 XmlElement rootElem = doc.DocumentElement;   //获取根节点
-                FixNodeValue(rootElem, "date", DateTime.Now.ToString("yyyy-MM-dd"));
+                FixNodeValue(rootElem, "date", DateTime.Now.ToString("yyyyMMdd"));
                 FixNodeValue(rootElem, "title", dataInfo.Data_Info.Title);
                 FixNodeValue(rootElem, "geoID", dataInfo.Data_Info.GeoID);
                 FixNodeValue(rootElem, "dataEdition", dataInfo.Data_Info.DataEdition);

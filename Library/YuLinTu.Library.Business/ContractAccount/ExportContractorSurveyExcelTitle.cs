@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
-using System.IO;
-using System.Windows.Forms;
-using System.Collections;
 using YuLinTu.Data;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -44,7 +37,8 @@ namespace YuLinTu.Library.Business
             titleName = UnitName + titleName;
             if (SystemSet.TempTableHead && !string.IsNullOrEmpty(titleName))
             {
-                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
+                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? 
+                    contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
 
             string delctime = time?.ToString("yyyy年M月dd日");
@@ -61,7 +55,8 @@ namespace YuLinTu.Library.Business
             }
             else
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 
+                    21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
             }
             SetRange("A2", "D2", "单位:  " + ExcelName);
             columnIndex = 2;
@@ -654,7 +649,7 @@ namespace YuLinTu.Library.Business
             }
             if (contractLandOutputSurveyDefine.IsTransterValue || contractLandOutputSurveyDefine.TransterModeValue || contractLandOutputSurveyDefine.TransterTermValue)
             {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地流转情况", true);
+                //SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地流转情况", true);
             }
             startIndex = columnIndex + 1;
             if (contractLandOutputSurveyDefine.UseSituationValue)

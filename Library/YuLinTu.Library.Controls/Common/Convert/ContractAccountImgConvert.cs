@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Drawing;
@@ -46,9 +46,16 @@ namespace YuLinTu.Library.Controls
             imgFamily = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
             imgLock = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
             imgLand.CacheOption = BitmapCacheOption.OnLoad;
+            imgLand.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
             imgGeoLand.CacheOption = BitmapCacheOption.OnLoad;
+            imgGeoLand.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
             imgFamily.CacheOption = BitmapCacheOption.OnLoad;
+            imgFamily.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
             imgLock.CacheOption = BitmapCacheOption.OnLoad;
+            imgLock.CreateOptions = BitmapCreateOptions.DelayCreation‌;
         }
 
 
