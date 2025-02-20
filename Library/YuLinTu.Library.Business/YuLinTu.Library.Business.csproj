@@ -300,6 +300,10 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerArgument.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerAttribute.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerArgument.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerOperation.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelArgument.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelOperation.cs" />

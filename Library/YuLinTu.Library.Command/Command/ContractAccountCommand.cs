@@ -382,6 +382,11 @@ namespace YuLinTu.Library.Command
         public const string FindName = "find";
 
         /// <summary>
+        /// 数据质检名称
+        /// </summary>
+        public const string DataQualityName = "dataQuality";
+
+        /// <summary>
         /// 清空命令名称
         /// </summary>
         public const string ClearName = "clear";
@@ -793,6 +798,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand Find = new RoutedCommand(FindName, typeof(Button));
 
         /// <summary>
+        /// 数据质检
+        /// </summary>
+        public RoutedCommand DataQuality = new RoutedCommand(DataQualityName, typeof(Button));
+
+        /// <summary>
         /// 清空命令
         /// </summary>
         public RoutedCommand Clear = new RoutedCommand(ClearName, typeof(Button));
@@ -1192,6 +1202,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding FindBind = new CommandBinding();
 
         /// <summary>
+        /// 数据质检绑定
+        /// </summary>
+        public CommandBinding DataQualityBind = new CommandBinding();
+
+        /// <summary>
         /// 清空绑定
         /// </summary>
         public CommandBinding ClearBind = new CommandBinding();
@@ -1297,6 +1312,7 @@ namespace YuLinTu.Library.Command
             LandLevelNullBind.Command = LandLevelNull;
             LandShapeNullBind.Command = LandShapeNull;
             FindBind.Command = Find;
+            DataQualityBind.Command = DataQuality;
             ClearBind.Command = Clear;
             RefreshBind.Command = Refresh;
             ExportPackageBind.Command = ExportPackage;
