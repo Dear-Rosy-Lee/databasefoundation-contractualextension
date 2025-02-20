@@ -48,8 +48,8 @@
             <Label Content="设置模式:"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0"/>
             <cmps:MetroComboBox Name="cbModule" IsEnabled="{Binding ElementName=cbPointSet,Path=IsChecked}" 
                                                 Height="30" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="7,5,0,0" VerticalAlignment="Center" TabIndex="7">
-                <ComboBoxItem  IsSelected="True">截取</ComboBoxItem>
-                <ComboBoxItem >四舍五入</ComboBoxItem>
+                <ComboBoxItem >截取</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">四舍五入</ComboBoxItem>
             </cmps:MetroComboBox>
 
             <Label Content="面积选择:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0"/>

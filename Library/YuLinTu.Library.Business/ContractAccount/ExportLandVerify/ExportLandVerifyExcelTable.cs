@@ -371,6 +371,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "/");
             InitalizeRangeValue("AG" + index, "AH" + index, "删除");
         }
+
         /// <summary>
         /// 书写当前地域信息
         /// </summary>

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace YuLinTu.Library.Controls
         public ContractLandInitializeAreaNumericFormat(bool isBatch = false)
         {
             InitializeComponent();
-            this.Header = isBatch ? "批量地块面积小数位截取" : "地块面积小数位截取";
+            this.Header = isBatch ? "批量地块面积小数位计算" : "地块面积小数位计算";
             btnConfirm.IsEnabled = false;
         }
 

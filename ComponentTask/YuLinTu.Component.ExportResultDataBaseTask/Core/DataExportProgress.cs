@@ -55,6 +55,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         public int AreaType { get; set; }
 
         /// <summary>
+        /// 导出界址
+        /// </summary>
+        public bool ContainDotLine { get; set; }
+
+        /// <summary>
         /// 是否导出扫描资料
         /// </summary>
         public bool IsExportScan { get; set; }
@@ -650,8 +655,13 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         {
                             string filename = Path.GetFileNameWithoutExtension(files[i]);
                             FileEntity fe = FileEntityExport(exportFile, filename);
+                            if (!ContainDotLine && (filename == JZD.TableName || filename == JZX.TableName))
+                            {
+                                continue;
+                            }
                             string destionName = Path.Combine(ShapeFilePath, filename + code + year + Path.GetExtension(files[i]));
-                            if ((fe.IsExport && !File.Exists(destionName) && !exportFile.IsAllExport) || exportFile.IsAllExport)
+                            if ((fe.IsExport && !File.Exists(destionName) && !exportFile.IsAllExport)
+                                || exportFile.IsAllExport)
                                 File.Copy(files[i], destionName, true);
                         }
                     }

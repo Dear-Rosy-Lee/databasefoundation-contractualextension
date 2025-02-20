@@ -549,6 +549,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 ExportOnlyLandResult(efe);
             }
+            dataProgress.ContainDotLine = ContainDotLine;
             canContinue = InitalizeAgricultureDirectory(dataProgress, spaceProgress, efe);
             if (!canContinue)
             {

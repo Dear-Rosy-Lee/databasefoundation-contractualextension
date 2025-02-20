@@ -1,21 +1,10 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using YuLinTu.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Appwork;
-using YuLinTu.Windows.Wpf.Metro;
-using Xceed.Wpf.Toolkit;
-using Microsoft.Win32;
 using System.Windows;
+using YuLinTu.Appwork;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.Zone
 {

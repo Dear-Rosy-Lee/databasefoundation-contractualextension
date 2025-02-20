@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -862,7 +862,7 @@ namespace YuLinTu.Library.Business
             isErrorRecord = false;
             try
             {
-                ImportLandTiesTable landTableImport = new ImportLandTiesTable();
+                var landTableImport = new ImportLandTiesTable();
 
                 #region 通过反射等机制定制化具体的业务处理类
 
