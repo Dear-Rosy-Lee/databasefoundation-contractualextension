@@ -307,6 +307,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandLevelNull, command.LandLevelNull, command.LandLevelNullBind);
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
+            SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
             SetCommandBinding(mbtnDownLoad, command.DownLoad, command.DownLoadBind);
@@ -641,6 +642,10 @@ namespace YuLinTu.Component.ContractAccount
                     FindLand();    //空间查看
                     break;
 
+                case ContractAccountCommand.DataQualityName:
+                    contractAccountPanel.DataQuality();    
+                    break;
+
                 case ContractAccountCommand.ClearName:
                     contractAccountPanel.Clear();
                     break;
@@ -694,6 +699,7 @@ namespace YuLinTu.Component.ContractAccount
                 btnExportData.IsEnabled = isEnable;
                 btnTemplate.IsEnabled = isEnable;
                 btnExportContractInformation.IsEnabled = isEnable;
+                mbtnDataQuality.IsEnabled = isEnable;
             }));
         }
 

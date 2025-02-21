@@ -2,6 +2,7 @@
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
+using Microsoft.Scripting.Actions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.Business.ContractAccount.AttributeDataChecker;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
@@ -7836,8 +7838,68 @@ namespace YuLinTu.Library.Controls
             return section.Settings;
         }
 
+
+
         #endregion Methods -上传下载
 
+        #region Method-质检 
+        public void DataQuality()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("数据检查", "请选择行政区域进行数据检查!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.County || currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("数据检查", "请选择在镇级以下(包括镇)地域进行数据检查!");
+                    return;
+                }
+                
+                else
+                {
+                    var dialog = new DataCheckPage();
+                    dialog.Page = TheWorkPage;
+                    dialog.Header = "配置检查项";
+                    TheWorkPage.Page.ShowMessageBox(dialog, (b, r) =>
+                    {
+                        if (b == null || !b.Value)
+                            return;
+                        DataQualityTask(dialog.TaskArgument);
+                    });
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportPublishExcel(导出调查信息公示表)", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+        public void DataQualityTask(TaskAttributeDataCheckerArgument argument)
+        {
+            argument.CurrentZone = currentZone;
+            argument.DbContext = DbContext;
+            TaskAttributeDataCheckerOperation operation = new TaskAttributeDataCheckerOperation();
+            operation.Argument = argument;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+        #endregion Method-质检
         #endregion Method-工具
 
         #endregion Methods
