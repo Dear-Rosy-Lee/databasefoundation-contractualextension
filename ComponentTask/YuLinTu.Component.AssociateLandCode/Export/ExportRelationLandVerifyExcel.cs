@@ -116,13 +116,17 @@ namespace YuLinTu.Library.Business
                 bindex++;
             }
             HashSet<string> setlandnumber = new HashSet<string>();//手动设置关联的地块编码
+            var familystr = ((int)eLandCategoryType.ContractLand).ToString();
             foreach (ContractLand land in lands)
             {
                 double tableArea = land.TableArea ?? 0;
                 TotalLandTable += tableArea;
-                TotalLandAware += land.AwareArea;
+                if (land.LandCategory == familystr)
+                {
+                    TotalLandAware += land.AwareArea;
+                }
                 TotalLandActual += land.ActualArea;
-                WriteLandInformation(landFamily.CurrentFamily, land, aindex);
+                WriteLandInformation(landFamily.CurrentFamily, land, aindex, land.LandCategory == familystr);
                 SetRowHeight(aindex, 27.75);
                 if (!string.IsNullOrEmpty(land.OldLandNumber) && !setlandnumber.Contains(land.OldLandNumber))
                 {
@@ -162,18 +166,19 @@ namespace YuLinTu.Library.Business
             {
                 virtualpersonCode = landFamily.CurrentFamily.OldVirtualCode;
             }
+            bool sfjt = jtmcs.Contains(landFamily.CurrentFamily.Name);
             string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode) && landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
-            InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), jtmcs.Contains(landFamily.CurrentFamily.Name) ? "" : virtualpersonCode);
+            InitalizeRangeValue("C" + index, "C" + (index + height - 1), sfjt ? "" : cardtype.Name);
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), sfjt ? "" : virtualpersonCode);
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
             InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
             InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), oldvpcode, Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
-            InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
+            InitalizeRangeValue("G" + index, "G" + (index + height - 1), sfjt ? 0 : landFamily.Persons.Count);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
@@ -248,7 +253,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写地块信息
         /// </summary>
-        public void WriteLandInformation(VirtualPerson vp, ContractLand land, int index)
+        public void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
@@ -278,7 +283,7 @@ namespace YuLinTu.Library.Business
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
 
-            InitalizeRangeValue("Y" + index, "Y" + index, Math.Round(land.AwareArea, 2));
+            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? Math.Round(land.AwareArea, 2) : 0);
             InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
             InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");

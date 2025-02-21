@@ -51,6 +51,7 @@ namespace YuLinTu.Component.AssociateLandCode
         #region Method - Override
         protected override void OnGo()
         {
+            jtmcs.Clear();
             jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" });
             this.ReportProgress(0, "开始验证参数...");
             this.ReportInfomation("开始验证参数...");

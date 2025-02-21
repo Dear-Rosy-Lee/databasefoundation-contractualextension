@@ -12,7 +12,6 @@ namespace YuLinTu.Library.Business
         #region Property
 
         public bool IsGroup { get; set; }
-
         #endregion Property
 
         #region Field
@@ -21,7 +20,7 @@ namespace YuLinTu.Library.Business
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
-
+        private List<string> jtmcs = new List<string>();
         #endregion Field
 
         #region Ctor
@@ -31,6 +30,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskExportVerifyExcel()
         {
+            jtmcs.Clear();
+            jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" });
         }
 
         #endregion Ctor
@@ -211,6 +212,15 @@ namespace YuLinTu.Library.Business
                 var vp = item.ConvertTo<VirtualPerson>();
                 vp.Status = eVirtualPersonStatus.Bad;
                 var landDelCollection = dellds.FindAll(c => c.CBFID == vp.ID);
+                if (jtmcs.Contains(item.Name))
+                {
+                    var jten = accountFamilyCollection.Find(t => t.CurrentFamily.Name == item.Name);
+                    if (jten != null)
+                    {
+                        jten.LandDelCollection.AddRange(landDelCollection);
+                        continue;
+                    }
+                }
                 ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                 accountLandFamily.CurrentFamily = vp;
                 accountLandFamily.Persons = vp.SharePersonList;

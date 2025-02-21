@@ -698,7 +698,6 @@ namespace YuLinTu.Library.Aux
 
             public byte[] wkb;
             public Coordinate[] coords;
-            [Obsolete]
             public IEnvelope env;
             public Dictionary<Coordinate, string> dicJzdh = null;// new Dictionary<Coordinate, string>();
         }
@@ -728,7 +727,6 @@ namespace YuLinTu.Library.Aux
 
         private class ListShapeDkEntity : List<ShapeDkEntity>
         {
-            [Obsolete]
             public void AssignJzdh(IPoint pt, string jzdh, double tolerance, double tolerance2)
             {
                 var c = new Coordinate(pt.X, pt.Y);
@@ -1402,7 +1400,6 @@ namespace YuLinTu.Library.Aux
         /// <summary>
         /// 导出地块
         /// </summary>
-        [Obsolete]
         public void DoExportLandOnly(HashSet<string> excludeDkbm)// string shpFileName,string jzxShpFileName,string where=null)
         {
             ReportInfomation("开始时间：" + DateTime.Now);

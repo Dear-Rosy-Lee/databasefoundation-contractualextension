@@ -160,8 +160,8 @@
             MaxLength="50"
             TabIndex="7"
             Text="{Binding Path=LawyerCartNumber, Mode=TwoWay}" />
-        
-        <cmps:ImageTextItem  Grid.Row="4" Margin="5,0,0,0" IsRequired="True" Text="负责人证件号码:"/>
+
+        <cmps:ImageTextItem  Grid.Row="4" Margin="5,0,0,0" IsRequired="True" Text="负责人地址:"/>
         <!--<Label
             Grid.Row="4"
             Content="负责人地址:"

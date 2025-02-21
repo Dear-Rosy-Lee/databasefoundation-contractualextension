@@ -252,7 +252,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出数据成果
         /// </summary>
-        [Obsolete]
         public virtual void Export()
         {
             this.ReportProgress(0, "开始");
@@ -398,7 +397,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块
         /// </summary>
-        [Obsolete]
         public virtual void ExportLand(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand)
@@ -525,7 +523,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 数据处理
         /// </summary>
-        [Obsolete]
         public virtual void ArcDataProgress()
         {
             var zones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);
@@ -843,7 +840,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块、界址点、界址线
         /// </summary>
-        [Obsolete]
         public virtual void ExportLandResultFile(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var pointquery = DbContext.CreateQuery<BuildLandBoundaryAddressDot>();
@@ -881,7 +877,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 导出地块
         /// </summary>
-        [Obsolete]
         public virtual void ExportLandOnly(ArcSpaceDataProgress spaceProgress, HashSet<string> extendSet)
         {
             var landquery = DbContext.CreateQuery<ContractLand>();
