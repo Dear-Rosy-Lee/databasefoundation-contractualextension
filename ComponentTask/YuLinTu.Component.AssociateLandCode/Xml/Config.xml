@@ -13,5 +13,5 @@
   <IsSystemManaged>true</IsSystemManaged>
   <IsApplicationDependency>true</IsApplicationDependency>,
   <IsConnected>true</IsConnected>
-  <IsEnabled>true</IsEnabled>
+  <IsEnabled>false</IsEnabled>
 </WinComponent>
