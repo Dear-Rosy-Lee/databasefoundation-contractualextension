@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.IO; 
 using System.Windows.Forms;
 using Utils.Tool;
 using YuLinTu.Windows.Wpf;
@@ -10,7 +10,7 @@ namespace YuLinTu.Product.YuLinTuTool
     {
         [STAThread]
         static void Main(string[] args)
-        {
+        { 
             // 设置环境变量
             string variableName = "Path";
             // 获取环境变量

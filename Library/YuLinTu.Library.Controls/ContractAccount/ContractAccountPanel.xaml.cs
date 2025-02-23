@@ -2319,6 +2319,7 @@ namespace YuLinTu.Library.Controls
                     return null;
                 var personStation = db.CreateVirtualPersonStation<LandVirtualPerson>();
                 listPerson = personStation.GetByZoneCode(currentZone.FullCode, eLevelOption.Self);
+                listPerson = listPerson.OrderBy(o => int.Parse(o.FamilyNumber)).ToList();
                 if (ContractBusinessSettingDefine.DisplayCollectUsingCBdata)
                 {
                     var persons = listPerson.FindAll(c => c.Name == "集体");
@@ -7861,7 +7862,7 @@ namespace YuLinTu.Library.Controls
                     ShowBox("数据检查", "请选择在镇级以下(包括镇)地域进行数据检查!");
                     return;
                 }
-                
+
                 else
                 {
                     var dialog = new DataCheckPage();
@@ -7873,7 +7874,7 @@ namespace YuLinTu.Library.Controls
                             return;
                         DataQualityTask(dialog.TaskArgument);
                     });
-                    
+
                 }
             }
             catch (Exception ex)

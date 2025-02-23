@@ -286,7 +286,6 @@ namespace YuLinTu.Component.AssociateLandCode
                 {
                     vp.ChangeSituation = eBHQK.TZJD;
                 }
-                bool result = false;
                 foreach (var t in lands)
                 {
                     var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
@@ -294,28 +293,26 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         t.OldLandNumber = slan.LandNumber;
                         rlandset.Add(slan.ID);
-                        result = true;
                         continue;
                     }
                     var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
                     if (rlands.Count == 0)
                     {
-                        continue;
+                        t.OldLandNumber = "";
                     }
-                    foreach (var c in rlands)
+                    else
                     {
-                        if (!rlandset.Contains(c.ID))
+                        foreach (var c in rlands)
                         {
-                            t.OldLandNumber = c.LandNumber;
-                            rlandset.Add(c.ID);
-                            result = true;
-                            break;
+                            if (!rlandset.Contains(c.ID))
+                            {
+                                t.OldLandNumber = c.LandNumber;
+                                rlandset.Add(c.ID);
+                                break;
+                            }
                         }
                     }
-                    if (result)
-                    {
-                        listLands.Add(t);
-                    }
+                    listLands.Add(t);
                 }
                 var delandstemp = listOldLands.Where(r => !rlandset.Contains(r.ID)).ToList();
                 foreach (var ld in delandstemp)

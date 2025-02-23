@@ -36,6 +36,9 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public InfoPageBase()
         {
+            ResourceDictionary resourceDictionary = new ResourceDictionary();
+            resourceDictionary.Source = new Uri("/Utils.Controls;component/Styles/AutoComplete.Styles.xaml", UriKind.RelativeOrAbsolute);
+            this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         #endregion
