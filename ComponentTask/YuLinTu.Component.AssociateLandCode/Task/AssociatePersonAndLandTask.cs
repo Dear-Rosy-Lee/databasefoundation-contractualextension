@@ -208,7 +208,19 @@ namespace YuLinTu.Component.AssociateLandCode
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
                     var deloldldtemp = new List<ContractLand_Del>();
                     var lstlds = AssociteLand(sd, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
-                    uplands.AddRange(lstlds);
+                    var upldnums = new HashSet<string>();
+                    foreach (var item in lstlds)
+                    {
+                        if (!upldnums.Contains(item.LandNumber))
+                            upldnums.Add(item.LandNumber);
+                    }
+                    foreach (var item in nlds)
+                    {
+                        if (upldnums.Contains(item.LandNumber))
+                            continue;
+                        item.OldLandNumber = "";
+                    }
+                    uplands.AddRange(nlds);
                     deloldlds.AddRange(deloldldtemp);
                     index++;
                     this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count} 地块:{lstlds.Count},未关联地块{deloldldtemp.Count}");

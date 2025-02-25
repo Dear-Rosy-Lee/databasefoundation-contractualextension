@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
@@ -602,7 +603,6 @@ namespace YuLinTu.Library.Business
                 string landneiborghsouthStr = "";
                 string landneiborghwestStr = "";
                 string landneiborghnorthtStr = "";
-
                 var landinfos = landneiborghinfos[i].Split(':');
                 //var targetlandnumber = landinfos[0];
                 //if (targetlandnumber != null)
@@ -610,7 +610,6 @@ namespace YuLinTu.Library.Business
                 //    targetLand = currentZoneLandList.Find(cf => cf.LandNumber == targetlandnumber);
                 //    if (targetLand == null) continue;
                 //}
-
                 var targetlandid = landinfos[0];
                 if (targetlandid != null)
                 {
@@ -653,7 +652,16 @@ namespace YuLinTu.Library.Business
             if (updateLands.Count > 0)
             {
                 this.ReportProgress(98, "查找完成，开始更新数据库");
-                landStation.UpdateRange(updateLands);
+                var metadata = Argument as TaskSeekLandNeighborArgument;
+                if (metadata.UpdateLandList != null || metadata.UpdateLandList.Count > 0)
+                {
+                    var tuplist = updateLands.FindAll(t => metadata.UpdateLandList.Any(a => a.LandNumber == t.LandNumber));
+                    landStation.UpdateRange(tuplist);
+                }
+                else
+                {
+                    landStation.UpdateRange(updateLands);
+                }
             }
             this.ReportInfomation(string.Format("在{0}下共查找{1}个地块", markDesc, currentZoneLandList.Count));
         }

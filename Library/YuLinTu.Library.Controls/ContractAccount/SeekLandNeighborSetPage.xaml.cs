@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
@@ -22,16 +10,16 @@ namespace YuLinTu.Library.Controls
     public partial class SeekLandNeighborSetPage : InfoPageBase
     {
 
-        private static SeekLandNeighborSetPage seekLandNeighborSetPage;
+        //private static SeekLandNeighborSetPage seekLandNeighborSetPage;
 
         public static SeekLandNeighborSetPage Getinstence(IWorkpage page)
         {
-            if (seekLandNeighborSetPage == null)
-            {
-                seekLandNeighborSetPage = new SeekLandNeighborSetPage(page);
-                return seekLandNeighborSetPage;
-            }
-            return seekLandNeighborSetPage;
+            //if (seekLandNeighborSetPage == null)
+            //{
+            //    seekLandNeighborSetPage = new SeekLandNeighborSetPage(page);
+            //    return seekLandNeighborSetPage;
+            //}
+            return new SeekLandNeighborSetPage(page);
         }
 
 
