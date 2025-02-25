@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Scripting.Actions;
 using Microsoft.Scripting.Utils;
 using YuLinTu;
 using YuLinTu.Data;
@@ -3035,7 +3036,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出公示结果归户表(Word)
         /// </summary>
-        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "", bool exportdelempty = false)
+        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "", 
+            bool exportdelempty = false, bool exportawareArea = false)
         {
             bool flag = false;
             try
@@ -3070,7 +3072,8 @@ namespace YuLinTu.Library.Business
                 export.DictList = DictList;
                 export.ZoneList = zonelist;
                 export.LandCollection = landItems;  //地块集合
-                export.ExportPublicTableDeleteEmpty = exportdelempty;
+                export.ExportPublicTableDeleteEmpty = exportdelempty; 
+                export.ExportPublicAwareArea = exportawareArea;
                 var sender = GetTissue(zone.ID); //发包方
                 if (sender == null)
                 {

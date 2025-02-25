@@ -165,6 +165,7 @@ namespace YuLinTu.Library.Business
                     export.DictList = listDict == null ? new List<Dictionary>() : listDict;
                     export.LandCollection = landsOfFamily == null ? new List<ContractLand>() : landsOfFamily;  //地块集合
                     export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
+                    export.ExportPublicAwareArea = argument.ContractSettingDefine.ExportPublicTableUseAwareArea;
                     //if(family.IsStockFarmer)
                     //    export.LandCollection.AddRange(landStocks);
 

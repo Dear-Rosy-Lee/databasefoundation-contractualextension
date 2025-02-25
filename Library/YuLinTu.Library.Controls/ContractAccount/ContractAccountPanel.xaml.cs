@@ -3567,7 +3567,8 @@ namespace YuLinTu.Library.Controls
                     {
                         List<ContractLand> lands = ContractAccountBusiness.GetPersonCollection(CurrentAccountItem.Tag.ID);
                         lands.LandNumberFormat(SystemSetDefine);
-                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "", SettingDefine.ExportPublicTableDeleteEmpty);   //导出单个
+                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "",
+                            SettingDefine.ExportPublicTableDeleteEmpty, SettingDefine.ExportPublicTableUseAwareArea);   //导出单个
                     }
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
