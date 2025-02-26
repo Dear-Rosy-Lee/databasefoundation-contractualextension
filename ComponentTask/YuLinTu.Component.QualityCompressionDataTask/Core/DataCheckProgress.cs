@@ -43,7 +43,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         public string Check()
         {
             //获取当前路径下shape数据
-
+            ErrorInfo = "";
             string filepath;
             string filename;
             try
@@ -51,7 +51,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
                 if (!CheckFile(filepath, filename))
-                    return  ErrorInfo;
+                    return ErrorInfo;
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
                 if (srid == 4490)
@@ -66,7 +66,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     return ErrorInfo;
                 }
                 List<LandEntity> ls = new List<LandEntity>();
-                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid,"");
+                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid, "");
                 if (landShapeList.IsNullOrEmpty())
                 {
                     return ErrorInfo;
