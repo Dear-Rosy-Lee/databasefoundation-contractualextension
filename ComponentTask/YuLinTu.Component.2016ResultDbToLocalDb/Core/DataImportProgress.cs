@@ -716,7 +716,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                         index++;
 
                         var landList = valligelandList.FindAll(l => l.DKBM.StartsWith(z));
-                        var dkDic = new Dictionary<string, DKEX>();
+                        var dkDic = new Dictionary<string, DKEXP>();
                         landList.ForEach(t =>
                         {
                             if (!dkDic.ContainsKey(t.DKBM))
@@ -748,7 +748,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <param name="index">处理序号</param>
         /// <param name="percent">处理百分比</param>
         /// <returns></returns>
-        private bool ExecuteImport(Dictionary<string, DKEX> dkDic, string searchCode, int zoneListCount, Dictionary<string, string> dicCodeName,
+        private bool ExecuteImport(Dictionary<string, DKEXP> dkDic, string searchCode, int zoneListCount, Dictionary<string, string> dicCodeName,
             DataCollectionDb townCollection, DbDataProcess dbProcess, int index, double percent, bool splite)
         {
             bool sucess = true;

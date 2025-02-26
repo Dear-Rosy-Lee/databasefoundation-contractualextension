@@ -307,7 +307,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <summary>
         /// 从数据库中获取地块数据
         /// </summary> 
-        public List<DKEX> GetLandFromDatabase(string keyCode, bool getjzdx = true)
+        public List<DKEXP> GetLandFromDatabase(string keyCode, bool getjzdx = true)
         {
             return GetLandFromDatabase(keyCode, ShapeFileList, getjzdx);
         }
@@ -319,7 +319,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <param name="files"></param>
         /// <param name="getJzdx">是否获取界址点线</param>
         /// <returns></returns>
-        private List<DKEX> GetLandFromDatabase(string keyCode, List<FileCondition> files, bool getJzdx = true)
+        private List<DKEXP> GetLandFromDatabase(string keyCode, List<FileCondition> files, bool getJzdx = true)
         {
             var dkquery = sqliteDb.CreateQuery<DKST>();
             var jzdquery = sqliteDb.CreateQuery<JZDST>();
@@ -380,12 +380,12 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     }
                 }
             }
-            var dkexList = new ConcurrentBag<DKEX>();
+            var dkexList = new ConcurrentBag<DKEXP>();
             Parallel.ForEach(dkList, land =>
             {
                 lock (_lock)
                 {
-                    var dkex = ObjectExtension.ConvertTo<DKEX>(land);
+                    var dkex = ObjectExtension.ConvertTo<DKEXP>(land);
                     dkex.JZD = new List<JZD>();
                     dkex.JZX = new List<JZX>();
                     if (getJzdx)

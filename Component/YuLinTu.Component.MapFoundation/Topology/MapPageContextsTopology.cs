@@ -67,6 +67,8 @@ namespace YuLinTu.Component.MapFoundation
                                 {
                                     deloldLand = false;
                                 }
+                                if (entities[i].LandNumber == entities[i].OldLandNumber)
+                                    entities[i].OldLandNumber = "";
                                 var dbland = landStation.GetByLandNumber(entities[i].LandNumber);// (l => l.ID == entities[i].ID)
                                 if (dbland != null)
                                 {
@@ -75,6 +77,7 @@ namespace YuLinTu.Component.MapFoundation
                                 }
                                 else
                                 {
+                                    entities[i].OldLandNumber = "";
                                     landStation.Add(entities[i]);
                                 }
                             }

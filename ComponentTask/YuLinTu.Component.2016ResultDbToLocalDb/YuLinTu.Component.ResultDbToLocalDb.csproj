@@ -218,14 +218,16 @@
     <Compile Include="Core\DataImportProgress.cs" />
     <Compile Include="Core\DataZoneReader.cs" />
     <Compile Include="Core\DbDataProcess.cs" />
+    <Compile Include="Core\ExpandEntity.cs" />
     <Compile Include="Core\FileImportConfig.cs" />
     <Compile Include="Core\FileZoneEntity.cs" />
     <Compile Include="Core\ListTake.cs" />
+    <Compile Include="Core\LocalComplexRightEntity.cs" />
+    <Compile Include="Core\LocalComplexSpaceEntity.cs" />
     <Compile Include="Core\SpaceDataOperator.cs" />
     <Compile Include="Core\SqliteEntity.cs" />
     <Compile Include="Core\ZoneDataIntegration.cs" />
     <Compile Include="Entrance.cs" />
-    <Compile Include="LocalComplexSpaceEntity.cs" />
     <Compile Include="TaskPageContext.cs" />
     <Compile Include="Task\CBJYQZMDB.cs" />
     <Compile Include="Task\FileChoiceControl.xaml.cs">
@@ -234,7 +236,6 @@
     <Compile Include="Task\FileChoicePage.xaml.cs">
       <DependentUpon>FileChoicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Task\LocalComplexRightEntity.cs" />
     <Compile Include="Task\PropertyDescriptorBuilderTest.cs" />
     <Compile Include="Task\PropertyTriggerTest.cs" />
     <Compile Include="Task\TaskInstalllerServiceAccount.cs" />
