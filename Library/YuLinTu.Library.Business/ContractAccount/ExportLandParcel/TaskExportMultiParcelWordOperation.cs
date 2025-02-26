@@ -77,7 +77,7 @@ namespace YuLinTu.Library.Business
                 {
                     VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
                 }
-                var listLand = VillageContractLands.FindAll(t => t.ZoneCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                var listLand = VillageContractLands.FindAll(t => t.ZoneCode != null && t.ZoneCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
                 if (settingDefine.ContainsOtherZoneLand)
                     listLand = VillageContractLands;
                 if (listLand == null || listLand.Count == 0)
