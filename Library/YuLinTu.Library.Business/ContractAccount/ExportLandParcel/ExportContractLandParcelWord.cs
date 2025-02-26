@@ -509,11 +509,11 @@ namespace YuLinTu.Library.Business
             string checkPerson = SettingDefine.CheckPerson.IsNullOrEmpty() ? placeholder : SettingDefine.CheckPerson;
             string cartographyDate = (SettingDefine.CartographyDate == null) ? placeholder : SettingDefine.CartographyDate.Value.ToString("yyyy年MM月dd日");
             string checkDate = (SettingDefine.CheckDate == null) ? placeholder : SettingDefine.CheckDate.Value.ToString("yyyy年MM月dd日");
-            string otherInfo = $"制图者：{cartographer} " +
-                               $"制图日期：{cartographyDate} " +
-                               $"审核者：{checkPerson} " +
-                               $"审核日期：{checkDate} " +
-                               $"制图单位：{SettingDefine.CartographyUnit}";
+            string otherInfo = $" 制图者：{cartographer}     " +
+                               $" 制图日期：{cartographyDate}     " +
+                               $" 审核者：{checkPerson}     " +
+                               $" 审核日期：{checkDate}     " +
+                               $" 制图单位：{SettingDefine.CartographyUnit}";
             WriteLandInfoVertical(pageSize, totalPageSize, otherInfo);
         }
 
