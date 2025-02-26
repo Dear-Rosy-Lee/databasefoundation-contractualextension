@@ -52,8 +52,7 @@ namespace YuLinTu.Component.MapFoundation
                             entities.Add(x.Land);
                         });
 
-
-                        if (flag == true)
+                        if (flag)
                         {
                             if (string.IsNullOrEmpty(oldlandNumber))
                                 oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;

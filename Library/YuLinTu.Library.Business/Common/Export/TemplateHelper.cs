@@ -119,6 +119,8 @@ namespace YuLinTu.Library.Business
                 {
                     Shape = c.Shape,
                     ID = c.ID,
+                    OwnerId = c.OwnerId,
+                    ZoneCode = c.ZoneCode,
                     LandNumber = c.LandNumber,
                     OwnerName = c.OwnerName
                 }).ToList();
