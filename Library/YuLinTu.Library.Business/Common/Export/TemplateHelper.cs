@@ -169,6 +169,7 @@ namespace YuLinTu.Library.Business
                 NeighborSouth = c.NeighborSouth,
                 NeighborWest = c.NeighborWest,
                 OwnerId = c.OwnerId,
+                ZoneCode = c.ZoneCode
                 //Purpose = c.Purpose,
                 //PlatType = c.PlatType,
             }).ToList();

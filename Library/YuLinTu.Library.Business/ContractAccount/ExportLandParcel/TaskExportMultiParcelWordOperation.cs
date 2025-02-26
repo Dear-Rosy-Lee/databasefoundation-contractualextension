@@ -77,7 +77,7 @@ namespace YuLinTu.Library.Business
                 {
                     VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
                 }
-                var listLand = VillageContractLands.FindAll(t => t.LandCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                var listLand = VillageContractLands.FindAll(t => t.ZoneCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
                 if (settingDefine.ContainsOtherZoneLand)
                     listLand = VillageContractLands;
                 if (listLand == null || listLand.Count == 0)
@@ -105,8 +105,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出公示结果归户表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出公示结果归户表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出地块示意图任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出地块示意图出现异常! " + ex.Message);
             }
         }
 
