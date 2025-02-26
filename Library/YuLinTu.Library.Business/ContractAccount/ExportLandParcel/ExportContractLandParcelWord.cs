@@ -496,10 +496,9 @@ namespace YuLinTu.Library.Business
             // 示意图页数
             var landCount = geoLandCollection.Count;
             int pageSize = landCount > PAGECOUNT1 ?
-                landCount % PAGECOUNT1 == 0 ?
-                    landCount / PAGECOUNT1 :
-                    landCount / PAGECOUNT1 + 1 :
-                1;
+                (landCount - PAGECOUNT1) % PAGECOUNT2 == 0 ?
+                (landCount - PAGECOUNT1) / PAGECOUNT2 + 1 : (landCount - PAGECOUNT1) / PAGECOUNT2 + 2
+                : 1;
 
             // 扩展页页数
 

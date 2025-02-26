@@ -25,7 +25,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskGroupExportMultiParcelWordOperation()
         {
-            MaxThreadCount = 1;
+            MaxThreadCount = 3;
         }
 
         #endregion
