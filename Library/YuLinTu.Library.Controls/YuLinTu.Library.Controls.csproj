@@ -219,6 +219,7 @@
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Common\Convert\BoolConvert.cs" />
     <Compile Include="Common\Convert\UserConfigValueConvert.cs" />
+    <Compile Include="Common\Convert\BooleanToVisibilityConverter.cs" />
     <Compile Include="Concord\BatchModel.cs" />
     <Compile Include="Concord\ConcordApplicationTableSetting.xaml.cs">
       <DependentUpon>ConcordApplicationTableSetting.xaml</DependentUpon>

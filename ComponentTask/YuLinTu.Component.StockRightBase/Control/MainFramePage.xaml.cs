@@ -813,7 +813,7 @@ namespace YuLinTu.Component.StockRightBase.Control
                 ShowBox(ContractAccountInfo.ImportZone, "未选择行政地域");
                 return;
             }
-            ImportLandShapePage addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
             addPage.ThePage = Workpage;
             addPage.Db = DbContext;
             Workpage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -841,7 +841,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         /// </summary>
         private void ImportLandShapeData(TaskContractAccountArgument meta, IDbContext dbContext)
         {
-            TaskContractAccountOperation import = new TaskContractAccountOperation();
+            var import = new TaskContractAccountOperation();
             import.Argument = meta;
             import.Description = ContractAccountInfo.ImportShapeData;
             import.Name = ContractAccountInfo.ImportShpData;

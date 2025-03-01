@@ -149,6 +149,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool UseOldLandCodeBindImport { get; set; }
 
+        public bool DelLandImport { get; set; }
+
         /// <summary>
         /// 地块图斑导入设置实体
         /// </summary>
@@ -1352,7 +1354,8 @@ namespace YuLinTu.Library.Business
             dbContext.BeginTransaction();
             try
             {
-                DeleteLandByZoneCode(zone.FullCode);
+                if (DelLandImport)
+                    DeleteLandByZoneCode(zone.FullCode);
 
                 for (int i = 0; i < addPersonList.Count; i++)
                 {

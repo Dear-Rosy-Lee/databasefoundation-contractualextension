@@ -124,6 +124,7 @@ namespace YuLinTu.Library.Business
             landBusiness.UseContractorNumberImport = metadata.UseContractorNumberImport;
             landBusiness.UseOldLandCodeBindImport = metadata.UseOldLandCodeBindImport;
             landBusiness.shapeAllcolNameList = metadata.shapeAllcolNameList;
+            landBusiness.DelLandImport = metadata.DelLandImport;
             var zoneStation = dbContext.CreateZoneWorkStation();
             List<Zone> childrenZone = zoneStation.GetChildren(zone.FullCode, eLevelOption.Subs);
             Zone parent = landBusiness.GetParent(zone);

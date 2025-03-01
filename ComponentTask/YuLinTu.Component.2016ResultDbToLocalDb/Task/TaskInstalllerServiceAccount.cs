@@ -69,6 +69,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 dep.IsStandCode = IsStandCode == "True" ? true : false;
                 dep.CreatUnit = argument.CreatUnit;
                 dep.DelOldData = argument.DelOldData;
+                dep.IsLegalData = argument.IsLegalData;
                 dep.ImportData();
             }
             catch (Exception ex)

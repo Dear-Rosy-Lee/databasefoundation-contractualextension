@@ -132,6 +132,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// </summary>
         public bool CreatDataBase { get; set; }
 
+        public bool IsLegalData { get; set; }
+
         private Dictionary<string, Library.Entity.Dictionary> dicLandType;
 
         #endregion Propertys
@@ -887,6 +889,14 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 ResultDbToLocalDb.LocalComplexRightEntity obj =
                     ResultDbToLocalDb.LocalComplexRightEntity.From(item,
                         new Action<string>(t => this.ReportError(t)));
+                if (IsLegalData)
+                {
+                    obj.CBF.OldVirtualCode = item.CBF.CBFBM;
+                    foreach (var dk in obj.DKXXS)
+                    {
+                        dk.OldLandNumber = dk.LandNumber;
+                    }
+                }
                 list.Add(obj);
             }
             Dictionary<string, Library.Entity.VirtualPerson> families = new Dictionary<string, Library.Entity.VirtualPerson>();

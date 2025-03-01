@@ -2729,7 +2729,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var dbContext = CreateDb();
-            ImportLandShapePage addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
             addPage.ThePage = TheWorkPage;
             addPage.Db = dbContext;
             TheWorkPage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -2750,6 +2750,7 @@ namespace YuLinTu.Library.Controls
                 meta.UseContractorNumberImport = addPage.UseContractorNumberImport;
                 meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
+                meta.DelLandImport = addPage.DelLandImport;
                 ImportLandShapeData(meta, dbContext);
             });
         }

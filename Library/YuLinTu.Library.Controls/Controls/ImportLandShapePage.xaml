@@ -10,6 +10,9 @@
                  Height="550"
                  Width="660"
                  Header="导入地块图斑数据">
+    <am:InfoPageBase.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </am:InfoPageBase.Resources>
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}">
         <Grid.RowDefinitions>
             <RowDefinition Height="90"></RowDefinition>
@@ -76,9 +79,9 @@
                              VerticalAlignment="Center"
                              Margin="15,0,0,0"
                              TabIndex="3" />
-                <RadioButton Content="按承包方户号导入"  ToolTip="按承包户号为准，先清空再导入"
+                <RadioButton Content="按承包方户号导入"  ToolTip="按承包户号为准，进行导入"
                              Name="chkUseContractorNumberImport"
-                            Click="chkUseContractorNumberImport_Click"
+                             Click="chkUseContractorNumberImport_Click"
                              VerticalAlignment="Center"
                              Margin="15,0,0,0"
                              TabIndex="3" />
@@ -111,6 +114,14 @@
                          LastChildFill="False"
                          Visibility="{Binding IsBusy, Converter={StaticResource NotBoolToVisibilityHiddenConverter}}">
                 <CheckBox DockPanel.Dock="Left" VerticalAlignment="Center" Content="全匹配" Name="allCheck" Click="allCheck_Click"/>
+
+                <CheckBox DockPanel.Dock="Left" Margin="20,0,0,0"
+                          VerticalAlignment="Center" IsChecked="True"
+                          Content="清空地块数据"
+                          Name="landdelCheck"
+                          Visibility="{Binding ElementName=chkUseContractorNumberImport,Path=IsChecked,Converter={StaticResource boolToVisibilityConverter}}"
+                          Click="allCheck_Click" />
+
                 <metro:MetroButton DockPanel.Dock="Right"
                                    Margin="5,0,0,0"
                                    Padding="5"
