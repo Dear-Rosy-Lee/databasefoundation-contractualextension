@@ -329,7 +329,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             var jzdbmList = jzdquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
             var jzxbmList = jzxquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
 
-            List<DK> dkList = new List<DK>();
+            var dkList = new List<DKEXP>();
 
             var group = bmList.GroupBy(t => t.TCBS).ToList();
             foreach (var item in group)
@@ -339,7 +339,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 if (file == null)
                     file = files.Find(t => t.Name.StartsWith("DK") && t.FullName.Contains((bs == "" ? "" : "_" + bs)));
                 var recodeList = item.ToList();
-                var list = InitiallDataList<DK, DKST>(file, recodeList);
+                var list = InitiallDataList<DKEXP, DKST>(file, recodeList);
                 dkList.AddRange(list);
             }
 
@@ -868,7 +868,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public IEnumerable<T> InitiallDataEnum<T, P>(FileCondition fnp, List<P> bsList)
             where T : class, new() where P : BSST
         {
-            var dkList = new List<DKEX>();
             var infoArray = typeof(T).GetProperties();
             var fieldIndex = new Dictionary<string, int>();
             using (var shp = new ShapeFile())

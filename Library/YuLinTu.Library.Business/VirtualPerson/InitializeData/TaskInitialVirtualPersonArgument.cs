@@ -196,6 +196,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool InitEndTime { get; set; }
 
+        public bool InitAllNum { get; set; }
+
         #endregion
 
         #region Ctor

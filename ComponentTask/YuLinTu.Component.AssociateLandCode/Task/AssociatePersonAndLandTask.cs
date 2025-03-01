@@ -225,33 +225,30 @@ namespace YuLinTu.Component.AssociateLandCode
                     index++;
                     this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count} 地块:{lstlds.Count},未关联地块{deloldldtemp.Count}");
                 }
-                //if (true)
-                {
-                    vpStation.UpdatePersonList(vps);
-                    landStation.UpdateOldLandCode(uplands, true);
+                vpStation.UpdatePersonList(vps);
+                landStation.UpdateOldLandCode(uplands, true);
 
-                    try
+                try
+                {
+                    dbContext.BeginTransaction();
+                    //TO 删除承包方入库
+                    foreach (var dvp in deloldvps)
                     {
-                        dbContext.BeginTransaction();
-                        //TO 删除承包方入库
-                        foreach (var dvp in deloldvps)
-                        {
-                            vpdquery.Add(dvp).Save();
-                        }
-                        //TO 删除地块入库
-                        foreach (var dld in deloldlds)
-                        {
-                            cldquery.Add(dld).Save();
-                        }
-                        dbContext.CommitTransaction();
-                        this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据完成", index, zoneListCount, village.FullName));
+                        vpdquery.Add(dvp).Save();
                     }
-                    catch (Exception ex)
+                    //TO 删除地块入库
+                    foreach (var dld in deloldlds)
                     {
-                        Log.WriteException(this, "", ex.ToString());
-                        dbContext.RollbackTransaction();
-                        throw new Exception("关联数据出错" + ex.Message);
+                        cldquery.Add(dld).Save();
                     }
+                    dbContext.CommitTransaction();
+                    this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据完成", index, zoneListCount, village.FullName));
+                }
+                catch (Exception ex)
+                {
+                    Log.WriteException(this, "", ex.ToString());
+                    dbContext.RollbackTransaction();
+                    throw new Exception("关联数据出错" + ex.Message);
                 }
             }
         }
@@ -314,14 +311,20 @@ namespace YuLinTu.Component.AssociateLandCode
                     }
                     else
                     {
+                        bool hasrelate = false;
                         foreach (var c in rlands)
                         {
                             if (!rlandset.Contains(c.ID))
                             {
+                                hasrelate = true;
                                 t.OldLandNumber = c.LandNumber;
                                 rlandset.Add(c.ID);
                                 break;
                             }
+                        }
+                        if (!hasrelate)
+                        {
+                            t.OldLandNumber = "";
                         }
                     }
                     listLands.Add(t);
@@ -329,7 +332,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 var delandstemp = listOldLands.Where(r => !rlandset.Contains(r.ID)).ToList();
                 foreach (var ld in delandstemp)
                 {
-                    dellands.Add(ChangeDataEntity(sender, ld));
+                    dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld));
                 }
             }
             var temps = olds.Where(r => !rlandset.Contains(r.ID)).ToList();
@@ -337,39 +340,9 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 if (dellands.Any(t => t.DKBM == ld.LandNumber))
                     continue;
-                dellands.Add(ChangeDataEntity(sender, ld));
+                dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld));
             }
             return listLands;
-        }
-
-        /// <summary>
-        /// 转换对象实体
-        /// </summary>
-        private ContractLand_Del ChangeDataEntity(CollectivityTissue sender, ContractLand ld)
-        {
-            var data = new ContractLand_Del()
-            {
-                BZXX = ld.Comment,
-                DKBM = ld.LandNumber,
-                DKBZ = ld.NeighborNorth,
-                DKXZ = ld.NeighborWest,
-                DKNZ = ld.NeighborSouth,
-                DKDZ = ld.NeighborEast,
-                DKMC = ld.Name,
-                DYBM = sender.ZoneCode,
-                ID = ld.ID,
-                QQDKBM = ld.OldLandNumber,
-                QQMJ = ld.AwareArea,
-                SCMJ = ld.ActualArea,
-                CBFID = ld.OwnerId,
-                TDYT = ld.Purpose,
-                TDLYLX = ld.LandCode,
-                SYQXZ = ld.OwnRightType,
-                DLDJ = ld.LandLevel,
-                DKLB = ld.LandCategory,
-                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
-            };
-            return data;
         }
 
         /// <summary>

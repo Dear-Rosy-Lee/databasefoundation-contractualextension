@@ -7,7 +7,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <summary>
         /// 确权地块编码
         /// </summary>
-        public string QQDKDKBM { get; set; }
+        public string QQDKBM { get; set; }
     }
 
 }

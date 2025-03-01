@@ -753,6 +753,7 @@ namespace YuLinTu.Library.Controls
         {
             if (list == null || list.Count == 0)
                 return;
+            list = list.OrderBy(l => l.Code).ToList();
             foreach (CollectivityTissue z in list)
             {
                 SenderDataItem node = SenderDataItem.ConvertToItem(z);

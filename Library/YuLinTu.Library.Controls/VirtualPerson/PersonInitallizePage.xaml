@@ -41,7 +41,11 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <CheckBox Content="承包方编码（重新进行编码）" Click="cbCheckBox_Click" Name="cbNumber" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
+                    <CheckBox Content="承包方编码" Click="cbCheckBox_Click" Name="cbNumber" VerticalAlignment="Center"/>
+                    <StackPanel  Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding ElementName=cbNumber,Path=IsChecked}">
+                        <RadioButton Content="全部重编" ToolTip="从1开始全部重编承包方编码" GroupName="rcbmum" Click="cbCheckBox_Click" Name="cbNumberAll" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <RadioButton Content="重编合并部分" ToolTip="重编前14位与地域不匹配的部分,不填充缺失的编码" GroupName="rcbmum" IsChecked="True" Click="cbCheckBox_Click" Name="cbNumberPart"  VerticalAlignment="Center"/>
+                    </StackPanel>
                     <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Margin="5,0,0,0" Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left" Width="110" VerticalAlignment="Center" Grid.ColumnSpan="2" />
                     <CheckBox Content="性别" Grid.Column="3"  VerticalAlignment="Center" x:Name="cbSex" Margin="0,0,5,0" HorizontalAlignment="Right" Click="cbSex_Click"/>
 

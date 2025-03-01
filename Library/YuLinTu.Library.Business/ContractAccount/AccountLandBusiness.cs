@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Scripting.Actions;
 using Microsoft.Scripting.Utils;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
@@ -3036,7 +3037,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出公示结果归户表(Word)
         /// </summary>
-        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "", 
+        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "",
             bool exportdelempty = false, bool exportawareArea = false)
         {
             bool flag = false;
@@ -3072,7 +3073,7 @@ namespace YuLinTu.Library.Business
                 export.DictList = DictList;
                 export.ZoneList = zonelist;
                 export.LandCollection = landItems;  //地块集合
-                export.ExportPublicTableDeleteEmpty = exportdelempty; 
+                export.ExportPublicTableDeleteEmpty = exportdelempty;
                 export.ExportPublicAwareArea = exportawareArea;
                 var sender = GetTissue(zone.ID); //发包方
                 if (sender == null)
@@ -3883,7 +3884,7 @@ namespace YuLinTu.Library.Business
         /// <param name="metadata">任务参数(主要传递初始化界面上设置的一些参数)</param>
         /// <param name="listLand">待初始化的地块集合</param>
         /// <param name="currentZone">当前初始化地块集合所在的地域</param>
-        public void ContractLandInitialTool(TaskInitialLandInfoArgument metadata, List<ContractLand> listLand, Zone currentZone)
+        public void ContractLandInitialTool(TaskInitialLandInfoArgument argument, List<ContractLand> listLand, Zone currentZone)
         {
             string markDesc = GetMarkDesc(currentZone);
 
@@ -3933,7 +3934,7 @@ namespace YuLinTu.Library.Business
                     return;
                 }
                 //if (metadata.InitialLandNumber && metadata.IsNew && metadata.InitialNull)是否按照从左到右初始化
-                if (metadata.InitialLandNumberByUpDown)
+                if (argument.InitialLandNumberByUpDown)
                 {
                     landsOfStatus = OrderLandByPosition(currentZone, landsOfStatus);
                 }
@@ -3968,8 +3969,32 @@ namespace YuLinTu.Library.Business
                 //        t.DoInit(wh);
                 //    }
                 //}
-                ProcessLandInformationInstall(landStation, landsOfStatus, metadata, zonePersonList, currentZone, sender, markDesc, listLand.Count);
+                int landIndex = 1;
+                if (argument.IsNewPart)
+                {
+                    var templist = landsOfStatus.Where(t => t.LandNumber.StartsWith(t.ZoneCode)).ToList();
+                    var mxnum = templist.Max(m => int.Parse(m.LandNumber.Substring(14)));
+                    if (mxnum == 0)
+                    {
+                        mxnum = landsOfStatus.Count;
+                    }
+                    landIndex = mxnum + 1;
+                    landsOfStatus = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
+                }
+                ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                 db.CommitTransaction();
+
+
+                var re = landStation.UpdateRange(landsOfStatus);
+                if (re <= 0)
+                {
+                    this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
+                }
+                else
+                {
+                    this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, landsOfStatus.Count, re));
+                    this.ReportProgress(100, null);
+                }
             }
             catch (Exception ex)
             {
@@ -4082,10 +4107,9 @@ namespace YuLinTu.Library.Business
         /// 初始化地块信息
         /// </summary>
         private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus, TaskInitialLandInfoArgument metadata,
-          List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int listLandCount)
+          List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
         {
-            int index = 1;   //地块索引
-            int landIndex = 1;
+            int index = 1;   //地块索引 
             int successCount = 0;
             double landPercent = 0.0;  //百分比
 
@@ -4177,7 +4201,7 @@ namespace YuLinTu.Library.Business
                 {
                     if (metadata.InitialLandNumber)
                     {
-                        if (metadata.InitialLandOldNumber)
+                        if (string.IsNullOrEmpty(land.OldLandNumber))//metadata.InitialLandOldNumber)
                             land.OldLandNumber = land.LandNumber;
                         land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)
@@ -4336,17 +4360,6 @@ namespace YuLinTu.Library.Business
                 }
                 index++;
                 landIndex++;
-            }
-
-            var re = landStation.UpdateRange(landsOfStatus);
-            if (re <= 0)
-            {
-                this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
-            }
-            else
-            {
-                this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, listLandCount, re));
-                this.ReportProgress(100, null);
             }
         }
 

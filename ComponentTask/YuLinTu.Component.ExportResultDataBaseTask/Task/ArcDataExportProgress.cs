@@ -1332,7 +1332,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 entity.VirtualPersonCode = InitalizeContractorCode(vp, zone);
                 entity.CBF = InitalizeContractorData(vp, entity.VirtualPersonCode);
                 entity.JTCY = InitalizeSharePersonData(vp, entity.VirtualPersonCode, false);
-                List<CBHT> vphts = new List<CBHT>();
+                var vphts = new List<ICBHT>();
                 List<CBJYQZ> vpcbjyqzs = new List<CBJYQZ>();
                 List<CBJYQZDJB> vpcbjyqzdjbs = new List<CBJYQZDJB>();
                 List<CBDKXX> cbds = new List<CBDKXX>();
@@ -1468,7 +1468,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary> 
         public virtual void ProcessConcordData(ExchangeRightEntity entity, ContractConcord concorditem, List<ContractLand> vplands, List<CBDKXX> cbds,
             List<DKEX> spacecdbs, HashSet<string> spacecdbDKBMs, List<BelongRelation> brqglands, VirtualPerson vp, List<ContractLand> landCollection,
-            List<CBHT> vphts, List<CBJYQZDJB> vpcbjyqzdjbs, List<ContractRegeditBook> bookCollection, List<CBJYQZ> vpcbjyqzs, int[] landArray, string serNumberTemp)
+            List<ICBHT> vphts, List<CBJYQZDJB> vpcbjyqzdjbs, List<ContractRegeditBook> bookCollection, List<CBJYQZ> vpcbjyqzs, int[] landArray, string serNumberTemp)
         {
             List<ContractLand> lands = vplands.FindAll(ld => ld.ConcordId != null && ld.ConcordId.HasValue && ld.ConcordId.Value == concorditem.ID);
             var concordlandsCount = lands.Count;

@@ -225,6 +225,9 @@ namespace YuLinTu.Library.Controls
             get { return personComment; }
             set { personComment = value; }
         }
+
+        public bool InstallerAllNumber { get; set; }
+
         #endregion
 
         #region Methods
@@ -332,6 +335,7 @@ namespace YuLinTu.Library.Controls
                 InitEndTime = (bool)cbEndTime.IsChecked;
                 InitPersonComment = (bool)cbPersonComment.IsChecked;
                 InitSharePersonComment = (bool)cbSharePersonComment.IsChecked;
+                InstallerAllNumber = (bool)cbNumberAll.IsChecked;
             }));
 
             if (!InitialContractWay && !InitConcordNumber && !InitWarrentNumber && !initiallNumber && !initiallNation && !initiallZip && !InitiallVpAddress && !InitiallSurveyPerson
@@ -469,6 +473,8 @@ namespace YuLinTu.Library.Controls
         private void cbCheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox ck = sender as CheckBox;
+            if (ck == null)
+                return;
             if ((bool)ck.IsChecked)
                 chkNum++;
             else

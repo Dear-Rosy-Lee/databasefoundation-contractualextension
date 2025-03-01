@@ -63,6 +63,7 @@ namespace YuLinTu.Library.Controls
         private AgricultureLandExpand landExpand = null;
         private bool isCombination;  //地块编码是否按组合方式生成
         private bool isNew;   //地块编码是否按统一重新生成
+        private bool isNewPart;   //地块编码是否按统一重新生成
         //private bool initialLandExpand; //是否初始化地块调查信息
 
         private bool initialMapNumber;     //是否初始化图幅编号
@@ -260,6 +261,15 @@ namespace YuLinTu.Library.Controls
         {
             get { return isNew; }
             set { isNew = value; }
+        }
+
+        /// <summary>
+        /// 地块编码是否按统一重新生成
+        /// </summary>
+        public bool IsNewPart
+        {
+            get { return isNewPart; }
+            set { isNewPart = value; }
         }
 
         /// <summary>
@@ -538,6 +548,7 @@ namespace YuLinTu.Library.Controls
                 handleContractLand = (bool)cbHandleContractLand.IsChecked;
                 isCombination = (bool)rbCombination.IsChecked;
                 isNew = (bool)rbNew.IsChecked;
+                IsNewPart = (bool)rbNewPart.IsChecked;
                 //initialMapNumber = (bool)cbMapNumber.IsChecked;
                 initialQSXZ = (bool)cbQSXZ.IsChecked;
                 initialSurveyPerson = (bool)cbSurveyPerson.IsChecked;
@@ -690,14 +701,12 @@ namespace YuLinTu.Library.Controls
                 if (villageInlitialSet)
                 {
                     rbCombination.IsChecked = false;
-                    rbNew.IsChecked = true;
                     rbCombination.IsEnabled = false;
                     rbNew.IsEnabled = true;
                 }
                 else
                 {
                     rbCombination.IsChecked = false;
-                    rbNew.IsChecked = true;
                 }
                 cbLandNumberByUpdown.IsEnabled = true;
 
@@ -724,9 +733,6 @@ namespace YuLinTu.Library.Controls
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             count++;
-            CheckBox chk = sender as CheckBox;
-            if (chk.Name == "cbLandNumber")
-                rbNew.IsChecked = true;
         }
 
         private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)

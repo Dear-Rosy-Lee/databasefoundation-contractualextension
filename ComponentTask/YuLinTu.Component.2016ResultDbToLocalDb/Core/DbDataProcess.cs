@@ -199,16 +199,17 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             dataDb.FBFJH = GetDatasByKeyCode<FBF>(FBF.FFBFBM, keyCode);
             if (!UseZoneCode)
             {
-                var cbfs = GetDatasByKeyCode<CBF>(CBF.FCBFBM, keyCode);
+                var cbfs = GetDatasByKeyCode<CBFSC>(CBF.FCBFBM, keyCode);
                 dataDb.CBFJH = cbfs.ConvertAll(t =>
                 {
-                    var cbf = t.ConvertTo<CBFSC>();
+                    var cbf = t;//.ConvertTo<CBFSC>();
                     cbf.XZDYBM = cbf.CBFBM.Substring(0, 14);
                     return cbf;
                 });
             }
             else
             {
+                var cbfs2 = GetDatasByKeyCode<CBFSC>(CBF.FCBFBM, keyCode);
                 dataDb.CBFJH = GetDatasByKeyCode<CBFSC>(CBFSC.FXZDYBM, keyCode);
             }
             var dks = GetDatasByKeyCode<CBDKXXSC>(CBDKXX.FDKBM, keyCode);
@@ -450,10 +451,16 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             right.ZoneCode = zoneCode;
             right.CBF = cbf;
             right.JTCY = dc.JTCYJH.FindAll(t => t.CBFBM == cbfbm);
-            right.HT = dc.HTJH.FindAll(t => t.CBFBM == (cbfbm));
+            right.HT = new List<ICBHT>();
             right.FBF = fbf;
             var CBDKJH = dc.DKXXJH.FindAll(t => t.CBFBM == (cbfbm));
             right.DKXX = ChangeDKXX(CBDKJH, spaceLandList);
+
+            var hts = dc.HTJH.FindAll(t => t.CBFBM == (cbfbm));
+            foreach (var ht in hts)
+            {
+                right.HT.Add(ht as ICBHT);
+            }
             if (right.DKXX == null || right.DKXX.Count == 0)
             {
                 creList.Add(right);

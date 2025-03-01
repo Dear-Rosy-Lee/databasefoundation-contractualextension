@@ -109,12 +109,22 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// 获得承包方实体
         /// </summary>
         /// <returns></returns>
-        private static VirtualPerson InitalizeContractorData(CBF entityCBF, List<CBF_JTCY> entityJTCY, String zoneCode)
+        private static VirtualPerson InitalizeContractorData(ICBF ICBFEntity, List<CBF_JTCY> entityJTCY, String zoneCode)
         {
-            if (entityCBF == null)
+            if (ICBFEntity == null)
             {
                 return null;
             }
+            CBFSC entityCBF = null;
+            if (ICBFEntity is CBF)
+            {
+                entityCBF = (ICBFEntity as CBF).ConvertTo<CBFSC>();
+            }
+            else if (ICBFEntity is CBFSC)
+            {
+                entityCBF = ICBFEntity as CBFSC;
+            }
+
             VirtualPerson VirtualPersonCBF = new LandVirtualPerson();
             VirtualPersonCBF.ZoneCode = zoneCode;
             VirtualPersonCBF.FamilyNumber = SubVirtualPersonFamilyNum(entityCBF.CBFBM);
@@ -124,7 +134,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             VirtualPersonCBF.Address = entityCBF.CBFDZ;
             VirtualPersonCBF.PostalNumber = entityCBF.YZBM;
             VirtualPersonCBF.Telephone = entityCBF.LXDH;
-
+            VirtualPersonCBF.OldVirtualCode = entityCBF.QQCBFBM;
             VirtualPersonCBF.SharePersonList = InitalizeSharePersonData(entityJTCY, VirtualPersonCBF);
 
             VirtualPersonExpand vpFamilyExpand = new VirtualPersonExpand();
@@ -303,7 +313,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 landguidHTBMList.Add(cbd.ID, edkxxitem.CBHTBM);
                 if (edkxxitem.KJDK != null)
                 {
-                    landguidkjzbList.Add(cbd.ID, edkxxitem.KJDK.KJZB);
+                    landguidkjzbList.Add(cbd.ID, (edkxxitem.KJDK as DKEX).KJZB);
                 }
                 dkxxs.Add(cbd);
             }
@@ -314,11 +324,21 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// 初始化空间地块
         /// </summary>
         /// <returns></returns>
-        public static ContractLand InitalizeSpaceLandData(DKEX dk)
+        public static ContractLand InitalizeSpaceLandData(IDK IDk)
         {
-            if (dk == null)
+            if (IDk == null)
             {
                 return null;
+            }
+
+            DKEXP dk = null;
+            if (IDk is DKEXP)
+            {
+                dk = (DKEXP)IDk;
+            }
+            else
+            {
+                dk = (IDk as DKEX).ConvertTo<DKEXP>();
             }
             ContractLand getcbd = new ContractLand();
 
@@ -349,7 +369,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             getcbd.NeighborWest = dk.DKXZ;
             getcbd.NeighborNorth = dk.DKBZ;
             getcbd.Comment = dk.DKBZXX;
-
+            getcbd.OldLandNumber = dk.QQDKBM;
             AgricultureLandExpand landex = new AgricultureLandExpand();
             landex.ReferPerson = dk.ZJRXM;
             getcbd.LandExpand = landex;
@@ -365,7 +385,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// 初始化承包合同实体
         /// </summary>
         /// <returns></returns>
-        private static List<ContractConcord> InitalizeConcordData(List<CBHT> entityHTs, List<CBJYQZDJB> entityDJBs, String zoneCode)
+        private static List<ContractConcord> InitalizeConcordData(List<ICBHT> entityHTs, List<CBJYQZDJB> entityDJBs, String zoneCode)
         {
             if (entityHTs == null || entityHTs.Count == 0 && (entityDJBs == null || entityDJBs.Count == 0))
             {

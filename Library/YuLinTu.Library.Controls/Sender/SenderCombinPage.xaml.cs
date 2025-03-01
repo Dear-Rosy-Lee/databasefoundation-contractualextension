@@ -159,7 +159,7 @@ namespace YuLinTu.Library.Controls
             {
                 SenderDataBusiness business = CreateBusiness();
                 var vpbs = new VirtualPersonBusiness(db);
-                var cbs = new ConcordBusiness(db);
+                var hts = new ConcordBusiness(db);
                 var landBusiness = new AccountLandBusiness(db);
                 var crBusiness = new ContractRegeditBookBusiness(db);
                 var zBusiness = new ZoneDataBusiness(db);
@@ -176,7 +176,7 @@ namespace YuLinTu.Library.Controls
                         worker.ReportProgress(index, t.Name);
                         var zonecode = t.ZoneCode;
                         vpbs.UpdataSenderCode(zonecode, tempTissue);
-                        cbs.UpdataSenderCode(zonecode, tempTissue);
+                        hts.UpdataSenderCode(zonecode, tempTissue);
                         landBusiness.UpdateLands(zonecode, tempTissue);
                         crBusiness.UpdateList(zonecode, tempTissue);
                         index++;
@@ -267,7 +267,6 @@ namespace YuLinTu.Library.Controls
                 ShowBox(SenderInfo.SenderAdd, SenderInfo.SenderNameRepeat, eMessageGrade.Error);
                 return;
             }
-            tempTissue.Code = pageContent.mtbCode.Text;
             isdel = cb_recode.IsChecked == null ? false : cb_recode.IsChecked.Value;
             MenueEnable(false);
             if (!worker.IsBusy)
@@ -312,6 +311,8 @@ namespace YuLinTu.Library.Controls
             }
             if (!string.IsNullOrEmpty(pageContent.selectZoneCode) && tempTissue.ZoneCode != pageContent.selectZoneCode)
                 tempTissue.ZoneCode = pageContent.selectZoneCode;
+
+            tempTissue.Code = pageContent.mtbCode.Text;
         }
 
         /// <summary>

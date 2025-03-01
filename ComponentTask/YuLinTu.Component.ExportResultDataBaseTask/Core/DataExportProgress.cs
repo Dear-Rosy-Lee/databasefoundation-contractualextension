@@ -469,7 +469,14 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 if (entity.CBF != null)
                 {
-                    data.CBFJH.Add(entity.CBF.Initialize());
+                    //if (entity.CBF is CBF)
+                    {
+                        data.CBFJH.Add((entity.CBF as CBF).Initialize());
+                    }
+                    //else if (entity.CBF is cb)
+                    //{
+                    //    data.CBFJH.Add((entity.CBF as CBF).Initialize());
+                    //}
                 }
                 if (entity.FBF != null)
                 {
@@ -492,7 +499,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     {
                         if (h.CBQXZ == null)
                             h.CBQXZ = now;
-                        data.HTJH.Add(h.Initialize());
+                        data.HTJH.Add((h as CBHT).Initialize());
                     });
                 }
                 if (entity.DJB != null)

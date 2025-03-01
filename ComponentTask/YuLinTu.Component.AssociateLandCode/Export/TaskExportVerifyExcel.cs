@@ -20,7 +20,7 @@ namespace YuLinTu.Library.Business
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
-        private List<string> jtmcs = new List<string>();
+        private List<string> jtmcs;
         #endregion Field
 
         #region Ctor
@@ -30,8 +30,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskExportVerifyExcel()
         {
-            jtmcs.Clear();
-            jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" });
+            jtmcs = new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" };
         }
 
         #endregion Ctor

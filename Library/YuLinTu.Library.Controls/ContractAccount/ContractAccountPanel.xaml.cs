@@ -5870,7 +5870,7 @@ namespace YuLinTu.Library.Controls
             //    return;
             //}
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
-            ContractLandInitializePage initialPage = new ContractLandInitializePage(isBatch);
+            var initialPage = new ContractLandInitializePage(isBatch);
             initialPage.Workpage = TheWorkPage;
             initialPage.LandBusiness = ContractAccountBusiness;
             initialPage.CurrentZone = CurrentZone;
@@ -7052,8 +7052,9 @@ namespace YuLinTu.Library.Controls
             argument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
             argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
+            argument.IsNewPart = initialLand.IsNewPart;
 
-            TaskInitialLandInfoOperation operation = new TaskInitialLandInfoOperation();
+            var operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
             argument.InitLandComment = initialLand.InitLandComment;
             argument.LandComment = initialLand.LandComment;

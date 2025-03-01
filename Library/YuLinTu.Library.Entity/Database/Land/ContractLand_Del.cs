@@ -208,5 +208,35 @@ namespace YuLinTu.Library.Entity
         }
 
         #endregion Properties
+
+        /// <summary>
+        /// 转换对象
+        /// </summary> 
+        public static ContractLand_Del ChangeDataEntity(string zoneCode, ContractLand ld)
+        {
+            var data = new ContractLand_Del()
+            {
+                BZXX = ld.Comment,
+                DKBM = ld.LandNumber,
+                DKBZ = ld.NeighborNorth,
+                DKXZ = ld.NeighborWest,
+                DKNZ = ld.NeighborSouth,
+                DKDZ = ld.NeighborEast,
+                DKMC = ld.Name,
+                DYBM = zoneCode,
+                ID = ld.ID,
+                QQDKBM = ld.OldLandNumber,
+                QQMJ = ld.AwareArea,
+                SCMJ = ld.ActualArea,
+                CBFID = ld.OwnerId,
+                TDYT = ld.Purpose,
+                TDLYLX = ld.LandCode,
+                SYQXZ = ld.OwnRightType,
+                DLDJ = ld.LandLevel,
+                DKLB = ld.LandCategory,
+                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
+            };
+            return data;
+        }
     }
 }

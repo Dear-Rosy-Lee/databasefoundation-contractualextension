@@ -228,7 +228,6 @@ namespace YuLinTu.Library.Controls
             InitializeComponent();
             DataContext = this;
             InlitiallCombox();
-
             cNation = eNation.Han;
             eMode = eConstructMode.Family;
             cMode = ((int)eConstructMode.Family).ToString();
@@ -369,7 +368,11 @@ namespace YuLinTu.Library.Controls
                 var contractWay = constructModeList.Find(t => t.Key == ((int)FamilyExpand.ConstructMode).ToString());
                 if (contractWay != null)
                     cbContractWay.SelectedItem = contractWay;
-               
+
+                if (vp.Name.Contains("集体") && vp.FamilyExpand.ContractorType != eContractorType.Unit)
+                {
+                    cbType.IsEnabled = true;
+                }
 
                 txtNum.Text = familyNumber;
                 string splitContent = (familyNumber.PadLeft(4, '0').Replace(familyNumber, ""));
@@ -418,7 +421,7 @@ namespace YuLinTu.Library.Controls
             cbContractWay.DisplayMemberPath = "Value";
             cbContractWay.ItemsSource = constructModeList;
             cbContractWay.SelectedIndex = 0;
-            
+
             cbBHQK.DisplayMemberPath = "DisplayName";
             bhqkList = EnumStore<eBHQK>.GetListByType();
             cbBHQK.ItemsSource = bhqkList;
@@ -804,7 +807,7 @@ namespace YuLinTu.Library.Controls
             DateTime now = DateTime.Now;
             int age = now.Year - ds.Value.Year;
             if (now.Month < ds.Value.Month || (now.Month == ds.Value.Month && now.Day < ds.Value.Day)) age--;
-            txt_Age.Text = age.ToString();           
+            txt_Age.Text = age.ToString();
         }
 
         private void cbBHQK_SelectionChanged(object sender, SelectionChangedEventArgs e)
