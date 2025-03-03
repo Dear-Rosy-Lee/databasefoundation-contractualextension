@@ -12,9 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Scripting.Actions;
 using Microsoft.Scripting.Utils;
-using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
@@ -3976,12 +3974,12 @@ namespace YuLinTu.Library.Business
                 if (argument.IsNewPart)
                 {
                     var templist = landsOfStatus.Where(t => t.LandNumber.StartsWith(t.ZoneCode)).ToList();
-                    var mxnum = templist.Max(m => int.Parse(m.LandNumber.Substring(14)));
+                    var mxnum = templist.Count == 0 ? 1 : templist.Max(m => int.Parse(m.LandNumber.Substring(14)));
                     if (mxnum == 0)
                     {
                         mxnum = landsOfStatus.Count;
                     }
-                    landIndex = mxnum + 1;
+                    landIndex = (templist.Count == 0 ? 0 : mxnum) + 1;
                     landsOfStatus = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
                 }
                 ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
@@ -3991,7 +3989,15 @@ namespace YuLinTu.Library.Business
                 var re = landStation.UpdateRange(landsOfStatus);
                 if (re <= 0)
                 {
-                    this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
+                    if (argument.IsNewPart)
+                    {
+                        this.ReportProgress(100);
+                        this.ReportInfomation(string.Format("无地块进行了初始化，请是否存在地块编码前14位与地域不匹配的数据"));
+                    }
+                    else
+                    {
+                        this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
+                    }
                 }
                 else
                 {
@@ -4113,7 +4119,7 @@ namespace YuLinTu.Library.Business
           List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
         {
             int index = 1;   //地块索引 
-            int successCount = 0;
+            //int successCount = 0;
             double landPercent = 0.0;  //百分比
 
             this.ReportProgress(1, null);
@@ -4205,6 +4211,8 @@ namespace YuLinTu.Library.Business
                     if (metadata.InitialLandNumber)
                     {
                         if (string.IsNullOrEmpty(land.OldLandNumber))//metadata.InitialLandOldNumber)
+                            land.OldLandNumber = land.LandNumber;
+                        else if (metadata.InitialLandOldNumber)
                             land.OldLandNumber = land.LandNumber;
                         land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)

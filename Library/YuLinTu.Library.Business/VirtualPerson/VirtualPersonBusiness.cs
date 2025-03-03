@@ -1581,7 +1581,7 @@ namespace YuLinTu.Library.Business
                 if (!argument.InitAllNum)
                 {
                     var templist = farmPersons.Where(t => string.IsNullOrEmpty(t.OldVirtualCode) || (!string.IsNullOrEmpty(t.OldVirtualCode) && t.OldVirtualCode.StartsWith(t.ZoneCode))).ToList();
-                    var mxnum = templist.Max(m => int.Parse(m.FamilyNumber));
+                    var mxnum = templist.Count == 0 ? 1 : templist.Max(m => int.Parse(m.FamilyNumber));
                     if (mxnum == 0)
                     {
                         mxnum = farmPersons.Count;
@@ -1590,7 +1590,7 @@ namespace YuLinTu.Library.Business
                     {
                         throw new Exception("承包方数据存在农户编码超过9000,请尝试修复 集体 的承包方类型后再编码");
                     }
-                    familyindex = mxnum + 1;
+                    familyindex = (templist.Count == 0 ? 0 : mxnum) + 1;
                     farmPersons = farmPersons.FindAll(t => !string.IsNullOrEmpty(t.OldVirtualCode) && !t.OldVirtualCode.StartsWith(t.ZoneCode));
                 }
                 dbContext.BeginTransaction();

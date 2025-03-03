@@ -1,7 +1,8 @@
 ﻿using System;
-using System.IO; 
+using System.IO;
 using System.Windows.Forms;
 using Utils.Tool;
+using YuLinTu.Library.Business;
 using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
@@ -10,7 +11,7 @@ namespace YuLinTu.Product.YuLinTuTool
     {
         [STAThread]
         static void Main(string[] args)
-        { 
+        {
             // 设置环境变量
             string variableName = "Path";
             // 获取环境变量
@@ -48,6 +49,10 @@ namespace YuLinTu.Product.YuLinTuTool
                     $"\n----- {ex.Message}-----", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            //UpdateProgram.InstallUpdateProgram();
+            //UpdateProgram.CheckUpdate();
+
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);
             shell.Shutdown += (s, e) =>

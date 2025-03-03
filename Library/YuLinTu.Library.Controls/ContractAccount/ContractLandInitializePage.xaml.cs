@@ -489,10 +489,11 @@ namespace YuLinTu.Library.Controls
                 var message = new TabMessageBoxDialog
                 {
                     Header = "提示",
-                    Message = "当前地域下地块中已有 确权地块编码 数据，若确权地块编码存在错误才需要覆盖，是否覆盖？",
+                    Message = "地块数据中已有 确权地块编码，若确权地块编码存在错误才执行覆盖，是否覆盖？",
                     MessageGrade = eMessageGrade.Warn,
                     ConfirmButtonText = "覆盖",
-                    CancelButtonText = "取消",
+                    CancelButtonText = "不覆盖",
+                    CloseButtonVisibility = Visibility.Collapsed
                 };
                 Workpage.Page.ShowDialog(message, (b, c) =>
                 {
