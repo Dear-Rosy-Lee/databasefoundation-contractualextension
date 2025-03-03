@@ -302,6 +302,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         t.OldLandNumber = slan.LandNumber;
                         rlandset.Add(slan.ID);
+                        listLands.Add(t);
                         continue;
                     }
                     var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();

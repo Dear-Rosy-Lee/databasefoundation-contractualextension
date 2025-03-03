@@ -70,7 +70,7 @@ namespace YuLinTu.Library.Business
                 upList.Add(fbf);
                 upList.Add(QGQZ);
                 upList.Add(QGHT);
-                ToolSerialization.SerializeXml(fileName, upList);
+                //ToolSerialization.SerializeXml(fileName, upList);
                 return true;
             }
             catch
