@@ -393,63 +393,23 @@ namespace YuLinTu.Component.AssociateLandCode
                     listVps.Add(vp);
                     continue;
                 }
-                foreach (var x in oldVps)
-                {
-                    if (receslist.Contains(x.ID))
-                        continue;
-
-                    bool result = false;
-
-                    if (x.Number == vp.Number)
-                    {
-                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                        if (vp.PersonCount == x.PersonCount)
-                        {
-                            vp.ChangeSituation = eBHQK.RDXXJBB;
-                        }
-                        else
-                        {
-                            vp.ChangeSituation = eBHQK.CYXXBH;
-                        }
-                        result = true;
-                    }
-                    else if (vp.Name == "集体" && x.Name == vp.Name)
-                    {
-                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                        result = true;
-                    }
-                    else
-                    {
-                        foreach (var sharePerson in x.SharePersonList)
-                        {
-                            if (sharePerson.ICN == vp.Number)
-                            {
-                                vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                                vp.ChangeSituation = eBHQK.CYXXBH;
-                                result = true;
-                            }
-                        }
-                    }
-                    if (!result && argument.SearchInvpcode)
-                    {
-                        if (vp.FamilyNumber == x.Number && vp.Name == x.Name)
-                        {
-                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                            result = true;
-                        }
-                    }
-                    if (result)
-                    {
-                        listVps.Add(vp);
-                        receslist.Add(x.ID);
-                        break;
-                    }
-                }
+                FindRelationPerson(vp, oldVps, receslist, listVps);
+                //if (string.IsNullOrEmpty(vp.OldVirtualCode))
+                //{
+                //    WriteLog(resfile, $"发包方：{sender.Name}{sender.Code} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,以当作新增处理！");
+                //}
+            }
+            foreach (var vp in vps)
+            {
+                if (!string.IsNullOrEmpty(vp.OldVirtualCode))
+                    continue;
+                FindRelationPerson(vp, oldVps, receslist, listVps, true);
                 if (string.IsNullOrEmpty(vp.OldVirtualCode))
                 {
                     WriteLog(resfile, $"发包方：{sender.Name}{sender.Code} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,以当作新增处理！");
                 }
             }
+
             var delvptemp = oldVps.Where(t => !receslist.Contains(t.ID)).ToList().ConvertAll(c => c.ConvertTo<VirtualPerson_Del>());
             foreach (var dvp in delvptemp)
             {
@@ -458,6 +418,99 @@ namespace YuLinTu.Component.AssociateLandCode
                 deloldvps.Add(dvp);
             }
             return listVps;
+        }
+
+        /// <summary>
+        /// 查找关联的承包方
+        /// </summary>
+        /// <param name="vp">当前承包方</param>
+        /// <param name="oldVps">原承包方集合</param>
+        /// <param name="receslist">已关联的承包方id</param>
+        /// <param name="listVps">更新数据集合</param>
+        private void FindRelationPerson(VirtualPerson vp, List<VirtualPerson> oldVps, HashSet<Guid> receslist, List<VirtualPerson> listVps, bool relationShareperson = false)
+        {
+            bool isrelation = false;
+
+            foreach (var x in oldVps)
+            {
+                if (receslist.Contains(x.ID))
+                    continue;
+
+                bool result = false;
+
+                if (x.Number == vp.Number)//身份证号一致
+                {
+                    vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                    if (vp.PersonCount == x.PersonCount)
+                    {
+                        vp.ChangeSituation = eBHQK.RDXXJBB;
+                    }
+                    else
+                    {
+                        vp.ChangeSituation = eBHQK.CYXXBH;
+                    }
+                    result = true;
+                }
+                else if (vp.Name == "集体" && x.Name == vp.Name)
+                {
+                    vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                    result = true;
+                }
+                else
+                {
+                    foreach (var sharePerson in x.SharePersonList)
+                    {
+                        if (sharePerson.ICN == vp.Number)
+                        {
+                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                            vp.ChangeSituation = eBHQK.CYXXBH;
+                            result = true;
+                        }
+                    }
+                }
+
+                if (!result && argument.SearchInvpcode)
+                {
+                    if (vp.FamilyNumber == x.Number && vp.Name == x.Name)
+                    {
+                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                        result = true;
+                    }
+                }
+
+
+                if (result)
+                {
+                    isrelation = true;
+                    listVps.Add(vp);
+                    receslist.Add(x.ID);
+                    break;
+                }
+            }
+            if (!isrelation && relationShareperson)
+            {
+                //WriteLog(resfile, $"承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,开始以成员查找关联！");
+                bool personrelation = false;
+                foreach (var person in vp.SharePersonList)
+                {
+                    foreach (var x in oldVps)
+                    {
+                        if (receslist.Contains(x.ID))
+                            continue;
+                        if (x.Number == person.ICN)//身份证号一致
+                        {
+                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                            vp.ChangeSituation = eBHQK.CYXXBH;
+                            listVps.Add(vp);
+                            receslist.Add(x.ID);
+                            personrelation = true;
+                            break;
+                        }
+                    }
+                    if (personrelation)
+                        break;
+                }
+            }
         }
 
         private bool ValidateArgs()
