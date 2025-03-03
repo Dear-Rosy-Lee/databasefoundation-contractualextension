@@ -6290,6 +6290,7 @@ namespace YuLinTu.Component.MapFoundation
             land.NeighborWest = keyValues.FirstOrDefault(x => x.Key.Equals("DKXZ")).Value;
             land.NeighborSouth = keyValues.FirstOrDefault(x => x.Key.Equals("DKNZ")).Value;
             land.NeighborNorth = keyValues.FirstOrDefault(x => x.Key.Equals("DKBZ")).Value;
+            land.OldLandNumber = keyValues.FirstOrDefault(x => x.Key.Equals("QQDKBM"))?.Value;
             return land;
         }
 
