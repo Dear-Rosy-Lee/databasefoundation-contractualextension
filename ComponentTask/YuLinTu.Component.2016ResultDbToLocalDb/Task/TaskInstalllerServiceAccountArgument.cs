@@ -106,9 +106,10 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             //ClrVersion = eIISCLRVersion.v40;
             //Enable32 = true;
             GenerateCoilDot = false;
-            CreatUnit = false;
-            CreatDataBase = false;
-            _DelOldData = true;
+            CreatUnit = true;
+            CreatDataBase = true;
+            DelOldData = true;
+            IsLegalData = false;
         }
 
         #endregion
