@@ -1,11 +1,8 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
-using System;
+﻿using System;
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
-using YuLinTu;
+using ICSharpCode.SharpZipLib.Zip;
 using YuLinTu.Library.Log;
-using NetTopologySuite.Triangulate;
-using System.Diagnostics;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask

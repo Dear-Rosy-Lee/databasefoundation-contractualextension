@@ -1,12 +1,9 @@
-﻿using NetTopologySuite.Algorithm;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Markup;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {

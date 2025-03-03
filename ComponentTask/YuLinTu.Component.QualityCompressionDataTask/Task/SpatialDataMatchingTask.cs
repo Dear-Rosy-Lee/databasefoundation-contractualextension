@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using DotSpatial.Projections;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
@@ -14,17 +12,9 @@ using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Asn1.Cms;
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
-using YuLinTu.Appwork;
-using YuLinTu.Data.Shapefile;
 using YuLinTu.Data;
-using YuLinTu.Library.Log;
+using YuLinTu.Data.Shapefile;
 using YuLinTu.Spatial;
-using YuLinTu.tGISCNet;
-using YuLinTu.Windows;
-using System.Linq;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -81,7 +71,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             this.ReportProgress(1, "开始检查...");
             this.ReportInfomation("开始检查...");
             System.Threading.Thread.Sleep(200);
-
+            var TreatmentKey = ConfigurationManager.AppSettings.TryGetValue<string>("TreatmentKey", "57f90f07-66a9-46bd-96f2-61143e01365a");
+            var TreatmentUrl = ConfigurationManager.AppSettings.TryGetValue<string>("TreatmentUrl", "http://www.scgis.net:8282/DrillingPlatformAPI/API/CrsTrans/Trans2CK_Multi");
             //TODO 加密方式
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
             //    Parameters.stringZipPassword,
@@ -93,7 +84,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             {
                 try
                 {
-                    string zonecode = ProcessDataOnline();
+                    string zonecode = ProcessDataOnline(TreatmentUrl, TreatmentKey);
                     if (argument.AutoComprass)
                         CompressFolder($"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}", zipFilePath, zonecode);
                     this.ReportProgress(100);
@@ -300,7 +291,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// 在线处理数据
         /// </summary>
         /// <returns></returns>
-        public string ProcessDataOnline(string key = "57f90f07-66a9-46bd-96f2-61143e01365a")
+        public string ProcessDataOnline(string url, string key)
         {
             int srid = 0;
             string prjstr = "";
@@ -312,7 +303,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 int.TryParse(GetMarkValue(prjstr, "EPSG", 6), out srid);
             }
             var landShapeList = DataCheckProgress.InitiallShapeLandList(argument.CheckFilePath, srid, "");
-            if (landShapeList.IsNullOrEmpty())
+            if (landShapeList == null)
             {
                 return "";
             }
@@ -320,7 +311,9 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             string prj4490 = "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]";
             ProjectionInfo sreproject = ProjectionInfo.FromEsriString(prj4490);
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
-
+            this.ReportProgress(5, "开始处理数据");
+            var p = 90.0 / landShapeList.Count();
+            int pindex = 1;
             List<IFeature> list = new List<IFeature>();
             foreach (var item in landShapeList)
             {
@@ -330,6 +323,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 {
                     zonecode = item.DKBM.Substring(0, 12);
                 }
+
                 land.DKMC = item.DKMC;
                 land.QQDKBM = item.QQDKBM;
                 land.CBFBM = item.CBFBM;
@@ -340,7 +334,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 foreach (var gs in geostr)
                 {
                     var djen = new DataJsonEntity(gs, key);
-                    coordinateslist.Add(DataProcessOnLine(djen));
+                    coordinateslist.Add(DataProcessOnLine(url, djen));
                 }
 
                 var linearRing = new LinearRing(coordinateslist[0].ToArray());
@@ -361,6 +355,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var attributes = CreateAttributesSimple(land);
                 Feature feature = new Feature(land.Shape.Instance, attributes);
                 list.Add(feature);
+                this.ReportProgress(5 + (int)(p * pindex), $"({pindex}/{landShapeList.Count})数据处理中..");
+                pindex++;
             }
 
             //输出Shape文件
@@ -432,12 +428,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private List<GeoAPI.Geometries.Coordinate> DataProcessOnLine(object data)
+        private List<GeoAPI.Geometries.Coordinate> DataProcessOnLine(string url, object data)
         {
             ApiCaller apiCaller = new ApiCaller();
             apiCaller.client = new HttpClient();
-            string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
-            baseUrl = "http://www.scgis.net:8282/DrillingPlatformAPI/API/CrsTrans/Trans2CK_Multi";
+            //baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
+            //string baseUrl = "http://www.scgis.net:8282/DrillingPlatformAPI/API/CrsTrans/Trans2CK_Multi";
             //string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
             // 发送 GET 请求
             //res = await apiCaller.GetDataAsync(postUrl);
@@ -445,7 +441,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             string jsonData = JsonConvert.SerializeObject(data);
             try
             {
-                var getresult = apiCaller.PostDataAsync(baseUrl, jsonData);
+                var getresult = apiCaller.PostDataAsync(url, jsonData);
                 return ConstructCoordsFromString(getresult);
             }
             catch (Exception ex)

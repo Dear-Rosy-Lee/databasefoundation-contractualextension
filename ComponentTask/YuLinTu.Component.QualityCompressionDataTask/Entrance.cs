@@ -1,19 +1,10 @@
-﻿using YuLinTu.Windows;
-using System;
-using Org.BouncyCastle.Asn1.X9;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.Math;
-using Org.BouncyCastle.Math.EC;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.Crypto.Signers;
-using Org.BouncyCastle.Crypto.Digests;
+﻿using System;
 using System.IO;
-using Org.BouncyCastle.OpenSsl;
-using System.Security.Cryptography.X509Certificates;
 using System.Linq;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
 {

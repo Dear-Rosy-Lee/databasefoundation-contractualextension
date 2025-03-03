@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text.RegularExpressions;
+using System.Text;
 using DotSpatial.Projections;
+using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
 using YuLinTu.Appwork;
 using YuLinTu.Data;
+using YuLinTu.Library.Log;
 using YuLinTu.Spatial;
 using YuLinTu.tGISCNet;
 using YuLinTu.Windows;
@@ -59,18 +60,23 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
                     return ErrorInfo;
                 }
-                var token = Parameters.Token.ToString();
-                if (Parameters.Token.Equals(Guid.Empty))
-                {
-                    ErrorInfo = "请先登录后,再进行检查";
-                    return ErrorInfo;
-                }
+
                 List<LandEntity> ls = new List<LandEntity>();
                 var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid, "");
-                if (landShapeList.IsNullOrEmpty())
+                if (landShapeList == null)
                 {
                     return ErrorInfo;
                 }
+                if (landShapeList.Count == 0)
+                {
+                    return "矢量文件中不存在数据";
+                }
+                ErrorInfo = CheckTopology(landShapeList);
+                if (!string.IsNullOrEmpty(ErrorInfo))
+                {
+                    return ErrorInfo;
+                }
+                var landcode = "";
                 foreach (var item in landShapeList)
                 {
                     var land = new LandEntity();
@@ -78,8 +84,23 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     var landShape = item.Shape as YuLinTu.Spatial.Geometry;
                     land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
                     land.qqdkbm = item.QQDKBM;
+                    var zcode = item.DKBM.Substring(0, 6);
+                    landcode += zcode == landcode ? "" : zcode;
+
                     ls.Add(land);
                 }
+                if (landcode == "512022" || landcode == "513922")
+                {
+                    return "";
+                }
+
+                var token = Parameters.Token.ToString();
+                if (Parameters.Token.Equals(Guid.Empty))
+                {
+                    ErrorInfo = "请先登录后,再进行检查";
+                    return ErrorInfo;
+                }
+
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
                 string zonecode = Parameters.Region.ToString();
@@ -89,6 +110,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 //res = await apiCaller.GetDataAsync(postUrl);
                 // 发送 POST 请求
                 string jsonData = JsonConvert.SerializeObject(ls);
+                Log.WriteError(this, "", $"url {postGetTaskIdUrl} token {token} json {jsonData}");
                 var getTaskID = apiCaller.PostGetTaskIDAsync(token, postGetTaskIdUrl, jsonData);
                 string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
                 var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
@@ -138,11 +160,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         public bool CheckFile(string filepath, string filename)
         {
             // 校验文件名称
-            if (!Regex.IsMatch(filename, @"^DK\d{10}$"))
-            {
-                ErrorInfo = "文件名名称不正确，应以DK(6位县级区划代码)(4 位年份代码)为名称";
-                return false;
-            }
+            //if (!Regex.IsMatch(filename, @"^DK\d{10}$"))
+            //{
+            //    ErrorInfo = "文件名名称不正确，应以DK(6位县级区划代码)(4 位年份代码)为名称";
+            //    return false;
+            //}
             // 校验文件是否存在
             string[] requiredExtensions = { ".dbf", ".prj", ".shp", ".shx" };
 
@@ -181,9 +203,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             }
         }
 
-        static private bool CheckField(ShapeFile shp, string ErrorInfo)
+        static private string CheckField(ShapeFile shp)
         {
-            var infoArray = typeof(DKEX).GetProperties();
+            string err = "";
+            var infoArray = typeof(QCDK).GetProperties();
             for (int i = 0; i < infoArray.Length; i++)
             {
 
@@ -194,21 +217,21 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     case "CBFBM":
                         if (index == -1)
                         {
-                            ErrorInfo = "shp文件未包含CBFBM字段；";
+                            err = "shp文件未包含CBFBM字段；";
 
                         }
                         break;
                     case "DKBM":
                         if (index == -1)
                         {
-                            ErrorInfo += "shp文件未包含DKBM字段；";
+                            err += "shp文件未包含DKBM字段；";
 
                         }
                         break;
                     case "QQDKBM":
                         if (index == -1)
                         {
-                            ErrorInfo += "shp文件未包含QQDKBM字段；";
+                            err += "shp文件未包含QQDKBM字段；";
 
                         }
                         break;
@@ -221,16 +244,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         break;
                 }
             }
-            if (!ErrorInfo.IsNullOrEmpty())
-            {
-                return false;
-            }
-            return true;
+            return err;
         }
 
-        static public List<DKEX> InitiallShapeLandList(string filePath, int srid, string zoneCode = "")
+        static public List<QCDK> InitiallShapeLandList(string filePath, int srid, string zoneCode = "")
         {
-            var dkList = new List<DKEX>();
+            var dkList = new List<QCDK>();
 
             if (filePath == null || string.IsNullOrEmpty(filePath))
             {
@@ -242,15 +261,16 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var err = shp.Open(filePath);
                 if (!string.IsNullOrEmpty(err))
                 {
-                    LogWrite.WriteErrorLog("读取地块Shape文件发生错误" + err);
+                    Log.WriteError(null, "", "读取地块Shape文件发生错误" + err);
                     return null;
                 }
                 var codeIndex = new Dictionary<string, int>();
 
-                if (!CheckField(shp, ErrorInfo))
-                    return null;
+                ErrorInfo = CheckField(shp);
+                if (!string.IsNullOrEmpty(ErrorInfo))
+                    throw new Exception(ErrorInfo);
 
-                foreach (var dk in ForEnumRecord<DKEX>(shp, filePath, codeIndex, srid, DK.CDKBM, zoneCode))
+                foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
                 {
                     dkList.Add(dk);
                 }
@@ -357,8 +377,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 int.TryParse(dataReader.GetFieldString(row, colum), out bsm);
                 value = bsm;
             }
-            else if (info.Name.EndsWith("MJ") || info.Name.EndsWith("MJM") || info.Name == "CD" || info.Name == ZJ.CKD || info.Name == JZD.CXZBZ || info.Name == JZD.CYZBZ ||
-                 info.Name == KZD.CX80 || info.Name == KZD.CY80 || info.Name == KZD.CY2000 || info.Name == KZD.CX2000)
+            else if (info.Name.EndsWith("MJ") || info.Name.EndsWith("MJM") || info.Name == "CD")
             {
                 double scmj = 0;
                 var mjstr = dataReader.GetFieldString(row, colum);
@@ -439,5 +458,149 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 geometry.SpatialReference = new SpatialReference(srid);
             return geometry;
         }
+
+        /// <summary>
+        /// 拓扑检查
+        /// </summary>
+        /// <returns></returns>
+        public string CheckTopology(List<QCDK> landlist)
+        {
+            if (landlist.Count == 0)
+                return "";
+            StringBuilder stringBuilder = new StringBuilder();
+            var distanc = 0.05 * 0.05;
+            var replist = new List<CheckGeo>();
+            foreach (var item in landlist)
+            {
+                if (item.DKBM == null || item.DKBM.Length != 19)
+                {
+                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的数据编码不规范!");
+                    continue;
+                }
+                var dkgeo = item.Shape as YuLinTu.Spatial.Geometry;
+                if (dkgeo == null)
+                    continue;
+                if (!dkgeo.IsValid())
+                {
+                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形无效!");
+                    continue;
+                }
+
+                if (dkgeo.Area() < 1)
+                {
+                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形是碎面!");
+                    continue;
+                }
+
+                if (dkgeo.ToSingleGeometries().Count() > 1)
+                {
+                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形包含多个图元!");
+                    continue;
+                }
+                var allcoords = dkgeo.ToCoordinates().ToList();
+                allcoords = allcoords.OrderBy(o => o.X).ToList();
+                for (int i = 0; i < allcoords.Count - 1; i++)
+                {
+                    if (allcoords[i].X == allcoords[i + 1].X &&
+                        allcoords[i].Y == allcoords[i + 1].Y)
+                        continue;
+                    if (allcoords[i].X - allcoords[i + 1].X > 0.05)
+                        continue;
+                    var xd = allcoords[i].X - allcoords[i + 1].X;
+                    var yd = allcoords[i].Y - allcoords[i + 1].Y;
+                    if (xd * xd + yd * yd < distanc)
+                    {
+                        stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形节点({allcoords[i].X},{allcoords[i].Y}),({allcoords[i + 1].X},{allcoords[i + 1].Y})距离小于0.05米!");
+                    }
+                }
+                //var geos = dkgeo.ToSingleGeometries();
+                List<IGeometry> geocs = new List<IGeometry>();
+                var bd = dkgeo.Instance.Boundary;
+                if (bd.GeometryType == "LinearRing")
+                {
+                    geocs.Add(dkgeo.Instance);
+                }
+                else if (bd.GeometryType == "GeometryCollection")
+                {
+                    foreach (var g in ((NetTopologySuite.Geometries.GeometryCollection)bd).Geometries)
+                    {
+                        geocs.Add(dkgeo.Instance);
+                    }
+                }
+                //var geocs = ((NetTopologySuite.Geometries.GeometryCollection)dkgeo.Instance.Boundary).Geometries;
+
+                foreach (var gitem in geocs)
+                {
+                    var coordArr = gitem.Coordinates.ToList();
+                    for (int i = 0; i < coordArr.Count - 2; i++)
+                    {
+                        var angle = CalcAngle(coordArr[i], coordArr[i + 1], coordArr[i + 2]);
+                        if (angle != 0 && (angle < 5 || angle > 355))
+                        {
+                            stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角,度数为{angle}!");
+                            continue;
+                        }
+                    }
+                    var tangle = CalcAngle(coordArr[coordArr.Count - 2], coordArr[0], coordArr[1]);
+                    if (tangle != 0 && (tangle < 5 || tangle > 355))
+                    {
+                        stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角!,度数为{tangle}");
+                    }
+                }
+                replist.Add(new CheckGeo()
+                {
+                    DKBM = item.DKBM,
+                    Shape = (item.Shape as YuLinTu.Spatial.Geometry).Buffer(-0.001),
+                    MinX = allcoords.Min(t => t.X),
+                    MaxX = allcoords.Max(t => t.X)
+                });
+            }
+
+            replist = replist.OrderBy(l => l.MinX).ToList();
+
+            for (int i = 0; i < replist.Count - 1; i++)
+            {
+                for (int j = i + 1; j < replist.Count - 2; j++)
+                {
+                    if (replist[i].MaxX < replist[j].MinX)
+                    {
+                        break;
+                    }
+                    if (replist[i].Shape.Intersects(replist[j].Shape))
+                    {
+                        stringBuilder.AppendLine($"地块编码为{replist[i].DKBM}的矢量与地块编码为{replist[j].DKBM}的矢量存在重叠！");
+                    }
+                }
+
+            }
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// 计算角度
+        /// </summary> 
+        private double CalcAngle(GeoAPI.Geometries.Coordinate coordinate1, GeoAPI.Geometries.Coordinate coordinate2, GeoAPI.Geometries.Coordinate coordinate3)
+        {
+            double max = coordinate1.X - coordinate2.X;
+            double may = coordinate1.Y - coordinate2.Y;
+            double mbx = coordinate3.X - coordinate2.X;
+            double mby = coordinate3.Y - coordinate2.Y;
+            double v1 = (max * mbx) + (may * mby);
+            double maval = Math.Sqrt(max * max + may * may);
+            double mbval = Math.Sqrt(mbx * mbx + mby * mby);
+            double cosM = v1 / (maval * mbval);
+            double angleAMB = Math.Acos(cosM) * 180 / Math.PI;
+            return angleAMB;
+        }
+
+    }
+
+    public class CheckGeo
+    {
+        public Spatial.Geometry Shape { get; set; }
+        public string DKBM { get; set; }
+
+        public double MinX { get; set; }
+        public double MaxX { get; set; }
     }
 }
