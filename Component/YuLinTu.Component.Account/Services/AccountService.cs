@@ -17,9 +17,11 @@ namespace YuLinTu.Component.Account.Services
 
         protected IAccountApi Api
         {
-            get => RefitService.For<IAccountApi>(TheApp.Current.GetSystemSection().TryGetValue(
-                AppParameters.stringDefaultSecurityService,
-                AppParameters.stringDefaultSecurityServiceValue));
+            get
+            {
+                var url = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSecurityService, AppParameters.stringDefaultSecurityServiceValue);
+                return RefitService.For<IAccountApi>(url);
+            }
         }
 
         protected IAccountApi GetApi(RefitSettings settings)
@@ -176,7 +178,7 @@ namespace YuLinTu.Component.Account.Services
                 var jsonString = result.Data.ToString();
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
                 string region = jsonObject.region;
-                if(!region.IsNullOrEmpty())
+                if (!region.IsNullOrEmpty())
                     Parameters.Region = region;
                 string token = jsonObject.token;
                 Guid session;
