@@ -12,7 +12,7 @@ namespace YuLinTu.Library.Business
     /// </summary>
     [Serializable]
     public class ExportRelationLandVerifyExcel : ExportLandVerifyExcelTable
-    { 
+    {
         #region Ctor
 
         public ExportRelationLandVerifyExcel()
@@ -20,7 +20,7 @@ namespace YuLinTu.Library.Business
             SaveFilePath = string.Empty;
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
-            base.TemplateName = "摸底调查核实表"; 
+            base.TemplateName = "摸底调查核实表";
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace YuLinTu.Library.Business
                 aindex++;
             }
             int height = 0;
-            if ((landFamily.LandCollection.Count > landFamily.Persons.Count) || landFamily.LandDelCollection.Count > landFamily.Persons.Count)
+            if ((landFamily.LandCollection.Count + landFamily.LandDelCollection.Count) > landFamily.Persons.Count)
             {
                 height = landFamily.LandCollection.Count + landFamily.LandDelCollection.Count;
             }
@@ -199,7 +199,7 @@ namespace YuLinTu.Library.Business
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
-         
+
         /// <summary>
         /// 保存完成后
         /// </summary>

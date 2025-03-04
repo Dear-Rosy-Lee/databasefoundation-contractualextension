@@ -7190,11 +7190,11 @@ namespace YuLinTu.Library.Controls
             groupArgument.InitialNull = initialLand.InitializeNull;
             groupArgument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             groupArgument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
-
+            groupArgument.IsNewPart = initialLand.IsNewPart;
             groupArgument.VillageInlitialSet = SystemSetDefine.VillageInlitialSet;
             groupArgument.InitLandComment = initialLand.InitLandComment;
             groupArgument.LandComment = initialLand.LandComment;
-            TaskGroupInitialLandInfoOperation groupOperation = new TaskGroupInitialLandInfoOperation();
+            var groupOperation = new TaskGroupInitialLandInfoOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;
             groupOperation.Description = ContractAccountInfo.InitialLandInfo;   //任务描述

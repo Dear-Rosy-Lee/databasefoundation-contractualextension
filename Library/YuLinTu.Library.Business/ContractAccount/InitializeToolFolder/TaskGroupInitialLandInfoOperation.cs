@@ -117,6 +117,7 @@ namespace YuLinTu.Library.Business
                 argument.CombinationLandNumber = combinationLandNumber;
                 argument.InitLandComment = groupArgument.InitLandComment;
                 argument.LandComment = groupArgument.LandComment;
+                argument.IsNewPart = groupArgument.IsNewPart;
                 TaskInitialLandInfoOperation operation = new TaskInitialLandInfoOperation();
                 operation.Argument = argument;
                 operation.Name = "初始化" + zone.Name + "地块基本信息";

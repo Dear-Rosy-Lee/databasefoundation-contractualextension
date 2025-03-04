@@ -3970,6 +3970,7 @@ namespace YuLinTu.Library.Business
                 //        t.DoInit(wh);
                 //    }
                 //}
+
                 int landIndex = 1;
                 if (argument.IsNewPart)
                 {
@@ -3980,11 +3981,28 @@ namespace YuLinTu.Library.Business
                         mxnum = landsOfStatus.Count;
                     }
                     landIndex = (templist.Count == 0 ? 0 : mxnum) + 1;
-                    landsOfStatus = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
+                    List<ContractLand> landsOfStatusPart = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
+                    ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                    foreach (var item in landsOfStatus)
+                    {
+                        var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
+                        if (gl != null)
+                        {
+                            item.OldLandNumber = gl.OldLandNumber;
+                            item.LandNumber = gl.LandNumber;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty(item.OldLandNumber))
+                                item.OldLandNumber = item.LandNumber;
+                        }
+                    }
                 }
-                ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                else
+                {
+                    ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                }
                 db.CommitTransaction();
-
 
                 var re = landStation.UpdateRange(landsOfStatus);
                 if (re <= 0)
@@ -4115,8 +4133,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 初始化地块信息
         /// </summary>
-        private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus, TaskInitialLandInfoArgument metadata,
-          List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
+        private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus,
+            TaskInitialLandInfoArgument metadata, List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
         {
             int index = 1;   //地块索引 
             //int successCount = 0;

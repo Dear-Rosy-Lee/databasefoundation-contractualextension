@@ -484,7 +484,7 @@ namespace YuLinTu.Library.Controls
             }
 
             var lands = LandBusiness.GetCollection(CurrentZone.FullCode, eLevelOption.SelfAndSubs);
-            if (!lands.Any(t => string.IsNullOrEmpty(t.OldLandNumber)))
+            if (lands.Any(t => !string.IsNullOrEmpty(t.OldLandNumber)))
             {
                 var message = new TabMessageBoxDialog
                 {
