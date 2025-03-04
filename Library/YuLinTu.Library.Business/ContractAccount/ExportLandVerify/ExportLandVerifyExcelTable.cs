@@ -321,7 +321,7 @@ namespace YuLinTu.Library.Business
                 aindex++;
             }
             int height = 0;
-            if ((landFamily.LandCollection.Count > landFamily.Persons.Count) || landFamily.LandDelCollection.Count > landFamily.Persons.Count)
+            if ((landFamily.LandCollection.Count + landFamily.LandDelCollection.Count) > landFamily.Persons.Count)
             {
                 height = landFamily.LandCollection.Count + landFamily.LandDelCollection.Count;
             }
