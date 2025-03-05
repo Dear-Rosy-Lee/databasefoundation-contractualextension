@@ -122,7 +122,9 @@ namespace YuLinTu.Library.Business
                     OwnerId = c.OwnerId,
                     ZoneCode = c.ZoneCode,
                     LandNumber = c.LandNumber,
-                    OwnerName = c.OwnerName
+                    OwnerName = c.OwnerName,
+                    AwareArea = c.AwareArea,
+                    ActualArea = c.ActualArea
                 }).ToList();
             return VillageLands;
         }

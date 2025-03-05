@@ -369,7 +369,7 @@ namespace YuLinTu.Library.Controls
                 if (contractWay != null)
                     cbContractWay.SelectedItem = contractWay;
 
-                if (vp.Name.Contains("集体") && vp.FamilyExpand.ContractorType != eContractorType.Unit)
+                if (vp.Name != null && vp.Name.Contains("集体") && vp.FamilyExpand.ContractorType != eContractorType.Unit)
                 {
                     cbType.IsEnabled = true;
                 }

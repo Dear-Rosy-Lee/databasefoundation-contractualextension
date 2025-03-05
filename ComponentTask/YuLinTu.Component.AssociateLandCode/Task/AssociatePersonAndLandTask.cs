@@ -206,7 +206,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
                     var deloldldtemp = new List<ContractLand_Del>();
-                    var lstlds = AssociteLand(sd, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
+                    var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
                     var upldnums = new HashSet<string>();
                     foreach (var item in lstlds)
                     {
@@ -256,7 +256,7 @@ namespace YuLinTu.Component.AssociateLandCode
         /// <summary>
         /// 关联地块
         /// </summary>
-        private List<ContractLand> AssociteLand(CollectivityTissue sender, List<VirtualPerson> revps, List<VirtualPerson_Del> delvps, List<VirtualPerson> ovps,
+        private List<ContractLand> AssociteLand(CollectivityTissue sender, List<VirtualPerson> nvps, List<VirtualPerson> revps, List<VirtualPerson_Del> delvps, List<VirtualPerson> ovps,
             List<ContractLand> geoLands, List<ContractLand> oldLands, List<RelationZone> relationZones, List<ContractLand_Del> dellands)
         {
             var listLands = new List<ContractLand>();
@@ -267,7 +267,9 @@ namespace YuLinTu.Component.AssociateLandCode
             var olds = oldLands.FindAll(t => zonecodelist.Contains(t.ZoneCode));//旧地块
             var jtdkset = new HashSet<string>();
             var rlandset = new HashSet<Guid>();
-            foreach (var vp in revps)//关联上的承包方
+
+
+            foreach (var vp in nvps)//先按原地块编码关联一次
             {
                 var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
                 if (lands.Count == 0)
@@ -298,8 +300,29 @@ namespace YuLinTu.Component.AssociateLandCode
                             land.OldLandNumber = "";
                         }
                     }
+                }
+            }
+
+            foreach (var vp in revps)//关联上的承包方
+            {
+                var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
+                if (lands.Count == 0)
+                    continue;
+                List<ContractLand> listOldLands = new List<ContractLand>();
+                if (jtmcs.Contains(vp.Name))
+                {
+                    listOldLands.Clear();
+                    foreach (var vpcode in vp.OldVirtualCode.Split('/'))
+                    {
+                        var tvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vpcode).FirstOrDefault()?.ID;
+                        if (tvpid != null)
+                            listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid && !jtdkset.Contains(t.LandNumber)).ToList());
+                    }
+                }
+                else
+                {
                     var oldvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vp.OldVirtualCode).FirstOrDefault().ID;
-                    listOldLands = olds.Where(t => t.OwnerId == oldvpid && !rlandset.Contains(t.ID)).ToList();
+                    listOldLands = olds.Where(t => t.OwnerId == oldvpid).ToList();
                 }
 
                 if (lands.Count > listOldLands.Count)
@@ -310,6 +333,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 {
                     vp.ChangeSituation = eBHQK.TZJD;
                 }
+                listOldLands.RemoveAll(r => rlandset.Contains(r.ID));
+
                 foreach (var t in lands)
                 {
                     if (!string.IsNullOrEmpty(t.OldLandNumber))
@@ -354,8 +379,6 @@ namespace YuLinTu.Component.AssociateLandCode
                     tdeland.CBFID = vp.ID;
                     dellands.Add(tdeland);
                 }
-
-
                 /////从集体土地挂机地块，只按地块编码挂接
                 //var jtvps = ovps.FindAll(f => jtmcs.Contains(f.Name));
                 //if (jtvps.Count > 0)
@@ -453,7 +476,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 FindRelationPerson(vp, oldVps, receslist, listVps, true);
                 if (string.IsNullOrEmpty(vp.OldVirtualCode))
                 {
-                    var msg = $"{sender.Name} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户 {vp.Name} 未成功挂接原承包方,以当作新增处理！";
+                    var msg = $"{sender.Name} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户 {vp.Name} 未成功挂接原承包方,已当作新增处理！";
                     this.ReportInfomation(msg);
                     WriteLog(resfile, msg);
                 }
