@@ -653,7 +653,7 @@ namespace YuLinTu.Library.Business
             {
                 this.ReportProgress(98, "查找完成，开始更新数据库");
                 var metadata = Argument as TaskSeekLandNeighborArgument;
-                if (metadata.UpdateLandList != null || metadata.UpdateLandList.Count > 0)
+                if (metadata.UpdateLandList != null && metadata.UpdateLandList.Count > 0)
                 {
                     var tuplist = updateLands.FindAll(t => metadata.UpdateLandList.Any(a => a.LandNumber == t.LandNumber));
                     landStation.UpdateRange(tuplist);

@@ -3994,7 +3994,16 @@ namespace YuLinTu.Library.Business
                         else
                         {
                             if (string.IsNullOrEmpty(item.OldLandNumber))
+                            {
                                 item.OldLandNumber = item.LandNumber;
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                {
+                                    item.OldLandNumber = item.SourceNumber;
+                                }
+                            }
                         }
                     }
                 }
@@ -4002,9 +4011,8 @@ namespace YuLinTu.Library.Business
                 {
                     ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                 }
-                db.CommitTransaction();
-
                 var re = landStation.UpdateRange(landsOfStatus);
+                db.CommitTransaction();
                 if (re <= 0)
                 {
                     if (argument.IsNewPart)

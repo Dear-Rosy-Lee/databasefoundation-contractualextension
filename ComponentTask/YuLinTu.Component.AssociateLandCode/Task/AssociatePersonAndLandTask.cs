@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
+using YuLinTu.Component.Common;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -87,6 +88,7 @@ namespace YuLinTu.Component.AssociateLandCode
             index = 1;
             cindex = 1;
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
+            DataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);
             var zoneStation = dbContext.CreateZoneWorkStation();
             var allZones = zoneStation.GetAll();
