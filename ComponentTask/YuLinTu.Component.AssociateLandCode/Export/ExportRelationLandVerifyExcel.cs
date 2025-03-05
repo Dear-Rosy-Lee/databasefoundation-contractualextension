@@ -171,9 +171,9 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), sfjt ? "" : cardtype.Name);
             InitalizeRangeValue("D" + index, "D" + (index + height - 1), sfjt ? "" : virtualpersonCode);
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
-            InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), virtualpersonCode, Worksheet2);
+            InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), sfjt ? "" : virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), oldvpcode, Worksheet2);
+            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), sfjt ? 0 : landFamily.Persons.Count);

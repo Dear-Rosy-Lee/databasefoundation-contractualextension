@@ -109,7 +109,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             CreatUnit = true;
             CreatDataBase = true;
             DelOldData = true;
-            IsLegalData = false;
+            IsLegalData = true;
         }
 
         #endregion
