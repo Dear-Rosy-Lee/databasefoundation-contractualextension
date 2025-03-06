@@ -532,6 +532,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     if (stream.Length < 1024 * 1024)
                         filecanread = false;
                 }
+                databasepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, name + $"_{DateTime.Now.Ticks}.sqlite");
             }
             if ((!File.Exists(databasepath) || !filecanread) && sr != null)
             {
