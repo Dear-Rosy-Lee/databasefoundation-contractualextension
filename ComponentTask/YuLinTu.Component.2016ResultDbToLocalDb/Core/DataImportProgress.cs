@@ -819,7 +819,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     }
                 }
                 int nccount = ImportContractLandDatas(LocalService, noContractLands, zone.FullName, zone.FullCode,
-                    8000 + creList.Count + 1);
+                    9000 + creList.Count + 1);
                 ReportImportInfo(entityList, zoneName, nccount);
             }
             catch (Exception ex)
@@ -891,10 +891,12 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                         new Action<string>(t => this.ReportError(t)));
                 if (IsLegalData)
                 {
-                    obj.CBF.OldVirtualCode = item.CBF.CBFBM;
+                    if (string.IsNullOrEmpty(obj.CBF.OldVirtualCode))
+                        obj.CBF.OldVirtualCode = item.CBF.CBFBM;
                     foreach (var dk in obj.DKXXS)
                     {
-                        dk.OldLandNumber = dk.LandNumber;
+                        if (string.IsNullOrEmpty(dk.OldLandNumber))
+                            dk.OldLandNumber = dk.LandNumber;
                     }
                 }
                 list.Add(obj);
@@ -1295,21 +1297,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             if (dkexList == null || dkexList.Count == 0)
                 return 0;
             Library.Entity.LandVirtualPerson vp = null;
-            if (CreatUnit)
-            {
-                vp = new Library.Entity.LandVirtualPerson()
-                {
-                    ID = Guid.NewGuid(),
-                    Name = "集体",
-                    FamilyNumber = fnum.ToString(),
-                    IsStockFarmer = false,
-                    SharePersonList = new List<Library.Entity.Person>(),
-                    ZoneCode = zoneCode,
-                    VirtualType = Library.Entity.eVirtualPersonType.CollectivityTissue,
-                    FamilyExpand = new Library.Entity.VirtualPersonExpand() { ContractorType = Library.Entity.eContractorType.Unit }
-                };
-                localService.Queries.Add(localService.CreateQuery<Library.Entity.LandVirtualPerson>().Add(vp));
-            }
             List<Library.Entity.ContractLand> listCL = new List<Library.Entity.ContractLand>();
             //导出成果库里面，地块矢量数据里面只有实测面积，没有确权及台账面积，导回来就会空
             Dictionary<Guid, string> LandguidkjzbList = new Dictionary<Guid, string>();
@@ -1443,10 +1430,23 @@ namespace YuLinTu.Component.ResultDbToLocalDb
 
                 #endregion 处理生成界址信息
             }
+            if (listhandleCL.Count() > 0 && CreatUnit)
+            {
+                vp = new Library.Entity.LandVirtualPerson()
+                {
+                    ID = Guid.NewGuid(),
+                    Name = "集体",
+                    FamilyNumber = fnum.ToString(),
+                    IsStockFarmer = false,
+                    SharePersonList = new List<Library.Entity.Person>(),
+                    ZoneCode = zoneCode,
+                    VirtualType = Library.Entity.eVirtualPersonType.CollectivityTissue,
+                    FamilyExpand = new Library.Entity.VirtualPersonExpand() { ContractorType = Library.Entity.eContractorType.Unit }
+                };
+                localService.Queries.Add(localService.CreateQuery<Library.Entity.LandVirtualPerson>().Add(vp));
+            }
 
-            localService.Queries.Add(
-                localService.CreateQuery<Library.Entity.ContractLand>().
-                AddRange(listCL.ToArray()));
+            localService.Queries.Add(localService.CreateQuery<Library.Entity.ContractLand>().AddRange(listCL.ToArray()));
             string jzdxInfo = "";
             if (GenerateCoilDot)
             {

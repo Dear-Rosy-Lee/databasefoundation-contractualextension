@@ -155,11 +155,19 @@ namespace YuLinTu.Library.Business
                     this.ReportError($"未获取到{zone.FullName}下的发包方数据不完整：代表姓名({tissue.LawyerName} )、代表证件号({tissue.LawyerCartNumber} )、地址({tissue.LawyerAddress} )、电话({tissue.LawyerTelephone} )");
                     return false;
                 }
-                if (accountFamilyCollection.Count(t => t.CurrentFamily.Name == ("集体") || t.CurrentFamily.Name.Contains("组集体")) > 1)
+                var jtfs = accountFamilyCollection.FindAll(t => t.CurrentFamily.Name == ("集体") || t.CurrentFamily.Name.Contains("集体"));
+                if (jtfs.Count > 1)
                 {
                     this.ReportError($"{zone.FullName}下的存在多个集体，请处理后再进行导出！");
                     return false;
                 }
+
+                if (jtfs.Count() == 1 && jtfs[0].CurrentFamily.Name != "集体")
+                {
+                    this.ReportError($"{zone.FullName}下的导出表的集体承包方名称只能为 集体，请修改为集体后再进行导出！");
+                    return false;
+                }
+
                 if (tissue != null)
                     zoneName = tissue.Name;
                 GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
