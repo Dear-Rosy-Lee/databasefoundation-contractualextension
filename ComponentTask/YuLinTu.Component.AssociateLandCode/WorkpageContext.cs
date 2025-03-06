@@ -88,7 +88,7 @@ namespace YuLinTu.Component.AssociateLandCode
             SuperButton familyAccountBtn = new SuperButton();
             familyAccountBtn.Padding = new Thickness(8, 4, 8, 4);
             familyAccountBtn.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"));
-            familyAccountBtn.Content = "导出关联数据摸底调查表";
+            familyAccountBtn.Content = "关联数据摸底成果表";
             familyAccountBtn.ToolTip = @"按区域导出摸底调查表。";
             familyAccountBtn.Click += InitialLandNumberHandle;
             return familyAccountBtn;
