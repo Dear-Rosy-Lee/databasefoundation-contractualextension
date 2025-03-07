@@ -223,24 +223,24 @@ namespace YuLinTu.Library.Business
             bhqkList = EnumStore<eBHQK>.GetListByType();
             var delvps = AccountLandFamily.FindAll(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad);
 
-            HashSet<Guid> delset = new HashSet<Guid>();
-            foreach (var landFamily in AccountLandFamily)
-            {
-                if (delset.Contains(landFamily.CurrentFamily.ID) || landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
-                    continue;
-                var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
-                if (delvp != null)
-                {
-                    delset.Add(delvp.CurrentFamily.ID);
-                    foreach (var item in delvp.LandDelCollection)
-                    {
-                        if (landFamily.LandCollection.Any(t => t.LandNumber == item.DKBM))
-                            continue;
-                        landFamily.LandDelCollection.Add(item);
-                    }
-                }
-            }
-            AccountLandFamily.RemoveAll(t => delset.Contains(t.CurrentFamily.ID));
+            //HashSet<Guid> delset = new HashSet<Guid>();
+            //foreach (var landFamily in AccountLandFamily)
+            //{
+            //    if (delset.Contains(landFamily.CurrentFamily.ID) || landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
+            //        continue;
+            //    var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
+            //    if (delvp != null)
+            //    {
+            //        delset.Add(delvp.CurrentFamily.ID);
+            //        foreach (var item in delvp.LandDelCollection)
+            //        {
+            //            if (landFamily.LandCollection.Any(t => t.LandNumber == item.DKBM))
+            //                continue;
+            //            landFamily.LandDelCollection.Add(item);
+            //        }
+            //    }
+            //}
+            //AccountLandFamily.RemoveAll(t => delset.Contains(t.CurrentFamily.ID));
             foreach (var landFamily in AccountLandFamily)
             {
                 cindex++;
