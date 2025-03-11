@@ -3052,6 +3052,19 @@ namespace YuLinTu.Library.Business
                 string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
                 var concordStation = dbContext.CreateConcordStation();
                 var concords = concordStation.GetAllConcordByFamilyID(vp.ID);
+                if (vp.IsStockFarmer)
+                {
+                    var stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(vp.ID, zone.FullCode);
+                    if (stockLands.Count > 0)
+                    {
+                        stockLands.ForEach(e =>
+                        {
+                            e.AwareArea = e.QuantificicationArea;
+                            e.ActualArea = e.QuantificicationArea;
+                        });
+                        landItems.AddRange(stockLands);
+                    }
+                }
 
                 ExportPublicityWordTable export = new ExportPublicityWordTable();
 
@@ -3592,6 +3605,8 @@ namespace YuLinTu.Library.Business
         /// <param name="person">当前户</param>
         /// <param name="filePath">保存文件路径</param>
         /// <param name="save">是否保存</param>
+        /// <param name="imageSavePath"></param>
+        /// <param name="isStockLand">null 为确权确股，true为确股，false为确权</param>
         public void ExportMultiParcelWord(Zone currentZone, List<ContractLand> listLand, VirtualPerson person, string filePath, bool save = false, string imageSavePath = "", bool? isStockLand = false)
         {
             //List<ContractLand> listLand = new List<ContractLand>();
@@ -3619,28 +3634,25 @@ namespace YuLinTu.Library.Business
                 var lineStation = dbContext.CreateXZDWWorkStation();
                 var PointStation = dbContext.CreateDZDWWorkStation();
                 var PolygonStation = dbContext.CreateMZDWWorkStation();
-                string templatePath = string.Empty;
-                if (isStockLand != null)
-                    templatePath = TemplateHelper.WordTemplate(((bool)isStockLand ? "安徽" : "") + TemplateFile.ParcelWord);
-                else
-                    templatePath = TemplateHelper.WordTemplate(TemplateFile.ParcelWord);
                 string savePathOfImage = string.IsNullOrEmpty(imageSavePath) ? filePath : imageSavePath;
                 string savePathOfWord = InitalizeLandImageName(filePath, person); // filePath + @"\" + familyNuber + "-" + person.Name + "-" + TemplateFile.ParcelWord + ".doc";
-
                 //listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
                 var VillageZone = GetParent(currentZone);
+                var templatePath = TemplateHelper.WordTemplate(TemplateFile.ParcelWord);
+                List<ContractLand> stockLands = new List<ContractLand>();
                 if (isStockLand != null)
                 {
+                    //templatePath = TemplateHelper.WordTemplate(((bool)isStockLand ? "安徽" : "") + TemplateFile.ParcelWord);
+                    stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(person.ID, currentZone.FullCode);
                     if ((bool)isStockLand)
                     {
-                        var stockLandsvp = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(person.ID, currentZone.FullCode);
-                        listLand = stockLandsvp;
+                        listLand = stockLands;
                     }
-                    else
-                    {
-                        // 导出确权地块示意图，要排除掉股地
-                        listLand = listLand.FindAll(c => !c.IsStockLand);
-                    }
+                }
+                else
+                {
+                    // 导出确权地块示意图，要排除掉股地
+                    listLand = listLand.FindAll(c => !c.IsStockLand);
                 }
                 listGeoLand = listLand.FindAll(c => c.Shape != null);
                 listGeoLand = InitalizeAgricultureLandSortValue(listGeoLand);

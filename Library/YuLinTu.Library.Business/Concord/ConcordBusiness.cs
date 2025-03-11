@@ -1509,7 +1509,10 @@ namespace YuLinTu.Library.Business
                 {
                     var stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(curVp.ID, currentZone.FullCode);
                     if (stockLands.Count > 0)
+                    {
+                        stockLands.ForEach(e => { e.AwareArea = e.QuantificicationArea; });
                         lands.AddRange(stockLands);
+                    }
                 }
                 lands.LandNumberFormat(SystemSet);
                 exportConcord.ListLand = lands;

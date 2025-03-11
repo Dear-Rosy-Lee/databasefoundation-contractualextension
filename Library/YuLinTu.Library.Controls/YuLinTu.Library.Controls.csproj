@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
@@ -12,7 +13,6 @@
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -922,8 +922,6 @@
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props'))" />
@@ -948,8 +946,9 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets'))" />
   </Target>
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" />
@@ -962,6 +961,7 @@
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

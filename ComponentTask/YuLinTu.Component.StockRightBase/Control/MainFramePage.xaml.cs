@@ -891,12 +891,12 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void Btn_PreviewConcord_Click(object sender, RoutedEventArgs e)
         {
-            Preview("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Preview("合同(确股)", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         private void Btn_ExportConcord_Click(object sender, RoutedEventArgs e)
         {
-            Export("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Export("合同（确股）", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         #endregion

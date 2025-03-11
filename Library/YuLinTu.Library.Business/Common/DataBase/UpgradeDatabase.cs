@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using YuLinTu.Data;
-using YuLinTu;
-using System.Xml.Linq;
 using System.IO;
 using System.Linq;
-using YuLinTu.Library.Entity;
+using YuLinTu;
+using YuLinTu.Data;
 
 namespace YuLinTu.Library.Business
 {
@@ -1322,7 +1318,7 @@ namespace YuLinTu.Library.Business
                 var elements = dbContext.DataSource.CreateSchema().GetElements();
                 var srid = dbContext.DataSource.CreateSchema().GetElementSpatialReference(
                  ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).Schema,
-                 ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).TableName).WKID;
+                 ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).TableName)?.WKID;
                 var query = dbContext.CreateQuery();
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
@@ -1385,7 +1381,7 @@ namespace YuLinTu.Library.Business
                         }
                         if (field.FieldName == "Shape")
                         {
-                            commandStrFieldAdd = string.Format("Select AddGeometryColumn('{0}', 'Shape',{1}, 'GEOMETRY', 'XY')", table.TableName, srid);
+                            commandStrFieldAdd = string.Format("Select AddGeometryColumn('{0}', 'Shape',{1}, 'GEOMETRY', 'XY')", table.TableName, srid == null ? 0 : srid);
                             query.CommandContext.CommandText.Append(commandStrFieldAdd);
                             query.Execute();
                             query.CommandContext.CommandText.Clear();

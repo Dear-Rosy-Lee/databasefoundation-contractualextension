@@ -73,7 +73,7 @@ namespace YuLinTu.Library.Business
                 }
 
                 var settingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
-                if (VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
+                if (VillageContractLands == null || VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
                 {
                     VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
                 }

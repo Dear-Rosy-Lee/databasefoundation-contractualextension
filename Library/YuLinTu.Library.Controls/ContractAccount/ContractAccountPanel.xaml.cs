@@ -5624,6 +5624,7 @@ namespace YuLinTu.Library.Controls
                             return;
                         }
                     }
+                    //lands.AddRange(geoLandOfFamily);
                     var confirmPage = new ConfirmPage(TheWorkPage, ContractAccountInfo.PreviewMultiParcelOfFamily,
                         string.Format("是否预览{0}地块示意图?", CurrentAccountItem.Tag.Name));
                     confirmPage.Confirm += (a, c) =>
@@ -5631,7 +5632,8 @@ namespace YuLinTu.Library.Controls
                         try
                         {
                             string fileName = SystemSet.DefaultPath;
-                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, landList, CurrentAccountItem.Tag, fileName, false, "", null);
+                            //ContractAccountBusiness.
+                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, geoLands, CurrentAccountItem.Tag, fileName, false, "", null);
                         }
                         catch (Exception ex)
                         {

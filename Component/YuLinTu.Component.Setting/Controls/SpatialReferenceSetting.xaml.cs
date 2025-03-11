@@ -534,15 +534,25 @@ namespace YuLinTu.Component.Setting
                     //tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
                 }
                 var schma = dbContext.CreateSchema();
+
                 foreach (var item in tableList)
                 {
+
                     if (!schma.AnyElement(null, item.TableName))
                     {
                         Log.WriteWarn(this, "数据库升级模块", $"数据库{item.TableName}表不存在，未进行升级！");
                         continue;
                     }
-                    var table = schma.GetElementProperties(null, item.TableName);
-                    item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
+                    try
+                    {
+                        var table = schma.GetElementPropertyNames(null, item.TableName);
+                         //table = schma.GetElementProperties(null, item.TableName);
+                        item.FieldList.RemoveAll(r => table.Any(t => t == r.FieldName));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.WriteError(this, "数据库升级模块", $"获取数据库表{item.TableName}表字段错误：" + ex.Message);
+                    }
                 }
                 tableList.RemoveAll(t => t.FieldList.Count == 0);
                 if (tableList == null || tableList.Count == 0)
