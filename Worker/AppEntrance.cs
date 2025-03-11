@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Windows.Wpf;
 using System.IO;
 using System.Reflection;
 using Autofac;
-using YuLinTu.Library.Business;
+using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
 {
@@ -40,31 +37,32 @@ namespace YuLinTu.Product.YuLinTuTool
             //GC.WaitForPendingFinalizers();
 
             //Data.SQLite.ProviderDbCSQLite.ShutdownAllConnection();
-            var builder = new ContainerBuilder();
-            var assemblyFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Libraries", "libs"), "YuLinTu.Library.*.dll");
-            var assemblies = new List<Assembly>();
+            /*
+             var builder = new ContainerBuilder();
+             var assemblyFiles = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Libraries", "libs"), "YuLinTu.Library.*.dll");
+             var assemblies = new List<Assembly>();
 
-            foreach (var file in assemblyFiles)
-            {
-                var assembly = Assembly.LoadFile(file);
-                assemblies.Add(Assembly.LoadFrom(file));
-                builder.Register(assembly);
-            }
+             foreach (var file in assemblyFiles)
+             {
+                 var assembly = Assembly.LoadFile(file);
+                 assemblies.Add(Assembly.LoadFrom(file));
+                 builder.Register(assembly);
+             }
 
-            // 注册工作单元拦截器
-            builder.RegisterInstance(new UnitOfWorkInterceptor());
+             // 注册工作单元拦截器
+             builder.RegisterInstance(new UnitOfWorkInterceptor());
 
-            ContainerProvider.Load(builder);
+             ContainerProvider.Load(builder);
 
-            builder.RegisterBuildCallback(container =>
-            {
-                //注册 IValidator
-                //container.RegisterValidators(assemblies);
-            });
+             builder.RegisterBuildCallback(container =>
+             {
+                 //注册 IValidator
+                 //container.RegisterValidators(assemblies);
+             });
 
-            // 注册 GDAL
-            //GdalShapefile.Register();
-
+             // 注册 GDAL
+             //GdalShapefile.Register();
+            */
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);
         }

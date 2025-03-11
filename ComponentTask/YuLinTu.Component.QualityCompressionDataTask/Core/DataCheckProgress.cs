@@ -10,6 +10,7 @@ using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 using YuLinTu.Appwork;
+using YuLinTu.Component.Account.Models;
 using YuLinTu.Data;
 using YuLinTu.Library.Log;
 using YuLinTu.Spatial;
@@ -93,9 +94,9 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 {
                     return "";
                 }
-
-                var token = Parameters.Token.ToString();
-                if (Parameters.Token.Equals(Guid.Empty))
+                var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
+                //var token = Parameters.Token.ToString();
+                if (token.Equals(Guid.Empty))
                 {
                     ErrorInfo = "请先登录后,再进行检查";
                     return ErrorInfo;
@@ -103,7 +104,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
-                string zonecode = Parameters.Region.ToString();
+                string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
                 string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
@@ -417,7 +418,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 else if (g.Instance is Point)
                 {
-                    var pg = g.Instance as Point;
+                    var pg = g.Instance;
                     shels = pg.Coordinates;
                     hols = new LinearRing[0];
                 }
@@ -573,7 +574,28 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
 
             }
+            CheckNodeRepeat(landlist, stringBuilder);
             return stringBuilder.ToString();
+        }
+
+        /// <summary>
+        /// 检查相邻要素节点重复
+        /// </summary>
+        private void CheckNodeRepeat(List<QCDK> landlist, StringBuilder stringBuilder)
+        {
+            AreaNodeRepeatCheck check = new AreaNodeRepeatCheck();
+            var geolist = new List<CheckGeometry>();
+            for (int i = 0; i < landlist.Count; i++)
+            {
+                geolist.Add(new CheckGeometry()
+                {
+                    index = i,
+                    Graphic = landlist[i].Shape as YuLinTu.Spatial.Geometry
+                });
+            }
+            check.DoCheck(geolist, 0.05, 0.001, (i, j, x1, y1, x2, y2, len) => { }, (progress) =>
+            {
+            });
         }
 
         /// <summary>

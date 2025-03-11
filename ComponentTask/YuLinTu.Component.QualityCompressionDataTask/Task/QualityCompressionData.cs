@@ -2,7 +2,9 @@
 using System.IO;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using YuLinTu.Component.Account.Models;
 using YuLinTu.Library.Log;
+using YuLinTu.Web.Core;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -11,7 +13,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
     /// 质检、加密、压缩矢量数据成果任务
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "加密矢量数据成果",
-        Gallery = "矢量数据成果处理",
+        //Gallery = "矢量数据成果处理",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class QualityCompressionData : Task
@@ -138,6 +140,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// <param name="zipStream">压缩文件</param>
         private static void CompressFolder(string sourceFile, string zipFilePath)
         {
+            var loginRegion = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");
             var fileInfo = new FileInfo(sourceFile);
             string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fileInfo.Name}.*", SearchOption.AllDirectories);
 
@@ -146,7 +149,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 using (var zipStream = new ZipOutputStream(fsOut))
                 {
                     zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                    zipStream.Password = Parameters.Region + "Ylt@dzzw";
+                    zipStream.Password = loginRegion + "Ylt@dzzw";
                     foreach (string matchingFile in matchingFiles)
                     {
                         var matchingFileInfo = new FileInfo(matchingFile);
@@ -180,7 +183,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var dcp = new DataCheckProgress();
                 dcp.DataArgument = argument;
 
-                var falg = dcp.Check(); 
+                var falg = dcp.Check();
                 this.ReportProgress(10);
                 if (!string.IsNullOrEmpty(falg))
                 {

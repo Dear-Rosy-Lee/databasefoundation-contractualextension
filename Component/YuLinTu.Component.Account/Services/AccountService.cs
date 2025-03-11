@@ -1,13 +1,12 @@
-﻿using Autofac;
-using Refit;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Autofac;
+using Newtonsoft.Json;
+using Refit;
 using YuLinTu.Appwork;
 using YuLinTu.Component.Account.Models;
 using YuLinTu.Security;
 using YuLinTu.Windows;
-using Newtonsoft.Json;
-using YuLinTu.Component.QualityCompressionDataTask;
 
 namespace YuLinTu.Component.Account.Services
 {
@@ -179,12 +178,14 @@ namespace YuLinTu.Component.Account.Services
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
                 string region = jsonObject.region;
                 if (!region.IsNullOrEmpty())
-                    Parameters.Region = region;
+                    AppGlobalSettings.Current[Parameters.RegionName] = region;
+                //Parameters.Region = region;
                 string token = jsonObject.token;
                 Guid session;
                 if (Guid.TryParse(token, out session))
                 {
-                    Parameters.Token = session;
+                    AppGlobalSettings.Current[Parameters.TokeName] = session;
+                    //Parameters.Token = session;
                     return session;
                 }
                 else
@@ -201,7 +202,8 @@ namespace YuLinTu.Component.Account.Services
         public bool Logout(Guid sessionCode)
         {
             var result = Api.LogoutAsync().Result;
-            Parameters.Token = Guid.Empty;
+            // Parameters.Token = Guid.Empty;
+            AppGlobalSettings.Current[Parameters.TokeName] = Guid.Empty;
             return result.Success;
         }
 

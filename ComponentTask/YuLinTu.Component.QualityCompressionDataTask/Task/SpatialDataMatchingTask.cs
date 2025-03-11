@@ -23,7 +23,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
     /// 在线匹配矢量数据成果任务
     /// </summary>
     [TaskDescriptor(IsLanguageName = false, Name = "在线空间数据匹配",
-        Gallery = "矢量数据成果处理",
+        //Gallery = "矢量数据成果处理",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/GroupBlogInsertLinks.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/32/GroupInsertLinks.png")]
     public class SpatialDataMatchingTask : Task
@@ -252,7 +252,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 else if (g.Instance is Point)
                 {
-                    var pg = g.Instance as Point;
+                    var pg = g.Instance;
                     shels = pg.Coordinates;
                     hols = new LinearRing[0];
                 }

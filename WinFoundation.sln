@@ -21,52 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTuTool", "Worker\YuLin
 		{884B68F2-6F43-439D-91AE-31BAF151FE05} = {884B68F2-6F43-439D-91AE-31BAF151FE05}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManualSlaveProcessTask", "ManualSlaveProcessTask", "{BD0F3CF7-3E8D-498E-AE26-6849495C524B}"
-	ProjectSection(SolutionItems) = preProject
-		ManualSlaveProcessTask\DotSpatial.Projections.dll = ManualSlaveProcessTask\DotSpatial.Projections.dll
-		ManualSlaveProcessTask\gdal200.dll = ManualSlaveProcessTask\gdal200.dll
-		ManualSlaveProcessTask\GeoAPI.dll = ManualSlaveProcessTask\GeoAPI.dll
-		ManualSlaveProcessTask\libfreexl-1.dll = ManualSlaveProcessTask\libfreexl-1.dll
-		ManualSlaveProcessTask\libgcc_s_seh-1.dll = ManualSlaveProcessTask\libgcc_s_seh-1.dll
-		ManualSlaveProcessTask\libgcc_s_seh_64-1.dll = ManualSlaveProcessTask\libgcc_s_seh_64-1.dll
-		ManualSlaveProcessTask\libgeos-3-5-0.dll = ManualSlaveProcessTask\libgeos-3-5-0.dll
-		ManualSlaveProcessTask\libgeos_c-1.dll = ManualSlaveProcessTask\libgeos_c-1.dll
-		ManualSlaveProcessTask\libiconv-2.dll = ManualSlaveProcessTask\libiconv-2.dll
-		ManualSlaveProcessTask\liblzma-5.dll = ManualSlaveProcessTask\liblzma-5.dll
-		ManualSlaveProcessTask\libproj-9.dll = ManualSlaveProcessTask\libproj-9.dll
-		ManualSlaveProcessTask\libsqlite3-0.dll = ManualSlaveProcessTask\libsqlite3-0.dll
-		ManualSlaveProcessTask\libstdc++_64-6.dll = ManualSlaveProcessTask\libstdc++_64-6.dll
-		ManualSlaveProcessTask\libstdc++_64-62.dll = ManualSlaveProcessTask\libstdc++_64-62.dll
-		ManualSlaveProcessTask\libxml2-2.dll = ManualSlaveProcessTask\libxml2-2.dll
-		ManualSlaveProcessTask\ManualSlaveProcessTask.exe = ManualSlaveProcessTask\ManualSlaveProcessTask.exe
-		ManualSlaveProcessTask\ManualSlaveProcessTask.exe.config = ManualSlaveProcessTask\ManualSlaveProcessTask.exe.config
-		ManualSlaveProcessTask\Microsoft.Practices.ServiceLocation.dll = ManualSlaveProcessTask\Microsoft.Practices.ServiceLocation.dll
-		ManualSlaveProcessTask\Microsoft.Practices.Unity.Configuration.dll = ManualSlaveProcessTask\Microsoft.Practices.Unity.Configuration.dll
-		ManualSlaveProcessTask\Microsoft.Practices.Unity.dll = ManualSlaveProcessTask\Microsoft.Practices.Unity.dll
-		ManualSlaveProcessTask\mod_spatialite.dll = ManualSlaveProcessTask\mod_spatialite.dll
-		ManualSlaveProcessTask\NetTopologySuite.dll = ManualSlaveProcessTask\NetTopologySuite.dll
-		ManualSlaveProcessTask\PowerCollections.dll = ManualSlaveProcessTask\PowerCollections.dll
-		ManualSlaveProcessTask\sqlite3.exe = ManualSlaveProcessTask\sqlite3.exe
-		ManualSlaveProcessTask\System.Data.SQLite.dll = ManualSlaveProcessTask\System.Data.SQLite.dll
-		ManualSlaveProcessTask\tGISC.dll = ManualSlaveProcessTask\tGISC.dll
-		ManualSlaveProcessTask\YuLinTu.Data.dll = ManualSlaveProcessTask\YuLinTu.Data.dll
-		ManualSlaveProcessTask\YuLinTu.Data.Dynamic.dll = ManualSlaveProcessTask\YuLinTu.Data.Dynamic.dll
-		ManualSlaveProcessTask\YuLinTu.Data.Framework.dll = ManualSlaveProcessTask\YuLinTu.Data.Framework.dll
-		ManualSlaveProcessTask\YuLinTu.Diagnostics.dll = ManualSlaveProcessTask\YuLinTu.Diagnostics.dll
-		ManualSlaveProcessTask\YuLinTu.dll = ManualSlaveProcessTask\YuLinTu.dll
-		ManualSlaveProcessTask\YuLinTu.Interception.dll = ManualSlaveProcessTask\YuLinTu.Interception.dll
-		ManualSlaveProcessTask\YuLinTu.IO.dll = ManualSlaveProcessTask\YuLinTu.IO.dll
-		ManualSlaveProcessTask\YuLinTu.Library.Result.dll = ManualSlaveProcessTask\YuLinTu.Library.Result.dll
-		ManualSlaveProcessTask\YuLinTu.Library.WinFoundationAux.dll = ManualSlaveProcessTask\YuLinTu.Library.WinFoundationAux.dll
-		ManualSlaveProcessTask\YuLinTu.NetAux.dll = ManualSlaveProcessTask\YuLinTu.NetAux.dll
-		ManualSlaveProcessTask\YuLinTu.Script.dll = ManualSlaveProcessTask\YuLinTu.Script.dll
-		ManualSlaveProcessTask\YuLinTu.ServiceModel.dll = ManualSlaveProcessTask\YuLinTu.ServiceModel.dll
-		ManualSlaveProcessTask\YuLinTu.tGISCNet.dll = ManualSlaveProcessTask\YuLinTu.tGISCNet.dll
-		ManualSlaveProcessTask\YuLinTu.Unity.dll = ManualSlaveProcessTask\YuLinTu.Unity.dll
-		ManualSlaveProcessTask\YuLinTu.Windows.Core.dll = ManualSlaveProcessTask\YuLinTu.Windows.Core.dll
-		ManualSlaveProcessTask\zlib1.dll = ManualSlaveProcessTask\zlib1.dll
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ComponentTask", "ComponentTask", "{19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.QualityCompressionDataTask", "ComponentTask\YuLinTu.Component.QualityCompressionDataTask\YuLinTu.Component.QualityCompressionDataTask.csproj", "{D55B87E9-2B5B-4ABC-9A6A-92323069486C}"
