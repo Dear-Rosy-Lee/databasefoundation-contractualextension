@@ -14,6 +14,7 @@ using NetTopologySuite.IO;
 using Newtonsoft.Json;
 using YuLinTu.Data;
 using YuLinTu.Data.Shapefile;
+using YuLinTu.Library.Log;
 using YuLinTu.Spatial;
 
 
@@ -93,7 +94,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 catch (Exception ex)
                 {
-                    Library.Log.Log.WriteException(this, "OnGo(数据处理失败!)", ex.Message + ex.StackTrace);
+                    Log.WriteException(this, "OnGo(数据处理失败!)", ex.Message + ex.StackTrace);
                     this.ReportError(string.Format("数据处理出错!" + ex.Message));
                 }
             }

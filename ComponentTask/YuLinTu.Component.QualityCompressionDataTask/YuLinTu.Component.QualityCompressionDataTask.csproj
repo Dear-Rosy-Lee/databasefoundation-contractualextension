@@ -196,6 +196,10 @@
     <Reference Include="YuLinTu.Appwork.Task">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll</HintPath>
     </Reference>
+    <Reference Include="YuLinTu.Library.Log, Version=8.1.15.602, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.Library.Log.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\PropertyDescriptorBuilderFileBrowserShp.cs" />
@@ -221,10 +225,6 @@
     <ProjectReference Include="..\..\Component\YuLinTu.Component.Account\YuLinTu.Component.Account.csproj">
       <Project>{563041F8-FBDA-40FD-9E27-3D65DDE6C42C}</Project>
       <Name>YuLinTu.Component.Account</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
-      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
-      <Name>YuLinTu.Library.Log</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
