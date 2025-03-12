@@ -148,7 +148,7 @@
                                                 SelectionChanged="cmbQSXZ_SelectionChanged"
                                                 Margin="0,0,0,0" />
 
-                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取地块四至"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
+                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取四至 ( 前的内容" ToolTip="获取四至括号前内容" Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
                                       Checked="ToggleButton_OnChecked"  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3"  VerticalAlignment="Center"  />
 
                             <CheckBox x:Name="cbInitializeLandNeighborInfo"  Content="获取地块周边相邻地块"  Margin="10,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 

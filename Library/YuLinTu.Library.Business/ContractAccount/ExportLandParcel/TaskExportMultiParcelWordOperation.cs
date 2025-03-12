@@ -95,7 +95,9 @@ namespace YuLinTu.Library.Business
                         foreach (var stockLand in stockLandsvp)
                         {
                             if (!listLand.Any(t => t.ID.Equals(stockLand.ID)))
+                            {
                                 listLand.Add(stockLand);
+                            }
                         }
                     }
                 }

@@ -268,7 +268,10 @@ namespace YuLinTu.Library.Business
                 foreach (var stockLand in stockLandsvp)
                 {
                     if (!geoLandCollection.Any(t => t.ID == stockLand.ID))
+                    {
+                        stockLand.ActualArea = stockLand.QuantificicationArea;
                         geoLandCollection.Add(stockLand);
+                    }
                 }
             }
             List<ContractLand> lands = new List<ContractLand>();

@@ -1641,13 +1641,15 @@ namespace YuLinTu.Library.Business
             if (vpspart != null)
             {
                 uplist = InstallPersonValue(vpspart, argument, isNULL, index, familyIndex);
+                var upstaylist = new List<VirtualPerson>();
                 foreach (var item in vps)
                 {
                     if (vpspart.Any(v => v.ID == item.ID))
                         continue;
                     item.OldVirtualCode = item.ZoneCode.PadRight(14, '0') + item.FamilyNumber.PadLeft(4, '0');
-                    uplist.Add(item);
+                    upstaylist.Add(item);
                 }
+                uplist.AddRange(InstallPersonValue(upstaylist, argument, isNULL, index, familyIndex));
             }
             else
             {
