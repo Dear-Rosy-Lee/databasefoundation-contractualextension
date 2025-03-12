@@ -195,6 +195,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 if (srid == 4490)
                 {
                     ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
+                    this.ReportError(ErrorInfo);
                     return false;
                 }
                 //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
