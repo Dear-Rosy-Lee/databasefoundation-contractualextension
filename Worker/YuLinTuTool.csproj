@@ -419,6 +419,198 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 102E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 108E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 114E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 120E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 126E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 132E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 78E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 84E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 90E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 96E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 25.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 26.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 27.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 28.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 29.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 30.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 31.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 32.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 33.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 34.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 35.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 36.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 37.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 38.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 39.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 40.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 41.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 42.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 43.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 44.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 3 Degree GK Zone 45.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 105E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 111E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 117E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 123E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 129E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 135E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 75E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 81E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 87E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 93E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK CM 99E.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 13.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 14.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 15.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 16.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 17.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 18.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 19.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 20.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 21.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 22.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\SpatialReferences\Projected Coordinate Systems\Gauss Kruger\CGCS2000\CGCS2000 GK Zone 23.prj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\SpatialReferences\Unknow\Unknow.prj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
