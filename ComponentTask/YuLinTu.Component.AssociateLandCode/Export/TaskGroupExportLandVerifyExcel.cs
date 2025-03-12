@@ -89,7 +89,7 @@ namespace YuLinTu.Library.Business
                 argument.VirtualType = groupArgument.VirtualType;
                 var operation = new TaskExportVerifyExcel();
                 operation.Argument = argument;
-                operation.Name = "批量导出摸底核实表";
+                operation.Name = "批量导出调查成果表";
                 operation.Description = zone.FullName;
                 Add(operation);
 

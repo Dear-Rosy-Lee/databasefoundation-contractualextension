@@ -53,14 +53,14 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 return;
             }
-        }                
+        }
 
         /// <summary>
         /// 加载工具栏
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-         
+
         protected override void OnInstalToolbar(object sender, InstallUIElementsEventArgs e)
         {
             //承包台账模块
@@ -88,8 +88,8 @@ namespace YuLinTu.Component.AssociateLandCode
             SuperButton familyAccountBtn = new SuperButton();
             familyAccountBtn.Padding = new Thickness(8, 4, 8, 4);
             familyAccountBtn.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"));
-            familyAccountBtn.Content = "关联数据摸底成果表";
-            familyAccountBtn.ToolTip = @"按区域导出摸底调查表。";
+            familyAccountBtn.Content = "关联数据调查成果表";
+            familyAccountBtn.ToolTip = @"按区域导出调查调查表。";
             familyAccountBtn.Click += InitialLandNumberHandle;
             return familyAccountBtn;
         }
@@ -105,7 +105,7 @@ namespace YuLinTu.Component.AssociateLandCode
         {
             if (btnInitialData != null)
                 btnInitialData.IsOpen = false;
-            string showBoxHeader = "导出摸底调查表";
+            string showBoxHeader = "导出调查成果表";
             var currentZone = contractAccountPanel.CurrentZone;
             if (currentZone == null)
             {
@@ -128,9 +128,9 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 if (b == null || !(bool)b)
                     return;
-                ExportVerifyExcelTaskGroup(extPage.FileName, "批量导出摸底调查表", showBoxHeader, currentZone, DbContext);
+                ExportVerifyExcelTaskGroup(extPage.FileName, "批量导出调查成果表", showBoxHeader, currentZone, DbContext);
             });
-        } 
+        }
 
         /// <summary>
         /// 批量导出摸底调查表
@@ -157,7 +157,7 @@ namespace YuLinTu.Component.AssociateLandCode
             }
             groupOperation.StartAsync();
         }
-         
+
         /// <summary>
         /// 消息显示框
         /// </summary>

@@ -375,6 +375,13 @@ namespace YuLinTu.Library.Business
 
         }
 
+        public override void WriteTempLate()
+        {
+            base.WriteTempLate();
+            var title = $"{ZoneDesc}-农村土地承包经营权调查成果表";
+            InitalizeRangeValue("A" + 1, "AI" + 2, title);
+        }
+
         /// <summary>
         /// 保存完成后
         /// </summary>

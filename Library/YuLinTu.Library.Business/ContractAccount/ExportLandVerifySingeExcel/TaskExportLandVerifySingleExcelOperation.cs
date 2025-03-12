@@ -78,8 +78,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出摸底核实表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出摸底核实表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出单户摸底核实表任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出单户摸底核实表出现异常!");
             }
         }
 

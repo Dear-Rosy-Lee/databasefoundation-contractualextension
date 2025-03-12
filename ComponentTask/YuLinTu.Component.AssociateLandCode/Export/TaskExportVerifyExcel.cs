@@ -74,8 +74,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出摸底核实表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出摸底核实表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出调查成果表任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出调查成果表出现异常!");
             }
         }
 
@@ -175,7 +175,7 @@ namespace YuLinTu.Library.Business
                 int personCount = vps == null ? 0 : vps.Count;
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
+                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xls";
 
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
