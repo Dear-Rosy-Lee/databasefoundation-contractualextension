@@ -166,7 +166,6 @@ namespace YuLinTu.Library.Business
         {
             if (landFamily == null)
                 return;
-
             double TotalLandAware = 0;
             double TotalLandActual = 0;
             double TotalLandTable = 0;
@@ -183,6 +182,14 @@ namespace YuLinTu.Library.Business
             {
                 peoples.Remove(hz);
                 peoples.Insert(0, hz);
+            }
+
+            if (landFamily.CurrentFamily.Name == "集体" &&
+                lands.Count == 0 &&
+                peoples.Count == 0 &&
+                landDels.Count == 0)
+            {
+                return;
             }
 
             peopleCount += peoples.Count;
@@ -233,10 +240,7 @@ namespace YuLinTu.Library.Business
                 height = landFamily.Persons.Count;
             }
             landCount += lands.Count + landDels.Count;
-            if (lands.Count == 0)
-            {
-                //index++;
-            }
+            height = height == 0 ? 1 : height;
             AwareArea += TotalLandAware;
             ActualArea += TotalLandActual;
             TableArea += TotalLandTable;

@@ -330,10 +330,7 @@ namespace YuLinTu.Library.Business
                 height = landFamily.Persons.Count;
             }
             landCount += lands.Count + landDels.Count;
-            if (lands.Count == 0)
-            {
-                //index++;
-            }
+            height = height == 0 ? 1 : height;
             AwareArea += TotalLandAware;
             ActualArea += TotalLandActual;
             TableArea += TotalLandTable;

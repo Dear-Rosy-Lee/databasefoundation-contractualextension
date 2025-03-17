@@ -1,13 +1,10 @@
-﻿using Microsoft.Scripting.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Windows;
-using static YuLinTu.tGISCNet.SmallAngleCheckWKB;
 
 namespace YuLinTu.Library.Business
 {
