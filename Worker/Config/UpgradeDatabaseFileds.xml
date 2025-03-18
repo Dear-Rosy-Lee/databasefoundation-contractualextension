@@ -86,7 +86,7 @@
 				<FieldType>TEXT</FieldType>
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
-			</UpdateField> 
+			</UpdateField>
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>
@@ -834,6 +834,145 @@
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
+			<UpdateField>
+				<FieldName>QZNH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CBJYQZBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>FZJG</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>FZRQ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>TZJG</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>TZRQ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DZRQ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DZCS</FieldName>
+				<FieldType>NUMERIC</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CJZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>CJSJ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>XGZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>XGSJ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DYDM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>BZ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField> 
+			<UpdateField>
+				<FieldName>ZT</FieldName>
+				<FieldType>NUMERIC</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZSFLY</FieldName>
+				<FieldType>BOOL</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZLQRQ</FieldName>
+				<FieldType>DATETIME</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZLQRXM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZLQRZJLX</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>QZLQRZJHM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>JZSFSH</FieldName>
+				<FieldType>BOOL</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>YSZSBH</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>

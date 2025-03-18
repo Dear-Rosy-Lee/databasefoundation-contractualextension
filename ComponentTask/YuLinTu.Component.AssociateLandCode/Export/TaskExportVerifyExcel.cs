@@ -170,6 +170,7 @@ namespace YuLinTu.Library.Business
 
                 if (tissue != null)
                     zoneName = tissue.Name;
+
                 GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
@@ -213,9 +214,15 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void GetDelDataToExport(List<ContractAccountLandFamily> accountFamilyCollection, string zonecode)
         {
+            accountFamilyCollection.Sort((a, b) =>
+            {
+                long aNumber = Convert.ToInt64(a.CurrentFamily.FamilyNumber);
+                long bNumber = Convert.ToInt64(b.CurrentFamily.FamilyNumber);
+                return aNumber.CompareTo(bNumber);
+            });
+
             var query = dbContext.CreateQuery<VirtualPerson_Del>();
             var delvps = query.Where(t => t.ZoneCode == zonecode).ToList();
-
             var dquery = dbContext.CreateQuery<ContractLand_Del>();
             var dellds = dquery.Where(t => t.DYBM == zonecode).ToList();
             foreach (var item in delvps)
@@ -223,6 +230,19 @@ namespace YuLinTu.Library.Business
                 var vp = item.ConvertTo<VirtualPerson>();
                 vp.Status = eVirtualPersonStatus.Bad;
                 var landDelCollection = dellds.FindAll(c => c.CBFID == vp.ID);
+                var dfvp = accountFamilyCollection.Find(t => t.CurrentFamily.OldVirtualCode == item.OldVirtualCode);
+                if (dfvp != null)
+                {
+
+                    foreach (var land in dfvp.LandCollection)
+                    {
+                        var dl = landDelCollection.Find(t => t.DKBM == land.OldLandNumber);
+                        if (dl != null)
+                            landDelCollection.Remove(dl);
+                    }
+                    dfvp.LandDelCollection.AddRange(landDelCollection);
+                    continue;
+                }
                 if (jtmcs.Contains(item.Name))
                 {
                     var jten = accountFamilyCollection.Find(t => t.CurrentFamily.Name == item.Name);

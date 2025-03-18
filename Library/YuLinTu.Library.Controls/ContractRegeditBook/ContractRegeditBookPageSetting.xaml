@@ -7,7 +7,7 @@
              xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
              xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro" 
              xmlns:am="clr-namespace:YuLinTu.Library.Controls"
-             Height="230" Width="350" Header="证书分页设置">
+             Height="230" Width="400" Header="证书分页设置">
     <Grid>
         <Grid.Resources>
             <Style x:Key="LableStyle" TargetType="Label">
@@ -21,15 +21,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Margin="10,25">
+        <Grid Margin="10,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35"/>
 
             </Grid.RowDefinitions>
 

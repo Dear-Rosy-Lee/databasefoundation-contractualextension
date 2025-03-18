@@ -120,7 +120,7 @@ namespace YuLinTu.Library.Business
             Worksheet2.Cells.SetColumnWidth(2, 25);
             Worksheet2.Cells.SetColumnWidth(3, 25);
             bhqkList = EnumStore<eBHQK>.GetListByType();
-            var delvps = AccountLandFamily.FindAll(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad);
+            //var delvps = AccountLandFamily.FindAll(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad);
 
             //HashSet<Guid> delset = new HashSet<Guid>();
             //foreach (var landFamily in AccountLandFamily)
@@ -130,7 +130,7 @@ namespace YuLinTu.Library.Business
             //    var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
             //    if (delvp != null)
             //    {
-            //        if (delvp.CurrentFamily.ID.ToString() == "abbcb9db-41bd-4572-b58e-79e5454b87c1") 
+            //        if (delvp.CurrentFamily.ID.ToString() == "abbcb9db-41bd-4572-b58e-79e5454b87c1")
             //        {
             //        }
             //        delset.Add(delvp.CurrentFamily.ID);

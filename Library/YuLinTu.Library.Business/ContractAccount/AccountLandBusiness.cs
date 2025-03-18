@@ -3994,7 +3994,7 @@ namespace YuLinTu.Library.Business
                     }
                     landIndex = (templist.Count == 0 ? 0 : mxnum) + 1;
                     List<ContractLand> landsOfStatusPart = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
-                    List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
+                    List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => t.LandNumber.StartsWith(t.ZoneCode));
                     ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                     ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                     foreach (var item in landsOfStatusPartStay)

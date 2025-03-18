@@ -157,7 +157,7 @@ namespace YuLinTu.Library.Business
                 }
                 if (tissue != null)
                     zoneName = tissue.Name;
-                GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
+                //GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
                 var export = new ExportLandVerifyExcelTable();

@@ -1,15 +1,14 @@
 ﻿/*
- * (C) 2021 - 2024 鱼鳞图公司版权所有,保留所有权利
+ * (C) 2021 - 2025 鱼鳞图公司版权所有,保留所有权利
 */
 
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Windows.Forms;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using YuLinTu.Data;
 using YuLinTu.Library.Aux;
 using YuLinTu.Library.Business;
@@ -2811,12 +2810,26 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
                 cbdkxx.HTMJM = Math.Round(land.ActualArea, 2);
-                cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                if (land.LandExpand.MeasureArea > 0)
+                {
+                    cbdkxx.HTMJ = land.LandExpand.MeasureArea;
+                }
+                else
+                {
+                    cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                }
             }
             else if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
                 cbdkxx.HTMJM = Math.Round(land.AwareArea, 2);
-                cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                if (land.LandExpand.MeasureArea > 0)
+                {
+                    cbdkxx.HTMJ = land.LandExpand.MeasureArea;
+                }
+                else
+                {
+                    cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                }
             }
             cbdkxx.YHTMJM = Math.Round((land.TableArea != null ? land.TableArea.Value : 0), 2);
             cbdkxx.YHTMJ = Math.Round(cbdkxx.YHTMJM.Value / 0.0015, 2);
