@@ -541,28 +541,14 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             spaceProgress.Alert += (s, e) => { this.ReportAlert(e.Grade, e.UserState, e.Description); };
 
             var efe = new ExportFileEntity();
-            if (OnlyExportLandResult)
-            {
-                ExportOnlyLandResult(efe);
-            }
+
             dataProgress.ContainDotLine = ContainDotLine;
             canContinue = InitalizeAgricultureDirectory(dataProgress, spaceProgress, efe);
             if (!canContinue)
             {
                 return;
             }
-            if (OnlyExportLandResult)
-            {
-                if (ContainDotLine)
-                {
-                    ExportLandResultFile(spaceProgress, extendSet);
-                }
-                else
-                {
-                    ExportLandOnly(spaceProgress, extendSet);
-                }
-                return;
-            }
+
 
             this.ReportProgress(1, string.Format("正在获取{0}数据", currentZone.FullName));
             var summerys = new List<DataSummary>();
@@ -587,12 +573,16 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             if (!CanChecker)
             {
                 ExportShapeExcel(summerys, spaceProgress, /*sqliteManager,*/ zones);
-                if (ContainDotLine)
+                if (OnlyExportLandResult)
                 {
-                    ExportLandResultFile(spaceProgress, extendSet);
+                    ExportOnlyLandResult(efe);
                 }
                 else
                 {
+                    if (ContainDotLine)
+                    {
+                        ExportLandResultFile(spaceProgress, extendSet);
+                    }
                     ExportLandOnly(spaceProgress, extendSet);
                 }
             }
