@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Autofac;
 using Newtonsoft.Json;
 using Refit;
@@ -18,7 +19,8 @@ namespace YuLinTu.Component.Account.Services
         {
             get
             {
-                var url = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSecurityService, AppParameters.stringDefaultSecurityServiceValue);
+                var url = ConfigurationManager.AppSettings.TryGetValue(AppParameters.stringDefaultSecurityService, AppParameters.stringDefaultSecurityServiceValue);
+                //var url = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSecurityService, AppParameters.stringDefaultSecurityServiceValue);
                 return RefitService.For<IAccountApi>(url);
             }
         }

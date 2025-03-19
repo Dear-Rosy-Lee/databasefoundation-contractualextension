@@ -2,26 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using DotSpatial.Projections;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
-using Newtonsoft.Json;
-using YuLinTu.Appwork;
-using YuLinTu.Component.Account.Models;
 using YuLinTu.Data;
 using YuLinTu.Library.Log;
 using YuLinTu.Spatial;
 using YuLinTu.tGISCNet;
-using YuLinTu.Windows;
 using File = System.IO.File;
 using SpatialReference = YuLinTu.Spatial.SpatialReference;
 
-namespace YuLinTu.Component.QualityCompressionDataTask
+namespace YuLinTu.Component.VectorDataTreatTask
 {
-    public class DataCheckProgress
+    public class VectorDataProgress
     {
         /// <summary>
         /// 图形SRID
@@ -35,107 +30,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// <summary>
         /// 参数
         /// </summary>
-        public QualityCompressionDataArgument DataArgument { get; set; }
+        public VectorDataUpdateArgument DataArgument { get; set; }
 
         public static string ErrorInfo { get; private set; }
 
         public IDataSource Source { get; set; }
 
-
-        public string Check()
-        {
-            //获取当前路径下shape数据
-            ErrorInfo = "";
-            string filepath;
-            string filename;
-            try
-            {
-                filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
-                filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
-                if (!CheckFile(filepath, filename))
-                    return ErrorInfo;
-                var sr = GetByFile(filepath + "\\" + filename);
-                srid = sr.WKID;
-                if (srid == 4490)
-                {
-                    ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
-                    return ErrorInfo;
-                }
-
-                List<LandEntity> ls = new List<LandEntity>();
-                var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid, "");
-                if (landShapeList == null)
-                {
-                    return ErrorInfo;
-                }
-                if (landShapeList.Count == 0)
-                {
-                    return "矢量文件中不存在数据";
-                }
-                ErrorInfo = CheckTopology(landShapeList);
-                if (!string.IsNullOrEmpty(ErrorInfo))
-                {
-                    return ErrorInfo;
-                }
-                var landcode = "";
-                foreach (var item in landShapeList)
-                {
-                    var land = new LandEntity();
-                    land.dkbm = item.DKBM;
-                    var landShape = item.Shape as YuLinTu.Spatial.Geometry;
-                    land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
-                    land.qqdkbm = item.QQDKBM;
-                    var zcode = item.DKBM.Substring(0, 6);
-                    landcode += zcode == landcode ? "" : zcode;
-
-                    ls.Add(land);
-                }
-                if (landcode == "512022" || landcode == "513922")
-                {
-                    return "";
-                }
-                var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
-                //var token = Parameters.Token.ToString();
-                if (string.IsNullOrEmpty(token))
-                {
-                    ErrorInfo = "请先登录后,再进行检查";
-                    return ErrorInfo;
-                }
-
-                ApiCaller apiCaller = new ApiCaller();
-                apiCaller.client = new HttpClient();
-                string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
-                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
-                string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
-                // 发送 GET 请求
-                //res = await apiCaller.GetDataAsync(postUrl);
-                // 发送 POST 请求
-                string jsonData = JsonConvert.SerializeObject(ls);
-                Log.WriteError(this, "", $"url {postGetTaskIdUrl} token {token} json {jsonData}");
-                var getTaskID = apiCaller.PostGetTaskIDAsync(token, postGetTaskIdUrl, jsonData);
-                string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
-                var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
-                ErrorInfo = apiCaller.ErrorInfo;
-                if (!getResult.IsNullOrEmpty())
-                {
-                    var folderPath = CreateLog();
-                    WriteLog(folderPath, getResult);
-                    ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
-                    return ErrorInfo;
-                }
-                if (getResult == null)
-                {
-                    return ErrorInfo;
-                }
-                return "";
-            }
-            catch (Exception ex)
-            {
-                ErrorInfo = ex.Message;
-                return ErrorInfo;
-            }
-
-        }
         public static SpatialReference GetByFile(string fileName)
         {
             var prjFile = Path.ChangeExtension(fileName, ".prj");
@@ -157,51 +57,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 result.WKID = 4490;
             }
             return result;
-        }
-        public bool CheckFile(string filepath, string filename)
-        {
-            // 校验文件名称
-            //if (!Regex.IsMatch(filename, @"^DK\d{10}$"))
-            //{
-            //    ErrorInfo = "文件名名称不正确，应以DK(6位县级区划代码)(4 位年份代码)为名称";
-            //    return false;
-            //}
-            // 校验文件是否存在
-            string[] requiredExtensions = { ".dbf", ".prj", ".shp", ".shx" };
-
-            foreach (string extension in requiredExtensions)
-            {
-                string fullPath = Path.Combine(filepath, filename + extension);
-                if (!File.Exists(fullPath))
-                {
-                    ErrorInfo = $"缺少文件: {filename + extension}";
-                    return false;
-                }
-            }
-
-
-            return true;
-        }
-        public string CreateLog()
-        {
-            // 指定文件夹路径
-            string folderPath = DataArgument.ResultFilePath;
-            string fileName = $"检查结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
-            // 合成完整文件路径
-            folderPath = Path.Combine(folderPath, fileName);
-            File.WriteAllText(folderPath, "检查结果记录:\n");
-            return folderPath;
-        }
-
-        public void WriteLog(string path, KeyValueList<string, string> mes)
-        {
-            int i = 0;
-            foreach (var item in mes)
-            {
-                i++;
-                IEnumerable<string> stringCollection = new[] { $"{i}. {item.Key}:{item.Value.Substring(0, item.Value.Length - 2)}" };
-                File.AppendAllLines(path, stringCollection);
-            }
         }
 
         static private string CheckField(ShapeFile shp)
