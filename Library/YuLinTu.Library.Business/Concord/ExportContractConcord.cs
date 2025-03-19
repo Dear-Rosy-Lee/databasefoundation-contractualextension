@@ -269,7 +269,19 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
                 SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);
                 SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
-                SetTableCellValue(tableIndex, startRow, 6, item.AwareArea.ToString());
+                var areastr = item.AwareArea.ToString();
+                switch (AreaType)
+                {
+                    case 0:
+                        areastr = item.TableArea.ToString();
+                        break;
+                    case 1:
+                        areastr = item.ActualArea.ToString();
+                        break;
+                    default:
+                        break;
+                }
+                SetTableCellValue(tableIndex, startRow, 6, areastr);
                 totleAwareArea += item.AwareArea;
                 if (item.LandLevel == "01")
                 {
@@ -481,7 +493,7 @@ namespace YuLinTu.Library.Business
         protected virtual void WriteConcordInfo()
         {
             //WitePersonInformaion();
-            WriteSharePersonValue(); 
+            WriteSharePersonValue();
             ProcessLandParcel();
             WriteLandInfo();
 

@@ -254,23 +254,23 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         private bool _InspectionData;
 
-        [DisplayLanguage("检查证件号码重复")]
-        [DescriptionLanguage("检查证件号码重复")]
-        [PropertyDescriptor(
-             Builder = typeof(YuLinTu.Library.Business.PropertyDescriptorBool),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
-        public bool InspectionDocNumRepeat
-        {
-            get { return _InspectionDocNumRepeat; }
-            set
-            {
-                _InspectionDocNumRepeat = value;
-                ExportLastResSettingDefine.InspectionDocNumRepeat = _InspectionDocNumRepeat.ToString();
-                NotifyPropertyChanged("InspectionDocNumRepeat");
-            }
-        }
+        //[DisplayLanguage("检查证件号码重复")]
+        //[DescriptionLanguage("检查证件号码重复")]
+        //[PropertyDescriptor(
+        //     Builder = typeof(YuLinTu.Library.Business.PropertyDescriptorBool),
+        //    UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        //public bool InspectionDocNumRepeat
+        //{
+        //    get { return _InspectionDocNumRepeat; }
+        //    set
+        //    {
+        //        _InspectionDocNumRepeat = value;
+        //        ExportLastResSettingDefine.InspectionDocNumRepeat = _InspectionDocNumRepeat.ToString();
+        //        NotifyPropertyChanged("InspectionDocNumRepeat");
+        //    }
+        //}
 
-        private bool _InspectionDocNumRepeat;
+        //private bool _InspectionDocNumRepeat;
 
         [DisplayLanguage("导出示意图路径为PDF")]
         [DescriptionLanguage("导出示意图路径为PDF")]
@@ -361,8 +361,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
         private bool _OnlyExportLandResult;
 
-        [DisplayLanguage("包含界址点、界址线")]
-        [DescriptionLanguage("只导出地块矢量文件")]
+        [DisplayLanguage("同时导出界址点、界址线")]
+        [DescriptionLanguage("导出矢量文件时，同时导出界址点、界址线")]
         [PropertyDescriptor(
              Builder = typeof(YuLinTu.Library.Business.PropertyDescriptorBool),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
@@ -424,7 +424,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             // HasJZX = bool.Parse(ExportLastResSettingDefine.HasJZX);
             HasAffixData = bool.Parse(ExportLastResSettingDefine.HasScanDataFolder);
             InspectionData = bool.Parse(ExportLastResSettingDefine.InspectionData);
-            InspectionDocNumRepeat = bool.Parse(ExportLastResSettingDefine.InspectionDocNumRepeat);
+            //InspectionDocNumRepeat = bool.Parse(ExportLastResSettingDefine.InspectionDocNumRepeat);
             //IsReportErrorICN = bool.Parse(ExportLastResSettingDefine.IsReportErrorICN);
             IsReportNoConcordLands = bool.Parse(ExportLastResSettingDefine.IsReportNoConcordLands);
             IsReportNoConcordNoLandsFamily = bool.Parse(ExportLastResSettingDefine.IsReportNoConcordNoLandsFamily);

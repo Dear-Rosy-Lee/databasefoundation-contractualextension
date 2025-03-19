@@ -120,7 +120,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             dataProgress.ContainDotLine = true;
             dataProgress.CanChecker = args.InspectionData;
             dataProgress.DictList = DictList;
-            dataProgress.CheckCardNumber = args.InspectionDocNumRepeat;
+            dataProgress.CheckCardNumber = args.InspectionData; //args.InspectionDocNumRepeat;
             dataProgress.IsReportNoConcordLands = args.IsReportNoConcordLands;
             dataProgress.IsSaveParcelPathAsPDF = args.IsSaveParcelPathAsPDF;
             dataProgress.IsReportNoConcordNoLandsFamily = args.IsReportNoConcordNoLandsFamily;
