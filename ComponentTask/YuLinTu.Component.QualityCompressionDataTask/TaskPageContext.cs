@@ -23,12 +23,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 TypeTask = typeof(QualityCompressionData),
                 TypeArgument = typeof(QualityCompressionDataArgument)
             });
-
-            e.Templates.Add(new TaskDescriptor
-            {
-                TypeTask = typeof(SpatialDataMatchingTask),
-                TypeArgument = typeof(SpatialDataMatchingArgument)
-            });
         }
 
         protected override bool NeedHandleMessage()
