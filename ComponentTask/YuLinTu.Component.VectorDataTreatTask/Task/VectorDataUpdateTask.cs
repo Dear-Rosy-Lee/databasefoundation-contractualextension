@@ -270,7 +270,8 @@ namespace YuLinTu.Component.VectorDataTreatTask
             }
             if (pointstr.Count > 0)
             {
-                return $"成功更新{pointstr.GetValue("results") as string}条数据";
+                var ts = pointstr[0].Value;//.GetValue("results");
+                return $"成功更新{ts}条数据";
             }
             return "";
         }

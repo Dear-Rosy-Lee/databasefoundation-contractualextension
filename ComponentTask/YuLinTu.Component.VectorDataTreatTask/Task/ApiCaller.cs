@@ -169,15 +169,22 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 using (JsonDocument resultsDoc = JsonDocument.Parse(resultsJson))
                 {
                     JsonElement resultsRoot = resultsDoc.RootElement;
-                    foreach (JsonProperty property in resultsRoot.EnumerateObject())
+                    try
                     {
-                        string key = property.Name;
-                        string errorMessages = property.Value.GetProperty("errorMessages").GetString();
-                        var result = property.Value.GetProperty("success").GetBoolean();
-                        if (result == false)
+                        foreach (JsonProperty property in resultsRoot.EnumerateObject())
                         {
-                            keyValues.Add(new KeyValue<string, string>(key, errorMessages));
+                            string key = property.Name;
+                            string errorMessages = property.Value.GetProperty("errorMessages").GetString();
+                            var result = property.Value.GetProperty("success").GetBoolean();
+                            if (result == false)
+                            {
+                                keyValues.Add(new KeyValue<string, string>(key, errorMessages));
+                            }
                         }
+                    }
+                    catch
+                    {
+                        keyValues.Add(new KeyValue<string, string>("results", resultsJson));
                     }
                 }
             }
