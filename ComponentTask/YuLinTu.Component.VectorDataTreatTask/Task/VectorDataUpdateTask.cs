@@ -86,7 +86,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
             {
                 try
                 {
-                    ProcessDataOnline(baseUrl, postGetTaskIdUrl, token);
+                    ProcessDataOnline(baseUrl, postGetTaskIdUrl, token, zonecode);
                     this.ReportProgress(100);
                     this.ReportInfomation("数据处理成功。");
                     //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
@@ -193,7 +193,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         /// 在线处理数据
         /// </summary>
         /// <returns></returns>
-        public void ProcessDataOnline(string url, string murl, string key)
+        public void ProcessDataOnline(string url, string murl, string key, string szdy)
         {
             int srid = 0;
             var landprj = Path.ChangeExtension(argument.CheckFilePath, "prj");
@@ -214,7 +214,8 @@ namespace YuLinTu.Component.VectorDataTreatTask
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
             this.ReportProgress(5, "开始处理数据");
             var p = 90.0 / landShapeList.Count();
-            int pindex = 1;
+            int pindex = 0;
+            int index = 0;
             List<LandEntity> ls = new List<LandEntity>();
             foreach (var item in landShapeList)
             {
@@ -225,13 +226,27 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
                 land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
                 ls.Add(land);
+                if (ls.Count == 100)
+                {
+                    var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
+                    int upint = 0;
+                    int.TryParse(upcountstr, out upint);
+                    pindex += upint;
+                    ls.Clear();
+                }
+                index++;
+                this.ReportProgress((int)(index * p), $"({index}/{landShapeList.Count()})正在更新数据");
             }
-
-            var re = DataProcessOnLine(url, murl, ls, key);
-            if (re != "200")
+            if (ls.Count > 0)
             {
-                this.ReportInfomation(re);
+                var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
+                int upint = 0;
+                int.TryParse(upcountstr, out upint);
+                pindex += upint;
+                ls.Clear();
             }
+            this.ReportInfomation($"文件中共{landShapeList.Count}条数据，成功更新{pindex}条");
+            this.ReportProgress(100);
         }
 
         /// <summary>
@@ -239,18 +254,18 @@ namespace YuLinTu.Component.VectorDataTreatTask
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private string DataProcessOnLine(string baseUrl, string murl, List<LandEntity> data, string token)
+        private string DataProcessOnLine(string baseUrl, string murl, List<LandEntity> data, string token, string szdy)
         {
             ApiCaller apiCaller = new ApiCaller();
             apiCaller.client = new HttpClient();
             string jsonData = JsonConvert.SerializeObject(data);
             try
             {
-                var getTaskID = apiCaller.PostGetTaskIDAsync(token, $"{baseUrl}{murl}", jsonData);
-                string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
-                var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
+                //var getTaskID = apiCaller.(token, $"{baseUrl}{murl}", jsonData);
+                //string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
+                var getResult = apiCaller.PostDataAsync($"{baseUrl}{murl}", jsonData, token, szdy);
                 //var getresult = apiCaller.PostDataAsync(url, jsonData, token);
-                return ConstructCoordsFromString(getResult);
+                return getResult;// ConstructCoordsFromString(getResult);
             }
             catch (Exception ex)
             {

@@ -51,7 +51,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         /// <param name="url"></param>
         /// <param name="jsonData"></param>
         /// <returns></returns>
-        public string PostDataAsync(string url, string jsonData, string token = "")
+        public string PostDataAsync(string url, string jsonData, string token = "", string szdy = "")
         {
             try
             {
@@ -60,6 +60,10 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 if (!string.IsNullOrEmpty(token))
                 {
                     client.DefaultRequestHeaders.Add("token", token);
+                }
+                if (!string.IsNullOrEmpty(szdy))
+                {
+                    client.DefaultRequestHeaders.Add("szdy", szdy);
                 }
                 // 发送 POST 请求
                 HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
@@ -74,17 +78,30 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
                     {
                         JsonElement root = doc.RootElement;
-                        JsonElement data = root.GetProperty("result");
-                        JsonElement jsuccess = root.GetProperty("success");
-                        if (jsuccess.ToString().ToLower().Equals("false"))
+                        JsonElement data = new JsonElement();
+                        var res = root.TryGetProperty("result", out data);
+                        if (res)
                         {
-                            string err = root.GetProperty("errormsg").ToString();
-                            throw new Exception(err);
+                            data = root.GetProperty("result");
+                            JsonElement jsuccess = root.GetProperty("success");
+                            if (jsuccess.ToString().ToLower().Equals("false"))
+                            {
+                                string err = root.GetProperty("errormsg").ToString();
+                                throw new Exception(err);
+                            }
+                            else
+                            {
+                                string points = data.GetProperty("points").ToString();
+                                return points;
+                            }
                         }
-                        else
+
+                        var updata = root.TryGetProperty("data", out data);
+                        if (updata)
                         {
-                            string points = data.GetProperty("points").ToString();
-                            return points;
+
+                            JsonElement jsuccess = root.GetProperty("data");
+                            return jsuccess.ToString();
                         }
                     }
                 }
