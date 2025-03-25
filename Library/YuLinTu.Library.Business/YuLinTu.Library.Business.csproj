@@ -316,6 +316,7 @@
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerArgument.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerAttribute.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckProgress.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerArgument.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerOperation.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />

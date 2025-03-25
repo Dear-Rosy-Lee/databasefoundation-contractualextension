@@ -231,7 +231,7 @@ namespace YuLinTu.Library.Business
     }
 
     [NavigationItem("数据检查")]
-    public class DataRepeatability : INotifyPropertyChanged
+    public class DataRepeataBility : INotifyPropertyChanged
     {
         private bool _dataRepeataBilityCheck;
         private bool _dataRepeataBilityCheckCode;
@@ -264,7 +264,7 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        public DataRepeatability()
+        public DataRepeataBility()
         {
             DataRepeataBilityCheck = true;
             DataRepeataBilityCheckCode = true;

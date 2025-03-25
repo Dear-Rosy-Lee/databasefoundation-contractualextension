@@ -160,14 +160,14 @@ namespace YuLinTu.Library.Controls
             var dataCorrectness = MapCheckItems<DataCorrectness>();
             var ruleOfIDCheck = MapCheckItems<RuleOfIDCheck>();
             var dataLogic = MapCheckItems<DataLogic>();
-            var dataRepeatability = MapCheckItems<DataRepeatability>();
+            var dataRepeatability = MapCheckItems<DataRepeataBility>();
             var uniqueness = MapCheckItems<Uniqueness>();
             TaskArgument = new TaskAttributeDataCheckerArgument();
             TaskArgument.MandatoryField = mandatoryField;
             TaskArgument.DataCorrectness = dataCorrectness;
             TaskArgument.RuleOfIDCheck = ruleOfIDCheck;
             TaskArgument.DataLogic = dataLogic;
-            TaskArgument.DataRepeatability = dataRepeatability;
+            TaskArgument.DataRepeataBility = dataRepeatability;
             TaskArgument.Uniqueness = uniqueness;
         }
 

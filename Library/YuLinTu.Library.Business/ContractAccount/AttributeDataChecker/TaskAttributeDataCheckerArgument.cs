@@ -26,7 +26,7 @@ namespace YuLinTu.Library.Business
         public DataCorrectness DataCorrectness { get; set; }
         public RuleOfIDCheck RuleOfIDCheck { get; set; }
         public DataLogic DataLogic { get; set; }
-        public DataRepeatability DataRepeatability { get; set; }
+        public DataRepeataBility DataRepeataBility { get; set; }
         public Uniqueness Uniqueness { get; set; }
 
         #endregion
