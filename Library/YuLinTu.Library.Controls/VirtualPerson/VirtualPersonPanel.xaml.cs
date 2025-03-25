@@ -1712,6 +1712,7 @@ namespace YuLinTu.Library.Controls
             argument.InitAllNum = page.InstallerAllNumber;
             argument.ListPerson = VirtualPersonFilter(persons);
             argument.VillageInlitialSet = false;
+            argument.InitiallStartNum = page.InitiallStartNum;
             argument.FarmerFamilyNumberIndex = new int[] { 1 };  //农户
             argument.PersonalFamilyNumberIndex = new int[] { 8001 };  //个人
             argument.UnitFamilyNumberIndex = new int[] { 9001 };  //单位
@@ -1742,7 +1743,7 @@ namespace YuLinTu.Library.Controls
         {
             if (page == null)
                 return;
-            TaskGroupInitialVirtualPersonArgument groupArgument = new TaskGroupInitialVirtualPersonArgument();
+            var groupArgument = new TaskGroupInitialVirtualPersonArgument();
             groupArgument.Database = DbContext == null ? DataBaseSource.GetDataBaseSource() : DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.InitiallNumber = page.InitiallNumber;
@@ -1775,8 +1776,9 @@ namespace YuLinTu.Library.Controls
             groupArgument.CNation = page.CNation;
             groupArgument.VirtualType = this.VirtualType;
             groupArgument.FamilyOtherSet = FamilyOtherSet;
+            groupArgument.InitiallStartNum = page.InitiallStartNum;
             groupArgument.VillageInlitialSet = currentZone.Level == eZoneLevel.Village ? SystemSet.VillageInlitialSet : false;
-            TaskGroupInitialVirtualPersonOperation groupOperation = new TaskGroupInitialVirtualPersonOperation();
+            var groupOperation = new TaskGroupInitialVirtualPersonOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = VirtualPersonInfo.PersonInitialDesc;   //任务描述
             groupOperation.Name = VirtualPersonInfo.PersonInitiall;       //任务名称

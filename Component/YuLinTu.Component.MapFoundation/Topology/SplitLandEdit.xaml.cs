@@ -158,7 +158,7 @@ namespace YuLinTu.Component.MapFoundation
             }
             Owner.ShowDialog(new MessageDialog()
             {
-                Message = "是否确定地块编码编辑完成并保存？",
+                Message = "是否确定已完成地块编码调整并保存数据？",
                 Header = "地块编码"
             }, (b, r) =>
             {

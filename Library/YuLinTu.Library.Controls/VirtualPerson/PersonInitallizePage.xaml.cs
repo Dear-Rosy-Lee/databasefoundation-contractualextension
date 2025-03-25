@@ -79,6 +79,16 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum
+        {
+            get { return initiallStartNum; }
+            set { initiallStartNum = value; }
+        }
+        private int initiallStartNum;
+
+        /// <summary>
         /// 初始化邮编
         /// </summary>
         public bool InitiallZip
@@ -246,6 +256,8 @@ namespace YuLinTu.Library.Controls
             InitiallControl();
             btnAdd.IsEnabled = false;
             eMode = eConstructMode.Family;
+            InitiallStartNum = 1;
+            txtInitiallStartNum.Text = InitiallStartNum.ToString();
         }
 
         #endregion
@@ -336,6 +348,9 @@ namespace YuLinTu.Library.Controls
                 InitPersonComment = (bool)cbPersonComment.IsChecked;
                 InitSharePersonComment = (bool)cbSharePersonComment.IsChecked;
                 InstallerAllNumber = (bool)cbNumberAll.IsChecked;
+                int pinstartnun = 0;
+                int.TryParse(txtInitiallStartNum.Text, out pinstartnun);
+                InitiallStartNum = pinstartnun == 0 ? 1 : pinstartnun;
             }));
 
             if (!InitialContractWay && !InitConcordNumber && !InitWarrentNumber && !initiallNumber && !initiallNation && !initiallZip && !InitiallVpAddress && !InitiallSurveyPerson

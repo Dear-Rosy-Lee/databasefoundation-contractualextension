@@ -103,11 +103,13 @@
                                 <RadioButton x:Name="rbNew" Click="rbNew_Click"
                                              Content="全部重新生成"
                                              ToolTip="统一生成地块编码"
-                                             HorizontalAlignment="Left" VerticalAlignment="Center"  GroupName="gn_land" Margin="0,0,10,0"  />
+                                             HorizontalAlignment="Left" VerticalAlignment="Center"  GroupName="gn_land" Margin="0,0,70,0"  />
                                 <RadioButton x:Name="rbNewPart" Content="重编合并部分"  IsChecked="True"
                                              ToolTip="将前14位与当前地域不匹配的地块进行重新编码，不填充缺失部分"
-                                             HorizontalAlignment="Left" Margin="70,0,0,0"
-                                             GroupName="gn_land" Click="rbNew_Click" Width="227" />
+                                             HorizontalAlignment="Left"
+                                             GroupName="gn_land" Click="rbNew_Click"/>
+                                <cmps:MetroTextBox Margin="35,0,0,0" x:Name="txtInitiallStartNum" IsEnabled="{Binding ElementName=rbNew,Path=IsChecked}" ToolTip="编码的起始编号" 
+                                                   Width="150" VerticalAlignment="Center"></cmps:MetroTextBox>
 
                             </DockPanel>
 

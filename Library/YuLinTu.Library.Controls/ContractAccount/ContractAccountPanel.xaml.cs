@@ -7056,6 +7056,7 @@ namespace YuLinTu.Library.Controls
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
             argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
             argument.IsNewPart = initialLand.IsNewPart;
+            argument.InitiallStartNum = initialLand.InitiallStartNum;
 
             var operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
@@ -7156,7 +7157,7 @@ namespace YuLinTu.Library.Controls
         private void InitialLandInfoTaskGroup(object page, List<Zone> allZones)
         {
             var initialLand = page as ContractLandInitializePage;
-            TaskGroupInitialLandInfoArgument groupArgument = new TaskGroupInitialLandInfoArgument();
+            var groupArgument = new TaskGroupInitialLandInfoArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.AllZones = allZones;
@@ -7196,6 +7197,8 @@ namespace YuLinTu.Library.Controls
             groupArgument.VillageInlitialSet = SystemSetDefine.VillageInlitialSet;
             groupArgument.InitLandComment = initialLand.InitLandComment;
             groupArgument.LandComment = initialLand.LandComment;
+            groupArgument.InitiallStartNum = initialLand.InitiallStartNum;
+
             var groupOperation = new TaskGroupInitialLandInfoOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;

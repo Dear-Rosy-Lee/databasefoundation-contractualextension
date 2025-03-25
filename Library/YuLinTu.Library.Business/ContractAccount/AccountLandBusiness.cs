@@ -4023,6 +4023,7 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
+                    landIndex = argument.InitiallStartNum;
                     ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                 }
                 var re = landStation.UpdateRange(landsOfStatus);

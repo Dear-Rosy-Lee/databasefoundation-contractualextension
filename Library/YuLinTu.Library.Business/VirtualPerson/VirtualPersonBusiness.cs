@@ -1594,6 +1594,10 @@ namespace YuLinTu.Library.Business
                     familyindex = (templist.Count == 0 ? 0 : mxnum) + 1;
                     partfarmPersons = farmPersons.FindAll(t => !string.IsNullOrEmpty(t.OldVirtualCode) && !t.OldVirtualCode.StartsWith(t.ZoneCode));
                 }
+                else
+                {
+                    familyindex = argument.InitiallStartNum;
+                }
                 dbContext.BeginTransaction();
                 int farmSuccessCount = SetPersonValue(farmPersons, partfarmPersons, argument, landStation, argument.FarmerFamilyNumberIndex, familyindex, 0, vpPercent, currentPercent, markDesc);   //农户
                 int personaSuccessCount = SetPersonValue(personalPersons, null, argument, landStation, argument.PersonalFamilyNumberIndex, 8001, farmPersons.Count, vpPercent, currentPercent, markDesc);  //个人
@@ -1638,7 +1642,7 @@ namespace YuLinTu.Library.Business
             //vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
             bool isNULL = argument.InitialNull;
             List<VirtualPerson> uplist = null;
-            if (vpspart != null)
+            if (vpspart != null && vpspart.Count > 0)
             {
                 uplist = InstallPersonValue(vpspart, argument, isNULL, index, familyIndex);
                 var upstaylist = new List<VirtualPerson>();
