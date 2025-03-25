@@ -2318,6 +2318,7 @@ namespace YuLinTu.Library.Controls
                     return null;
                 var personStation = db.CreateVirtualPersonStation<LandVirtualPerson>();
                 listPerson = personStation.GetByZoneCode(currentZone.FullCode, eLevelOption.Self);
+                listPerson = listPerson.OrderBy(o => int.Parse(o.FamilyNumber)).ToList();
                 if (ContractBusinessSettingDefine.DisplayCollectUsingCBdata)
                 {
                     var persons = listPerson.FindAll(c => c.Name == "集体");
@@ -2727,7 +2728,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var dbContext = CreateDb();
-            ImportLandShapePage addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
             addPage.ThePage = TheWorkPage;
             addPage.Db = dbContext;
             TheWorkPage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -2748,6 +2749,7 @@ namespace YuLinTu.Library.Controls
                 meta.UseContractorNumberImport = addPage.UseContractorNumberImport;
                 meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
+                meta.DelLandImport = addPage.DelLandImport;
                 ImportLandShapeData(meta, dbContext);
             });
         }
@@ -3565,7 +3567,8 @@ namespace YuLinTu.Library.Controls
                     {
                         List<ContractLand> lands = ContractAccountBusiness.GetPersonCollection(CurrentAccountItem.Tag.ID);
                         lands.LandNumberFormat(SystemSetDefine);
-                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "", SettingDefine.ExportPublicTableDeleteEmpty);   //导出单个
+                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "",
+                            SettingDefine.ExportPublicTableDeleteEmpty, SettingDefine.ExportPublicTableUseAwareArea);   //导出单个
                     }
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
@@ -5620,6 +5623,7 @@ namespace YuLinTu.Library.Controls
                             return;
                         }
                     }
+                    //lands.AddRange(geoLandOfFamily);
                     var confirmPage = new ConfirmPage(TheWorkPage, ContractAccountInfo.PreviewMultiParcelOfFamily,
                         string.Format("是否预览{0}地块示意图?", CurrentAccountItem.Tag.Name));
                     confirmPage.Confirm += (a, c) =>
@@ -5627,7 +5631,8 @@ namespace YuLinTu.Library.Controls
                         try
                         {
                             string fileName = SystemSet.DefaultPath;
-                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, landList, CurrentAccountItem.Tag, fileName, false, "", null);
+                            //ContractAccountBusiness.
+                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, geoLands, CurrentAccountItem.Tag, fileName, false, "", null);
                         }
                         catch (Exception ex)
                         {
@@ -5867,7 +5872,7 @@ namespace YuLinTu.Library.Controls
             //    return;
             //}
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
-            ContractLandInitializePage initialPage = new ContractLandInitializePage(isBatch);
+            var initialPage = new ContractLandInitializePage(isBatch);
             initialPage.Workpage = TheWorkPage;
             initialPage.LandBusiness = ContractAccountBusiness;
             initialPage.CurrentZone = CurrentZone;
@@ -7049,8 +7054,9 @@ namespace YuLinTu.Library.Controls
             argument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
             argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
+            argument.IsNewPart = initialLand.IsNewPart;
 
-            TaskInitialLandInfoOperation operation = new TaskInitialLandInfoOperation();
+            var operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
             argument.InitLandComment = initialLand.InitLandComment;
             argument.LandComment = initialLand.LandComment;
@@ -7185,11 +7191,11 @@ namespace YuLinTu.Library.Controls
             groupArgument.InitialNull = initialLand.InitializeNull;
             groupArgument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             groupArgument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
-
+            groupArgument.IsNewPart = initialLand.IsNewPart;
             groupArgument.VillageInlitialSet = SystemSetDefine.VillageInlitialSet;
             groupArgument.InitLandComment = initialLand.InitLandComment;
             groupArgument.LandComment = initialLand.LandComment;
-            TaskGroupInitialLandInfoOperation groupOperation = new TaskGroupInitialLandInfoOperation();
+            var groupOperation = new TaskGroupInitialLandInfoOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;
             groupOperation.Description = ContractAccountInfo.InitialLandInfo;   //任务描述
@@ -7860,7 +7866,7 @@ namespace YuLinTu.Library.Controls
                     ShowBox("数据检查", "请选择在镇级以下(包括镇)地域进行数据检查!");
                     return;
                 }
-                
+
                 else
                 {
                     var dialog = new DataCheckPage();
@@ -7872,7 +7878,7 @@ namespace YuLinTu.Library.Controls
                             return;
                         DataQualityTask(dialog.TaskArgument);
                     });
-                    
+
                 }
             }
             catch (Exception ex)

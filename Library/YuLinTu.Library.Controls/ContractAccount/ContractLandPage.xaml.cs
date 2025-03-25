@@ -13,7 +13,7 @@ using Xceed.Wpf.Toolkit;
 using YuLinTu.Data;
 using YuLinTu.Library.Aux;
 using YuLinTu.Library.Business;
-using YuLinTu.Library.Entity; 
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.NetAux;
 using YuLinTu.Spatial;
@@ -42,7 +42,7 @@ namespace YuLinTu.Library.Controls
         private VirtualPersonBusiness personBusiness;
         private AccountLandBusiness landBusiness;
         private List<Dictionary> list;
-        private int count;
+        //private int count;
         private TaskQueue queueQuery;//获取数据
         private TaskQueue queueGet;//获取数据
         //private string newLandNumber;//新地块编码
@@ -139,8 +139,9 @@ namespace YuLinTu.Library.Controls
                 {
                     if (!IsStockRight)
                     {
-                        cmbVirtualPersonName.ItemsSource = virtualPersonList;
-                        cmbVirtualPersonName.DisplayMemberPath = "Name";
+                        SetSelectPerson();
+                        cmbVirtualPersonName.ItemsSource = SelectVirtualPersonObs;
+                        //cmbVirtualPersonName.DisplayMemberPath = "Name";
                         //cmbVirtualPersonName.SelectedIndex = 0;
                     }
                 }));
@@ -269,6 +270,8 @@ namespace YuLinTu.Library.Controls
         public MapControl MapControl { get; set; }
         public GraphicsLayer layerHover { get; set; }
 
+        public ObservableCollection<SelectPersonInterface> SelectVirtualPersonObs = new ObservableCollection<SelectPersonInterface>();
+
         #endregion
 
         #region Ctor
@@ -295,7 +298,7 @@ namespace YuLinTu.Library.Controls
             this.DataContext = this;
             pointgraphic = new Graphic();
             linegraphic = new Graphic();
-            //IsStockRight = false;
+            //IsStockRight = false; 
         }
 
         #endregion
@@ -319,6 +322,29 @@ namespace YuLinTu.Library.Controls
             if (isAdd && currentZone != null)
             {
                 CurrentLand.LandNumber = landBusiness.GetNewLandNumber(currentZone.FullCode);
+            }
+        }
+
+        /// <summary>
+        /// 设置选择人员信息
+        /// </summary>
+        private void SetSelectPerson(string part = "")
+        {
+            SelectVirtualPersonObs.Clear();
+            if (VirtpersonList != null && VirtpersonList.Count() == 0)
+            {
+                return;
+            }
+            foreach (var svp in VirtpersonList)
+            {
+                var sitm = new SelectPersonInterface()
+                {
+                    ID = svp.ID.ToString(),
+                    Name = $"{svp.Name}({svp.FamilyNumber.PadLeft(4, '0')})"
+                };
+                if (!string.IsNullOrEmpty(part) && !sitm.Name.Contains(part))
+                    continue;
+                SelectVirtualPersonObs.Add(sitm);
             }
         }
 
@@ -382,7 +408,14 @@ namespace YuLinTu.Library.Controls
             if (currentPerson != null && virtualPersonList != null)
             {
                 if (!IsStockRight)
-                    cmbVirtualPersonName.SelectedItem = virtualPersonList.Find(t => t.ID == currentPerson.ID);
+                {
+                    var fvp = virtualPersonList.Find(t => t.ID == currentPerson.ID);
+                    if (fvp != null)
+                    {
+                        var citem = SelectVirtualPersonObs.Where(t => t.ID == fvp.ID.ToString()).FirstOrDefault();
+                        cmbVirtualPersonName.SelectedItem = citem;
+                    }
+                }
             }
             else
             {
@@ -458,6 +491,17 @@ namespace YuLinTu.Library.Controls
             {
                 txtLandNameAlise.Text = land.LandName;
             }
+        }
+
+        /// <summary>
+        /// 更新数据源
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void autoCities_PatternChanged(object sender, Utils.Controls.AutoComplete.AutoCompleteArgs args)
+        {
+            SetSelectPerson(args.Pattern);
+            args.DataSource = SelectVirtualPersonObs;
         }
 
         /// <summary>
@@ -607,6 +651,11 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void GetLandValue()
         {
+            var spi = cmbVirtualPersonName.SelectedItem as SelectPersonInterface;
+            if (spi != null)
+            {
+                currentPerson = VirtpersonList.Find(t => t.ID.ToString() == spi.ID);
+            }
             if (currentPerson == null)
             {
                 //没有指明添加地块的承包方
@@ -1185,7 +1234,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (listVirtualPerson == null || listVirtualPerson.Count() == 0) return;
                     List<Person> listPerson = listVirtualPerson.Find(c => c.ID == currentPerson.ID).SharePersonList;
-                    count = listPerson.Count;
+                    //count = listPerson.Count;
                     txtOwnerName.Text = listPerson.NameString();
                     listVirtualPerson = null;
                     GC.Collect();
@@ -1940,12 +1989,17 @@ namespace YuLinTu.Library.Controls
             return true;
         }
 
-
-
         #endregion
 
         #endregion
+    }
 
-
+    /// <summary>
+    /// 选择人员对象
+    /// </summary>
+    public class SelectPersonInterface
+    {
+        public string ID { get; set; }
+        public string Name { get; set; }
     }
 }

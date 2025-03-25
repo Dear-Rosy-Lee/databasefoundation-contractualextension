@@ -68,6 +68,15 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         }
         private bool _DelOldData;
 
+        [DisplayLanguage("是否汇交数据")]
+        [DescriptionLanguage("是否导入的2018年汇交数据")]
+        public bool IsLegalData
+        {
+            get { return _IsLegalData; }
+            set { _IsLegalData = value; NotifyPropertyChanged("IsLegalData"); }
+        }
+        private bool _IsLegalData;
+
         //public bool NeedCheck
         //{
         //    get { return _NeedCheck; }
@@ -75,7 +84,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         //}
         //private bool _NeedCheck;
 
-        [DisplayLanguage("自动创建数据库")]
+        [DisplayLanguage("新创建数据库")]
         [DescriptionLanguage("自动创建新的数据库,数据将导入到新创建的库中，并设置为数据源")]
         public bool CreatDataBase
         {
@@ -97,9 +106,10 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             //ClrVersion = eIISCLRVersion.v40;
             //Enable32 = true;
             GenerateCoilDot = false;
-            CreatUnit = false;
-            CreatDataBase = false;
-            _DelOldData = true;
+            CreatUnit = true;
+            CreatDataBase = true;
+            DelOldData = true;
+            IsLegalData = true;
         }
 
         #endregion

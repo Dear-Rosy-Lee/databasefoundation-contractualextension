@@ -196,6 +196,11 @@ namespace YuLinTu.Library.Business
         public bool InitialNull;
 
         /// <summary>
+        /// 地块编码是否重新生成不匹配部分
+        /// </summary>
+        public bool IsNewPart { get; set; }
+
+        /// <summary>
         /// 是否初始化地块备注
         /// </summary>
         public bool InitLandComment

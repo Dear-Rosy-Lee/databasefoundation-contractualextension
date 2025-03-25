@@ -35,6 +35,8 @@ namespace YuLinTu.Library.Business
 
         public bool ExportPublicTableDeleteEmpty { get; set; }
 
+        public bool ExportPublicAwareArea { get; set; }
+
         #endregion Properties
 
         #region Ctor
@@ -529,6 +531,7 @@ namespace YuLinTu.Library.Business
 
                 double? tableArea = landCollection[i].TableArea;
                 double actualArea = landCollection[i].ActualArea;
+                double awareArea = landCollection[i].AwareArea;
                 string purpose = landCollection[i].Purpose;
 
                 if (!ToolMath.MatchEntiretyNumber(purpose.ToString()))
@@ -563,7 +566,14 @@ namespace YuLinTu.Library.Business
                                                                                                   //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
                                                                                                   //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
 
-                SetTableCellValue(0, row, colBase + 3, (tableArea == null || !tableArea.HasValue || tableArea.Value <= 0.0) ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(tableArea.Value.ToString(), 2));
+                if (!ExportPublicAwareArea)
+                {
+                    SetTableCellValue(0, row, colBase + 3, (tableArea == null || !tableArea.HasValue || tableArea.Value <= 0.0) ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(tableArea.Value.ToString(), 2));
+                }
+                else
+                {
+                    SetTableCellValue(0, row, colBase + 3, awareArea <= 0.0 ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(awareArea.ToString(), 2));
+                }
                 SetTableCellValue(0, row, colBase + 4, actualArea == 0 ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(actualArea.ToString(), 2));
                 SetTableCellValue(0, row, colBase + 5, listTDYT.Find(c => c.Code == purpose).Name);
                 SetTableCellValue(0, row, colBase + 6, levelString);

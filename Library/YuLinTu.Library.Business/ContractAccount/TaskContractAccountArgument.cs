@@ -3,16 +3,8 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
-using YuLinTu;
 using YuLinTu.Data;
-using System.Collections.ObjectModel;
-using System.Collections;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -96,11 +88,11 @@ namespace YuLinTu.Library.Business
         /// 当前地域下的地块集合
         /// </summary>
         public List<ContractLand> CurrentZoneLandList { get; set; }
-       
+
         /// <summary>
         /// 是否批量
         /// </summary>
-        public bool IsBatch { get; set; }       
+        public bool IsBatch { get; set; }
 
         #region Properties - 导入地块图斑
 
@@ -123,6 +115,8 @@ namespace YuLinTu.Library.Business
         /// 按照地块编码绑定导入-导入地块图斑设置
         /// </summary>
         public bool UseOldLandCodeBindImport { get; set; }
+
+        public bool DelLandImport { get; set; }
 
         /// <summary>
         /// 读取的shp所有字段名称

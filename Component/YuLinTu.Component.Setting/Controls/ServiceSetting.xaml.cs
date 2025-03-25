@@ -3,18 +3,12 @@
  */
 
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
-using System.Xml;
 using AutoUpdaterDotNET;
-using OSGeo.GDAL;
 using YuLinTu.Appwork;
 using YuLinTu.Library.Business;
 using YuLinTu.Windows;
@@ -97,13 +91,13 @@ namespace YuLinTu.Component.Setting
             var ver = asm.GetAttribute<AssemblyFileVersionAttribute>();
             if (ver != null)
                 txtVer.Text = ver.Version;
-            AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
-            AutoUpdater.AppTitle = "升级更新";
-            AutoUpdater.RemindLaterAt = 2;
-            AutoUpdater.Synchronous = true;
-            AutoUpdater.InstallationPath = AppDomain.CurrentDomain.BaseDirectory;
-            AutoUpdater.DownloadPath = AppDomain.CurrentDomain.BaseDirectory;
+            //AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
+            //Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
+            //AutoUpdater.AppTitle = "升级更新";
+            //AutoUpdater.RemindLaterAt = 2;
+            //AutoUpdater.Synchronous = true;
+            //AutoUpdater.InstallationPath = AppDomain.CurrentDomain.BaseDirectory;
+            //AutoUpdater.DownloadPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
         private async void CheckUpdate_Click(object sender, RoutedEventArgs e)

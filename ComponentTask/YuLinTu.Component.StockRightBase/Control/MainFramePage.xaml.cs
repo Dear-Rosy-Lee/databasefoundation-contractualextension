@@ -813,7 +813,7 @@ namespace YuLinTu.Component.StockRightBase.Control
                 ShowBox(ContractAccountInfo.ImportZone, "未选择行政地域");
                 return;
             }
-            ImportLandShapePage addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
             addPage.ThePage = Workpage;
             addPage.Db = DbContext;
             Workpage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -841,7 +841,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         /// </summary>
         private void ImportLandShapeData(TaskContractAccountArgument meta, IDbContext dbContext)
         {
-            TaskContractAccountOperation import = new TaskContractAccountOperation();
+            var import = new TaskContractAccountOperation();
             import.Argument = meta;
             import.Description = ContractAccountInfo.ImportShapeData;
             import.Name = ContractAccountInfo.ImportShpData;
@@ -891,12 +891,12 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void Btn_PreviewConcord_Click(object sender, RoutedEventArgs e)
         {
-            Preview("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Preview("合同(确股)", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         private void Btn_ExportConcord_Click(object sender, RoutedEventArgs e)
         {
-            Export("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Export("合同（确股）", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         #endregion

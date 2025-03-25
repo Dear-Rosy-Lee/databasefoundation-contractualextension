@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using Utils.Tool;
+using YuLinTu.Library.Business;
 using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
@@ -48,6 +49,10 @@ namespace YuLinTu.Product.YuLinTuTool
                     $"\n----- {ex.Message}-----", "运行提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            //UpdateProgram.InstallUpdateProgram();
+            //UpdateProgram.CheckUpdate();
+
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);
             shell.Shutdown += (s, e) =>

@@ -1,33 +1,8 @@
 ﻿/*
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
 using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Unity;
-using YuLinTu;
-using YuLinTu.Data;
-using YuLinTu.Library.Repository;
-using System.ComponentModel;
-using System.Threading;
-using System.Diagnostics;
-using YuLinTu.Library.WorkStation;
-using YuLinTu.Library.Office;
-using System.IO;
-using System.Collections.ObjectModel;
-using YuLinTu.Spatial;
-using YuLinTu.Data.Shapefile;
-using YuLinTu.Data.Dynamic;
-using System.Collections;
-using System.Reflection;
-using YuLinTu.Diagrams;
-using System.Threading.Tasks;
 
 namespace YuLinTu.Library.WorkStation
 {

@@ -199,16 +199,17 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             dataDb.FBFJH = GetDatasByKeyCode<FBF>(FBF.FFBFBM, keyCode);
             if (!UseZoneCode)
             {
-                var cbfs = GetDatasByKeyCode<CBF>(CBF.FCBFBM, keyCode);
+                var cbfs = GetDatasByKeyCode<CBFSC>(CBF.FCBFBM, keyCode);
                 dataDb.CBFJH = cbfs.ConvertAll(t =>
                 {
-                    var cbf = t.ConvertTo<CBFSC>();
+                    var cbf = t;//.ConvertTo<CBFSC>();
                     cbf.XZDYBM = cbf.CBFBM.Substring(0, 14);
                     return cbf;
                 });
             }
             else
             {
+                var cbfs2 = GetDatasByKeyCode<CBFSC>(CBF.FCBFBM, keyCode);
                 dataDb.CBFJH = GetDatasByKeyCode<CBFSC>(CBFSC.FXZDYBM, keyCode);
             }
             var dks = GetDatasByKeyCode<CBDKXXSC>(CBDKXX.FDKBM, keyCode);
@@ -344,7 +345,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <param name="spaceLandList">地块集合</param>
         /// <param name="djbCollection">登记簿集合</param>
         /// <param name="creList">空户或自留地数据</param>
-        public List<ComplexRightEntity> GetRightCollectionByZone(string searchCode, string zoneCode, Dictionary<string, DKEX> spaceLandList,
+        public List<ComplexRightEntity> GetRightCollectionByZone(string searchCode, string zoneCode, Dictionary<string, DKEXP> spaceLandList,
             DataCollectionDb townCollection, Dictionary<string, string> dicCodeName, List<ComplexRightEntity> creList, List<string> noPersonLand = null)
         {
             var cbfList = townCollection.CBFJH.FindAll(t => t.CBFBM.StartsWith(searchCode));
@@ -441,7 +442,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <summary>
         /// 通过权证编码获取数据
         /// </summary>
-        public ComplexRightEntity GetExchageEntity(FBF fbf, CBF cbf, string zoneCode, Dictionary<string, DKEX> spaceLandList,
+        public ComplexRightEntity GetExchageEntity(FBF fbf, CBF cbf, string zoneCode, Dictionary<string, DKEXP> spaceLandList,
             DataCollectionDb dc, Dictionary<string, string> dicCodeName, List<ComplexRightEntity> creList)
         {
             string cbfbm = cbf.CBFBM;
@@ -450,10 +451,16 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             right.ZoneCode = zoneCode;
             right.CBF = cbf;
             right.JTCY = dc.JTCYJH.FindAll(t => t.CBFBM == cbfbm);
-            right.HT = dc.HTJH.FindAll(t => t.CBFBM == (cbfbm));
+            right.HT = new List<ICBHT>();
             right.FBF = fbf;
             var CBDKJH = dc.DKXXJH.FindAll(t => t.CBFBM == (cbfbm));
             right.DKXX = ChangeDKXX(CBDKJH, spaceLandList);
+
+            var hts = dc.HTJH.FindAll(t => t.CBFBM == (cbfbm));
+            foreach (var ht in hts)
+            {
+                right.HT.Add(ht as ICBHT);
+            }
             if (right.DKXX == null || right.DKXX.Count == 0)
             {
                 creList.Add(right);
@@ -543,7 +550,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// 转换地块信息实体
         /// </summary>
         public List<CBDKXXEX> ChangeDKXX(List<CBDKXXSC> landList,
-            Dictionary<string, DKEX> spaceLandList, List<DKEX> lands = null)
+            Dictionary<string, DKEXP> spaceLandList, List<DKEXP> lands = null)
         {
             var dkCollection = new List<CBDKXXEX>();
             var hashCode = new HashSet<string>();

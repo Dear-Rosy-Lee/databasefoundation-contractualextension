@@ -12,7 +12,6 @@ namespace YuLinTu.Library.Business
         #region Property
 
         public bool IsGroup { get; set; }
-
         #endregion Property
 
         #region Field
@@ -21,7 +20,7 @@ namespace YuLinTu.Library.Business
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
-
+        private List<string> jtmcs;
         #endregion Field
 
         #region Ctor
@@ -31,6 +30,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskExportVerifyExcel()
         {
+            jtmcs = new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" };
         }
 
         #endregion Ctor
@@ -74,8 +74,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出摸底核实表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出摸底核实表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出调查成果表任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出调查成果表出现异常!");
             }
         }
 
@@ -155,14 +155,28 @@ namespace YuLinTu.Library.Business
                     this.ReportError($"未获取到{zone.FullName}下的发包方数据不完整：代表姓名({tissue.LawyerName} )、代表证件号({tissue.LawyerCartNumber} )、地址({tissue.LawyerAddress} )、电话({tissue.LawyerTelephone} )");
                     return false;
                 }
+                var jtfs = accountFamilyCollection.FindAll(t => t.CurrentFamily.Name == ("集体") || t.CurrentFamily.Name.Contains("集体"));
+                if (jtfs.Count > 1)
+                {
+                    this.ReportError($"{zone.FullName}下的存在多个集体，请处理后再进行导出！");
+                    return false;
+                }
+
+                if (jtfs.Count() == 1 && jtfs[0].CurrentFamily.Name != "集体")
+                {
+                    this.ReportError($"{zone.FullName}下的导出表的集体承包方名称只能为 集体，请修改为集体后再进行导出！");
+                    return false;
+                }
+
                 if (tissue != null)
                     zoneName = tissue.Name;
+
                 GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "摸底核实表" + ".xls";
+                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xls";
 
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
@@ -200,17 +214,44 @@ namespace YuLinTu.Library.Business
         /// </summary>
         private void GetDelDataToExport(List<ContractAccountLandFamily> accountFamilyCollection, string zonecode)
         {
+            accountFamilyCollection.Sort((a, b) =>
+            {
+                long aNumber = Convert.ToInt64(a.CurrentFamily.FamilyNumber);
+                long bNumber = Convert.ToInt64(b.CurrentFamily.FamilyNumber);
+                return aNumber.CompareTo(bNumber);
+            });
+
             var query = dbContext.CreateQuery<VirtualPerson_Del>();
             var delvps = query.Where(t => t.ZoneCode == zonecode).ToList();
-
             var dquery = dbContext.CreateQuery<ContractLand_Del>();
             var dellds = dquery.Where(t => t.DYBM == zonecode).ToList();
-
             foreach (var item in delvps)
             {
                 var vp = item.ConvertTo<VirtualPerson>();
                 vp.Status = eVirtualPersonStatus.Bad;
                 var landDelCollection = dellds.FindAll(c => c.CBFID == vp.ID);
+                var dfvp = accountFamilyCollection.Find(t => t.CurrentFamily.OldVirtualCode == item.OldVirtualCode);
+                if (dfvp != null)
+                {
+
+                    foreach (var land in dfvp.LandCollection)
+                    {
+                        var dl = landDelCollection.Find(t => t.DKBM == land.OldLandNumber);
+                        if (dl != null)
+                            landDelCollection.Remove(dl);
+                    }
+                    dfvp.LandDelCollection.AddRange(landDelCollection);
+                    continue;
+                }
+                if (jtmcs.Contains(item.Name))
+                {
+                    var jten = accountFamilyCollection.Find(t => t.CurrentFamily.Name == item.Name);
+                    if (jten != null)
+                    {
+                        jten.LandDelCollection.AddRange(landDelCollection);
+                        continue;
+                    }
+                }
                 ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                 accountLandFamily.CurrentFamily = vp;
                 accountLandFamily.Persons = vp.SharePersonList;

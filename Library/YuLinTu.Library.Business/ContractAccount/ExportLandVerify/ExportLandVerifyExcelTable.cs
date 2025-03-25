@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
 using System.IO;
-using YuLinTu.Data;
+using System.Linq;
 using Aspose.Cells;
-using Microsoft.Scripting.Utils;
+using YuLinTu.Data;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
 
 namespace YuLinTu.Library.Business
 {
@@ -38,7 +37,7 @@ namespace YuLinTu.Library.Business
         protected List<Dictionary> dictDKLB;
         protected List<Dictionary> dictTDLYLX;
         protected List<EnumStore<eBHQK>> bhqkList;//变化情况
-
+        protected List<string> jtmcs;
 
         #endregion Fields
 
@@ -95,6 +94,7 @@ namespace YuLinTu.Library.Business
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
             base.TemplateName = "摸底调查核实表";
+            jtmcs = new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体", "共有", "争议地" };
         }
 
         /// <summary>
@@ -215,32 +215,32 @@ namespace YuLinTu.Library.Business
             }
             familyCount = AccountLandFamily.Count;
             toolProgress.InitializationPercent(AccountLandFamily.Count, 99, 1);
-            Worksheet2 = workbook.Worksheets.Add("ysb");
-            Worksheet2.Cells.SetColumnWidth(0, 21);
-            Worksheet2.Cells.SetColumnWidth(1, 21);
-            Worksheet2.Cells.SetColumnWidth(2, 25);
-            Worksheet2.Cells.SetColumnWidth(3, 25);
+            //Worksheet2 = workbook.Worksheets.Add("ysb");
+            //Worksheet2.Cells.SetColumnWidth(0, 21);
+            //Worksheet2.Cells.SetColumnWidth(1, 21);
+            //Worksheet2.Cells.SetColumnWidth(2, 25);
+            //Worksheet2.Cells.SetColumnWidth(3, 25);
             bhqkList = EnumStore<eBHQK>.GetListByType();
             var delvps = AccountLandFamily.FindAll(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad);
 
-            HashSet<Guid> delset = new HashSet<Guid>();
-            foreach (var landFamily in AccountLandFamily)
-            {
-                if (delset.Contains(landFamily.CurrentFamily.ID) || landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
-                    continue;
-                var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
-                if (delvp != null)
-                {
-                    delset.Add(delvp.CurrentFamily.ID);
-                    foreach (var item in delvp.LandDelCollection)
-                    {
-                        if (landFamily.LandCollection.Any(t => t.LandNumber == item.DKBM))
-                            continue;
-                        landFamily.LandDelCollection.Add(item);
-                    }
-                }
-            }
-            AccountLandFamily.RemoveAll(t => delset.Contains(t.CurrentFamily.ID));
+            //HashSet<Guid> delset = new HashSet<Guid>();
+            //foreach (var landFamily in AccountLandFamily)
+            //{
+            //    if (delset.Contains(landFamily.CurrentFamily.ID) || landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
+            //        continue;
+            //    var delvp = delvps.Find(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == landFamily.CurrentFamily.OldVirtualCode);
+            //    if (delvp != null)
+            //    {
+            //        delset.Add(delvp.CurrentFamily.ID);
+            //        foreach (var item in delvp.LandDelCollection)
+            //        {
+            //            if (landFamily.LandCollection.Any(t => t.LandNumber == item.DKBM))
+            //                continue;
+            //            landFamily.LandDelCollection.Add(item);
+            //        }
+            //    }
+            //}
+            //AccountLandFamily.RemoveAll(t => delset.Contains(t.CurrentFamily.ID));
             foreach (var landFamily in AccountLandFamily)
             {
                 cindex++;
@@ -249,7 +249,7 @@ namespace YuLinTu.Library.Business
             }
             WriteTempLate();
             SetLineType("A7", "AI" + index, false);
-            Worksheet2.IsVisible = false;
+            //Worksheet2.IsVisible = false;
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
             AccountLandFamily = null;
             return true;
@@ -264,7 +264,6 @@ namespace YuLinTu.Library.Business
             if (landFamily == null)
                 return;
 
-            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count + landFamily.LandDelCollection.Count : landFamily.Persons.Count;
             double TotalLandAware = 0;
             double TotalLandActual = 0;
             double TotalLandTable = 0;
@@ -295,124 +294,148 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(bindex, 27.75);
                 bindex++;
             }
-
-            foreach (var land in lands)
+            HashSet<string> setlandnumber = new HashSet<string>();//手动设置关联的地块编码
+            var familystr = ((int)eLandCategoryType.ContractLand).ToString();
+            foreach (ContractLand land in lands)
             {
                 double tableArea = land.TableArea ?? 0;
                 TotalLandTable += tableArea;
-                TotalLandAware += land.AwareArea;
+                if (land.LandCategory == familystr)
+                {
+                    TotalLandAware += land.AwareArea;
+                }
                 TotalLandActual += land.ActualArea;
-                WriteCurrentZoneInformation(land, aindex);
+                WriteLandInformation(landFamily.CurrentFamily, land, aindex, land.LandCategory == familystr);
                 SetRowHeight(aindex, 27.75);
+                if (!string.IsNullOrEmpty(land.OldLandNumber) && !setlandnumber.Contains(land.OldLandNumber))
+                {
+                    setlandnumber.Add(land.OldLandNumber);
+                }
                 aindex++;
             }
-            foreach (var landDel in landDels)
+            landDels.RemoveAll(t => setlandnumber.Contains(t.DKBM));
+            foreach (ContractLand_Del landDel in landDels)
             {
-                TotalLandTable += 0;
-                TotalLandAware += landDel.QQMJ;
-                TotalLandActual += landDel.SCMJ;
                 SetRowHeight(aindex, 27.75);
-                WriteCurrentZoneInformation(landDel, aindex);
+                WriteDelLandInformation(landFamily.CurrentFamily, landDel, aindex);
                 aindex++;
             }
-
+            int height = 0;
+            if ((landFamily.LandCollection.Count + landFamily.LandDelCollection.Count) > landFamily.Persons.Count)
+            {
+                height = landFamily.LandCollection.Count + landFamily.LandDelCollection.Count;
+            }
+            else
+            {
+                height = landFamily.Persons.Count;
+            }
             landCount += lands.Count + landDels.Count;
-            if (lands.Count == 0)
-            {
-                //index++;
-            }
+            height = height == 0 ? 1 : height;
             AwareArea += TotalLandAware;
             ActualArea += TotalLandActual;
             TableArea += TotalLandTable;
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
+            string virtualpersonCode = $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}";
+            if (landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
+            {
+                virtualpersonCode = landFamily.CurrentFamily.OldVirtualCode;
+            }
+            bool sfjt = jtmcs.Contains(landFamily.CurrentFamily.Name);
+            string oldvpcode = string.IsNullOrEmpty(landFamily.CurrentFamily.OldVirtualCode) && landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad ? virtualpersonCode : landFamily.CurrentFamily.OldVirtualCode;
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
-            InitalizeRangeValue("C" + index, "C" + (index + height - 1), cardtype.Name);
-            InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}");
-            InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
-            InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.ZoneCode.PadRight(14, '0')}{result}", Worksheet2);
-            InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), $"{landFamily.CurrentFamily.OldVirtualCode}", Worksheet2);
+            InitalizeRangeValue("C" + index, "C" + (index + height - 1), sfjt ? "" : cardtype.Name);
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), sfjt ? "" : virtualpersonCode);
+            //InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
+            //InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), sfjt ? "" : virtualpersonCode, Worksheet2);
+            //InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
+            //InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
-            InitalizeRangeValue("G" + index, "G" + (index + height - 1), landFamily.Persons.Count);
+            InitalizeRangeValue("G" + index, "G" + (index + height - 1), sfjt ? 0 : landFamily.Persons.Count);
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
-            var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
-            if (bhqk != null)
+            if (landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
             {
-                InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
+                InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "合同注销");
             }
             else
             {
-                InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "");
+                var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
+                if (bhqk != null)
+                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
+                else
+                {
+                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "其他直接顺延");
+                }
             }
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
         }
-        public virtual void WriteCurrentZoneInformation(ContractLand_Del landDel, int index)
-        {
-            InitalizeRangeValue("P" + index, "P" + index, landDel.DKMC.IsNullOrEmpty() ? "/" : landDel.DKMC);
-            InitalizeRangeValue("Q" + index, "Q" + index, landDel.DKBM.IsNullOrEmpty() ? "/" : landDel.DKBM);
-            InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
-            InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM, Worksheet2);
-            InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? "" : landDel.QQDKBM, Worksheet2);
-            InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
-            InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
-            InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "/");
-            InitalizeRangeValue("AD" + index, "AD" + index, landDel.DKNZ != null ? landDel.DKNZ : "/");
-            InitalizeRangeValue("AE" + index, "AE" + index, landDel.DKXZ != null ? landDel.DKXZ : "/");
-            InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "/");
-            InitalizeRangeValue("AG" + index, "AH" + index, "删除");
-        }
+
+        //public virtual void WriteCurrentZoneInformation(ContractLand_Del landDel, int index)
+        //{
+        //    InitalizeRangeValue("P" + index, "P" + index, landDel.DKMC.IsNullOrEmpty() ? "/" : landDel.DKMC);
+        //    InitalizeRangeValue("Q" + index, "Q" + index, landDel.DKBM.IsNullOrEmpty() ? "/" : landDel.DKBM);
+        //    InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
+        //    InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM, Worksheet2);
+        //    InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
+        //    InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? "" : landDel.QQDKBM, Worksheet2);
+        //    InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+        //    InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+        //    InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "/");
+        //    InitalizeRangeValue("AD" + index, "AD" + index, landDel.DKNZ != null ? landDel.DKNZ : "/");
+        //    InitalizeRangeValue("AE" + index, "AE" + index, landDel.DKXZ != null ? landDel.DKXZ : "/");
+        //    InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "/");
+        //    InitalizeRangeValue("AG" + index, "AH" + index, "删除");
+        //}
 
         /// <summary>
         /// 书写当前地域信息
         /// </summary>
-        public virtual void WriteCurrentZoneInformation(ContractLand land, int index)
-        {
-            Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
-            Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
-            Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
-            Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
-            Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
-            InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "" : land.Name);
-            InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber);
-            InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
-            InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
-            InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
-            if (syqxz != null)
-                InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
-            if (dklb != null)
-                InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
-            if (tdlylx != null)
-                InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
-            if (dldj != null)
-                InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
-            if (tdyt != null)
-                InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+        //public virtual void WriteCurrentZoneInformation(ContractLand land, int index)
+        //{
+        //    Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
+        //    Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
+        //    Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
+        //    Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
+        //    Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
+        //    InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "" : land.Name);
+        //    InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber);
+        //    InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
+        //    InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
+        //    InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
+        //    InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
+        //    if (syqxz != null)
+        //        InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+        //    if (dklb != null)
+        //        InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+        //    if (tdlylx != null)
+        //        InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
+        //    if (dldj != null)
+        //        InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
+        //    if (tdyt != null)
+        //        InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
 
-            if (land.IsFarmerLand != null)
-            {
-                Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
-                InitalizeRangeValue("W" + index, "W" + index, SF.Name);
-            }
+        //    if (land.IsFarmerLand != null)
+        //    {
+        //        Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
+        //        InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+        //    }
 
-            InitalizeRangeValue("Y" + index, "Y" + index, Math.Round(land.AwareArea, 2));
-            InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
-            InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
-            InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
-            InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
-            InitalizeRangeValue("AF" + index, "AF" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
-            InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
-        }
+        //    InitalizeRangeValue("Y" + index, "Y" + index, Math.Round(land.AwareArea, 2));
+        //    InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
+        //    InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
+        //    InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
+        //    InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
+        //    InitalizeRangeValue("AF" + index, "AF" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
+        //    InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
+        //}
 
         public virtual void WritePersonInformation(Person person, int index, bool flag)
         {
@@ -533,11 +556,95 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
-        ///  获取上级地域
+        /// 书写地块信息
         /// </summary>
-        /// <param name="zone"></param>
-        /// <param name="dbContext"></param>
-        /// <returns></returns>
+        public virtual void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract)
+        {
+            Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
+            Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
+            Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(land.LandCode) || c.Code.Equals(land.LandCode));
+            Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(land.Purpose) || c.Code.Equals(land.Purpose));
+            Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(land.LandLevel) || c.Code.Equals(land.LandLevel));
+            InitalizeRangeValue("P" + index, "P" + index, land.Name.IsNullOrEmpty() ? "" : land.Name);
+            InitalizeRangeValue("Q" + index, "Q" + index, land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber);
+            //InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
+            //InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
+            //InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
+            //InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
+            if (syqxz != null)
+                InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+            if (dklb != null)
+                InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+            if (tdlylx != null)
+                InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
+            if (dldj != null)
+                InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
+            if (tdyt != null)
+                InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+
+            if (land.IsFarmerLand != null)
+            {
+                Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
+                InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+            }
+
+            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? Math.Round(land.AwareArea, 2) : 0);
+            InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
+            InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "");
+            InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "");
+            InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "");
+            InitalizeRangeValue("AF" + index, "AF" + index, land.NeighborNorth != null ? land.NeighborNorth : "");
+            InitalizeRangeValue("AG" + index, "AH" + index, land.Comment);
+        }
+
+        /// <summary>
+        /// 书写删除地块信息
+        /// </summary>
+        /// <param name="vp"></param>
+        /// <param name="landDel"></param>
+        /// <param name="index"></param>
+        public virtual void WriteDelLandInformation(VirtualPerson vp, ContractLand_Del landDel, int index)
+        {
+            InitalizeRangeValue("P" + index, "P" + index, landDel.DKMC.IsNullOrEmpty() ? "" : landDel.DKMC);
+            InitalizeRangeValue("Q" + index, "Q" + index, landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM);
+            //InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
+            //InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM, Worksheet2);
+            //InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
+            //InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? landDel.DKBM : landDel.QQDKBM, Worksheet2);
+            InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
+            InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "");
+            InitalizeRangeValue("AD" + index, "AD" + index, landDel.DKNZ != null ? landDel.DKNZ : "");
+            InitalizeRangeValue("AE" + index, "AE" + index, landDel.DKXZ != null ? landDel.DKXZ : "");
+            InitalizeRangeValue("AF" + index, "AF" + index, landDel.DKBZ != null ? landDel.DKBZ : "");
+            InitalizeRangeValue("AG" + index, "AH" + index, "删除");
+
+            Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(landDel.SYQXZ) || c.Code.Equals(landDel.SYQXZ));
+            Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(landDel.DKLB) || c.Code.Equals(landDel.DKLB));
+            Dictionary tdlylx = dictTDLYLX.Find(c => c.Name.Equals(landDel.TDLYLX) || c.Code.Equals(landDel.TDLYLX));
+            Dictionary tdyt = dictTDYT.Find(c => c.Name.Equals(landDel.TDYT) || c.Code.Equals(landDel.TDYT));
+            Dictionary dldj = dictDLDJ.Find(c => c.Name.Equals(landDel.DLDJ) || c.Code.Equals(landDel.DLDJ));
+
+
+            if (syqxz != null)
+                InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
+            if (dklb != null)
+                InitalizeRangeValue("S" + index, "S" + index, dklb.Name);
+            if (tdlylx != null)
+                InitalizeRangeValue("T" + index, "T" + index, tdlylx.Name);
+            if (dldj != null)
+                InitalizeRangeValue("U" + index, "U" + index, dldj.Name);
+            if (tdyt != null)
+                InitalizeRangeValue("V" + index, "V" + index, tdyt.Name);
+
+            if (!string.IsNullOrEmpty(landDel.SFJBNT))
+            {
+                Dictionary SF = dicSF.Find(c => c.Code.Equals(landDel.SFJBNT));
+                if (SF != null)
+                    InitalizeRangeValue("W" + index, "W" + index, SF.Name);
+            }
+
+        }
 
         #endregion 开始生成Excel
 

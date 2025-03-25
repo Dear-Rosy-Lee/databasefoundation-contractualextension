@@ -31,6 +31,7 @@ namespace YuLinTu.Library.Business
         private bool exportPublicTableDeleteEmpty;
         private bool _isCheckedRibbing;
         private bool _isCheckedBaulk;
+        private bool exportPublicTableUseAwareArea;
 
         //private bool exportVPTableCountContainsDiedPerson;
 
@@ -171,6 +172,15 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 导出归户表时使用合同面积
+        /// </summary>
+        public bool ExportPublicTableUseAwareArea
+        {
+            get { return exportPublicTableUseAwareArea; }
+            set { exportPublicTableUseAwareArea = value; NotifyPropertyChanged("ExportPublicTableUseAwareArea"); }
+        }
+
+        /// <summary>
         /// 勾选田垄
         /// </summary>
         public bool IsCheckedRibbing
@@ -211,6 +221,7 @@ namespace YuLinTu.Library.Business
             IsCheckedRibbing = true;
             IsCheckedBaulk = false;
             ExportPublicTableDeleteEmpty = false;
+            exportPublicTableUseAwareArea = true;
         }
 
         #endregion Ctor

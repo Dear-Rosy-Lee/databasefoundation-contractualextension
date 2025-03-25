@@ -147,6 +147,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool UseOldLandCodeBindImport { get; set; }
 
+        public bool DelLandImport { get; set; }
+
         /// <summary>
         /// 地块图斑导入设置实体
         /// </summary>
@@ -1350,7 +1352,8 @@ namespace YuLinTu.Library.Business
             dbContext.BeginTransaction();
             try
             {
-                DeleteLandByZoneCode(zone.FullCode);
+                if (DelLandImport)
+                    DeleteLandByZoneCode(zone.FullCode);
 
                 for (int i = 0; i < addPersonList.Count; i++)
                 {
@@ -3035,7 +3038,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 导出公示结果归户表(Word)
         /// </summary>
-        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "", bool exportdelempty = false)
+        public bool ExportPublishWord(Zone zone, VirtualPerson vp, List<ContractLand> landItems, string filename = "",
+            bool exportdelempty = false, bool exportawareArea = false)
         {
             bool flag = false;
             try
@@ -3048,6 +3052,19 @@ namespace YuLinTu.Library.Business
                 string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
                 var concordStation = dbContext.CreateConcordStation();
                 var concords = concordStation.GetAllConcordByFamilyID(vp.ID);
+                if (vp.IsStockFarmer)
+                {
+                    var stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(vp.ID, zone.FullCode);
+                    if (stockLands.Count > 0)
+                    {
+                        stockLands.ForEach(e =>
+                        {
+                            e.AwareArea = e.QuantificicationArea;
+                            e.ActualArea = e.QuantificicationArea;
+                        });
+                        landItems.AddRange(stockLands);
+                    }
+                }
 
                 ExportPublicityWordTable export = new ExportPublicityWordTable();
 
@@ -3071,6 +3088,7 @@ namespace YuLinTu.Library.Business
                 export.ZoneList = zonelist;
                 export.LandCollection = landItems;  //地块集合
                 export.ExportPublicTableDeleteEmpty = exportdelempty;
+                export.ExportPublicAwareArea = exportawareArea;
                 var sender = GetTissue(zone.ID); //发包方
                 if (sender == null)
                 {
@@ -3587,6 +3605,8 @@ namespace YuLinTu.Library.Business
         /// <param name="person">当前户</param>
         /// <param name="filePath">保存文件路径</param>
         /// <param name="save">是否保存</param>
+        /// <param name="imageSavePath"></param>
+        /// <param name="isStockLand">null 为确权确股，true为确股，false为确权</param>
         public void ExportMultiParcelWord(Zone currentZone, List<ContractLand> listLand, VirtualPerson person, string filePath, bool save = false, string imageSavePath = "", bool? isStockLand = false)
         {
             //List<ContractLand> listLand = new List<ContractLand>();
@@ -3614,28 +3634,25 @@ namespace YuLinTu.Library.Business
                 var lineStation = dbContext.CreateXZDWWorkStation();
                 var PointStation = dbContext.CreateDZDWWorkStation();
                 var PolygonStation = dbContext.CreateMZDWWorkStation();
-                string templatePath = string.Empty;
-                if (isStockLand != null)
-                    templatePath = TemplateHelper.WordTemplate(((bool)isStockLand ? "安徽" : "") + TemplateFile.ParcelWord);
-                else
-                    templatePath = TemplateHelper.WordTemplate(TemplateFile.ParcelWord);
                 string savePathOfImage = string.IsNullOrEmpty(imageSavePath) ? filePath : imageSavePath;
                 string savePathOfWord = InitalizeLandImageName(filePath, person); // filePath + @"\" + familyNuber + "-" + person.Name + "-" + TemplateFile.ParcelWord + ".doc";
-
                 //listLand = GetCollection(currentZone.FullCode, eLevelOption.Self);
                 var VillageZone = GetParent(currentZone);
+                var templatePath = TemplateHelper.WordTemplate(TemplateFile.ParcelWord);
+                List<ContractLand> stockLands = new List<ContractLand>();
                 if (isStockLand != null)
                 {
+                    //templatePath = TemplateHelper.WordTemplate(((bool)isStockLand ? "安徽" : "") + TemplateFile.ParcelWord);
+                    stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(person.ID, currentZone.FullCode);
                     if ((bool)isStockLand)
                     {
-                        var stockLandsvp = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(person.ID, currentZone.FullCode);
-                        listLand = stockLandsvp;
+                        listLand = stockLands;
                     }
-                    else
-                    {
-                        // 导出确权地块示意图，要排除掉股地
-                        listLand = listLand.FindAll(c => !c.IsStockLand);
-                    }
+                }
+                else
+                {
+                    // 导出确权地块示意图，要排除掉股地
+                    listLand = listLand.FindAll(c => !c.IsStockLand);
                 }
                 listGeoLand = listLand.FindAll(c => c.Shape != null);
                 listGeoLand = InitalizeAgricultureLandSortValue(listGeoLand);
@@ -3880,7 +3897,7 @@ namespace YuLinTu.Library.Business
         /// <param name="metadata">任务参数(主要传递初始化界面上设置的一些参数)</param>
         /// <param name="listLand">待初始化的地块集合</param>
         /// <param name="currentZone">当前初始化地块集合所在的地域</param>
-        public void ContractLandInitialTool(TaskInitialLandInfoArgument metadata, List<ContractLand> listLand, Zone currentZone)
+        public void ContractLandInitialTool(TaskInitialLandInfoArgument argument, List<ContractLand> listLand, Zone currentZone)
         {
             string markDesc = GetMarkDesc(currentZone);
 
@@ -3930,7 +3947,7 @@ namespace YuLinTu.Library.Business
                     return;
                 }
                 //if (metadata.InitialLandNumber && metadata.IsNew && metadata.InitialNull)是否按照从左到右初始化
-                if (metadata.InitialLandNumberByUpDown)
+                if (argument.InitialLandNumberByUpDown)
                 {
                     landsOfStatus = OrderLandByPosition(currentZone, landsOfStatus);
                 }
@@ -3965,8 +3982,68 @@ namespace YuLinTu.Library.Business
                 //        t.DoInit(wh);
                 //    }
                 //}
-                ProcessLandInformationInstall(landStation, landsOfStatus, metadata, zonePersonList, currentZone, sender, markDesc, listLand.Count);
+
+                int landIndex = 1;
+                if (argument.IsNewPart)
+                {
+                    var templist = landsOfStatus.Where(t => t.LandNumber.StartsWith(t.ZoneCode)).ToList();
+                    var mxnum = templist.Count == 0 ? 1 : templist.Max(m => int.Parse(m.LandNumber.Substring(14)));
+                    if (mxnum == 0)
+                    {
+                        mxnum = landsOfStatus.Count;
+                    }
+                    landIndex = (templist.Count == 0 ? 0 : mxnum) + 1;
+                    List<ContractLand> landsOfStatusPart = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
+                    List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => t.LandNumber.StartsWith(t.ZoneCode));
+                    ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                    ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                    foreach (var item in landsOfStatusPartStay)
+                    {
+                        var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
+                        if (gl != null)
+                        {
+                            item.OldLandNumber = gl.OldLandNumber;
+                            item.LandNumber = gl.LandNumber;
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty(item.OldLandNumber))
+                            {
+                                item.OldLandNumber = item.LandNumber;
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                {
+                                    item.OldLandNumber = item.SourceNumber;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ProcessLandInformationInstall(landStation, landsOfStatus, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                }
+                var re = landStation.UpdateRange(landsOfStatus);
                 db.CommitTransaction();
+                if (re <= 0)
+                {
+                    if (argument.IsNewPart)
+                    {
+                        this.ReportProgress(100);
+                        this.ReportInfomation(string.Format("无地块进行了初始化，请是否存在地块编码前14位与地域不匹配的数据"));
+                    }
+                    else
+                    {
+                        this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
+                    }
+                }
+                else
+                {
+                    this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, landsOfStatus.Count, re));
+                    this.ReportProgress(100, null);
+                }
             }
             catch (Exception ex)
             {
@@ -4078,12 +4155,11 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 初始化地块信息
         /// </summary>
-        private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus, TaskInitialLandInfoArgument metadata,
-          List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int listLandCount)
+        private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus,
+            TaskInitialLandInfoArgument metadata, List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
         {
-            int index = 1;   //地块索引
-            int landIndex = 1;
-            int successCount = 0;
+            int index = 1;   //地块索引 
+            //int successCount = 0;
             double landPercent = 0.0;  //百分比
 
             this.ReportProgress(1, null);
@@ -4174,7 +4250,9 @@ namespace YuLinTu.Library.Business
                 {
                     if (metadata.InitialLandNumber)
                     {
-                        if (metadata.InitialLandOldNumber)
+                        if (string.IsNullOrEmpty(land.OldLandNumber))//metadata.InitialLandOldNumber)
+                            land.OldLandNumber = land.LandNumber;
+                        else if (metadata.InitialLandOldNumber)
                             land.OldLandNumber = land.LandNumber;
                         land.SourceNumber = land.LandNumber;
                         if (metadata.IsCombination)
@@ -4333,17 +4411,6 @@ namespace YuLinTu.Library.Business
                 }
                 index++;
                 landIndex++;
-            }
-
-            var re = landStation.UpdateRange(landsOfStatus);
-            if (re <= 0)
-            {
-                this.ReportInfomation(string.Format("无地块进行了初始化，请检查数据是否正确，是否包含在地域图斑中，是否有飞地等"));
-            }
-            else
-            {
-                this.ReportInfomation(string.Format("{0}共{1}个地块,成功初始化{2}个地块基本信息", markDesc, listLandCount, re));
-                this.ReportProgress(100, null);
             }
         }
 

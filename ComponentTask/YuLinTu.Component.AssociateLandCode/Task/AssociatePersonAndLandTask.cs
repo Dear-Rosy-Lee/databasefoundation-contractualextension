@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
+using YuLinTu.Component.Common;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -51,7 +52,8 @@ namespace YuLinTu.Component.AssociateLandCode
         #region Method - Override
         protected override void OnGo()
         {
-            jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体" });
+            jtmcs.Clear();
+            jtmcs.AddRange(new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体", "共有", "争议地" });
             this.ReportProgress(0, "开始验证参数...");
             this.ReportInfomation("开始验证参数...");
             System.Threading.Thread.Sleep(200);
@@ -86,6 +88,7 @@ namespace YuLinTu.Component.AssociateLandCode
             index = 1;
             cindex = 1;
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
+            DataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);
             var zoneStation = dbContext.CreateZoneWorkStation();
             var allZones = zoneStation.GetAll();
@@ -177,13 +180,12 @@ namespace YuLinTu.Component.AssociateLandCode
                 var vps = vpStation.GetByZoneCode(village.FullCode, eLevelOption.Subs);
                 var geoLands = landStation.GetCollection(village.FullCode, eLevelOption.Subs);
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode));
-                var upvps = new List<VirtualPerson>();
-                var deloldvps = new List<VirtualPerson_Del>();
-
-                var uplands = new List<ContractLand>();
-                var deloldlds = new List<ContractLand_Del>();
                 foreach (var sd in sds)
                 {
+                    var upvps = new List<VirtualPerson>();
+                    var deloldvps = new List<VirtualPerson_Del>();
+                    var uplands = new List<ContractLand>();
+                    var deloldlds = new List<ContractLand_Del>();
                     this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据", index, zoneListCount, sd.Name));
                     var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
                     if (nvps.Count == 0)
@@ -206,14 +208,24 @@ namespace YuLinTu.Component.AssociateLandCode
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
                     var deloldldtemp = new List<ContractLand_Del>();
-                    var lstlds = AssociteLand(sd, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
-                    uplands.AddRange(lstlds);
+                    var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
+                    var upldnums = new HashSet<string>();
+                    foreach (var item in lstlds)
+                    {
+                        if (!upldnums.Contains(item.LandNumber))
+                            upldnums.Add(item.LandNumber);
+                    }
+                    foreach (var item in nlds)
+                    {
+                        if (upldnums.Contains(item.LandNumber))
+                            continue;
+                        item.OldLandNumber = "";
+                    }
+                    uplands.AddRange(nlds);
                     deloldlds.AddRange(deloldldtemp);
                     index++;
                     this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count} 地块:{lstlds.Count},未关联地块{deloldldtemp.Count}");
-                }
-                //if (true)
-                {
+
                     vpStation.UpdatePersonList(vps);
                     landStation.UpdateOldLandCode(uplands, true);
 
@@ -246,7 +258,7 @@ namespace YuLinTu.Component.AssociateLandCode
         /// <summary>
         /// 关联地块
         /// </summary>
-        private List<ContractLand> AssociteLand(CollectivityTissue sender, List<VirtualPerson> revps, List<VirtualPerson_Del> delvps, List<VirtualPerson> ovps,
+        private List<ContractLand> AssociteLand(CollectivityTissue sender, List<VirtualPerson> nvps, List<VirtualPerson> revps, List<VirtualPerson_Del> delvps, List<VirtualPerson> ovps,
             List<ContractLand> geoLands, List<ContractLand> oldLands, List<RelationZone> relationZones, List<ContractLand_Del> dellands)
         {
             var listLands = new List<ContractLand>();
@@ -255,11 +267,15 @@ namespace YuLinTu.Component.AssociateLandCode
             if (zonecodelist.Count == 0)
                 return listLands;
             var olds = oldLands.FindAll(t => zonecodelist.Contains(t.ZoneCode));//旧地块
-
+            var jtdkset = new HashSet<string>();
             var rlandset = new HashSet<Guid>();
-            foreach (var vp in revps)//关联上的承包方
+
+
+            foreach (var vp in nvps)//先按原地块编码关联一次
             {
                 var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
+                if (lands.Count == 0)
+                    continue;
                 List<ContractLand> listOldLands = new List<ContractLand>();
                 if (jtmcs.Contains(vp.Name))
                 {
@@ -268,7 +284,41 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         var tvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vpcode).FirstOrDefault()?.ID;
                         if (tvpid != null)
-                            listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid).ToList());
+                            listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid && !jtdkset.Contains(t.LandNumber)).ToList());
+                    }
+                }
+                else
+                {
+                    foreach (var land in lands)
+                    {
+                        var old = oldLands.Find(t => t.LandNumber == land.OldLandNumber);
+                        if (old != null && !rlandset.Contains(old.ID))
+                        {
+                            rlandset.Add(old.ID);
+                            listLands.Add(land);
+                        }
+                        else
+                        {
+                            land.OldLandNumber = "";
+                        }
+                    }
+                }
+            }
+
+            foreach (var vp in revps)//关联上的承包方
+            {
+                var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
+                if (lands.Count == 0)
+                    continue;
+                List<ContractLand> listOldLands = new List<ContractLand>();
+                if (jtmcs.Contains(vp.Name))
+                {
+                    listOldLands.Clear();
+                    foreach (var vpcode in vp.OldVirtualCode.Split('/'))
+                    {
+                        var tvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vpcode).FirstOrDefault()?.ID;
+                        if (tvpid != null)
+                            listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid && !jtdkset.Contains(t.LandNumber)).ToList());
                     }
                 }
                 else
@@ -285,81 +335,87 @@ namespace YuLinTu.Component.AssociateLandCode
                 {
                     vp.ChangeSituation = eBHQK.TZJD;
                 }
-                bool result = false;
+                listOldLands.RemoveAll(r => rlandset.Contains(r.ID));
+
                 foreach (var t in lands)
                 {
+                    if (!string.IsNullOrEmpty(t.OldLandNumber))
+                        continue;
                     var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
                     if (slan != null && !rlandset.Contains(slan.ID))
                     {
                         t.OldLandNumber = slan.LandNumber;
                         rlandset.Add(slan.ID);
-                        result = true;
+                        listLands.Add(t);
                         continue;
                     }
                     var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
                     if (rlands.Count == 0)
                     {
-                        continue;
+                        t.OldLandNumber = "";
                     }
-                    foreach (var c in rlands)
+                    else
                     {
-                        if (!rlandset.Contains(c.ID))
+                        bool hasrelate = false;
+                        foreach (var c in rlands)
                         {
-                            t.OldLandNumber = c.LandNumber;
-                            rlandset.Add(c.ID);
-                            result = true;
-                            break;
+                            if (!rlandset.Contains(c.ID))
+                            {
+                                hasrelate = true;
+                                t.OldLandNumber = c.LandNumber;
+                                rlandset.Add(c.ID);
+                                break;
+                            }
+                        }
+                        if (!hasrelate)
+                        {
+                            t.OldLandNumber = "";
                         }
                     }
-                    if (result)
-                    {
-                        listLands.Add(t);
-                    }
+                    listLands.Add(t);
                 }
                 var delandstemp = listOldLands.Where(r => !rlandset.Contains(r.ID)).ToList();
                 foreach (var ld in delandstemp)
                 {
-                    dellands.Add(ChangeDataEntity(sender, ld));
+                    var tdeland = ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld);
+                    tdeland.CBFID = vp.ID;
+                    dellands.Add(tdeland);
                 }
+                /////从集体土地挂机地块，只按地块编码挂接
+                //var jtvps = ovps.FindAll(f => jtmcs.Contains(f.Name));
+                //if (jtvps.Count > 0)
+                //{
+                //    List<ContractLand> tOldLands = new List<ContractLand>();
+                //    foreach (var jt in jtvps)
+                //    {
+                //        tOldLands.AddRange(olds.Where(t => t.OwnerId == jt.ID).ToList());
+                //    }
+                //    foreach (var t in lands)
+                //    {
+                //        if (!string.IsNullOrEmpty(t.OldLandNumber))
+                //        {
+                //            continue;
+                //        }
+                //        var slan = tOldLands.FirstOrDefault(w => w.OldLandNumber == t.LandNumber || w.LandNumber == t.LandNumber);
+                //        if (slan != null && !rlandset.Contains(slan.ID))
+                //        {
+                //            t.OldLandNumber = slan.LandNumber;
+                //            jtdkset.Add(slan.LandNumber);
+                //            rlandset.Add(slan.ID);
+                //            listLands.Add(t);
+                //            break;
+                //        }
+                //    }
+                //}
             }
             var temps = olds.Where(r => !rlandset.Contains(r.ID)).ToList();
             foreach (var ld in temps)
             {
                 if (dellands.Any(t => t.DKBM == ld.LandNumber))
                     continue;
-                dellands.Add(ChangeDataEntity(sender, ld));
+                dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld));
             }
             return listLands;
-        }
-
-        /// <summary>
-        /// 转换对象实体
-        /// </summary>
-        private ContractLand_Del ChangeDataEntity(CollectivityTissue sender, ContractLand ld)
-        {
-            var data = new ContractLand_Del()
-            {
-                BZXX = ld.Comment,
-                DKBM = ld.LandNumber,
-                DKBZ = ld.NeighborNorth,
-                DKXZ = ld.NeighborWest,
-                DKNZ = ld.NeighborSouth,
-                DKDZ = ld.NeighborEast,
-                DKMC = ld.Name,
-                DYBM = sender.ZoneCode,
-                ID = ld.ID,
-                QQDKBM = ld.OldLandNumber,
-                QQMJ = ld.AwareArea,
-                SCMJ = ld.ActualArea,
-                CBFID = ld.OwnerId,
-                TDYT = ld.Purpose,
-                TDLYLX = ld.LandCode,
-                SYQXZ = ld.OwnRightType,
-                DLDJ = ld.LandLevel,
-                DKLB = ld.LandCategory,
-                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
-            };
-            return data;
         }
 
         /// <summary>
@@ -409,63 +465,25 @@ namespace YuLinTu.Component.AssociateLandCode
                     listVps.Add(vp);
                     continue;
                 }
-                foreach (var x in oldVps)
-                {
-                    if (receslist.Contains(x.ID))
-                        continue;
-
-                    bool result = false;
-
-                    if (x.Number == vp.Number)
-                    {
-                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                        if (vp.PersonCount == x.PersonCount)
-                        {
-                            vp.ChangeSituation = eBHQK.RDXXJBB;
-                        }
-                        else
-                        {
-                            vp.ChangeSituation = eBHQK.CYXXBH;
-                        }
-                        result = true;
-                    }
-                    else if (vp.Name == "集体" && x.Name == vp.Name)
-                    {
-                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                        result = true;
-                    }
-                    else
-                    {
-                        foreach (var sharePerson in x.SharePersonList)
-                        {
-                            if (sharePerson.ICN == vp.Number)
-                            {
-                                vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                                vp.ChangeSituation = eBHQK.CYXXBH;
-                                result = true;
-                            }
-                        }
-                    }
-                    if (!result && argument.SearchInvpcode)
-                    {
-                        if (vp.FamilyNumber == x.Number && vp.Name == x.Name)
-                        {
-                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                            result = true;
-                        }
-                    }
-                    if (result)
-                    {
-                        listVps.Add(vp);
-                        receslist.Add(x.ID);
-                        break;
-                    }
-                }
+                FindRelationPerson(vp, oldVps, receslist, listVps);
+                //if (string.IsNullOrEmpty(vp.OldVirtualCode))
+                //{
+                //    WriteLog(resfile, $"发包方：{sender.Name}{sender.Code} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,以当作新增处理！");
+                //}
+            }
+            foreach (var vp in vps)
+            {
+                if (!string.IsNullOrEmpty(vp.OldVirtualCode))
+                    continue;
+                FindRelationPerson(vp, oldVps, receslist, listVps, true);
                 if (string.IsNullOrEmpty(vp.OldVirtualCode))
                 {
-                    WriteLog(resfile, $"发包方：{sender.Name}{sender.Code} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,以当作新增处理！");
+                    var msg = $"{sender.Name} 下的 承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户 {vp.Name} 未成功挂接原承包方,已当作新增处理！";
+                    this.ReportInfomation(msg);
+                    WriteLog(resfile, msg);
                 }
             }
+
             var delvptemp = oldVps.Where(t => !receslist.Contains(t.ID)).ToList().ConvertAll(c => c.ConvertTo<VirtualPerson_Del>());
             foreach (var dvp in delvptemp)
             {
@@ -474,6 +492,99 @@ namespace YuLinTu.Component.AssociateLandCode
                 deloldvps.Add(dvp);
             }
             return listVps;
+        }
+
+        /// <summary>
+        /// 查找关联的承包方
+        /// </summary>
+        /// <param name="vp">当前承包方</param>
+        /// <param name="oldVps">原承包方集合</param>
+        /// <param name="receslist">已关联的承包方id</param>
+        /// <param name="listVps">更新数据集合</param>
+        private void FindRelationPerson(VirtualPerson vp, List<VirtualPerson> oldVps, HashSet<Guid> receslist, List<VirtualPerson> listVps, bool relationShareperson = false)
+        {
+            bool isrelation = false;
+
+            foreach (var x in oldVps)
+            {
+                if (receslist.Contains(x.ID))
+                    continue;
+
+                bool result = false;
+
+                if (x.Number == vp.Number)//身份证号一致
+                {
+                    vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                    if (vp.PersonCount == x.PersonCount)
+                    {
+                        vp.ChangeSituation = eBHQK.RDXXJBB;
+                    }
+                    else
+                    {
+                        vp.ChangeSituation = eBHQK.CYXXBH;
+                    }
+                    result = true;
+                }
+                else if (vp.Name == "集体" && x.Name == vp.Name)
+                {
+                    vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                    result = true;
+                }
+                else
+                {
+                    foreach (var sharePerson in x.SharePersonList)
+                    {
+                        if (sharePerson.ICN == vp.Number)
+                        {
+                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                            vp.ChangeSituation = eBHQK.CYXXBH;
+                            result = true;
+                        }
+                    }
+                }
+
+                if (!result && argument.SearchInvpcode)
+                {
+                    if (vp.FamilyNumber == x.Number && vp.Name == x.Name)
+                    {
+                        vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                        result = true;
+                    }
+                }
+
+
+                if (result)
+                {
+                    isrelation = true;
+                    listVps.Add(vp);
+                    receslist.Add(x.ID);
+                    break;
+                }
+            }
+            if (!isrelation && relationShareperson)
+            {
+                //WriteLog(resfile, $"承包方编码为{vp.ZoneCode + vp.FamilyNumber.PadLeft(4, '0')} 的农户未成功挂接原承包方,开始以成员查找关联！");
+                bool personrelation = false;
+                foreach (var person in vp.SharePersonList)
+                {
+                    foreach (var x in oldVps)
+                    {
+                        if (receslist.Contains(x.ID))
+                            continue;
+                        if (x.Number == person.ICN)//身份证号一致
+                        {
+                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                            vp.ChangeSituation = eBHQK.CYXXBH;
+                            listVps.Add(vp);
+                            receslist.Add(x.ID);
+                            personrelation = true;
+                            break;
+                        }
+                    }
+                    if (personrelation)
+                        break;
+                }
+            }
         }
 
         private bool ValidateArgs()

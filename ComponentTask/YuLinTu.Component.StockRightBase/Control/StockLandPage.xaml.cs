@@ -337,7 +337,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             var bussnessObject = _bussiness.GetBussinessObject(CurrentZone);
             if (bussnessObject == null || bussnessObject.ContractLands.Count == 0)
             {
-                ShowBox("提示", "暂无可以划拨的确股地块！", eMessageGrade.Warn);
+                ShowBox("提示", "暂无可划拨的确股地块！", eMessageGrade.Warn);
                 return;
             }
             var alllands = bussnessObject.ContractLands.ToList();
@@ -348,7 +348,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             }
             if (alllands.Count == 0)
             {
-                ShowBox("提示", "暂无可以划拨的确股地块！", eMessageGrade.Warn);
+                ShowBox("提示", "暂无可划拨的确股地块！", eMessageGrade.Warn);
                 return;
             }
             AllLandPage landGrid = new AllLandPage();

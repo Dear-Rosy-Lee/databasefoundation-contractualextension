@@ -119,8 +119,12 @@ namespace YuLinTu.Library.Business
                 {
                     Shape = c.Shape,
                     ID = c.ID,
+                    OwnerId = c.OwnerId,
+                    ZoneCode = c.ZoneCode,
                     LandNumber = c.LandNumber,
-                    OwnerName = c.OwnerName
+                    OwnerName = c.OwnerName,
+                    AwareArea = c.AwareArea,
+                    ActualArea = c.ActualArea
                 }).ToList();
             return VillageLands;
         }
@@ -167,6 +171,7 @@ namespace YuLinTu.Library.Business
                 NeighborSouth = c.NeighborSouth,
                 NeighborWest = c.NeighborWest,
                 OwnerId = c.OwnerId,
+                ZoneCode = c.ZoneCode
                 //Purpose = c.Purpose,
                 //PlatType = c.PlatType,
             }).ToList();

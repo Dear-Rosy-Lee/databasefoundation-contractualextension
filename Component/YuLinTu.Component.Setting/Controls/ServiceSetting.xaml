@@ -18,19 +18,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <DockPanel Grid.Row="0" LastChildFill="True">
-                        <TextBlock
-                            Width="100"
-                            VerticalAlignment="Center"
-                            DockPanel.Dock="Left"
-                            Text="更新服务器地址:" />
-                        <cmps:MetroTextBox
-                            Height="30"
-                            VerticalAlignment="Center"
-                            Text="{Binding ServiceSettingDefine.BusinessSecurityAddress, Mode=TwoWay}" />
-                    </DockPanel>
+                    </Grid.RowDefinitions> 
                     <!--<DockPanel
                         Grid.Row="1"
                         Margin="0,5,0,0"
@@ -72,13 +60,25 @@
         </cmps:OptionsContainer>
 
         <cmps:OptionsContainer Text="版本更新" Visibility="Visible">
+            
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />                        
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" LastChildFill="True">
+
+                    <DockPanel Grid.Row="0" LastChildFill="True" Margin="0,5">
+                        <TextBlock  Width="100" VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Text="更新程序服务:" />
+                        <cmps:MetroTextBox Height="30"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding ServiceSettingDefine.BusinessSecurityAddress, Mode=TwoWay}" />
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1" LastChildFill="True">
                         <TextBlock
                             Width="100"
                             DockPanel.Dock="Left"
@@ -96,7 +96,7 @@
 
                     <metro:MetroButton HorizontalAlignment="Left"
                         Name="btnCheckUpdate"
-                        Grid.Row="1" Width="85"
+                        Grid.Row="2" Width="85"
                         Margin="-10,10,0,0" 
                         HorizontalContentAlignment="Left"
                         VerticalContentAlignment="Stretch"

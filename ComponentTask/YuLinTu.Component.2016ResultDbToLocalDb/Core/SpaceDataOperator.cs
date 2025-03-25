@@ -307,7 +307,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <summary>
         /// 从数据库中获取地块数据
         /// </summary> 
-        public List<DKEX> GetLandFromDatabase(string keyCode, bool getjzdx = true)
+        public List<DKEXP> GetLandFromDatabase(string keyCode, bool getjzdx = true)
         {
             return GetLandFromDatabase(keyCode, ShapeFileList, getjzdx);
         }
@@ -319,7 +319,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// <param name="files"></param>
         /// <param name="getJzdx">是否获取界址点线</param>
         /// <returns></returns>
-        private List<DKEX> GetLandFromDatabase(string keyCode, List<FileCondition> files, bool getJzdx = true)
+        private List<DKEXP> GetLandFromDatabase(string keyCode, List<FileCondition> files, bool getJzdx = true)
         {
             var dkquery = sqliteDb.CreateQuery<DKST>();
             var jzdquery = sqliteDb.CreateQuery<JZDST>();
@@ -329,7 +329,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             var jzdbmList = jzdquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
             var jzxbmList = jzxquery.Where(t => t.DKBM.Contains(keyCode)).ToList();
 
-            List<DK> dkList = new List<DK>();
+            var dkList = new List<DKEXP>();
 
             var group = bmList.GroupBy(t => t.TCBS).ToList();
             foreach (var item in group)
@@ -339,7 +339,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                 if (file == null)
                     file = files.Find(t => t.Name.StartsWith("DK") && t.FullName.Contains((bs == "" ? "" : "_" + bs)));
                 var recodeList = item.ToList();
-                var list = InitiallDataList<DK, DKST>(file, recodeList);
+                var list = InitiallDataList<DKEXP, DKST>(file, recodeList);
                 dkList.AddRange(list);
             }
 
@@ -380,12 +380,12 @@ namespace YuLinTu.Component.ResultDbToLocalDb
                     }
                 }
             }
-            var dkexList = new ConcurrentBag<DKEX>();
+            var dkexList = new ConcurrentBag<DKEXP>();
             Parallel.ForEach(dkList, land =>
             {
                 lock (_lock)
                 {
-                    var dkex = ObjectExtension.ConvertTo<DKEX>(land);
+                    var dkex = ObjectExtension.ConvertTo<DKEXP>(land);
                     dkex.JZD = new List<JZD>();
                     dkex.JZX = new List<JZX>();
                     if (getJzdx)
@@ -868,7 +868,6 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public IEnumerable<T> InitiallDataEnum<T, P>(FileCondition fnp, List<P> bsList)
             where T : class, new() where P : BSST
         {
-            var dkList = new List<DKEX>();
             var infoArray = typeof(T).GetProperties();
             var fieldIndex = new Dictionary<string, int>();
             using (var shp = new ShapeFile())

@@ -20,6 +20,7 @@ using YuLinTu.Spatial;
 using DotSpatial.Projections.Transforms;
 using DotSpatial.Projections;
 using System.ComponentModel;
+using YuLinTu.Component.Common;
 
 namespace YuLinTu.Component.Setting
 {
@@ -298,7 +299,8 @@ namespace YuLinTu.Component.Setting
                     if (sfn != "" && sf != null)
                     {
                         creatsucess = TryCreateDatabase(ds, sfn, sf);
-                        UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
+                        DataBaseHelper.TryUpdateDatabase(ds);
+                        //UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
                     }
                     if (creatsucess)
                     {
@@ -509,7 +511,7 @@ namespace YuLinTu.Component.Setting
                     Workspace.Window.ShowDialog(errorPage);
                     return;
                 }
-                bool serialSuccess = true;
+                //bool serialSuccess = true;
                 string path = AppDomain.CurrentDomain.BaseDirectory + "Config";
 
                 //if (System.IO.Directory.Exists(path))
@@ -518,19 +520,39 @@ namespace YuLinTu.Component.Setting
                 List<UpgradeDatabase> tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
                 if (tableList.Count == 0)
                 {
-                    serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
-                    tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
+                    var msgPage = new TabMessageBoxDialog
+                    {
+                        Header = "更新数据库",
+                        Message = "数据库更新失败，未获取配置文件或更新的内容!",
+                        MessageGrade = eMessageGrade.Error,
+                        CancelButtonText = "确定",
+                        ConfirmButtonVisibility = Visibility.Collapsed,
+                    };
+                    Workspace.Window.ShowDialog(msgPage);
+                    return;
+                    //serialSuccess = UpgradeDatabaseExtent.SerializeUpgradeDatabaseInfo();
+                    //tableList = UpgradeDatabaseExtent.DeserializeUpgradeDatabaseInfo();
                 }
                 var schma = dbContext.CreateSchema();
+
                 foreach (var item in tableList)
                 {
+
                     if (!schma.AnyElement(null, item.TableName))
                     {
                         Log.WriteWarn(this, "数据库升级模块", $"数据库{item.TableName}表不存在，未进行升级！");
                         continue;
                     }
-                    var table = schma.GetElementProperties(null, item.TableName);
-                    item.FieldList.RemoveAll(r => table.Any(t => t.ColumnName == r.FieldName));
+                    try
+                    {
+                        var table = schma.GetElementPropertyNames(null, item.TableName);
+                         //table = schma.GetElementProperties(null, item.TableName);
+                        item.FieldList.RemoveAll(r => table.Any(t => t == r.FieldName));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.WriteError(this, "数据库升级模块", $"获取数据库表{item.TableName}表字段错误：" + ex.Message);
+                    }
                 }
                 tableList.RemoveAll(t => t.FieldList.Count == 0);
                 if (tableList == null || tableList.Count == 0)

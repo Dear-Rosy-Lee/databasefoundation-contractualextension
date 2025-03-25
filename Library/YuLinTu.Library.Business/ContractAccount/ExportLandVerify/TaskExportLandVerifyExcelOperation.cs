@@ -25,6 +25,7 @@ namespace YuLinTu.Library.Business
         private SystemSetDefine SystemSetDefine = SystemSetDefine.GetIntence();
         private IDbContext dbContext;
         private Zone zone;
+        private List<string> jtmcs;
 
         #endregion Field
 
@@ -35,6 +36,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskExportLandVerifyExcelOperation()
         {
+            jtmcs = new List<string>() { "村集体", "社集体", "集体", "集体地", "组集体", "公有地" };
         }
 
         #endregion Ctor
@@ -155,7 +157,7 @@ namespace YuLinTu.Library.Business
                 }
                 if (tissue != null)
                     zoneName = tissue.Name;
-
+                //GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
                 int personCount = vps == null ? 0 : vps.Count;
                 var export = new ExportLandVerifyExcelTable();
@@ -208,6 +210,40 @@ namespace YuLinTu.Library.Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 获取删除数据进行导出
+        /// </summary>
+        private void GetDelDataToExport(List<ContractAccountLandFamily> accountFamilyCollection, string zonecode)
+        {
+            var query = dbContext.CreateQuery<VirtualPerson_Del>();
+            var delvps = query.Where(t => t.ZoneCode == zonecode).ToList();
+
+            var dquery = dbContext.CreateQuery<ContractLand_Del>();
+            var dellds = dquery.Where(t => t.DYBM == zonecode).ToList();
+
+            foreach (var item in delvps)
+            {
+                var vp = item.ConvertTo<VirtualPerson>();
+                vp.Status = eVirtualPersonStatus.Bad;
+                var landDelCollection = dellds.FindAll(c => c.CBFID == vp.ID);
+                if (jtmcs.Contains(item.Name))
+                {
+                    var jten = accountFamilyCollection.Find(t => t.CurrentFamily.Name == item.Name);
+                    if (jten != null)
+                    {
+                        jten.LandDelCollection.AddRange(landDelCollection);
+                        continue;
+                    }
+                }
+                ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
+                accountLandFamily.CurrentFamily = vp;
+                accountLandFamily.Persons = vp.SharePersonList;
+                accountLandFamily.LandDelCollection = landDelCollection;
+                accountFamilyCollection.Add(accountLandFamily);
+            }
+        }
+
 
         #endregion Method—ExportBusiness
 

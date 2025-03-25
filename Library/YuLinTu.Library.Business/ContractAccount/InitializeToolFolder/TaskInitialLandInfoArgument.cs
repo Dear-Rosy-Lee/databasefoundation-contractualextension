@@ -1,10 +1,7 @@
 ﻿/*
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
@@ -119,6 +116,11 @@ namespace YuLinTu.Library.Business
         /// 地块编码是否按统一重新生成
         /// </summary>
         public bool IsNew { get; set; }
+
+        /// <summary>
+        /// 地块编码是否重新生成不匹配部分
+        /// </summary>
+        public bool IsNewPart { get; set; }
 
         /// <summary>
         /// 承包地块扩展信息

@@ -14,7 +14,7 @@
     Header="共有人信息" Loaded="InfoPageBase_Loaded"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png">
     <am:InfoPageBase.Resources>
-        <ResourceDictionary Source="/Utils.Controls;component/Styles/AutoComplete.Styles.xaml" />
+        <!--<ResourceDictionary Source="/Utils.Controls;component/Styles/AutoComplete.Styles.xaml" />-->
     </am:InfoPageBase.Resources>
 
     <Grid>
@@ -207,7 +207,7 @@
                     MaxDropDownHeight="150"  Visibility="Collapsed" />
                 <ctr:AutoComplete x:Name="cbRelationship" Grid.Row="8" Grid.Column="3" SelectedValuePath="Code" DisplayMemberPath="Code"
            PatternChanged="autoCities_PatternChanged" Style="{StaticResource AutoCompleteComboBox}"
-           Delay="300" SelectedValue="2" Height="32" MaxDropDownHeight="150"  Width="225"/>
+           Delay="200" SelectedValue="2" Height="32" MaxDropDownHeight="150"  Width="225"/>
                 <Label
                     Grid.Row="10"
                     Content="是否共有人:"

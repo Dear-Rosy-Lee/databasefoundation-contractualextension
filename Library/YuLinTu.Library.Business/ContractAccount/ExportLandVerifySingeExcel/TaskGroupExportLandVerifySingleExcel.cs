@@ -87,7 +87,7 @@ namespace YuLinTu.Library.Business
                 argument.VirtualType = eVirtualType.Land;
                 var operation = new TaskExportLandVerifySingleExcelOperation();
                 operation.Argument = argument;
-                operation.Name = "批量导出摸底核实表";
+                operation.Name = "批量导出单户摸底核实表";
                 operation.Description = zone.FullName;
                 Add(operation);
 

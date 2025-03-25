@@ -59,6 +59,7 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <CheckBox IsChecked="{Binding DisplayCollectUsingCBdata,Mode=TwoWay}" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,0,0">呈现数据时只呈现家庭户信息
                         </CheckBox>
@@ -76,7 +77,9 @@
                         </CheckBox>
                         <CheckBox IsChecked="{Binding ExportPublicTableDeleteEmpty,Mode=TwoWay}" Grid.Row="8" VerticalAlignment="Center" Margin="0,10,0,0">导出公示归户表删除空白行
                         </CheckBox>
-                        <Grid Grid.Row="9" Margin="-5,5,0,0">
+                        <CheckBox IsChecked="{Binding ExportPublicTableUseAwareArea,Mode=TwoWay}" Grid.Row="9" VerticalAlignment="Center" Margin="0,10,0,0">导出公示归户表使用合同面积
+                        </CheckBox>
+                        <Grid Grid.Row="10" Margin="-5,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="180"></ColumnDefinition>
                                 <ColumnDefinition Width="60"></ColumnDefinition>

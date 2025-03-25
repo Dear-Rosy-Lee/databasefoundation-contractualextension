@@ -1,13 +1,10 @@
-﻿using Microsoft.Scripting.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Windows;
-using static YuLinTu.tGISCNet.SmallAngleCheckWKB;
 
 namespace YuLinTu.Library.Business
 {
@@ -78,8 +75,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出摸底核实表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出摸底核实表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出单户摸底核实表任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出单户摸底核实表出现异常!");
             }
         }
 

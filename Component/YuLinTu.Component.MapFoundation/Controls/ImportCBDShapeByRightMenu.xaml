@@ -11,19 +11,19 @@
              Width="730"
              Header="导入地块图斑数据">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}" Margin="0,0,0,0">
-        <Grid.RowDefinitions>          
+        <Grid.RowDefinitions>
             <RowDefinition Height="130"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-     
+
         <Grid Margin="10"
               Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-     
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70" />
@@ -105,7 +105,7 @@
                              VerticalAlignment="Center"
                              Margin="30,0,0,0"
                              TabIndex="3" />
-                <RadioButton Content="按承包方户号导入"  ToolTip="按承包户号为准，先清空再导入"
+                <RadioButton Content="按承包方户号导入"  ToolTip="按承包户号为准，进行导入"
                              Name="chkUseContractorNumberImport"
                              Click="chkUseContractorNumberImport_Click"
                              VerticalAlignment="Center"
@@ -142,6 +142,13 @@
                           Content="全匹配"
                           Name="allCheck"
                           Click="allCheck_Click" />
+                <CheckBox DockPanel.Dock="Left" Margin="20,0,0,0"
+                          VerticalAlignment="Center"
+                          Content="清空地块数据"
+                          Name="landdelCheck"
+                          Visibility="{Binding ElementName=chkUseContractorNumberImport,Path=IsChecked}"
+                          Click="allCheck_Click" />
+
                 <metro:MetroButton DockPanel.Dock="Right"
                                    Margin="5,0,0,0"
                                    Padding="5"
@@ -176,4 +183,4 @@
             </DockPanel>
         </Border>
     </Grid>
-    </am:InfoPageBase>
+</am:InfoPageBase>

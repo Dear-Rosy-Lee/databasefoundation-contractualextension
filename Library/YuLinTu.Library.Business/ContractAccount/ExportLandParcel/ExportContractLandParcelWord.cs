@@ -268,7 +268,10 @@ namespace YuLinTu.Library.Business
                 foreach (var stockLand in stockLandsvp)
                 {
                     if (!geoLandCollection.Any(t => t.ID == stockLand.ID))
+                    {
+                        stockLand.ActualArea = stockLand.QuantificicationArea;
                         geoLandCollection.Add(stockLand);
+                    }
                 }
             }
             List<ContractLand> lands = new List<ContractLand>();
@@ -496,10 +499,9 @@ namespace YuLinTu.Library.Business
             // 示意图页数
             var landCount = geoLandCollection.Count;
             int pageSize = landCount > PAGECOUNT1 ?
-                landCount % PAGECOUNT1 == 0 ?
-                    landCount / PAGECOUNT1 :
-                    landCount / PAGECOUNT1 + 1 :
-                1;
+                (landCount - PAGECOUNT1) % PAGECOUNT2 == 0 ?
+                (landCount - PAGECOUNT1) / PAGECOUNT2 + 1 : (landCount - PAGECOUNT1) / PAGECOUNT2 + 2
+                : 1;
 
             // 扩展页页数
 
@@ -510,11 +512,11 @@ namespace YuLinTu.Library.Business
             string checkPerson = SettingDefine.CheckPerson.IsNullOrEmpty() ? placeholder : SettingDefine.CheckPerson;
             string cartographyDate = (SettingDefine.CartographyDate == null) ? placeholder : SettingDefine.CartographyDate.Value.ToString("yyyy年MM月dd日");
             string checkDate = (SettingDefine.CheckDate == null) ? placeholder : SettingDefine.CheckDate.Value.ToString("yyyy年MM月dd日");
-            string otherInfo = $"制图者：{cartographer} " +
-                               $"制图日期：{cartographyDate} " +
-                               $"审核者：{checkPerson} " +
-                               $"审核日期：{checkDate} " +
-                               $"制图单位：{SettingDefine.CartographyUnit}";
+            string otherInfo = $" 制图者：{cartographer}     " +
+                               $" 制图日期：{cartographyDate}     " +
+                               $" 审核者：{checkPerson}     " +
+                               $" 审核日期：{checkDate}     " +
+                               $" 制图单位：{SettingDefine.CartographyUnit}";
             WriteLandInfoVertical(pageSize, totalPageSize, otherInfo);
         }
 

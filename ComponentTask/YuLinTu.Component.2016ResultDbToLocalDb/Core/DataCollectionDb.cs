@@ -130,5 +130,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         public const string FXZDYBM = "XZDYBM";
 
         public string XZDYBM { get; set; }
+
+        public string QQCBFBM { get; set; }
     }
 }

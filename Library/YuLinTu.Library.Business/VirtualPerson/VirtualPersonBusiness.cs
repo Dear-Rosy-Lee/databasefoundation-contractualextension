@@ -1577,11 +1577,27 @@ namespace YuLinTu.Library.Business
                 int currentPercent = 1;
                 int lockPersonCount = listPersons.Count(c => c.Status == eVirtualPersonStatus.Lock);  //统计锁定的人
                 var landStation = dbContext.CreateContractLandWorkstation();   //注意:业务统一到了承包台账里面
-
+                int familyindex = 1;
+                List<VirtualPerson> partfarmPersons = new List<VirtualPerson>();
+                if (!argument.InitAllNum)
+                {
+                    var templist = farmPersons.Where(t => string.IsNullOrEmpty(t.OldVirtualCode) || (!string.IsNullOrEmpty(t.OldVirtualCode) && t.OldVirtualCode.StartsWith(t.ZoneCode))).ToList();
+                    var mxnum = templist.Count == 0 ? 1 : templist.Max(m => int.Parse(m.FamilyNumber));
+                    if (mxnum == 0)
+                    {
+                        mxnum = farmPersons.Count;
+                    }
+                    if (mxnum >= 9000)
+                    {
+                        throw new Exception("承包方数据存在农户编码超过9000,请尝试修复 集体 的承包方类型后再编码");
+                    }
+                    familyindex = (templist.Count == 0 ? 0 : mxnum) + 1;
+                    partfarmPersons = farmPersons.FindAll(t => !string.IsNullOrEmpty(t.OldVirtualCode) && !t.OldVirtualCode.StartsWith(t.ZoneCode));
+                }
                 dbContext.BeginTransaction();
-                int farmSuccessCount = SetPersonValue(farmPersons, argument, landStation, argument.FarmerFamilyNumberIndex, 1, 0, vpPercent, currentPercent, markDesc);   //农户
-                int personaSuccessCount = SetPersonValue(personalPersons, argument, landStation, argument.PersonalFamilyNumberIndex, 8001, farmPersons.Count, vpPercent, currentPercent, markDesc);  //个人
-                int unitSuccessCount = SetPersonValue(unitPersons, argument, landStation, argument.UnitFamilyNumberIndex, 9001, listPersons.Count - unitPersons.Count, vpPercent, currentPercent, markDesc);    //单位
+                int farmSuccessCount = SetPersonValue(farmPersons, partfarmPersons, argument, landStation, argument.FarmerFamilyNumberIndex, familyindex, 0, vpPercent, currentPercent, markDesc);   //农户
+                int personaSuccessCount = SetPersonValue(personalPersons, null, argument, landStation, argument.PersonalFamilyNumberIndex, 8001, farmPersons.Count, vpPercent, currentPercent, markDesc);  //个人
+                int unitSuccessCount = SetPersonValue(unitPersons, null, argument, landStation, argument.UnitFamilyNumberIndex, 9001, listPersons.Count - unitPersons.Count, vpPercent, currentPercent, markDesc);    //单位
                 dbContext.CommitTransaction();
 
                 this.ReportProgress(100, null);
@@ -1598,7 +1614,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 dbContext.RollbackTransaction();
-                this.ReportError("初始化承包方基本信息失败!");
+                this.ReportError("初始化承包方基本信息失败! " + ex.Message);
                 YuLinTu.Library.Log.Log.WriteError(this, "InitialVirtualPersonInfo(提交更新数据)", ex.Message + ex.StackTrace);
             }
         }
@@ -1613,7 +1629,7 @@ namespace YuLinTu.Library.Business
         /// <param name="vpPercent">平均百分比</param>
         /// <param name="currentPercent">当前百分比</param>
         /// <param name="markDesc">任务描述信息</param>
-        private int SetPersonValue(List<VirtualPerson> vps, TaskInitialVirtualPersonArgument argument, IContractLandWorkStation landStation,
+        private int SetPersonValue(List<VirtualPerson> vps, List<VirtualPerson> vpspart, TaskInitialVirtualPersonArgument argument, IContractLandWorkStation landStation,
             int[] familyIndex, int index, int formatnumber, double vpPercent = 0.0, double currentPercent = 0.0, string markDesc = "")
         {
             int successCount = 0;
@@ -1621,6 +1637,41 @@ namespace YuLinTu.Library.Business
                 return successCount;
             //vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
             bool isNULL = argument.InitialNull;
+            List<VirtualPerson> uplist = null;
+            if (vpspart != null)
+            {
+                uplist = InstallPersonValue(vpspart, argument, isNULL, index, familyIndex);
+                var upstaylist = new List<VirtualPerson>();
+                foreach (var item in vps)
+                {
+                    if (vpspart.Any(v => v.ID == item.ID))
+                        continue;
+                    item.OldVirtualCode = item.ZoneCode.PadRight(14, '0') + item.FamilyNumber.PadLeft(4, '0');
+                    upstaylist.Add(item);
+                }
+                uplist.AddRange(InstallPersonValue(upstaylist, argument, isNULL, index, familyIndex));
+            }
+            else
+            {
+                uplist = InstallPersonValue(vps, argument, isNULL, index, familyIndex);
+            }
+            //bool isSuccess = Update(vpi);
+            foreach (var vpi in uplist)
+            {
+                int upCount = landStation.UpdateDataForInitialVirtualPerson(vpi);
+                this.ReportProgress((int)(currentPercent + vpPercent * formatnumber), string.Format("{0}", markDesc + vpi.Name));
+                if (upCount > 0)
+                {
+                    successCount++;
+                    formatnumber++;
+                }
+            }
+            return successCount;
+        }
+
+        private List<VirtualPerson> InstallPersonValue(List<VirtualPerson> vps, TaskInitialVirtualPersonArgument argument,
+            bool isNULL, int index, int[] familyIndex)
+        {
             foreach (VirtualPerson vpi in vps)
             {
                 string Number = argument.CurrentZone.FullCode.PadRight(14, '0') + vpi.FamilyNumber.PadLeft(4, '0');
@@ -1774,20 +1825,11 @@ namespace YuLinTu.Library.Business
                 {
                     InitSharePersonComment(vpi);
                 }
-                //bool isSuccess = Update(vpi);
-                int upCount = landStation.UpdateDataForInitialVirtualPerson(vpi);
-                this.ReportProgress((int)(currentPercent + vpPercent * formatnumber), string.Format("{0}", markDesc + vpi.Name));
-                if (upCount > 0)
-                {
-                    successCount++;
-                    formatnumber++;
-                    index++;
-                    familyIndex[0]++;
-                }
+                index++;
+                familyIndex[0]++;
             }
-            return successCount;
+            return vps;
         }
-
 
         /// <summary>
         /// 后期添加的初始化共有人备注信息（从Description赋值到Comment。）

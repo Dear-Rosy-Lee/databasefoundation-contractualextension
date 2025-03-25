@@ -63,6 +63,8 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public bool UseOldLandCodeBindImport { get; private set; }
 
+        public bool DelLandImport { get; private set; }
+
         /// <summary>
         /// 数据汇总设置实体属性
         /// </summary>
@@ -297,6 +299,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void btnExcuteImport_Click_1(object sender, RoutedEventArgs e)
         {
+            DelLandImport = (bool)landdelCheck.IsChecked;
             //保存当前配置
             Dispatcher.Invoke(new Action(() =>
             {
