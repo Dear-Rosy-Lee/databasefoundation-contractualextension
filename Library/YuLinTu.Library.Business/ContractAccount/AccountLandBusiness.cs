@@ -3996,7 +3996,7 @@ namespace YuLinTu.Library.Business
                     List<ContractLand> landsOfStatusPart = landsOfStatus.FindAll(t => !t.LandNumber.StartsWith(t.ZoneCode));
                     List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => t.LandNumber.StartsWith(t.ZoneCode));
                     ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
-                    ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
+                    ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex, false);
                     foreach (var item in landsOfStatusPartStay)
                     {
                         var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
@@ -4157,7 +4157,8 @@ namespace YuLinTu.Library.Business
         /// 初始化地块信息
         /// </summary>
         private void ProcessLandInformationInstall(IContractLandWorkStation landStation, List<ContractLand> landsOfStatus,
-            TaskInitialLandInfoArgument metadata, List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender, string markDesc, int landIndex)
+            TaskInitialLandInfoArgument metadata, List<VirtualPerson> zonePersonList, Zone currentZone, CollectivityTissue sender,
+            string markDesc, int landIndex, bool reinstallNumber = true)
         {
             int index = 1;   //地块索引 
             //int successCount = 0;
@@ -4247,64 +4248,67 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
-                if (!isNULL || (isNULL && (land.LandNumber == null || land.LandNumber.Trim() == string.Empty)))
+                if (reinstallNumber)
                 {
-                    if (metadata.InitialLandNumber)
+                    if (!isNULL || (isNULL && (land.LandNumber == null || land.LandNumber.Trim() == string.Empty)))
                     {
-                        if (string.IsNullOrEmpty(land.OldLandNumber))//metadata.InitialLandOldNumber)
-                            land.OldLandNumber = land.LandNumber;
-                        else if (metadata.InitialLandOldNumber)
-                            land.OldLandNumber = land.LandNumber;
-                        land.SourceNumber = land.LandNumber;
-                        if (metadata.IsCombination)
+                        if (metadata.InitialLandNumber)
                         {
-                            //如果地块编码是19位的，不处理。如果调查编码是空的，就用地块编码。
-                            if (land.SurveyNumber.IsNullOrEmpty() == false)
+                            if (string.IsNullOrEmpty(land.OldLandNumber))//metadata.InitialLandOldNumber)
+                                land.OldLandNumber = land.LandNumber;
+                            else if (metadata.InitialLandOldNumber)
+                                land.OldLandNumber = land.LandNumber;
+                            land.SourceNumber = land.LandNumber;
+                            if (metadata.IsCombination)
                             {
-                                land.LandNumber = sender.Code + land.SurveyNumber.PadLeft(5, '0');
-                            }
-                            else
-                            {
-                                if (land.LandNumber != null && land.LandNumber.Length <= 5)
+                                //如果地块编码是19位的，不处理。如果调查编码是空的，就用地块编码。
+                                if (land.SurveyNumber.IsNullOrEmpty() == false)
                                 {
-                                    land.LandNumber = sender.Code + land.LandNumber.PadLeft(5, '0');
+                                    land.LandNumber = sender.Code + land.SurveyNumber.PadLeft(5, '0');
                                 }
-                                if (land.LandNumber.Length == 19 &&
-                                    !land.LandNumber.StartsWith(land.SenderCode))
-                                {
-                                    land.SurveyNumber = land.LandNumber.Substring(14);
-                                    land.LandNumber = sender.Code + land.SurveyNumber;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (metadata.VillageInlitialSet)
-                            {
-                                //按村发包
-                                string unitCode = string.Empty;
-                                if (currentZone.Level == eZoneLevel.Group)
-                                    unitCode = currentZone.UpLevelCode;
                                 else
-                                    unitCode = currentZone.FullCode;
-                                if (unitCode.Length == 16)
-                                    unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
-                                unitCode = unitCode.PadRight(14, '0');
-                                if (metadata.HandleContractLand)
-                                    metadata.CombinationLandNumber[0] = CheckLandNumber(unitCode, metadata.CombinationLandNumber[0], otherLand);
-                                land.LandNumber = unitCode + metadata.CombinationLandNumber[0].ToString().PadLeft(5, '0');
+                                {
+                                    if (land.LandNumber != null && land.LandNumber.Length <= 5)
+                                    {
+                                        land.LandNumber = sender.Code + land.LandNumber.PadLeft(5, '0');
+                                    }
+                                    if (land.LandNumber.Length == 19 &&
+                                        !land.LandNumber.StartsWith(land.SenderCode))
+                                    {
+                                        land.SurveyNumber = land.LandNumber.Substring(14);
+                                        land.LandNumber = sender.Code + land.SurveyNumber;
+                                    }
+                                }
                             }
                             else
                             {
-                                //按组发包
-                                string unitCode = currentZone.FullCode;
-                                if (unitCode.Length == 16)
-                                    unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
-                                unitCode = unitCode.PadRight(14, '0');
-                                if (metadata.HandleContractLand)
-                                    landIndex = CheckLandNumber(unitCode, landIndex, otherLand);
-                                string landnumber = unitCode + landIndex.ToString().PadLeft(5, '0');
-                                land.LandNumber = landnumber;
+                                if (metadata.VillageInlitialSet)
+                                {
+                                    //按村发包
+                                    string unitCode = string.Empty;
+                                    if (currentZone.Level == eZoneLevel.Group)
+                                        unitCode = currentZone.UpLevelCode;
+                                    else
+                                        unitCode = currentZone.FullCode;
+                                    if (unitCode.Length == 16)
+                                        unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
+                                    unitCode = unitCode.PadRight(14, '0');
+                                    if (metadata.HandleContractLand)
+                                        metadata.CombinationLandNumber[0] = CheckLandNumber(unitCode, metadata.CombinationLandNumber[0], otherLand);
+                                    land.LandNumber = unitCode + metadata.CombinationLandNumber[0].ToString().PadLeft(5, '0');
+                                }
+                                else
+                                {
+                                    //按组发包
+                                    string unitCode = currentZone.FullCode;
+                                    if (unitCode.Length == 16)
+                                        unitCode = unitCode.Substring(0, 12) + unitCode.Substring(14, 2);
+                                    unitCode = unitCode.PadRight(14, '0');
+                                    if (metadata.HandleContractLand)
+                                        landIndex = CheckLandNumber(unitCode, landIndex, otherLand);
+                                    string landnumber = unitCode + landIndex.ToString().PadLeft(5, '0');
+                                    land.LandNumber = landnumber;
+                                }
                             }
                         }
                     }
