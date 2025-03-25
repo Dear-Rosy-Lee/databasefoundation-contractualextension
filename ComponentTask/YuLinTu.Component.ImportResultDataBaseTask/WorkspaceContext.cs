@@ -5,7 +5,7 @@ using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
 using YuLinTu.Windows;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 通用信息插件上下文

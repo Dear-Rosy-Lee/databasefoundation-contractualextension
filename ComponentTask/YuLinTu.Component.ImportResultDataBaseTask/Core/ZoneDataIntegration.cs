@@ -8,7 +8,7 @@ using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 行政区域数据操作

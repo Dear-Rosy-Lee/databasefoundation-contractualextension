@@ -4,7 +4,7 @@
 using Quality.Business.TaskBasic;
 using YuLinTu.Library.Controls;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 文件/地域设置实体

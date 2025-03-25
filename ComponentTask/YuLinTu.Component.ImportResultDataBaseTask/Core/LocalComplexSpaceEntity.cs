@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using YuLinTu.Library.Entity;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class LocalComplexSpaceEntity
     {

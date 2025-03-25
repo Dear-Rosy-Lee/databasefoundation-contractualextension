@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace YuLinTu.Component.ResultDbToLocalDbFX
+namespace YuLinTu.Component.ImportResultDataBaseTaskFX
 {
   public class CBJYQZ
     {

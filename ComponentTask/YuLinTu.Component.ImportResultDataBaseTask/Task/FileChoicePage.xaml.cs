@@ -16,7 +16,7 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 文件导出选择界面

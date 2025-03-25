@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using YuLinTu.Library.Entity;
 using YuLinTu.Spatial;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class LocalComplexRightEntity
     {

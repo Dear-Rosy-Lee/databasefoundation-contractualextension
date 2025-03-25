@@ -20,7 +20,7 @@ using YuLinTu.Windows.Wpf;
 using Quality.Business.Entity;
 
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 配置类

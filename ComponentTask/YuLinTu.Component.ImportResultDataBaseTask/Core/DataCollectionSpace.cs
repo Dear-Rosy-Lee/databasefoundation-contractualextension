@@ -5,7 +5,7 @@ using Quality.Business.Entity;
 using System;
 using System.Collections.Generic;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 空间数据集合类

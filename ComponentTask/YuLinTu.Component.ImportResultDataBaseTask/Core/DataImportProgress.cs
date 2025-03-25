@@ -23,7 +23,7 @@ using YuLinTu.Library.Business;
 using YuLinTu.Spatial;
 using ZoneDto = YuLinTu.Library.Entity.Zone;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 获取数据
@@ -884,11 +884,10 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         private void ImportContractLandPropertyRightDatas(IDbContext localService, List<ComplexRightEntity> entityList, string zoneName = null, string zoneCode = null, bool isnormalexport = true)
         {
             var db = localService.CreateZoneWorkStation();
-            List<ResultDbToLocalDb.LocalComplexRightEntity> list = new List<ResultDbToLocalDb.LocalComplexRightEntity>();
+            List<LocalComplexRightEntity> list = new List<LocalComplexRightEntity>();
             foreach (var item in entityList)
             {
-                ResultDbToLocalDb.LocalComplexRightEntity obj =
-                    ResultDbToLocalDb.LocalComplexRightEntity.From(item,
+                LocalComplexRightEntity obj = LocalComplexRightEntity.From(item,
                         new Action<string>(t => this.ReportError(t)));
                 if (IsLegalData)
                 {
@@ -1013,7 +1012,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             List<Library.Entity.BelongRelation> listCLBR,
             List<Library.Entity.StockConcord> listSC,
             List<Library.Entity.StockWarrant> listSW,
-            ResultDbToLocalDb.LocalComplexRightEntity obj,
+            LocalComplexRightEntity obj,
             string zoneCode,
             string zoneName,
             Dictionary<string, Library.Entity.VirtualPerson> families,
@@ -1155,7 +1154,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         /// </summary>
         private void SetLineAndPoint(List<Library.Entity.BuildLandBoundaryAddressDot> zonelistSaveDots, List<Library.Entity.BuildLandBoundaryAddressCoil> zonelistSaveCoils,
             List<Library.Entity.BuildLandBoundaryAddressDot> zonelistDots, List<Library.Entity.BuildLandBoundaryAddressCoil> zonelistCoils,
-            Library.Entity.ContractLand land, ResultDbToLocalDb.LocalComplexRightEntity obj, string zoneCode)
+            Library.Entity.ContractLand land, LocalComplexRightEntity obj, string zoneCode)
         {
             var landDots = new List<Library.Entity.BuildLandBoundaryAddressDot>();
             var landCoils = new List<Library.Entity.BuildLandBoundaryAddressCoil>();
@@ -1247,11 +1246,11 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         private void ImportNoContractLandVPDatas(IDbContext localService, List<ComplexRightEntity> entityList, string zoneName = null, string zoneCode = null)
         {
             var db = localService.CreateZoneWorkStation();
-            List<ResultDbToLocalDb.LocalComplexRightEntity> list = new List<ResultDbToLocalDb.LocalComplexRightEntity>();
+            List<LocalComplexRightEntity> list = new List<LocalComplexRightEntity>();
 
             foreach (var item in entityList)
             {
-                ResultDbToLocalDb.LocalComplexRightEntity obj = ResultDbToLocalDb.LocalComplexRightEntity.From(item);
+                LocalComplexRightEntity obj = LocalComplexRightEntity.From(item);
                 list.Add(obj);
             }
 
@@ -1601,7 +1600,7 @@ namespace YuLinTu.Component.ResultDbToLocalDb
             {
                 localService.BeginTransaction();
 
-                var obj = ResultDbToLocalDb.LocalComplexSpaceEntity.From(spaceEntity);
+                var obj = LocalComplexSpaceEntity.From(spaceEntity);
                 var db = localService.CreateZoneWorkStation();
 
                 foreach (var item in obj.MZDW)

@@ -10,7 +10,7 @@ using System.Windows.Data;
 using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class PropertyDescriptorBuilderTest : PropertyDescriptorBuilder
     {
