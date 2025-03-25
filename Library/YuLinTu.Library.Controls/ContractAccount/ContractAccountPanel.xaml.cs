@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
-using YuLinTu.Library.Business.ContractAccount.AttributeDataChecker;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
