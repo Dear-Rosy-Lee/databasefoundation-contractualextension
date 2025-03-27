@@ -100,12 +100,13 @@ namespace YuLinTu.Component.Setting
             //AutoUpdater.DownloadPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
+        private  void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
-            string uplogUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/changelog.html";
-            await VerifyLink(updateUrl);
-            //("https://yourdomain.com/updates.xml", new TimeSpan(0, 24, 0));
+            UpdateProgram.CheckUpdate();
+            //string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
+            //string uplogUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/changelog.html";
+            //await VerifyLink(updateUrl);
+            ////("https://yourdomain.com/updates.xml", new TimeSpan(0, 24, 0));
         }
 
         private async System.Threading.Tasks.Task VerifyLink(string updateUrl)

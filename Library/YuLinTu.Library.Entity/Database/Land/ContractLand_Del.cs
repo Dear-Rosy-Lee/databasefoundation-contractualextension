@@ -108,7 +108,20 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("CBFID");
             }
         }
-
+        /// <summary>
+        /// 承包方id
+        /// </summary>
+        [DataColumn("CBFBM")]
+        public string CBFBM
+        {
+            get { return cbfbm; }
+            set
+            {
+                cbfbm = value;
+                NotifyPropertyChanged("CBFBM");
+            }
+        }
+        private string cbfbm;
 
         [DataColumn("DKDZ")]
         public string DKDZ
@@ -212,7 +225,7 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         /// 转换对象
         /// </summary> 
-        public static ContractLand_Del ChangeDataEntity(string zoneCode, ContractLand ld)
+        public static ContractLand_Del ChangeDataEntity(string zoneCode, ContractLand ld, string fnum = "")
         {
             var data = new ContractLand_Del()
             {
@@ -234,6 +247,7 @@ namespace YuLinTu.Library.Entity
                 SYQXZ = ld.OwnRightType,
                 DLDJ = ld.LandLevel,
                 DKLB = ld.LandCategory,
+                CBFBM = fnum,
                 SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
             };
             return data;

@@ -170,6 +170,12 @@
 				<IsAdd>true</IsAdd>
 			</UpdateField>
 			<UpdateField>
+				<FieldName>CBFBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
 				<FieldName>DKBM</FieldName>
 				<FieldType>TEXT</FieldType>
 				<IsNull>true</IsNull>

@@ -415,13 +415,27 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        /// <summary>
+        /// 设置关联
+        /// </summary>
+        /// <param name="arg"></param>
         private void ChangeDataAndSend(TaskGoEventArgs arg)
         {
+            var dicdklb = new Dictionary<string, Dictionary>();
+            var dicdldj = new Dictionary<string, Dictionary>();
+            foreach (var item in listDKLB)
+            {
+                dicdklb.Add(item.Code, item);
+            }
+            foreach (var item in listDLDJ)
+            {
+                dicdldj.Add(item.Code, item);
+            }
             if (arg == null)
             {
                 foreach (var item in currentPersonList)
                 {
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
                     if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
                     {
                         continue;
@@ -439,7 +453,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (arg.Instance.IsStopPending)
                         break;
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
                     arg.Instance.ReportProgress(50, svpi);
                 }
             }

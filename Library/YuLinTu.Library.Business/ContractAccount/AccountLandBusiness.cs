@@ -1419,8 +1419,14 @@ namespace YuLinTu.Library.Business
                 expand.Name = targetLand.Name;
                 expand.HouseHolderName = targetLand.Name;
             }
-            targetLand.OwnerName = PropertString(shapeData, infoList, selectColNameList, "NameIndex");
-            targetLand.Name = PropertString(shapeData, infoList, selectColNameList, "LandNameIndex");
+            if ((string)infoList[0].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            {
+                targetLand.OwnerName = PropertString(shapeData, infoList, selectColNameList, "NameIndex");
+            }
+            if ((string)infoList[2].GetValue(ImportLandShapeInfoDefine, null) != "None")
+            {
+                targetLand.Name = PropertString(shapeData, infoList, selectColNameList, "LandNameIndex");
+            }
             targetLand.LandNumber = PropertString(shapeData, infoList, selectColNameList, "CadastralNumberIndex");
             //if ((string)infoList[4].GetValue(ImportLandShapeInfoDefine, null) != "None")
             //{
