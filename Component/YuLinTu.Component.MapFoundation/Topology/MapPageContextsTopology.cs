@@ -10,6 +10,11 @@ using YuLinTu.Library.Entity;
 using System.Collections.Generic;
 using OSGeo.OGR;
 using YuLinTu.Data;
+using System.Windows.Interop;
+using System.Windows.Threading;
+using System.Windows;
+using YuLinTu.Appwork;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -72,7 +77,13 @@ namespace YuLinTu.Component.MapFoundation
                                 if (dbland != null)
                                 {
                                     entities[i].ID = dbland.ID;
-                                    landStation.Update(entities[i]);
+
+                                    //查询是否在数据库中存在该地块
+                                    if (VerifyLandCode(entities))
+                                    {
+                                        landStation.Update(entities[i]);
+                                    }
+
                                 }
                                 else
                                 {
@@ -106,6 +117,25 @@ namespace YuLinTu.Component.MapFoundation
                 };
                 Workpage.Page.ShowDialog(dlg, (b, r) => { dlg.Uninstall(); });
             }));
+
         }
+        private bool VerifyLandCode(List<ContractLand> contractLands)
+        {
+            
+            Workpage.Workspace.Window.ShowDialog(new MessageDialog()
+            {
+                Message = "是否确定地块编码编辑完成并保存？",
+                Header = "地块编码"
+            }, (b, r) =>
+            {
+                if (b.HasValue && b.Value)
+                {
+                    
+                }
+                  
+            });
+            return true;
+        }
+
     }
 }
