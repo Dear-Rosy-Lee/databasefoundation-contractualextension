@@ -138,8 +138,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Library.CompareResu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ComponentTask", "ComponentTask", "{19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.ResultDbToLocalDb", "ComponentTask\YuLinTu.Component.2016ResultDbToLocalDb\YuLinTu.Component.ResultDbToLocalDb.csproj", "{DABFC851-98B3-4E84-A81E-451573B07BC1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.CombinationDataBaseTask", "ComponentTask\YuLinTu.Component.CombinationDataBaseTask\YuLinTu.Component.CombinationDataBaseTask.csproj", "{F526F87E-8396-47F2-9B2B-922E8B09C4FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.CombineWordTask", "ComponentTask\YuLinTu.Component.CombineWordTask\YuLinTu.Component.CombineWordTask.csproj", "{C53EB389-E61A-48B2-B06A-888FE366DE54}"
@@ -165,6 +163,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.AssociateLandCode", "ComponentTask\YuLinTu.Component.AssociateLandCode\YuLinTu.Component.AssociateLandCode.csproj", "{35F37702-D347-4911-9965-7CCB1F8377D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.CoordinateTransformTask", "ComponentTask\YuLinTu.Component.CoordinateTransform\YuLinTu.Component.CoordinateTransformTask.csproj", "{C42C2FF4-C3D0-416D-A279-E440533FFB0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.ImportResultDataBaseTask", "ComponentTask\YuLinTu.Component.ImportResultDataBaseTask\YuLinTu.Component.ImportResultDataBaseTask.csproj", "{DABFC851-98B3-4E84-A81E-451573B07BC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -595,22 +595,6 @@ Global
 		{18051D54-C6EB-4685-BF80-75544CC8FF30}.Release|x64.Build.0 = Release|Any CPU
 		{18051D54-C6EB-4685-BF80-75544CC8FF30}.Release|x86.ActiveCfg = Release|x86
 		{18051D54-C6EB-4685-BF80-75544CC8FF30}.Release|x86.Build.0 = Release|x86
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Mixed Platforms.Build.0 = Debug|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x64.ActiveCfg = Debug|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x64.Build.0 = Debug|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x86.ActiveCfg = Debug|x86
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x86.Build.0 = Debug|x86
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Mixed Platforms.ActiveCfg = Release|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Mixed Platforms.Build.0 = Release|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x64.ActiveCfg = Release|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x64.Build.0 = Release|x64
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x86.ActiveCfg = Release|x86
-		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x86.Build.0 = Release|x86
 		{F526F87E-8396-47F2-9B2B-922E8B09C4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F526F87E-8396-47F2-9B2B-922E8B09C4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F526F87E-8396-47F2-9B2B-922E8B09C4FD}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
@@ -819,6 +803,22 @@ Global
 		{C42C2FF4-C3D0-416D-A279-E440533FFB0E}.Release|x64.Build.0 = Release|Any CPU
 		{C42C2FF4-C3D0-416D-A279-E440533FFB0E}.Release|x86.ActiveCfg = Release|x86
 		{C42C2FF4-C3D0-416D-A279-E440533FFB0E}.Release|x86.Build.0 = Release|x86
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x64.ActiveCfg = Debug|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x64.Build.0 = Debug|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x86.ActiveCfg = Debug|x86
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Debug|x86.Build.0 = Debug|x86
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Mixed Platforms.ActiveCfg = Release|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|Mixed Platforms.Build.0 = Release|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x64.ActiveCfg = Release|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x64.Build.0 = Release|x64
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x86.ActiveCfg = Release|x86
+		{DABFC851-98B3-4E84-A81E-451573B07BC1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -851,7 +851,6 @@ Global
 		{E1E71531-E3AA-4D87-B697-349C8CC022AB} = {706F840F-ED9B-4430-AC6D-C14346F13B0E}
 		{7B05A4EC-0279-47D1-886A-C2EECF030976} = {5E8BEC2E-E812-453F-A292-FD91C9EC9E7E}
 		{18051D54-C6EB-4685-BF80-75544CC8FF30} = {5E8BEC2E-E812-453F-A292-FD91C9EC9E7E}
-		{DABFC851-98B3-4E84-A81E-451573B07BC1} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{F526F87E-8396-47F2-9B2B-922E8B09C4FD} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{C53EB389-E61A-48B2-B06A-888FE366DE54} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{CF931943-16A1-4B6C-9938-3D22A8DED2B7} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
@@ -865,6 +864,7 @@ Global
 		{505501E5-39B4-40E4-ACA6-0FDAA5DA9DA6} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{35F37702-D347-4911-9965-7CCB1F8377D3} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{C42C2FF4-C3D0-416D-A279-E440533FFB0E} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
+		{DABFC851-98B3-4E84-A81E-451573B07BC1} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD91C12-2BD4-444D-A690-F2AA0E7ABF34}

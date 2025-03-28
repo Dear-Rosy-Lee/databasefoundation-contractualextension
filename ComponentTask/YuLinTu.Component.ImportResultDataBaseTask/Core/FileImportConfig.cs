@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using YuLinTu.Library.Controls;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 文件/地域设置实体

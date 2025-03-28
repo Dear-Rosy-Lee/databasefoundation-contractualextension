@@ -1594,6 +1594,10 @@ namespace YuLinTu.Library.Business
                     familyindex = (templist.Count == 0 ? 0 : mxnum) + 1;
                     partfarmPersons = farmPersons.FindAll(t => !string.IsNullOrEmpty(t.OldVirtualCode) && !t.OldVirtualCode.StartsWith(t.ZoneCode));
                 }
+                else
+                {
+                    familyindex = argument.InitiallStartNum;
+                }
                 dbContext.BeginTransaction();
                 int farmSuccessCount = SetPersonValue(farmPersons, partfarmPersons, argument, landStation, argument.FarmerFamilyNumberIndex, familyindex, 0, vpPercent, currentPercent, markDesc);   //农户
                 int personaSuccessCount = SetPersonValue(personalPersons, null, argument, landStation, argument.PersonalFamilyNumberIndex, 8001, farmPersons.Count, vpPercent, currentPercent, markDesc);  //个人
@@ -1638,7 +1642,7 @@ namespace YuLinTu.Library.Business
             //vps.Sort((a, b) => { return a.Name.CompareTo(b.Name); });
             bool isNULL = argument.InitialNull;
             List<VirtualPerson> uplist = null;
-            if (vpspart != null)
+            if (vpspart != null && vpspart.Count > 0)
             {
                 uplist = InstallPersonValue(vpspart, argument, isNULL, index, familyIndex);
                 var upstaylist = new List<VirtualPerson>();
@@ -1649,7 +1653,7 @@ namespace YuLinTu.Library.Business
                     item.OldVirtualCode = item.ZoneCode.PadRight(14, '0') + item.FamilyNumber.PadLeft(4, '0');
                     upstaylist.Add(item);
                 }
-                uplist.AddRange(InstallPersonValue(upstaylist, argument, isNULL, index, familyIndex));
+                uplist.AddRange(InstallPersonValue(upstaylist, argument, isNULL, index, familyIndex, false));
             }
             else
             {
@@ -1670,7 +1674,7 @@ namespace YuLinTu.Library.Business
         }
 
         private List<VirtualPerson> InstallPersonValue(List<VirtualPerson> vps, TaskInitialVirtualPersonArgument argument,
-            bool isNULL, int index, int[] familyIndex)
+            bool isNULL, int index, int[] familyIndex, bool reinstallNumber = true)
         {
             foreach (VirtualPerson vpi in vps)
             {
@@ -1679,15 +1683,18 @@ namespace YuLinTu.Library.Business
                     Number += "J";
                 else
                     Number += "Q";
-                //20160929 陈泽林 不管什么状态统一初始化
-                if (!isNULL || (isNULL && (vpi.FamilyNumber == null || vpi.FamilyNumber.Trim() == string.Empty)))
+                if (reinstallNumber)
                 {
-                    if (argument.InitiallNumber)
+                    //20160929 陈泽林 不管什么状态统一初始化
+                    if (!isNULL || (isNULL && (vpi.FamilyNumber == null || vpi.FamilyNumber.Trim() == string.Empty)))
                     {
-                        if (argument.VillageInlitialSet)
-                            vpi.FamilyNumber = familyIndex[0].ToString().PadLeft(4, '0');
-                        else
-                            vpi.FamilyNumber = index.ToString().PadLeft(4, '0');
+                        if (argument.InitiallNumber)
+                        {
+                            if (argument.VillageInlitialSet)
+                                vpi.FamilyNumber = familyIndex[0].ToString().PadLeft(4, '0');
+                            else
+                                vpi.FamilyNumber = index.ToString().PadLeft(4, '0');
+                        }
                     }
                 }
                 //if (vpi.Status == eVirtualPersonStatus.Lock)   //去除被锁定的承包方

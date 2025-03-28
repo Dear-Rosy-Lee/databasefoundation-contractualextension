@@ -413,7 +413,13 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 if (dellands.Any(t => t.DKBM == ld.LandNumber))
                     continue;
-                dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld));
+                string oldfamilynumber = "";
+                var ovp = ovps.Find(t => t.ID == ld.OwnerId);
+                if (ovp != null)
+                {
+                    oldfamilynumber = ovp.ZoneCode.PadRight(14, '0') + ovp.FamilyNumber.PadLeft(4, '0');
+                }
+                dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld, oldfamilynumber));
             }
             return listLands;
         }

@@ -224,9 +224,9 @@
                                        x:Name="dockPanelEmptyReplacement" Visibility="Visible" x:FieldModifier="public">
                                 <TextBlock DockPanel.Dock="Left"
                                            VerticalAlignment="Center"
-                                           Text="空数据替换" />
-                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Right" Text="{Binding SystemSettingDefine.EmptyReplacement, Mode=TwoWay}" />
-                               
+                                           Text="空数据替换" Margin="0,0,10,0"/>
+                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Left" Text="{Binding SystemSettingDefine.EmptyReplacement, Mode=TwoWay}" />
+
                             </DockPanel>
                         </Grid>
                     </StackPanel>
@@ -236,6 +236,7 @@
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -265,7 +266,13 @@
                                       Content="所有导出报表中涉及姓名时去除重复标识" />
                             <CheckBox Grid.Row="3"
                                       IsChecked="{Binding SystemSettingDefine.StatisticsDeadPersonInfo, Mode=TwoWay}"
-                                      Content="是否统计去世成员信息" />
+                                      Content="统计去世成员信息" />
+
+                            <!--<DockPanel Grid.Row="4" Style="{StaticResource grid_item}" x:Name="dp_Rewriting" Visibility="Visible" x:FieldModifier="public">
+                                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Text="初始化数据起始编号" />
+                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Left" Text="{Binding SystemSettingDefine.RewritingStartNumber, Mode=TwoWay}" />
+
+                            </DockPanel>-->
                             <DockPanel Grid.Row="4"
                                        Style="{StaticResource grid_item}">
                                 <TextBlock DockPanel.Dock="Left"

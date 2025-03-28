@@ -198,6 +198,11 @@ namespace YuLinTu.Library.Business
 
         public bool InitAllNum { get; set; }
 
+        /// <summary>
+        /// 初始化起始编码
+        /// </summary>         
+        public int InitiallStartNum { get; set; }
+
         #endregion
 
         #region Ctor

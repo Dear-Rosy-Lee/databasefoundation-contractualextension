@@ -17,7 +17,7 @@ using YuLinTu.Data;
 using YuLinTu.Data.SQLite;
 using YuLinTu.tGISCNet;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 空间数据操作

@@ -50,8 +50,8 @@ namespace YuLinTu.Product.YuLinTuTool
                 return;
             }
 
-            //UpdateProgram.InstallUpdateProgram();
-            //UpdateProgram.CheckUpdate();
+            UpdateProgram.InstallUpdateProgram();
+            UpdateProgram.CheckUpdate();
 
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);

@@ -24,7 +24,55 @@ namespace YuLinTu.Library.Controls
             ContractLandPersonItem item = new ContractLandPersonItem() { ID = tableVp.ID };
             item.Tag = tableVp;
             // 先获取非股地，再获取股地
-            List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand).OrderBy(s=>s.LandNumber).ToList();
+            List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand).OrderBy(s => s.LandNumber).ToList();
+            if (isStockLand && ralationList.Count > 0)
+            {
+                // 股地里，“权属关系”表里必有对应信息
+                var ralations = ralationList.FindAll(o => o.VirtualPersonID == tableVp.ID);
+                var geoLandOfFamily = new List<ContractLand>();
+                ralations.ForEach(r =>
+                {
+                    var land = accountLandList.Find(g => g.ID == r.LandID);
+                    if (land != null)
+                    {
+                        land = land.Clone() as ContractLand;
+                        if (!list.Any(c => c.ID.Equals(land.ID)))
+                        {
+                            land.AwareArea = r.QuanficationArea;
+                            list.Add(land);
+                        }
+                    }
+                });
+            }
+            foreach (var land in list)
+            {
+                ContractLandBinding cb = new ContractLandBinding(land);
+                ConvertCodeToName(cb, listDKLB, listDLDJ);
+                if (isAddChildren)
+                    item.Children.Add(cb);
+            }
+            if (list.Count > 0)
+                item.Visibility = Visibility.Visible;
+            item.Name = CreateItemName(tableVp, list.Count) + CreateItemNumber(tableVp);
+            item.ActualAreaUI = list.Sum(o => o.ActualArea).AreaFormat(2);
+            item.AwareAreaUI = list.Sum(o => o.AwareArea).AreaFormat(2);
+            item.TableAreaUI = list.Sum(o => o.TableArea).AreaFormat(2);
+            item.ContractDelayAreaUI = list.Sum(o => o.ContractDelayArea).AreaFormat(2);
+            item.Img = item.Tag.Status == eVirtualPersonStatus.Lock ? 3 : 0;
+            return item;
+        }
+
+
+        public static ContractLandPersonItem ConvertItem
+            (this VirtualPerson tableVp, List<ContractLand> accountLandList,
+            Dictionary<string, Dictionary> listDKLB, Dictionary<string, Dictionary> listDLDJ,
+            bool isStockLand, List<BelongRelation> ralationList,
+            bool isAddChildren = true)
+        {
+            ContractLandPersonItem item = new ContractLandPersonItem() { ID = tableVp.ID };
+            item.Tag = tableVp;
+            // 先获取非股地，再获取股地
+            List<ContractLand> list = accountLandList.FindAll(t => t.OwnerId == tableVp.ID && !t.IsStockLand).OrderBy(s => s.LandNumber).ToList();
             if (isStockLand && ralationList.Count > 0)
             {
                 // 股地里，“权属关系”表里必有对应信息
@@ -73,6 +121,26 @@ namespace YuLinTu.Library.Controls
             landBinding.LandCategoryUI = category == null ? "" : category.Name;
             var level = listDLDJ.Find(t => t.Code == landBinding.Tag.LandLevel);
             landBinding.LandLevelUI = level == null ? "" : level.Name;
+            if (landBinding.Tag.IsFarmerLand != null)
+                landBinding.IsFarmerLandUI = Convert.ToBoolean(landBinding.Tag.IsFarmerLand) ? "是" : "否";
+        }
+
+        /// <summary>
+        /// 将编码转换为名称
+        /// </summary>
+        /// <param name="landBinding">承包地块(界面实体)</param>
+        /// <param name="dicts">数据字典集合</param>
+        public static void ConvertCodeToName(ContractLandBinding landBinding, Dictionary<string, Dictionary> listDKLB, Dictionary<string, Dictionary> listDLDJ)
+        {
+            Dictionary category = null;
+            if (listDKLB.TryGetValue(landBinding.Tag.LandCategory, out category))
+                landBinding.LandCategoryUI = category.Name;
+
+            Dictionary level = null;
+            if (listDLDJ.TryGetValue(landBinding.Tag.LandLevel, out level))
+            {
+                landBinding.LandLevelUI = level.Name;
+            }
             if (landBinding.Tag.IsFarmerLand != null)
                 landBinding.IsFarmerLandUI = Convert.ToBoolean(landBinding.Tag.IsFarmerLand) ? "是" : "否";
         }

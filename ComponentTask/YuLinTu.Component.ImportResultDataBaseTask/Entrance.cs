@@ -3,7 +3,7 @@
  */
 using YuLinTu.Windows;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 应用程序上下文

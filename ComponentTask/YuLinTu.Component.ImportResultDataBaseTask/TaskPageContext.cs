@@ -5,7 +5,7 @@ using YuLinTu.Windows;
 using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class TaskPageContext : WorkpageContextTask
     {
@@ -32,8 +32,8 @@ namespace YuLinTu.Component.ResultDbToLocalDb
         {
             e.Templates.Add(new TaskDescriptor
             {
-                TypeTask = typeof(ResultDbToLocalDb.TaskInstalllerServiceAccount),
-                TypeArgument = typeof(ResultDbToLocalDb.TaskInstalllerServiceAccountArgument)
+                TypeTask = typeof(TaskInstalllerServiceAccount),
+                TypeArgument = typeof(TaskInstalllerServiceAccountArgument)
             });
 
         }

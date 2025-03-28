@@ -212,11 +212,13 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 地块备注
         /// </summary>
-        public string LandComment
-        {
-            get;
-            set;
-        }
+        public string LandComment { get; set; }
+
+        /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum { get; set; }
+
         #endregion
 
         #region Ctor

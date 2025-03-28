@@ -4,7 +4,7 @@
 */
 using YuLinTu.Windows.Wpf.Metro.Components;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 成果导入参数类

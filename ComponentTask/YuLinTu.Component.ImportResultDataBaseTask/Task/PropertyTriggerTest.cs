@@ -12,7 +12,7 @@ using YuLinTu.Appwork;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class PropertyTriggerTest : PropertyTrigger
     {

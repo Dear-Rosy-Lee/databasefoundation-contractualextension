@@ -583,7 +583,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     {
                         ExportLandResultFile(spaceProgress, extendSet);
                     }
-                    ExportLandOnly(spaceProgress, extendSet);
+                    else
+                    {
+                        ExportLandOnly(spaceProgress, extendSet);
+                    }
                 }
             }
             else

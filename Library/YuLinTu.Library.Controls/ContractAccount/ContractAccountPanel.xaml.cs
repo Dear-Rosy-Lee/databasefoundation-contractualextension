@@ -415,13 +415,27 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        /// <summary>
+        /// 设置关联
+        /// </summary>
+        /// <param name="arg"></param>
         private void ChangeDataAndSend(TaskGoEventArgs arg)
         {
+            var dicdklb = new Dictionary<string, Dictionary>();
+            var dicdldj = new Dictionary<string, Dictionary>();
+            foreach (var item in listDKLB)
+            {
+                dicdklb.Add(item.Code, item);
+            }
+            foreach (var item in listDLDJ)
+            {
+                dicdldj.Add(item.Code, item);
+            }
             if (arg == null)
             {
                 foreach (var item in currentPersonList)
                 {
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
                     if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
                     {
                         continue;
@@ -439,7 +453,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (arg.Instance.IsStopPending)
                         break;
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
                     arg.Instance.ReportProgress(50, svpi);
                 }
             }
@@ -7055,6 +7069,7 @@ namespace YuLinTu.Library.Controls
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
             argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
             argument.IsNewPart = initialLand.IsNewPart;
+            argument.InitiallStartNum = initialLand.InitiallStartNum;
 
             var operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
@@ -7155,7 +7170,7 @@ namespace YuLinTu.Library.Controls
         private void InitialLandInfoTaskGroup(object page, List<Zone> allZones)
         {
             var initialLand = page as ContractLandInitializePage;
-            TaskGroupInitialLandInfoArgument groupArgument = new TaskGroupInitialLandInfoArgument();
+            var groupArgument = new TaskGroupInitialLandInfoArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.AllZones = allZones;
@@ -7195,6 +7210,8 @@ namespace YuLinTu.Library.Controls
             groupArgument.VillageInlitialSet = SystemSetDefine.VillageInlitialSet;
             groupArgument.InitLandComment = initialLand.InitLandComment;
             groupArgument.LandComment = initialLand.LandComment;
+            groupArgument.InitiallStartNum = initialLand.InitiallStartNum;
+
             var groupOperation = new TaskGroupInitialLandInfoOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;

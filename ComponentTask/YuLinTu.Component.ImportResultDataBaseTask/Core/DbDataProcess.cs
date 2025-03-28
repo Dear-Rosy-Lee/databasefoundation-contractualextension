@@ -11,7 +11,7 @@ using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Data.Dynamic;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 数据库数据获取

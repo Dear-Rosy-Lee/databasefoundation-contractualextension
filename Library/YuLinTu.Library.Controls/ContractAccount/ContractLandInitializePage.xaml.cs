@@ -86,6 +86,7 @@ namespace YuLinTu.Library.Controls
 
         private bool initialLandNeighbor;//是否获取四至(前信息
         private bool initialLandNeighborInfo;//是否获取地块周边地块集合
+
         #endregion
 
         #region Properties
@@ -411,6 +412,17 @@ namespace YuLinTu.Library.Controls
             get { return landComment; }
             set { landComment = value; }
         }
+
+        /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum
+        {
+            get { return initiallStartNum; }
+            set { initiallStartNum = value; }
+        }
+        private int initiallStartNum;
+
         #endregion
 
         #region Methods-Override
@@ -467,6 +479,7 @@ namespace YuLinTu.Library.Controls
             cmbQSXZ.ItemsSource = qsxzList;
             cmbQSXZ.DisplayMemberPath = "Name";
             cmbQSXZ.SelectedIndex = 0;
+            txtInitiallStartNum.Text = "1";
         }
 
         #endregion
@@ -495,6 +508,7 @@ namespace YuLinTu.Library.Controls
                     CancelButtonText = "不覆盖",
                     CloseButtonVisibility = Visibility.Collapsed
                 };
+
                 Workpage.Page.ShowDialog(message, (b, c) =>
                 {
                     if ((bool)b)
@@ -561,6 +575,9 @@ namespace YuLinTu.Library.Controls
                 initialLandNeighborInfo = (bool)cbInitializeLandNeighborInfo.IsChecked;
                 initialReferPersonByOwner = (bool)cbReferPersonExpand.IsChecked;
                 initLandComment = (bool)cbLandComment.IsChecked;
+                int pinstartnun = 0;
+                int.TryParse(txtInitiallStartNum.Text, out pinstartnun);
+                InitiallStartNum = pinstartnun == 0 ? 1 : pinstartnun;
             }));
             if (!initialQSXZ && !initialLandName && !initialLandLevel && !initialLandPurpose && !initialLandNumber && !initialIsFamer
              && !initialAwareArea && !handleContractLand && !initialMapNumber && !initialSurveyPerson && !initialLandNeighbor && !initialLandNeighborInfo

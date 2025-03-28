@@ -455,7 +455,14 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("J" + index, "J" + index, person.Telephone);
             InitalizeRangeValue("K" + index, "K" + index, cardtype.Name);
             InitalizeRangeValue("L" + index, "L" + index, person.ICN);
-            InitalizeRangeValue("M" + index, "M" + index, person.Relationship);
+            if (person.Name == "集体")
+            {
+                InitalizeRangeValue("M" + index, "M" + index, "户主");
+            }
+            else
+            {
+                InitalizeRangeValue("M" + index, "M" + index, person.Relationship);
+            }
             InitalizeRangeValue("N" + index, "N" + index, person.Comment);
             InitalizeRangeValue("O" + index, "O" + index, person.Opinion);
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using YuLinTu.Library.Office;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 读取行政区域列表

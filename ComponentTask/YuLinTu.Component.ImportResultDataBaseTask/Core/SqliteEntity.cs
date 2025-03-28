@@ -1,4 +1,4 @@
-﻿namespace YuLinTu.Component.ResultDbToLocalDb
+﻿namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     public class BSST
     {

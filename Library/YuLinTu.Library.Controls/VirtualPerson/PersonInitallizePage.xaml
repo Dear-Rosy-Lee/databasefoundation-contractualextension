@@ -42,18 +42,21 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <CheckBox Content="承包方编码" Click="cbCheckBox_Click" Name="cbNumber" VerticalAlignment="Center"/>
-                    <StackPanel  Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding ElementName=cbNumber,Path=IsChecked}">
+                    <StackPanel  Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" IsEnabled="{Binding ElementName=cbNumber,Path=IsChecked}">
                         <RadioButton Content="全部重编" ToolTip="从1开始全部重编承包方编码" GroupName="rcbmum" Click="cbCheckBox_Click" Name="cbNumberAll" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         <RadioButton Content="重编合并部分" ToolTip="重编前14位与地域不匹配的部分,不填充缺失的编码" GroupName="rcbmum" IsChecked="True" Click="cbCheckBox_Click" Name="cbNumberPart"  VerticalAlignment="Center"/>
+                        <cmps:MetroTextBox Margin="10,0,0,0" x:Name="txtInitiallStartNum" IsEnabled="{Binding ElementName=cbNumberAll,Path=IsChecked}" ToolTip="编码的起始编号" Width="100" VerticalAlignment="Center"></cmps:MetroTextBox>
                     </StackPanel>
-                    <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Margin="5,0,0,0" Grid.Row="0" Grid.Column="2"   HorizontalAlignment="Left" Width="110" VerticalAlignment="Center" Grid.ColumnSpan="2" />
-                    <CheckBox Content="性别" Grid.Column="3"  VerticalAlignment="Center" x:Name="cbSex" Margin="0,0,5,0" HorizontalAlignment="Right" Click="cbSex_Click"/>
-
+                    <DockPanel Grid.Column="3" VerticalAlignment="Center" >
+                        <CheckBox x:Name="cbInitializeNull" Content="只初始化空项" Width="110" VerticalAlignment="Center" />
+                        <CheckBox Content="性别" VerticalAlignment="Center" x:Name="cbSex" Click="cbSex_Click"/>
+                    </DockPanel>
                     <CheckBox Content="邮政编码" Grid.Row="1" Grid.Column="0" Name="cbZip" Click="cbCheckBox_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75"/>
                     <cmps:MetroTextBox Name="txtZip" PreviewKeyDown="mtbCode_PreviewKeyDown" PreviewTextInput="mtbCode_PreviewTextInput" Height="30" VerticalAlignment="Center" IsEnabled="{Binding ElementName=cbZip,Path=IsChecked}" MaxLength="6" Grid.Column="1" Grid.Row="1"/>
 
                     <CheckBox Content="民族" Name="chbNation" Margin="5,0,0,0" Grid.Row="1" Grid.Column="2" Click="cbCheckBox_Click" HorizontalAlignment="Left" Width="74" VerticalAlignment="Center" />
                     <cmps:MetroComboBox VerticalAlignment="Center" Padding="7,0,0,0" Grid.Row="1" Grid.Column="3" Name="cbNation" SelectionChanged="cbNation_SelectionChanged" IsEnabled="{Binding ElementName=chbNation,Path=IsChecked}" Height="30" Width="200"/>
+
                     <!--<CheckBox Content="调查审核公示信息" Click="cbSuevery_Click" Grid.Row="1"  Name="cbSuevery" VerticalAlignment="Center" Margin="5,0,0,0"/>-->
                 </Grid>
                 <StackPanel Grid.Row="1" x:Name="spBase">

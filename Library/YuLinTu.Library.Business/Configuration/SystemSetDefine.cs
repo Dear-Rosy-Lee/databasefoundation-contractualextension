@@ -256,6 +256,13 @@ namespace YuLinTu.Library.Business
             set { statisticsDeadPersonInfo = value; NotifyPropertyChanged("StatisticsDeadPersonInfo"); }
         }
 
+        public int rewritingStartNumber;
+        public int RewritingStartNumber
+        {
+            get { return rewritingStartNumber; }
+            set { rewritingStartNumber = value; NotifyPropertyChanged("RewritingStartNumber"); }
+        }
+
         /// <summary>
         /// 截取地块编码长度
         /// </summary>
@@ -465,6 +472,7 @@ namespace YuLinTu.Library.Business
             backUpPath = Path.Combine(TheApp.Current.GetDataPath(), "Backup");
             backUperDate = DateTime.Now;
             emptyReplacement = "/";
+            RewritingStartNumber = 1;
         }
 
         private static SystemSetDefine _familyOtherDefine;

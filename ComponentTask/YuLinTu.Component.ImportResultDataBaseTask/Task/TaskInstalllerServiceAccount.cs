@@ -7,7 +7,7 @@ using System.Configuration;
 using System.IO;
 using Quality.Business.TaskBasic;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 2016年新规范农业部数据交换任务导入

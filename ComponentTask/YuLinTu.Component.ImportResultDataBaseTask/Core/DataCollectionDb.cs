@@ -3,11 +3,9 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Quality.Business.Entity;
 
-namespace YuLinTu.Component.ResultDbToLocalDb
+namespace YuLinTu.Component.ImportResultDataBaseTask
 {
     /// <summary>
     /// 属性数据集合类
