@@ -789,7 +789,6 @@
     <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
       <Name>YuLinTu.Library.Entity</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
@@ -813,7 +812,6 @@
     <ProjectReference Include="..\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
       <Name>YuLinTu.Library.WorkStation</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

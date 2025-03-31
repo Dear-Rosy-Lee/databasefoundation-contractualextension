@@ -1,4 +1,5 @@
 ﻿using Microsoft.Scripting.Actions;
+using NPOI.POIFS.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,16 +80,28 @@ namespace YuLinTu.Library.Business
             cindex = 1;
             currentZone = argument.CurrentZone;
             dbContext = argument.DbContext;
-            var zoneStation = dbContext.CreateZoneWorkStation();
-            var groups = zoneStation.GetByChildLevel(currentZone.FullCode , eZoneLevel.Group);
-            double Percent = 100 / (double)groups.Count;
-            resfile = CreateLog();
-            foreach(var group in groups)
+            ReadData(dbContext);
+            if (currentZone.Level == eZoneLevel.Group)
             {
-                this.ReportProgress(3 + (int)(cindex * Percent), string.Format("({0}/{1})挂接{2}原地块编码", cindex, groups.Count, group.FullName));
-                if(!DataCheck(group))
+                resfile = CreateLog();
+                this.ReportProgress(3 + 50, $"(1/1)进行{currentZone.FullName}属性数据质量检查");
+                if (!DataCheck(currentZone))
                     return false;
-                cindex++;
+            }
+            else
+            {
+                var zoneStation = dbContext.CreateZoneWorkStation();
+                var groups = zoneStation.GetByChildLevel(currentZone.FullCode, eZoneLevel.Group);
+                double Percent = 100 / (double)groups.Count;
+                resfile = CreateLog();
+                foreach (var group in groups)
+                {
+                    this.ReportProgress(3 + (int)(cindex * Percent), string.Format("({0}/{1})挂接{2}原地块编码", cindex, groups.Count, group.FullName));
+                    if (!DataCheck(group))
+                        return false;
+                    cindex++;
+                }
+                return true;
             }
             return true;
         }
@@ -159,7 +172,30 @@ namespace YuLinTu.Library.Business
             this.ReportInfomation(string.Format("数据检查参数正确。"));
             return true;
         }
+        
+        private void ReadData(IDbContext dbContext)
+        {
+            Dictionary<string, VirtualPerson> AllVirtualPeople = new Dictionary<string, VirtualPerson>();
+            Dictionary<string, Person> AllPeople = new Dictionary<string, Person>();
+            Dictionary<string, ContractLand> AllContractLand = new Dictionary<string, ContractLand>();
+            var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.Get();
+            foreach(var item in vps)
+            {
+                AllVirtualPeople.Add(item.Number, item);
+                item.SharePersonList.ForEach(t => { AllPeople.Add(t.ICN, t); });
+            }
+            var landStation = dbContext.CreateContractLandWorkstation();
+            var lands = landStation.Get();
+            foreach (var item in lands)
+            {
+                AllContractLand.Add(item.LandNumber, item);
+            }
+            argument.AllVirtualPeople = AllVirtualPeople;
+            argument.AllPeople = AllPeople;
+            argument.AllContractLand = AllContractLand;
 
+        }
         #endregion Method - Private 
 
         #endregion Methods
