@@ -16,6 +16,7 @@ namespace YuLinTu.Library.Business
     /// </summary>
     public class UpdateProgram
     {
+        public static bool ShoweAvailable;
         /// <summary>
         /// 初始化更新
         /// </summary>
@@ -39,7 +40,8 @@ namespace YuLinTu.Library.Business
             }
             if (!args.IsUpdateAvailable)
             {
-                System.Windows.MessageBox.Show($@"当前已是最新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (ShoweAvailable)
+                    System.Windows.MessageBox.Show($@"当前已是最新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -118,8 +120,9 @@ namespace YuLinTu.Library.Business
             //}
         }
 
-        public static async void CheckUpdate()
+        public static async void CheckUpdate(bool showMsg = true)
         {
+            ShoweAvailable = showMsg;
             var center = TheApp.Current.GetSystemSettingsProfileCenter();
             var profile = center.GetProfile<ServiceSetDefine>();
             var section = profile.GetSection<ServiceSetDefine>();

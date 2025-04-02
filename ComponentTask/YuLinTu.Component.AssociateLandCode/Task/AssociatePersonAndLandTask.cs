@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CSScriptLibrary;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
 using YuLinTu.Component.Common;
@@ -179,7 +180,7 @@ namespace YuLinTu.Component.AssociateLandCode
             {
                 var vps = vpStation.GetByZoneCode(village.FullCode, eLevelOption.Subs);
                 var geoLands = landStation.GetCollection(village.FullCode, eLevelOption.Subs);
-                var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode));
+                var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
                     var upvps = new List<VirtualPerson>();
@@ -224,7 +225,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     uplands.AddRange(nlds);
                     deloldlds.AddRange(deloldldtemp);
                     index++;
-                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count} 地块:{lstlds.Count},未关联地块{deloldldtemp.Count}");
+                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未原关联承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldldtemp.Count}块");
 
                     vpStation.UpdatePersonList(vps);
                     landStation.UpdateOldLandCode(uplands, true);
@@ -268,8 +269,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 return listLands;
             var olds = oldLands.FindAll(t => zonecodelist.Contains(t.ZoneCode));//旧地块
             var jtdkset = new HashSet<string>();
-            var rlandset = new HashSet<Guid>();
-
+            var rlandidset = new HashSet<Guid>();
+            var rvpidset = new HashSet<Guid>();
 
             foreach (var vp in nvps)//先按原地块编码关联一次
             {
@@ -292,9 +293,9 @@ namespace YuLinTu.Component.AssociateLandCode
                     foreach (var land in lands)
                     {
                         var old = oldLands.Find(t => t.LandNumber == land.OldLandNumber);
-                        if (old != null && !rlandset.Contains(old.ID))
+                        if (old != null && !rlandidset.Contains(old.ID))
                         {
-                            rlandset.Add(old.ID);
+                            rlandidset.Add(old.ID);
                             listLands.Add(land);
                         }
                         else
@@ -307,6 +308,7 @@ namespace YuLinTu.Component.AssociateLandCode
 
             foreach (var vp in revps)//关联上的承包方
             {
+                rvpidset.Add(vp.ID);
                 var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
                 if (lands.Count == 0)
                     continue;
@@ -335,19 +337,22 @@ namespace YuLinTu.Component.AssociateLandCode
                 {
                     vp.ChangeSituation = eBHQK.TZJD;
                 }
-                listOldLands.RemoveAll(r => rlandset.Contains(r.ID));
+                listOldLands.RemoveAll(r => rlandidset.Contains(r.ID));
 
                 foreach (var t in lands)
                 {
                     if (!string.IsNullOrEmpty(t.OldLandNumber))
                         continue;
                     var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
-                    if (slan != null && !rlandset.Contains(slan.ID))
+                    if (slan != null)
                     {
-                        t.OldLandNumber = slan.LandNumber;
-                        rlandset.Add(slan.ID);
-                        listLands.Add(t);
-                        continue;
+                        if (!rlandidset.Contains(slan.ID))
+                        {
+                            t.OldLandNumber = slan.LandNumber;
+                            rlandidset.Add(slan.ID);
+                            listLands.Add(t);
+                            continue;
+                        }
                     }
                     var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
                     if (rlands.Count == 0)
@@ -359,11 +364,11 @@ namespace YuLinTu.Component.AssociateLandCode
                         bool hasrelate = false;
                         foreach (var c in rlands)
                         {
-                            if (!rlandset.Contains(c.ID))
+                            if (!rlandidset.Contains(c.ID))
                             {
                                 hasrelate = true;
                                 t.OldLandNumber = c.LandNumber;
-                                rlandset.Add(c.ID);
+                                rlandidset.Add(c.ID);
                                 break;
                             }
                         }
@@ -374,7 +379,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     }
                     listLands.Add(t);
                 }
-                var delandstemp = listOldLands.Where(r => !rlandset.Contains(r.ID)).ToList();
+                var delandstemp = listOldLands.Where(r => !rlandidset.Contains(r.ID)).ToList();
                 foreach (var ld in delandstemp)
                 {
                     var tdeland = ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld);
@@ -408,7 +413,31 @@ namespace YuLinTu.Component.AssociateLandCode
                 //    }
                 //}
             }
-            var temps = olds.Where(r => !rlandset.Contains(r.ID)).ToList();
+
+            foreach (var vp in nvps)//未关联的农户下的地块，按地块编码关联一次
+            {
+                if (rvpidset.Contains(vp.ID))
+                    continue;
+                var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
+                if (lands.Count == 0)
+                    continue;
+                foreach (var land in lands)
+                {
+                    var slan = olds.FirstOrDefault(w => w.LandNumber == land.LandNumber);
+                    if (slan == null)
+                    {
+                        continue;
+                    }
+                    if (!rlandidset.Contains(slan.ID))
+                    {
+                        land.OldLandNumber = slan.LandNumber;
+                        rlandidset.Add(slan.ID);
+                        listLands.Add(land);
+                    }
+                }
+            }
+
+            var temps = olds.Where(r => !rlandidset.Contains(r.ID)).ToList();
             foreach (var ld in temps)
             {
                 if (dellands.Any(t => t.DKBM == ld.LandNumber))
