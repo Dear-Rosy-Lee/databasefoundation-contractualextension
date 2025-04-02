@@ -60,6 +60,19 @@ namespace YuLinTu.Library.Business
                 throw new Exception(string.Format("模板文件:{0}.dot不存在", templateName));
             return fileName;
         }
+        /// <summary>
+        /// 获取模板
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <returns></returns>
+        public static string WordDocxTemplate(string templateName)
+        {
+            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                string.Format(@"Template\{0}.docx", templateName));
+            if (!File.Exists(fileName))
+                throw new Exception(string.Format("模板文件:{0}.dot不存在", templateName));
+            return fileName;
+        }
 
         #endregion
     }
