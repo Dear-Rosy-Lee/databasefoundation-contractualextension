@@ -176,7 +176,7 @@ namespace YuLinTu.Library.Aux
                     var g = WKBHelper.fromWKB(en.wkb);
                     en.env = g.EnvelopeInternal;
                     en.coords = g.Coordinates;
-
+                    en.SCMJ = (double)Math.Round((decimal)g.Area, 2);
                     if (xmlKzxx != null)
                     {
                         xml.LoadXml(xmlKzxx);

@@ -387,6 +387,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     if (en.SYQXZ != "10" && en.SYQXZ != "30" && en.SYQXZ != "31" &&
                      en.SYQXZ != "32" && en.SYQXZ != "33" && en.SYQXZ != "34")
                         en.SYQXZ = "30";
+                    if (en.SCMJ == 0)
+                    {
+
+                    }
                 };
 
                 exp.DoExport(excludeDkbm);
