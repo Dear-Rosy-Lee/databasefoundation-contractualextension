@@ -312,15 +312,15 @@ namespace YuLinTu.Library.WorkStation
                 SetBookmarkValue(AgricultureBookMarkWork.ContractorCheckPerson + (i == 0 ? "" : i.ToString()), expand.CheckPerson);//承包方审核员
                 SetBookmarkValue(AgricultureBookMarkWork.ContractorCheckDate + (i == 0 ? "" : i.ToString()), (expand.CheckDate != null && expand.CheckDate.HasValue) ? ToolDateTime.GetLongDateString(expand.CheckDate.Value) : "");//承包方审核日期
                 SetBookmarkValue(AgricultureBookMarkWork.ContractorCheckOpinion + (i == 0 ? "" : i.ToString()), expand.CheckOpinion);//承包方审核意见
+                WriteCredentialsInformation(i);
             }
-            WriteCredentialsInformation();
             WriteSharePersonInformation();
         }
 
         /// <summary>
         /// 设置证件类型
         /// </summary>
-        private void WriteCredentialsInformation()
+        private void WriteCredentialsInformation(int i)
         {
             if (Contractor == null)
             {
@@ -330,25 +330,25 @@ namespace YuLinTu.Library.WorkStation
             switch (type)
             {
                 case eCredentialsType.IdentifyCard:
-                    SetBookmarkValue(AgricultureBookMarkWork.IdentifyCard, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.IdentifyCard + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 case eCredentialsType.AgentCard:
-                    SetBookmarkValue(AgricultureBookMarkWork.AgentCard, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.AgentCard + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 case eCredentialsType.OfficerCard:
-                    SetBookmarkValue(AgricultureBookMarkWork.OfficerCard, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.OfficerCard + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 case eCredentialsType.Other:
-                    SetBookmarkValue(AgricultureBookMarkWork.CredentialOther, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.CredentialOther + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 case eCredentialsType.Passport:
-                    SetBookmarkValue(AgricultureBookMarkWork.Passport, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.Passport + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 case eCredentialsType.ResidenceBooklet:
-                    SetBookmarkValue(AgricultureBookMarkWork.ResidenceBooklet, "R");//证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.ResidenceBooklet + (i == 0 ? "" : i.ToString()), "R");//证件号码
                     break;
                 default:
-                    SetBookmarkValue(AgricultureBookMarkWork.CredentialOther, "R");//其它证件号码
+                    SetBookmarkValue(AgricultureBookMarkWork.CredentialOther + (i == 0 ? "" : i.ToString()), "R");//其它证件号码
                     break;
             }
         }
@@ -356,7 +356,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 设置承包类型
         /// </summary>
-        private void WriteConcordModeInformation()
+        private void WriteConcordModeInformation(int i)
         {
             if (Concord == null && DictList != null)
             {
@@ -370,25 +370,25 @@ namespace YuLinTu.Library.WorkStation
             switch (mode)
             {
                 case eConstructMode.Consensus:
-                    SetBookmarkValue(AgricultureBookMarkWork.ConsensusContract, "R");//公开协商
+                    SetBookmarkValue(AgricultureBookMarkWork.ConsensusContract + (i == 0 ? "" : i.ToString()), "R");//公开协商
                     break;
                 case eConstructMode.Exchange:
-                    SetBookmarkValue(AgricultureBookMarkWork.ExchangeContract, "R");//互换
+                    SetBookmarkValue(AgricultureBookMarkWork.ExchangeContract + (i == 0 ? "" : i.ToString()), "R");//互换
                     break;
                 case eConstructMode.Family:
-                    SetBookmarkValue(AgricultureBookMarkWork.FamilyContract, "R");//家庭承包
+                    SetBookmarkValue(AgricultureBookMarkWork.FamilyContract + (i == 0 ? "" : i.ToString()), "R");//家庭承包
                     break;
                 case eConstructMode.Other:
-                    SetBookmarkValue(AgricultureBookMarkWork.OtherContract, "R");//其他
+                    SetBookmarkValue(AgricultureBookMarkWork.OtherContract + (i == 0 ? "" : i.ToString()), "R");//其他
                     break;
                 case eConstructMode.Tenderee:
-                    SetBookmarkValue(AgricultureBookMarkWork.TendereeContract, "R");//招标
+                    SetBookmarkValue(AgricultureBookMarkWork.TendereeContract + (i == 0 ? "" : i.ToString()), "R");//招标
                     break;
                 case eConstructMode.Transfer:
-                    SetBookmarkValue(AgricultureBookMarkWork.TransferContract, "R");//转让
+                    SetBookmarkValue(AgricultureBookMarkWork.TransferContract + (i == 0 ? "" : i.ToString()), "R");//转让
                     break;
                 case eConstructMode.Vendue:
-                    SetBookmarkValue(AgricultureBookMarkWork.VendueContract, "R");//拍卖
+                    SetBookmarkValue(AgricultureBookMarkWork.VendueContract + (i == 0 ? "" : i.ToString()), "R");//拍卖
                     break;
                 default:
                     break;
@@ -929,9 +929,10 @@ namespace YuLinTu.Library.WorkStation
                 SetBookmarkValue(AgricultureBookMarkWork.ConcordTableAreaCount + (i == 0 ? "" : i.ToString()), (Concord.TotalTableArea != null && Concord.TotalTableArea.HasValue && Concord.TotalTableArea.Value > 0) ? ToolMath.SetNumbericFormat(InitalizeArea(Concord.TotalTableArea.Value).ToString(), 2) : AgricultureSettingWork.InitalizeAreaString());//合同块总二轮台账面积
                 SetBookmarkValue(AgricultureBookMarkWork.ConcordModoAreaCount + (i == 0 ? "" : i.ToString()), Concord.CountMotorizeLandArea > 0 ? ToolMath.SetNumbericFormat(InitalizeArea(Concord.CountMotorizeLandArea).ToString(), 2) : AgricultureSettingWork.InitalizeAreaString());//合同总机动地面积
                 SetBookmarkValue(AgricultureBookMarkWork.ConcordAddress + (i == 0 ? "" : i.ToString()), Concord.SecondContracterLocated);//合同中承包方地址
+                WriteConcordModeInformation(i);
 
             }
-            WriteConcordModeInformation();
+            
             WriteConcordStartAndEndTime();
         }
 

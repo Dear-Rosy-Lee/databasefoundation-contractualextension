@@ -70,7 +70,7 @@ namespace YuLinTu.Library.Business
             string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 string.Format(@"Template\{0}.docx", templateName));
             if (!File.Exists(fileName))
-                throw new Exception(string.Format("模板文件:{0}.dot不存在", templateName));
+                throw new Exception(string.Format("模板文件:{0}.docx不存在", templateName));
             return fileName;
         }
 

@@ -288,6 +288,33 @@ namespace YuLinTu.Library.Office
                 Close();
             }
         }
+        public void SaveAsDocx(object data, string fileName)
+        {
+            if (doc == null)
+            {
+                throw new Exception(TEMPLATEFILE_NOT_OPEN);
+            }
+            fileName = WordOperator.InitalizeValideFileName(fileName);
+            string extension = System.IO.Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+            {
+                fileName += ".docx";
+            }
+            else
+            {
+                fileName = extension == ".docx" ? fileName : fileName.Replace(extension, ".docx");
+            }
+
+            this.savedFileName = fileName;
+
+            bool success = OnSetParamValue(data);
+            if (success)
+            {
+                WordOperator.InitalzieDirectory(fileName);
+                doc.Save(fileName, SaveFormat.Docx);
+                Close();
+            }
+        }
 
         /// <summary>
         /// 另存为
@@ -766,9 +793,10 @@ namespace YuLinTu.Library.Office
                 Cell cell = row.Cells[colIndex];
                 if (cell != null)
                 {
-                    builder.MoveToCell(tableIndex, rowIndex, colIndex, 0);
-                    //2018.3.26 修改，空字符替换
-                    builder.Write(string.IsNullOrEmpty(value) ? EmptyReplacement : value);
+                    cell.RemoveAllChildren();
+                    Paragraph para = new Paragraph(doc);
+                    para.AppendChild(new Run(doc, string.IsNullOrEmpty(value) ? EmptyReplacement : value));
+                    cell.AppendChild(para);
                 }
                 cell = null;
                 row = null;
