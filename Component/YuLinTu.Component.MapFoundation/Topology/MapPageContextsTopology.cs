@@ -79,7 +79,7 @@ namespace YuLinTu.Component.MapFoundation
                                     entities[i].ID = dbland.ID;
 
                                     //查询是否在数据库中存在该地块
-                                    if (VerifyLandCode(entities))
+                                    //if (VerifyLandCode(entities))
                                     {
                                         landStation.Update(entities[i]);
                                     }

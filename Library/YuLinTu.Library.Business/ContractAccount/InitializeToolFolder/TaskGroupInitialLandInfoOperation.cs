@@ -80,6 +80,14 @@ namespace YuLinTu.Library.Business
                 //if (currentLands == null || currentLands.Count <= 0)
                 //    continue;
                 TaskInitialLandInfoArgument argument = groupArgument.ConvertTo<TaskInitialLandInfoArgument>();
+                argument.QSXZ = groupArgument.QSXZ;
+                argument.CurrentZone = zone;
+                argument.Database = dbContext;
+                argument.CurrentZoneLandList = currentLands;
+                argument.CombinationLandNumber = combinationLandNumber;
+                argument.InitLandComment = groupArgument.InitLandComment;
+                argument.LandComment = groupArgument.LandComment;
+                argument.IsNewPart = groupArgument.IsNewPart;
                 /*new TaskInitialLandInfoArgument();
             argument.LandName = groupArgument.LandName;
             argument.LandLevel = groupArgument.LandLevel;
@@ -111,14 +119,6 @@ namespace YuLinTu.Library.Business
             argument.VirtualType = groupArgument.VirtualType;
             argument.InitialNull = groupArgument.InitialNull;
             argument.InitialQSXZ = groupArgument.InitialQSXZ;
-            argument.QSXZ = groupArgument.QSXZ;
-            argument.CurrentZone = zone;
-            argument.Database = dbContext;
-            argument.CurrentZoneLandList = currentLands;
-            argument.CombinationLandNumber = combinationLandNumber;
-            argument.InitLandComment = groupArgument.InitLandComment;
-            argument.LandComment = groupArgument.LandComment;
-            argument.IsNewPart = groupArgument.IsNewPart;
                 */
 
                 var operation = new TaskInitialLandInfoOperation();
