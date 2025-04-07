@@ -155,15 +155,13 @@ namespace YuLinTu.Component.MapFoundation
             var errorList = new List<string>();
             foreach (var item in SplitItems)
             {
-                
-                    item.NewNumber = item.SurveyNumber;
-                    var newLandCode = CurrentZone.FullCode + item.NewNumber;
-                    var land = landWorkStation.GetByLandNumber(newLandCode);
-                    if (land != null)
-                    {
-                        errorList.Add(newLandCode);
-                    }
-                    
+                item.NewNumber = item.SurveyNumber;
+                var newLandCode = CurrentZone.FullCode + item.NewNumber;
+                var land = landWorkStation.GetByLandNumber(newLandCode);
+                if (land != null && newLandCode != SelectOldLandNumber)
+                {
+                    errorList.Add(newLandCode);
+                }
             }
             if (!errorList.IsNullOrEmpty())
             {
