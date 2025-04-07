@@ -7900,7 +7900,7 @@ namespace YuLinTu.Library.Controls
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "ExportPublishExcel(导出调查信息公示表)", ex.Message + ex.StackTrace);
+                YuLinTu.Library.Log.Log.WriteException(this, "数据质量检查", ex.Message + ex.StackTrace);
                 return;
             }
         }
@@ -7910,6 +7910,8 @@ namespace YuLinTu.Library.Controls
             argument.DbContext = DbContext;
             TaskAttributeDataCheckerOperation operation = new TaskAttributeDataCheckerOperation();
             operation.Argument = argument;
+            operation.Description = "属性数据质量检查";
+            operation.Name = "属性数据质量检查";
             operation.Completed += new TaskCompletedEventHandler((o, t) =>
             {
                 //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
