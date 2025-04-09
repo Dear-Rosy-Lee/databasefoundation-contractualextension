@@ -37,15 +37,9 @@ namespace YuLinTu.Library.Business
 
         public List<Person> persons { get; set; }
 
-        public static string ErrorInfo { get; private set; }
+        public string ErrorInfo { get; private set; }
 
         public List<Dictionary> DictList { get; set; }
-
-        public Dictionary<string, VirtualPerson> AllVirtualPeople { get; set; }
-        public Dictionary<string, Person> AllPeople { get; set; }
-        public Dictionary<string, ContractLand> AllContractLand { get; set; }
-
-
 
         #endregion Property
 
@@ -66,12 +60,8 @@ namespace YuLinTu.Library.Business
             var concordStation = dbContext.CreateConcordStation();
             var concords = concordStation.GetByZoneCode(zone.FullCode);
             contractConcord = concords;
-
             persons = new List<Person>();
             virtualPeople.ForEach(t => { persons.AddRange(t.SharePersonList); });
-            AllVirtualPeople = DataArgument.AllVirtualPeople;
-            AllPeople = DataArgument.AllPeople;
-            AllContractLand = DataArgument.AllContractLand;
             MandatoryFieldCheck();
             DataCorrectnessCheck();
             RuleOfIDCheck();
@@ -83,65 +73,62 @@ namespace YuLinTu.Library.Business
 
         private void MandatoryFieldCheck()
         {
-            var info = "必填字段完整性检查：";
+            var info = "";
 
             if (DataArgument.MandatoryField.MandatoryFieldSender == true)
             {
-                info += "\r\n发包方属性：";
-                
                 //发包方名称
                 if (collectivityTissue.Name.IsNullOrEmpty())
                 {
-                    info += "发包方名称未填写;";
+                    info += "\n发包方名称未填写;";
                 }
                 //发包方编码
                 if (collectivityTissue.Code.IsNullOrEmpty())
                 {
-                    info += "发包方编码未填写;";
+                    info += "\n发包方编码未填写;";
                 }
                 //发包方负责人
                 if (collectivityTissue.LawyerName.IsNullOrEmpty())
                 {
-                    info += "发包方负责人未填写;";
+                    info += "\n发包方负责人未填写;";
                 }
                 //发包方负责人证件类型
                 if (collectivityTissue.LawyerCredentType.ToString().IsNullOrEmpty())
                 {
-                    info += "发包方负责人证件类型未填写;";
+                    info += "\n发包方负责人证件类型未填写;";
                 }
                 //发包方负责人证件号
                 if (collectivityTissue.LawyerCartNumber.IsNullOrEmpty())
                 {
-                    info += "发包方负责人证件号未填写;";
+                    info += "\n发包方负责人证件号未填写;";
                 }
                 //发包方地址
                 if (collectivityTissue.LawyerAddress.IsNullOrEmpty())
                 {
-                    info += "发包方地址未填写;";
+                    info += "\n发包方地址未填写;";
                 }
                 //调查员
                 if (collectivityTissue.SurveyPerson.IsNullOrEmpty())
                 {
-                    info += "发包方调查员未填写;";
+                    info += "\n发包方调查员未填写;";
                 }
                 //调查日期
                 if (collectivityTissue.SurveyDate.ToString().IsNullOrEmpty())
                 {
-                    info += "发包方调查日期未填写;";
+                    info += "\n发包方调查日期未填写;";
                 }
 
             }
             
             if (DataArgument.MandatoryField.MandatoryFieldVP == true)
             {
-                info += "\r\n承包方属性：";
                 
                 if (virtualPeople.Where(x => x.FamilyNumber.IsNullOrEmpty()).ToList() != null)
                 {
                     var vpList = virtualPeople.Where(x => x.FamilyNumber.IsNullOrEmpty()).ToList();
                     foreach (var vp in vpList) 
                     {
-                        info += $"承包方{vp.Name},承包方户编号未填写;";
+                        info += $"\n承包方{vp.Name},承包方户编号未填写;";
                     }
                 }
                 if (virtualPeople.Where(x => x.Name.IsNullOrEmpty()).ToList() != null)
@@ -149,7 +136,7 @@ namespace YuLinTu.Library.Business
                     var vpList = virtualPeople.Where(x => x.Name.IsNullOrEmpty()).ToList();
                     foreach (var vp in vpList)
                     {
-                        info += $"承包方户编号{vp.Name},承包方姓名未填写;";
+                        info += $"\n承包方户编号{vp.Name},承包方姓名未填写;";
                     }
                 }
                 if (virtualPeople.Where(x => x.VirtualType.ToString().IsNullOrEmpty()).ToList() != null)
@@ -157,7 +144,7 @@ namespace YuLinTu.Library.Business
                     var vpList = virtualPeople.Where(x => x.VirtualType.ToString().IsNullOrEmpty()).ToList();
                     foreach (var vp in vpList)
                     {
-                        info += $"承包方{vp.Name},承包方类型未填写;";
+                        info += $"\n承包方{vp.Name},承包方类型未填写;";
                     }
                 }
                 if (virtualPeople.Where(x => x.Address.IsNullOrEmpty()).ToList() != null)
@@ -165,13 +152,12 @@ namespace YuLinTu.Library.Business
                     var vpList = virtualPeople.Where(x => x.Address.IsNullOrEmpty()).ToList();
                     foreach (var vp in vpList)
                     {
-                        info += $"承包方{vp.Name},承包方地址未填写;";
+                        info += $"\n承包方{vp.Name},承包方地址未填写;";
                     }
                 }
             }
             if (DataArgument.MandatoryField.MandatoryFieldMember == true)
             {
-                info += "\r\n家庭成员属性：";
                 
                 if (persons.Where(x => x.Name.IsNullOrEmpty()).ToList() != null)
                 {
@@ -179,7 +165,7 @@ namespace YuLinTu.Library.Business
                     foreach (var sharePerson in sharePersonList)
                     {
                         var vp = virtualPeople.Where(x => x.ID == sharePerson.FamilyID).FirstOrDefault();
-                        info += $"承包方{vp.Name},家庭成员身份证为{sharePerson.ICN},成员姓名未填写;";
+                        info += $"\n承包方{vp.Name},家庭成员身份证为{sharePerson.ICN},成员姓名未填写;";
                     }
                 }
                 if (persons.Where(x => x.Gender.ToString().IsNullOrEmpty()).ToList() != null)
@@ -188,7 +174,7 @@ namespace YuLinTu.Library.Business
                     foreach (var sharePerson in sharePersonList)
                     {
                         var vp = virtualPeople.Where(x => x.ID == sharePerson.FamilyID).FirstOrDefault();
-                        info += $"承包方{vp.Name},成员姓名为{sharePerson.Name},成员性别未填写;";
+                        info += $"\n承包方{vp.Name},成员姓名为{sharePerson.Name},成员性别未填写;";
                     }
                 }
                 if (persons.Where(x => x.CardType.ToString().IsNullOrEmpty()).ToList() != null)
@@ -197,7 +183,7 @@ namespace YuLinTu.Library.Business
                     foreach (var sharePerson in sharePersonList)
                     {
                         var vp = virtualPeople.Where(x => x.ID == sharePerson.FamilyID).FirstOrDefault();
-                        info += $"承包方{vp.Name},成员姓名为{sharePerson.Name},成员证件类型未填写;";
+                        info += $"\n承包方{vp.Name},成员姓名为{sharePerson.Name},成员证件类型未填写;";
                     }
                 }
                 if (persons.Where(x => x.ICN.IsNullOrEmpty()).ToList() != null)
@@ -206,7 +192,7 @@ namespace YuLinTu.Library.Business
                     foreach (var sharePerson in sharePersonList)
                     {
                         var vp = virtualPeople.Where(x => x.ID == sharePerson.FamilyID).FirstOrDefault();
-                        info += $"承包方{vp.Name},成员姓名为{sharePerson.Name},证件号码未填写;";
+                        info += $"\n承包方{vp.Name},成员姓名为{sharePerson.Name},证件号码未填写;";
                     }
                 }
                 if (persons.Where(x => x.Relationship.IsNullOrEmpty()).ToList() != null)
@@ -215,20 +201,19 @@ namespace YuLinTu.Library.Business
                     foreach (var sharePerson in sharePersonList)
                     {
                         var vp = virtualPeople.Where(x => x.ID == sharePerson.FamilyID).FirstOrDefault();
-                        info += $"承包方{vp.Name},成员姓名为{sharePerson.Name},家庭关系未填写;";
+                        info += $"\n承包方{vp.Name},成员姓名为{sharePerson.Name},家庭关系未填写;";
                     }
                 }
             }
             if (DataArgument.MandatoryField.MandatoryFieldLand == true)
             {
-                info += "\r\n地块信息属性：";
                 
                 if (contractLand.Where(x => x.Name.IsNullOrEmpty()).ToList() != null)
                 {
                     var landList = contractLand.Where(x => x.Name.IsNullOrEmpty()).ToList();
                     foreach (var land in landList)
                     {
-                        info += $"地块编码：{land.LandNumber},地块名称未填写;";
+                        info += $"\n地块编码：{land.LandNumber},地块名称未填写;";
                     }
                 }
                 if (contractLand.Where(x => x.LandCategory.IsNullOrEmpty()).ToList() != null)
@@ -236,7 +221,7 @@ namespace YuLinTu.Library.Business
                     var landList = contractLand.Where(x => x.LandCategory.IsNullOrEmpty()).ToList();
                     foreach (var land in landList)
                     {
-                        info += $"地块编码：{land.LandNumber},地块类别未填写;";
+                        info += $"\n地块编码：{land.LandNumber},地块类别未填写;";
                     }
                 }
                 if (contractLand.Where(x => x.LandCode.IsNullOrEmpty()).ToList() != null)
@@ -244,7 +229,7 @@ namespace YuLinTu.Library.Business
                     var landList = contractLand.Where(x => x.LandCode.IsNullOrEmpty()).ToList();
                     foreach (var land in landList)
                     {
-                        info += $"地块编码：{land.LandNumber},土地利用类型未填写;";
+                        info += $"\n地块编码：{land.LandNumber},土地利用类型未填写;";
                     }
                 }
                 if (contractLand.Where(x => x.Purpose.IsNullOrEmpty()).ToList() != null)
@@ -252,7 +237,7 @@ namespace YuLinTu.Library.Business
                     var landList = contractLand.Where(x => x.Purpose.IsNullOrEmpty()).ToList();
                     foreach (var land in landList)
                     {
-                        info += $"地块编码：{land.LandNumber},土地用途未填写;";
+                        info += $"\n地块编码：{land.LandNumber},土地用途未填写;";
                     }
                 }
                 if (contractLand.Where(x => x.ActualArea != 0).ToList() != null)
@@ -260,20 +245,19 @@ namespace YuLinTu.Library.Business
                     var landList = contractLand.Where(x => x.ActualArea != 0).ToList();
                     foreach (var land in landList)
                     {
-                        info += $"地块编码：{land.LandNumber},实测面积未填写;";
+                        info += $"\n地块编码：{land.LandNumber},实测面积未填写;";
                     }
                 }
             }
             if (DataArgument.MandatoryField.MandatoryFieldContract == true)
             {
-                info += "\r\n合同信息属性：";
                 
                 if (contractConcord.Where(x => x.ConcordNumber.IsNullOrEmpty()).ToList() != null)
                 {
                     var contractList = contractConcord.Where(x => x.ConcordNumber.IsNullOrEmpty()).ToList();
                     foreach (var contract in contractList)
                     {
-                        info += $"承包方:{contract.ContracterName},承包合同编码未填写;";
+                        info += $"\n承包方:{contract.ContracterName},承包合同编码未填写;";
                     }
                 }
                 if (contractConcord.Where(x => x.ContractDate.ToString().IsNullOrEmpty()).ToList() != null)
@@ -281,7 +265,7 @@ namespace YuLinTu.Library.Business
                     var contractList = contractConcord.Where(x => x.ContractDate.ToString().IsNullOrEmpty()).ToList();
                     foreach (var contract in contractList)
                     {
-                        info += $"承包方:{contract.ContracterName},承包合同签订日期未填写;";
+                        info += $"\n承包方:{contract.ContracterName},承包合同签订日期未填写;";
                     }
                 }
                 if (contractConcord.Where(x => x.ManagementTime.ToString().IsNullOrEmpty()).ToList() != null)
@@ -289,7 +273,7 @@ namespace YuLinTu.Library.Business
                     var contractList = contractConcord.Where(x => x.ManagementTime.ToString().IsNullOrEmpty()).ToList();
                     foreach (var contract in contractList)
                     {
-                        info += $"承包方:{contract.ContracterName},承包合同期限未填写;";
+                        info += $"\n承包方:{contract.ContracterName},承包合同期限未填写;";
                     }
                 }
                 if (contractConcord.Where(x => x.ArableLandType.IsNullOrEmpty()).ToList() != null)
@@ -297,7 +281,7 @@ namespace YuLinTu.Library.Business
                     var contractList = contractConcord.Where(x => x.ArableLandType.IsNullOrEmpty()).ToList();
                     foreach (var contract in contractList)
                     {
-                        info += $"承包方:{contract.ContracterName},合同承包方式未填写;";
+                        info += $"\n承包方:{contract.ContracterName},合同承包方式未填写;";
                     }
                 }
                 if (contractConcord.Where(x => x.CountAwareArea != 0).ToList() != null)
@@ -305,7 +289,7 @@ namespace YuLinTu.Library.Business
                     var contractList = contractConcord.Where(x => x.CountAwareArea != 0).ToList();
                     foreach (var contract in contractList)
                     {
-                        info += $"承包方:{contract.ContracterName},合同面积亩未填写;";
+                        info += $"\n承包方:{contract.ContracterName},合同面积亩未填写;";
                     }
                 }
             }
@@ -313,22 +297,22 @@ namespace YuLinTu.Library.Business
         }
         private void DataCorrectnessCheck()
         {
-            var info = "数据填写正确性检查：";
+            var info = "";
             if (DataArgument.DataCorrectness.DataCorrectnessField == true)
             {
                 foreach (var vp in virtualPeople)
                 {
                     if (!Enum.IsDefined(typeof(eVirtualPersonType), vp.VirtualType))
                     {
-                        info += $" 承包方:{vp.Name},承包方类型字段填写不满足值域检查要求;";
+                        info += $"\n承包方:{vp.Name},承包方类型字段填写不满足值域检查要求;";
                     }
                     if (!Enum.IsDefined(typeof(eCredentialsType), vp.CardType))
                     {
-                        info += $" 承包方:{vp.Name},证件类型字段填写不满足值域检查要求;";
+                        info += $"\n承包方:{vp.Name},证件类型字段填写不满足值域检查要求;";
                     }
                     if (!Enum.IsDefined(typeof(eBHQK), vp.ChangeSituation))
                     {
-                        info += $" 承包方:{vp.Name},变化情况字段填写不满足值域检查要求;";
+                        info += $"\n承包方:{vp.Name},变化情况字段填写不满足值域检查要求;";
                     }
                 }
                
@@ -336,17 +320,17 @@ namespace YuLinTu.Library.Business
                 {
                     if (!Enum.IsDefined(typeof(eCredentialsType), person.CardType))
                     {
-                        info += $" 姓名:{person.Name},证件类型字段填写不满足值域检查要求;";
+                        info += $"\n姓名:{person.Name},证件类型字段填写不满足值域检查要求;";
                     }
                     if (!Enum.IsDefined(typeof(eGender), person.Gender))
                     {
-                        info += $" 姓名:{person.Name},性别字段填写不满足值域检查要求;";
+                        info += $"\n姓名:{person.Name},性别字段填写不满足值域检查要求;";
                     }
                     var relationShipList = FamilyRelationShip.AllRelation();
 
                     if (!relationShipList.Contains(person.Relationship))
                     {
-                        info += $" 姓名:{person.Name},家庭关系填写不满足值域检查要求;";
+                        info += $"\n姓名:{person.Name},家庭关系填写不满足值域检查要求;";
                     }
                 }
                 foreach (var land in contractLand)
@@ -354,12 +338,12 @@ namespace YuLinTu.Library.Business
                     var dictDKLB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DKLB);
                     if (!dictDKLB.Select(x=>x.Code).Contains(land.LandCategory))
                     {
-                        info += $" 地块编码:{land.LandNumber},地块类别字段填写不满足值域检查要求;";
+                        info += $"\n地块编码:{land.LandNumber},地块类别字段填写不满足值域检查要求;";
                     }
                     var dictTDYT = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.TDYT);
                     if (!dictTDYT.Select(x => x.Code).Contains(land.Purpose))
                     {
-                        info += $" 地块编码:{land.LandNumber},土地用途字段填写不满足值域检查要求;";
+                        info += $"\n地块编码:{land.LandNumber},土地用途字段填写不满足值域检查要求;";
                     }
                 }
             }
@@ -371,7 +355,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var vp in invalidvpName)
                     {
-                        info += $"身份证：{vp.Number},承包方姓名不能包含数字、空格，除了 · 以外的的特殊字符";
+                        info += $"\n身份证：{vp.Number},承包方姓名不能包含数字、空格，除了 · 以外的的特殊字符";
                     }
                 }
                 // 检查 成员姓名 是否合法（仅中文和·）
@@ -380,7 +364,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var person in invalidpersonName)
                     {
-                        info += $"身份证：{person.ICN},成员姓名不能包含数字、空格，除了 · 以外的的特殊字符";
+                        info += $"\n身份证：{person.ICN},成员姓名不能包含数字、空格，除了 · 以外的的特殊字符";
                     }
                 }
             }
@@ -388,19 +372,19 @@ namespace YuLinTu.Library.Business
             {
                 if (!IsValidName(collectivityTissue.SurveyPerson) )
                 {
-                    info += $"发包方：{collectivityTissue.Name},调查人员不能包含数字、空格，除了 · 以外的的特殊字符";
+                    info += $"\n发包方：{collectivityTissue.Name},调查人员不能包含数字、空格，除了 · 以外的的特殊字符";
                 }
                 if (!IsValidName(collectivityTissue.CheckPerson))
                 {
-                    info += $"发包方：{collectivityTissue.Name},审核人员不能包含数字、空格，除了 · 以外的的特殊字符";
+                    info += $"\n发包方：{collectivityTissue.Name},审核人员不能包含数字、空格，除了 · 以外的的特殊字符";
                 }
                 if (!GetInvalidNames(collectivityTissue.SurveyPerson).IsNullOrEmpty())
                 {
-                    info += $"发包方：{collectivityTissue.Name},调查人员存在多个人名，不可使用除、，；,;的分拆字符串。";
+                    info += $"\n发包方：{collectivityTissue.Name},调查人员存在多个人名，不可使用除、，；,;的分拆字符串。";
                 }
                 if (!GetInvalidNames(collectivityTissue.CheckPerson).IsNullOrEmpty())
                 {
-                    info += $"发包方：{collectivityTissue.Name},审核人员存在多个人名，不可使用除、，；,;的分拆字符串。";
+                    info += $"\n发包方：{collectivityTissue.Name},审核人员存在多个人名，不可使用除、，；,;的分拆字符串。";
                 }
             }
             if (DataArgument.DataCorrectness.DataCorrectnessEvent == true)
@@ -409,11 +393,11 @@ namespace YuLinTu.Library.Business
                 {
                     if (collectivityTissue.SurveyChronicle.Length > 500)
                     {
-                        info += $"发包方：{collectivityTissue.Name},调查记事内容的长度不能超过500个字符";
+                        info += $"\n发包方：{collectivityTissue.Name},调查记事内容的长度不能超过500个字符";
                     }
                     if (collectivityTissue.CheckOpinion.Length > 500)
                     {
-                        info += $"发包方：{collectivityTissue.Name},审核记事内容的长度不能超过500个字符";
+                        info += $"\n发包方：{collectivityTissue.Name},审核记事内容的长度不能超过500个字符";
                     }
                 }
             }
@@ -424,23 +408,23 @@ namespace YuLinTu.Library.Business
             var info = "";
             if (DataArgument.RuleOfIDCheck.RuleOfID == true)
             {
-                info += "证件号规则性校验：";
+                
                 if (!IsValidIdCard(collectivityTissue.LawyerCartNumber))
                 {
-                    info += $"发包方负责人:{collectivityTissue.LawyerName} 的证件号码不符合身份证规则";
+                    info += $"\n发包方负责人:{collectivityTissue.LawyerName} 的证件号码不符合身份证规则";
                 }
                 foreach (var vp in virtualPeople)
                 {
                     if (!IsValidIdCard(vp.Number))
                     {
-                        info += $"承包方:{vp.Name} 的证件号码不符合身份证规则";
+                        info += $"\n承包方:{vp.Name} 的证件号码不符合身份证规则";
                     }
                 }
                 foreach (var person in persons)
                 {
                     if (!IsValidIdCard(person.ICN))
                     {
-                        info += $"承包方:{person.Name} 的证件号码不符合身份证规则";
+                        info += $"\n承包方:{person.Name} 的证件号码不符合身份证规则";
                     }
                 }
             }
@@ -448,7 +432,7 @@ namespace YuLinTu.Library.Business
         }
         private void DataLogicCheck()
         {
-            var info = "数据逻辑正确性检查：";
+            var info = "";
             if (DataArgument.DataLogic.DataLogicLandType == true)
             {
                 foreach (var land in contractLand)
@@ -457,12 +441,12 @@ namespace YuLinTu.Library.Business
                     {
                         if (!(land.AwareArea > 0))
                         {
-                            info += $"地块编码：{land.LandNumber},地块类型为“承包地块”时，确权面积必须大于0；";
+                            info += $"\n地块编码：{land.LandNumber},地块类型为“承包地块”时，确权面积必须大于0；";
                         }
 
                         if (land.ConstructMode != "110")
                         {
-                            info += $"地块编码：{land.LandNumber},地块类型为“承包地块”时，地块的承包方式必须为家庭承包方式;";
+                            info += $"\n地块编码：{land.LandNumber},地块类型为“承包地块”时，地块的承包方式必须为家庭承包方式;";
                         }
                     }
                     
@@ -477,7 +461,7 @@ namespace YuLinTu.Library.Business
                                         .Count(x => !string.IsNullOrEmpty(x)) < 3).ToList();
                     if (invalidNeighbors.Any())
                     {
-                        info += $"地块编码：{land.LandNumber},地块四至的东、南、西、北至，至少有3个方向不能为空;";
+                        info += $"\n地块编码：{land.LandNumber},地块四至的东、南、西、北至，至少有3个方向不能为空;";
                     }
                 }
                  
@@ -486,7 +470,7 @@ namespace YuLinTu.Library.Business
         }
         private void DataRepeataBilityCheck()
         {
-            var info = "发包方内数据重复性检查：";
+            var info = "";
             if (DataArgument.DataRepeataBility.DataRepeataBilityCheck == true)
             {
                 var duplicateHH = virtualPeople
@@ -500,7 +484,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var dup in duplicateHH)
                     {
-                        info += $"姓名：{dup.Name}  , 重复的承包方户编号:{dup.HH}";
+                        info += $"\n姓名：{string.Join("、",dup.Name)},重复的承包方户编号:{dup.HH}";
                     }
                 }
                 var duplicateVPID = virtualPeople
@@ -514,7 +498,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var dup in duplicateVPID)
                     {
-                        info += $"姓名：{dup.Name},重复的承包方证件号码:{dup.ID}";
+                        info += $"\n姓名：{string.Join("、", dup.Name)},重复的承包方证件号码:{dup.ID}";
                     }
                 }
                 var duplicatePersonID = persons
@@ -528,7 +512,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var dup in duplicatePersonID)
                     {
-                        info += $"姓名：{dup.Name},重复的成员身份证号码:{dup.ID}";
+                        info += $"\n姓名：{string.Join("、", dup.Name)},重复的成员身份证号码:{dup.ID}";
                     }
                 }
                 var duplicateLands = contractLand
@@ -542,7 +526,7 @@ namespace YuLinTu.Library.Business
                 {
                     foreach (var dup in duplicateLands)
                     {
-                        info += $"地块名称：{dup.Name},重复的地块编码:{dup.ID}";
+                        info += $"\n地块名称：{string.Join("、", dup.Name)},重复的地块编码:{dup.ID}";
                     }
                 }
             }
@@ -556,7 +540,7 @@ namespace YuLinTu.Library.Business
                         
                         if(virtualPeople.Where(x => x.Name == name).ToList().Count != 1)
                         {
-                            info += "单个发包方下不能有多个集体";
+                            info += "\n单个发包方下不能有多个集体";
                         }
                     }
                 
@@ -567,12 +551,90 @@ namespace YuLinTu.Library.Business
         private void UniquenessCheck()
         {
             var info = "";
+            List<LandVirtualPerson> AllVirtualPeople = DataArgument.AllVirtualPeople;
+            List<Person> AllPeople = DataArgument.AllPeople;
+            List<ContractLand> AllContractLand = DataArgument.AllContractLand;
             if (DataArgument.Uniqueness.UniquenessCheck == true)
             {
-                info += "整库唯一性检查：";
-                foreach(var vp in virtualPeople)
+                var vpNumberCounts = new Dictionary<string, int>();
+                foreach (var vp in AllVirtualPeople)
                 {
-                    //TODO 整库唯一性检查 
+                    if (vp.Number.IsNotNullOrEmpty())
+                    {
+                        if (vpNumberCounts.ContainsKey(vp.Number))
+                        {
+                            vpNumberCounts[vp.Number]++;
+                        }
+                        else
+                        {
+                            vpNumberCounts[vp.Number] = 1;
+                        }
+                    }
+                }
+
+                foreach (var vp in virtualPeople)
+                {
+                    if (vp.Number.IsNotNullOrEmpty())
+                    {
+                        if (vpNumberCounts.TryGetValue(vp.Number, out int count) && count > 1)
+                        {
+                            info += $"\n承包方身份证：{vp.Number}整库必须唯一";
+                        }
+                    }
+                    
+                }
+                var personNumberCounts = new Dictionary<string, int>();
+                foreach (var person in AllPeople)
+                {
+                    if (person.ICN.IsNotNullOrEmpty())
+                    {
+                        if (personNumberCounts.ContainsKey(person.ICN))
+                        {
+                            personNumberCounts[person.ICN]++;
+                        }
+                        else
+                        {
+                            personNumberCounts[person.ICN] = 1;
+                        }
+                    }
+                    
+                }
+                foreach (var person in persons)
+                {
+                    if (person.ICN.IsNotNullOrEmpty())
+                    {
+                        if (personNumberCounts.TryGetValue(person.ICN, out int count) && count > 1)
+                        {
+                            info += $"\n成员身份证：{person.ICN}整库必须唯一";
+                        }
+                    }
+                    
+                }
+                var landNumberCounts = new Dictionary<string, int>();
+                foreach (var contractLand in AllContractLand)
+                {
+                    if (contractLand.LandNumber.IsNotNullOrEmpty())
+                    {
+                        if (landNumberCounts.ContainsKey(contractLand.LandNumber))
+                        {
+                            landNumberCounts[contractLand.LandNumber]++;
+                        }
+                        else
+                        {
+                            landNumberCounts[contractLand.LandNumber] = 1;
+                        }
+                    }
+                }
+                foreach (var land in contractLand)
+                {
+                    if (land.LandNumber.IsNotNullOrEmpty())
+                    {
+                        if (landNumberCounts.TryGetValue(land.LandNumber, out int count) && count > 1)
+                        {
+                            info += $"\n地块编码：{land.LandNumber}整库必须唯一";
+                        }
+                    }
+                        
                 }
             }
             ErrorInfo += info;

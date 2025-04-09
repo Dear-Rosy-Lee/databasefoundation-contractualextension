@@ -28,7 +28,6 @@ namespace YuLinTu.Library.Business
         private TaskAttributeDataCheckerArgument argument;
         private int index;
         private int cindex;
-        private string resfile;
 
         #endregion Field
 
@@ -83,22 +82,21 @@ namespace YuLinTu.Library.Business
             ReadData(dbContext);
             if (currentZone.Level == eZoneLevel.Group)
             {
-                resfile = CreateLog();
+                var resfile = CreateLog(currentZone);
                 this.ReportProgress(3 + 50, $"(1/1)进行{currentZone.FullName}属性数据质量检查");
-                if (!DataCheck(currentZone))
-                    return false;
+                DataCheck(resfile,currentZone);
             }
             else
             {
                 var zoneStation = dbContext.CreateZoneWorkStation();
                 var groups = zoneStation.GetByChildLevel(currentZone.FullCode, eZoneLevel.Group);
                 double Percent = 100 / (double)groups.Count;
-                resfile = CreateLog();
+                
                 foreach (var group in groups)
                 {
-                    this.ReportProgress(3 + (int)(cindex * Percent), string.Format("({0}/{1})挂接{2}原地块编码", cindex, groups.Count, group.FullName));
-                    if (!DataCheck(group))
-                        return false;
+                    this.ReportProgress(3 + (int)(cindex * Percent), string.Format("({0}/{1})进行{2}属性数据质量检查", cindex, groups.Count, group.FullName));
+                    var resfile = CreateLog(group);
+                    DataCheck(resfile,group);
                     cindex++;
                 }
                 return true;
@@ -110,7 +108,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <returns></returns>
 
-        private bool DataCheck(Zone group) 
+        private bool DataCheck(string resfile, Zone group) 
         {
             try
             {
@@ -118,15 +116,17 @@ namespace YuLinTu.Library.Business
                 var dcp = new DataCheckProgress();
                 dcp.DataArgument = argument;
                 dcp.zone = group;
-                var falg = dcp.Check();
-                if ((falg!=null))
+                var errorInfo = dcp.Check();
+                if (errorInfo.IsNotNullOrEmpty())
                 {
-                    this.ReportError("数据检查存在错误，详情请在安装软件安装目录中查看错误文档");
-                    return false;
+                    this.ReportError($"{group.Name},数据检查存在错误，详情请在安装软件安装目录中查看错误文档");
+                    WriteLog(resfile, errorInfo);
+                    return true;
                 }
                 else
                 {
-                    this.ReportInfomation("数据检查通过。");
+                    this.ReportInfomation($"{group.Name}数据检查通过。");
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -135,10 +135,14 @@ namespace YuLinTu.Library.Business
                 this.ReportError(string.Format("数据检查时出错!"));
                 return false;
             }
-            return true;
         }
-
-        private string CreateLog()
+        
+            private void WriteLog(string path, string errinfo)
+            {
+                File.AppendAllText(path, errinfo);
+            }
+        
+        private string CreateLog(Zone group)
         {
             
             // 定义文件夹路径
@@ -150,10 +154,10 @@ namespace YuLinTu.Library.Business
                 Directory.CreateDirectory(folderPath);
             }
             
-            string fileName = $"挂接结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
+            string fileName = $"{group.FullName}质量检查结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
             // 合成完整文件路径
             folderPath = Path.Combine(folderPath, fileName);
-            File.WriteAllText(folderPath, "检查结果记录\n");
+            File.WriteAllText(folderPath, "检查结果记录");
             return folderPath;
         }
 
@@ -175,25 +179,18 @@ namespace YuLinTu.Library.Business
         
         private void ReadData(IDbContext dbContext)
         {
-            Dictionary<string, VirtualPerson> AllVirtualPeople = new Dictionary<string, VirtualPerson>();
-            Dictionary<string, Person> AllPeople = new Dictionary<string, Person>();
-            Dictionary<string, ContractLand> AllContractLand = new Dictionary<string, ContractLand>();
             var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             var vps = vpStation.Get();
-            foreach(var item in vps)
-            {
-                AllVirtualPeople.Add(item.Number, item);
-                item.SharePersonList.ForEach(t => { AllPeople.Add(t.ICN, t); });
-            }
+            argument.AllVirtualPeople = vps;
             var landStation = dbContext.CreateContractLandWorkstation();
             var lands = landStation.Get();
-            foreach (var item in lands)
+            List<Person> persons = new List<Person>();
+            foreach(var item in vps)
             {
-                AllContractLand.Add(item.LandNumber, item);
+                persons.AddRange(item.SharePersonList);
             }
-            argument.AllVirtualPeople = AllVirtualPeople;
-            argument.AllPeople = AllPeople;
-            argument.AllContractLand = AllContractLand;
+            argument.AllPeople = persons;
+            argument.AllContractLand = lands;
 
         }
         #endregion Method - Private 

@@ -29,9 +29,9 @@ namespace YuLinTu.Library.Business
         public DataRepeataBility DataRepeataBility { get; set; }
         public Uniqueness Uniqueness { get; set; }
 
-        public Dictionary<string, VirtualPerson> AllVirtualPeople { get; set; }
-        public Dictionary<string, Person> AllPeople { get; set; }
-        public Dictionary<string, ContractLand> AllContractLand { get; set; }
+        public List<LandVirtualPerson> AllVirtualPeople { get; set; }
+        public List<Person> AllPeople { get; set; }
+        public List<ContractLand> AllContractLand { get; set; }
 
         #endregion
         public TaskAttributeDataCheckerArgument()
