@@ -133,13 +133,18 @@ namespace YuLinTu.Library.Business
             string password = "yltadmin";
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
-            HttpResponseMessage response = await client.GetAsync(updateUrl);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
-                AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
-                //AutoUpdater.OpenDownloadPage = true;
-                AutoUpdater.Start(updateUrl);
+                HttpResponseMessage response = await client.GetAsync(updateUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
+                    AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
+                    //AutoUpdater.OpenDownloadPage = true;
+                    AutoUpdater.Start(updateUrl);
+                }
+            }
+            catch { 
             }
         }
     }
