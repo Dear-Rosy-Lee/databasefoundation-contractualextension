@@ -574,7 +574,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
 
             }
-            CheckNodeRepeat(landlist, stringBuilder);
+            //CheckNodeRepeat(landlist, stringBuilder);
             return stringBuilder.ToString();
         }
 
