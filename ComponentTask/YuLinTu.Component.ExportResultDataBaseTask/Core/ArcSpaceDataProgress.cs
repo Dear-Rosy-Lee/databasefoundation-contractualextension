@@ -592,7 +592,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             foreach (var item in columns)
             {
                 var typechar = 'C';
-                if (item.CharType == "Int")
+                if (item.CharType == "Int"|| item.CharType == "N")
                     typechar = 'N';
                 else if (item.CharType == "Double" || item.CharType == "Float")
                     typechar = 'F';

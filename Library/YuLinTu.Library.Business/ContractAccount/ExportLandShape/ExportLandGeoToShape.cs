@@ -112,14 +112,17 @@ namespace YuLinTu.Library.Business
 
                     switch (Exportway)
                     {
-                        case 1:
+                        case 0:
                             attributes = CreateAttributesTableStand(item);
+                            break;
+                        case 1:
+                            attributes = CreateAttributesTable<ContractLand>(item);
                             break;
                         case 2:
                             attributes = CreateAttributesSimple(item);
                             break;
                         default:
-                            attributes = CreateAttributesTable<ContractLand>(item);
+                            attributes = CreateAttributesTableStand(item);
                             break;
                     }
                     YuLinTu.Spatial.Geometry geometry = item.Shape as YuLinTu.Spatial.Geometry;
@@ -184,14 +187,17 @@ namespace YuLinTu.Library.Business
             DbaseFileHeader header = new DbaseFileHeader();
             switch (Exportway)
             {
-                case 1:
+                case 0:
                     header = CreateStandHeader(feature);
+                    break;
+                case 1:
+                    header = CreateDefaultHeader(feature);
                     break;
                 case 2:
                     header = CreateSampleHeader(feature);
                     break;
                 default:
-                    header = CreateDefaultHeader(feature);
+                    header = CreateStandHeader(feature);
                     break;
             }
             return header;

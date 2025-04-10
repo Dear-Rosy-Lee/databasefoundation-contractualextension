@@ -27,7 +27,7 @@ namespace YuLinTu.Library.Controls
         public string FileName { get; private set; }
 
         /// <summary>
-        /// 导出方式
+        /// 导出方式   0"标准汇交格式" 1"数据库格式"  2"空间匹配校准格式"
         /// </summary>
         public int EportType { get; private set; }
 

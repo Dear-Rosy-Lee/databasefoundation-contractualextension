@@ -45,8 +45,8 @@ namespace YuLinTu.Library.Business
             var importDot = new InitializeLandDotCoilTask();
 
             #region 通过反射等机制定制化具体的业务处理类
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes().Where(t => t.BaseType != null && t.BaseType.Equals(typeof(InitializeLandDotCoilTask))))
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var types = assemblies.SelectMany(a => a.GetTypes().Where(t => t.BaseType != null && t.BaseType.Equals(typeof(InitializeLandDotCoilTask))))
                 .ToArray();
             if (types.Length > 0)
             {
