@@ -489,7 +489,7 @@ namespace YuLinTu.Component.MapFoundation
 
             for (int i = 0; i < getGeoList.Count; i++)
             {
-                var area = ToolMath.CutNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();
