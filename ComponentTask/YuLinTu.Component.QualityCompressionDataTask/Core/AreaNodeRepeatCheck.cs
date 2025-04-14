@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using YuLinTu.Data.Shards;
 using YuLinTu.Spatial;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -25,7 +26,17 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             _tolerance = tolerance;
             Clear();
             //GridIndex::Grid idx([&](int rowID, CExtent & ext)->bool{ return GetExtent(rowID, ext); }, tolerance);
-            Grid idx = new Grid(cidx);
+            Grid idx = new Grid(cidx, tolerance);
+            idx._getShpExtent += (index, extent) =>
+            {
+                var cg = geolist.Find(t => t.index == index);
+                if (cg == null || cg.Graphic == null)
+                    return false;
+                var env = cg.Graphic.Envelope();
+                extent.SetElements(env.MinX(), env.MinY(), env.MaxX(), env.MaxY());
+                return true;
+            };
+
             buildIndex(idx);
 
             nProgressCount = idx.calcIndexCount();// _shpFile->GetRecordCount();
@@ -55,7 +66,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             {
                 var p = it.p1;
                 var pi = it.p2;
-                reportError(p.shpID, pi.shpID, p.x, p.y, pi.x, pi.y, 0);
+                var distanc = Math.Sqrt(Math.Pow((p.x - pi.x), 2) + Math.Pow((p.y - pi.y), 2));
+                reportError(p.shpID, pi.shpID, p.x, p.y, pi.x, pi.y, distanc);
             }
         }
 
@@ -94,7 +106,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         {
             Grid g = idx;
             var fullExt = geolist[0].Graphic.Envelope();
-            geolist.ForEach(f => fullExt.Union(f.Graphic.Envelope()));
+            CExtent cExtent = new CExtent();
+            cExtent.SetElements(fullExt.MinX(), fullExt.MinY(), fullExt.MaxX(), fullExt.MaxY());
+            geolist.ForEach(f =>
+            {
+                var env = f.Graphic.Envelope();
+                cExtent.UpElements(env.MinX(), env.MinY(), env.MaxX(), env.MaxY()); //= fullExt.Union(f.Graphic.Envelope())                
+            });
             CExtent cExtent = new CExtent();
             cExtent.SetElements(fullExt.MinX(), fullExt.MinY(), fullExt.MaxX(), fullExt.MaxY());
             //var fullExt = () _shpFile.GetFullExtent();
@@ -253,7 +271,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 for (int i = vecTmp.Count() - 1; i >= 0; --i)
                 {
                     var pi = vecTmp[i];
-
                     var dx = p.x - pi.x;
                     if (dx > tolerance)
                     {
@@ -280,7 +297,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         if (d2 <= tolerance2 && d2 > overlapTolerance2)
                         {
                             MyResult mr = new MyResult(p, pi);
-                            if (_result.Any(r => r.p1.IsEqual(mr.p1) && r.p2.IsEqual(mr.p2)))
+                            if (!_result.Any(r => r.p1.IsEqual(mr.p1) && r.p2.IsEqual(mr.p2)))
                             {
                                 //reportError(p.shpID, pi.shpID, p.x, p.y, pi.x, pi.y, d2);
                                 _result.Add(mr);
@@ -293,13 +310,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 vecTmp.Add(p);
             }
         }
-
     }
 
     public class CExtent
     {
         public double xmin, ymin, xmax, ymax;
-        List<int> shapes;
+        List<int> shapes = new List<int>();
         /// <summary>
         /// 处理容差
         /// </summary>
@@ -317,6 +333,14 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             this.xmax = xmax;
             this.ymin = ymin;
             this.ymax = ymax;
+        }
+
+        public void UpElements(double xmin, double ymin, double xmax, double ymax)
+        {
+            this.xmin = this.xmin < xmin ? this.xmin : xmin;
+            this.xmax = this.xmax > xmax ? this.xmax : xmax;
+            this.ymin = this.ymin < ymin ? this.ymin : ymin;
+            this.ymax = this.ymax > ymax ? this.ymax : ymax;
         }
 
         public Point GetCenterPoint()
@@ -352,17 +376,24 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public Node(int depth)
         {
+            shapes = new List<int>();
         }
 
         public Node(CExtent ext)
         {
             nodeDepth = 0;
+            this.xmin = ext.xmin;
+            this.xmax = ext.xmax;
+            this.ymin = ext.ymin;
+            this.ymax = ext.ymax;
+            shapes = new List<int>();
         }
     }
 
     public class CheckGeometry
     {
         public int index { get; set; }
+        public string bm { get; set; }
 
         public Geometry Graphic { get; set; }
     }
@@ -374,21 +405,22 @@ namespace YuLinTu.Component.QualityCompressionDataTask
     {
         const int MAX_DEPTH = 8;
         const int MAX_NODES = 40000;
-        private CExtent _fullExtent;
-        HashSet<int> _atMultiNodeShps;
+        private CExtent _fullExtent = new CExtent();
+        HashSet<int> _atMultiNodeShps = new HashSet<int>();
 
         //const Grid operator=(Grid rhs);
 
         //public Grid(Grid rhs);
 
-        Func<int, CExtent, bool> _getShpExtent;
+        public Func<int, CExtent, bool> _getShpExtent;
         double _tolerance;
 
         bool _fUseOneNode;//不构建索引，所有ID都加入到一个根节点
-        Dictionary<int, CExtent> _cacheExtent;
-        public List<Node> _nodes;
+        Dictionary<int, CExtent> _cacheExtent = new Dictionary<int, CExtent>();
+        public List<Node> _nodes = new List<Node>();
         public Grid(Func<int, CExtent, bool> onGetShpExtent, double tolerance = 0.0)
         {
+            this._tolerance = tolerance;
         }
         ~Grid()
         {
@@ -432,7 +464,6 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         }
         public void setFullExtent(CExtent ext, int nRecordCount = 0)
         {
-
             setFullExtent(ext.xmin, ext.ymin, ext.xmax, ext.ymax, nRecordCount);
         }
         public CExtent getFullExtent()
@@ -485,6 +516,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
             }
         }
+
         public bool AddShape(int shpID)
         {//, double xmin, double ymin, double xmax, double ymax){
             if (_fUseOneNode)

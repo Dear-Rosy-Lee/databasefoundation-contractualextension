@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Windows.Media;
 using DotSpatial.Projections;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
@@ -41,8 +42,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public IDataSource Source { get; set; }
 
+        public Action<string> ReportErrorMethod { get; set; }
 
-        public string Check()
+        /// <summary>
+        /// 数据检查
+        /// </summary>
+        public bool Check()
         {
             //获取当前路径下shape数据
             ErrorInfo = "";
@@ -53,29 +58,36 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 filepath = Path.GetDirectoryName(DataArgument.CheckFilePath);
                 filename = Path.GetFileNameWithoutExtension(DataArgument.CheckFilePath);
                 if (!CheckFile(filepath, filename))
-                    return ErrorInfo;
+                {
+                    this.ReportError(ErrorInfo);
+                    return false;
+                }
                 var sr = GetByFile(filepath + "\\" + filename);
                 srid = sr.WKID;
                 if (srid == 4490)
                 {
-                    ErrorInfo = "请将当前坐标系转为投影坐标系后，再进行检查！";
-                    return ErrorInfo;
+                    this.ReportError("请将当前坐标系转为投影坐标系后，再进行检查！");
+                    return false;
                 }
 
                 List<LandEntity> ls = new List<LandEntity>();
                 var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid, "");
                 if (landShapeList == null)
                 {
-                    return ErrorInfo;
+                    this.ReportError(ErrorInfo);
+                    return false;
                 }
                 if (landShapeList.Count == 0)
                 {
-                    return "矢量文件中不存在数据";
+                    this.ReportError("矢量文件中不存在数据");
+                    return false;
                 }
-                ErrorInfo = CheckTopology(landShapeList);
-                if (!string.IsNullOrEmpty(ErrorInfo))
+                CheckTopology(landShapeList);
+                if (!string.IsNullOrEmpty(ErrorInfo) || haserror)
                 {
-                    return ErrorInfo;
+                    if (!string.IsNullOrEmpty(ErrorInfo))
+                        this.ReportError(ErrorInfo);
+                    return false;
                 }
                 var landcode = "";
                 foreach (var item in landShapeList)
@@ -92,14 +104,15 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
                 if (landcode == "512022" || landcode == "513922")
                 {
-                    return "";
+                    return true;
                 }
                 var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
                 //var token = Parameters.Token.ToString();
                 if (string.IsNullOrEmpty(token))
                 {
                     ErrorInfo = "请先登录后,再进行检查";
-                    return ErrorInfo;
+                    this.ReportError(ErrorInfo);
+                    return false;
                 }
 
                 ApiCaller apiCaller = new ApiCaller();
@@ -121,18 +134,21 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     var folderPath = CreateLog();
                     WriteLog(folderPath, getResult);
                     ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
-                    return ErrorInfo;
+                    this.ReportError(ErrorInfo);
+                    return false;
                 }
                 if (getResult == null)
                 {
-                    return ErrorInfo;
+                    this.ReportError(ErrorInfo);
+                    return false;
                 }
-                return "";
+                return true;
             }
             catch (Exception ex)
             {
                 ErrorInfo = ex.Message;
-                return ErrorInfo;
+                this.ReportError(ErrorInfo);
+                return false;
             }
 
         }
@@ -459,15 +475,25 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 geometry.SpatialReference = new SpatialReference(srid);
             return geometry;
         }
+        private bool haserror = false;
+
+        private void ReportError(string msg)
+        {
+            haserror = true;
+            if (ReportErrorMethod != null)
+            {
+                this.ReportErrorMethod(msg);
+            }
+        }
 
         /// <summary>
         /// 拓扑检查
         /// </summary>
         /// <returns></returns>
-        public string CheckTopology(List<QCDK> landlist)
+        public void CheckTopology(List<QCDK> landlist)
         {
             if (landlist.Count == 0)
-                return "";
+                return;
             StringBuilder stringBuilder = new StringBuilder();
             var distanc = 0.05 * 0.05;
             var replist = new List<CheckGeo>();
@@ -475,7 +501,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             {
                 if (item.DKBM == null || item.DKBM.Length != 19)
                 {
-                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的数据编码不规范!");
+                    this.ReportError($"地块编码为{item.DKBM}的数据编码不规范!");
+                    //stringBuilder.AppendLine($"地块编码为{item.DKBM}的数据编码不规范!");
                     continue;
                 }
                 var dkgeo = item.Shape as YuLinTu.Spatial.Geometry;
@@ -483,19 +510,23 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     continue;
                 if (!dkgeo.IsValid())
                 {
-                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形无效!");
+                    this.ReportError($"地块编码为{item.DKBM}的矢量图形无效!");
+                    //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形无效!");
                     continue;
                 }
 
                 if (dkgeo.Area() < 1)
                 {
-                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形是碎面!");
+                    this.ReportError($"地块编码为{item.DKBM}的矢量图形是碎面!");
+                    //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形是碎面!");
                     continue;
                 }
 
                 if (dkgeo.ToSingleGeometries().Count() > 1)
                 {
-                    stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形包含多个图元!");
+
+                    this.ReportError($"地块编码为{item.DKBM}的矢量图形包含多个图元,图元个数为{dkgeo.ToSingleGeometries().Count()}个!");
+                    //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形包含多个图元!");
                     continue;
                 }
                 var allcoords = dkgeo.ToCoordinates().ToList();
@@ -509,9 +540,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         continue;
                     var xd = allcoords[i].X - allcoords[i + 1].X;
                     var yd = allcoords[i].Y - allcoords[i + 1].Y;
-                    if (xd * xd + yd * yd < distanc)
+                    var dis = Math.Sqrt(distanc);
+                    if (dis < 0.05)
                     {
-                        stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形节点({allcoords[i].X},{allcoords[i].Y}),({allcoords[i + 1].X},{allcoords[i + 1].Y})距离小于0.05米!");
+                        this.ReportError($"地块编码为{item.DKBM}的矢量图形节点({allcoords[i].X},{allcoords[i].Y})与节点({allcoords[i + 1].X},{allcoords[i + 1].Y})距离{dis}小于0.05米!");
+                        //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形节点({allcoords[i].X},{allcoords[i].Y}),({allcoords[i + 1].X},{allcoords[i + 1].Y})距离小于0.05米!");
                     }
                 }
                 //var geos = dkgeo.ToSingleGeometries();
@@ -538,14 +571,16 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         var angle = CalcAngle(coordArr[i], coordArr[i + 1], coordArr[i + 2]);
                         if (angle != 0 && (angle < 5 || angle > 355))
                         {
-                            stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角,度数为{angle}!");
+                            this.ReportError($"地块编码为{item.DKBM}的矢量图形存在狭长角,度数为{angle}!");
+                            //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角,度数为{angle}!");
                             continue;
                         }
                     }
                     var tangle = CalcAngle(coordArr[coordArr.Count - 2], coordArr[0], coordArr[1]);
                     if (tangle != 0 && (tangle < 5 || tangle > 355))
                     {
-                        stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角!,度数为{tangle}");
+                        this.ReportError($"地块编码为{item.DKBM}的矢量图形存在狭长角!,度数为{tangle}");
+                        //stringBuilder.AppendLine($"地块编码为{item.DKBM}的矢量图形存在狭长角!,度数为{tangle}");
                     }
                 }
                 replist.Add(new CheckGeo()
@@ -569,13 +604,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     }
                     if (replist[i].Shape.Intersects(replist[j].Shape))
                     {
-                        stringBuilder.AppendLine($"地块编码为{replist[i].DKBM}的矢量与地块编码为{replist[j].DKBM}的矢量存在重叠！");
+                        this.ReportError($"地块编码为{replist[i].DKBM}的矢量与地块编码为{replist[j].DKBM}的矢量存在重叠！");
+                        //stringBuilder.AppendLine($"地块编码为{replist[i].DKBM}的矢量与地块编码为{replist[j].DKBM}的矢量存在重叠！");
                     }
                 }
 
             }
-            //CheckNodeRepeat(landlist, stringBuilder);
-            return stringBuilder.ToString();
+            CheckNodeRepeat(landlist, stringBuilder);
         }
 
         /// <summary>
@@ -590,10 +625,16 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 geolist.Add(new CheckGeometry()
                 {
                     index = i,
+                    bm = landlist[i].DKBM,
                     Graphic = landlist[i].Shape as YuLinTu.Spatial.Geometry
                 });
             }
-            check.DoCheck(geolist, 0.05, 0.001, (i, j, x1, y1, x2, y2, len) => { }, (progress) =>
+            check.DoCheck(geolist, 0.0001, 0.05, (i, j, x1, y1, x2, y2, len) =>
+            {
+                var dkbm1 = landlist[i].DKBM;
+                var dkbm2 = landlist[j].DKBM;
+                this.ReportError($"地块({dkbm1})的点({x1},{y1})与地块({dkbm2})的点({x2},{y1})距离过近{len}米，请检查核实数据");
+            }, (progress) =>
             {
             });
         }
