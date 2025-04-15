@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
-using System.Windows.Media;
 using DotSpatial.Projections;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
@@ -92,8 +91,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var landcode = "";
                 foreach (var item in landShapeList)
                 {
-                    var land = new LandEntity();
-                    land.dkbm = item.DKBM;
+                    var land = new LandEntity
+                    {
+                        dkbm = item.DKBM
+                    };
                     var landShape = item.Shape as YuLinTu.Spatial.Geometry;
                     land.ewkt = $"SRID={sr.WKID};{landShape.GeometryText}";
                     land.qqdkbm = item.QQDKBM;
@@ -202,7 +203,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         {
             // 指定文件夹路径
             string folderPath = DataArgument.ResultFilePath;
-            string fileName = $"检查结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
+            string fileName = $"检查结果{DateTime.Now:yyyy年M月d日HH时mm分}.txt";
             // 合成完整文件路径
             folderPath = Path.Combine(folderPath, fileName);
             File.WriteAllText(folderPath, "检查结果记录:\n");
@@ -253,7 +254,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         }
                         break;
                     case "Shape":
-                        //if (index == -1)
+                        //if (Index == -1)
                         //{
                         //    ErrorInfo += "shp文件未包含Shape字段；";
 
@@ -287,7 +288,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 if (!string.IsNullOrEmpty(ErrorInfo))
                     throw new Exception(ErrorInfo);
 
-                foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
+                foreach (var dk in ForEnumRecord<QCDK>(shp,/* filePath,*/ codeIndex, srid, QCDK.CDKBM, zoneCode))
                 {
                     dkList.Add(dk);
                 }
@@ -295,12 +296,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             return dkList;
         }
 
-        static public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp, string fileName, Dictionary<string, int> codeIndex,
+        static public IEnumerable<T> ForEnumRecord<T>(ShapeFile shp,/* string fileName, */Dictionary<string, int> codeIndex,
           int srid, string mainField = "", string zoneCode = "", bool setGeo = true) where T : class, new()
         {
             var infoArray = typeof(T).GetProperties();
             var fieldIndex = new Dictionary<string, int>();
-            bool isSelect = (mainField != "" && zoneCode != "") ? true : false;
+            bool isSelect = (mainField != "" && zoneCode != "");
 
             int dkbmindex = -1;
             for (int i = 0; i < infoArray.Length; i++)
@@ -432,13 +433,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     shels = pg.Shell.Coordinates;
                     hols = pg.Holes;
                 }
-                else if (g.Instance is Point)
+                else if (g.Instance is IPoint)
                 {
                     var pg = g.Instance;
                     shels = pg.Coordinates;
                     hols = new LinearRing[0];
                 }
-                else if (g.Instance is LinearRing)
+                else if (g.Instance is ILinearRing)
                 {
                     var pg = g.Instance as LinearRing;
                     shels = pg.Coordinates;
@@ -610,25 +611,27 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 }
 
             }
-            CheckNodeRepeat(landlist, stringBuilder);
+            CheckNodeRepeat(landlist);
         }
 
         /// <summary>
         /// 检查相邻要素节点重复
         /// </summary>
-        private void CheckNodeRepeat(List<QCDK> landlist, StringBuilder stringBuilder)
+        private void CheckNodeRepeat(List<QCDK> landlist)
         {
             AreaNodeRepeatCheck check = new AreaNodeRepeatCheck();
+            check.ReportErrorMethod += (msg) => this.ReportError(msg);
             var geolist = new List<CheckGeometry>();
             for (int i = 0; i < landlist.Count; i++)
             {
                 geolist.Add(new CheckGeometry()
                 {
-                    index = i,
-                    bm = landlist[i].DKBM,
+                    Index = i,
+                    Bm = landlist[i].DKBM,
                     Graphic = landlist[i].Shape as YuLinTu.Spatial.Geometry
                 });
             }
+            this.ReportError("开始检查相邻要素节点重复----数据已准备");
             check.DoCheck(geolist, 0.0001, 0.05, (i, j, x1, y1, x2, y2, len) =>
             {
                 var dkbm1 = landlist[i].DKBM;
