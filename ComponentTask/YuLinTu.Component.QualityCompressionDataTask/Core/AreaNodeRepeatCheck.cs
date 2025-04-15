@@ -113,8 +113,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var env = f.Graphic.Envelope();
                 cExtent.UpElements(env.MinX(), env.MinY(), env.MaxX(), env.MaxY()); //= fullExt.Union(f.Graphic.Envelope())                
             });
-            CExtent cExtent = new CExtent();
-            cExtent.SetElements(fullExt.MinX(), fullExt.MinY(), fullExt.MaxX(), fullExt.MaxY());
+            //CExtent cExtent = new CExtent();
+            //cExtent.SetElements(fullExt.MinX(), fullExt.MinY(), fullExt.MaxX(), fullExt.MaxY());
             //var fullExt = () _shpFile.GetFullExtent();
             g.setFullExtent(cExtent);
             var nRecords = geolist.Count();
