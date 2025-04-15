@@ -97,7 +97,9 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         //}
 
         bool cidx(int rowID, CExtent ext)
-        { return GetExtent(rowID, ext); }//, tolerance);
+        {
+            return GetExtent(rowID, ext); 
+        }//, tolerance);
 
         /// <summary>
         /// 建立索引
