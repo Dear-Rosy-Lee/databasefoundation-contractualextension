@@ -631,7 +631,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     Graphic = landlist[i].Shape as YuLinTu.Spatial.Geometry
                 });
             }
-            this.ReportError("开始检查相邻要素节点重复----数据已准备");
+            //this.ReportError("开始检查相邻要素节点重复----数据已准备");
             check.DoCheck(geolist, 0.0001, 0.05, (i, j, x1, y1, x2, y2, len) =>
             {
                 var dkbm1 = landlist[i].DKBM;

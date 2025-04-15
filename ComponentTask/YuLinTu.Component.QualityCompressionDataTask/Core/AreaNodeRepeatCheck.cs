@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.ObjectBuilder2;
-using YuLinTu.Data.Shards;
 using YuLinTu.Spatial;
 
 namespace YuLinTu.Component.QualityCompressionDataTask
