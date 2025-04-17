@@ -28,6 +28,21 @@ namespace YuLinTu.Component.VectorDataTreatTask
             }
         }
 
+        [DisplayLanguage("使用确权地块编码挂接", IsLanguageName = false)]
+        [DescriptionLanguage("使用确权地块编码挂接", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        public bool UseOldNumber
+        {
+            get { return useOldNumber; }
+            set
+            {
+                useOldNumber = value;
+                NotifyPropertyChanged("UseOldNumber");
+            }
+        }
+        private bool useOldNumber;
+
         #endregion Properties
 
         #region Ctor

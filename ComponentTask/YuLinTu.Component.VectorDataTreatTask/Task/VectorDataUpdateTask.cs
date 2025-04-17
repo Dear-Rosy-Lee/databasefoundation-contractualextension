@@ -229,6 +229,10 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     var land = new LandEntity();
                     land.dkbm = item.DKBM;
                     land.qqdkbm = item.QQDKBM;
+                    if (argument.UseOldNumber)
+                    {
+                        land.dkbm = land.qqdkbm;
+                    }
                     var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
                     ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
                     land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
