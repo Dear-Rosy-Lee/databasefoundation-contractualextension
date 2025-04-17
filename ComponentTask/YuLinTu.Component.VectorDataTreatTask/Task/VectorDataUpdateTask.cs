@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using CSScriptLibrary;
 using DotSpatial.Projections;
-using NetTopologySuite.Features;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Tls;
 using YuLinTu.Appwork;
 using YuLinTu.Component.Account.Models;
 using YuLinTu.Library.Log;
 using YuLinTu.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YuLinTu.Component.VectorDataTreatTask
 {
@@ -94,7 +90,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 catch (Exception ex)
                 {
                     Log.WriteException(this, "OnGo(数据处理失败!)", ex.Message + ex.StackTrace);
-                    this.ReportError(string.Format("数据处理出错!" + ex.Message));
+                    this.ReportError(string.Format($"数据处理出错!{baseUrl} " + ex.Message));
                 }
             }
         }
@@ -143,8 +139,9 @@ namespace YuLinTu.Component.VectorDataTreatTask
             try
             {
                 ErrorInfo = "";
-                string filepath = Path.GetDirectoryName(argument.CheckFilePath);
-                string filename = Path.GetFileNameWithoutExtension(argument.CheckFilePath);
+                var filelist = GetAllFiles(argument.CheckFilePath);
+                string filepath = Path.GetDirectoryName(filelist[0]);
+                string filename = Path.GetFileNameWithoutExtension(filelist[0]);
                 if (!CheckFile(filepath, filename))
                     return false;
                 var sr = VectorDataProgress.GetByFile(filepath + "\\" + filename);
@@ -196,37 +193,58 @@ namespace YuLinTu.Component.VectorDataTreatTask
         public void ProcessDataOnline(string url, string murl, string key, string szdy)
         {
             int srid = 0;
-            var landprj = Path.ChangeExtension(argument.CheckFilePath, "prj");
+            var filelist = GetAllFiles(argument.CheckFilePath);
+            if (filelist.Count == 0)
+            {
+                return;
+            }
+
+            var landprj = Path.ChangeExtension(filelist[0], "prj");
             using (var sreader = new StreamReader(landprj))
             {
                 if (string.IsNullOrEmpty(prjstr))
                     prjstr = sreader.ReadToEnd();
                 //int.TryParse(GetMarkValue(prjstr, "EPSG", 6), out srid);
             }
-            var landShapeList = VectorDataProgress.InitiallShapeLandList(argument.CheckFilePath, srid, "");
-            if (landShapeList == null)
-            {
-                return;
-            }
 
             string prj4490 = "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]";
             ProjectionInfo sreproject = ProjectionInfo.FromEsriString(prj4490);
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
             this.ReportProgress(5, "开始处理数据");
-            var p = 90.0 / landShapeList.Count();
+            var p = 90.0 / filelist.Count();
             int pindex = 0;
             int index = 0;
-            List<LandEntity> ls = new List<LandEntity>();
-            foreach (var item in landShapeList)
+            var datacount = 0;
+            foreach (var file in filelist)
             {
-                var land = new LandEntity();
-                land.dkbm = item.DKBM;
-                land.qqdkbm = item.QQDKBM;
-                var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
-                ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
-                land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
-                ls.Add(land);
-                if (ls.Count == 100)
+                var landShapeList = VectorDataProgress.InitiallShapeLandList(file, srid, "");
+                if (landShapeList == null)
+                {
+                    return;
+                }
+                datacount += landShapeList.Count;
+                List<LandEntity> ls = new List<LandEntity>();
+                foreach (var item in landShapeList)
+                {
+                    var land = new LandEntity();
+                    land.dkbm = item.DKBM;
+                    land.qqdkbm = item.QQDKBM;
+                    var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
+                    ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
+                    land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
+                    ls.Add(land);
+                    if (ls.Count == 100)
+                    {
+                        var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
+                        int upint = 0;
+                        int.TryParse(upcountstr, out upint);
+                        pindex += upint;
+                        ls.Clear();
+                    }
+                    index++;
+                    this.ReportProgress((int)(index * p), $"(文件{Path.GetFileName(file)},{index}/{landShapeList.Count()}) 正在更新数据");
+                }
+                if (ls.Count > 0)
                 {
                     var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
                     int upint = 0;
@@ -234,19 +252,33 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     pindex += upint;
                     ls.Clear();
                 }
-                index++;
-                this.ReportProgress((int)(index * p), $"({index}/{landShapeList.Count()})正在更新数据");
             }
-            if (ls.Count > 0)
-            {
-                var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
-                int upint = 0;
-                int.TryParse(upcountstr, out upint);
-                pindex += upint;
-                ls.Clear();
-            }
-            this.ReportInfomation($"文件中共{landShapeList.Count}条数据，成功更新{pindex}条");
+            this.ReportInfomation($"共{filelist.Count}个文件，共{datacount}条数据，成功更新{pindex}条");
             this.ReportProgress(100);
+        }
+
+        /// <summary>
+        /// 获取所有的文件
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetAllFiles(string path)
+        {
+            List<string> files = new List<string>();
+            var dirs = Directory.GetDirectories(path);
+            if (dirs.Count() > 0)
+            {
+                foreach (var dir in dirs)
+                {
+                    files.AddRange(GetAllFiles(dir));
+                }
+            }
+            var filepaths = Directory.GetFiles(path);
+            foreach (var item in filepaths)
+            {
+                if (Path.GetExtension(item).ToLower() == ".shp")
+                    files.Add(item);
+            }
+            return files;
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
 
         [DisplayLanguage("地块数据路径", IsLanguageName = false)]
         [DescriptionLanguage("待处理地块数据文件的路径", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public string CheckFilePath
         {
