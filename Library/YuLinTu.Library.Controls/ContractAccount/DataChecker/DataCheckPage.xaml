@@ -52,24 +52,64 @@
 
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*" />
+            <RowDefinition Height="0.85*" />
+            <RowDefinition Height="0.1*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130" />
             <!--  导航栏  -->
             <ColumnDefinition Width="*" />
             <!--  检查项区域  -->
         </Grid.ColumnDefinitions>
+        <Border
+            Grid.Row="0"
+            Grid.Column="1"
+            BorderBrush="#C0C0C0"
+            BorderThickness="1">
+            <StackPanel
+                x:Name="RightPanel"
+                Grid.Row="0"
+                Grid.Column="1">
+                <!--  全选、全不选 控件区域  -->
+                <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="480,0,10,0"
+                        Content="配置检查项是否全选:" />
+                    <CheckBox
+                        x:Name="SelectAllCheckBox"
+                        Margin="0,0,15,0"
+                        Checked="SelectAllCheckBox_Checked"
+                        Content="全选"
+                        Unchecked="SelectAllCheckBox_Unchecked" />
+                    <CheckBox
+                        x:Name="SelectNoneCheckBox"
+                        Checked="SelectNoneCheckBox_Checked"
+                        Content="全不选"
+                        Unchecked="SelectNoneCheckBox_Unchecked" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
-        <StackPanel Grid.Column="0" Background="#EEE">
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,-29,0,0"
+            Background="#E0E0E0">
+
             <ListBox
                 Name="NavListBox"
                 Padding="-6,0,-6,0"
-                Background="#F8F8F8"
+                Background="#E0E0E0"
                 BorderThickness="0"
                 SelectionChanged="NavListBox_SelectionChanged" />
         </StackPanel>
 
         <ScrollViewer
+            Grid.Row="1"
             Grid.Column="1"
             Margin="10"
             VerticalScrollBarVisibility="Auto">
@@ -116,55 +156,64 @@
                 </ItemsControl>
             </StackPanel>
         </ScrollViewer>
-
-        <StackPanel
+        <Border
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Margin="10"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal">
-            <metro:MetroButton
-                x:Name="btnSave"
-                Height="30"
-                MinWidth="75"
-                Margin="10,0,0,0"
-                Click="btnConfirm_Click"
-                Command="{x:Static metro:MetroCommands.ConfirmTabMessageBoxCommand}"
-                DockPanel.Dock="Right">
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        VerticalAlignment="Center"
-                        RenderOptions.BitmapScalingMode="NearestNeighbor"
-                        SnapsToDevicePixels="True"
-                        Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
-                        Stretch="None" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="确定" />
-                </StackPanel>
-            </metro:MetroButton>
-            <metro:MetroButton
-                x:Name="canc"
-                Height="30"
-                MinWidth="75"
-                Margin="10,0,5,0"
-                Click="btnCancel_Click"
-                Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
-                DockPanel.Dock="Right">
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        RenderOptions.BitmapScalingMode="NearestNeighbor"
-                        SnapsToDevicePixels="True"
-                        Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"
-                        Stretch="None" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="取消" />
-                </StackPanel>
-            </metro:MetroButton>
-        </StackPanel>
+            BorderBrush="#C0C0C0"
+            BorderThickness="1">
+            <StackPanel
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <metro:MetroButton
+                    x:Name="btnSave"
+                    Height="30"
+                    MinWidth="75"
+                    Margin="10,0,0,0"
+                    BorderBrush="#C0C0C0"
+                    BorderThickness="1"
+                    Click="btnConfirm_Click"
+                    Command="{x:Static metro:MetroCommands.ConfirmTabMessageBoxCommand}"
+                    DockPanel.Dock="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapScalingMode="NearestNeighbor"
+                            SnapsToDevicePixels="True"
+                            Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png"
+                            Stretch="None" />
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="确定" />
+                    </StackPanel>
+                </metro:MetroButton>
+                <metro:MetroButton
+                    x:Name="canc"
+                    Height="30"
+                    MinWidth="75"
+                    Margin="10,0,5,0"
+                    BorderBrush="#C0C0C0"
+                    BorderThickness="1"
+                    Click="btnCancel_Click"
+                    Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                    DockPanel.Dock="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Image
+                            RenderOptions.BitmapScalingMode="NearestNeighbor"
+                            SnapsToDevicePixels="True"
+                            Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png"
+                            Stretch="None" />
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="取消" />
+                    </StackPanel>
+                </metro:MetroButton>
+            </StackPanel>
+        </Border>
     </Grid>
 </cmps:TabMessageBox>

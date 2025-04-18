@@ -1,4 +1,6 @@
 ﻿using CSScriptLibrary;
+using DevComponents.DotNetBar;
+using DotSpatial.Projections.Transforms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,21 +8,22 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
 {
+
     /// <summary>
     /// DataCheckPage.xaml 的交互逻辑
     /// </summary>
     public partial class DataCheckPage : TabMessageBox
     {
-        private Dictionary<string, object> _dataObjects = new Dictionary<string, object>(); // 存储所有类别的数据对象
-
+        private Dictionary<string, object> _dataObjects = new Dictionary<string, object>(); 
+        private List<KeyValue<string,CheckItemConfig>> checkItemList = new List<KeyValue<string, CheckItemConfig>>(); 
         public TaskAttributeDataCheckerArgument TaskArgument;
-
         private object _currentObject; // 当前显示的类别对象
         public IWorkpage Page { get; set; }
 
@@ -32,15 +35,22 @@ namespace YuLinTu.Library.Controls
 
         public void LoadNavigationItems()
         {
-            var assembly = Assembly.Load("YuLinTu.Library.Business");  // 指定程序集名称
+            var assembly = Assembly.Load("YuLinTu.Library.Business");
             var types = assembly.GetTypes()
-                                .Where(t => t.GetCustomAttribute<NavigationItemAttribute>() != null);
-
+                .Where(t => t.GetCustomAttribute<NavigationItemAttribute>() != null);
+            var savedConfigs = CheckItemConfigHelper.Load();
+            savedConfigs.ForEach(x =>
+            {
+                checkItemList.Add(new KeyValue<string, CheckItemConfig>(x.DisplayName, x));
+            });
+            
+            
             foreach (var type in types)
             {
                 var attr = type.GetCustomAttribute<NavigationItemAttribute>();
                 var obj = Activator.CreateInstance(type);  // 创建数据对象
                 _dataObjects[attr.Title] = obj; // 存储对象
+                
 
                 var item = new ListBoxItem { Content = attr.Title, Tag = obj };
                 NavListBox.Items.Add(item);
@@ -71,12 +81,16 @@ namespace YuLinTu.Library.Controls
             CheckItemPanel.Children.Clear();
             var properties = dataObject.GetType().GetProperties()
               .Where(p => p.GetCustomAttribute<CheckItemAttribute>() != null);
-
+            var savedConfigs = CheckItemConfigHelper.Load();
+            
+            
             foreach (var prop in properties)
             {
                 var attr = prop.GetCustomAttribute<CheckItemAttribute>();
                 if (attr != null)
                 {
+                    var target = checkItemList.FirstOrDefault(kv => kv.Key == prop.Name);
+                    dataObject.SetPropertyValue(prop.Name, target.Value.IsChecked);
                     var grid = new Grid
                     {
                         Margin = new Thickness(0, 5, 0, 5)
@@ -88,7 +102,7 @@ namespace YuLinTu.Library.Controls
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                     // 复选框
-                    var checkBox = new CheckBox
+                    var checkBox = new System.Windows.Controls.CheckBox
                     {
                         IsChecked = (bool)prop.GetValue(dataObject),
                         Tag = prop,
@@ -147,13 +161,58 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void CheckBox_Changed(object sender, RoutedEventArgs e)
         {
-            if (sender is CheckBox checkBox && checkBox.Tag is PropertyInfo property && _currentObject != null)
+            if (sender is System.Windows.Controls.CheckBox checkBox && checkBox.Tag is PropertyInfo property && _currentObject != null)
             {
+                var target = checkItemList.FirstOrDefault(kv => kv.Key == property.Name);
+                if (target != null && checkBox.IsChecked is bool isChecked)
+                {
+                    target.Value.IsChecked = isChecked;
+                }
+                var configList = checkItemList.Select(kv => kv.Value).ToList();
+                CheckItemConfigHelper.Save(configList);
                 property.SetValue(_currentObject, checkBox.IsChecked);
             }
         }
 
+        private void SelectAllCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetAllCheckBoxes(true);
+            // 取消对“全不选”的选中状态，防止同时勾选
+            SelectNoneCheckBox.IsChecked = false;
+        }
 
+        private void SelectAllCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void SelectNoneCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetAllCheckBoxes(false);
+            // 取消对“全选”的选中状态
+            SelectAllCheckBox.IsChecked = false;
+        }
+        private void SetAllCheckBoxes(bool isChecked)
+        {
+            foreach (var grid in CheckItemPanel.Children.OfType<Grid>())
+            {
+                var target = checkItemList.FirstOrDefault(kv => kv.Key == grid.Name);
+                if (target != null)
+                {
+                    target.Value.IsChecked = isChecked;
+                }
+                var configList = checkItemList.Select(kv => kv.Value).ToList();
+                CheckItemConfigHelper.Save(configList);
+                var checkBox = grid.Children.OfType<System.Windows.Controls.CheckBox>().FirstOrDefault();
+                if (checkBox != null)
+                {
+                    checkBox.IsChecked = isChecked;
+                }
+            }
+        }
+        private void SelectNoneCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            
+        }
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             var mandatoryField = MapCheckItems<MandatoryField>();
@@ -178,14 +237,14 @@ namespace YuLinTu.Library.Controls
                 .Where(p => p.GetCustomAttribute<CheckItemAttribute>() != null)
                 .ToDictionary(p => p.Name, p => p); // 转换为字典，方便查找
 
-            foreach (var entry in _dataObjects)
+            foreach (var entry in checkItemList)
             {
-                foreach (var prop in entry.Value.GetType().GetProperties()
-                    .Where(p => p.GetCustomAttribute<CheckItemAttribute>() != null))
+                foreach (var prop in targetProperties)
                 {
-                    if (targetProperties.TryGetValue(prop.Name, out var targetProperty))
+                    if (targetProperties.ContainsKey(entry.Key))
                     {
-                        targetProperty.SetValue(targetObject, prop.GetValue(entry.Value));
+                        var target = targetProperties.FirstOrDefault(kv => kv.Key == entry.Key);
+                        target.Value.SetValue(targetObject, entry.Value.IsChecked);
                     }
                 }
             }
@@ -195,7 +254,8 @@ namespace YuLinTu.Library.Controls
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            
+            var configList = checkItemList.Select(kv => kv.Value).ToList();
+            CheckItemConfigHelper.Save(configList);
         }
     }
 }

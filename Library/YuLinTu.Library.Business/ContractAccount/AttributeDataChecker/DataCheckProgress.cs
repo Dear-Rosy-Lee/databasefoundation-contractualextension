@@ -240,9 +240,9 @@ namespace YuLinTu.Library.Business
                         info += $"\n地块编码：{land.LandNumber},土地用途未填写;";
                     }
                 }
-                if (contractLand.Where(x => x.ActualArea != 0).ToList() != null)
+                if (contractLand.Where(x => x.ActualArea == 0).ToList() != null)
                 {
-                    var landList = contractLand.Where(x => x.ActualArea != 0).ToList();
+                    var landList = contractLand.Where(x => x.ActualArea == 0).ToList();
                     foreach (var land in landList)
                     {
                         info += $"\n地块编码：{land.LandNumber},实测面积未填写;";
@@ -251,7 +251,16 @@ namespace YuLinTu.Library.Business
             }
             if (DataArgument.MandatoryField.MandatoryFieldContract == true)
             {
-                
+                foreach(var item in virtualPeople) 
+                {
+                    var contract = contractConcord.Where(x => x.ContracterId == item.ID);
+                    if (contract.IsNullOrEmpty())
+                    {
+                        info += $"\n承包方:{item.Name},无承包合同信息，无法检查;";
+                    }
+                }
+
+
                 if (contractConcord.Where(x => x.ConcordNumber.IsNullOrEmpty()).ToList() != null)
                 {
                     var contractList = contractConcord.Where(x => x.ConcordNumber.IsNullOrEmpty()).ToList();
@@ -284,9 +293,9 @@ namespace YuLinTu.Library.Business
                         info += $"\n承包方:{contract.ContracterName},合同承包方式未填写;";
                     }
                 }
-                if (contractConcord.Where(x => x.CountAwareArea != 0).ToList() != null)
+                if (contractConcord.Where(x => x.CountAwareArea == 0).ToList() != null)
                 {
-                    var contractList = contractConcord.Where(x => x.CountAwareArea != 0).ToList();
+                    var contractList = contractConcord.Where(x => x.CountAwareArea == 0).ToList();
                     foreach (var contract in contractList)
                     {
                         info += $"\n承包方:{contract.ContracterName},合同面积亩未填写;";
