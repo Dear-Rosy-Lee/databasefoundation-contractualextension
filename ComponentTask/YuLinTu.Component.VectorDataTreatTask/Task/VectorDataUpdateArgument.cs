@@ -28,8 +28,8 @@ namespace YuLinTu.Component.VectorDataTreatTask
             }
         }
 
-        [DisplayLanguage("使用确权地块编码挂接", IsLanguageName = false)]
-        [DescriptionLanguage("使用确权地块编码挂接", IsLanguageName = false)]
+        [DisplayLanguage("以确权地块编码挂接", IsLanguageName = false)]
+        [DescriptionLanguage("以确权地块编码为匹配字段进行数据挂接", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         public bool UseOldNumber

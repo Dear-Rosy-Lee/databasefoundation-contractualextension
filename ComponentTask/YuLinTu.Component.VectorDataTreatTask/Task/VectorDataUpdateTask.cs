@@ -74,7 +74,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
             System.Threading.Thread.Sleep(200);
 
             string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
-            string baseUrl = TheApp.Current.GetSystemSection().TryGetValue("DefaultSystemService", AppParameters.stringDefaultSystemServiceValue);
+            string baseUrl = AppGlobalSettings.Current.TryGetValue("DefaultSystemService", AppParameters.stringDefaultSystemServiceValue);
             string postGetTaskIdUrl = $"/ruraland/api/topology/update/shape/{zonecode}/false/by/dkbm";
             var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length - 4);
             //进行质检 
@@ -233,6 +233,8 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     {
                         land.dkbm = land.qqdkbm;
                     }
+                    if (string.IsNullOrEmpty(land.dkbm))
+                        continue;
                     var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
                     ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
                     land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
