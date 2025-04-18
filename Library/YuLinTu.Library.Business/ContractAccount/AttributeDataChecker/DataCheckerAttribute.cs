@@ -19,11 +19,13 @@ namespace YuLinTu.Library.Business
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class CheckItemAttribute : Attribute
     {
+        public string Name { get;}
         public string Label { get; }
         public string Description { get; }  // 新增描述信息
 
-        public CheckItemAttribute(string label, string description = "")
+        public CheckItemAttribute(string name,string label, string description = "")
         {
+            Name = name;
             Label = label;
             Description = description;
         }

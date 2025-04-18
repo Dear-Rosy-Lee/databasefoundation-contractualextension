@@ -314,6 +314,8 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\CheckItemConfig.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\CheckItemConfigHelper.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerArgument.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerAttribute.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckProgress.cs" />

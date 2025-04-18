@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Business
 {
@@ -57,6 +58,7 @@ namespace YuLinTu.Library.Business
                 if (!Beginning())
                 {
                     this.ReportError(string.Format("数据检查出错!"));
+                    CanOpenResult = true;
                     return;
                 }
                 
@@ -67,6 +69,7 @@ namespace YuLinTu.Library.Business
                 this.ReportError(string.Format("数据检查出错!"));
                 return;
             }
+            CanOpenResult = true;
             this.ReportProgress(100);
             this.ReportInfomation("数据检查成功。");
         }
@@ -144,9 +147,9 @@ namespace YuLinTu.Library.Business
         
         private string CreateLog(Zone group)
         {
-            
+
             // 定义文件夹路径
-            string folderPath = Path.Combine(Environment.CurrentDirectory, "检查记录");
+            var folderPath = Path.Combine(Path.GetTempPath(),"检查结果");
 
             // 检查文件夹是否存在，如果不存在则创建
             if (!Directory.Exists(folderPath))
@@ -192,6 +195,12 @@ namespace YuLinTu.Library.Business
             argument.AllPeople = persons;
             argument.AllContractLand = lands;
 
+        }
+        public override void OpenResult()
+        {
+            var folderPath = Path.Combine(Path.GetTempPath(), "检查结果");
+            System.Diagnostics.Process.Start(folderPath);
+            base.OpenResult();
         }
         #endregion Method - Private 
 
