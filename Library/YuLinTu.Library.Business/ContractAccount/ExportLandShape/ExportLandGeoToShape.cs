@@ -210,6 +210,7 @@ namespace YuLinTu.Library.Business
             header.AddColumn(DKFiled.CDKMC, 'C', 50, 0);
             header.AddColumn("QQDKBM", 'C', 19, 0);
             header.AddColumn("CBFBM", 'C', 18, 0);
+            header.AddColumn("DKLB", 'C', 4, 0);
             return header;
         }
 
@@ -521,6 +522,7 @@ namespace YuLinTu.Library.Business
             attributes.AddAttribute(DKFiled.CDKBM, en.LandNumber);
             attributes.AddAttribute(DKFiled.CDKMC, en.Name);
             attributes.AddAttribute("QQDKBM", en.OldLandNumber);
+            attributes.AddAttribute("DKLB", en.LandCategory);
             var cbfbm = "";
             if (ListVp != null)
             {
