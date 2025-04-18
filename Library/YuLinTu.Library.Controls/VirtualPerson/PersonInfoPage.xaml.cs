@@ -285,6 +285,7 @@ namespace YuLinTu.Library.Controls
             Result = false;
             person.Nation = cNation;
             person.CardType = eCardType;
+            person.Name = person.Name.Trim();
             if (isAdd)
             {
                 item.AddSharePerson(person);
@@ -337,7 +338,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var cardType = cbCardType.SelectedItem as KeyValue<string, string>;
-            person.Relationship = cbRelationship.SelectedValue==null?"": cbRelationship.SelectedValue.ToString();
+            person.Relationship = cbRelationship.SelectedValue == null ? "" : cbRelationship.SelectedValue.ToString();
             bool right = ToolICN.Check(person.ICN);
             string errorMsg = string.Empty;
             if (string.IsNullOrEmpty(person.Name))
