@@ -3309,7 +3309,7 @@ namespace YuLinTu.Library.Controls
                             person = person.FindAll(c => c.IsSharedLand.Equals("是"));
                             vp.SharePersonList = person;
                         }
-                        landStation.ExportObligeeWord(currentZone, vp, masdsc, concordnumber, sender, DictList, warrentnumber, book,
+                        landStation.ExportObligeeWord(currentZone, vp, masdsc, concords[0], sender, DictList, warrentnumber, book,
                             SystemSet.DefaultPath, SystemSet.ExportVPTableCountContainsDiedPerson, SystemSet.KeepRepeatFlag, () => { return WorkStationExtend.GetSystemSetReplacement(); });
                     }
                 }

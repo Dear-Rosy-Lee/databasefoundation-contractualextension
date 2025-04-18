@@ -202,8 +202,8 @@ namespace YuLinTu.Library.WorkStation
         private void WriteSecondConcordInformation(VirtualPerson family)
         {
             VirtualPersonExpand expand = family.FamilyExpand;
-            SetBookmarkValue("ConcordNumber", expand != null ? (string.IsNullOrEmpty(expand.ConcordNumber) ? "/" : expand.ConcordNumber) : "/");//合同编号
-            SetBookmarkValue("BookNumber", expand != null ? (string.IsNullOrEmpty(expand.WarrantNumber) ? "/" : expand.WarrantNumber) : "/");//权证编号
+            //SetBookmarkValue("ConcordNumber", expand != null ? (string.IsNullOrEmpty(expand.ConcordNumber) ? "/" : expand.ConcordNumber) : "/");//合同编号
+            //SetBookmarkValue("BookNumber", expand != null ? (string.IsNullOrEmpty(expand.WarrantNumber) ? "/" : expand.WarrantNumber) : "/");//权证编号
 
             //SetBookmarkValue("ConcordNumber", string.IsNullOrEmpty(ConcordNumber) ? "/" : ConcordNumber);//合同编号
             //SetBookmarkValue("BookNumber", string.IsNullOrEmpty(WarrentNumber) ? "/" : WarrentNumber);//权证编号
