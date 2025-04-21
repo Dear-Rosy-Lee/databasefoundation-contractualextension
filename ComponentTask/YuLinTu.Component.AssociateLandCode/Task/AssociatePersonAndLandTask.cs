@@ -183,6 +183,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
+                    if (sd.Code != "51160221620303")
+                        continue;
                     var upvps = new List<VirtualPerson>();
                     var deloldvps = new List<VirtualPerson_Del>();
                     var uplands = new List<ContractLand>();
@@ -208,8 +210,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     var lstvps = ExecuteUpdateVp(sd, nvps, oldVps, relationZones, deloldvps);
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
-                    var deloldldtemp = new List<ContractLand_Del>();
-                    var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldldtemp);
+                    var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldlds);
                     var upldnums = new HashSet<string>();
                     foreach (var item in lstlds)
                     {
@@ -223,10 +224,15 @@ namespace YuLinTu.Component.AssociateLandCode
                         item.OldLandNumber = "";
                     }
                     uplands.AddRange(nlds);
-                    deloldlds.AddRange(deloldldtemp);
+                    //deloldlds.AddRange(deloldldtemp);
                     index++;
-                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未原关联承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldldtemp.Count}块");
+                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未原关联承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldlds.Count}块");
 
+                    if (argument.SearchInShape)
+                    {
+                        SearchSameInShape(uplands.FindAll(t => t.OldLandNumber == ""),
+                            oldLands, deloldlds);
+                    }
                     vpStation.UpdatePersonList(vps);
                     landStation.UpdateOldLandCode(uplands, true);
 
@@ -253,6 +259,50 @@ namespace YuLinTu.Component.AssociateLandCode
                         throw new Exception("关联数据出错" + ex.Message);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 按图形相似性进行图形的查找
+        /// </summary>
+        private void SearchSameInShape(List<ContractLand> listnewlands, List<ContractLand> listOldLands, List<ContractLand_Del> dellands)
+        {
+            if (dellands.Count == 0)
+                return;
+            HashSet<Guid> guids = new HashSet<Guid>();
+            foreach (var item in dellands)
+            {
+                guids.Add(item.ID);
+            }
+            var dellandents = listOldLands.FindAll(t => guids.Contains(t.ID));
+            if (dellandents.Count == 0)
+                return;
+            GeometrySimilarityChecker checker = new GeometrySimilarityChecker();
+            foreach (var land in listnewlands)
+            {
+                if (land.LandNumber == "5116022162030300289")
+                {
+                }
+                var list = new List<KeyValue<double, ContractLand>>();
+                foreach (var item in dellandents)
+                {
+                    if (land.LandNumber == "5116022162030300289" && item.LandNumber == "5116022162030500197")
+                    {
+                    }
+                    var p = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)land.Shape.Instance,
+                        (NetTopologySuite.Geometries.Geometry)item.Shape.Instance);
+                    if (p > 0.85)
+                    {
+                        list.Add(new KeyValue<double, ContractLand>(p, item));
+                    }
+
+                }
+                if (list.Count == 0)
+                    continue;
+                var nlist = list.OrderByDescending(t => t.Key).ToList();
+                land.OldLandNumber = nlist[0].Value.LandNumber;
+                dellands.RemoveAll(l => l.ID == nlist[0].Value.ID);
+                dellandents.Remove(nlist[0].Value);
             }
         }
 
@@ -305,115 +355,11 @@ namespace YuLinTu.Component.AssociateLandCode
                     }
                 }
             }
-
+            var checker = new GeometrySimilarityChecker();
             foreach (var vp in revps)//关联上的承包方
             {
-                rvpidset.Add(vp.ID);
-                var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
-                if (lands.Count == 0)
-                    continue;
-                List<ContractLand> listOldLands = new List<ContractLand>();
-                if (jtmcs.Contains(vp.Name))
-                {
-                    listOldLands.Clear();
-                    foreach (var vpcode in vp.OldVirtualCode.Split('/'))
-                    {
-                        var tvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vpcode).FirstOrDefault()?.ID;
-                        if (tvpid != null)
-                            listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid && !jtdkset.Contains(t.LandNumber)).ToList());
-                    }
-                }
-                else
-                {
-                    var oldvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vp.OldVirtualCode).FirstOrDefault().ID;
-                    listOldLands = olds.Where(t => t.OwnerId == oldvpid).ToList();
-                }
-
-                if (lands.Count > listOldLands.Count)
-                {
-                    vp.ChangeSituation = eBHQK.TZZD;
-                }
-                else if (lands.Count < listOldLands.Count)
-                {
-                    vp.ChangeSituation = eBHQK.TZJD;
-                }
-                listOldLands.RemoveAll(r => rlandidset.Contains(r.ID));
-
-                foreach (var t in lands)
-                {
-                    if (!string.IsNullOrEmpty(t.OldLandNumber))
-                        continue;
-                    var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
-                    if (slan != null)
-                    {
-                        if (!rlandidset.Contains(slan.ID))
-                        {
-                            t.OldLandNumber = slan.LandNumber;
-                            rlandidset.Add(slan.ID);
-                            listLands.Add(t);
-                            continue;
-                        }
-                    }
-                    var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
-                    if (rlands.Count == 0)
-                    {
-                        t.OldLandNumber = "";
-                    }
-                    else
-                    {
-                        bool hasrelate = false;
-                        foreach (var c in rlands)
-                        {
-                            if (!rlandidset.Contains(c.ID))
-                            {
-                                hasrelate = true;
-                                t.OldLandNumber = c.LandNumber;
-                                rlandidset.Add(c.ID);
-                                break;
-                            }
-                        }
-                        if (!hasrelate)
-                        {
-                            t.OldLandNumber = "";
-                        }
-                    }
-                    listLands.Add(t);
-                }
-                var delandstemp = listOldLands.Where(r => !rlandidset.Contains(r.ID)).ToList();
-                foreach (var ld in delandstemp)
-                {
-                    var tdeland = ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld);
-                    tdeland.CBFID = vp.ID;
-                    dellands.Add(tdeland);
-                }
-                /////从集体土地挂机地块，只按地块编码挂接
-                //var jtvps = ovps.FindAll(f => jtmcs.Contains(f.Name));
-                //if (jtvps.Count > 0)
-                //{
-                //    List<ContractLand> tOldLands = new List<ContractLand>();
-                //    foreach (var jt in jtvps)
-                //    {
-                //        tOldLands.AddRange(olds.Where(t => t.OwnerId == jt.ID).ToList());
-                //    }
-                //    foreach (var t in lands)
-                //    {
-                //        if (!string.IsNullOrEmpty(t.OldLandNumber))
-                //        {
-                //            continue;
-                //        }
-                //        var slan = tOldLands.FirstOrDefault(w => w.OldLandNumber == t.LandNumber || w.LandNumber == t.LandNumber);
-                //        if (slan != null && !rlandset.Contains(slan.ID))
-                //        {
-                //            t.OldLandNumber = slan.LandNumber;
-                //            jtdkset.Add(slan.LandNumber);
-                //            rlandset.Add(slan.ID);
-                //            listLands.Add(t);
-                //            break;
-                //        }
-                //    }
-                //}
+                RelationLandInfo(sender.ZoneCode, vp, rvpidset, geoLands, ovps, olds, jtdkset, rlandidset, listLands, dellands, checker);
             }
-
             foreach (var vp in nvps)//未关联的农户下的地块，按地块编码关联一次
             {
                 if (rvpidset.Contains(vp.ID))
@@ -451,6 +397,136 @@ namespace YuLinTu.Component.AssociateLandCode
                 dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld, oldfamilynumber));
             }
             return listLands;
+        }
+
+        /// <summary>
+        /// 管理地块
+        /// </summary>
+        /// <param name="vp">当前承包方</param>
+        /// <param name="rvpidset"></param>
+        /// <param name="geoLands"></param>
+        /// <param name="ovps"></param>
+        /// <param name="olds"></param>
+        /// <param name="jtdkset"></param>
+        /// <param name="rlandidset"></param>
+        private void RelationLandInfo(string senderZoneCode, VirtualPerson vp, HashSet<Guid> rvpidset, List<ContractLand> geoLands,
+            List<VirtualPerson> ovps, List<ContractLand> olds, HashSet<string> jtdkset, HashSet<Guid> rlandidset,
+            List<ContractLand> listLands, List<ContractLand_Del> dellands, GeometrySimilarityChecker checker)
+        {
+            rvpidset.Add(vp.ID);
+            var lands = geoLands.Where(x => x.OwnerId == vp.ID).ToList();//承包方下的现有地块 
+            if (lands.Count == 0)
+                return;
+            List<ContractLand> listOldLands = new List<ContractLand>();
+            if (jtmcs.Contains(vp.Name))
+            {
+                listOldLands.Clear();
+                foreach (var vpcode in vp.OldVirtualCode.Split('/'))
+                {
+                    var tvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vpcode).FirstOrDefault()?.ID;
+                    if (tvpid != null)
+                        listOldLands.AddRange(olds.Where(t => t.OwnerId == tvpid && !jtdkset.Contains(t.LandNumber)).ToList());
+                }
+            }
+            else
+            {
+                var oldvpid = ovps.Where(x => x.ZoneCode + x.FamilyNumber.PadLeft(4, '0') == vp.OldVirtualCode).FirstOrDefault().ID;
+                listOldLands = olds.Where(t => t.OwnerId == oldvpid).ToList();
+            }
+
+            if (lands.Count > listOldLands.Count)
+            {
+                vp.ChangeSituation = eBHQK.TZZD;
+            }
+            else if (lands.Count < listOldLands.Count)
+            {
+                vp.ChangeSituation = eBHQK.TZJD;
+            }
+            listOldLands.RemoveAll(r => rlandidset.Contains(r.ID));
+
+            foreach (var t in lands)
+            {
+                if (t.LandNumber == "5116022162030300089" || t.LandNumber == "5116022162030300118" || t.LandNumber == "5116022162030300286")
+                {
+                }
+                if (!string.IsNullOrEmpty(t.OldLandNumber))
+                    continue;
+                var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
+                if (slan != null)
+                {
+                    if (!rlandidset.Contains(slan.ID))
+                    {
+                        t.OldLandNumber = slan.LandNumber;
+                        rlandidset.Add(slan.ID);
+                        listLands.Add(t);
+                        continue;
+                    }
+                }
+                var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
+                if (rlands.Count == 0)
+                {
+                    t.OldLandNumber = "";
+                }
+                else
+                {
+                    bool hasrelate = false;
+                    ContractLand rld = null;// rlands.Find(c => c.Name == t.Name);
+                    if (argument.SearchInShape)
+                    {
+                        rld = rlands.Find(c => c.Name == t.Name && checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)t.Shape.Instance,
+                          (NetTopologySuite.Geometries.Geometry)c.Shape.Instance) >= 0.8);
+                    }
+                    else
+                    {
+                        rld = rlands.Find(c => c.Name == t.Name);
+                    }
+                    if (rld != null)
+                    {
+                        hasrelate = true;
+                        t.OldLandNumber = rld.LandNumber;
+                        rlandidset.Add(rld.ID);
+                    }
+                    else
+                    {
+                        foreach (var c in rlands)
+                        {
+                            if (!rlandidset.Contains(c.ID))
+                            {
+                                if (argument.SearchInShape)
+                                {
+                                    var chkp = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)t.Shape.Instance, (NetTopologySuite.Geometries.Geometry)c.Shape.Instance);
+                                    if (chkp > 0.9)
+                                    {
+                                        hasrelate = true;
+                                        t.OldLandNumber = c.LandNumber;
+                                        rlandidset.Add(c.ID);
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    hasrelate = true;
+                                    t.OldLandNumber = c.LandNumber;
+                                    rlandidset.Add(c.ID);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!hasrelate)
+                    {
+                        t.OldLandNumber = "";
+                    }
+                }
+                listLands.Add(t);
+            }
+            var delandstemp = listOldLands.Where(r => !rlandidset.Contains(r.ID)).ToList();
+            foreach (var ld in delandstemp)
+            {
+                var tdeland = ContractLand_Del.ChangeDataEntity(senderZoneCode, ld);
+                tdeland.CBFID = vp.ID;
+                dellands.Add(tdeland);
+            }
         }
 
         /// <summary>
