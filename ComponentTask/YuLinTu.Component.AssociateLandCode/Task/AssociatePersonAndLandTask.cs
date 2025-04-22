@@ -183,8 +183,6 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
-                    if (sd.Code != "51160221620303")
-                        continue;
                     var upvps = new List<VirtualPerson>();
                     var deloldvps = new List<VirtualPerson_Del>();
                     var uplands = new List<ContractLand>();
@@ -280,15 +278,14 @@ namespace YuLinTu.Component.AssociateLandCode
             GeometrySimilarityChecker checker = new GeometrySimilarityChecker();
             foreach (var land in listnewlands)
             {
-                if (land.LandNumber == "5116022162030300289")
-                {
-                }
                 var list = new List<KeyValue<double, ContractLand>>();
                 foreach (var item in dellandents)
                 {
+#if DEBUG
                     if (land.LandNumber == "5116022162030300289" && item.LandNumber == "5116022162030500197")
                     {
                     }
+#endif
                     var p = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)land.Shape.Instance,
                         (NetTopologySuite.Geometries.Geometry)item.Shape.Instance);
                     if (p > 0.85)
@@ -446,9 +443,11 @@ namespace YuLinTu.Component.AssociateLandCode
 
             foreach (var t in lands)
             {
+#if DEBUG
                 if (t.LandNumber == "5116022162030300089" || t.LandNumber == "5116022162030300118" || t.LandNumber == "5116022162030300286")
                 {
                 }
+#endif
                 if (!string.IsNullOrEmpty(t.OldLandNumber))
                     continue;
                 var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
