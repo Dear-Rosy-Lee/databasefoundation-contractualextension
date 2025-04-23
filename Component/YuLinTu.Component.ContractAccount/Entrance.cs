@@ -50,8 +50,8 @@ namespace YuLinTu.Component.ContractAccount
             {
                 return;
             }
-            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
-            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiOld = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterB as ZoneDataItem;
             if (zdiOld == null || zdiNew == null)
             {
                 return;
@@ -62,7 +62,7 @@ namespace YuLinTu.Component.ContractAccount
             ContainerFactory factory = new ContainerFactory(dbContext);
             var landRep = factory.CreateRepository<IContractLandRepository>();
             //var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
-            var dkquery = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));//.ToList();
+            var dkquery = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.Equals(zdiOld.FullCode));//.ToList();
             var uplist = new List<ContractLand>();
             dkquery.ForEach((i, p, x) =>
             {
@@ -119,7 +119,7 @@ namespace YuLinTu.Component.ContractAccount
         private void UpdateBelongLand(IDbContext dbContext, ZoneDataItem zdiOld, ZoneDataItem zdiNew)
         {
             var belongRelationStation = dbContext.CreateBelongRelationWorkStation();
-            var landList = belongRelationStation.GetdDataByZoneCode(zdiOld.FullCode, eLevelOption.SelfAndSubs);
+            var landList = belongRelationStation.GetdDataByZoneCode(zdiOld.FullCode, eLevelOption.Self);
             if (landList.Count == 0)
                 return;
             var query = dbContext.CreateQuery<BelongRelation>();
