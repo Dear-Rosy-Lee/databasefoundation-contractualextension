@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 
 namespace YuLinTu.Library.Entity
@@ -13,6 +10,21 @@ namespace YuLinTu.Library.Entity
     [DataTable("QSGX")]
     public class BelongRelation : NotifyCDObject
     {
+        private Guid id;
+
+        /// <summary>
+        ///标识码
+        /// </summary>
+        [DataColumn("ID", Nullable = false, PrimaryKey = false)]
+        public Guid ID
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                NotifyPropertyChanged("ID");
+            }
+        }
 
         private Guid landId;
         /// <summary>
@@ -102,6 +114,11 @@ namespace YuLinTu.Library.Entity
                 _quotiety = value;
                 NotifyPropertyChanged("Quotiety");
             }
+        }
+
+        public BelongRelation()
+        {
+            id = Guid.NewGuid();
         }
     }
 }

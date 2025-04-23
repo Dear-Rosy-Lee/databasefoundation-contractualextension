@@ -88,6 +88,7 @@ namespace YuLinTu.Component.ContractAccount
                 landRep.SaveChanges();
             }
 
+            UpdateBelongLand(dbContext, zdiOld, zdiNew);
             //if (ZoneDefine.SyncCode == true)
             //{
             //    ContractLands.ForEach(x =>
@@ -108,6 +109,35 @@ namespace YuLinTu.Component.ContractAccount
             //    });
             //    UpContractLand(dbContext, ContractLands);
             //}
+        }
+
+
+        /// <summary>
+        /// 更新确股地块信息
+        /// </summary>
+        /// <param name="dbContext"></param>
+        private void UpdateBelongLand(IDbContext dbContext, ZoneDataItem zdiOld, ZoneDataItem zdiNew)
+        {
+            var belongRelationStation = dbContext.CreateBelongRelationWorkStation();
+            var landList = belongRelationStation.GetdDataByZoneCode(zdiOld.FullCode, eLevelOption.SelfAndSubs);
+            if (landList.Count == 0)
+                return;
+            var query = dbContext.CreateQuery<BelongRelation>();
+            try
+            {
+                dbContext.BeginTransaction();
+                foreach (var item in landList)
+                {
+                    item.ZoneCode = zdiNew.FullCode;
+                    query.Where(t => t.ID == item.ID).Update(item).Save();
+                }
+                dbContext.CommitTransaction();
+            }
+            catch (Exception ex)
+            {
+                dbContext.RollbackTransaction();
+                throw ex;
+            }
         }
 
         #endregion

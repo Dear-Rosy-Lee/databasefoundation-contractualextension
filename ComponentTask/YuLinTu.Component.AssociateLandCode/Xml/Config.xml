@@ -12,6 +12,6 @@
   <EntrancePath>.\Components\YuLinTu.Component.AssociateLandCode\Binary\YuLinTu.Component.AssociateLandCode.dll</EntrancePath>
   <IsSystemManaged>true</IsSystemManaged>
   <IsApplicationDependency>true</IsApplicationDependency>,
-  <IsConnected>false</IsConnected>
-  <IsEnabled>false</IsEnabled>
+  <IsConnected>true</IsConnected>
+  <IsEnabled>true</IsEnabled>
 </WinComponent>

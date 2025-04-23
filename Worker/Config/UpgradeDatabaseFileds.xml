@@ -705,6 +705,12 @@
 		<TableName>QSGX</TableName>
 		<FieldList>
 			<UpdateField>
+				<FieldName>ID</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>false</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
 				<FieldName>CBFID</FieldName>
 				<FieldType>TEXT</FieldType>
 				<IsNull>false</IsNull>
