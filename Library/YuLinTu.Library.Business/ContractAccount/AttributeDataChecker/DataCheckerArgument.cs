@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace YuLinTu.Library.Business
 {
-    [NavigationItem("必填字段检查")]
+    [NavigationItem("必填字段完整性检查")]
     public class MandatoryField : INotifyPropertyChanged
     {
         private bool _mandatoryFieldSender;
@@ -23,7 +23,10 @@ namespace YuLinTu.Library.Business
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        [CheckItem("MandatoryFieldSender","发包方", "发包方名称、发包方编码、发包方负责人、证件类型、证件号、发包方地址、调查员、调查日期等不能为空")]
+        /// <summary>
+        /// 发包方属性
+        /// </summary>
+        [CheckItem("MandatoryFieldSender", "发包方属性", "发包方名称、发包方编码、发包方负责人、证件类型、证件号、发包方地址、调查员、调查日期等不能为空")]
         public bool MandatoryFieldSender
         {
             get => _mandatoryFieldSender;
@@ -34,7 +37,10 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        [CheckItem("MandatoryFieldVP","承包方", "承包方户编号、承包方名称、承包方类型、承包方地址等不能为空")]
+        /// <summary>
+        /// 承包方属性
+        /// </summary>
+        [CheckItem("MandatoryFieldVP", "承包方属性", "承包方户编号、承包方名称、承包方类型、承包方地址等不能为空")]
         public bool MandatoryFieldVP
         {
             get => _mandatoryFieldVP;
@@ -45,7 +51,10 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        [CheckItem("MandatoryFieldMember", "家庭成员", "成员姓名、成员性别、成员证件类型、证件号码、家庭关系等不能为空")]
+        /// <summary>
+        /// 家庭成员属性
+        /// </summary>
+        [CheckItem("MandatoryFieldMember", "家庭成员属性", "成员姓名、成员性别、成员证件类型、证件号码、家庭关系等不能为空")]
         public bool MandatoryFieldMember
         {
             get => _mandatoryFieldMember;
@@ -56,7 +65,10 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        [CheckItem("MandatoryFieldLand", "地块信息", "地块名称、地块类别、土地利用类型、土地用途、实测面积等不能为空")]
+        /// <summary>
+        /// 地块信息属性
+        /// </summary>
+        [CheckItem("MandatoryFieldLand", "地块信息属性", "地块名称、地块类别、土地利用类型、土地用途、实测面积等不能为空")]
         public bool MandatoryFieldLand
         {
             get => _mandatoryFieldLand;
@@ -67,7 +79,10 @@ namespace YuLinTu.Library.Business
             }
         }
 
-        [CheckItem("MandatoryFieldContract","合同信息", "合同编码、签订日期、承包期限起、承包期限止、承包方式，合同面积亩等不能为空")]
+        /// <summary>
+        /// 合同信息属性
+        /// </summary>
+        [CheckItem("MandatoryFieldContract", "合同信息属性", "合同编码、签订日期、承包期限起、承包期限止、承包方式，合同面积亩等不能为空")]
         public bool MandatoryFieldContract
         {
             get => _mandatoryFieldContract;
@@ -88,7 +103,7 @@ namespace YuLinTu.Library.Business
         }
     }
 
-    [NavigationItem("数据填写检查")]
+    [NavigationItem("填写规范性检查")]
     public class DataCorrectness : INotifyPropertyChanged
     {
         private bool _dataCorrectnessField;
@@ -104,7 +119,9 @@ namespace YuLinTu.Library.Business
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        /// <summary>
+        /// 字段填写值域检查
+        /// </summary>
         [CheckItem("DataCorrectnessField","字段填写", "承包方类型、证件类型、性别、家庭关系、地块类别、土地用途、变化情况等字段填写满足值域检查要求")]
         public bool DataCorrectnessField
         {
@@ -116,6 +133,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 承包方姓名、成员姓名检查
+        /// </summary>
         [CheckItem("DataCorrectnessVPName","承包方姓名、成员姓名", "承包方姓名、成员姓名不能包含数字、空格，除了 · 以外的的特殊字符")]
         public bool DataCorrectnessVPName
         {
@@ -127,6 +147,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 调查人员、审核人员姓名检查
+        /// </summary>
         [CheckItem("DataCorrectnessSurveyName","调查人员、审核人员姓名", "调查人员、审核人员姓名不能包含数字、空格，除了 · 以外的的特殊字符；如果是多个人名，使用 、，；, ; 的分拆字符串后的名字符合名字的校验规则")]
         public bool DataCorrectnessSurveyName
         {
@@ -138,6 +161,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 调查记事、审核记事
+        /// </summary>
         [CheckItem("DataCorrectnessEvent","调查记事、审核记事", "调查记事、审核记事等内容的长度不超过500个字符")]
         public bool DataCorrectnessEvent
         {
@@ -157,7 +183,7 @@ namespace YuLinTu.Library.Business
         }
     }
 
-    [NavigationItem("证件号检查")]
+    [NavigationItem("证件号正确性检查")]
     public class RuleOfIDCheck : INotifyPropertyChanged
     {
         private bool _ruleOfID;
@@ -169,7 +195,9 @@ namespace YuLinTu.Library.Business
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        /// <summary>
+        /// 证件号码
+        /// </summary>
         [CheckItem("RuleOfID","证件号码", "发包方、承包方、家庭成员等证件号码符合身份证的规则")]
         public bool RuleOfID
         {
@@ -186,7 +214,7 @@ namespace YuLinTu.Library.Business
         }
     }
 
-    [NavigationItem("数据逻辑检查")]
+    [NavigationItem("数据逻辑性检查")]
     public class DataLogic: INotifyPropertyChanged
     {
         private bool _dataLogicLandType;
@@ -200,6 +228,9 @@ namespace YuLinTu.Library.Business
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// 地块类型
+        /// </summary>
         [CheckItem("DataLogicLandType","地块类型", "地块类型为“承包地块”时，确权面积必须大于0；地块的承包方式必须为家庭承包方式")]
         public bool DataLogicLandType
         {
@@ -211,6 +242,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 地块四至
+        /// </summary>
         [CheckItem("DataLogicLandLimit","地块四至", "地块四至的东、南、西、北至，至少有3个方向不能为空")]
         public bool DataLogicLandLimit
         {
@@ -230,7 +264,7 @@ namespace YuLinTu.Library.Business
 
     }
 
-    [NavigationItem("数据检查")]
+    [NavigationItem("组内唯一性检查")]
     public class DataRepeataBility : INotifyPropertyChanged
     {
         private bool _dataRepeataBilityCheck;
@@ -242,6 +276,10 @@ namespace YuLinTu.Library.Business
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// 集体唯一性
+        /// </summary>
         [CheckItem("DataRepeataBilityCheck","集体唯一性", "单个发包方下不能有多个集体 (集体名称为：村集体、社集体、集体、集体地、组集体")]
         public bool DataRepeataBilityCheck
         {
@@ -253,6 +291,9 @@ namespace YuLinTu.Library.Business
             }
         }
 
+        /// <summary>
+        /// 编码唯一性
+        /// </summary>
         [CheckItem("DataRepeataBilityCheckCode","编码唯一性", "单个发包方内承包方编码、承包方证件号码、成员身份证号码、地块编码等必须唯一")]
         public bool DataRepeataBilityCheckCode
         {
@@ -272,7 +313,7 @@ namespace YuLinTu.Library.Business
 
     }
 
-    [NavigationItem("整库检查")]
+    [NavigationItem("整库唯一性检查")]
     public class Uniqueness : INotifyPropertyChanged
     {
         private bool _uniquenessCheck;
@@ -283,6 +324,10 @@ namespace YuLinTu.Library.Business
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// 整库编码唯一性
+        /// </summary>
         [CheckItem("UniquenessCheck","整库编码唯一性", "承包方编码、承包方证件号码、成员身份证号码、地块编码等整库必须唯一")]
         public bool UniquenessCheck
         {
