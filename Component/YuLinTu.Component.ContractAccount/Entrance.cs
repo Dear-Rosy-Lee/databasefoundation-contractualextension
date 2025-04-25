@@ -50,8 +50,8 @@ namespace YuLinTu.Component.ContractAccount
             {
                 return;
             }
-            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
-            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiOld = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterB as ZoneDataItem;
             if (zdiOld == null || zdiNew == null)
             {
                 return;
@@ -62,7 +62,7 @@ namespace YuLinTu.Component.ContractAccount
             ContainerFactory factory = new ContainerFactory(dbContext);
             var landRep = factory.CreateRepository<IContractLandRepository>();
             //var ContractLands = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode)).ToList();
-            var dkquery = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.StartsWith(zdiOld.FullCode));//.ToList();
+            var dkquery = dbContext.CreateQuery<ContractLand>().Where(x => x.ZoneCode.Equals(zdiOld.FullCode));//.ToList();
             var uplist = new List<ContractLand>();
             dkquery.ForEach((i, p, x) =>
             {
@@ -88,6 +88,7 @@ namespace YuLinTu.Component.ContractAccount
                 landRep.SaveChanges();
             }
 
+            UpdateBelongLand(dbContext, zdiOld, zdiNew);
             //if (ZoneDefine.SyncCode == true)
             //{
             //    ContractLands.ForEach(x =>
@@ -108,6 +109,35 @@ namespace YuLinTu.Component.ContractAccount
             //    });
             //    UpContractLand(dbContext, ContractLands);
             //}
+        }
+
+
+        /// <summary>
+        /// 更新确股地块信息
+        /// </summary>
+        /// <param name="dbContext"></param>
+        private void UpdateBelongLand(IDbContext dbContext, ZoneDataItem zdiOld, ZoneDataItem zdiNew)
+        {
+            var belongRelationStation = dbContext.CreateBelongRelationWorkStation();
+            var landList = belongRelationStation.GetdDataByZoneCode(zdiOld.FullCode, eLevelOption.Self);
+            if (landList.Count == 0)
+                return;
+            var query = dbContext.CreateQuery<BelongRelation>();
+            try
+            {
+                dbContext.BeginTransaction();
+                foreach (var item in landList)
+                {
+                    item.ZoneCode = zdiNew.FullCode;
+                    query.Where(t => t.ID == item.ID).Update(item).Save();
+                }
+                dbContext.CommitTransaction();
+            }
+            catch (Exception ex)
+            {
+                dbContext.RollbackTransaction();
+                throw ex;
+            }
         }
 
         #endregion

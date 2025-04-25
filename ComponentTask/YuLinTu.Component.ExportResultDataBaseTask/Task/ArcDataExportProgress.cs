@@ -781,7 +781,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     var pdata = dataProgress.SetDataToProgress(entityCollection);
                     ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList);
                     collection.Add(pdata);
-                    entityCollection.Clear();
+                    if (entityCollection != null)
+                        entityCollection.Clear();
                 }
             }
             try

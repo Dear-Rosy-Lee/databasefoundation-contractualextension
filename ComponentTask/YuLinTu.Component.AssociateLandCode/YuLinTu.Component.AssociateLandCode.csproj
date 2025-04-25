@@ -127,6 +127,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -149,6 +150,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GeometrySimilarityChecker.cs" />
     <Compile Include="Entrance.cs" />
     <Compile Include="Export\ExportRelationLandVerifyExcel.cs" />
     <Compile Include="Export\TaskExportVerifyExcel.cs" />

@@ -173,10 +173,11 @@ namespace YuLinTu.Library.Business
                     }
                     #endregion
                     export.SystemSet.KeepRepeatFlag = SystemSetDefine.KeepRepeatFlag;
-                    export.Contractor = vp;                    
+                    export.Contractor = vp;
                     export.MarkDesc = markDesc;
                     export.DictList = argument.DictList;
                     export.Book = book;
+                    export.Concord = concords[0];
                     export.ExportVPTableCountContainsDiedPerson = SystemSetDefine.ExportVPTableCountContainsDiedPerson;
                     export.IsShare = SystemSetDefine.PersonTable;
                     export.ConcordNumber = concordnumber;

@@ -200,7 +200,7 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
-        public int UpdateOldLandCode(ContractLand entity,bool onlycode)
+        public int UpdateOldLandCode(ContractLand entity, bool onlycode)
         {
             DefaultRepository.UpdateOldLandsCode(entity, onlycode);
             return TrySaveChanges(DefaultRepository);
@@ -208,7 +208,7 @@ namespace YuLinTu.Library.WorkStation
 
         public int UpdateOldLandCode(List<ContractLand> entities, bool onlycode)
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 DefaultRepository.UpdateOldLandsCode(entity, onlycode);
             }
@@ -1275,7 +1275,7 @@ namespace YuLinTu.Library.WorkStation
         /// 导出承包方Word调查表
         /// </summary>
         public void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
-            string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
+            ContractConcord concord, CollectivityTissue sender, List<Dictionary> diclist,
             string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool KeepRepeatFlag, Func<string> GetReplace = null)
         {
             if (vp == null || zone == null)
@@ -1301,7 +1301,8 @@ namespace YuLinTu.Library.WorkStation
             export.ExportVPTableCountContainsDiedPerson = ExportVPTableCountContainsDiedPerson;
             export.DictList = diclist;
             export.Book = book;
-            export.ConcordNumber = ConcordNumber;
+            export.Concord = concord;
+            export.ConcordNumber = concord.ConcordNumber;
             export.Tissue = sender;  //发包方
             export.WarrentNumber = WarrentNumber;
             export.OpenTemplate(tempPath);

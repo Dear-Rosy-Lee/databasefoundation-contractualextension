@@ -1,4 +1,6 @@
-﻿using YuLinTu.Component.Common;
+﻿using System;
+using System.IO;
+using YuLinTu.Component.Common;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.AssociateLandCode
@@ -14,6 +16,7 @@ namespace YuLinTu.Component.AssociateLandCode
         private string relationExcelFilePath;
         private bool searchInSharePerson;
         private bool searchInvpcode;
+        private bool searchInshape;
         #endregion Fields
 
         #region Properties
@@ -48,6 +51,16 @@ namespace YuLinTu.Component.AssociateLandCode
             set { relationExcelFilePath = value; NotifyPropertyChanged("RelationExcelFilePath"); }
         }
 
+        [DisplayLanguage("以图形相似性进行关联")]
+        [DescriptionLanguage("在发包方内未在属性上关联的地块按图形相似性进行查找关联")]
+        [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        public bool SearchInShape
+        {
+            get { return searchInshape; }
+            set { searchInshape = value; NotifyPropertyChanged("SearchInShape"); }
+        }
+
         [DisplayLanguage("承包方编码后四位与姓名查找")]
         [DescriptionLanguage("承包方编码后四位与姓名查找关联")]
         [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
@@ -74,5 +87,10 @@ namespace YuLinTu.Component.AssociateLandCode
         }
 
         #endregion Properties
+
+        public AssociatePersonAndLandArgument() 
+        {
+            resultFilePath= Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        }
     }
 }
