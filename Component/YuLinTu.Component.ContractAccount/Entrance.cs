@@ -32,6 +32,7 @@ namespace YuLinTu.Component.ContractAccount
             Application.Current.Resources.MergedDictionaries.Add(
                 new ResourceDictionary() { Source = new Uri("pack://application:,,,/YuLinTu.Diagrams;component/Resources/Res.xaml") });
         }
+        /*
         /// <summary>
         /// 地域初始化完成
         /// </summary>
@@ -139,7 +140,7 @@ namespace YuLinTu.Component.ContractAccount
                 throw ex;
             }
         }
-
+        */
         #endregion
     }
 }
