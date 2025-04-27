@@ -1369,7 +1369,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 {
                     ProcessConcordData(entity, concorditem, vplands, cbds, spacecdbs, spacecdbDKBMs, brqglands,
                         vp, landCollection, vphts, vpcbjyqzdjbs, bookCollection, vpcbjyqzs, landArray, serNumberTemp);
-
+                    var qght = qghts.Find(t => t.ConcordNumber == concorditem.ConcordNumber);
+                    if (qght != null)
+                        qghts.Remove(qght);
                 }
                 if (qghttable && qgqztable)
                 {

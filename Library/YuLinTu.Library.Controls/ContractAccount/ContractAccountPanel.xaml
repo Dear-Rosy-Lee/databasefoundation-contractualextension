@@ -66,7 +66,7 @@
                         Margin="8,0,0,0"
                         VerticalAlignment="Center"
                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"
-                        Text="{Binding AccountSummary.LandCount}"
+                        Text="{Binding AccountSummary.LandCount}" Width="180"
                         ToolTip="总地块数" />
 
                     <cmps:ImageTextItem

@@ -3532,10 +3532,17 @@ namespace YuLinTu.Component.MapFoundation
                     return;
                 }
                 Guid landId = new Guid(landid.ToString());
+                var sfqgxt = obj.GetPropertyValue("SFQGDK");
+
+                if (sfqgxt != null && (bool)sfqgxt)
+                {
+                    ShowBox("提示", "确股地块无法在当前模块进行属性编辑，请在确股模块编辑!");
+                    return;
+                }
                 string personId = obj.GetPropertyValue("QLRBS") as string;
                 if (personId == null)
                 {
-                    ShowBox("提示", "QLRBS为空!");
+                    ShowBox("提示", "地块无所属承包方,请设置设置所属承包方!");
                     return;
                 }
                 Guid pId = new Guid(personId);
@@ -3929,7 +3936,8 @@ namespace YuLinTu.Component.MapFoundation
             {
                 ShowBox("拓扑处理", "未选择图层");
                 return;
-            };
+            }
+            ;
             var nowSelectlayer = currentSelectedLayer as VectorLayer;
             if (nowSelectlayer.DataSource == null)
             {

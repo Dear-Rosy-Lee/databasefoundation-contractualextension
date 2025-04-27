@@ -1219,7 +1219,14 @@ namespace YuLinTu.Library.Controls
         {
             if (IsStockRight) return;
             txtOwnerName.Text = "";
-            currentPerson = cmbVirtualPersonName.SelectedItem as VirtualPerson;
+            //currentPerson = cmbVirtualPersonName.SelectedItem as VirtualPerson;
+
+            var spi = cmbVirtualPersonName.SelectedItem as SelectPersonInterface;
+            if (spi != null)
+            {
+                currentPerson = VirtpersonList.Find(t => t.ID.ToString() == spi.ID);
+            }
+
             if (currentPerson == null)
             {
                 return;

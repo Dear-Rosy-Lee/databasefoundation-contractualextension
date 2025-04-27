@@ -16,7 +16,7 @@ namespace YuLinTu.Library.Controls
         #region Fields
 
         private int familyCount;
-        private int landCount;
+        private string landCount;
         private string actualAreaCount = "0.00";
         private string arwareAreaCount = "0.00";
         private string tableAreaCount = "0.00";
@@ -42,7 +42,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 总地块数
         /// </summary>
-        public int LandCount
+        public string LandCount
         {
             get { return landCount; }
             set
@@ -114,7 +114,7 @@ namespace YuLinTu.Library.Controls
         public void EmptyData()
         {
             this.FamilyCount = 0;
-            this.LandCount = 0;
+            this.LandCount = "地块数：0";
             this.ActualAreaCount = "0.00";
             this.ArwareAreaCount = "0.00";
             this.TableAreaCount = "0.00";

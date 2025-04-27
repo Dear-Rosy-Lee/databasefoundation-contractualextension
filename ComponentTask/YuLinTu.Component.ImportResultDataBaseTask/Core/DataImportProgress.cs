@@ -13,6 +13,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
+using NPOI.SS.Formula;
 using NPOI.Util;
 using Quality.Business.Entity;
 using Quality.Business.TaskBasic;
@@ -1050,10 +1051,14 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
                             localqz.Number = localdjb.Number;
                             localqz.RegeditNumber = localdjb.RegeditNumber;
                             localqz.SerialNumber = localdjb.SerialNumber.IsNullOrEmpty() ? "" : (localdjb.SerialNumber.Length <= 6 ? localdjb.SerialNumber : localdjb.SerialNumber.Substring(localdjb.SerialNumber.Length - 7, 6));
-
                             localqz.ContractRegeditBookExcursus = localdjb.ContractRegeditBookExcursus;
                             localqz.ContractRegeditBookPerson = localdjb.ContractRegeditBookPerson;
                             localqz.ContractRegeditBookTime = localdjb.ContractRegeditBookTime;
+
+                            localqz.RegeditBookGettedDate = localqz.RegeditBookGettedDate;
+                            localqz.GetterName = localqz.GetterName;
+                            localqz.GetterCardType = localqz.GetterCardType;
+                            localqz.GetterCardNumber = localqz.GetterCardNumber;
                         }
 
                         if (localqz != null)

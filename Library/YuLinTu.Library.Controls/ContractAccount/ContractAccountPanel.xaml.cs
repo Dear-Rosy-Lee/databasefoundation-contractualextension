@@ -486,6 +486,7 @@ namespace YuLinTu.Library.Controls
         {
             int familyCount = 0;
             int landCount = 0;
+            int stockLandCount = 0;
             double summaryTableArea = 0;
             double summaryActualArea = 0;
             double summaryAwareArea = 0;
@@ -512,9 +513,9 @@ namespace YuLinTu.Library.Controls
                     {
                         continue;
                     }
+                    landCount++;
                     if (!land.IsStockLand)
                     {
-                        landCount++;
                         double tableArea = land.Tag.TableArea == null ? 0 : land.Tag.TableArea.Value;
                         double contractDelayArea = land.Tag.ContractDelayArea;
                         summaryTableArea += tableArea;
@@ -548,7 +549,8 @@ namespace YuLinTu.Library.Controls
                     });
                     if (landStock.Count > 0)
                     {
-                        landCount = landCount + landStock.Count;
+                        stockLandCount += landStock.Count;
+                        //landCount = landCount + landStock.Count;
                         summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
                         summaryActualArea = summaryActualArea + Convert.ToDouble(landStock.Sum(o => o.ActualArea));
                         summaryAwareArea = summaryAwareArea + Convert.ToDouble(landStock.Sum(o => o.AwareArea));
@@ -558,7 +560,7 @@ namespace YuLinTu.Library.Controls
             }
 
             AccountSummary.FamilyCount = familyCount;
-            AccountSummary.LandCount = landCount;
+            AccountSummary.LandCount = $"地块数：{landCount} (确股:{stockLandCount})";//landCount;
             AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
             AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
             AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
@@ -614,7 +616,7 @@ namespace YuLinTu.Library.Controls
                 }
             }
             AccountSummary.FamilyCount++;
-            AccountSummary.LandCount += item.Children.Count;
+            //AccountSummary.LandCount += item.Children.Count;
             AccountSummary.TableAreaCount = (ConvertDouble(AccountSummary.TableAreaCount) + summaryTableArea) + "";
             AccountSummary.ActualAreaCount = (ConvertDouble(AccountSummary.ActualAreaCount) + summaryActualArea) + "";
             AccountSummary.ArwareAreaCount = (ConvertDouble(AccountSummary.ArwareAreaCount) + summaryAwareArea) + "";
