@@ -456,7 +456,7 @@ namespace YuLinTu.Component.MapFoundation
             while (index < getGeoList.Count)
             {
                 YuLinTu.Spatial.Geometry geo = getGeoList[index];
-                var geoarea = ToolMath.CutNumericFormat(geo.Area() * projectionUnit, 5);
+                var geoarea = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, 5);
                 for (int i = 0; i < getGeoList.Count; i++)
                 {
                     if (index == i)
@@ -464,7 +464,7 @@ namespace YuLinTu.Component.MapFoundation
                         continue;
                     }
                     YuLinTu.Spatial.Geometry geo1 = getGeoList[i];//.Find(t => t.Within(geo));
-                    var geoarea1 = ToolMath.CutNumericFormat(geo1.Area() * projectionUnit, 5);
+                    var geoarea1 = ToolMath.RoundNumericFormat(geo1.Area() * projectionUnit, 5);
                     if (geo.Within(geo1))
                     {
                         getGeoList.Remove(geo);

@@ -431,7 +431,7 @@ namespace YuLinTu.Component.MapFoundation
             }
 
             selectLand.Shape = resGeometry;
-            selectLand.ActualArea = ToolMath.CutNumericFormat(resGeometry.Area() * projectionUnit, 2);
+            selectLand.ActualArea = ToolMath.RoundNumericFormat(resGeometry.Area() * projectionUnit, 2);
             landbus.ModifyLand(selectLand);
 
             MapControl.SelectedItems[0].Object.Geometry = resGeometry;

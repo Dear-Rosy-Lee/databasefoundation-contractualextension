@@ -1638,7 +1638,7 @@ namespace YuLinTu.Component.MapFoundation
                             cl.OwnerName = vp.Name;
                             cl.ZoneCode = vp.ZoneCode;
                             cl.Shape = dzdw.Shape;
-                            cl.ActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(dzdw.Shape.Area() * projectionUnit, 2);
+                            cl.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dzdw.Shape.Area() * projectionUnit, 2);
 
                             landBusiness.AddLand(cl);
                             dczdstation.Delete(dzdw.ID);
@@ -1741,7 +1741,7 @@ namespace YuLinTu.Component.MapFoundation
                             VirtualPerson vp = virtualPersonBusiness.GetVirtualPersonByID(dragLand.OwnerId.Value);
                             if (vp.Status == eVirtualPersonStatus.Lock) return;
                             dragLand.Shape = dczd.Shape;
-                            dragLand.ActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(dczd.Shape.Area() * projectionUnit, 2); ;
+                            dragLand.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dczd.Shape.Area() * projectionUnit, 2); ;
                             landBusiness.ModifyLand(dragLand);
                             dczdstation.Delete(dczd.ID);
                             vl.Refresh();
@@ -3257,13 +3257,13 @@ namespace YuLinTu.Component.MapFoundation
                 var grahpics = e.AddGraphics;
                 var targetgra = e.UpdateGraphic;
 
-                var targetGraActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(targetgra.Geometry.Area() * projectionUnit, 2);
+                var targetGraActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(targetgra.Geometry.Area() * projectionUnit, 2);
                 targetgra.Object.Object.SetPropertyValue("SCMJ", targetGraActualArea);
                 targetgra.Object.Object.SetPropertyValue("TZMJ", targetGraActualArea);
 
                 foreach (var graitem in grahpics)
                 {
-                    var graitemActualArea = YuLinTu.Library.WorkStation.ToolMath.CutNumericFormat(graitem.Geometry.Area() * projectionUnit, 2);
+                    var graitemActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(graitem.Geometry.Area() * projectionUnit, 2);
                     graitem.Object.Object.SetPropertyValue("SCMJ", graitemActualArea);
                     graitem.Object.Object.SetPropertyValue("TZMJ", graitemActualArea);
 

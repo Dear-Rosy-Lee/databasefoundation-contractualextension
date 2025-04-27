@@ -203,7 +203,7 @@ namespace YuLinTu.Component.MapFoundation
             AccountLandBusiness landbus = new AccountLandBusiness(db);
             GetMapSelectItems(landbus);
             if (selectGeometryCollection.Count() == 0) return;
-            ClipPolygonSetting clipcontrol = new ClipPolygonSetting(selectGeometryCollection[0].Area());
+            var clipcontrol = new ClipPolygonSetting(selectGeometryCollection[0].Area());
             clipcontrol.Workpage = workpage;
             workpage.Page.ShowMessageBox(clipcontrol, (b, r) =>
             {
