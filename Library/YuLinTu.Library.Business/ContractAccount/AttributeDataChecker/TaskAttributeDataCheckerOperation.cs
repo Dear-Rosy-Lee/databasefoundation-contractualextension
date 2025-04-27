@@ -85,20 +85,24 @@ namespace YuLinTu.Library.Business
             ReadData(dbContext);
             if (currentZone.Level == eZoneLevel.Group)
             {
-                var resfile = CreateLog(currentZone);
+                var zoneStation = dbContext.CreateZoneWorkStation();
+                var zoneName = zoneStation.GetTownZoneName(currentZone);
+                var resfile = CreateLog(zoneName);
                 this.ReportProgress(3 + 50, $"(1/1)进行{currentZone.FullName}属性数据质量检查");
                 DataCheck(resfile,currentZone);
             }
             else
             {
                 var zoneStation = dbContext.CreateZoneWorkStation();
+                
                 var groups = zoneStation.GetByChildLevel(currentZone.FullCode, eZoneLevel.Group);
                 double Percent = 100 / (double)groups.Count;
-                
+                var zoneName = zoneStation.GetTownZoneName(currentZone);
+                var resfile = CreateLog(zoneName);
                 foreach (var group in groups)
                 {
                     this.ReportProgress(3 + (int)(cindex * Percent), string.Format("({0}/{1})进行{2}属性数据质量检查", cindex, groups.Count, group.FullName));
-                    var resfile = CreateLog(group);
+                    WriteLog(resfile, new List<string> { $"\n{group.Name}检查结果：" });
                     DataCheck(resfile,group);
                     cindex++;
                 }
@@ -120,15 +124,17 @@ namespace YuLinTu.Library.Business
                 dcp.DataArgument = argument;
                 dcp.zone = group;
                 var errorInfo = dcp.Check();
-                if (errorInfo.IsNotNullOrEmpty())
+                if (!HasAnyCheckPassed(errorInfo))
                 {
-                    this.ReportError($"{group.Name},数据检查存在错误，详情请在安装软件安装目录中查看错误文档");
+                    
+                    this.ReportError($"{group.Name},数据检查存在错误，详情请查看错误文档");
                     WriteLog(resfile, errorInfo);
                     return true;
                 }
                 else
                 {
                     this.ReportInfomation($"{group.Name}数据检查通过。");
+                    WriteLog(resfile, errorInfo);
                     return true;
                 }
             }
@@ -140,12 +146,13 @@ namespace YuLinTu.Library.Business
             }
         }
         
-            private void WriteLog(string path, string errinfo)
+            private void WriteLog(string path, List<string> ListError)
             {
+                var errinfo = string.Join("", ListError);
                 File.AppendAllText(path, errinfo);
             }
         
-        private string CreateLog(Zone group)
+        private string CreateLog(string ZoneName)
         {
 
             // 定义文件夹路径
@@ -156,8 +163,7 @@ namespace YuLinTu.Library.Business
             {
                 Directory.CreateDirectory(folderPath);
             }
-            
-            string fileName = $"{group.FullName}质量检查结果{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
+            string fileName = $"{ZoneName}-数据检查-{DateTime.Now.ToString("yyyy年M月d日HH时mm分")}.txt";
             // 合成完整文件路径
             folderPath = Path.Combine(folderPath, fileName);
             File.WriteAllText(folderPath, "检查结果记录");
@@ -202,6 +208,12 @@ namespace YuLinTu.Library.Business
             System.Diagnostics.Process.Start(folderPath);
             base.OpenResult();
         }
+
+        public bool HasAnyCheckPassed(List<string> checkResults)
+        {
+            return checkResults.All(result => result.Contains("检查通过"));
+        }
+
         #endregion Method - Private 
 
         #endregion Methods
