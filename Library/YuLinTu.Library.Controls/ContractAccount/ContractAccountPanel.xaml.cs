@@ -2402,9 +2402,9 @@ namespace YuLinTu.Library.Controls
                     landStation.AddDelLand(landdel);
                     landStation.DeleteRelationDataByLand(landIds);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    ShowBox(ContractAccountInfo.ContractLandDel, "删除承包地块失败!", showConfirm: false);
+                    ShowBox(ContractAccountInfo.ContractLandDel, "删除承包地块失败!" + ex.Message, showConfirm: false);
                     return;
                 }
                 Dispatcher.Invoke(new Action(() =>

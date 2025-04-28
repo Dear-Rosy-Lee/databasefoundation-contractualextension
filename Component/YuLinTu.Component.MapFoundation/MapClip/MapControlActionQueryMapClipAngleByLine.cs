@@ -394,7 +394,7 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             //将第一个分割的赋给原始的，这样就不用裁剪了。                        
                             selectContractLandCollection[m].Shape = MaxAreaGeo;
-                            selectContractLandCollection[m].ActualArea = ToolMath.CutNumericFormat(MaxAreaGeo.Area() * projectionUnit, 2);
+                            selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(MaxAreaGeo.Area() * projectionUnit, 2);
                             selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                             selectContractLandCollection[m].TableArea = 0;
                             landbus.ModifyLand(selectContractLandCollection[m]);

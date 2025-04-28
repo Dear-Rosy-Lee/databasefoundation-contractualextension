@@ -43,8 +43,8 @@
                     </Grid.RowDefinitions>
                     <CheckBox Content="承包方编码" Click="cbCheckBox_Click" Name="cbNumber" VerticalAlignment="Center"/>
                     <StackPanel  Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" IsEnabled="{Binding ElementName=cbNumber,Path=IsChecked}">
-                        <RadioButton Content="全部重编" ToolTip="从1开始全部重编承包方编码" GroupName="rcbmum" Click="cbCheckBox_Click" Name="cbNumberAll" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         <RadioButton Content="重编合并部分" ToolTip="重编前14位与地域不匹配的部分,不填充缺失的编码" GroupName="rcbmum" IsChecked="True" Click="cbCheckBox_Click" Name="cbNumberPart"  VerticalAlignment="Center"/>
+                        <RadioButton Content="全部重编" ToolTip="从1开始全部重编承包方编码" GroupName="rcbmum" Click="cbCheckBox_Click" Name="cbNumberAll" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         <cmps:MetroTextBox Margin="10,0,0,0" x:Name="txtInitiallStartNum" IsEnabled="{Binding ElementName=cbNumberAll,Path=IsChecked}" ToolTip="编码的起始编号" Width="100" VerticalAlignment="Center"></cmps:MetroTextBox>
                     </StackPanel>
                     <DockPanel Grid.Column="3" VerticalAlignment="Center" >

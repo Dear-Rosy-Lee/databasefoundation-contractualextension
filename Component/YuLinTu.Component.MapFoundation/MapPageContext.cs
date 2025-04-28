@@ -3542,7 +3542,7 @@ namespace YuLinTu.Component.MapFoundation
                 string personId = obj.GetPropertyValue("QLRBS") as string;
                 if (personId == null)
                 {
-                    ShowBox("提示", "地块无所属承包方,请设置设置所属承包方!");
+                    ShowBox("提示", "地块无所属承包方,请设置所属承包方!");
                     return;
                 }
                 Guid pId = new Guid(personId);
