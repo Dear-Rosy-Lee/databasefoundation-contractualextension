@@ -408,7 +408,7 @@ namespace YuLinTu.Library.Office
         /// 保存所有更改。
         /// </summary>
         /// <history>
-        ///     2011年1月23日 1:40:40   Roc 创建
+        /// 2011年1月23日 1:40:40   Roc 创建
         /// </history>
         public void Save()
         {
@@ -448,6 +448,7 @@ namespace YuLinTu.Library.Office
             {
                 return;
             }
+            WordOperator.InitalzieDirectory(fileName);
             fileName = WordOperator.InitalizeValideFileName(fileName);
             string extension = System.IO.Path.GetExtension(fileName);
             if (string.IsNullOrEmpty(extension))
@@ -456,10 +457,16 @@ namespace YuLinTu.Library.Office
             }
             else
             {
-                fileName = extension == ".xls" ? fileName : fileName.Replace(extension, ".xls");
+                if (extension == ".xlsx")
+                {
+                    workbook.Save(fileName, SaveFormat.Xlsx);
+                }
+                else
+                {
+                    fileName = extension == ".xls" ? fileName : fileName.Replace(extension, ".xls");
+                    workbook.Save(fileName, SaveFormat.Excel97To2003);
+                }
             }
-            WordOperator.InitalzieDirectory(fileName);
-            workbook.Save(fileName, SaveFormat.Excel97To2003);
             SaveEnd(fileName);
         }
 

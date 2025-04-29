@@ -1302,7 +1302,7 @@ namespace YuLinTu.Library.WorkStation
             export.DictList = diclist;
             export.Book = book;
             export.Concord = concord;
-            export.ConcordNumber = concord.ConcordNumber;
+            export.ConcordNumber = concord == null ? "" : concord.ConcordNumber;
             export.Tissue = sender;  //发包方
             export.WarrentNumber = WarrentNumber;
             export.OpenTemplate(tempPath);

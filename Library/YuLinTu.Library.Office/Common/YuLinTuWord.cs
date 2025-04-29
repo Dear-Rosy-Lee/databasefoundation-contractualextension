@@ -462,7 +462,7 @@ namespace YuLinTu.Library.Office
                     }
                     else
                     {
-                        doc.Save(fileName, SaveFormat.Doc); 
+                        doc.Save(fileName, SaveFormat.Doc);
                     }
                 }
                 Close();
@@ -767,7 +767,7 @@ namespace YuLinTu.Library.Office
         /// <param name="rowIndex"></param>
         /// <param name="colIndex"></param>
         /// <param name="value"></param>
-        protected void SetTableCellValue(int tableIndex, int rowIndex, int colIndex, string value)
+        protected void SetTableCellValue(int tableIndex, int rowIndex, int colIndex, string value, string fontName = "")
         {
             if (doc == null)
             {
@@ -795,7 +795,12 @@ namespace YuLinTu.Library.Office
                 {
                     cell.RemoveAllChildren();
                     Paragraph para = new Paragraph(doc);
-                    para.AppendChild(new Run(doc, string.IsNullOrEmpty(value) ? EmptyReplacement : value));
+                    var run = new Run(doc, string.IsNullOrEmpty(value) ? EmptyReplacement : value);
+                    if (!string.IsNullOrEmpty(fontName))
+                    {
+                        run.Font.Name = fontName;
+                    }
+                    para.AppendChild(run);
                     cell.AppendChild(para);
                 }
                 cell = null;

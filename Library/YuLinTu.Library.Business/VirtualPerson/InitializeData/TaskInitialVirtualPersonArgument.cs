@@ -213,6 +213,7 @@ namespace YuLinTu.Library.Business
         public TaskInitialVirtualPersonArgument()
         {
             VirtualType = eVirtualType.Land;
+            FarmerFamilyNumberIndex = new int[] { 1 };
         }
 
         #endregion 

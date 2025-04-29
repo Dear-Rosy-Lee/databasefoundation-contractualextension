@@ -176,7 +176,7 @@ namespace YuLinTu.Library.Business
                 int personCount = vps == null ? 0 : vps.Count;
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xls";
+                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
 
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
@@ -203,7 +203,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 result = false;
-                this.ReportError("导出摸底核实表失败");
+                this.ReportError("导出摸底核实表失败" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportVirtualPersonExcel(导出数据到摸底核实表)", ex.Message + ex.StackTrace);
             }
             return result;

@@ -26,8 +26,9 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public static string ExcelTemplate(string templateName)
         {
-            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                string.Format(@"Template\{0}.xlt", templateName));
+            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Template\\{templateName}.xlt");
+            if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Template\\{templateName}.xltx");
             if (!File.Exists(fileName))
                 throw new Exception(string.Format("模板文件:{0}.xlt不存在", templateName));
             return fileName;

@@ -253,7 +253,7 @@ namespace YuLinTu.Library.Controls
         private List<VirtualPerson> CreateVirtualPersonCollection()
         {
             var personStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
-            List<VirtualPerson> persons = personStation.GetByZoneCode(CurrentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
+            List<VirtualPerson> persons = personStation.GetByZoneCode(CurrentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.SelfAndSubs);
             List<VirtualPerson> vps = new List<VirtualPerson>();
             var orderdVps = persons.OrderBy(vp =>
             {
