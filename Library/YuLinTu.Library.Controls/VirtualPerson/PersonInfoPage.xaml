@@ -222,27 +222,36 @@
                     Text="{Binding IsSharedLand, Mode=TwoWay}" />
 
                 <Label
-                    Grid.Row="12"
+                    Grid.Row="10"
+                    Grid.Column="2"
                     Margin="0,5"
                     VerticalAlignment="Top"
-                    Content="备注:"
+                    Content="成员备注:"
                     Style="{StaticResource LableStyle}" />
-                <cmps:MetroTextBox
-                    Name="txt_Comment"
-                    Grid.Row="12"
-                    Grid.Column="1"
+                <cmps:MetroComboBox
+                    Grid.Row="10"
+                    Grid.Column="3"
+                    Name="cb_Comment" 
                     Grid.ColumnSpan="3"
-                    Height="60"
-                    VerticalContentAlignment="Stretch"
-                    MaxLength="100"
-                    Text="{Binding Comment, Mode=TwoWay}"
-                    TextWrapping="Wrap" />
+                    Height="30" SelectionChanged="cb_Comment_SelectionChanged"
+                    VerticalContentAlignment="Stretch" 
+                    >
+                    <!--Text="{Binding Comment, Mode=TwoWay}"
+                    <ComboBoxItem >外嫁女</ComboBoxItem>
+                    <ComboBoxItem >入赘男</ComboBoxItem>
+                    <ComboBoxItem >在校大学生</ComboBoxItem>
+                    <ComboBoxItem >国家公职人员</ComboBoxItem>
+                    <ComboBoxItem >军人（军官、士兵）</ComboBoxItem>
+                    <ComboBoxItem >新生儿</ComboBoxItem>
+                    <ComboBoxItem >去世</ComboBoxItem>
+                    <ComboBoxItem >其他备注</ComboBoxItem>-->
+                </cmps:MetroComboBox>
 
                 <Label
                     Grid.Row="14"
                     Margin="0,5"
                     VerticalAlignment="Top"
-                    Content="修改意见:"
+                    Content="成员备注说明:"
                     Style="{StaticResource LableStyle}" />
                 <cmps:MetroTextBox
                     Name="txt_Opinion"

@@ -239,6 +239,8 @@ namespace YuLinTu.Library.Controls
             cbShare.ItemsSource = new List<string> { "是", "否" };
             cbShare.SelectedIndex = 0;
 
+            cb_Comment.ItemsSource = new List<string> { "外嫁女", "入赘男", "在校大学生", "国家公职人员", "军人（军官、士兵）", "新生儿", "去世", "其他备注" };
+
             if (Virtualperson.Status == eVirtualPersonStatus.Lock)
                 btnAdd.IsEnabled = false;
         }
@@ -274,7 +276,14 @@ namespace YuLinTu.Library.Controls
                 if (Virtualperson.FamilyExpand.ContractorType == eContractorType.Unit)
                     cbCardType.IsEnabled = false;
             }
-
+            if (string.IsNullOrEmpty(person.Comment))
+            {
+                cb_Comment.SelectedValue = "其他备注";
+            }
+            else
+            {
+                cb_Comment.SelectedValue = person.Comment;
+            }
         }
 
         /// <summary>
@@ -430,6 +439,14 @@ namespace YuLinTu.Library.Controls
             else
             {
                 person.Gender = eGender.Unknow;
+            }
+            if (cb_Comment.SelectedItem.ToString() != "其他备注")
+            {
+                person.Comment = cb_Comment.SelectedItem.ToString();
+            }
+            else
+            {
+                person.Comment = "";
             }
             ConfirmAsync();
         }
@@ -671,6 +688,19 @@ namespace YuLinTu.Library.Controls
         private void InfoPageBase_Loaded(object sender, RoutedEventArgs e)
         {
             cbRelationship.Focus();
+        }
+
+        private void cb_Comment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectvalue = (sender as MetroComboBox).SelectedItem;
+            if (selectvalue != null && selectvalue.ToString() == "其他备注")
+            {
+                txt_Opinion.IsEnabled = true;
+            }
+            else
+            {
+                txt_Opinion.IsEnabled = false;
+            }
         }
     }
 }
