@@ -203,7 +203,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 result = false;
-                this.ReportError("导出摸底核实表失败" + ex.Message);
+                this.ReportError("导出摸底核实表失败," + ex.Message);
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportVirtualPersonExcel(导出数据到摸底核实表)", ex.Message + ex.StackTrace);
             }
             return result;

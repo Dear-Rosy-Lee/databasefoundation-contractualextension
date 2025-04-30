@@ -308,7 +308,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="zoneYearCode">地域年份代码</param>
         /// <param name="prjString">坐标文件</param>
         /// <param name="excludeDkbm">编码集合</param>
-        [Obsolete]
         public virtual void testExportJzd(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
          HashSet<string> excludeDkbm, int numLand, int numPoint, int numLine)

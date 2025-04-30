@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Aspose.Cells;
 using YuLinTu.Library.Entity;
 
@@ -12,6 +13,8 @@ namespace YuLinTu.Library.Business
     [Serializable]
     public class ExportRelationLandVerifyExcel : ExportLandVerifyExcelTable
     {
+        List<CheckVpEntity> checkVpEntities = new List<CheckVpEntity>();
+
         #region Ctor
 
         public ExportRelationLandVerifyExcel()
@@ -20,6 +23,7 @@ namespace YuLinTu.Library.Business
             toolProgress = new ToolProgress();
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
             base.TemplateName = "摸底调查核实表";
+            checkVpEntities.Clear();
         }
 
         /// <summary>
@@ -203,6 +207,14 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(bindex, 27.75);
                 bindex++;
             }
+            var vpcode = landFamily.CurrentFamily.ZoneCode.PadRight(14, '0') + landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
+            var cvp = checkVpEntities.Find(t => t.NewVpCode == vpcode);
+            if (cvp == null && !jtmcs.Contains(landFamily.CurrentFamily.Name))
+            {
+                cvp = new CheckVpEntity() { NewVpCode = vpcode, OldVpCode = landFamily.CurrentFamily.OldVirtualCode };
+                checkVpEntities.Add(cvp);
+            }
+
             HashSet<string> setlandnumber = new HashSet<string>();//手动设置关联的地块编码
             var familystr = ((int)eLandCategoryType.ContractLand).ToString();
             foreach (ContractLand land in lands)
@@ -219,6 +231,14 @@ namespace YuLinTu.Library.Business
                 if (!string.IsNullOrEmpty(land.OldLandNumber) && !setlandnumber.Contains(land.OldLandNumber))
                 {
                     setlandnumber.Add(land.OldLandNumber);
+                }
+                if (cvp != null)
+                {
+                    cvp.LandList.Add(new CheckLandEntity()
+                    {
+                        NewLandCode = land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber,
+                        OldLandCode = land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber
+                    });
                 }
                 aindex++;
             }
@@ -267,6 +287,10 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("X" + index, "X" + (index + height - 1), TotalLandTable);
             InitalizeRangeValue("Z" + index, "Z" + (index + height - 1), TotalLandAware);
             InitalizeRangeValue("AB" + index, "AB" + (index + height - 1), TotalLandActual);
+
+            //if (!sfjt)
+            //    checkVpEntities.Add(new CheckVpEntity() { NewVpCode = virtualpersonCode, OldVpCode = oldvpcode });
+
             if (landFamily.CurrentFamily.Status == eVirtualPersonStatus.Bad)
             {
                 InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "合同注销");
@@ -399,8 +423,8 @@ namespace YuLinTu.Library.Business
                 StyleFlag styleFlag = new StyleFlag();
                 styleFlag.Locked = true;
                 // 保护工作表
-                sheet.Protect(ProtectionType.All, "ylt", ""); // 设置密码
-                // 创建一个范围，例如A1:C10，然后解锁这个范围
+                sheet.Protect(ProtectionType.All, "ylt123456", ""); // 设置密码
+                                                                    // 创建一个范围，例如A1:C10，然后解锁这个范围
                 Cells cells = sheet.Cells;
                 Range range = cells.CreateRange("AI3:AI" + (index - 1));
                 range.ApplyStyle(unlockStyle, styleFlag); // 应用样式但不锁定范围 
@@ -410,6 +434,119 @@ namespace YuLinTu.Library.Business
             {
                 Log.Log.WriteError(this, "SaveEnd", ex.Message);
             }
+            CheckData();
+        }
+
+        /// <summary>
+        /// 检查数据
+        /// </summary>
+        private void CheckData()
+        {
+            //新承包方编码重复，就承包方编码重复   新地块编码重复，就地块编码重复
+            if (checkVpEntities.Count == 0)
+                return;
+            var oldvpkeys = new List<string>();
+            var newVpkeys = new List<string>();
+            var oldLandkeys = new List<string>();
+            var newLandkeys = new List<string>();
+
+            foreach (var cvpe in checkVpEntities)
+            {
+                oldvpkeys.Add(cvpe.OldVpCode == null ? "" : cvpe.OldVpCode);
+                newVpkeys.Add(cvpe.NewVpCode);
+
+                foreach (var item in cvpe.LandList)
+                {
+                    oldLandkeys.Add(item.OldLandCode == null ? "" : item.OldLandCode);
+                    newLandkeys.Add(item.NewLandCode);
+                }
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+            var nglist = newVpkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
+            var oglist = oldvpkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
+            var ollist = oldLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
+            var nllist = newLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
+            oglist.ForEach(t => stringBuilder.AppendLine($"原承包方编码：{t}重复挂接"));
+            nglist.ForEach(t => stringBuilder.AppendLine($"承包方编码：{t}存在重复"));
+
+            ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t}重复挂接"));
+            nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t}存在重复"));
+
+
+
+            var nexitvps = newVpkeys.FindAll(t => oldvpkeys.Contains(t));//新编码在旧编码中存在的情况
+            var nexitlands = newLandkeys.FindAll(t => oldLandkeys.Contains(t));//新编码在旧编码中存在的情况
+
+            var kvlist = new List<Tuple<string, string>>();
+            var landkvlist = new List<Tuple<string, string>>();
+            foreach (var cvpe in checkVpEntities)
+            {
+                if (cvpe.NewVpCode == cvpe.OldVpCode)
+                    continue;
+                if (!string.IsNullOrEmpty(cvpe.OldVpCode))
+                {
+                    var fkv = kvlist.Find(t => t.Item1 == cvpe.OldVpCode && t.Item2 == cvpe.NewVpCode);
+                    if (fkv != null)
+                    {
+                        stringBuilder.AppendLine($"承包方挂接存在交叉：承包方编码{cvpe.NewVpCode}，原承包方编码{cvpe.OldVpCode};");
+                    }
+                    else
+                    {
+                        if (nexitvps.Contains(cvpe.NewVpCode) && nexitvps.Contains(cvpe.OldVpCode))
+                        {
+                            stringBuilder.AppendLine($"承包方挂接存在交叉：承包方编码{cvpe.NewVpCode}，原承包方编码{cvpe.OldVpCode};");
+                        }
+                        kvlist.Add(new Tuple<string, string>(cvpe.NewVpCode, cvpe.OldVpCode));
+                    }
+                }
+                foreach (var item in cvpe.LandList)
+                {
+                    if (item.NewLandCode == item.OldLandCode)
+                        continue;
+                    if (!string.IsNullOrEmpty(item.OldLandCode))
+                    {
+                        var landkv = landkvlist.Find(t => t.Item1 == item.OldLandCode && t.Item2 == item.NewLandCode);
+                        if (landkv != null)
+                        {
+                            stringBuilder.AppendLine($"地块挂接存在交叉：地块编码{item.NewLandCode}，原地块编码{item.OldLandCode};");
+                        }
+                        else
+                        {
+                            if (nexitlands.Contains(item.NewLandCode) && nexitlands.Contains(item.OldLandCode))
+                            {
+                                stringBuilder.AppendLine($"地块挂接存在交叉：地块编码{item.NewLandCode}，原地块编码{item.OldLandCode};");
+                            }
+                            landkvlist.Add(new Tuple<string, string>(item.NewLandCode, item.OldLandCode));
+                        }
+                    }
+                }
+            }
+            if (stringBuilder.Length > 0)
+            {
+                throw new Exception(" 挂接数据存在问题：\n" + stringBuilder.ToString());
+            }
+        }
+
+        class CheckVpEntity
+        {
+            public string NewVpCode { get; set; }
+
+            public string OldVpCode { get; set; }
+
+            public List<CheckLandEntity> LandList { get; set; }
+
+            public CheckVpEntity()
+            {
+                LandList = new List<CheckLandEntity>();
+            }
+        }
+
+        class CheckLandEntity
+        {
+            public string NewLandCode { get; set; }
+
+            public string OldLandCode { get; set; }
         }
     }
 }

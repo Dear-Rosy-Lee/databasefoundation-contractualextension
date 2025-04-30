@@ -1190,7 +1190,6 @@ namespace YuLinTu.Library.Aux
         /// <param name="shpFilePath">shape文件的输出路径</param>
         /// <param name="sDydm">当前地域的地域全编码</param>
         /// <param name="excludeDkbm">要排除的地块编码</param>
-        [Obsolete]
         public void DoExport(HashSet<string> excludeDkbm)// string shpFileName,string jzxShpFileName,string where=null)
         {
             ReportInfomation("开始时间：" + DateTime.Now);
