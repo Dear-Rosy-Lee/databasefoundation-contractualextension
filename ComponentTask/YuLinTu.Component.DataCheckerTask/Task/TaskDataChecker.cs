@@ -11,6 +11,7 @@ using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.DataCheckerTask
 {

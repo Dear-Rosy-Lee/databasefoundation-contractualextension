@@ -468,10 +468,10 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public static double RoundNumericFormat(double value, int digits)
         {
-            return (double)Math.Round((decimal)value, digits);
+            return (double)ToolMath.RoundNumericFormat((decimal)value, digits);
             /*
             double number = value + 0.00000001;
-         //   double numeric = Math.Round(number, digits);
+         //   double numeric = ToolMath.RoundNumericFormat(number, digits);
 
             double numeric = Convert.ToUInt64(number * 100) / 100.0;
             switch (digits)

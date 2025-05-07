@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 using YuLinTu.tGIS;
 using YuLinTu.tGIS.Client;

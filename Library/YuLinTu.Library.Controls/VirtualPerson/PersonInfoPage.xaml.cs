@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 

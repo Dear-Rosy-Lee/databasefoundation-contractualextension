@@ -1489,7 +1489,7 @@ namespace YuLinTu.Library.Business
                     if (actualArea == null)
                     {
                         double area = targetLand.Shape.Area();
-                        getActualArea = Math.Round(area * 0.0015, 4);
+                        getActualArea = ToolMath.RoundNumericFormat(area * 0.0015, 4);
                     }
                     else
                     {
@@ -1923,7 +1923,7 @@ namespace YuLinTu.Library.Business
                     if (actualArea == null)
                     {
                         double area = targetLand.Shape.Area();
-                        getActualArea = Math.Round(area * 0.0015, 4);
+                        getActualArea = ToolMath.RoundNumericFormat(area * 0.0015, 4);
                     }
                     else
                     {
@@ -4502,8 +4502,8 @@ namespace YuLinTu.Library.Business
                 {
                     var landGeo = land.Shape as YuLinTu.Spatial.Geometry;
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
-                    //var areaNew = Math.Round((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
-                    // var areaDraw = Math.Round(landGeo.Area() * projectionUnit, 4);
+                    //var areaNew = ToolMath.RoundNumericFormat((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
+                    // var areaDraw = ToolMath.RoundNumericFormat(landGeo.Area() * projectionUnit, 4);
                     var landgeoarea = landGeo.Area();
                     var areaDraw = ToolMath.SetNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric, metadata.ToAreaModule);
                     if (metadata.ToActualArea)

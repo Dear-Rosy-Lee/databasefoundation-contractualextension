@@ -18,6 +18,7 @@ using YuLinTu.Visio.Designer;
 using YuLinTu.Visio.Designer.Elements;
 using YuLinTu.Windows;
 using YuLinTu;
+using YuLinTu.Library.WorkStation;
 namespace YuLinTu.Component.DiagramFoundation
 {
     /// <summary>

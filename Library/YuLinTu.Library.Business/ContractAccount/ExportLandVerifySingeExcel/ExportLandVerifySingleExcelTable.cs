@@ -6,6 +6,7 @@ using Aspose.Cells;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

@@ -4335,7 +4335,7 @@ namespace YuLinTu.Component.MapFoundation
                 var geo = e.Graphic.Geometry;
                 if (geo == null)
                     return;
-                double area = Math.Round(geo.Area() * projectionUnit, 2);
+                double area = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, 2);
                 var landOb = e.Graphic.Object.Object;
                 if (landOb == null)
                     return;
@@ -5930,7 +5930,7 @@ namespace YuLinTu.Component.MapFoundation
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 dbContext = e.LayerDataSource as IDbContext;
-                area = Math.Round(geometry.Area() * projectionUnit, 2);
+                area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, 2);
                 idObject = e.Object.Object.GetPropertyValue("ID");
                 if (idObject == null)
                 {
@@ -6090,7 +6090,7 @@ namespace YuLinTu.Component.MapFoundation
         private void AddContractLandWithMark(VirtualPerson selectPersonNow, Zone selectZone, YuLinTu.Spatial.Geometry geometry, ContractLandMark landMark, IDbContext db, DrawFeatureInstallPropertiesEventArgs e, bool isUseTopu = true)
         {
             object idObject = null;
-            var area = Math.Round(geometry.Area() * projectionUnit, 2);
+            var area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, 2);
             bool useAlt = true;
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {

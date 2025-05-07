@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -32,7 +33,7 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public static string AreaFormat(this double value, int number = 2, bool isSprit = false)
         {
-            var str = value > 0 ? ToolMath.SetNumbericFormat(Math.Round(value, number).ToString(), number) : AgricultureSetting.InitalizeAreaString(number, isSprit);
+            var str = value > 0 ? ToolMath.SetNumbericFormat(ToolMath.RoundNumericFormat(value, number).ToString(), number) : AgricultureSetting.InitalizeAreaString(number, isSprit);
             return str;
         }
 

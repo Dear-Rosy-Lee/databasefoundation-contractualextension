@@ -18,6 +18,7 @@ using YuLinTu.Library.Business;
 using YuLinTu.PropertyRight.Services.Client;
 using YuLinTu.Data;
 using YuLinTu.Spatial;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

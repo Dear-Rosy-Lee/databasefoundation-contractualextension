@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Documents;
 using System.Windows.Threading;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.PadDataHandle
 {

@@ -94,7 +94,7 @@ namespace YuLinTu.Library.Aux
                                 zjzdh = s;
                             }
                         }
-                        var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + Math.Round(en.Shape.Length, 2) + "米到" + zjzdh;
+                        var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + Math.Round((decimal)en.Shape.Length, 2) + "米到" + zjzdh;
                         updateJzxsm(db, en.rowid, jszsm);
                     }
                 }, wh);

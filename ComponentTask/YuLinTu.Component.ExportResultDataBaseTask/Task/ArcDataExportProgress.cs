@@ -18,6 +18,7 @@ using YuLinTu.Library.Result;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 using YuLinTu.Windows;
+using ToolMath = Quality.Business.TaskBasic.ToolMath;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
 {
@@ -1413,8 +1414,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                                     spacecdbDKBMs.Add(dk.DKBM);
                                 }
                             }
-                            ht.HTZMJ = ht.HTZMJ + Math.Round(land.QuanficationArea / 0.0015, 2);
-                            ht.HTZMJM = ht.HTZMJM + Math.Round(land.QuanficationArea, 2);
+                            ht.HTZMJ = ht.HTZMJ +Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea / 0.0015, 2);
+                            ht.HTZMJM = ht.HTZMJM +  Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea, 2);
                         }
 
                         var books = stockwarrantStation.Get(bk => bk.ID == concorditem.ID);
@@ -1517,8 +1518,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                                 spacecdbs.Add(dk);
                                 spacecdbDKBMs.Add(dk.DKBM);
                             }
-                            ht.HTZMJ = ht.HTZMJ + Math.Round(relationland.QuanficationArea / 0.0015, 2);
-                            ht.HTZMJM = ht.HTZMJM + Math.Round(relationland.QuanficationArea, 2);
+                            ht.HTZMJ = ht.HTZMJ + ToolMath.ConvertRound(relationland.QuanficationArea / 0.0015, 2);
+                            ht.HTZMJM = ht.HTZMJM + ToolMath.ConvertRound(relationland.QuanficationArea, 2);
                         }
                     }
                 }
@@ -1632,7 +1633,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 return false;
             }
             string description = string.Format("{0}下发包方:{1}中", zoneName, tissue.Name);
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerName)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.LawyerName)))
             {
                 if (showInformation)
                 {
@@ -1644,7 +1645,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerCartNumber)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.LawyerCartNumber)))
             {
                 if (showInformation)
                 {
@@ -1658,7 +1659,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (tissue.LawyerCredentType == eCredentialsType.IdentifyCard && !string.IsNullOrEmpty(tissue.LawyerCartNumber))
             {
-                bool isRight = YuLinTu.Library.Business.ToolICN.Check(tissue.LawyerCartNumber);
+                bool isRight = ToolICN.Check(tissue.LawyerCartNumber);
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1671,7 +1672,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerTelephone)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.LawyerTelephone)))
             {
                 if (showInformation)
                 {
@@ -1684,7 +1685,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             else
             {
-                bool isRight = YuLinTu.Library.Business.ToolMath.MatchAllNumber(tissue.LawyerTelephone.Replace("+", "").Replace("-", ""));
+                bool isRight = Library.WorkStation.ToolMath.MatchAllNumber(tissue.LawyerTelephone.Replace("+", "").Replace("-", ""));
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1698,7 +1699,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     canExport = false;
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerAddress)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.LawyerAddress)))
             {
                 if (showInformation)
                 {
@@ -1710,7 +1711,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.LawyerPosterNumber)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.LawyerPosterNumber)))
             {
                 if (showInformation)
                 {
@@ -1724,7 +1725,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             else
             {
-                bool isRight = tissue.LawyerPosterNumber.Length == 6 && YuLinTu.Library.Business.ToolMath.MatchAllNumber(tissue.LawyerPosterNumber);
+                bool isRight = tissue.LawyerPosterNumber.Length == 6 && Library.WorkStation.ToolMath.MatchAllNumber(tissue.LawyerPosterNumber);
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1738,7 +1739,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     canExport = false;
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.SurveyPerson)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.SurveyPerson)))
             {
                 if (showInformation)
                 {
@@ -1762,7 +1763,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(tissue.SurveyChronicle)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(tissue.SurveyChronicle)))
             {
                 if (showInformation)
                 {
@@ -1837,7 +1838,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         break;
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(vp.Number)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(vp.Number)))
             {
                 if (showInformation)
                 {
@@ -1851,7 +1852,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (vp.CardType == eCredentialsType.IdentifyCard && !string.IsNullOrEmpty(vp.Number))
             {
-                bool isRight = YuLinTu.Library.Business.ToolICN.Check(vp.Number);
+                bool isRight = ToolICN.Check(vp.Number);
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1864,7 +1865,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(vp.Address)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(vp.Address)))
             {
                 if (showInformation)
                 {
@@ -1876,7 +1877,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(vp.PostalNumber)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(vp.PostalNumber)))
             {
                 if (showInformation)
                 {
@@ -1890,7 +1891,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             else
             {
-                bool isRight = vp.PostalNumber.Length == 6 && YuLinTu.Library.Business.ToolMath.MatchAllNumber(vp.PostalNumber);
+                bool isRight = vp.PostalNumber.Length == 6 && Library.WorkStation.ToolMath.MatchAllNumber(vp.PostalNumber);
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1904,7 +1905,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     canExport = false;
                 }
             }
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(vp.Telephone)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(vp.Telephone)))
             {
                 if (showInformation)
                 {
@@ -1917,7 +1918,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             else
             {
-                bool isRight = YuLinTu.Library.Business.ToolMath.MatchAllNumber(vp.Telephone.Replace("+", "").Replace("-", ""));
+                bool isRight = Library.WorkStation.ToolMath.MatchAllNumber(vp.Telephone.Replace("+", "").Replace("-", ""));
                 if (!isRight)
                 {
                     if (showInformation)
@@ -1933,7 +1934,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (expand != null)
             {
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(expand.SurveyPerson)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(expand.SurveyPerson)))
                 {
                     if (showInformation)
                     {
@@ -1957,7 +1958,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                     canExport = false;
                 }
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(expand.SurveyChronicle)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(expand.SurveyChronicle)))
                 {
                     if (showInformation)
                     {
@@ -1968,7 +1969,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         WriteDataInformation("提示:" + description + "承包方调查记事未填写!");
                     }
                 }
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(expand.PublicityChroniclePerson)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(expand.PublicityChroniclePerson)))
                 {
                     if (showInformation)
                     {
@@ -1980,7 +1981,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                     canExport = false;
                 }
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(expand.PublicityChronicle)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(expand.PublicityChronicle)))
                 {
                     if (showInformation)
                     {
@@ -1991,7 +1992,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         WriteDataInformation("提示:" + description + "承包方公示记事未填写!");
                     }
                 }
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(expand.PublicityCheckPerson)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(expand.PublicityCheckPerson)))
                 {
                     if (showInformation)
                     {
@@ -2043,7 +2044,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var persons = SortSharePerson(vp);
             foreach (var person in persons)
             {
-                if (person.Name == vp.Name && person.ICN == vp.Number && string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(person.Relationship)))
+                if (person.Name == vp.Name && person.ICN == vp.Number && string.IsNullOrEmpty(ToolString.ExceptSpaceString(person.Relationship)))
                 {
                     person.Relationship = "户主";
                 }
@@ -2059,7 +2060,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                     canExport = false;
                 }
-                if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(person.ICN)))
+                if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(person.ICN)))
                 {
                     if (showInformation)
                     {
@@ -2073,7 +2074,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 if (person.CardType == eCredentialsType.IdentifyCard && !string.IsNullOrEmpty(person.ICN))
                 {
-                    bool isRight = YuLinTu.Library.Business.ToolICN.Check(person.ICN);
+                    bool isRight = ToolICN.Check(person.ICN);
                     if (!isRight)
                     {
                         if (showInformation)
@@ -2088,7 +2089,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 if (person.Name != vp.Name)
                 {
-                    if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(person.Relationship)))
+                    if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(person.Relationship)))
                     {
                         if (showInformation)
                         {
@@ -2165,7 +2166,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         {
             var canExport = true;
             string description = string.Format("{0}下承包方:{1}下地块编码为:{2}的地块", zoneName, land.OwnerName, land.LandNumber);
-            if (string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(land.Name)))
+            if (string.IsNullOrEmpty(ToolString.ExceptSpaceString(land.Name)))
             {
                 if (showInformation)
                 {
@@ -2268,7 +2269,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 canExport = false;
             }
             string[] neighbors = new string[] { land.NeighborEast, land.NeighborSouth, land.NeighborWest, land.NeighborNorth };
-            if (neighbors != null && neighbors.Length > 0 && string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(neighbors[0])))
+            if (neighbors != null && neighbors.Length > 0 && string.IsNullOrEmpty(ToolString.ExceptSpaceString(neighbors[0])))
             {
                 if (showInformation)
                 {
@@ -2280,7 +2281,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (neighbors != null && neighbors.Length > 1 && string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(neighbors[1])))
+            if (neighbors != null && neighbors.Length > 1 && string.IsNullOrEmpty(ToolString.ExceptSpaceString(neighbors[1])))
             {
                 if (showInformation)
                 {
@@ -2292,7 +2293,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (neighbors != null && neighbors.Length > 2 && string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(neighbors[2])))
+            if (neighbors != null && neighbors.Length > 2 && string.IsNullOrEmpty(ToolString.ExceptSpaceString(neighbors[2])))
             {
                 if (showInformation)
                 {
@@ -2304,7 +2305,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (neighbors != null && neighbors.Length > 3 && string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(neighbors[3])))
+            if (neighbors != null && neighbors.Length > 3 && string.IsNullOrEmpty(ToolString.ExceptSpaceString(neighbors[3])))
             {
                 if (showInformation)
                 {
@@ -2316,7 +2317,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 canExport = false;
             }
-            if (land == null || string.IsNullOrEmpty(YuLinTu.Library.Business.ToolString.ExceptSpaceString(land.LandExpand.ReferPerson)))
+            if (land == null || string.IsNullOrEmpty(ToolString.ExceptSpaceString(land.LandExpand.ReferPerson)))
             {
                 if (showInformation)
                 {
@@ -2808,30 +2809,30 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             cbdkxx.CBFBM = familyNumber;
             if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
-                cbdkxx.HTMJM = Math.Round(land.ActualArea, 2);
+                cbdkxx.HTMJM = ToolMath.ConvertRound(land.ActualArea, 2);
                 if (land.LandExpand.MeasureArea > 0)
                 {
                     cbdkxx.HTMJ = land.LandExpand.MeasureArea;
                 }
                 else
                 {
-                    cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, 2);
                 }
             }
             else if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
-                cbdkxx.HTMJM = Math.Round(land.AwareArea, 2);
+                cbdkxx.HTMJM = ToolMath.ConvertRound(land.AwareArea, 2);
                 if (land.LandExpand.MeasureArea > 0)
                 {
                     cbdkxx.HTMJ = land.LandExpand.MeasureArea;
                 }
                 else
                 {
-                    cbdkxx.HTMJ = Math.Round(cbdkxx.HTMJM.Value / 0.0015, 2);
+                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, 2);
                 }
             }
-            cbdkxx.YHTMJM = Math.Round((land.TableArea != null ? land.TableArea.Value : 0), 2);
-            cbdkxx.YHTMJ = Math.Round(cbdkxx.YHTMJM.Value / 0.0015, 2);
+            cbdkxx.YHTMJM = ToolMath.ConvertRound((land.TableArea != null ? land.TableArea.Value : 0), 2);
+            cbdkxx.YHTMJ = ToolMath.ConvertRound(cbdkxx.YHTMJM.Value / 0.0015, 2);
             cbdkxx.CBJYQQDFS = land.ConstructMode == null ? "110" : land.ConstructMode;
             cbdkxx.SFQQQG = "2";
             return cbdkxx;
@@ -2851,10 +2852,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             cbdkxx.DKBM = landCode;
             cbdkxx.FBFBM = senderCode;
             cbdkxx.CBFBM = familyNumber;
-            cbdkxx.HTMJ = Math.Round(qgLand.QuanficationArea / 0.0015, 2);
-            cbdkxx.HTMJM = Math.Round(qgLand.QuanficationArea, 2);
-            cbdkxx.YHTMJM = Math.Round(qgLand.TableArea, 2);
-            cbdkxx.YHTMJ = Math.Round(qgLand.TableArea / 0.0015, 2);
+            cbdkxx.HTMJ = ToolMath.ConvertRound(qgLand.QuanficationArea / 0.0015, 2);
+            cbdkxx.HTMJM = ToolMath.ConvertRound(qgLand.QuanficationArea, 2);
+            cbdkxx.YHTMJM = ToolMath.ConvertRound(qgLand.TableArea, 2);
+            cbdkxx.YHTMJ = ToolMath.ConvertRound(qgLand.TableArea / 0.0015, 2);
             cbdkxx.CBJYQQDFS = land.ConstructMode == null ? "110" : land.ConstructMode;
             cbdkxx.SFQQQG = "1";
             return cbdkxx;
@@ -2890,8 +2891,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 dk.SFJBNT = "0";
             }
-            dk.SCMJ = Math.Round(land.ActualArea / 0.0015, 2);
-            dk.SCMJM = Math.Round(land.ActualArea, 2);
+            dk.SCMJ = ToolMath.ConvertRound(land.ActualArea / 0.0015, 2);
+            dk.SCMJM = ToolMath.ConvertRound(land.ActualArea, 2);
             dk.DKDZ = land.NeighborEast;
             dk.DKNZ = land.NeighborSouth;
             dk.DKXZ = land.NeighborWest;
@@ -2946,16 +2947,16 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
-                cbht.HTZMJ = Math.Round(concord.CountActualArea / 0.0015, 2);
-                cbht.HTZMJM = Math.Round(concord.CountActualArea, 2);
+                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountActualArea / 0.0015, 2);
+                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountActualArea, 2);
             }
             else if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
-                cbht.HTZMJ = Math.Round(concord.CountAwareArea / 0.0015, 2);
-                cbht.HTZMJM = Math.Round(concord.CountAwareArea, 2);
+                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountAwareArea / 0.0015, 2);
+                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountAwareArea, 2);
             }
-            cbht.YHTZMJM = concord.TotalTableArea != null ? Math.Round(concord.TotalTableArea.Value, 2) : concord.TotalTableArea;
-            cbht.YHTZMJ = cbht.YHTZMJM != null ? Math.Round(cbht.YHTZMJM.Value / 0.0015, 2) : 0;
+            cbht.YHTZMJM = concord.TotalTableArea != null ? ToolMath.ConvertRound(concord.TotalTableArea.Value, 2) : concord.TotalTableArea;
+            cbht.YHTZMJ = cbht.YHTZMJM != null ? ToolMath.ConvertRound(cbht.YHTZMJM.Value / 0.0015, 2) : 0;
 
             cbht.QDSJ = concord.ContractDate != null ? concord.ContractDate.Value.Date : DateTime.Now;
             return cbht;
@@ -3208,7 +3209,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 mzdw.BZ = spot.Comment;
                 mzdw.DWMC = spot.DWMC;
                 mzdw.MJ = spot.Area;
-                mzdw.MJM = Math.Round(spot.Area * 0.0015, 2);
+                mzdw.MJM = ToolMath.ConvertRound(spot.Area * 0.0015, 2);
                 mzdw.Shape = spot.Shape == null ? null : spot.Shape.Instance;
                 mzdws.Add(mzdw);
                 startIndex++;
@@ -3295,7 +3296,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 jbnt.YSDM = point.FeatureCode;
                 jbnt.BHQBH = point.ConserveNumber;
                 jbnt.JBNTMJ = point.FarmLandArea;
-                jbnt.JBNTMJM = point.FarmLandArea != null ? Math.Round(point.FarmLandArea.Value * 0.0015, 2) : point.FarmLandArea;
+                jbnt.JBNTMJM = point.FarmLandArea != null ? ToolMath.ConvertRound(point.FarmLandArea.Value * 0.0015, 2) : point.FarmLandArea;
                 jbnt.Shape = point.Shape == null ? null : point.Shape.Instance;
                 farmers.Add(jbnt);
                 startIndex++;
@@ -3322,8 +3323,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
             public Point(double x, double y)
             {
-                this.X = Math.Round(x, 4);
-                this.Y = Math.Round(y, 4);
+                this.X = ToolMath.ConvertRound(x, 4);
+                this.Y = ToolMath.ConvertRound(y, 4);
             }
 
             public override bool Equals(object obj)
@@ -3764,7 +3765,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 return familyName;
             }
-            string number = Library.Business.ToolString.GetAllNumberWithInString(familyName);
+            string number = ToolString.GetAllNumberWithInString(familyName);
             if (!string.IsNullOrEmpty(number))
             {
                 return familyName.Replace(number, "");

@@ -406,9 +406,9 @@ namespace YuLinTu.Library.Business
                 awareArea += land.AwareArea;
                 actualArea += land.ActualArea;
             }
-            tableArea = Math.Round(tableArea, 4);
-            awareArea = Math.Round(awareArea, 4);
-            actualArea = Math.Round(actualArea, 4);
+            tableArea = ToolMath.RoundNumericFormat(tableArea, 4);
+            awareArea = ToolMath.RoundNumericFormat(awareArea, 4);
+            actualArea = ToolMath.RoundNumericFormat(actualArea, 4);
         }
 
 

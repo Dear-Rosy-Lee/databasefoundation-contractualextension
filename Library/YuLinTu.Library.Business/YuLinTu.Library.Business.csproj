@@ -699,13 +699,9 @@
     <Compile Include="SharpZip\SharpZipOperation.cs" />
     <Compile Include="Tool\ToolAssemblyInfoConfig.cs" />
     <Compile Include="Tool\ToolConfiguration.cs" />
-    <Compile Include="Tool\ToolDateTime.cs" />
     <Compile Include="Tool\ToolException.cs" />
-    <Compile Include="Tool\ToolICN.cs" />
-    <Compile Include="Tool\ToolMath.cs" />
     <Compile Include="Tool\ToolProgress.cs" />
     <Compile Include="Tool\ToolSerialization.cs" />
-    <Compile Include="Tool\ToolString.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorTable.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportApplyBook.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorExcel.cs" />

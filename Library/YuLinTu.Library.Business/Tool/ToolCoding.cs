@@ -8,6 +8,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

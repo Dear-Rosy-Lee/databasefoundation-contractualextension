@@ -27,7 +27,7 @@ namespace YuLinTu.Library.Business
         public int ToAreaNumeric { get; set; }
 
         /// <summary>
-        /// 面积截取模式
+        /// 小数点处理模式
         /// </summary>
         public int ToAreaModule { get; set; }
 

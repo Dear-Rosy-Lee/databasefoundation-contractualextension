@@ -17,6 +17,7 @@ using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.MapFoundation
 {

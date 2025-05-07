@@ -404,7 +404,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             //{
             //    dlg.Model.StockTotality += person.SharePersonList.Count;
             //}
-            //dlg.Model.SingleStockArea = Math.Round(dlg.Model.AreaTotality / dlg.Model.StockTotality, 2);
+            //dlg.Model.SingleStockArea = ToolMath.RoundNumericFormat(dlg.Model.AreaTotality / dlg.Model.StockTotality, 2);
             //Workpage.Workspace.ApplyTheme(dlg);
             //if (dlg.ShowDialog() == true)
             //{

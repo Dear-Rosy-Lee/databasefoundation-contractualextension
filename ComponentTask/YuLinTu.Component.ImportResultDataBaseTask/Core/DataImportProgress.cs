@@ -13,8 +13,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
-using NPOI.SS.Formula;
-using NPOI.Util;
 using Quality.Business.Entity;
 using Quality.Business.TaskBasic;
 using YuLinTu.Component.Common;
@@ -1235,7 +1233,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
 
                 if (landCoils.Any(ld => ld.ID == landcoilitem.ID) == false)
                 {
-                    landcoilitem.CoilLength = YuLinTu.Library.Business.ToolMath.CutNumericFormat(landcoilitem.Shape.Length(), 2);
+                    landcoilitem.CoilLength = ToolMath.ConvertRound(landcoilitem.Shape.Length(), 2);
                     landcoilitem.OrderID = coilindex;
                     landCoils.Add(landcoilitem);
                     coilindex++;
@@ -1423,7 +1421,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
 
                         if (landCoils.Any(ld => ld.ID == landcoilitem.ID) == false)
                         {
-                            landcoilitem.CoilLength = YuLinTu.Library.Business.ToolMath.CutNumericFormat(landcoilitem.Shape.Length(), 2);
+                            landcoilitem.CoilLength = ToolMath.ConvertRound(landcoilitem.Shape.Length(), 2);
                             landcoilitem.OrderID = coilindex;
                             landCoils.Add(landcoilitem);
                             coilindex++;

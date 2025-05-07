@@ -9,6 +9,7 @@ using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 
 namespace YuLinTu.Library.Business

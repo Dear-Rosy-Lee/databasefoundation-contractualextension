@@ -530,7 +530,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             lzht.LZHTBM = ht.LZHTBM;
             lzht.LZHTDYT = ht.LZHTDYT;
             lzht.LZJGSM = ht.LZJGSM;
-            lzht.LZMJ = Math.Round(ht.LZMJ, 2);
+            lzht.LZMJ = ToolMath.ConvertRound(ht.LZMJ, 2);
             lzht.LZQTDYT = ht.LZQTDYT;
             lzht.LZQX = ht.LZQX;
             lzht.LZQXJSRQ = ht.LZQXJSRQ;
@@ -566,9 +566,9 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
                     DKBM = dkxx.DKBM,
                     FBFBM = dkxx.FBFBM,
                     SFQQQG = dkxx.SFQQQG,
-                    HTMJ = Math.Round(dkxx.HTMJ, 2),
+                    HTMJ = ToolMath.ConvertRound(dkxx.HTMJ, 2),
                     HTMJM = dkxx.HTMJM,
-                    YHTMJ = dkxx.YHTMJ != null ? Math.Round(dkxx.YHTMJ.Value, 2) : 0,
+                    YHTMJ = dkxx.YHTMJ != null ? ToolMath.ConvertRound(dkxx.YHTMJ.Value, 2) : 0,
                     YHTMJM = dkxx.YHTMJM,
                     LZHTBM = dkxx.LZHTBM
                 };

@@ -7,6 +7,7 @@ using YuLinTu.Library.Entity;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

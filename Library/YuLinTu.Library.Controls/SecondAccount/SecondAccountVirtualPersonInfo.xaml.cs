@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;

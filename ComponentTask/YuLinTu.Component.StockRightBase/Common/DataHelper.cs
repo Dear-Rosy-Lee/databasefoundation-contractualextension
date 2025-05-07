@@ -4,6 +4,7 @@ using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase
 {
@@ -74,7 +75,7 @@ namespace YuLinTu.Component.StockRightBase
                 return 0.00;
             }
 
-            return Math.Round((double)molecule / denominator, 2);
+            return ToolMath.RoundNumericFormat((double)molecule / denominator, 2);
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace YuLinTu.Component.StockRightBase
                 return "0.00";
             }
 
-            return Math.Round((double)molecule / denominator, 2).ToString() + "%";
+            return ToolMath.RoundNumericFormat((double)molecule / denominator, 2).ToString() + "%";
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace YuLinTu.Component.StockRightBase
                 return 0.00;
             }
 
-            return Math.Round((double)families / groupPerson, digits);
+            return ToolMath.RoundNumericFormat((double)families / groupPerson, digits);
         }
 
         #endregion

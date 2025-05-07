@@ -892,7 +892,7 @@ namespace YuLinTu.Library.Controls
             //            break;
             //        }
             //    }
-            //    cCoil.CoilLength = Math.Round(dis, 2);
+            //    cCoil.CoilLength = ToolMath.RoundNumericFormat(dis, 2);
             //    //cCoil.Shape = YuLinTu.Spatial.Geometry.CreatePolyline(dots);
             //    //cCoil.Shape.Instance.SRID = SRID;
             //    //cCoil.Shape = YuLinTu.Spatial.Geometry.FromInstance(cCoil.Shape.Instance);
@@ -1157,7 +1157,7 @@ namespace YuLinTu.Library.Controls
                     qjzdh = dots.Find(t => t.ID == line.StartPointID).UniteDotNumber;
                     zjzdh = dots.Find(t => t.ID == line.EndPointID).UniteDotNumber;
                 }
-                var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + Math.Round(line.Shape.Length(), 2) + "米到" + zjzdh;
+                var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + ToolMath.RoundNumericFormat(line.Shape.Length(), 2) + "米到" + zjzdh;
                 line.Description = jszsm;
             }
         }

@@ -17,6 +17,7 @@ using DotSpatial.Data;
 using YuLinTu.Library.Business;
 using System.IO;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.MapFoundation
 {

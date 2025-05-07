@@ -77,14 +77,14 @@ namespace YuLinTu.Library.Aux
 
         public int GetHashCode(Coordinate obj)
         {
-            _tmpC.X = func(obj.X);// Math.Round(obj.X, 3);
-            _tmpC.Y = func(obj.Y);// Math.Round(obj.Y, 3);
+            _tmpC.X = func(obj.X);// ToolMath.RoundNumericFormat(obj.X, 3);
+            _tmpC.Y = func(obj.Y);// ToolMath.RoundNumericFormat(obj.Y, 3);
             return _tmpC.GetHashCode();
         }
 
         private static double func(double x)
         {
-            //return Math.Round(x, 3);
+            //return ToolMath.RoundNumericFormat(x, 3);
             long n = (long)((x + 0.00000001) * 100);
             return n / 100.0;
         }

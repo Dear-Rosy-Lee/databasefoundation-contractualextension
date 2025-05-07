@@ -15,6 +15,7 @@ using YuLinTu.PropertyRight.ContractLand;
 using YuLinTu.Library.Business;
 using YuLinTu.PropertyRight.Services.Client;
 using YuLinTu.Data;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

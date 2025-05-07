@@ -114,8 +114,8 @@ namespace YuLinTu.Component.CoordinateTransformTask
             dy = Dy;
             rota = Math.Atan(v / u);
             scale = u / Math.Cos(rota);
-            dx = Math.Round(dx, 6);
-            dy = Math.Round(dy, 6);
+            dx = (double)Math.Round((decimal)dx, 6);
+            dy = (double)Math.Round((decimal)dy, 6);
             rota = Math.Round(rota, 6);
             scale = Math.Round(scale, 6);
         }

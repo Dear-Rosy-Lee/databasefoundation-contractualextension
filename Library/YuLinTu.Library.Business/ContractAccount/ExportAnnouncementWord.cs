@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -200,9 +201,9 @@ namespace YuLinTu.Library.Business
         private void WriteOtherInformations()
         {
 
-            actualArea = Business.ToolMath.SetNumericFormat(actualArea, 4, 1);
-            awareArea = Business.ToolMath.SetNumericFormat(awareArea, 4, 1);
-            tableArea = Business.ToolMath.SetNumericFormat(tableArea, 4, 1);
+            actualArea = ToolMath.SetNumericFormat(actualArea, 4, 1);
+            awareArea = ToolMath.SetNumericFormat(awareArea, 4, 1);
+            tableArea = ToolMath.SetNumericFormat(tableArea, 4, 1);
             SetBookmarkValue("FamilyNumber", (ListPerson != null && ListPerson.Count > 0) ? ListPerson.Count.ToString() : "   ");
             SetBookmarkValue("LandNumber", (ListLand != null && ListLand.Count > 0) ? ListLand.Count.ToString() : "   ");
             double area = CalArea();

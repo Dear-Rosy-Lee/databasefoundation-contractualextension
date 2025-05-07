@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 
 namespace YuLinTu.Component.ImportResultDataBaseTask
@@ -362,8 +363,8 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
                 getcbd.IsFarmerLand = false;
             }
 
-            //getcbd.ActualArea = Math.Round(dk.SCMJ * 0.0015, 2);
-            getcbd.ActualArea = Library.Business.ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
+            //getcbd.ActualArea = ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
+            getcbd.ActualArea = ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
             getcbd.NeighborEast = dk.DKDZ;
             getcbd.NeighborSouth = dk.DKNZ;
             getcbd.NeighborWest = dk.DKXZ;
@@ -400,7 +401,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
                 HT.ArableLandType = entityHT.CBFS;
                 HT.ArableLandStartTime = entityHT.CBQXQ;
                 HT.ArableLandEndTime = entityHT.CBQXZ;
-                //HT.CountActualArea = Math.Round(entityHT.HTZMJ * 0.0015, 2);
+                //HT.CountActualArea = ToolMath.RoundNumericFormat(entityHT.HTZMJ * 0.0015, 2);
                 HT.CountAwareArea = entityHT.HTZMJM != null ? entityHT.HTZMJM.Value : 0;
                 HT.TotalTableArea = entityHT.YHTZMJM;
                 HT.ContractDate = entityHT.QDSJ;

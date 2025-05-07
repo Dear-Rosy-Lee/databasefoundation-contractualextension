@@ -331,7 +331,7 @@ namespace YuLinTu.Library.Business
                 var jszsm = "";
                 if (setArg.SetLineDescription == EnumDescription.LineLength)
                 {
-                    jszsm = Math.Round(en.Shape.Length(), 2).ToString();
+                    jszsm = ToolMath.RoundNumericFormat(en.Shape.Length(), 2).ToString();
                 }
                 else
                 {
@@ -348,7 +348,7 @@ namespace YuLinTu.Library.Business
                     }
                     if (setArg.SetLineDescription == EnumDescription.LineFind)
                     {
-                        jszsm = string.Format("{0}沿{1}方{2}米到{3}", qjzdh, a.toAzimuthString(), Math.Round(en.Shape.Length(), 2), zjzdh);
+                        jszsm = string.Format("{0}沿{1}方{2}米到{3}", qjzdh, a.toAzimuthString(), ToolMath.RoundNumericFormat(en.Shape.Length(), 2), zjzdh);
                     }
                     else
                     {
@@ -367,7 +367,7 @@ namespace YuLinTu.Library.Business
                         }
                         var lb = "";
                         lbdic.TryGetValue(en.CoilType, out lb);
-                        jszsm = string.Format("{0}沿{1}{2}{3}方{4}米到{5}", qjzdh, lb, wz, a.toAzimuthString(), Math.Round(en.Shape.Length(), 2), zjzdh);
+                        jszsm = string.Format("{0}沿{1}{2}{3}方{4}米到{5}", qjzdh, lb, wz, a.toAzimuthString(), ToolMath.RoundNumericFormat(en.Shape.Length(), 2), zjzdh);
                     }
                 }
                 en.Description = jszsm;
@@ -698,7 +698,7 @@ namespace YuLinTu.Library.Business
             var v1mod = Math.Sqrt(v1x * v1x + v1y * v1y);
             var v2mode = Math.Sqrt(v2x * v2x + v2y * v2y);
 
-            var angle = Math.Acos(Math.Round(multi / v1mod / v2mode, 6)) * 180 / Math.PI;
+            var angle = Math.Acos(ToolMath.RoundNumericFormat(multi / v1mod / v2mode, 6)) * 180 / Math.PI;
             return angle;
         }
 
@@ -933,7 +933,7 @@ namespace YuLinTu.Library.Business
             {
                 if (_lineDescription == EnumDescription.LineLength)
                 {
-                    line.Description = Math.Round(line.Shape.Length(), 2).ToString();
+                    line.Description = ToolMath.RoundNumericFormat(line.Shape.Length(), 2).ToString();
                 }
                 else
                 {
@@ -950,7 +950,7 @@ namespace YuLinTu.Library.Business
                     }
                     if (_lineDescription == EnumDescription.LineFind)
                     {
-                        line.Description = string.Format("{0}沿{1}方{2}米到{3}", qjzdh, a.toAzimuthString(), Math.Round(line.Shape.Length(), 2), zjzdh);
+                        line.Description = string.Format("{0}沿{1}方{2}米到{3}", qjzdh, a.toAzimuthString(), ToolMath.RoundNumericFormat(line.Shape.Length(), 2), zjzdh);
                     }
                     else
                     {
@@ -968,7 +968,7 @@ namespace YuLinTu.Library.Business
                                 break;
                         }
                         var lb = _jzxlbdic?.FirstOrDefault(r => r.Code == line.CoilType)?.Name ?? string.Empty;
-                        line.Description = string.Format("{0}沿{1}{2}{3}方{4}米到{5}", qjzdh, lb, wz, a.toAzimuthString(), Math.Round(line.Shape.Length(), 2), zjzdh);
+                        line.Description = string.Format("{0}沿{1}{2}{3}方{4}米到{5}", qjzdh, lb, wz, a.toAzimuthString(), ToolMath.RoundNumericFormat(line.Shape.Length(), 2), zjzdh);
                     }
                 }
             }
@@ -994,7 +994,7 @@ namespace YuLinTu.Library.Business
         //            qjzdh = dots.Find(t => t.ID == line.StartPointID).UniteDotNumber;
         //            zjzdh = dots.Find(t => t.ID == line.EndPointID).UniteDotNumber;
         //        }
-        //        var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + Math.Round(line.Shape.Length(), 2) + "米到" + zjzdh;
+        //        var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + ToolMath.RoundNumericFormat(line.Shape.Length(), 2) + "米到" + zjzdh;
         //        line.Description = jszsm;
         //    }
         //}

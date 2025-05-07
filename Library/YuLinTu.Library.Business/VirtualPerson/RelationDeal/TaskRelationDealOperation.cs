@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

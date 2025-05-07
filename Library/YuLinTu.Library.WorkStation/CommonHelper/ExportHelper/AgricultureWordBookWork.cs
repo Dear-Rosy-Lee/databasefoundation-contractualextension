@@ -1379,7 +1379,7 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         private double InitalizeArea(double area, int dicimal = 4)
         {
-            double ae = Math.Round(area, dicimal);
+            double ae = ToolMath.RoundNumericFormat(area, dicimal);
             return ae;
         }
 

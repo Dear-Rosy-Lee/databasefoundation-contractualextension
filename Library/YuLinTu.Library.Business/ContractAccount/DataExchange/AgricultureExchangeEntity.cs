@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.ServiceModel.Description;
 using YuLinTu.Library.Entity;
 using System.Collections.Generic;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

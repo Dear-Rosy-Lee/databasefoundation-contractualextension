@@ -813,8 +813,8 @@ namespace YuLinTu.Library.Aux
                 shp.WriteFieldString(_nCurrShapeID, 3, jzdEn.jzdlx);
                 shp.WriteFieldString(_nCurrShapeID, 4, jzdEn.jblx);
                 shp.WriteFieldString(_nCurrShapeID, 5, jzdEn.dkbm);
-                shp.WriteFieldDouble(_nCurrShapeID, 6, Math.Round(jzdEn.pt.Y, 3));
-                shp.WriteFieldDouble(_nCurrShapeID, 7, Math.Round(jzdEn.pt.X, 3));
+                shp.WriteFieldDouble(_nCurrShapeID, 6, (double)Math.Round((decimal)jzdEn.pt.Y, 3));
+                shp.WriteFieldDouble(_nCurrShapeID, 7, (double)Math.Round((decimal)jzdEn.pt.X, 3));
                 ++_nCurrShapeID;
 
                 if (jzdEn.fKeyJzd)
@@ -1047,7 +1047,7 @@ namespace YuLinTu.Library.Aux
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.TDLYLX);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.TDYT);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.SFJBNT);
-                shp.WriteFieldDouble(_nCurrShapeID, ++j, Math.Round(en.SCMJ, 2));
+                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJ, 2));
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKDZ);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKXZ);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKNZ);
@@ -1055,7 +1055,7 @@ namespace YuLinTu.Library.Aux
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKBZXX);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.ZJRXM);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.KJZB);
-                shp.WriteFieldDouble(_nCurrShapeID, ++j, Math.Round(en.SCMJM, 2));
+                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJM, 2));
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DLDJ);
                 ++_nCurrShapeID;
 
@@ -1126,8 +1126,8 @@ namespace YuLinTu.Library.Aux
 
             public int GetHashCode(IPoint obj)
             {
-                _tmpC.X = func(obj.X);// Math.Round(obj.X, 3);
-                _tmpC.Y = func(obj.Y);// Math.Round(obj.Y, 3);
+                _tmpC.X = func(obj.X);// ToolMath.RoundNumericFormat(obj.X, 3);
+                _tmpC.Y = func(obj.Y);// ToolMath.RoundNumericFormat(obj.Y, 3);
                 return _tmpC.GetHashCode();
             }
 
@@ -1540,7 +1540,7 @@ namespace YuLinTu.Library.Aux
         public double RoundNumericFormat(double value, int digits)
         {
             double number = value + 0.00000001;
-            //   double numeric = Math.Round(number, digits);
+            //   double numeric = ToolMath.RoundNumericFormat(number, digits);
 
             double numeric = Convert.ToUInt64(number * 100) / 100.0;
             switch (digits)

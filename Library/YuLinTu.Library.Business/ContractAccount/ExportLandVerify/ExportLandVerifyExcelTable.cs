@@ -6,6 +6,7 @@ using Aspose.Cells;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -428,8 +429,8 @@ namespace YuLinTu.Library.Business
         //        InitalizeRangeValue("W" + index, "W" + index, SF.Name);
         //    }
 
-        //    InitalizeRangeValue("Y" + index, "Y" + index, Math.Round(land.AwareArea, 2));
-        //    InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
+        //    InitalizeRangeValue("Y" + index, "Y" + index, ToolMath.RoundNumericFormat(land.AwareArea, 2));
+        //    InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));
         //    InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "/");
         //    InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
         //    InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "/");
@@ -595,8 +596,8 @@ namespace YuLinTu.Library.Business
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
 
-            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? Math.Round(land.AwareArea, 2) : 0);
-            InitalizeRangeValue("AA" + index, "AA" + index, Math.Round(land.ActualArea, 2));
+            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, 2) : 0);
+            InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "");
             InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "");
             InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "");

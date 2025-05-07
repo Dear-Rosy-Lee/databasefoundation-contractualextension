@@ -10,6 +10,7 @@ using YuLinTu.Library.Office;
 using System.IO;
 using YuLinTu.Spatial;
 using System.Threading.Tasks;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

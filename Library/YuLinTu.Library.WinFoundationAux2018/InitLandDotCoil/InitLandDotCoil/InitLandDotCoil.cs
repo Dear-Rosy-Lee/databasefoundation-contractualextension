@@ -342,7 +342,7 @@ namespace YuLinTu.Library.Aux
                     //毗邻地//如果是自己，界址线位置为外，其它信息还是自己，因为界址线位置外是自有
                     bool fTwin;//是否同毗邻地田挨田（无间隙）
                     ShortZd_cbd pld;//毗邻地
-                    jzxEn.JZXCD = Math.Round(calcLength(cbd, points, out shape, out pld, out fTwin), 2);
+                    jzxEn.JZXCD = (double)Math.Round((decimal)calcLength(cbd, points, out shape, out pld, out fTwin), 2);
 
                     //如果范围内什么都没有
                     if (_qlrSet.Count == 0 || pld == null)
@@ -720,7 +720,7 @@ namespace YuLinTu.Library.Aux
                         qjzdh = _p._param.AddressPointPrefix + qjzd.TBJZDH.ToString();
                         zjzdh = _p._param.AddressPointPrefix + zjzd.TBJZDH.ToString();
                     }
-                    var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + Math.Round(jzxEn.JZXCD, 2) + "米到" + zjzdh;
+                    var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + (double)Math.Round((decimal)jzxEn.JZXCD, 2) + "米到" + zjzdh;
                     jzxEn.JZXSM = jszsm;
                 }
                 else if (_p._param.LineDescription == EnumDescription.LineFindType)
@@ -753,7 +753,7 @@ namespace YuLinTu.Library.Aux
                     var jzxlbdic = _p._param.Jzxlbdics.Find(jd => jd.Code == jzxEn.JZXLB);
                     jzxlbstr = jzxlbdic?.Name;
 
-                    var jszsm = qjzdh + "沿" + jzxlbstr + nzw + a.toAzimuthString() + "方" + Math.Round(jzxEn.JZXCD, 2) + "米到" + zjzdh;
+                    var jszsm = qjzdh + "沿" + jzxlbstr + nzw + a.toAzimuthString() + "方" + (double)Math.Round((decimal)jzxEn.JZXCD, 2) + "米到" + zjzdh;
                     jzxEn.JZXSM = jszsm;
                 }
             }
@@ -1619,7 +1619,7 @@ namespace YuLinTu.Library.Aux
                 var v1mod = Math.Sqrt(v1x * v1x + v1y * v1y);
                 var v2mode = Math.Sqrt(v2x * v2x + v2y * v2y);
 
-                var angle = Math.Acos(Math.Round(multi / v1mod / v2mode, 6)) * 180 / Math.PI;
+                var angle = Math.Acos((double)Math.Round((decimal)(multi / v1mod / v2mode), 6)) * 180 / Math.PI;
                 return angle;
             }
 

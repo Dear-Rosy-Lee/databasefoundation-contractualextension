@@ -12,6 +12,7 @@ using YuLinTu.Spatial;
 using YuLinTu.tGIS.Data;
 using YuLinTu.tGIS;
 using YuLinTu.tGIS.Client;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

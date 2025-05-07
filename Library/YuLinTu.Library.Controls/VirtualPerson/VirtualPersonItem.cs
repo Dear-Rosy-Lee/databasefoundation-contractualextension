@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {
@@ -391,7 +392,7 @@ namespace YuLinTu.Library.Controls
                 Age = p.Age;
                 if (string.IsNullOrEmpty(Age))
                 {
-                    int age = YuLinTu.Library.Business.ToolDateTime.GetAge(p.Birthday);
+                    int age = ToolDateTime.GetAge(p.Birthday);
                     if (age != -1)
                         Age = age.ToString();
                 }

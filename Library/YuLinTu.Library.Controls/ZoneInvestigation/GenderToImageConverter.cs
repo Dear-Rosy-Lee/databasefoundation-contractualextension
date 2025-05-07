@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {

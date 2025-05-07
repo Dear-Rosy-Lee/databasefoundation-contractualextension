@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using YuLinTu.Windows;
 using YuLinTu.Library.Business;
 using YuLinTu.Component.StockRightBase.Model;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase.Bussiness
 {

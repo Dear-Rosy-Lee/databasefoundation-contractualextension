@@ -304,7 +304,7 @@ namespace YuLinTu.Library.WorkStation
                     }
                 }
             }
-            coil.Description = (Math.Round(length, 4)).ToString();
+            coil.Description = (ToolMath.RoundNumericFormat(length, 4)).ToString();
         }
 
         /// <summary>

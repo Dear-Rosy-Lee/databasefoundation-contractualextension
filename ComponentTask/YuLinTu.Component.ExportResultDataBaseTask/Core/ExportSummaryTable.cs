@@ -102,7 +102,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var mdbcbdlistDic = areaDic.Where(dd => cbddkbmlist.Contains(dd.Key)).ToList();
 
             summary.ContractLandCount = mdbcbdlistDic.Count;//承包地块数
-            summary.ContractLandAreaCount = Math.Round(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare()), 2);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
+            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare()), 2);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
 
             //选出有空间信息的非承包地块
             var fcbdshapeList = fcbdList.FindAll(fc => fc.Shape != null);
@@ -177,9 +177,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             foreach (var item in hts)
             {
                 if (item.CBHTBM != null && codeColl.Contains(item.CBHTBM))
-                    areaCount += Math.Round(item.HTZMJ * 0.0015, 2);
+                    areaCount += ToolMath.ConvertRound(item.HTZMJ * 0.0015, 2);
             }
-            return Math.Round(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, 2);
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             double areaCount = 0;
             foreach (var item in dks)
             {
-                areaCount += Math.Round(item.SCMJ * 0.0015, 2);
+                areaCount += ToolMath.ConvertRound(item.SCMJ * 0.0015, 2);
             }
-            return Math.Round(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, 2);
         }
 
         /// <summary>
@@ -205,9 +205,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 item.DKBM = item.DKBM == null ? "" : item.DKBM;
                 if (areaDic.ContainsKey(item.DKBM))
-                    areaCount += Math.Round(areaDic[item.DKBM] * 0.0015, 2);
+                    areaCount += ToolMath.ConvertRound(areaDic[item.DKBM] * 0.0015, 2);
             }
-            return Math.Round(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, 2);
         }
 
         /// <summary>

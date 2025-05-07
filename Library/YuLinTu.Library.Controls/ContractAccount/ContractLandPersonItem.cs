@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {

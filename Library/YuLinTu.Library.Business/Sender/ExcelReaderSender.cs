@@ -8,6 +8,7 @@ using System.Text;
 using YuLinTu.Library.Office;
 using System.Collections;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

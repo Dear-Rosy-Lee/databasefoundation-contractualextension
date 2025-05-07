@@ -2,14 +2,11 @@
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace YuLinTu.Library.WorkStation
 {
-    public class ToolMath
+    public static class ToolMath
     {
         public static string GetPercentString(int percent)
         {
@@ -244,11 +241,14 @@ namespace YuLinTu.Library.WorkStation
                 switch (currentIndex)
                 {
                     //此处出现的情况是如 10002332，“0”出现在万位上就应该加上一个“萬”读成壹仟萬零贰仟叁佰叁拾贰
-                    case 5: result += "万";
+                    case 5:
+                        result += "万";
                         break;
-                    case 9: result += "亿";
+                    case 9:
+                        result += "亿";
                         break;
-                    case 13: result += "万";
+                    case 13:
+                        result += "万";
                         break;
                 }
             }
@@ -315,11 +315,14 @@ namespace YuLinTu.Library.WorkStation
                 switch (currentIndex)
                 {
                     //此处出现的情况是如 10002332，“0”出现在万位上就应该加上一个“萬”读成壹仟萬零贰仟叁佰叁拾贰
-                    case 5: result += "萬";
+                    case 5:
+                        result += "萬";
                         break;
-                    case 9: result += "億";
+                    case 9:
+                        result += "億";
                         break;
-                    case 13: result += "萬";
+                    case 13:
+                        result += "萬";
                         break;
                 }
             }
@@ -455,14 +458,14 @@ namespace YuLinTu.Library.WorkStation
         }
 
         /// <summary>
-        /// 截取小数位数
+        /// 四舍五入小数位数
         /// </summary>
         /// <param name="value">数值</param>
         /// <param name="digits">位数</param>
         /// <returns></returns>
         public static double RoundNumericFormat(double value, int digits)
         {
-            double numeric = Math.Round(value, digits, MidpointRounding.AwayFromZero);
+            double numeric = (double)Math.Round((decimal)value, digits);
             //double number = value + 0.00000001;
             //double numeric = Convert.ToUInt32(number * 100) / 100.0;
             //switch (digits)
@@ -492,16 +495,25 @@ namespace YuLinTu.Library.WorkStation
             return numeric;
         }
 
+        public static int GetScopeNumber(int num, int min, int max)
+        {
+            if (num < min)
+                num = min;
+            if (num > max)
+                num = max;
+            return num;
+        }
+
         /// <summary>
         /// 设置小数格式
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="?"></param>
-        /// <returns></returns>
+        /// <param name="digits">保留的小数位数</param>
+        /// <param name="mode">mode=0:截取；mode!=0:四舍五入</param>
         public static double SetNumericFormat(double value, int digits, int mode)
-        {
+        {   //验证过两个方法都是对的
             double numeric = value;
-            if (mode == 0)
+            if (mode == 1)
             {
                 numeric = CutNumericFormat(value, digits);
             }
@@ -512,14 +524,6 @@ namespace YuLinTu.Library.WorkStation
             return numeric;
         }
 
-        public static int GetScopeNumber(int num, int min, int max)
-        {
-            if (num < min)
-                num = min;
-            if (num > max)
-                num = max;
-            return num;
-        }
 
         /// <summary>
         /// 设置数字字符串小数点位数
@@ -554,6 +558,15 @@ namespace YuLinTu.Library.WorkStation
                 sufFix += "0";
             }
             return perFix + sufFix;
+        }
+
+        /// <summary>
+        /// 判断double数据是否相等
+        /// </summary>
+        /// <returns>是否相等</returns>
+        public static bool AlmostEquals(double value, double otherValue, double precision)
+        {
+            return Math.Abs(value - otherValue) <= precision;
         }
     }
 }
