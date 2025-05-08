@@ -183,6 +183,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
+                    if (sd.Code != "51160310321001")
+                        continue;
                     var upvps = new List<VirtualPerson>();
                     var deloldvps = new List<VirtualPerson_Del>();
                     var uplands = new List<ContractLand>();
@@ -614,14 +616,15 @@ namespace YuLinTu.Component.AssociateLandCode
         private void FindRelationPerson(VirtualPerson vp, List<VirtualPerson> oldVps, HashSet<Guid> receslist, List<VirtualPerson> listVps, bool relationShareperson = false)
         {
             bool isrelation = false;
-
+            if (vp.Number == "512925197109246793")
+            {
+            }
             foreach (var x in oldVps)
             {
                 if (receslist.Contains(x.ID))
                     continue;
 
                 bool result = false;
-
                 if (x.Number == vp.Number)//身份证号一致
                 {
                     vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
@@ -640,18 +643,18 @@ namespace YuLinTu.Component.AssociateLandCode
                     vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
                     result = true;
                 }
-                else
-                {
-                    foreach (var sharePerson in x.SharePersonList)
-                    {
-                        if (sharePerson.ICN == vp.Number)
-                        {
-                            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
-                            vp.ChangeSituation = eBHQK.CYXXBH;
-                            result = true;
-                        }
-                    }
-                }
+                //else
+                //{
+                //    foreach (var sharePerson in x.SharePersonList)
+                //    {
+                //        if (sharePerson.ICN == vp.Number)
+                //        {
+                //            vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                //            vp.ChangeSituation = eBHQK.CYXXBH;
+                //            result = true;
+                //        }
+                //    }
+                //}
 
                 if (!result && argument.SearchInvpcode)
                 {
@@ -679,8 +682,15 @@ namespace YuLinTu.Component.AssociateLandCode
                 {
                     foreach (var x in oldVps)
                     {
+#if DEBUG
+                        if (x.Number == "512925197109246793")
+                        {
+                        }
+#endif
                         if (receslist.Contains(x.ID))
                             continue;
+                        if (personrelation)
+                            break;
                         if (x.Number == person.ICN)//身份证号一致
                         {
                             vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
@@ -689,6 +699,16 @@ namespace YuLinTu.Component.AssociateLandCode
                             receslist.Add(x.ID);
                             personrelation = true;
                             break;
+                        }
+                        foreach (var xperson in x.SharePersonList)
+                        {
+                            if (xperson.ICN == person.ICN)
+                            {
+                                vp.OldVirtualCode = x.ZoneCode + x.FamilyNumber.PadLeft(4, '0');
+                                vp.ChangeSituation = eBHQK.CYXXBH;
+                                personrelation = true;
+                                break;
+                            }
                         }
                     }
                     if (personrelation)

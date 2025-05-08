@@ -248,18 +248,11 @@ namespace YuLinTu.Component.AssociateLandCode
                                     ListOldLands.Remove(ListOldLands.Where(c => c.ActualArea == t.ActualArea).FirstOrDefault());
                                     ListLands.Add(t);
                                 }
-
                             }
-
                         }
-
-
                     });
-
                     CreateLandLogs(vp, oldVps, lands, oldlands, group);
-
                 }
-
             }
             return ListLands;
         }

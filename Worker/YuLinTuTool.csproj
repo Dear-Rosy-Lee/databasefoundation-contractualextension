@@ -2437,6 +2437,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArcGISExplorer.ico" />
+    <None Include="Template\DataBase3.mdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\DivisionCodeDictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
