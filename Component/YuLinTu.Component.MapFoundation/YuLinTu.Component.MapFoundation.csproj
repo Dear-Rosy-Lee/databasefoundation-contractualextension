@@ -560,6 +560,10 @@
     <Resource Include="Resources\VirtualPerson.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Library\YuLinTu.Library.Aux\YuLinTu.Library.Aux.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.Aux</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
@@ -588,10 +592,6 @@
       <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
       <Name>YuLinTu.Library.Repository</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
-      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.Aux</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
