@@ -43,20 +43,20 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             set;
         }
 
-        /// <summary>
-        /// 系统信息常规设置
-        /// </summary>
-        public SystemSetDefine SystemSet
-        {
-            get
-            {
-                var center = TheApp.Current.GetSystemSettingsProfileCenter();
-                var profile = center.GetProfile<SystemSetDefine>();
-                var section = profile.GetSection<SystemSetDefine>();
-                var config = section.Settings as SystemSetDefine;
-                return config;
-            }
-        }
+        ///// <summary>
+        ///// 系统信息常规设置
+        ///// </summary>
+        //public SystemSetDefine SystemSet
+        //{
+        //    get
+        //    {
+        //        var center = TheApp.Current.GetSystemSettingsProfileCenter();
+        //        var profile = center.GetProfile<SystemSetDefine>();
+        //        var section = profile.GetSection<SystemSetDefine>();
+        //        var config = section.Settings as SystemSetDefine;
+        //        return config;
+        //    }
+        //}
 
         #endregion Fields
 
@@ -87,7 +87,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         private void BuildPyramidProc(IDbContext dbContext)
         {
             var args = Argument as TaskBuildExportResultDataBaseArgument;
-
+            var systemSet = SystemSetDefine.GetIntence();
             #region 新版本入口
 
             ArcDataExportProgress dataProgress = new ArcDataExportProgress(dbContext);
@@ -126,7 +126,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             dataProgress.IsReportNoConcordNoLandsFamily = args.IsReportNoConcordNoLandsFamily;
             dataProgress.TaskExportLandDotCoilDefine = TaskExportLandDotCoilDefine;
             dataProgress.CBDKXXAwareAreaExportSet = args.CBDKXXAwareAreaExportSet;
-            dataProgress.KeepRepeatFlag = SystemSet.KeepRepeatFlag;
+            dataProgress.KeepRepeatFlag = systemSet.KeepRepeatFlag;
+            dataProgress.DecimalPlaces = systemSet.DecimalPlaces;
             dataProgress.OnlyKey = args.OnlyExportKey;
             dataProgress.UseUniteNumberExport = args.UseUniteNumberExport;
             dataProgress.OnlyExportLandResult = args.OnlyExportLandResult;

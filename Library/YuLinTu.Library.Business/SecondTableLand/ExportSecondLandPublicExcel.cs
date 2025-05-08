@@ -235,7 +235,7 @@ namespace YuLinTu.Library.Business
                     SetRange("K" + index, "K" + (index + length - 1), height, 11, false, vp != null && !string.IsNullOrEmpty(vp.TotalTableArea.ToString()) ? ToolMath.SetNumbericFormat(vp.TotalTableArea.ToString(), 2) : "");
                     if (!string.IsNullOrEmpty(vp.TotalArea))
                     {
-                        totalTebleArea += ToolMath.SetNumericFormat(Convert.ToDouble(vp.TotalArea), 2, 1);
+                        totalTebleArea += ToolMath.RoundNumericFormat(Convert.ToDouble(vp.TotalArea), 2);
                     }
                     #endregion
 

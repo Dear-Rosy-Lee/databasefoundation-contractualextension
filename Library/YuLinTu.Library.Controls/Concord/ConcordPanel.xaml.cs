@@ -442,9 +442,9 @@ namespace YuLinTu.Library.Controls
                     summaryAwareArea += (child.Visibility == Visibility.Visible) ? double.Parse(child.AwareArea) : 0;
                 }
             }
-            summaryConcordArea = ToolMath.SetNumericFormat(summaryConcordArea, 4, 1);
-            summaryActualArea = ToolMath.SetNumericFormat(summaryActualArea, 4, 1);
-            summaryAwareArea = ToolMath.SetNumericFormat(summaryAwareArea, 4, 1);
+            summaryConcordArea = ToolMath.RoundNumericFormat(summaryConcordArea, 4);
+            summaryActualArea = ToolMath.RoundNumericFormat(summaryActualArea, 4);
+            summaryAwareArea = ToolMath.RoundNumericFormat(summaryAwareArea, 4);
 
             Summary.ActualAreaCount = ToolMath.SetNumbericFormat(summaryActualArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryActualArea, 4);
             Summary.AwareAreaCount = ToolMath.SetNumbericFormat(summaryAwareArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryAwareArea, 4);

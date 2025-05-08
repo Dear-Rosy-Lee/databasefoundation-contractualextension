@@ -276,7 +276,7 @@ namespace YuLinTu.Library.Business
                     SetRange("U" + index, "U" + (index + length - 1), height, 11, false, exportData ? "" : totalArea.ToString());
                     if (!string.IsNullOrEmpty(item.CurrentFamily.TotalArea))
                     {
-                        totalTebleArea += ToolMath.SetNumericFormat(Convert.ToDouble(item.CurrentFamily.TotalArea), 2, 1);
+                        totalTebleArea += ToolMath.RoundNumericFormat(Convert.ToDouble(item.CurrentFamily.TotalArea), 2);
                     }
                     #endregion
 

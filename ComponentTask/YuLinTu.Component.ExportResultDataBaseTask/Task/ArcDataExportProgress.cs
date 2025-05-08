@@ -187,6 +187,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         public bool KeepRepeatFlag { get; set; }
 
         /// <summary>
+        /// 小数位数
+        /// </summary>
+        public int DecimalPlaces { get; set; }
+
+        /// <summary>
         /// 只导出关键界址点
         /// </summary>
         public bool OnlyKey { get; set; }
@@ -369,7 +374,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                 #endregion 输出.prj文件需要
 
-                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
+                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode, DecimalPlaces);
                 exp.ReportProgress += (msg, i) =>
                 {//进度
                     this.ReportProgress(i, msg);
@@ -402,7 +407,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public virtual void ExportLand(IDbContext dataSouce, string shapeFileOutputPath,
          string currentZoneCode, string zoneYearCode, string prjString,
-         HashSet<string> excludeDkbm, int numLand)
+         HashSet<string> excludeDkbm, int numLand, int datanum)
         {
             using (var db = new NetAux.DBSpatialite())
             {
@@ -444,7 +449,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
 
                 #endregion 输出.prj文件需要
 
-                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
+                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode, datanum);
                 exp.ReportProgress += (msg, i) =>
                 {//进度
                     this.ReportProgress(i, msg);
@@ -464,7 +469,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         en.SYQXZ = "30";
                 };
 
-                exp.DoExportLandOnly(excludeDkbm);
+                exp.DoExportLandOnly(excludeDkbm, datanum);
             }
         }
 
@@ -640,7 +645,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 {
                     var info = dataProgress.ExportDataFile(entityCollection, /*sqliteManager,*/
                         county.Name, county.FullCode, 0, county.FullCode + county.Name, summery,
-                        /*ContainDotLine,*/ CBDKXXAwareAreaExportSet, sqllandList);
+                        /*ContainDotLine,*/ CBDKXXAwareAreaExportSet, sqllandList, DecimalPlaces);
                     this.ReportAlert(eMessageGrade.Infomation, null, $"{zoneName}下属性成果数据导出完成:{info}");
                 }
                 catch (Exception ex)
@@ -754,7 +759,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 summerys.Add(summary);
                 var entityCollection = DataCheckProgress(zone, ref hasDx, extendSet, sqllandList, qgcbfs, qghts, qgqzs, datas);
                 var pdata = dataProgress.SetDataToProgress(entityCollection);
-                ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList);
+                ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList, DecimalPlaces);
                 collection.Add(pdata);
             }
             else
@@ -779,7 +784,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         continue;
                     }
                     var pdata = dataProgress.SetDataToProgress(entityCollection);
-                    ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList);
+                    ExportSummaryTable.SummaryData(pdata, summary, CBDKXXAwareAreaExportSet, sqllandList, DecimalPlaces);
                     collection.Add(pdata);
                     if (entityCollection != null)
                         entityCollection.Clear();
@@ -882,7 +887,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var lands = landquery.Where(t => t.SenderCode.StartsWith(currentZone.FullCode));
             ExportLand(DbContext, spaceProgress.ShapeFilePath, currentZone.FullCode,
                     county.FullCode + DateTime.Now.Year, spaceProgress.SpatialText, extendSet,
-                    landCount);
+                    landCount, DecimalPlaces);
         }
 
         /// <summary>
@@ -903,7 +908,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 ZoneCode = currentZone.FullCode,
                 ESRIPrjStr = prj,
                 OnlyKey = OnlyKey,
-                UseUniteNumberExport = UseUniteNumberExport
+                UseUniteNumberExport = UseUniteNumberExport,
+                DataNumber = DecimalPlaces
             };
             args.ESRIPrjStr = "";
             var task = new ExportShapeTask();
@@ -959,7 +965,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             this.ReportProgress(92, string.Format("导出汇总表格数据..."));
             ExportMataFile(spaceProgress);
             string summeryPath = Folder + @"\" + county.FullCode + county.Name + @"\汇总表格";
-            ExportSummaryTable summarytable = new ExportSummaryTable(summerys, summeryPath, county.FullCode + county.Name);
+            ExportSummaryTable summarytable = new ExportSummaryTable(summerys, summeryPath, county.FullCode + county.Name, DecimalPlaces);
             var excelResult = summarytable.ExportTable();
             if (excelResult)
                 this.ReportProgress(93, string.Format("汇总表格文件导出成功"));
@@ -1414,8 +1420,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                                     spacecdbDKBMs.Add(dk.DKBM);
                                 }
                             }
-                            ht.HTZMJ = ht.HTZMJ +Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea / 0.0015, 2);
-                            ht.HTZMJM = ht.HTZMJM +  Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea, 2);
+                            ht.HTZMJ = ht.HTZMJ + Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea / 0.0015, DecimalPlaces);
+                            ht.HTZMJM = ht.HTZMJM + Quality.Business.TaskBasic.ToolMath.ConvertRound(land.QuanficationArea, DecimalPlaces);
                         }
 
                         var books = stockwarrantStation.Get(bk => bk.ID == concorditem.ID);
@@ -1518,8 +1524,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                                 spacecdbs.Add(dk);
                                 spacecdbDKBMs.Add(dk.DKBM);
                             }
-                            ht.HTZMJ = ht.HTZMJ + ToolMath.ConvertRound(relationland.QuanficationArea / 0.0015, 2);
-                            ht.HTZMJM = ht.HTZMJM + ToolMath.ConvertRound(relationland.QuanficationArea, 2);
+                            ht.HTZMJ = ht.HTZMJ + ToolMath.ConvertRound(relationland.QuanficationArea / 0.0015, DecimalPlaces);
+                            ht.HTZMJM = ht.HTZMJM + ToolMath.ConvertRound(relationland.QuanficationArea, DecimalPlaces);
                         }
                     }
                 }
@@ -2413,6 +2419,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 canContinue = false;
             }
             fileName = Application.StartupPath + @"\Template\DataBase.mdb";
+            if (DecimalPlaces == 3)
+                fileName = Application.StartupPath + @"\Template\DataBase3.mdb";
             if (!File.Exists(fileName))
             {
                 this.ReportAlert(eMessageGrade.Error, null, "权属数据文件模板不存在!");
@@ -2809,30 +2817,30 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             cbdkxx.CBFBM = familyNumber;
             if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
-                cbdkxx.HTMJM = ToolMath.ConvertRound(land.ActualArea, 2);
+                cbdkxx.HTMJM = ToolMath.ConvertRound(land.ActualArea, DecimalPlaces);
                 if (land.LandExpand.MeasureArea > 0)
                 {
                     cbdkxx.HTMJ = land.LandExpand.MeasureArea;
                 }
                 else
                 {
-                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, 2);
+                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, DecimalPlaces);
                 }
             }
             else if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
-                cbdkxx.HTMJM = ToolMath.ConvertRound(land.AwareArea, 2);
+                cbdkxx.HTMJM = ToolMath.ConvertRound(land.AwareArea, DecimalPlaces);
                 if (land.LandExpand.MeasureArea > 0)
                 {
                     cbdkxx.HTMJ = land.LandExpand.MeasureArea;
                 }
                 else
                 {
-                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, 2);
+                    cbdkxx.HTMJ = ToolMath.ConvertRound(cbdkxx.HTMJM.Value / 0.0015, DecimalPlaces);
                 }
             }
-            cbdkxx.YHTMJM = ToolMath.ConvertRound((land.TableArea != null ? land.TableArea.Value : 0), 2);
-            cbdkxx.YHTMJ = ToolMath.ConvertRound(cbdkxx.YHTMJM.Value / 0.0015, 2);
+            cbdkxx.YHTMJM = ToolMath.ConvertRound((land.TableArea != null ? land.TableArea.Value : 0), DecimalPlaces);
+            cbdkxx.YHTMJ = ToolMath.ConvertRound(cbdkxx.YHTMJM.Value / 0.0015, DecimalPlaces);
             cbdkxx.CBJYQQDFS = land.ConstructMode == null ? "110" : land.ConstructMode;
             cbdkxx.SFQQQG = "2";
             return cbdkxx;
@@ -2852,10 +2860,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             cbdkxx.DKBM = landCode;
             cbdkxx.FBFBM = senderCode;
             cbdkxx.CBFBM = familyNumber;
-            cbdkxx.HTMJ = ToolMath.ConvertRound(qgLand.QuanficationArea / 0.0015, 2);
-            cbdkxx.HTMJM = ToolMath.ConvertRound(qgLand.QuanficationArea, 2);
-            cbdkxx.YHTMJM = ToolMath.ConvertRound(qgLand.TableArea, 2);
-            cbdkxx.YHTMJ = ToolMath.ConvertRound(qgLand.TableArea / 0.0015, 2);
+            cbdkxx.HTMJ = ToolMath.ConvertRound(qgLand.QuanficationArea / 0.0015, DecimalPlaces);
+            cbdkxx.HTMJM = ToolMath.ConvertRound(qgLand.QuanficationArea, DecimalPlaces);
+            cbdkxx.YHTMJM = ToolMath.ConvertRound(qgLand.TableArea, DecimalPlaces);
+            cbdkxx.YHTMJ = ToolMath.ConvertRound(qgLand.TableArea / 0.0015, DecimalPlaces);
             cbdkxx.CBJYQQDFS = land.ConstructMode == null ? "110" : land.ConstructMode;
             cbdkxx.SFQQQG = "1";
             return cbdkxx;
@@ -2891,8 +2899,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 dk.SFJBNT = "0";
             }
-            dk.SCMJ = ToolMath.ConvertRound(land.ActualArea / 0.0015, 2);
-            dk.SCMJM = ToolMath.ConvertRound(land.ActualArea, 2);
+            dk.SCMJ = ToolMath.ConvertRound(land.ActualArea / 0.0015, DecimalPlaces);
+            dk.SCMJM = ToolMath.ConvertRound(land.ActualArea, DecimalPlaces);
             dk.DKDZ = land.NeighborEast;
             dk.DKNZ = land.NeighborSouth;
             dk.DKXZ = land.NeighborWest;
@@ -2947,16 +2955,16 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             }
             if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
-                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountActualArea / 0.0015, 2);
-                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountActualArea, 2);
+                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountActualArea / 0.0015, DecimalPlaces);
+                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountActualArea, DecimalPlaces);
             }
             else if (CBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
-                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountAwareArea / 0.0015, 2);
-                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountAwareArea, 2);
+                cbht.HTZMJ = ToolMath.ConvertRound(concord.CountAwareArea / 0.0015, DecimalPlaces);
+                cbht.HTZMJM = ToolMath.ConvertRound(concord.CountAwareArea, DecimalPlaces);
             }
-            cbht.YHTZMJM = concord.TotalTableArea != null ? ToolMath.ConvertRound(concord.TotalTableArea.Value, 2) : concord.TotalTableArea;
-            cbht.YHTZMJ = cbht.YHTZMJM != null ? ToolMath.ConvertRound(cbht.YHTZMJM.Value / 0.0015, 2) : 0;
+            cbht.YHTZMJM = concord.TotalTableArea != null ? ToolMath.ConvertRound(concord.TotalTableArea.Value, DecimalPlaces) : concord.TotalTableArea;
+            cbht.YHTZMJ = cbht.YHTZMJM != null ? ToolMath.ConvertRound(cbht.YHTZMJM.Value / 0.0015, DecimalPlaces) : 0;
 
             cbht.QDSJ = concord.ContractDate != null ? concord.ContractDate.Value.Date : DateTime.Now;
             return cbht;
@@ -3209,7 +3217,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 mzdw.BZ = spot.Comment;
                 mzdw.DWMC = spot.DWMC;
                 mzdw.MJ = spot.Area;
-                mzdw.MJM = ToolMath.ConvertRound(spot.Area * 0.0015, 2);
+                mzdw.MJM = ToolMath.ConvertRound(spot.Area * 0.0015, DecimalPlaces);
                 mzdw.Shape = spot.Shape == null ? null : spot.Shape.Instance;
                 mzdws.Add(mzdw);
                 startIndex++;
@@ -3296,7 +3304,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 jbnt.YSDM = point.FeatureCode;
                 jbnt.BHQBH = point.ConserveNumber;
                 jbnt.JBNTMJ = point.FarmLandArea;
-                jbnt.JBNTMJM = point.FarmLandArea != null ? ToolMath.ConvertRound(point.FarmLandArea.Value * 0.0015, 2) : point.FarmLandArea;
+                jbnt.JBNTMJM = point.FarmLandArea != null ? ToolMath.ConvertRound(point.FarmLandArea.Value * 0.0015, DecimalPlaces) : point.FarmLandArea;
                 jbnt.Shape = point.Shape == null ? null : point.Shape.Instance;
                 farmers.Add(jbnt);
                 startIndex++;
@@ -3319,12 +3327,6 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 {
                     return Math.Sqrt(X * X + Y * Y);
                 }
-            }
-
-            public Point(double x, double y)
-            {
-                this.X = ToolMath.ConvertRound(x, 4);
-                this.Y = ToolMath.ConvertRound(y, 4);
             }
 
             public override bool Equals(object obj)
@@ -3400,7 +3402,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             if (efe == null)
                 efe = new ExportFileEntity();
             efe.VictorZJ.IsExport = false;
-            bool canContinue = exportProgress.CreatFolderFile(Folder, county.FullCode, DateTime.Now.Year.ToString(), county.Name, efe);
+            bool canContinue = exportProgress.CreatFolderFile(Folder, county.FullCode, DateTime.Now.Year.ToString(), county.Name, efe, DecimalPlaces);
             if (!canContinue)
             {
                 this.ReportAlert(eMessageGrade.Error, null, "创建确权登记成果数据库失败!");

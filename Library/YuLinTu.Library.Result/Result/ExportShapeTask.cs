@@ -12,7 +12,7 @@ namespace YuLinTu.Library.Result
         {
             var arg = Argument as ExportShapeTaskArgument;
             testExportJzd(arg.DbFile, arg.ShapeOutPath, arg.ZoneCode, arg.ZoneYearCode,
-                arg.LandNumber, arg.PointNumber, arg.LineNumber, arg.OnlyKey, arg.ESRIPrjStr,arg.UseUniteNumberExport);
+                arg.LandNumber, arg.PointNumber, arg.LineNumber, arg.OnlyKey, arg.ESRIPrjStr, arg.UseUniteNumberExport, arg.DataNumber);
         }
 
         protected override void OnGo()
@@ -28,7 +28,7 @@ namespace YuLinTu.Library.Result
         /// </summary>
         public void testExportJzd(string dbFile, string shapeFileOutputPath,
             string currentZoneCode, string zoneYearCode,
-            int dknumber, int jzdnumber, int jzxnumber, bool onlykey, string prj,bool useUniteNumberExport)
+            int dknumber, int jzdnumber, int jzxnumber, bool onlykey, string prj, bool useUniteNumberExport, int datanum)
         {
             var db = new DBSpatialite();
             {
@@ -61,7 +61,7 @@ namespace YuLinTu.Library.Result
                     prms.sESRIPrjStr = prjString; //SpatialReferenceUtil.FindEsriSpatialReferenceString(spatialReferencePath, srid);
                 }
                 #endregion
-                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode);
+                var exp = new ExportJzdx(db, prms, shapeFileOutputPath + @"\", currentZoneCode, zoneYearCode, datanum);
 
                 exp.ReportProgress += (msg, i) =>
                 {//进度

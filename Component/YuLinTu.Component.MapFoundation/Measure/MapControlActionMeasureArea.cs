@@ -332,8 +332,8 @@ namespace YuLinTu.Component.MapFoundation
             if (draw.GeometryGraphic == null || draw.GeometryGraphic.Geometry == null)
                 return;
 
-            var area = ToolMath.SetNumericFormat(draw.GeometryGraphic.Geometry.Area(), 2, 0);
-            objectLabel.LabelText = string.Format("面积:{0} {1}/{2} 亩", area, projectionUnit, ToolMath.SetNumericFormat(area * 0.0015, 2, 0));
+            var area = ToolMath.RoundNumericFormat(draw.GeometryGraphic.Geometry.Area(), 2);
+            objectLabel.LabelText = string.Format("面积:{0} {1}/{2} 亩", area, projectionUnit, ToolMath.RoundNumericFormat(area * 0.0015, 2));
 
             //如果获取的中点为null，则将绘制的第一个点赋值过来
             if (RefreshCenterGeometry())

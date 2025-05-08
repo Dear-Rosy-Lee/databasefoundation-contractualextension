@@ -281,21 +281,6 @@ namespace YuLinTu.Component.BusinessProcessWizard
         #endregion
 
         /// <summary>
-        /// 系统信息常规设置
-        /// </summary>
-        public SystemSetDefine SystemSet
-        {
-            get
-            {
-                var center = TheApp.Current.GetSystemSettingsProfileCenter();
-                var profile = center.GetProfile<SystemSetDefine>();
-                var section = profile.GetSection<SystemSetDefine>();
-                var config = section.Settings as SystemSetDefine;
-                return config;
-            }
-        }
-
-        /// <summary>
         /// 数据字典
         /// </summary>
         public List<YuLinTu.Library.Entity.Dictionary> DictList

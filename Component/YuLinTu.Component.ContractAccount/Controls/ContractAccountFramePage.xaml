@@ -1047,6 +1047,7 @@
                             <metro:MetroButton
                                 x:Name="btnSetAreaNumericFormat"
                                 Padding="8,4"
+                                Visibility="Collapsed"
                                 HorizontalContentAlignment="Left"
                                 VerticalContentAlignment="Stretch"
                                 x:FieldModifier="public">

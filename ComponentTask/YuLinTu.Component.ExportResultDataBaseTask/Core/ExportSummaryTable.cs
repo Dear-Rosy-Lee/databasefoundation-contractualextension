@@ -1,14 +1,13 @@
 ﻿/*
  * (C)2015 鱼鳞图公司版权所有，保留所有权利
  */
-using Quality.Business.Entity;
-using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using YuLinTu.Data;
+using Quality.Business.Entity;
+using Quality.Business.TaskBasic;
 using YuLinTu.Excel;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
@@ -23,6 +22,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         private List<DataSummary> sumList;
         private string filePath;
         private string codeName;
+        private int datanum;
 
         #endregion
 
@@ -32,12 +32,12 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 导出文件配置
         /// </summary>
         public ExportFileEntity ExportFile { get; set; }
-               
+
         #endregion
 
         #region Ctor
 
-        public ExportSummaryTable(List<DataSummary> sumList, string path, string codeName)
+        public ExportSummaryTable(List<DataSummary> sumList, string path, string codeName, int datanum)
         {
             this.sumList = sumList;
             if (sumList == null)
@@ -45,7 +45,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 sumList = new List<DataSummary>();
             }
             this.filePath = path;
-            this.codeName = codeName;           
+            this.codeName = codeName;
+            this.datanum = datanum;
             InitialSummary();
         }
 
@@ -57,7 +58,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// 统计数据
         /// </summary>
         public static void SummaryData(DataCollection data, DataSummary summary,
-            CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqliteLand)
+            CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqliteLand, int datanum)
         {
             string cbd = ((int)eDKLB.CBD).ToString();
             string zld = ((int)eDKLB.ZLD).ToString();
@@ -98,61 +99,61 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<SqliteDK> cbdList = kjdk.FindAll(t => t.DKLB == cbd);//承包地
             List<SqliteDK> fcbdList = kjdk.FindAll(t => t.DKLB != cbd);//非承包地
             //从签订合同的地块中选出承包地块
-            var cbddkbmlist = cbdList.Select(cbddkbm => cbddkbm.DKBM).ToList();          
+            var cbddkbmlist = cbdList.Select(cbddkbm => cbddkbm.DKBM).ToList();
             var mdbcbdlistDic = areaDic.Where(dd => cbddkbmlist.Contains(dd.Key)).ToList();
 
             summary.ContractLandCount = mdbcbdlistDic.Count;//承包地块数
-            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare()), 2);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
+            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare()), datanum);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
 
             //选出有空间信息的非承包地块
             var fcbdshapeList = fcbdList.FindAll(fc => fc.Shape != null);
             summary.UnContractLandCount = fcbdshapeList.Count;//非承包地块数
-            summary.UnContractLandAreaCount = AreaSCSum(fcbdshapeList);// fcbdList.Sum(t => t.SCMJ).ConvertHectare();//非承包地块总面积
+            summary.UnContractLandAreaCount = AreaSCSum(fcbdshapeList, datanum);// fcbdList.Sum(t => t.SCMJ).ConvertHectare();//非承包地块总面积
             summary.UnContractLandTypeArea = summary.UnContractLandAreaCount;
             List<SqliteDK> nyytList = cbdList.FindAll(t => t.TDYT == zzy || t.TDYT == ly || t.TDYT == xmy || t.TDYT == yy);//农业用途地块
             List<SqliteDK> fnyytList = cbdList.FindAll(t => t.TDYT == qtyt);//非农业用途地块
             //summary.AgricureAndUnAreaCount = summary.ContractLandAreaCount + summary.UnContractLandAreaCount; //cbdList.Sum(t => t.SCMJ).ConvertHectare();// summary.ContractLandAreaCount + summary.UnContractLandAreaCount;
 
-            summary.PlantAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == zzy), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//种植业面积
-            summary.ForestAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == ly), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//林业面积
-            summary.AnimalAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == xmy), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//畜牧业面积
-            summary.FishAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == yy), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//渔业面积
+            summary.PlantAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == zzy), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//种植业面积
+            summary.ForestAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == ly), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//林业面积
+            summary.AnimalAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == xmy), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//畜牧业面积
+            summary.FishAreaCount = AreaQQSum(nyytList.Where(t => t.TDYT == yy), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//渔业面积
 
-            summary.UnAgricureAreaCount = AreaSCSum(fnyytList);//.Sum(t => t.SCMJ).ConvertHectare();
+            summary.UnAgricureAreaCount = AreaSCSum(fnyytList, datanum);//.Sum(t => t.SCMJ).ConvertHectare();
             summary.AgricureAreaCount = (summary.PlantAreaCount + summary.ForestAreaCount + summary.AnimalAreaCount + summary.FishAreaCount);
             summary.AgricureAndUnAreaCount = summary.AgricureAreaCount + summary.UnAgricureAreaCount;
             List<SqliteDK> gyList = cbdList.FindAll(t => t.SYQXZ == gyxz);//国有地块
             List<SqliteDK> jtList = cbdList.FindAll(t => t.SYQXZ == cjzz || t.SYQXZ == cmxz ||
                 t.SYQXZ == jtsy || t.SYQXZ == qtsy || t.SYQXZ == xjsy);//集体地块
-            summary.CountryAreaCount = AreaQQSum(gyList, areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//国有面积
-            summary.CollectivityArea = AreaQQSum(jtList, areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//集体面积
+            summary.CountryAreaCount = AreaQQSum(gyList, areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//国有面积
+            summary.CollectivityArea = AreaQQSum(jtList, areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//集体面积
             summary.CountryAndCollAreaCount = summary.CountryAreaCount + summary.CollectivityArea;//所有面积
-            summary.GroupAreaCount = AreaQQSum(jtList.Where(t => t.SYQXZ == cmxz), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//村民小组面积
-            summary.GroupCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == cjzz), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//村级集体经济组织面积
-            summary.TownCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == xjsy), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//乡级集体经济组织面积
-            summary.OtherCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == qtsy), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//其他集体经济组织面积
+            summary.GroupAreaCount = AreaQQSum(jtList.Where(t => t.SYQXZ == cmxz), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//村民小组面积
+            summary.GroupCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == cjzz), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//村级集体经济组织面积
+            summary.TownCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == xjsy), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//乡级集体经济组织面积
+            summary.OtherCollectivityArea = AreaQQSum(jtList.Where(t => t.SYQXZ == qtsy), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//其他集体经济组织面积
 
-            summary.SelfLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == zld));//.Sum(t => t.SCMJ).ConvertHectare();//自留地面积
-            summary.MoveLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == jdd));//.Sum(t => t.SCMJ).ConvertHectare();//机动地面积
-            summary.WastLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == khd));//.Sum(t => t.SCMJ).ConvertHectare();//开荒地
-            summary.OtherCollectivityLandArea = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == qtd));//.Sum(t => t.SCMJ).ConvertHectare();//其他集体土地
-           
+            summary.SelfLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == zld), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//自留地面积
+            summary.MoveLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == jdd), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//机动地面积
+            summary.WastLandAreaCount = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == khd), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//开荒地
+            summary.OtherCollectivityLandArea = AreaSCSum(fcbdshapeList.Where(t => t.DKLB == qtd), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//其他集体土地
+
             if (cBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.确权面积)
             {
-                summary.ContractIsBaseArea = AreaQQSum(cbdList.Where(t => t.SFJBNT == yes), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积          
-                summary.ContractNotBaseArea = AreaQQSum(cbdList.Where(t => t.SFJBNT == no), areaDic);//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积
+                summary.ContractIsBaseArea = AreaQQSum(cbdList.Where(t => t.SFJBNT == yes), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积          
+                summary.ContractNotBaseArea = AreaQQSum(cbdList.Where(t => t.SFJBNT == no), areaDic, datanum);//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积
             }
             else if (cBDKXXAwareAreaExportSet == CbdkxxAwareAreaExportEnum.实测面积)
             {
-                summary.ContractIsBaseArea = AreaSCSum(cbdList.Where(t => t.SFJBNT == yes));//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积          
-                summary.ContractNotBaseArea = AreaSCSum(cbdList.Where(t => t.SFJBNT == no));//.Sum(t => t.SCMJ).ConvertHectare();//非基本农田面积
+                summary.ContractIsBaseArea = AreaSCSum(cbdList.Where(t => t.SFJBNT == yes), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//基本农田面积          
+                summary.ContractNotBaseArea = AreaSCSum(cbdList.Where(t => t.SFJBNT == no), datanum);//.Sum(t => t.SCMJ).ConvertHectare();//非基本农田面积
             }
             summary.ContractBaseAreaCount = summary.ContractIsBaseArea + summary.ContractNotBaseArea;//承包方是否基本农田合计
 
             summary.FamilyContractBookNumber = data.CBJYQZJH.Count(t => !string.IsNullOrEmpty(t.CBJYQZBM) && t.CBJYQZBM.Substring(t.CBJYQZBM.Length - 1) == "J");//家庭承包权证数
             summary.OtherContractBookNumber = data.CBJYQZJH.Count(t => !string.IsNullOrEmpty(t.CBJYQZBM) && t.CBJYQZBM.Substring(t.CBJYQZBM.Length - 1) == "Q");//其他承包权证数
 
-            summary.GisterbookArea = AreaHTSum(data.HTJH, data.CBJYQZJH);//.Sum(t => t.HTZMJ);//权证总面积
+            summary.GisterbookArea = AreaHTSum(data.HTJH, data.CBJYQZJH, datanum);//.Sum(t => t.HTZMJ);//权证总面积
             summary.FamilyCount = data.CBFJH.Count;
             List<CBF> jtcbList = data.CBFJH.FindAll(t => t.CBFLX == family);//家庭承包
             List<CBF> grList = data.CBFJH.FindAll(t => t.CBFLX == personal);//个人承包
@@ -167,7 +168,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <summary>
         /// 统计实测亩面积
         /// </summary>
-        static public double AreaHTSum(List<CBHT> hts, List<CBJYQZ> qzs)
+        static public double AreaHTSum(List<CBHT> hts, List<CBJYQZ> qzs, int datanum)
         {
             if (qzs == null || qzs.Count == 0)
                 return 0;
@@ -177,37 +178,37 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             foreach (var item in hts)
             {
                 if (item.CBHTBM != null && codeColl.Contains(item.CBHTBM))
-                    areaCount += ToolMath.ConvertRound(item.HTZMJ * 0.0015, 2);
+                    areaCount += ToolMath.ConvertRound(item.HTZMJ * 0.0015, datanum);
             }
-            return ToolMath.ConvertRound(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, datanum);
         }
 
         /// <summary>
         /// 统计实测亩面积
         /// </summary>
-        static public double AreaSCSum(IEnumerable<SqliteDK> dks)
+        static public double AreaSCSum(IEnumerable<SqliteDK> dks, int datanum)
         {
             double areaCount = 0;
             foreach (var item in dks)
             {
-                areaCount += ToolMath.ConvertRound(item.SCMJ * 0.0015, 2);
+                areaCount += ToolMath.ConvertRound(item.SCMJ * 0.0015, datanum);
             }
-            return ToolMath.ConvertRound(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, datanum);
         }
 
         /// <summary>
         /// 统计确权亩面积
         /// </summary>
-        static public double AreaQQSum(IEnumerable<SqliteDK> dks, Dictionary<string, double> areaDic)
+        static public double AreaQQSum(IEnumerable<SqliteDK> dks, Dictionary<string, double> areaDic, int datanum)
         {
             double areaCount = 0;
             foreach (var item in dks)
             {
                 item.DKBM = item.DKBM == null ? "" : item.DKBM;
                 if (areaDic.ContainsKey(item.DKBM))
-                    areaCount += ToolMath.ConvertRound(areaDic[item.DKBM] * 0.0015, 2);
+                    areaCount += ToolMath.ConvertRound(areaDic[item.DKBM] * 0.0015, datanum);
             }
-            return ToolMath.ConvertRound(areaCount, 2);
+            return ToolMath.ConvertRound(areaCount, datanum);
         }
 
         /// <summary>
@@ -339,7 +340,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     object value = info.GetValue(item, null);
                     if (info.PropertyType == typeof(double))
                     {
-                        double cellValue = ToolMath.Round(((double)value));// / 10000);
+                        double cellValue = ToolMath.ConvertRound((double)value,datanum);// / 10000);
                         //var cl = row.Instance.CreateCell(colIndex);
                         //cl.SetCellType(NPOI.SS.UserModel.CellType.Numeric);
                         cell.Instance.SetCellValue(cellValue);

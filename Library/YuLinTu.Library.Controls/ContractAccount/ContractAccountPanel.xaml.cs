@@ -433,7 +433,7 @@ namespace YuLinTu.Library.Controls
             {
                 foreach (var item in currentPersonList)
                 {
-                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations, true, SystemSetDefine.DecimalPlaces);
                     if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
                     {
                         continue;
@@ -451,7 +451,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (arg.Instance.IsStopPending)
                         break;
-                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations, true, SystemSetDefine.DecimalPlaces);
                     arg.Instance.ReportProgress(50, svpi);
                 }
             }
@@ -528,10 +528,10 @@ namespace YuLinTu.Library.Controls
                         virtualPersonContractDelayArea += contractDelayArea;
                     }
                 }
-                item.ActualAreaUI = virtualPersonActualArea.AreaFormat(2);
-                item.AwareAreaUI = virtualPersonAwareArea.AreaFormat(2);
-                item.TableAreaUI = virtualPersonTableArea.AreaFormat(2);
-                item.ContractDelayAreaUI = virtualPersonContractDelayArea.AreaFormat(2);
+                item.ActualAreaUI = virtualPersonActualArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.AwareAreaUI = virtualPersonAwareArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.TableAreaUI = virtualPersonTableArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.ContractDelayAreaUI = virtualPersonContractDelayArea.AreaFormat(SystemSetDefine.DecimalPlaces);
             }
 
             //加上确股地块统计信息
@@ -6521,8 +6521,10 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
+
             ContractLandInitializeArea initialAreaPage = new ContractLandInitializeArea(isBatch);
             initialAreaPage.Workpage = TheWorkPage;
+            initialAreaPage.ToAreaNumeric = SystemSetDefine.DecimalPlaces;
             initialAreaPage.CurrentZone = CurrentZone;
             TheWorkPage.Page.ShowMessageBox(initialAreaPage, (b, r) =>
             {

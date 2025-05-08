@@ -67,7 +67,7 @@ namespace YuLinTu.Library.Controls
             (this VirtualPerson tableVp, List<ContractLand> accountLandList,
             Dictionary<string, Dictionary> listDKLB, Dictionary<string, Dictionary> listDLDJ,
             bool isStockLand, List<BelongRelation> ralationList,
-            bool isAddChildren = true)
+            bool isAddChildren = true, int smallNum = 2)
         {
             ContractLandPersonItem item = new ContractLandPersonItem() { ID = tableVp.ID };
             item.Tag = tableVp;
@@ -102,10 +102,10 @@ namespace YuLinTu.Library.Controls
             if (list.Count > 0)
                 item.Visibility = Visibility.Visible;
             item.Name = CreateItemName(tableVp, list.Count) + CreateItemNumber(tableVp);
-            item.ActualAreaUI = list.Sum(o => o.ActualArea).AreaFormat(2);
-            item.AwareAreaUI = list.Sum(o => o.AwareArea).AreaFormat(2);
-            item.TableAreaUI = list.Sum(o => o.TableArea).AreaFormat(2);
-            item.ContractDelayAreaUI = list.Sum(o => o.ContractDelayArea).AreaFormat(2);
+            item.ActualAreaUI = list.Sum(o => o.ActualArea).AreaFormat(smallNum);
+            item.AwareAreaUI = list.Sum(o => o.AwareArea).AreaFormat(smallNum);
+            item.TableAreaUI = list.Sum(o => o.TableArea).AreaFormat(smallNum);
+            item.ContractDelayAreaUI = list.Sum(o => o.ContractDelayArea).AreaFormat(smallNum);
             item.Img = item.Tag.Status == eVirtualPersonStatus.Lock ? 3 : 0;
             return item;
         }

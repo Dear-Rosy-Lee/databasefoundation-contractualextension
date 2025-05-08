@@ -64,8 +64,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public bool IsExportScan { get; set; }
 
-        /// <summary>示意图
-        /// 是否导出
+        /// <summary>
+        /// 是否导出示意图
         /// </summary>
         public bool IsExportDKSYT { get; set; }
 
@@ -99,7 +99,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public string ExportDataFile(List<ExchangeRightEntity> rightEntitys,/* SqliteManager sqliteManager,*/
             string zoneName, string zoneCode, int persent, string rootFolderName, DataSummary summary,
-            /*bool containJzdJzx, */CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqlitLandList)
+            /*bool containJzdJzx, */CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqlitLandList, int datanum)
         {
             string info = string.Empty;
             this.rootFolderName = rootFolderName;
@@ -108,7 +108,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 collection = SetDataToProgress(rightEntitys);
                 rightEntitys.Clear();
-                ExportSummaryTable.SummaryData(collection, summary, cBDKXXAwareAreaExportSet, sqlitLandList);
+                ExportSummaryTable.SummaryData(collection, summary, cBDKXXAwareAreaExportSet, sqlitLandList, datanum);
                 //if (containJzdJzx == false)
                 //{
                 //    sqliteManager.InsertData(collection.KJDKJH, Srid);
@@ -628,7 +628,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="filePath">选择导出目录</param>
         /// <param name="codeYear">6位县级地域编码+4位年份编码</param>
         /// <param name="zoneName">县级地域名称</param>
-        public bool CreatFolderFile(string filePath, string code, string year, string zoneName, ExportFileEntity exportFile)
+        public bool CreatFolderFile(string filePath, string code, string year, string zoneName, ExportFileEntity exportFile, int datanum)
         {
             try
             {
@@ -649,7 +649,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 ShapeFilePath = dic[fpm.VictorName];
                 if ((hasDataExport && !File.Exists(DataBasePath) && !exportFile.IsAllExport) || exportFile.IsAllExport)
                 {
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database.mdb", DataBasePath, true);
+                    if (datanum == 3)
+                        File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database3.mdb", DataBasePath, true);
+                    else
+                        File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database.mdb", DataBasePath, true);
                 }
                 logFileName = Path.Combine(rootFolder, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt");
                 string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ShapeTemplate");

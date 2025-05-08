@@ -3,14 +3,10 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Library.Business
 {
@@ -318,6 +314,17 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 小数位数
+        /// </summary>
+        public int DecimalPlaces
+        {
+            get { return decimalPlaces; }
+            set { decimalPlaces = value; NotifyPropertyChanged("DecimalPlaces"); }
+        }
+
+        private int decimalPlaces;
+
+        /// <summary>
         /// 备份路径
         /// </summary>
         public string BackUpPath
@@ -473,6 +480,7 @@ namespace YuLinTu.Library.Business
             backUperDate = DateTime.Now;
             emptyReplacement = "/";
             RewritingStartNumber = 1;
+            decimalPlaces = 2;
         }
 
         private static SystemSetDefine _familyOtherDefine;

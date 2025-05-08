@@ -4517,7 +4517,7 @@ namespace YuLinTu.Library.Business
                         land.AwareArea = areaDraw;
                     }
                     var expad = land.LandExpand;
-                    expad.MeasureArea = ToolMath.SetNumericFormat(landgeoarea, 2, metadata.ToAreaModule);
+                    expad.MeasureArea = ToolMath.SetNumericFormat(landgeoarea, metadata.ToAreaNumeric, metadata.ToAreaModule);
                     land.LandExpand = expad;
                     int upCount = landStation.Update(land);
                     if (upCount > 0)

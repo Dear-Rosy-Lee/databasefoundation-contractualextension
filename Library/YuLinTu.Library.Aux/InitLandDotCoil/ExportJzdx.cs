@@ -1,6 +1,4 @@
-﻿using GeoAPI.Geometries;
-
-/*
+﻿/*
  * (C) 2016 鱼鳞图公司版权所有，保留所有权利
  * http://www.yulintu.com
  *
@@ -15,7 +13,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using GeoAPI.Geometries;
 using YuLinTu.NetAux;
 using YuLinTu.tGISCNet;
 
@@ -26,6 +24,11 @@ namespace YuLinTu.Library.Aux
     /// </summary>
     public class ExportJzdx
     {
+        /// <summary>
+        /// 小数位数
+        /// </summary>
+        private int datanum;
+
         private class Util
         {
             public static List<IndexItem> QuerySortedJzdIndexItems(DBSpatialite db, HashSet<string> excludeDkbm, string where = null)
@@ -990,7 +993,7 @@ namespace YuLinTu.Library.Aux
             {
                 _nStartBSM = _p._param.nDkBSMStartVal;
                 _nCurrShapeID = 0;
-                _shp = createDkShapeFile(MakeShapeFileName(), _p._param.sESRIPrjStr);
+                _shp = createDkShapeFile(MakeShapeFileName(), _p._param.sESRIPrjStr, _p.datanum);
             }
 
             public void OnEnd()
@@ -1002,7 +1005,7 @@ namespace YuLinTu.Library.Aux
                 }
             }
 
-            private static ShapeFile createDkShapeFile(string shpFileName, string sPrjStr)
+            private static ShapeFile createDkShapeFile(string shpFileName, string sPrjStr, int datanum)
             {
                 var shp = new ShapeFile();
                 shp.Create(shpFileName, EShapeType.SHPT_POLYGON, sPrjStr);
@@ -1015,7 +1018,7 @@ namespace YuLinTu.Library.Aux
                 shp.AddField("TDLYLX", DBFFieldType.FTString, 3);
                 shp.AddField("TDYT", DBFFieldType.FTString, 1);
                 shp.AddField("SFJBNT", DBFFieldType.FTString, 1);
-                shp.AddField("SCMJ", DBFFieldType.FTDouble, 16, 2);
+                shp.AddField("SCMJ", DBFFieldType.FTDouble, 16, datanum);
                 shp.AddField("DKDZ", DBFFieldType.FTString, 50);
                 shp.AddField("DKXZ", DBFFieldType.FTString, 50);
                 shp.AddField("DKNZ", DBFFieldType.FTString, 50);
@@ -1023,12 +1026,12 @@ namespace YuLinTu.Library.Aux
                 shp.AddField("DKBZXX", DBFFieldType.FTString, 254);
                 shp.AddField("ZJRXM", DBFFieldType.FTString, 100);
                 shp.AddField("KJZB", DBFFieldType.FTString, 254);
-                shp.AddField("SCMJM", DBFFieldType.FTDouble, 16, 2);
+                shp.AddField("SCMJM", DBFFieldType.FTDouble, 16, datanum);
                 shp.AddField("DLDJ", DBFFieldType.FTString, 2);
                 return shp;
             }
 
-            public void export(ShapeDkEntity en)//, ShapeFile shp)
+            public void export(ShapeDkEntity en, int datanum)//, ShapeFile shp)
             {
                 var shp = _shp;
                 int j = 0;
@@ -1047,7 +1050,7 @@ namespace YuLinTu.Library.Aux
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.TDLYLX);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.TDYT);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.SFJBNT);
-                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJ, 2));
+                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJ, datanum));
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKDZ);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKXZ);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKNZ);
@@ -1055,7 +1058,7 @@ namespace YuLinTu.Library.Aux
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DKBZXX);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.ZJRXM);
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.KJZB);
-                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJM, 2));
+                shp.WriteFieldDouble(_nCurrShapeID, ++j, (double)Math.Round((decimal)en.SCMJM, datanum));
                 shp.WriteFieldString(_nCurrShapeID, ++j, en.DLDJ);
                 ++_nCurrShapeID;
 
@@ -1069,7 +1072,7 @@ namespace YuLinTu.Library.Aux
                         _shp.Dispose();
                         _shp = null;
                         _nCurrShapeID = 0;
-                        _shp = createDkShapeFile(MakeShapeFileName(), _p._param.sESRIPrjStr);
+                        _shp = createDkShapeFile(MakeShapeFileName(), _p._param.sESRIPrjStr, datanum);
                     }
                 }
 
@@ -1161,7 +1164,7 @@ namespace YuLinTu.Library.Aux
         private string _countName;
 
         public ExportJzdx(DBSpatialite db, ExportJzdxParam prm,
-            string shpFilePath, string sDydm, string countname)
+            string shpFilePath, string sDydm, string countname, int datanum)
         {
             _db = db;
             _shpFilePath = shpFilePath;
@@ -1171,6 +1174,7 @@ namespace YuLinTu.Library.Aux
             _jzdExporter = new JzdExporter(this);
             _jzxExporter = new JzxExporter(this);
             _dkExporter = new DkExporter(this);
+            this.datanum = datanum;
         }
 
         private static bool testEqual(Coordinate c, double x, double y)
@@ -1374,7 +1378,7 @@ namespace YuLinTu.Library.Aux
 
                 foreach (var dk in dks)
                 {
-                    _dkExporter.export(dk);//, dkShp);
+                    _dkExporter.export(dk, datanum);//, dkShp);
                 }
 
                 #endregion 导出缓存中剩余部分的数据
@@ -1399,7 +1403,7 @@ namespace YuLinTu.Library.Aux
         /// <summary>
         /// 导出地块
         /// </summary>
-        public void DoExportLandOnly(HashSet<string> excludeDkbm)// string shpFileName,string jzxShpFileName,string where=null)
+        public void DoExportLandOnly(HashSet<string> excludeDkbm, int datanum)// string shpFileName,string jzxShpFileName,string where=null)
         {
             ReportInfomation("开始时间：" + DateTime.Now);
             string shpFilePath = _shpFilePath;
@@ -1450,11 +1454,11 @@ namespace YuLinTu.Library.Aux
                                 en.dicJzdh[c] = null;
                             }
                             if (en.wkb != null)
-                                en.SCMJ = RoundNumericFormat(Spatial.Geometry.FromBytes(en.wkb).Area(), 2);
+                                en.SCMJ = RoundNumericFormat(Spatial.Geometry.FromBytes(en.wkb).Area(), datanum);
                         });
                     foreach (var item in cache)
                     {
-                        _dkExporter.export(item);
+                        _dkExporter.export(item, datanum);
                     }
                     i = j;
                 }
@@ -1486,7 +1490,7 @@ namespace YuLinTu.Library.Aux
             }
             for (int i = lstRemove.Count - 1; i >= 0; --i)
             {
-                _dkExporter.export(lstRemove[i]);//, shp);
+                _dkExporter.export(lstRemove[i], datanum);//, shp);
             }
         }
 
@@ -1539,34 +1543,7 @@ namespace YuLinTu.Library.Aux
         /// <returns></returns>
         public double RoundNumericFormat(double value, int digits)
         {
-            double number = value + 0.00000001;
-            //   double numeric = ToolMath.RoundNumericFormat(number, digits);
-
-            double numeric = Convert.ToUInt64(number * 100) / 100.0;
-            switch (digits)
-            {
-                case 2:
-                    numeric = Convert.ToUInt64(number * 100) / 100.0;
-                    break;
-                case 3:
-                    numeric = Convert.ToUInt64(number * 1000) / 1000.0;
-                    break;
-                case 4:
-                    numeric = Convert.ToUInt64(number * 10000) / 10000.0;
-                    break;
-                case 5:
-                    numeric = Convert.ToUInt64(number * 100000) / 100000.0;
-                    break;
-                case 6:
-                    numeric = Convert.ToUInt64(number * 1000000) / 1000000.0;
-                    break;
-                case 7:
-                    numeric = Convert.ToUInt64(number * 10000000) / 10000000.0;
-                    break;
-                case 8:
-                    numeric = Convert.ToUInt64(number * 100000000) / 100000000.0;
-                    break;
-            }
+            double numeric = (double)Math.Round((decimal)value, digits);
             return numeric;
         }
     }
