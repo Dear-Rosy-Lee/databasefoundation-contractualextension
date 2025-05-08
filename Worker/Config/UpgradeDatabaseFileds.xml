@@ -694,6 +694,19 @@
 				<IsAdd>true</IsAdd>
 			</UpdateField>
 			<UpdateField>
+				<FieldName>YBMJ</FieldName>
+				<FieldType>DECIMAL</FieldType>
+				<FieldLength>13</FieldLength>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
+				<FieldName>DKXXXGYJ</FieldName>
+				<FieldType>TEXT</FieldType>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+			<UpdateField>
 				<FieldName>QQDKBM</FieldName>
 				<FieldType>TEXT</FieldType>
 				<IsNull>true</IsNull>
