@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace YuLinTu.Component.VectorDataTreatTask
 {
@@ -12,10 +13,25 @@ namespace YuLinTu.Component.VectorDataTreatTask
 
         private string checkFilePath;
         private string resultFilePath;
-
+        private string userName;
+        private string zoneCode;
         #endregion Fields
 
         #region Properties
+
+        [DisplayLanguage("用户名", IsLanguageName = false)]
+        [DescriptionLanguage("鱼鳞图云用户", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxReadOnly),
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        public string UserName
+        {
+            get { return userName; }
+            set
+            {
+                userName = value;
+                NotifyPropertyChanged("UserName");
+            }
+        }
 
         [DisplayLanguage("待处理数据路径", IsLanguageName = false)]
         [DescriptionLanguage("待处理数据文件的路径", IsLanguageName = false)]
@@ -44,6 +60,20 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 resultFilePath = value;
                 //qualityCompressionDataSetDefine.ResultFilePath = ResultFilePath;
                 NotifyPropertyChanged("ResultFilePath");
+            }
+        }
+
+        [DisplayLanguage("地域编码", IsLanguageName = false)]
+        [DescriptionLanguage("地域编码", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderText), 
+     UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
+        public string ZoneCode
+        {
+            get { return zoneCode; }
+            set
+            {
+                zoneCode = value;
+                NotifyPropertyChanged("ZoneCode");
             }
         }
 
@@ -128,6 +158,80 @@ namespace YuLinTu.Component.VectorDataTreatTask
         }
 
         #endregion Methods
+    }
+
+    public class PropertyDescriptorBuilderTextBoxReadOnly : PropertyDescriptorBuilder
+    {
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke(new Action(() =>
+            {
+                var pi = defaultValue.Object.GetType().GetProperty(defaultValue.Name);
+
+                var b = new Binding("Value")
+                {
+                    Source = defaultValue,
+                    Mode = BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                    ValidatesOnDataErrors = true
+                };
+                var designer = new MetroTextBox
+                {
+                    IsReadOnly = true
+                };
+
+                var pda = pi.GetAttribute<PropertyDescriptorAttribute>();
+                if (pda != null && pda.Converter != null)
+                {
+                    b.Converter = Activator.CreateInstance(pda.Converter) as IValueConverter;
+                    b.ConverterParameter = new PropertyGridConverterParameterPair(defaultValue.PropertyGrid, pda.ConverterParameter);
+                }
+                designer.Watermask = defaultValue.Watermask;
+                designer.SetBinding(MetroTextBox.TextProperty, b);
+
+                defaultValue.Designer = designer;
+                defaultValue.BindingExpression = designer.GetBindingExpression(MetroTextBox.TextProperty);
+            }));
+
+            return defaultValue;
+        }
+    }
+
+    public class PropertyDescriptorBuilderText : PropertyDescriptorBuilder
+    {
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke(new Action(() =>
+            {
+                var pi = defaultValue.Object.GetType().GetProperty(defaultValue.Name);
+
+                var b = new Binding("Value")
+                {
+                    Source = defaultValue,
+                    Mode = BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                    ValidatesOnDataErrors = true
+                };
+                var designer = new MetroTextBox
+                {
+                    IsReadOnly = defaultValue.Editable,
+                };
+
+                var pda = pi.GetAttribute<PropertyDescriptorAttribute>();
+                if (pda != null && pda.Converter != null)
+                {
+                    b.Converter = Activator.CreateInstance(pda.Converter) as IValueConverter;
+                    b.ConverterParameter = new PropertyGridConverterParameterPair(defaultValue.PropertyGrid, pda.ConverterParameter);
+                }
+                designer.Watermask = defaultValue.Watermask;
+                designer.SetBinding(MetroTextBox.TextProperty, b);
+
+                defaultValue.Designer = designer;
+                defaultValue.BindingExpression = designer.GetBindingExpression(MetroTextBox.TextProperty);
+            }));
+
+            return defaultValue;
+        }
     }
 
 }
