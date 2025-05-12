@@ -47,6 +47,7 @@ namespace YuLinTu.Component.MapFoundation
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion Fields
 
@@ -55,6 +56,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionQueryMapClipByLine(MapControl map)
             : base(map)
         {
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion Ctor
@@ -397,7 +399,7 @@ namespace YuLinTu.Component.MapFoundation
                                 if (i == 0)
                                 {
                                     selectContractLandCollection[m].Shape = returnClipGeo;
-                                    selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, 2);
+                                    selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                                     selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                                     selectContractLandCollection[m].TableArea = 0;
                                     selectContractLandCollection[m].OldLandNumber = selectContractLandCollection[m].LandNumber;
@@ -417,7 +419,7 @@ namespace YuLinTu.Component.MapFoundation
                                     clipLanditem.OldLandNumber = clipLanditem.LandNumber;
                                     clipLanditem.LandNumber = newLandNumber;
                                     clipLanditem.SurveyNumber = surverNumber;
-                                    clipLanditem.ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, 2);
+                                    clipLanditem.ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                                     clipLanditem.AwareArea = clipLanditem.ActualArea;
                                     clipLanditem.TableArea = 0;
                                     lands.Add(clipLanditem);
@@ -555,7 +557,7 @@ namespace YuLinTu.Component.MapFoundation
 
             for (int i = 0; i < getGeoList.Count; i++)
             {
-                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();
@@ -567,7 +569,7 @@ namespace YuLinTu.Component.MapFoundation
                     {
                         layerLabel.Graphics[i].Geometry = getGeoList[i].Centroid();
                     }
-                    objectLabelList[i].LabelText = string.Format("面积: {0:F2} {1}", area, "亩");
+                    objectLabelList[i].LabelText =$"面积: {area}亩";
                     layerLabel.Graphics[i].Object.SetPropertyValue("Object", objectLabelList[i]);
                 }
             }

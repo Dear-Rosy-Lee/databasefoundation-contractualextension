@@ -2,17 +2,12 @@
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.IO;
-using System.Net;
-using System.Web;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.ServiceModel;
-using System.Security.Cryptography;
-using System.ServiceModel.Description;
-using YuLinTu.Library.Entity;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
@@ -44,12 +39,14 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<ContractLand> LandCollection { get; set; }
 
+        private readonly SystemSetDefine SystemSet;
         #endregion
 
         #region Ctor
 
         public AgricultureExchangeEntity()
         {
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -93,7 +90,7 @@ namespace YuLinTu.Library.Business
             }
             foreach (var exContractLand in landCollection)
             {
-                ContractLand arcLand = ArcContractLandMapping(exContractLand);
+                ContractLand arcLand = ArcContractLandMapping(exContractLand, SystemSet.DecimalPlaces);
                 if (LandCollection.Find(ad => ad.ID == arcLand.ID || ad.CadastralNumber == arcLand.CadastralNumber) != null)
                 {
                     continue;
@@ -280,12 +277,12 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="exContractLand"></param>
         /// <returns></returns>
-        private ContractLand ArcContractLandMapping(YuLinTu.Business.ContractLand.Exchange2.ExContractLand exContractLand)
+        private ContractLand ArcContractLandMapping(YuLinTu.Business.ContractLand.Exchange2.ExContractLand exContractLand, int datanum = 2)
         {
             ContractLand land = new ContractLand();
             land.ID = exContractLand.ID;
             land.ConcordId = (exContractLand.ConcordId == null || !exContractLand.ConcordId.HasValue) ? land.ConcordId : exContractLand.ConcordId.Value;
-            land.ActualArea = exContractLand.ActualArea == 0.0 ? land.ActualArea : ToolMath.RoundNumericFormat(exContractLand.ActualArea * 0.0015, 2);
+            land.ActualArea = exContractLand.ActualArea == 0.0 ? land.ActualArea : ToolMath.RoundNumericFormat(exContractLand.ActualArea * 0.0015, datanum);
             land.AwareArea = exContractLand.AwareArea == 0.0 ? land.AwareArea : exContractLand.AwareArea;
             string fixNumber = string.Format("{0:D19}", 0);
             land.CadastralNumber = string.IsNullOrEmpty(exContractLand.CadastralNumber) ? fixNumber + exContractLand.AgricultureNumber : exContractLand.CadastralNumber;

@@ -55,7 +55,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public int Srid { get; set; }
 
-
+        private readonly SystemSetDefine SystemSet;
 
 
         #endregion
@@ -64,6 +64,7 @@ namespace YuLinTu.Library.Business
 
         public AgricultureBookMapping()
         {
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -430,7 +431,7 @@ namespace YuLinTu.Library.Business
         private void AgriSharePersonMapping(VirtualPerson vp, EX_CBJYQ_DJB regBook)
         {
             List<Person> list = vp.SharePersonList;
-            if (regBook.DJGYR == null&& list.Count==0)
+            if (regBook.DJGYR == null && list.Count == 0)
             {
                 Person sharePerson = new Person();
                 sharePerson.ID = vp.ID;
@@ -466,7 +467,7 @@ namespace YuLinTu.Library.Business
                 sharePerson.Birthday = person.CSRQ;
                 sharePerson.ID = person.ID;
                 sharePerson.Gender = LandCategoryMapping.GenderCodeMapping(person.XB);
-                sharePerson.Name = person.XM;               
+                sharePerson.Name = person.XM;
                 if (string.IsNullOrEmpty(sharePerson.Comment))
                 {
                     sharePerson.Comment = person.BZSM;
@@ -515,13 +516,13 @@ namespace YuLinTu.Library.Business
                 if (land.ContractorLand.TableArea != null)
                 {
                     concordTableArea = concordTableArea + land.ContractorLand.TableArea.Value;
-                    concordTableArea = ToolMath.RoundNumericFormat(concordTableArea, 2);
+                    concordTableArea = ToolMath.RoundNumericFormat(concordTableArea, SystemSet.DecimalPlaces);
                 }
                 concordActualArea = concordActualArea + land.ContractorLand.ActualArea;
-                concordActualArea = ToolMath.RoundNumericFormat(concordActualArea, 2);
+                concordActualArea = ToolMath.RoundNumericFormat(concordActualArea, SystemSet.DecimalPlaces);
 
                 concordAwareArea = concordAwareArea + land.ContractorLand.AwareArea;
-                concordAwareArea = ToolMath.RoundNumericFormat(concordAwareArea, 2);
+                concordAwareArea = ToolMath.RoundNumericFormat(concordAwareArea, SystemSet.DecimalPlaces);
 
                 land.DotCollection = InitalizeDotInformation(cbd, srid);
                 land.LineCollection = InitalizeLineInformation(cbd, srid);
@@ -581,7 +582,7 @@ namespace YuLinTu.Library.Business
             land.TableArea = exLand.ELHTMJ;
             land.ExtendB = exLand.GTDJBH;
             land.ID = exLand.ID;
-            land.ActualArea = ToolMath.RoundNumericFormat(exLand.SCMJ * 0.0015, 2);//实测面积处理 
+            land.ActualArea = ToolMath.RoundNumericFormat(exLand.SCMJ * 0.0015, SystemSet.DecimalPlaces);//实测面积处理 
             land.IsFarmerLand = exLand.SFJBNT;
             string[] arrayList = exLand.SZ.Split('#');
             land.NeighborEast = arrayList[0];
@@ -967,7 +968,7 @@ namespace YuLinTu.Library.Business
             concord.ContracterIdentifyNumber = regBook.CBFZJHM;
             concord.TotalTableArea = (regBook.CBDELHTZMJ != null && regBook.CBDELHTZMJ.HasValue) ? regBook.CBDELHTZMJ.Value : 0.0;
             concord.CountAwareArea = (regBook.QQZMJ != null && regBook.QQZMJ.HasValue) ? regBook.QQZMJ.Value : 0.0;
-            concord.CountActualArea = ToolMath.RoundNumericFormat(regBook.CBDSCZMJ * 0.0015, 2);
+            concord.CountActualArea = ToolMath.RoundNumericFormat(regBook.CBDSCZMJ * 0.0015, SystemSet.DecimalPlaces);
             concord.PublicityChronicle = regBook.GSJS;
             concord.PublicityChroniclePerson = regBook.GSJSR;
             concord.PublicityDate = regBook.GSJSRQ;

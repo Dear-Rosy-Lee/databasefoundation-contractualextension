@@ -93,6 +93,7 @@ namespace YuLinTu.Component.MapFoundation
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion
 
@@ -105,7 +106,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionQueryMapClipBySetting(MapControl map)
             : base(map)
         {
-
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -515,7 +516,7 @@ namespace YuLinTu.Component.MapFoundation
                         ContractLand clipLanditem = selectContractLandCollection[0].Clone() as ContractLand;
                         clipLanditem.ID = Guid.NewGuid();
                         clipLanditem.Shape = clipedGeometryList[i];
-                        clipLanditem.ActualArea = ToolMath.RoundNumericFormat(clipedGeometryList[i].Area() * projectionUnit, 2);
+                        clipLanditem.ActualArea = ToolMath.RoundNumericFormat(clipedGeometryList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                         clipLanditem.AwareArea = clipLanditem.ActualArea;
                         string number = landbus.GetNewLandNumber(currentZoneCode);
                         clipLanditem.LandNumber = number;
@@ -526,7 +527,7 @@ namespace YuLinTu.Component.MapFoundation
                         landbus.AddLand(clipLanditem);
                     }
                     selectContractLandCollection[0].Shape = clipedGeometryList[clipedGeometryList.Count - 1];
-                    selectContractLandCollection[0].ActualArea = ToolMath.RoundNumericFormat(clipedGeometryList[clipedGeometryList.Count - 1].Area() * projectionUnit, 2);
+                    selectContractLandCollection[0].ActualArea = ToolMath.RoundNumericFormat(clipedGeometryList[clipedGeometryList.Count - 1].Area() * projectionUnit, SystemSet.DecimalPlaces);
                     selectContractLandCollection[0].AwareArea = selectContractLandCollection[0].ActualArea;
                     selectContractLandCollection[0].TableArea = 0;
                     landbus.ModifyLand(selectContractLandCollection[0]);
@@ -1406,7 +1407,7 @@ namespace YuLinTu.Component.MapFoundation
             for (int i = 0; i < getGeoList.Count; i++)
             {
                 //var area = ToolMath.CutNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
-                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();

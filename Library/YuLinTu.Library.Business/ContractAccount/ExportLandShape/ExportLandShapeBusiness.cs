@@ -119,6 +119,7 @@ namespace YuLinTu.Library.Business
                     export.ListGeoLand = listGeoLand;
                     export.DictList = metadata.DictList;
                     export.Lang = eLanguage.CN;
+                    export.Exportway = 1;
                     export.ProgressChanged += ReportPercent;
                     export.Alert += ReportInfo;
                     export.ExportToShape();
