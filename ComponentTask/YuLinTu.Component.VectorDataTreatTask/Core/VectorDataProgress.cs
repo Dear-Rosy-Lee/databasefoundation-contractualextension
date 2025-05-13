@@ -65,7 +65,6 @@ namespace YuLinTu.Component.VectorDataTreatTask
             var infoArray = typeof(QCDK).GetProperties();
             for (int i = 0; i < infoArray.Length; i++)
             {
-
                 var info = infoArray[i];
                 var index = shp.FindField(info.Name);
                 switch (info.Name)
@@ -74,28 +73,24 @@ namespace YuLinTu.Component.VectorDataTreatTask
                         if (index == -1)
                         {
                             err = "shp文件未包含CBFBM字段；";
-
                         }
                         break;
                     case "DKBM":
                         if (index == -1)
                         {
                             err += "shp文件未包含DKBM字段；";
-
                         }
                         break;
                     case "QQDKBM":
                         if (index == -1)
                         {
                             err += "shp文件未包含QQDKBM字段；";
-
                         }
                         break;
                     case "Shape":
                         //if (index == -1)
                         //{
                         //    ErrorInfo += "shp文件未包含Shape字段；";
-
                         //}
                         break;
                 }
@@ -124,7 +119,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
 
                 ErrorInfo = CheckField(shp);
                 if (!string.IsNullOrEmpty(ErrorInfo))
-                    throw new Exception(ErrorInfo);
+                    throw new Exception(filePath + ErrorInfo);
 
                 foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
                 {
