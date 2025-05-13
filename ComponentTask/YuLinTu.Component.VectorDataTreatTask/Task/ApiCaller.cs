@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using static YuLinTu.tGISCNet.PointAreaRelationCheck;
 
 namespace YuLinTu.Component.VectorDataTreatTask
 {
@@ -169,6 +172,41 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 ErrorInfo = "出现异常：" + ex.Message;
             }
             return null;
+        }
+
+        public T GetResultAsync<T>(string url, Dictionary<string,string> Headers) where T:class,new()
+        {
+            var en = new T();
+            foreach(var kvp in Headers)
+            {
+                client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
+            }
+            try
+            {
+              HttpResponseMessage response = client.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+              response.EnsureSuccessStatusCode();
+               string responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+             // 读取响应内容
+              responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                {
+                    JsonElement root = doc.RootElement;
+                    JsonElement data = root.GetProperty("data");
+
+                    // 提取并解析 results 字段的内容
+                    string resultsJson = data.ToString();
+
+                    var entity = JsonSerializer.Deserialize<T>(resultsJson);
+                    // 再次解析 results 字符串为 JSON 对象
+                    return entity;
+                }
+               
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+       
         }
 
         private KeyValueList<string, string> GetData(string responseBody)

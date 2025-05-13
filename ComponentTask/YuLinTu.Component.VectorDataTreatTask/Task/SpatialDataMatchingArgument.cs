@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Scripting.Actions;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using YuLinTu.Component.Account.Models;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -21,8 +24,9 @@ namespace YuLinTu.Component.VectorDataTreatTask
 
         [DisplayLanguage("用户名", IsLanguageName = false)]
         [DescriptionLanguage("鱼鳞图云用户", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxReadOnly),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderText), Editable = false,
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/account.png")]
+        [WatermaskLanguage("请先登录鱼鳞图云账号")]
         public string UserName
         {
             get { return userName; }
@@ -36,7 +40,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         [DisplayLanguage("待处理数据路径", IsLanguageName = false)]
         [DescriptionLanguage("待处理数据文件的路径", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
         public string CheckFilePath
         {
             get { return checkFilePath; }
@@ -51,7 +55,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         [DisplayLanguage("处理结果文件路径", IsLanguageName = false)]
         [DescriptionLanguage("存放处理文件的路径", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
-             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
         public string ResultFilePath
         {
             get { return resultFilePath; }
@@ -65,8 +69,12 @@ namespace YuLinTu.Component.VectorDataTreatTask
 
         [DisplayLanguage("地域编码", IsLanguageName = false)]
         [DescriptionLanguage("地域编码", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderText), 
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderText),Editable = true, 
      UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "地域代码必填")]
+        [RegularExpression("^[1-9]\\d{11}$", ErrorMessage = "格式错误，请填写12位村级地域编码")]
+        [WatermaskLanguage("请先登录鱼鳞图云账号")]
         public string ZoneCode
         {
             get { return zoneCode; }
@@ -80,7 +88,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
         [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
-             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
         public bool AutoComprass
         {
             get { return autoComprass; }
@@ -104,6 +112,9 @@ namespace YuLinTu.Component.VectorDataTreatTask
         {
             checkFilePath = "";
             resultFilePath = "";
+            ZoneCode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
+            UserName = AppGlobalSettings.Current.TryGetValue(Parameters.UserName, "");
+
         }
 
         #endregion Ctor
@@ -177,7 +188,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 };
                 var designer = new MetroTextBox
                 {
-                    IsReadOnly = true
+                    IsReadOnly =true,
                 };
 
                 var pda = pi.GetAttribute<PropertyDescriptorAttribute>();
@@ -214,7 +225,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 };
                 var designer = new MetroTextBox
                 {
-                    IsReadOnly = defaultValue.Editable,
+                    IsReadOnly = !defaultValue.Editable,
                 };
 
                 var pda = pi.GetAttribute<PropertyDescriptorAttribute>();

@@ -179,6 +179,7 @@ namespace YuLinTu.Component.Account.Services
                 var jsonString = result.Data.ToString();
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonString);
                 string region = jsonObject.region;
+                AppGlobalSettings.Current[Parameters.UserName] = name;
                 if (!region.IsNullOrEmpty())
                     AppGlobalSettings.Current[Parameters.RegionName] = region;
                 //Parameters.Region = region;

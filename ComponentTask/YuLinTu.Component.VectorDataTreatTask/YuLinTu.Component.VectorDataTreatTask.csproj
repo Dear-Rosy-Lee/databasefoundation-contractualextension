@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AreaNodeRepeatCheck.cs" />
+    <Compile Include="Core\PostGetAPIEntity.cs" />
     <Compile Include="Core\PropertyDescriptorBuilderFileBrowserShp.cs" />
     <Compile Include="Core\VectorDataProgress.cs" />
     <Compile Include="Core\LandEntity.cs" />

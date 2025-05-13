@@ -4,7 +4,9 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
+using System.Windows.Markup;
 using DotSpatial.Projections;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
@@ -12,6 +14,9 @@ using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Newtonsoft.Json;
+using RTools_NTS.Util;
+using YuLinTu.Component.Account.Models;
+using YuLinTu.Component.VectorDataTreatTask.Core;
 using YuLinTu.Data;
 using YuLinTu.Data.Shapefile;
 using YuLinTu.Library.Log;
@@ -68,10 +73,18 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 this.ReportProgress(100);
                 return;
             }
-            this.ReportProgress(1, "开始检查...");
-            this.ReportInfomation("开始检查...");
+            var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
+            if (string.IsNullOrEmpty(token))
+            {
+                this.ReportError("请先登录后,再次进行操作");
+                return;
+            }
+            this.ReportProgress(1, "开始更新...");
+            this.ReportInfomation("开始更新...");
             System.Threading.Thread.Sleep(200);
-            var TreatmentKey = ConfigurationManager.AppSettings.TryGetValue<string>("TreatmentKey", "57f90f07-66a9-46bd-96f2-61143e01365a");
+            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(200);
+                   var TreatmentKey = GetTreatmentKey(token); //ConfigurationManager.AppSettings.TryGetValue<string>("TreatmentKey", "57f90f07-66a9-46bd-96f2-61143e01365a");
             var TreatmentUrl = ConfigurationManager.AppSettings.TryGetValue<string>("TreatmentUrl", "http://www.scgis.net:8282/DrillingPlatformAPI/API/CrsTrans/Trans2CK_Multi");
             //TODO 加密方式
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
@@ -84,9 +97,18 @@ namespace YuLinTu.Component.VectorDataTreatTask
             {
                 try
                 {
-                    string zonecode = ProcessDataOnline(TreatmentUrl, TreatmentKey);
+                    string handlZoneCode = string.Empty;
+                    bool isMatchSucess = ProcessDataOnline(TreatmentUrl, TreatmentKey, (temp) =>
+                    {
+                        handlZoneCode = temp;
+                        bool result=!(!temp.StartsWith(argument.ZoneCode) && argument.ZoneCode != "86");
+                        this.ReportError(string.Format("用户{0}无{1}地域的数据处理权限!", argument.UserName, temp));
+                        return result;
+                    });
+
+                    if (!isMatchSucess) return;
                     if (argument.AutoComprass)
-                        CompressFolder($"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}", zipFilePath, zonecode);
+                        CompressFolder($"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}", zipFilePath, handlZoneCode);
                     this.ReportProgress(100);
                     this.ReportInfomation("数据处理成功。");
                     //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
@@ -97,6 +119,27 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     this.ReportError(string.Format("数据处理出错!" + ex.Message));
                 }
             }
+        }
+
+        protected override void OnAlert(TaskAlertEventArgs e)
+        {
+            base.OnAlert(e);
+            var args = Argument as SpatialDataMatchingArgument;
+            //argument.ZoneCode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
+            //argument.UserName = AppGlobalSettings.Current.TryGetValue(Parameters.UserCodName, "");
+        }
+        private string GetTreatmentKey(string token)
+        {
+            var url= ConfigurationManager.AppSettings.TryGetValue<string>("DefaultBusinessAPIAdress", "https://api.yizhangtu.com");
+                url = url + "/stackcloud/api/open/api/dynamic/geoProcessing/tuomi/token";
+            ApiCaller apiCaller = new ApiCaller();
+            apiCaller.client = new HttpClient();
+            Dictionary<string,string>headers = new Dictionary<string,string>();
+            headers.Add("token", token);
+            headers.Add("t-open-api-app-code", "cbdDataProcessing");
+            var en=  apiCaller.GetResultAsync<PostGetAPIEntity>(url, headers);
+            return en.token;
+
         }
 
         #endregion Method - Override
@@ -287,7 +330,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         /// 在线处理数据
         /// </summary>
         /// <returns></returns>
-        public string ProcessDataOnline(string url, string key)
+        public bool ProcessDataOnline(string url, string key,Func<string,bool> jaugeZone)
         {
             int srid = 0;
             string prjstr = "";
@@ -301,9 +344,11 @@ namespace YuLinTu.Component.VectorDataTreatTask
             var landShapeList = VectorDataProgress.InitiallShapeLandList(argument.CheckFilePath, srid, "");
             if (landShapeList == null)
             {
-                return "";
+                return false;
             }
-
+            zonecode= landShapeList[0].DKBM.Substring(0, 12);
+            bool zoneMatch = jaugeZone(zonecode);
+            if (!zoneMatch) return zoneMatch;
             string prj4490 = "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]";
             ProjectionInfo sreproject = ProjectionInfo.FromEsriString(prj4490);
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
@@ -360,7 +405,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
             ExportToShape(Path.Combine(argument.ResultFilePath, filename), list, dreproject);
             // 加密压缩文件
 
-            return zonecode;
+            return zoneMatch;
         }
 
         /// <summary>
