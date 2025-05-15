@@ -165,6 +165,7 @@ namespace YuLinTu.Component.MapFoundation
 
         private IDbContext dbcontext = null;
         private YuLinTu.Library.WorkStation.IZoneWorkStation zoneStation = null;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion Fields
 
@@ -184,6 +185,7 @@ namespace YuLinTu.Component.MapFoundation
             {
                 zoneStation = dbcontext.CreateZoneWorkStation();
             }
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion Ctor
@@ -1638,7 +1640,7 @@ namespace YuLinTu.Component.MapFoundation
                             cl.OwnerName = vp.Name;
                             cl.ZoneCode = vp.ZoneCode;
                             cl.Shape = dzdw.Shape;
-                            cl.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dzdw.Shape.Area() * projectionUnit, 2);
+                            cl.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dzdw.Shape.Area() * projectionUnit, SystemSet.DecimalPlaces);
 
                             landBusiness.AddLand(cl);
                             dczdstation.Delete(dzdw.ID);
@@ -1741,7 +1743,7 @@ namespace YuLinTu.Component.MapFoundation
                             VirtualPerson vp = virtualPersonBusiness.GetVirtualPersonByID(dragLand.OwnerId.Value);
                             if (vp.Status == eVirtualPersonStatus.Lock) return;
                             dragLand.Shape = dczd.Shape;
-                            dragLand.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dczd.Shape.Area() * projectionUnit, 2); ;
+                            dragLand.ActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(dczd.Shape.Area() * projectionUnit, SystemSet.DecimalPlaces);
                             landBusiness.ModifyLand(dragLand);
                             dczdstation.Delete(dczd.ID);
                             vl.Refresh();
@@ -3257,13 +3259,13 @@ namespace YuLinTu.Component.MapFoundation
                 var grahpics = e.AddGraphics;
                 var targetgra = e.UpdateGraphic;
 
-                var targetGraActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(targetgra.Geometry.Area() * projectionUnit, 2);
+                var targetGraActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(targetgra.Geometry.Area() * projectionUnit, SystemSet.DecimalPlaces);
                 targetgra.Object.Object.SetPropertyValue("SCMJ", targetGraActualArea);
                 targetgra.Object.Object.SetPropertyValue("TZMJ", targetGraActualArea);
 
                 foreach (var graitem in grahpics)
                 {
-                    var graitemActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(graitem.Geometry.Area() * projectionUnit, 2);
+                    var graitemActualArea = YuLinTu.Library.WorkStation.ToolMath.RoundNumericFormat(graitem.Geometry.Area() * projectionUnit, SystemSet.DecimalPlaces);
                     graitem.Object.Object.SetPropertyValue("SCMJ", graitemActualArea);
                     graitem.Object.Object.SetPropertyValue("TZMJ", graitemActualArea);
 
@@ -4335,7 +4337,7 @@ namespace YuLinTu.Component.MapFoundation
                 var geo = e.Graphic.Geometry;
                 if (geo == null)
                     return;
-                double area = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, 2);
+                double area = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                 var landOb = e.Graphic.Object.Object;
                 if (landOb == null)
                     return;
@@ -5930,7 +5932,7 @@ namespace YuLinTu.Component.MapFoundation
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 dbContext = e.LayerDataSource as IDbContext;
-                area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, 2);
+                area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, SystemSet.DecimalPlaces);
                 idObject = e.Object.Object.GetPropertyValue("ID");
                 if (idObject == null)
                 {
@@ -6090,7 +6092,7 @@ namespace YuLinTu.Component.MapFoundation
         private void AddContractLandWithMark(VirtualPerson selectPersonNow, Zone selectZone, YuLinTu.Spatial.Geometry geometry, ContractLandMark landMark, IDbContext db, DrawFeatureInstallPropertiesEventArgs e, bool isUseTopu = true)
         {
             object idObject = null;
-            var area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, 2);
+            var area = ToolMath.RoundNumericFormat(geometry.Area() * projectionUnit, SystemSet.DecimalPlaces);
             bool useAlt = true;
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {

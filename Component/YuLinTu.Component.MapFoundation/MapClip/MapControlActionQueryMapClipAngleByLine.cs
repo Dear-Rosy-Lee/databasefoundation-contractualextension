@@ -47,6 +47,7 @@ namespace YuLinTu.Component.MapFoundation
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion
 
@@ -59,7 +60,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionQueryMapClipAngleByLine(MapControl map)
             : base(map)
         {
-
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -395,7 +396,7 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             //将第一个分割的赋给原始的，这样就不用裁剪了。                        
                             selectContractLandCollection[m].Shape = MaxAreaGeo;
-                            selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(MaxAreaGeo.Area() * projectionUnit, 2);
+                            selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(MaxAreaGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                             selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                             selectContractLandCollection[m].TableArea = 0;
                             landbus.ModifyLand(selectContractLandCollection[m]);
@@ -490,7 +491,7 @@ namespace YuLinTu.Component.MapFoundation
 
             for (int i = 0; i < getGeoList.Count; i++)
             {
-                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();
