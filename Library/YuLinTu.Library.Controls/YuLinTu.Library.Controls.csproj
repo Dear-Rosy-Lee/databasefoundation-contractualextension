@@ -436,6 +436,9 @@
     </Compile>
     <Compile Include="Concord\ConcordSummary.cs" />
     <Compile Include="Concord\ConcordValueConvert.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\AdjustSenderPage.xaml.cs">
+      <DependentUpon>AdjustSenderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VirtualPerson\FamilyNumberDetail.xaml.cs">
       <DependentUpon>FamilyNumberDetail.xaml</DependentUpon>
     </Compile>
@@ -801,6 +804,10 @@
     <Page Include="Concord\ConcordPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VirtualPerson\AdjustSender\AdjustSenderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VirtualPerson\FamilyNumberDetail.xaml">
       <SubType>Designer</SubType>

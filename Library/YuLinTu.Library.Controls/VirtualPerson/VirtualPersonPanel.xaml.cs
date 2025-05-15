@@ -10,12 +10,14 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls
 {
@@ -1539,6 +1541,83 @@ namespace YuLinTu.Library.Controls
                     task.StartAsync();
                 }
             });
+        }
+        /// <summary>
+        /// 调整发包方
+        /// </summary>
+        public void AdjustSender()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("调整发包方", "请选择行政区域进行调整发包方!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
+                    currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("调整发包方", "请选择在组级地域进行调整发包方!");
+                    return;
+                }
+
+                else
+                {
+
+                    List<VirtualPerson> persons = new List<VirtualPerson>();
+                    persons = vpStation.GetByZoneCode(currentZone.FullCode);
+
+                    var senderStation = DbContext.CreateCollectivityTissueWorkStation();
+                    var senders = senderStation.Get();
+                    var dialog = new AdjustSenderPage(persons, senders);
+                    ThePage.Page.ShowMessageBox(dialog, (s, t) =>
+                    {
+                        if (s == null || !s.Value)
+                            return;
+                        var vps = new List<VirtualPerson>();
+                        foreach ( var item in dialog.SelectSenderData.Select(tuple => tuple.Item1).ToList())
+                        {
+                            vps.Add(persons.Where(q => q.ID == item.Id).FirstOrDefault());
+                        }
+                        AdjustSenderTask(vps, dialog.NewSenderName);
+                    });
+                }
+            
+                
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "调整发包方", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+       
+        public void AdjustSenderTask(List<VirtualPerson> vps,string NewSenderName)
+        {
+            TaskAdjustSenderArgument argument = new TaskAdjustSenderArgument();
+            argument.Database = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.VirtualPeoples = vps;
+            argument.NewSenderName = NewSenderName;
+
+            TaskAdjustSenderOperation task = new TaskAdjustSenderOperation();
+            task.Argument = argument;
+            task.Name = "调整发包方";
+            task.Description = "批量调整发包方";
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            ThePage.TaskCenter.Add(task);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            task.StartAsync();
         }
 
         #endregion 数据处理

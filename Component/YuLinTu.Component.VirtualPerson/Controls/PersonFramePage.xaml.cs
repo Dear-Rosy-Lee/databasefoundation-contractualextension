@@ -135,6 +135,7 @@ namespace YuLinTu.Component.VirtualPerson
             SetCommandBinding(mbtnInitiallData, command.InitiallData, command.InitiallDataBind);
             SetCommandBinding(btnRelationCheck, command.RelationCheck, command.RelationCheckBind);
             SetCommandBinding(btnRelationReplace, command.RelationReplace, command.RelationReplaceBind);
+            SetCommandBinding(mbtnAdjustSender, command.AdjustSender, command.AdjustSenderBind);
 
             SetCommandBinding(btnSharePersonRepair, command.SharePersonRepair, command.SharePersonRepairBind);
 
@@ -326,6 +327,10 @@ namespace YuLinTu.Component.VirtualPerson
                     personPanel.RelationCheck();
                     break;
 
+                case VirtualPersonCommand.AdjustSenderName:
+                    personPanel.AdjustSender();
+                    break;
+
                 case VirtualPersonCommand.SharePersonRepairName:
                     personPanel.SharePersonRepair();
                     break;
@@ -367,7 +372,7 @@ namespace YuLinTu.Component.VirtualPerson
                 btndelegate.IsEnabled = isEnable;
                 btnIdea.IsEnabled = isEnable;
                 btnsurvey.IsEnabled = isEnable;
-
+                mbtnAdjustSender.IsEnabled = isEnable;
                 mbtnImport.IsEnabled = isEnable;
                 mbtnClear.IsEnabled = isEnable;
                 mbtnSplitFamily.IsEnabled = isEnable;

@@ -702,6 +702,9 @@
     <Compile Include="Tool\ToolException.cs" />
     <Compile Include="Tool\ToolProgress.cs" />
     <Compile Include="Tool\ToolSerialization.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\AdjustSender.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\TaskAdjustSenderArgument.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\TaskAdjustSenderOperation.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorTable.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportApplyBook.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorExcel.cs" />
