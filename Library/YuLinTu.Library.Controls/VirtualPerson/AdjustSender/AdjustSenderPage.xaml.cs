@@ -33,11 +33,14 @@ namespace YuLinTu.Library.Controls
     /// </summary>
     public partial class AdjustSenderPage : TabMessageBox
     {
+
         public List<AdjustSender> SenderData { get; set; }
 
         public List<Tuple<AdjustSender, TextBlock>> SelectSenderData { get; set; } 
 
         public List<CollectivityTissue> Senders { get; set; }
+
+        public List<ContractLand> Lands { get; set; }
 
         public List<string> SendersName { get; set; }
 
@@ -45,13 +48,14 @@ namespace YuLinTu.Library.Controls
 
         public string OldSenderName { get; set; }
 
-        public AdjustSenderPage(List<VirtualPerson> SelectedPersons,List<CollectivityTissue> collectivityTissues)
+        public AdjustSenderPage(List<VirtualPerson> selectedPersons,List<CollectivityTissue> collectivityTissues,List<ContractLand> contractLands)
         {
             InitializeComponent();
             Senders = collectivityTissues;
+            Lands = contractLands;
             SendersName = new List<string>();
             SendersName = Senders.Select(t => t.Name).ToList();
-            GetSenderData(SelectedPersons);  // 加载数据
+            GetSenderData(selectedPersons);  // 加载数据
             GenerateDataItems();
         }
         
@@ -59,6 +63,41 @@ namespace YuLinTu.Library.Controls
         private void GenerateDataItems()
         {
             DataItemsControl.ItemsSource = SenderData;
+        }
+        private void CheckBox_AllChecked(object sender, RoutedEventArgs e)
+        {
+            SetAllItemsCheckState(true);
+        }
+        private void CheckBox_AllUnchecked(object sender, RoutedEventArgs e)
+        {
+            SetAllItemsCheckState(false);
+        }
+        private void SetAllItemsCheckState(bool isChecked)
+        {
+
+            if (  SenderData is IList<AdjustSender> dataList)
+            {
+                foreach (var item in dataList)
+                {
+                    item.IsSelected = isChecked; // 假设数据类有IsSelected属性
+                }
+                return;
+            }
+
+        }
+
+        private static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child is T result)
+                    return result;
+                var childResult = FindVisualChild<T>(child);
+                if (childResult != null)
+                    return childResult;
+            }
+            return null;
         }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -88,17 +127,6 @@ namespace YuLinTu.Library.Controls
             var item = (AdjustSender)checkBox.Tag;
             var tuple = new Tuple<AdjustSender, TextBlock>(item, FindFBFMCTextBlock(parent));
             SelectSenderData.Remove(tuple);
-        }
-        private void AddTextBlock(Grid parent, int column, string text, Thickness thickness)
-        {
-            var textBlock = new TextBlock
-            {
-                Text = text,
-                Margin = thickness,
-                TextWrapping = TextWrapping.Wrap
-            };
-            Grid.SetColumn(textBlock, column);
-            parent.Children.Add(textBlock);
         }
         
         private void SenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -148,13 +176,15 @@ namespace YuLinTu.Library.Controls
             OldSenderName = sender.Name;
             foreach (var item in ListVirtualPeople)
             {
+                var landCount = Lands.Where(t => t.OwnerId == item.ID).Count();
                 AdjustSender adjustSender = new AdjustSender();
                 adjustSender.Id = item.ID;
+                adjustSender.IsSelected = false;
                 adjustSender.HH = item.FamilyNumber;
                 adjustSender.MC = item.Name;
                 adjustSender.ZJHM = item.Number;
                 adjustSender.CYSL = item.PersonCount;
-                adjustSender.DKSL = item.FamilyExpand.SecondConcordTotalLandCount;
+                adjustSender.DKSL = landCount;
                 adjustSender.FBFMC = sender.Name;
                 SenderData.Add(adjustSender);
             }

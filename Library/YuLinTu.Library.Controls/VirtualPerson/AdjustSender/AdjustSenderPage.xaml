@@ -27,24 +27,34 @@
         </Grid.ColumnDefinitions>
         <!--  表头区域  -->
         <StackPanel Grid.Row="0">
-            <Grid Grid.Row="0" Margin="10,5,10,0">
+            <Grid Grid.Row="0" Margin="5,5,10,0">
                 <Grid.ColumnDefinitions>
+                    <!--  勾选框  -->
+                    <ColumnDefinition Width="70" />
                     <!--  户号  -->
-                    <ColumnDefinition Width="51" />
+                    <ColumnDefinition Width="80" />
                     <!--  名称  -->
-                    <ColumnDefinition Width="63" />
-                    <!--  证件号码  -->
                     <ColumnDefinition Width="110" />
+                    <!--  证件号码  -->
+                    <ColumnDefinition Width="130" />
                     <!--  成员数量  -->
-                    <ColumnDefinition Width="125" />
+                    <ColumnDefinition Width="80" />
                     <!--  地块数量  -->
-                    <ColumnDefinition Width="65" />
+                    <ColumnDefinition Width="125" />
                     <!--  发包方名称  -->
                     <ColumnDefinition Width="145" />
-
-                    <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
-
+                <CheckBox
+                    Grid.Column="0"
+                    Margin="0,0,0,5"
+                    Checked="CheckBox_AllChecked"
+                    Tag="{Binding}"
+                    Unchecked="CheckBox_AllUnchecked" />
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="20,0,0,0"
+                    FontWeight="Bold"
+                    Text="全选" />
                 <!--  表头文本  -->
                 <TextBlock
                     Grid.Column="1"
@@ -80,7 +90,7 @@
             </Grid>
             <Separator
                 Height="1"
-                Margin="0,5,10,0"
+                Margin="0,0,10,0"
                 Background="LightGray" />
         </StackPanel>
 
@@ -96,17 +106,17 @@
                         <!--  单个数据项的模板  -->
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
-                                <!--  复选框  -->
-                                <ColumnDefinition Width="50" />
-                                <!--  户号  -->
                                 <ColumnDefinition Width="75" />
+                                <!--  复选框  -->
+                                <ColumnDefinition Width="65" />
+                                <!--  户号  -->
+                                <ColumnDefinition Width="80" />
                                 <!--  名称  -->
                                 <ColumnDefinition Width="200" />
                                 <!--  证件号码  -->
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="65" />
                                 <!--  成员数量  -->
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="30" />
                                 <!--  地块数量  -->
                                 <ColumnDefinition Width="200" />
                                 <!--  发包方名称  -->
@@ -125,6 +135,7 @@
                                 Grid.Column="0"
                                 Margin="5,0,0,5"
                                 Checked="CheckBox_Checked"
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                 Tag="{Binding}"
                                 Unchecked="CheckBox_Unchecked" />
 

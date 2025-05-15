@@ -69,9 +69,7 @@ namespace YuLinTu.Library.Business
                 this.ReportWarn(string.Format("{0}下无承包方数据!", zone.Name));
                 return;
             }
-            this.ReportProgress(1+percent, string.Format("开始获取{0}承包方家庭成员数据...", zone.Name));
-            var persons = new List<Person>();
-            vps.ForEach(p => { persons.AddRange(p.SharePersonList); });
+            
             this.ReportProgress(1 + 2 * percent, string.Format("开始获取{0}承包方地块数据...", zone.Name));
             var landStation = db.CreateContractLandWorkstation();
             var lands = landStation.GetCollection(zone.FullCode);

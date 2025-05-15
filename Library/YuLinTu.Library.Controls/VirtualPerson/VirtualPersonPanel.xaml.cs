@@ -1557,6 +1557,7 @@ namespace YuLinTu.Library.Controls
             {
                 var zoneStation = DbContext.CreateZoneWorkStation();
                 var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DbContext.CreateContractLandWorkstation();
                 int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
                 if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
                     currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
@@ -1571,10 +1572,10 @@ namespace YuLinTu.Library.Controls
 
                     List<VirtualPerson> persons = new List<VirtualPerson>();
                     persons = vpStation.GetByZoneCode(currentZone.FullCode);
-
+                    List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
                     var senderStation = DbContext.CreateCollectivityTissueWorkStation();
                     var senders = senderStation.Get();
-                    var dialog = new AdjustSenderPage(persons, senders);
+                    var dialog = new AdjustSenderPage(persons, senders, lands);
                     ThePage.Page.ShowMessageBox(dialog, (s, t) =>
                     {
                         if (s == null || !s.Value)
