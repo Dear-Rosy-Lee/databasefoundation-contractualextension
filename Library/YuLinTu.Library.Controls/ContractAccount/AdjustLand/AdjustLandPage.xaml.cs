@@ -18,38 +18,35 @@ namespace YuLinTu.Library.Controls
     /// <summary>
     /// AdjustSender.xaml 的交互逻辑
     /// </summary>
-    public partial class AdjustSenderPage : TabMessageBox
+    public partial class AdjustLandPage : TabMessageBox
     {
+        protected List<Dictionary> DictList;
+        public List<AdjustLand> LandData { get; set; }
 
-        public List<AdjustSender> SenderData { get; set; }
-
-        public List<Tuple<AdjustSender, TextBlock>> SelectSenderData { get; set; } 
-
-        public List<CollectivityTissue> Senders { get; set; }
+        public List<Tuple<AdjustLand, TextBlock>> SelectLandData { get; set; }
 
         public List<ContractLand> Lands { get; set; }
 
-        public List<string> SendersName { get; set; }
+        List<VirtualPerson> VirtualPersons { get; set; }
 
-        public string NewSenderName { get; set; }
+        public string NewVPName { get; set; }
 
-        public string OldSenderName { get; set; }
+        public string OldVPName { get; set; }
 
-        public AdjustSenderPage(List<VirtualPerson> selectedPersons,List<CollectivityTissue> collectivityTissues,List<ContractLand> contractLands)
+        public AdjustLandPage(List<VirtualPerson> virtualPersons, List<ContractLand> contractLands, List<Dictionary> dic)
         {
             InitializeComponent();
-            Senders = collectivityTissues;
+            DictList = dic;
             Lands = contractLands;
-            SendersName = new List<string>();
-            SendersName = Senders.Select(t => t.Name).ToList();
-            GetSenderData(selectedPersons);  // 加载数据
+            VirtualPersons = virtualPersons;
+            GetLandData(contractLands);  // 加载数据
             GenerateDataItems();
         }
-        
+
 
         private void GenerateDataItems()
         {
-            DataItemsControl.ItemsSource = SenderData;
+            DataItemsControl.ItemsSource = LandData;
         }
         private void CheckBox_AllChecked(object sender, RoutedEventArgs e)
         {
@@ -62,11 +59,11 @@ namespace YuLinTu.Library.Controls
         private void SetAllItemsCheckState(bool isChecked)
         {
 
-            if (  SenderData is IList<AdjustSender> dataList)
+            if (LandData is IList<AdjustLand> dataList)
             {
                 foreach (var item in dataList)
                 {
-                    item.IsSelected = isChecked; // 假设数据类有IsSelected属性
+                    item.IsSelected = isChecked; 
                 }
                 return;
             }
@@ -88,34 +85,35 @@ namespace YuLinTu.Library.Controls
         }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            SenderComboBox.Visibility = Visibility.Visible;
-            SenderComboBox.ItemsSource = Senders.Select(t => t.Name);
-            SenderComboBox.SelectedItem = OldSenderName;
             var checkBox = (CheckBox)sender;
-            var dataItem = (AdjustSender)checkBox.Tag;
+            var dataItem = (AdjustLand)checkBox.Tag;
+            SenderComboBox.Visibility = Visibility.Visible;
+            SenderComboBox.ItemsSource = VirtualPersons.Select(t => $"{t.Name} （{t.FamilyNumber}）");
+            SenderComboBox.SelectedItem = $"{dataItem.CBFMC} （{VirtualPersons.Where(t=>t.ID == dataItem.CBFId).FirstOrDefault().FamilyNumber}）";
+            OldVPName = dataItem.CBFMC;
             AddData(checkBox.Parent as Grid, checkBox);
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var checkBox = (CheckBox)sender;
-            var dataItem = (AdjustSender)checkBox.Tag;
+            var dataItem = (AdjustLand)checkBox.Tag;
             DelData(checkBox.Parent as Grid, checkBox);
         }
 
-        private void AddData(Grid parent,CheckBox checkBox)
+        private void AddData(Grid parent, CheckBox checkBox)
         {
             SenderComboBox.Visibility = Visibility.Visible;
-            var item = (AdjustSender)checkBox.Tag;
-            var tuple = new Tuple<AdjustSender, TextBlock>(item, FindFBFMCTextBlock(parent));
-            SelectSenderData.Add(tuple);
+            var item = (AdjustLand)checkBox.Tag;
+            var tuple = new Tuple<AdjustLand, TextBlock>(item, FindCBFMCTextBlock(parent));
+            SelectLandData.Add(tuple);
         }
         private void DelData(Grid parent, CheckBox checkBox)
         {
-            var item = (AdjustSender)checkBox.Tag;
-            var tuple = new Tuple<AdjustSender, TextBlock>(item, FindFBFMCTextBlock(parent));
-            SelectSenderData.Remove(tuple);
+            var item = (AdjustLand)checkBox.Tag;
+            var tuple = new Tuple<AdjustLand, TextBlock>(item, FindCBFMCTextBlock(parent));
+            SelectLandData.Remove(tuple);
         }
-        
+
         private void SenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox)
@@ -123,27 +121,38 @@ namespace YuLinTu.Library.Controls
                 // 显示操作按钮
                 btnConfirm.Visibility = Visibility.Visible;
                 btnCancel.Visibility = Visibility.Visible;
-
+                
                 // 更新选中值
-                NewSenderName = comboBox.SelectedItem?.ToString();
+                NewVPName = comboBox.SelectedItem?.ToString();
                 
             }
         }
-       
+
 
         // 更新关联的发包方名称
-        private void UpdateFBFMC(string FBFMC)
+        private void UpdateOldFBFMC()
         {
-            if (SelectSenderData != null)
+            if (SelectLandData != null)
             {
-                foreach (var item in SelectSenderData)
+                foreach (var item in SelectLandData)
                 {
-                    item.Item2.Text = FBFMC;
+                    item.Item2.Text = item.Item1.YCBFMC;
                 }
             }
-            
+
         }
-        private TextBlock FindFBFMCTextBlock(Grid parent)
+        private void UpdateNewFBFMC(string CBFMC)
+        {
+            if (SelectLandData != null)
+            {
+                foreach (var item in SelectLandData)
+                {
+                    item.Item2.Text = CBFMC;
+                }
+            }
+
+        }
+        private TextBlock FindCBFMCTextBlock(Grid parent)
         {
             foreach (var child in parent.Children)
             {
@@ -154,32 +163,32 @@ namespace YuLinTu.Library.Controls
             }
             return null;
         }
-        private void GetSenderData(List<VirtualPerson> ListVirtualPeople)
+        private void GetLandData(List<ContractLand> lands)
         {
-            SelectSenderData = new List<Tuple<AdjustSender, TextBlock>>();
-            SenderData = new List<AdjustSender>();
-            var zoneCode = ListVirtualPeople.FirstOrDefault().ZoneCode;
-            var sender = Senders.Where(x => x.Code == zoneCode).FirstOrDefault();
-            OldSenderName = sender.Name;
-            foreach (var item in ListVirtualPeople)
+            var dictDKLB = DictList.FindAll(t => t.GroupCode == DictionaryTypeInfo.DKLB);
+            SelectLandData = new List<Tuple<AdjustLand, TextBlock>>();
+            LandData = new List<AdjustLand>();
+            foreach (var item in lands)
             {
-                var landCount = Lands.Where(t => t.OwnerId == item.ID).Count();
-                AdjustSender adjustSender = new AdjustSender();
-                adjustSender.Id = item.ID;
-                adjustSender.IsSelected = false;
-                adjustSender.HH = item.FamilyNumber;
-                adjustSender.MC = item.Name;
-                adjustSender.ZJHM = item.Number;
-                adjustSender.CYSL = item.PersonCount;
-                adjustSender.DKSL = landCount;
-                adjustSender.FBFMC = sender.Name;
-                SenderData.Add(adjustSender);
+                Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(item.LandCategory) || c.Code.Equals(item.LandCategory));
+                AdjustLand adjustLand = new AdjustLand();
+                adjustLand.Id = item.ID;
+                adjustLand.IsSelected = false;
+                adjustLand.DKBM = item.LandNumber.Substring(14);
+                adjustLand.DKMC = item.Name;
+                adjustLand.DKLB = dklb.Name;
+                adjustLand.HTMJ = item.AwareArea;
+                adjustLand.SCMJ = item.ActualArea;
+                adjustLand.CBFMC = item.OwnerName;
+                adjustLand.YCBFMC = item.OwnerName;
+                adjustLand.CBFId = (Guid)item.OwnerId;
+                LandData.Add(adjustLand);
             }
 
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -188,13 +197,13 @@ namespace YuLinTu.Library.Controls
         }
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            UpdateFBFMC(NewSenderName);
+            UpdateNewFBFMC(NewVPName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0]);
             e.Handled = true; // 阻止事件继续处理
         }
         private void celButton_Click(object sender, RoutedEventArgs e)
         {
-            SenderComboBox.SelectedItem = OldSenderName;
-            UpdateFBFMC(OldSenderName);
+            SenderComboBox.SelectedItem = OldVPName;
+            UpdateOldFBFMC();
             e.Handled = true; // 阻止事件继续处理
         }
 

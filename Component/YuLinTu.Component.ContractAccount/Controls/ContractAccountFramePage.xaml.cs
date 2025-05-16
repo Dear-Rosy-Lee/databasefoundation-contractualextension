@@ -308,6 +308,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
             SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
+            SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
             SetCommandBinding(mbtnDownLoad, command.DownLoad, command.DownLoadBind);
@@ -646,6 +647,10 @@ namespace YuLinTu.Component.ContractAccount
                     contractAccountPanel.DataQuality();    
                     break;
 
+                case ContractAccountCommand.AdjustLandName:
+                    contractAccountPanel.AdjustLand();
+                    break;
+
                 case ContractAccountCommand.ClearName:
                     contractAccountPanel.Clear();
                     break;
@@ -700,6 +705,7 @@ namespace YuLinTu.Component.ContractAccount
                 btnTemplate.IsEnabled = isEnable;
                 btnExportContractInformation.IsEnabled = isEnable;
                 mbtnDataQuality.IsEnabled = isEnable;
+                mbtnAdjustLand.IsEnabled = isEnable;
             }));
         }
 

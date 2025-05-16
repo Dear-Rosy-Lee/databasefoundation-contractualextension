@@ -236,6 +236,9 @@
     <Compile Include="Concord\InitializeConcordPersonPage.xaml.cs">
       <DependentUpon>InitializeConcordPersonPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContractAccount\AdjustLand\AdjustLandPage.xaml.cs">
+      <DependentUpon>AdjustLandPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContractAccount\ContractLandInitializeCoil.xaml.cs">
       <DependentUpon>ContractLandInitializeCoil.xaml</DependentUpon>
     </Compile>
@@ -590,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Concord\InitializeConcordPersonPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContractAccount\AdjustLand\AdjustLandPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

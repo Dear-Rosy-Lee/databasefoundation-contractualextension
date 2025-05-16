@@ -387,6 +387,11 @@ namespace YuLinTu.Library.Command
         public const string DataQualityName = "dataQuality";
 
         /// <summary>
+        /// 地块调整
+        /// </summary>
+        public const string AdjustLandName = "adjustLand";
+
+        /// <summary>
         /// 清空命令名称
         /// </summary>
         public const string ClearName = "clear";
@@ -803,6 +808,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand DataQuality = new RoutedCommand(DataQualityName, typeof(Button));
 
         /// <summary>
+        /// 调整地块
+        /// </summary>
+        public RoutedCommand AdjustLand = new RoutedCommand(AdjustLandName, typeof(Button));
+
+        /// <summary>
         /// 清空命令
         /// </summary>
         public RoutedCommand Clear = new RoutedCommand(ClearName, typeof(Button));
@@ -1207,6 +1217,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding DataQualityBind = new CommandBinding();
 
         /// <summary>
+        /// 地块调整绑定
+        /// </summary>
+        public CommandBinding AdjustLandBind = new CommandBinding();
+
+        /// <summary>
         /// 清空绑定
         /// </summary>
         public CommandBinding ClearBind = new CommandBinding();
@@ -1313,6 +1328,7 @@ namespace YuLinTu.Library.Command
             LandShapeNullBind.Command = LandShapeNull;
             FindBind.Command = Find;
             DataQualityBind.Command = DataQuality;
+            AdjustLandBind.Command = AdjustLand;
             ClearBind.Command = Clear;
             RefreshBind.Command = Refresh;
             ExportPackageBind.Command = ExportPackage;

@@ -9,12 +9,14 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls
 {
@@ -7926,6 +7928,81 @@ namespace YuLinTu.Library.Controls
             operation.StartAsync();
         }
         #endregion Method-质检
+        #region Method-批量调整地块
+        public void AdjustLand()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("调整地块", "请选择行政区域进行调整地块!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DbContext.CreateContractLandWorkstation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
+                    currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("调整地块", "请选择在组级地域进行调整地块!");
+                    return;
+                }
+
+                else
+                {
+                    var dictStation = DbContext.CreateDictWorkStation();
+                    var DictList = dictStation.Get();
+                    List<VirtualPerson> persons = new List<VirtualPerson>();
+                    persons = vpStation.GetByZoneCode(currentZone.FullCode);
+                    List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
+                    var dialog = new AdjustLandPage(persons, lands, DictList);
+                    TheWorkPage.Page.ShowMessageBox(dialog, (s, t) =>
+                    {
+                        if (s == null || !s.Value)
+                            return;
+                        var Lands = new List<ContractLand>();
+                        foreach (var item in dialog.SelectLandData.Select(tuple => tuple.Item1).ToList())
+                        {
+                            Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
+                        }
+                        AdjustLandTask(Lands,dialog.NewVPName);
+                    });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "调整地块", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+        private void AdjustLandTask(List<ContractLand> Lands,string NewVPName)
+        {
+            TaskAdjustLandArgument argument = new TaskAdjustLandArgument();
+            argument.Database = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.Lands = Lands;
+            argument.NewVPName = NewVPName;
+
+            TaskAdjustLandOperation task = new TaskAdjustLandOperation();
+            task.Argument = argument;
+            task.Name = "调整地块";
+            task.Description = "批量调整地块";
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(task);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            task.StartAsync();
+        }
+        #endregion Method-批量调整地块
         #endregion Method-工具
 
         #endregion Methods
