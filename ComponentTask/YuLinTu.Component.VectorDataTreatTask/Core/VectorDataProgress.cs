@@ -98,6 +98,46 @@ namespace YuLinTu.Component.VectorDataTreatTask
             return err;
         }
 
+        static public void InitiallShapeLandList(string filePath, int srid, Action<int, List<QCDK>> DataAction, string zoneCode = "")
+        {
+            var dkList = new List<QCDK>();
+
+            if (filePath == null || string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+            //codeIndex.Clear();
+            using (var shp = new ShapeFile())
+            {
+                var err = shp.Open(filePath);
+                if (!string.IsNullOrEmpty(err))
+                {
+                    Log.WriteError(null, "", "读取地块Shape文件发生错误" + err);
+                    return;
+                }
+                var codeIndex = new Dictionary<string, int>();
+
+                ErrorInfo = CheckField(shp);
+                if (!string.IsNullOrEmpty(ErrorInfo))
+                    throw new Exception(filePath + ErrorInfo);
+                int count = shp.GetRecordCount();
+                foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
+                {
+                    dkList.Add(dk);
+                    if (dkList.Count == 10000)
+                    {
+                        DataAction(count, dkList);
+                        dkList.Clear();
+                    }
+                }
+                if (dkList.Count > 0)
+                {
+                    DataAction(count, dkList);
+                    dkList.Clear();
+                }
+            }
+        }
+
         static public List<QCDK> InitiallShapeLandList(string filePath, int srid, string zoneCode = "")
         {
             var dkList = new List<QCDK>();
