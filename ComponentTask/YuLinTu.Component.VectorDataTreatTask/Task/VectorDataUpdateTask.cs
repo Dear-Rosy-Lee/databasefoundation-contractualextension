@@ -255,7 +255,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                             ls.Clear();
                         }
                         index++;
-                        this.ReportProgress(1 + (int)(findex * p), $"({index}/{landShapeList.Count()},{Path.GetFileName(file)}) 正在更新数据");
+                        this.ReportProgress(1 + (int)(findex * p), $"({index}/{rowcount},{Path.GetFileName(file)}) 正在更新数据");
                     }
                     if (ls.Count > 0)
                     {
