@@ -310,6 +310,7 @@ namespace YuLinTu.Library.Business
             }
             InitalizeRangeValue("E" + index, "E" + index, person.ICN);
             InitalizeRangeValue("F" + index, "F" + index, person.Relationship);
+            InitalizeRangeValue("H" + index, "H" + index, person.Opinion);
         }
 
 

@@ -444,6 +444,7 @@ namespace YuLinTu.Library.Controls
             if (cb_Comment.SelectedItem.ToString() != "其他备注")
             {
                 person.Comment = cb_Comment.SelectedItem.ToString();
+                person.Opinion = cb_Comment.SelectedItem.ToString();
             }
             else
             {
@@ -700,6 +701,7 @@ namespace YuLinTu.Library.Controls
             }
             else
             {
+                txt_Opinion.Text = selectvalue.ToString();
                 txt_Opinion.IsEnabled = false;
             }
         }

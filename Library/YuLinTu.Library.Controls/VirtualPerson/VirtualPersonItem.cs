@@ -112,7 +112,7 @@ namespace YuLinTu.Library.Controls
         /// 备注
         /// </summary>
         public string Comment { get; set; }
-        
+
         /// <summary>
         /// 承包方
         /// </summary>
@@ -280,7 +280,7 @@ namespace YuLinTu.Library.Controls
             {
                 oldVirtualCode = value;
                 NotifyPropertyChanged("OldVirtualCode");
-                
+
             }
         }
         /// <summary>
@@ -378,7 +378,7 @@ namespace YuLinTu.Library.Controls
             FamilyID = (Guid)p.FamilyID;
             Name = p.Name;
             Relationship = p.Relationship;
-            Comment = p.Comment;
+            Comment = p.Opinion;
             Gender = p.Gender;
             Tag = p;
             Img = VirtualPersonItemHelper.ChangeByGender(p.Gender);
