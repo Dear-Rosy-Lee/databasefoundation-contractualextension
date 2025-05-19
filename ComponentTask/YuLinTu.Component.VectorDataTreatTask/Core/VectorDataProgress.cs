@@ -124,7 +124,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
                 {
                     dkList.Add(dk);
-                    if (dkList.Count == 10000)
+                    if (dkList.Count == 5000)
                     {
                         DataAction(count, dkList);
                         dkList.Clear();
