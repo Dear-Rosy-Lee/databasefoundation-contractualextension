@@ -21,6 +21,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 var designer = new FileBrowserTextBox();
                 designer.Filter = "文件类型(*.shp)|*.shp";
                 designer.Multiselect = false;
+                designer.Watermask = defaultValue.Watermask;
                 designer.SetBinding(TextBox.TextProperty, b);
                 designer.SetBinding(TextBox.ToolTipProperty, b);
 

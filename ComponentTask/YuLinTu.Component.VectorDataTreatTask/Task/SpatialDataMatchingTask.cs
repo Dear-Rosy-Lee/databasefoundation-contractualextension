@@ -101,7 +101,8 @@ namespace YuLinTu.Component.VectorDataTreatTask
                     bool isMatchSucess = ProcessDataOnline(TreatmentUrl, TreatmentKey, (temp) =>
                     {
                         handlZoneCode = temp;
-                        bool result=!(!temp.StartsWith(argument.ZoneCode) && argument.ZoneCode != "86");
+                        bool result=temp.StartsWith(argument.ZoneCode) || argument.ZoneCode == "86";
+                        if(result==false)
                         this.ReportError(string.Format("用户{0}无{1}地域的数据处理权限!", argument.UserName, temp));
                         return result;
                     });
@@ -226,7 +227,11 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 string filepath = Path.GetDirectoryName(argument.CheckFilePath);
                 string filename = Path.GetFileNameWithoutExtension(argument.CheckFilePath);
                 if (!CheckFile(filepath, filename))
+                {
+                    this.ReportError(ErrorInfo);
                     return false;
+                }
+       
                 var sr = VectorDataProgress.GetByFile(filepath + "\\" + filename);
                 var srid = sr.WKID;
                 if (srid == 4490)

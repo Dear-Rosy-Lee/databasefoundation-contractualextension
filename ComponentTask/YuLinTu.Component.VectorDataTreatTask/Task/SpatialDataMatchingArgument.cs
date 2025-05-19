@@ -41,6 +41,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
         [DescriptionLanguage("待处理数据文件的路径", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        [WatermaskLanguage("请选择.shp矢量文件路径")]
         public string CheckFilePath
         {
             get { return checkFilePath; }
@@ -52,10 +53,11 @@ namespace YuLinTu.Component.VectorDataTreatTask
             }
         }
 
-        [DisplayLanguage("处理结果文件路径", IsLanguageName = false)]
-        [DescriptionLanguage("存放处理文件的路径", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
-             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        [DisplayLanguage("处理结果文件夹路径", IsLanguageName = false)]
+        [DescriptionLanguage("存放处理文件夹的路径", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
+             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        [WatermaskLanguage("请在线加密数据存放文件夹")]
         public string ResultFilePath
         {
             get { return resultFilePath; }
@@ -169,6 +171,35 @@ namespace YuLinTu.Component.VectorDataTreatTask
         }
 
         #endregion Methods
+    }
+    public class PropertyDescriptorBuilderFolderBrowserExtsion : PropertyDescriptorBuilder
+    {
+      
+      public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke((Action)delegate
+            {
+                Binding binding = new Binding("Value")
+                {
+                    Source = defaultValue,
+                    Mode = BindingMode.TwoWay,
+                    ValidatesOnExceptions = true,
+                    UpdateSourceTrigger = UpdateSourceTrigger.LostFocus
+                };
+           
+                FolderBrowserTextBox folderBrowserTextBox = new FolderBrowserTextBox();
+                folderBrowserTextBox.Watermask = defaultValue.Watermask;
+                folderBrowserTextBox.Description = defaultValue.Description;
+                folderBrowserTextBox.SetBinding(TextBox.TextProperty, binding);
+                folderBrowserTextBox.SetBinding(FrameworkElement.ToolTipProperty, binding);
+                defaultValue.Designer = folderBrowserTextBox;
+       
+                defaultValue.BindingExpression = folderBrowserTextBox.GetBindingExpression(TextBox.TextProperty);
+            }, new object[0]);
+            return defaultValue;
+        
+
+        }
     }
 
     public class PropertyDescriptorBuilderTextBoxReadOnly : PropertyDescriptorBuilder
