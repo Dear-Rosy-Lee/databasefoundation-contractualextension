@@ -247,22 +247,41 @@
                     <ComboBoxItem >其他备注</ComboBoxItem>-->
                 </cmps:MetroComboBox>
 
-                <Label
+                <TextBlock 
                     Grid.Row="14"
+                    HorizontalAlignment="Left"
+                    TextWrapping="WrapWithOverflow"
                     Margin="0,5"
+                    Width="65"
+                    Foreground="Black"
                     VerticalAlignment="Top"
-                    Content="成员备注说明:"
-                    Style="{StaticResource LableStyle}" />
+                    Text="成员备注说明:"/>
                 <cmps:MetroTextBox
-                    Name="txt_Opinion"
+                    Name="txt_Comment"
                     Grid.Row="14"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
+                    Grid.Column="1" 
                     Height="60"
                     VerticalContentAlignment="Stretch"
                     MaxLength="100"
-                    Text="{Binding Opinion, Mode=TwoWay}"
+                    Text="{Binding Comment, Mode=TwoWay}"
                     TextWrapping="Wrap" />
+
+                <Label
+     Grid.Row="14"
+     Grid.Column="2" 
+     VerticalAlignment="Top"
+     Content="修改说明:"
+     Style="{StaticResource LableStyle}" />
+
+                <cmps:MetroTextBox
+     Name="txt_Opinion"
+     Grid.Row="14"
+     Grid.Column="3" 
+     Height="60"
+     VerticalContentAlignment="Stretch"
+     MaxLength="100"
+     Text="{Binding Opinion, Mode=TwoWay}"
+     TextWrapping="Wrap" />
             </Grid>
 
 
