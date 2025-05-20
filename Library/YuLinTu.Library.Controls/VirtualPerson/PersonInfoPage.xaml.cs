@@ -699,6 +699,7 @@ namespace YuLinTu.Library.Controls
             if (selectvalue != null && selectvalue.ToString() == "其他备注")
             {
                 txt_Comment.IsEnabled = true;
+                txt_Comment.Text = "";
             }
             else
             {
