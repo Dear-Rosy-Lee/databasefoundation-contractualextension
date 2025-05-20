@@ -1,0 +1,2633 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YuLinTu.tGISCNet.1.0.0.0.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck">
+            <summary>YuLinTu.tGISCNet.AreaAdjacentPointCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.#ctor(YuLinTu.tGISCNet.AreaAdjacentPointCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.AllInstances.DoCheckDoubleDoubleAreaAdjacentPointChecktGISCallback7_i_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaAdjacentPointCheck.DoCheck(Double overlapTolerance, Double minLen, tGISCallback7_i_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.Constructor">
+            <summary>设置 AreaAdjacentPointCheck.AreaAdjacentPointCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheck.DoCheckDoubleDoubleAreaAdjacentPointChecktGISCallback7_i_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaAdjacentPointCheck.DoCheck(Double overlapTolerance, Double minLen, tGISCallback7_i_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaAdjacentPointCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.#ctor(YuLinTu.tGISCNet.AreaAdjacentPointCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.AllInstances.DoCheckDoubleAreaAdjacentPointCheckForWKBtGISCallback7_i_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaAdjacentPointCheckForWKB.DoCheck(Double minLen, tGISCallback7_i_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.ConstructorFuncOfInt32EnvelopeFuncOfInt32ByteArrayDouble">
+            <summary>设置 AreaAdjacentPointCheckForWKB.AreaAdjacentPointCheckForWKB(Func`2&lt;Int32,Envelope&gt; callExtent, Func`2&lt;Int32,Byte[]&gt; callWKB, Double tolerance) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaAdjacentPointCheckForWKB.DoCheckDoubleAreaAdjacentPointCheckForWKBtGISCallback7_i_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaAdjacentPointCheckForWKB.DoCheck(Double minLen, tGISCallback7_i_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck">
+            <summary>YuLinTu.tGISCNet.AreaBoundaryCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.#ctor(YuLinTu.tGISCNet.AreaBoundaryCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.AllInstances.DoCheckDoubleDoubleActionOfInt32Int32ActionOfInt32">
+            <summary>设置 AreaBoundaryCheck.DoCheck(Double minBuffer, Double maxBuffer, Action`2&lt;Int32,Int32&gt; reportCheck, Action`1&lt;Int32&gt; reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.AllInstances.selfSnapIGeometryDouble">
+            <summary>设置 AreaBoundaryCheck.selfSnap(IGeometry g, Double snapTolerance) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.Constructor">
+            <summary>设置 AreaBoundaryCheck.AreaBoundaryCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.DoCheckDoubleDoubleActionOfInt32Int32ActionOfInt32">
+            <summary>设置 AreaBoundaryCheck.DoCheck(Double minBuffer, Double maxBuffer, Action`2&lt;Int32,Int32&gt; reportCheck, Action`1&lt;Int32&gt; reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaBoundaryCheck.selfSnapIGeometryDouble">
+            <summary>设置 AreaBoundaryCheck.selfSnap(IGeometry g, Double snapTolerance) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck">
+            <summary>YuLinTu.tGISCNet.AreaLineOverlapCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.#ctor(YuLinTu.tGISCNet.AreaLineOverlapCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.AllInstances.Dispose">
+            <summary>设置 AreaLineOverlapCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.AllInstances.DoCheckAreaLineOverlapCheckFlagDoubleAreaLineOverlapCheckFindTopErrorCallbackAreaLineOverlapCheckProgressCallback">
+            <summary>设置 AreaLineOverlapCheck.DoCheck(Flag flag, Double tolerance, FindTopErrorCallback reportCheck, ProgressCallback reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.AllInstances.OpenShpStringString">
+            <summary>设置 AreaLineOverlapCheck.OpenShp(String lineShpFile, String areaShpFile) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.Constructor">
+            <summary>设置 AreaLineOverlapCheck.AreaLineOverlapCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.Dispose">
+            <summary>设置 AreaLineOverlapCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.DoCheckAreaLineOverlapCheckFlagDoubleAreaLineOverlapCheckFindTopErrorCallbackAreaLineOverlapCheckProgressCallback">
+            <summary>设置 AreaLineOverlapCheck.DoCheck(Flag flag, Double tolerance, FindTopErrorCallback reportCheck, ProgressCallback reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheck.OpenShpStringString">
+            <summary>设置 AreaLineOverlapCheck.OpenShp(String lineShpFile, String areaShpFile) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaLineOverlapCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.#ctor(YuLinTu.tGISCNet.AreaLineOverlapCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AddAreaIDUInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.AddAreaID(UInt32 id) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AddLineIDUInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.AddLineID(UInt32 id) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.AddAreaIDUInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.AddAreaID(UInt32 id) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.AddLineIDUInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.AddLineID(UInt32 id) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.Dispose">
+            <summary>设置 AreaLineOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.DoCheckInt32DoubleAreaLineOverlapCheckForWKBtGISCallback6AreaLineOverlapCheckForWKBtGISCallback1_i">
+            <summary>设置 AreaLineOverlapCheckForWKB.DoCheck(Int32 flag, Double tolerance, tGISCallback6 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.SetExtentCallbackFuncOfInt32EnvelopeFuncOfInt32Envelope">
+            <summary>设置 AreaLineOverlapCheckForWKB.SetExtentCallback(Func`2&lt;Int32,Envelope&gt; pCallLineExtent, Func`2&lt;Int32,Envelope&gt; pCallAreaExtent) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.SetFullExtentEnvelopeEnvelope">
+            <summary>设置 AreaLineOverlapCheckForWKB.SetFullExtent(Envelope lineFullExt, Envelope areaFullExt) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.AllInstances.callGetWKBFuncOfInt32ByteArrayInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.callGetWKB(Func`2&lt;Int32,Byte[]&gt; call, Int32 id) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.ConstructorFuncOfInt32ByteArrayFuncOfInt32ByteArray">
+            <summary>设置 AreaLineOverlapCheckForWKB.AreaLineOverlapCheckForWKB(Func`2&lt;Int32,Byte[]&gt; pCallLineWKB, Func`2&lt;Int32,Byte[]&gt; pCallAreaWKB) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.Dispose">
+            <summary>设置 AreaLineOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.DoCheckInt32DoubleAreaLineOverlapCheckForWKBtGISCallback6AreaLineOverlapCheckForWKBtGISCallback1_i">
+            <summary>设置 AreaLineOverlapCheckForWKB.DoCheck(Int32 flag, Double tolerance, tGISCallback6 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.SetExtentCallbackFuncOfInt32EnvelopeFuncOfInt32Envelope">
+            <summary>设置 AreaLineOverlapCheckForWKB.SetExtentCallback(Func`2&lt;Int32,Envelope&gt; pCallLineExtent, Func`2&lt;Int32,Envelope&gt; pCallAreaExtent) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.SetFullExtentEnvelopeEnvelope">
+            <summary>设置 AreaLineOverlapCheckForWKB.SetFullExtent(Envelope lineFullExt, Envelope areaFullExt) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaLineOverlapCheckForWKB.callGetWKBFuncOfInt32ByteArrayInt32">
+            <summary>设置 AreaLineOverlapCheckForWKB.callGetWKB(Func`2&lt;Int32,Byte[]&gt; call, Int32 id) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck">
+            <summary>YuLinTu.tGISCNet.AreaOverlapCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.#ctor(YuLinTu.tGISCNet.AreaOverlapCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.AllInstances.DoCheck2ShapeFileDoubleAreaOverlapCheckReportOverlapCallbackTopCheckCallbackItGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 AreaOverlapCheck.DoCheck2(ShapeFile shp2, Double tolerance, ReportOverlapCallback reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.AllInstances.DoCheckDoubleAreaOverlapChecktGISCallback2_i_iTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaOverlapCheck.DoCheck(Double tolerance, tGISCallback2_i_i reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.Constructor">
+            <summary>设置 AreaOverlapCheck.AreaOverlapCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.DoCheck2ShapeFileDoubleAreaOverlapCheckReportOverlapCallbackTopCheckCallbackItGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 AreaOverlapCheck.DoCheck2(ShapeFile shp2, Double tolerance, ReportOverlapCallback reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.DoCheckDoubleAreaOverlapChecktGISCallback2_i_iTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaOverlapCheck.DoCheck(Double tolerance, tGISCallback2_i_i reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheck.GetAreaIGeometry">
+            <summary>设置 AreaOverlapCheck.GetArea(IGeometry g) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaOverlapCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.#ctor(YuLinTu.tGISCNet.AreaOverlapCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.AllInstances.DoCheckDoubleAreaOverlapCheckForWKBtGISCallback2_i_iTopCheckCallbackItGISCallback1_iAreaOverlapCheckForWKBtGISCallback_rb">
+            <summary>设置 AreaOverlapCheckForWKB.DoCheck(Double tolerance, tGISCallback2_i_i reportCheck, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.ConstructorFuncOfInt32EnvelopeFuncOfInt32ByteArray">
+            <summary>设置 AreaOverlapCheckForWKB.AreaOverlapCheckForWKB(Func`2&lt;Int32,Envelope&gt; callExtent, Func`2&lt;Int32,Byte[]&gt; callWKB) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaOverlapCheckForWKB.DoCheckDoubleAreaOverlapCheckForWKBtGISCallback2_i_iTopCheckCallbackItGISCallback1_iAreaOverlapCheckForWKBtGISCallback_rb">
+            <summary>设置 AreaOverlapCheckForWKB.DoCheck(Double tolerance, tGISCallback2_i_i reportCheck, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck">
+            <summary>YuLinTu.tGISCNet.AreaRepeatPointCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.#ctor(YuLinTu.tGISCNet.AreaRepeatPointCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.AllInstances.DoCheckDoubleAreaRepeatPointChecktGISCallback6_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaRepeatPointCheck.DoCheck(Double minLen, tGISCallback6_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.Constructor">
+            <summary>设置 AreaRepeatPointCheck.AreaRepeatPointCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheck.DoCheckDoubleAreaRepeatPointChecktGISCallback6_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 AreaRepeatPointCheck.DoCheck(Double minLen, tGISCallback6_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaRepeatPointCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.#ctor(YuLinTu.tGISCNet.AreaRepeatPointCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.Constructor">
+            <summary>设置 AreaRepeatPointCheckForWKB.AreaRepeatPointCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaRepeatPointCheckForWKB.DoCheckByteArrayDoubleDoubleActionOfDoubleDoubleDoubleDoubleDouble">
+            <summary>设置 AreaRepeatPointCheckForWKB.DoCheck(Byte[] wkb, Double len, Double len2, Action`5&lt;Double,Double,Double,Double,Double&gt; callback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaVertexOnEdgeCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.#ctor(YuLinTu.tGISCNet.AreaVertexOnEdgeCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.AddGeometryInt32ByteArray">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.AddGeometry(Int32 shpID, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.AllInstances.AddGeometryInt32ByteArray">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.AddGeometry(Int32 shpID, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.AllInstances.Dispose">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.AllInstances.DoCheckAreaVertexOnEdgeCheckForWKBOnErrorCheckedAreaVertexOnEdgeCheckForWKBtGISCallback1_i">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.DoCheck(OnErrorChecked reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.ConstructorDouble">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.AreaVertexOnEdgeCheckForWKB(Double tolerance) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.Dispose">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimAreaVertexOnEdgeCheckForWKB.DoCheckAreaVertexOnEdgeCheckForWKBOnErrorCheckedAreaVertexOnEdgeCheckForWKBtGISCallback1_i">
+            <summary>设置 AreaVertexOnEdgeCheckForWKB.DoCheck(OnErrorChecked reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid">
+            <summary>YuLinTu.tGISCNet.BuildPyramid 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.#ctor(YuLinTu.tGISCNet.BuildPyramid)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimBuildPyramid.Constructor">
+            <summary>设置 BuildPyramid.BuildPyramid() 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimCgl">
+            <summary>YuLinTu.tGISCNet.Cgl 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimCgl.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimCgl.#ctor(YuLinTu.tGISCNet.Cgl)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimCgl.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimCgl.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimCgl.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimCgl.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimCgl.Constructor">
+            <summary>设置 Cgl.Cgl() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimCgl.Orientation_indexDoubleDoubleDoubleDoubleDoubleDoubleDouble">
+            <summary>设置 Cgl.Orientation_index(Double x1, Double y1, Double x2, Double y2, Double x, Double y, Double tolerance2) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck">
+            <summary>YuLinTu.tGISCNet.LineHangCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.#ctor(YuLinTu.tGISCNet.LineHangCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.AllInstances.DoCheckDoubleLineHangChecktGISCallback3TopCheckCallbackItGISCallback1_i">
+            <summary>设置 LineHangCheck.DoCheck(Double tolerance, tGISCallback3 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.Constructor">
+            <summary>设置 LineHangCheck.LineHangCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineHangCheck.DoCheckDoubleLineHangChecktGISCallback3TopCheckCallbackItGISCallback1_i">
+            <summary>设置 LineHangCheck.DoCheck(Double tolerance, tGISCallback3 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.#ctor(YuLinTu.tGISCNet.LineIntersectionCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.AllInstances.Dispose">
+            <summary>设置 LineIntersectionCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.AllInstances.DoCheckDoubleDoubleDoubleLineIntersectionChecktGISCallback4iLineIntersectionChecktGISCallback6iiddddLineIntersectionChecktGISCallback1_i">
+            <summary>设置 LineIntersectionCheck.DoCheck(Double intersectTolerance, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.AllInstances.LoadShpString">
+            <summary>设置 LineIntersectionCheck.LoadShp(String shpFile) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.Constructor">
+            <summary>设置 LineIntersectionCheck.LineIntersectionCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.Dispose">
+            <summary>设置 LineIntersectionCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.DoCheckDoubleDoubleDoubleLineIntersectionChecktGISCallback4iLineIntersectionChecktGISCallback6iiddddLineIntersectionChecktGISCallback1_i">
+            <summary>设置 LineIntersectionCheck.DoCheck(Double intersectTolerance, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck.LoadShpString">
+            <summary>设置 LineIntersectionCheck.LoadShp(String shpFile) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheck2 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.#ctor(YuLinTu.tGISCNet.LineIntersectionCheck2)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.AllInstances.DoCheckShapeFileDoubleDoubleLineIntersectionCheck2tGISCallback4iLineIntersectionCheck2tGISCallback6iiddddTopCheckCallbackItGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 LineIntersectionCheck2.DoCheck(ShapeFile shp2, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.Constructor">
+            <summary>设置 LineIntersectionCheck2.LineIntersectionCheck2() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheck2.DoCheckShapeFileDoubleDoubleLineIntersectionCheck2tGISCallback4iLineIntersectionCheck2tGISCallback6iiddddTopCheckCallbackItGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 LineIntersectionCheck2.DoCheck(ShapeFile shp2, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.#ctor(YuLinTu.tGISCNet.LineIntersectionCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.AllInstances.DoCheckDoubleDoubleDoubleLineIntersectionCheckForWKBtGISCallback4iLineIntersectionCheckForWKBtGISCallback6iiddddLineIntersectionCheckForWKBtGISCallback1_iLineIntersectionCheckForWKBtGISCallback_rb">
+            <summary>设置 LineIntersectionCheckForWKB.DoCheck(Double interscetTolerance, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.ConstructorFuncOfInt32EnvelopeFuncOfInt32ByteArray">
+            <summary>设置 LineIntersectionCheckForWKB.LineIntersectionCheckForWKB(Func`2&lt;Int32,Envelope&gt; callExtent, Func`2&lt;Int32,Byte[]&gt; callWKB) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineIntersectionCheckForWKB.DoCheckDoubleDoubleDoubleLineIntersectionCheckForWKBtGISCallback4iLineIntersectionCheckForWKBtGISCallback6iiddddLineIntersectionCheckForWKBtGISCallback1_iLineIntersectionCheckForWKBtGISCallback_rb">
+            <summary>设置 LineIntersectionCheckForWKB.DoCheck(Double interscetTolerance, Double overlapTolerance, Double overlapMinDistance, tGISCallback4i reportInersect, tGISCallback6iidddd reportOverlay, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.LineSelfOverlapCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.#ctor(YuLinTu.tGISCNet.LineSelfOverlapCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.Constructor">
+            <summary>设置 LineSelfOverlapCheckForWKB.LineSelfOverlapCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimLineSelfOverlapCheckForWKB.DoCheckByteArrayDoubleDoubleActionOfDoubleDoubleDoubleDouble">
+            <summary>设置 LineSelfOverlapCheckForWKB.DoCheck(Byte[] wkb, Double tolerance, Double overlapMinDistance2, Action`4&lt;Double,Double,Double,Double&gt; reportCheck) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck">
+            <summary>YuLinTu.tGISCNet.MultiPartCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.#ctor(YuLinTu.tGISCNet.MultiPartCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.AllInstances.DoCheckMultiPartChecktGISCallback2TopCheckCallbackItGISCallback1_i">
+            <summary>设置 MultiPartCheck.DoCheck(tGISCallback2 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.Constructor">
+            <summary>设置 MultiPartCheck.MultiPartCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimMultiPartCheck.DoCheckMultiPartChecktGISCallback2TopCheckCallbackItGISCallback1_i">
+            <summary>设置 MultiPartCheck.DoCheck(tGISCallback2 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker">
+            <summary>YuLinTu.tGISCNet.NotCancelTracker 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.#ctor(YuLinTu.tGISCNet.NotCancelTracker)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.AllInstances.Cancel">
+            <summary>设置 NotCancelTracker.Cancel() 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.Bind(YuLinTu.tGISCNet.ICancelTracker)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.Cancel">
+            <summary>设置 NotCancelTracker.Cancel() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimNotCancelTracker.Constructor">
+            <summary>设置 NotCancelTracker.NotCancelTracker() 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.#ctor(YuLinTu.tGISCNet.PointAreaRelationCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AddRingPointAreaRelationCheckDkEntityILinearRingBoolean">
+            <summary>设置 PointAreaRelationCheck.AddRing(DkEntity en, ILinearRing lr, Boolean fMakeCCW) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AddRingPointAreaRelationCheckDkEntityIPolygon">
+            <summary>设置 PointAreaRelationCheck.AddRing(DkEntity en, IPolygon pgn) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances.AddRingPointAreaRelationCheckDkEntityILinearRingBoolean">
+            <summary>设置 PointAreaRelationCheck.AddRing(DkEntity en, ILinearRing lr, Boolean fMakeCCW) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances.AddRingPointAreaRelationCheckDkEntityIPolygon">
+            <summary>设置 PointAreaRelationCheck.AddRing(DkEntity en, IPolygon pgn) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances.DoCheckShapeFileStringDoubleActionOfInt32ActionOfInt32ActionOfDoubleDoubleListOfInt32FuncOfBoolean">
+            <summary>设置 PointAreaRelationCheck.DoCheck(ShapeFile dkShp, String jzdFileName, Double tolerance, Action`1&lt;Int32&gt; reportProgress, Action`1&lt;Int32&gt; onError1, Action`3&lt;Double,Double,List`1&lt;Int32&gt;&gt; onError2, Func`1&lt;Boolean&gt; cancel) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances.buildXIndexShapeFile">
+            <summary>设置 PointAreaRelationCheck.buildXIndex(ShapeFile shp) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.AllInstances.queryDKShapeFilePointAreaRelationCheckXBounds">
+            <summary>设置 PointAreaRelationCheck.queryDK(ShapeFile shp, XBounds x) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.Constructor">
+            <summary>设置 PointAreaRelationCheck.PointAreaRelationCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.DoCheckShapeFileStringDoubleActionOfInt32ActionOfInt32ActionOfDoubleDoubleListOfInt32FuncOfBoolean">
+            <summary>设置 PointAreaRelationCheck.DoCheck(ShapeFile dkShp, String jzdFileName, Double tolerance, Action`1&lt;Int32&gt; reportProgress, Action`1&lt;Int32&gt; onError1, Action`3&lt;Double,Double,List`1&lt;Int32&gt;&gt; onError2, Func`1&lt;Boolean&gt; cancel) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck+Cache 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.#ctor(YuLinTu.tGISCNet.PointAreaRelationCheck.Cache)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AddDkPointAreaRelationCheckDkEntity">
+            <summary>设置 Cache.AddDk(DkEntity en) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AddJzdCoordinate">
+            <summary>设置 Cache.AddJzd(Coordinate c) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AllInstances.AddDkPointAreaRelationCheckDkEntity">
+            <summary>设置 Cache.AddDk(DkEntity en) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AllInstances.AddJzdCoordinate">
+            <summary>设置 Cache.AddJzd(Coordinate c) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AllInstances.LogTest">
+            <summary>设置 Cache.LogTest() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.AllInstances.ProcessActionOfInt32ActionOfDoubleDoubleListOfInt32FuncOfBoolean">
+            <summary>设置 Cache.Process(Action`1&lt;Int32&gt; onError1, Action`3&lt;Double,Double,List`1&lt;Int32&gt;&gt; onError2, Func`1&lt;Boolean&gt; cancel) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.ConstructorDouble">
+            <summary>设置 Cache.Cache(Double tolerance) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.LogTest">
+            <summary>设置 Cache.LogTest() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimCache.ProcessActionOfInt32ActionOfDoubleDoubleListOfInt32FuncOfBoolean">
+            <summary>设置 Cache.Process(Action`1&lt;Int32&gt; onError1, Action`3&lt;Double,Double,List`1&lt;Int32&gt;&gt; onError2, Func`1&lt;Boolean&gt; cancel) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck+DkEntity 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.#ctor(YuLinTu.tGISCNet.PointAreaRelationCheck.DkEntity)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.AllInstances.FindAdjacentVertexPointAreaRelationCheckJzdEqualComparerCoordinateCoordinateOutCoordinateOut">
+            <summary>设置 DkEntity.FindAdjacentVertex(JzdEqualComparer cmp, Coordinate p, Coordinate&amp; preVertex, Coordinate&amp; nextVertex) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.Constructor">
+            <summary>设置 DkEntity.DkEntity() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimDkEntity.FindAdjacentVertexPointAreaRelationCheckJzdEqualComparerCoordinateCoordinateOutCoordinateOut">
+            <summary>设置 DkEntity.FindAdjacentVertex(JzdEqualComparer cmp, Coordinate p, Coordinate&amp; preVertex, Coordinate&amp; nextVertex) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck+JzdEqualComparer 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.#ctor(YuLinTu.tGISCNet.PointAreaRelationCheck.JzdEqualComparer)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.AllInstances.EqualsCoordinateCoordinate">
+            <summary>设置 JzdEqualComparer.Equals(Coordinate a, Coordinate b) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.AllInstances.GetHashCodeCoordinate">
+            <summary>设置 JzdEqualComparer.GetHashCode(Coordinate obj) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.Bind(System.Collections.Generic.IEqualityComparer{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.ConstructorDouble">
+            <summary>设置 JzdEqualComparer.JzdEqualComparer(Double tolerance) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.EqualsCoordinateCoordinate">
+            <summary>设置 JzdEqualComparer.Equals(Coordinate a, Coordinate b) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.GetHashCodeCoordinate">
+            <summary>设置 JzdEqualComparer.GetHashCode(Coordinate obj) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimJzdEqualComparer.funcDouble">
+            <summary>设置 JzdEqualComparer.func(Double x) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck+Ring 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.#ctor(YuLinTu.tGISCNet.PointAreaRelationCheck.Ring)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.AllInstances.IsCCWGet">
+            <summary>设置 Ring.get_IsCCW() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.AllInstances.IsCCWSetBoolean">
+            <summary>设置 Ring.set_IsCCW(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.ICollection)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.IEnumerable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.IList)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.Generic.ICollection{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.Generic.IEnumerable{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.Generic.IList{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.Generic.IReadOnlyCollection{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Bind(System.Collections.Generic.IReadOnlyList{GeoAPI.Geometries.Coordinate})">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.Constructor">
+            <summary>设置 Ring.Ring() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.IsCCWGet">
+            <summary>设置 Ring.get_IsCCW() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimRing.IsCCWSetBoolean">
+            <summary>设置 Ring.set_IsCCW(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck+XBounds 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.ShimXBounds.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.buildXIndexShapeFile">
+            <summary>设置 PointAreaRelationCheck.buildXIndex(ShapeFile shp) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointAreaRelationCheck.queryDKShapeFilePointAreaRelationCheckXBounds">
+            <summary>设置 PointAreaRelationCheck.queryDK(ShapeFile shp, XBounds x) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck">
+            <summary>YuLinTu.tGISCNet.PointLineOverlapCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.#ctor(YuLinTu.tGISCNet.PointLineOverlapCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.AllInstances.Dispose">
+            <summary>设置 PointLineOverlapCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.AllInstances.DoCheckDoublePointLineOverlapChecktGISCallback3_i_d_dPointLineOverlapChecktGISCallback2_i_s">
+            <summary>设置 PointLineOverlapCheck.DoCheck(Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback2_i_s reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.AllInstances.LoadShpStringString">
+            <summary>设置 PointLineOverlapCheck.LoadShp(String lineShp, String pointShp) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.Constructor">
+            <summary>设置 PointLineOverlapCheck.PointLineOverlapCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.Dispose">
+            <summary>设置 PointLineOverlapCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.DoCheckDoublePointLineOverlapChecktGISCallback3_i_d_dPointLineOverlapChecktGISCallback2_i_s">
+            <summary>设置 PointLineOverlapCheck.DoCheck(Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback2_i_s reportProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheck.LoadShpStringString">
+            <summary>设置 PointLineOverlapCheck.LoadShp(String lineShp, String pointShp) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.PointLineOverlapCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.#ctor(YuLinTu.tGISCNet.PointLineOverlapCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AddLineInt32ByteArray">
+            <summary>设置 PointLineOverlapCheckForWKB.AddLine(Int32 oid, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AddPointInt32DoubleDouble">
+            <summary>设置 PointLineOverlapCheckForWKB.AddPoint(Int32 oid, Double x, Double y) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances.AddLineInt32ByteArray">
+            <summary>设置 PointLineOverlapCheckForWKB.AddLine(Int32 oid, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances.AddPointInt32DoubleDouble">
+            <summary>设置 PointLineOverlapCheckForWKB.AddPoint(Int32 oid, Double x, Double y) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances.Build">
+            <summary>设置 PointLineOverlapCheckForWKB.Build() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances.Dispose">
+            <summary>设置 PointLineOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.AllInstances.DoCheckBooleanDoublePointLineOverlapCheckForWKBtGISCallback3_i_d_dPointLineOverlapCheckForWKBtGISCallback1_i">
+            <summary>设置 PointLineOverlapCheckForWKB.DoCheck(Boolean fCheckPoint, Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.Build">
+            <summary>设置 PointLineOverlapCheckForWKB.Build() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.Constructor">
+            <summary>设置 PointLineOverlapCheckForWKB.PointLineOverlapCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.Dispose">
+            <summary>设置 PointLineOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointLineOverlapCheckForWKB.DoCheckBooleanDoublePointLineOverlapCheckForWKBtGISCallback3_i_d_dPointLineOverlapCheckForWKBtGISCallback1_i">
+            <summary>设置 PointLineOverlapCheckForWKB.DoCheck(Boolean fCheckPoint, Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck">
+            <summary>YuLinTu.tGISCNet.PointOnLineCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.#ctor(YuLinTu.tGISCNet.PointOnLineCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.AllInstances.Dispose">
+            <summary>设置 PointOnLineCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.AllInstances.DoCheckDoublePointOnLineChecktGISCallback3_i_d_dPointOnLineChecktGISCallback1_iPointOnLineCheckCancelCallback">
+            <summary>设置 PointOnLineCheck.DoCheck(Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.AllInstances.LoadShpStringString">
+            <summary>设置 PointOnLineCheck.LoadShp(String sLineShp, String sPointShp) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.Constructor">
+            <summary>设置 PointOnLineCheck.PointOnLineCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.Dispose">
+            <summary>设置 PointOnLineCheck.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.DoCheckDoublePointOnLineChecktGISCallback3_i_d_dPointOnLineChecktGISCallback1_iPointOnLineCheckCancelCallback">
+            <summary>设置 PointOnLineCheck.DoCheck(Double tolerance, tGISCallback3_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOnLineCheck.LoadShpStringString">
+            <summary>设置 PointOnLineCheck.LoadShp(String sLineShp, String sPointShp) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck">
+            <summary>YuLinTu.tGISCNet.PointOverlapCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.#ctor(YuLinTu.tGISCNet.PointOverlapCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.AllInstances.DoCheck2ShapeFileDoublePointOverlapChecktGISCallback4_i_i_d_dPointOverlapChecktGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 PointOverlapCheck.DoCheck2(ShapeFile shpFile2, Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.AllInstances.DoCheckDoublePointOverlapChecktGISCallback4_i_i_d_dPointOverlapChecktGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 PointOverlapCheck.DoCheck(Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.Constructor">
+            <summary>设置 PointOverlapCheck.PointOverlapCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.DoCheck2ShapeFileDoublePointOverlapChecktGISCallback4_i_i_d_dPointOverlapChecktGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 PointOverlapCheck.DoCheck2(ShapeFile shpFile2, Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheck.DoCheckDoublePointOverlapChecktGISCallback4_i_i_d_dPointOverlapChecktGISCallback1_iTopCheckCallbackICancelCallback">
+            <summary>设置 PointOverlapCheck.DoCheck(Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, CancelCallback cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.PointOverlapCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.#ctor(YuLinTu.tGISCNet.PointOverlapCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.AddPointInt32DoubleDouble">
+            <summary>设置 PointOverlapCheckForWKB.AddPoint(Int32 oid, Double x, Double y) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.AllInstances.AddPointInt32DoubleDouble">
+            <summary>设置 PointOverlapCheckForWKB.AddPoint(Int32 oid, Double x, Double y) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.AllInstances.Dispose">
+            <summary>设置 PointOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.AllInstances.DoCheckDoublePointOverlapCheckForWKBtGISCallback4_i_i_d_dPointOverlapCheckForWKBtGISCallback1_iPointOverlapCheckForWKBtGISCallback_rb">
+            <summary>设置 PointOverlapCheckForWKB.DoCheck(Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.Constructor">
+            <summary>设置 PointOverlapCheckForWKB.PointOverlapCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.Dispose">
+            <summary>设置 PointOverlapCheckForWKB.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimPointOverlapCheckForWKB.DoCheckDoublePointOverlapCheckForWKBtGISCallback4_i_i_d_dPointOverlapCheckForWKBtGISCallback1_iPointOverlapCheckForWKBtGISCallback_rb">
+            <summary>设置 PointOverlapCheckForWKB.DoCheck(Double tolerance, tGISCallback4_i_i_d_d reportCheck, tGISCallback1_i reportProgress, tGISCallback_rb cancelCallback) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB">
+            <summary>YuLinTu.tGISCNet.SelfIntersectCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.#ctor(YuLinTu.tGISCNet.SelfIntersectCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.Constructor">
+            <summary>设置 SelfIntersectCheckForWKB.SelfIntersectCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSelfIntersectCheckForWKB.HasSelfIntersectByteArrayActionOfDoubleDouble">
+            <summary>设置 SelfIntersectCheckForWKB.HasSelfIntersect(Byte[] wkb, Action`2&lt;Double,Double&gt; reportCheck) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShapeFile">
+            <summary>YuLinTu.tGISCNet.ShapeFile 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeFile.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeFile.#ctor(YuLinTu.tGISCNet.ShapeFile)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AddFieldStringDBFFieldTypeInt32Int32">
+            <summary>设置 ShapeFile.AddField(String fieldName, DBFFieldType nFieldType, Int32 nWidth, Int32 nDecimals) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.AddFieldStringDBFFieldTypeInt32Int32">
+            <summary>设置 ShapeFile.AddField(String fieldName, DBFFieldType nFieldType, Int32 nWidth, Int32 nDecimals) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.BuildIndexBoolean">
+            <summary>设置 ShapeFile.BuildIndex(Boolean fForceRebuild) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.Close">
+            <summary>设置 ShapeFile.Close() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.CopyStructString">
+            <summary>设置 ShapeFile.CopyStruct(String lpszOut) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.CreateStringEShapeTypeStringBoolean">
+            <summary>设置 ShapeFile.Create(String shpFileName, EShapeType nShapeType, String sPrjStr, Boolean fDeleteIfExist) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.FileNameGet">
+            <summary>设置 ShapeFile.get_FileName() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.FileNameSetString">
+            <summary>设置 ShapeFile.set_FileName(String value) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.FindFieldString">
+            <summary>设置 ShapeFile.FindField(String fieldName) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetExtentInt32">
+            <summary>设置 ShapeFile.GetExtent(Int32 i) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetExtentInt32ShapeFiletGISCallback4_d_d_d_d">
+            <summary>设置 ShapeFile.GetExtent(Int32 i, tGISCallback4_d_d_d_d callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldBoolInt32Int32">
+            <summary>设置 ShapeFile.GetFieldBool(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldCount">
+            <summary>设置 ShapeFile.GetFieldCount() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldDecimalsInt32">
+            <summary>设置 ShapeFile.GetFieldDecimals(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldDoubleInt32Int32">
+            <summary>设置 ShapeFile.GetFieldDouble(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldIntInt32Int32">
+            <summary>设置 ShapeFile.GetFieldInt(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldLengthInt32">
+            <summary>设置 ShapeFile.GetFieldLength(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldNameInt32">
+            <summary>设置 ShapeFile.GetFieldName(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldStringInt32Int32">
+            <summary>设置 ShapeFile.GetFieldString(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldTypeInt32">
+            <summary>设置 ShapeFile.GetFieldType(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFieldValueInt32Int32">
+            <summary>设置 ShapeFile.GetFieldValue(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFullExtent">
+            <summary>设置 ShapeFile.GetFullExtent() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetFullExtentShapeFiletGISCallback4_d_d_d_d">
+            <summary>设置 ShapeFile.GetFullExtent(tGISCallback4_d_d_d_d callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetGeometryInt32Int32">
+            <summary>设置 ShapeFile.GetGeometry(Int32 rowid, Int32 srid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetRecordCountBoolean">
+            <summary>设置 ShapeFile.GetRecordCount(Boolean fShp) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetShapeType">
+            <summary>设置 ShapeFile.GetShapeType() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.GetWKBInt32Boolean">
+            <summary>设置 ShapeFile.GetWKB(Int32 rowid, Boolean fSortPolygon) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.HandleGet">
+            <summary>设置 ShapeFile.get_Handle() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsFieldNullInt32Int32">
+            <summary>设置 ShapeFile.IsFieldNull(Int32 r, Int32 c) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsIndexBuilded">
+            <summary>设置 ShapeFile.IsIndexBuilded() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsMultiPoint">
+            <summary>设置 ShapeFile.IsMultiPoint() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsPoint">
+            <summary>设置 ShapeFile.IsPoint() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsPolygon">
+            <summary>设置 ShapeFile.IsPolygon() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.IsPolyline">
+            <summary>设置 ShapeFile.IsPolyline() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.OpenStringStringBoolean">
+            <summary>设置 ShapeFile.Open(String shpFile, String lpszAccess, Boolean fLoadDbf) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.QueryIntersectsDoubleDoubleDoubleDouble">
+            <summary>设置 ShapeFile.QueryIntersects(Double xmin, Double ymin, Double xmax, Double ymax) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.QueryIntersectsDoubleDoubleDoubleDoubleShapeFileNextFeature">
+            <summary>设置 ShapeFile.QueryIntersects(Double xmin, Double ymin, Double xmax, Double ymax, NextFeature callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.SetCodePageString">
+            <summary>设置 ShapeFile.SetCodePage(String szCodePage) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.SetPrecisionInt32">
+            <summary>设置 ShapeFile.SetPrecision(Int32 n) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldBoolInt32Int32Boolean">
+            <summary>设置 ShapeFile.WriteFieldBool(Int32 row, Int32 col, Boolean val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldDateInt32Int32DateTime">
+            <summary>设置 ShapeFile.WriteFieldDate(Int32 row, Int32 col, DateTime val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldDoubleInt32Int32Double">
+            <summary>设置 ShapeFile.WriteFieldDouble(Int32 row, Int32 col, Double val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldIntInt32Int32Int32">
+            <summary>设置 ShapeFile.WriteFieldInt(Int32 row, Int32 col, Int32 val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldNullInt32Int32">
+            <summary>设置 ShapeFile.WriteFieldNull(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteFieldStringInt32Int32String">
+            <summary>设置 ShapeFile.WriteFieldString(Int32 row, Int32 col, String val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances.WriteWKBInt32ByteArray">
+            <summary>设置 ShapeFile.WriteWKB(Int32 row, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances._ctorb__52_0Int32Int32IntPtr">
+            <summary>设置 ShapeFile.&lt;.ctor&gt;b__52_0(Int32 rowid, Int32 sz, IntPtr o) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.AllInstances._ctorb__52_1Int32IntPtr">
+            <summary>设置 ShapeFile.&lt;.ctor&gt;b__52_1(Int32 cnt, IntPtr p) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeFile.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeFile.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeFile.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.BuildIndexBoolean">
+            <summary>设置 ShapeFile.BuildIndex(Boolean fForceRebuild) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.Close">
+            <summary>设置 ShapeFile.Close() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.Constructor">
+            <summary>设置 ShapeFile.ShapeFile() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.CopyStructString">
+            <summary>设置 ShapeFile.CopyStruct(String lpszOut) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.CreateStringEShapeTypeStringBoolean">
+            <summary>设置 ShapeFile.Create(String shpFileName, EShapeType nShapeType, String sPrjStr, Boolean fDeleteIfExist) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.FileNameGet">
+            <summary>设置 ShapeFile.get_FileName() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.FileNameSetString">
+            <summary>设置 ShapeFile.set_FileName(String value) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.FindFieldString">
+            <summary>设置 ShapeFile.FindField(String fieldName) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetExtentInt32">
+            <summary>设置 ShapeFile.GetExtent(Int32 i) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetExtentInt32ShapeFiletGISCallback4_d_d_d_d">
+            <summary>设置 ShapeFile.GetExtent(Int32 i, tGISCallback4_d_d_d_d callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldBoolInt32Int32">
+            <summary>设置 ShapeFile.GetFieldBool(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldCount">
+            <summary>设置 ShapeFile.GetFieldCount() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldDecimalsInt32">
+            <summary>设置 ShapeFile.GetFieldDecimals(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldDoubleInt32Int32">
+            <summary>设置 ShapeFile.GetFieldDouble(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldIntInt32Int32">
+            <summary>设置 ShapeFile.GetFieldInt(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldLengthInt32">
+            <summary>设置 ShapeFile.GetFieldLength(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldNameInt32">
+            <summary>设置 ShapeFile.GetFieldName(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldStringInt32Int32">
+            <summary>设置 ShapeFile.GetFieldString(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldTypeInt32">
+            <summary>设置 ShapeFile.GetFieldType(Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFieldValueInt32Int32">
+            <summary>设置 ShapeFile.GetFieldValue(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFullExtent">
+            <summary>设置 ShapeFile.GetFullExtent() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetFullExtentShapeFiletGISCallback4_d_d_d_d">
+            <summary>设置 ShapeFile.GetFullExtent(tGISCallback4_d_d_d_d callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetGeometryInt32Int32">
+            <summary>设置 ShapeFile.GetGeometry(Int32 rowid, Int32 srid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetRecordCountBoolean">
+            <summary>设置 ShapeFile.GetRecordCount(Boolean fShp) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetShapeType">
+            <summary>设置 ShapeFile.GetShapeType() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.GetWKBInt32Boolean">
+            <summary>设置 ShapeFile.GetWKB(Int32 rowid, Boolean fSortPolygon) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.HandleGet">
+            <summary>设置 ShapeFile.get_Handle() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsFieldNullInt32Int32">
+            <summary>设置 ShapeFile.IsFieldNull(Int32 r, Int32 c) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsIndexBuilded">
+            <summary>设置 ShapeFile.IsIndexBuilded() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsMultiPoint">
+            <summary>设置 ShapeFile.IsMultiPoint() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsPoint">
+            <summary>设置 ShapeFile.IsPoint() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsPolygon">
+            <summary>设置 ShapeFile.IsPolygon() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsPolyline">
+            <summary>设置 ShapeFile.IsPolyline() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.IsPolylineEShapeType">
+            <summary>设置 ShapeFile.IsPolyline(EShapeType nShapeType) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.OpenStringStringBoolean">
+            <summary>设置 ShapeFile.Open(String shpFile, String lpszAccess, Boolean fLoadDbf) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.QueryIntersectsDoubleDoubleDoubleDouble">
+            <summary>设置 ShapeFile.QueryIntersects(Double xmin, Double ymin, Double xmax, Double ymax) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.QueryIntersectsDoubleDoubleDoubleDoubleShapeFileNextFeature">
+            <summary>设置 ShapeFile.QueryIntersects(Double xmin, Double ymin, Double xmax, Double ymax, NextFeature callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.SetCodePageString">
+            <summary>设置 ShapeFile.SetCodePage(String szCodePage) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.SetPrecisionInt32">
+            <summary>设置 ShapeFile.SetPrecision(Int32 n) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldBoolInt32Int32Boolean">
+            <summary>设置 ShapeFile.WriteFieldBool(Int32 row, Int32 col, Boolean val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldDateInt32Int32DateTime">
+            <summary>设置 ShapeFile.WriteFieldDate(Int32 row, Int32 col, DateTime val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldDoubleInt32Int32Double">
+            <summary>设置 ShapeFile.WriteFieldDouble(Int32 row, Int32 col, Double val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldIntInt32Int32Int32">
+            <summary>设置 ShapeFile.WriteFieldInt(Int32 row, Int32 col, Int32 val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldNullInt32Int32">
+            <summary>设置 ShapeFile.WriteFieldNull(Int32 row, Int32 col) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteFieldStringInt32Int32String">
+            <summary>设置 ShapeFile.WriteFieldString(Int32 row, Int32 col, String val) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile.WriteWKBInt32ByteArray">
+            <summary>设置 ShapeFile.WriteWKB(Int32 row, Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile._ctorb__52_0Int32Int32IntPtr">
+            <summary>设置 ShapeFile.&lt;.ctor&gt;b__52_0(Int32 rowid, Int32 sz, IntPtr o) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeFile._ctorb__52_1Int32IntPtr">
+            <summary>设置 ShapeFile.&lt;.ctor&gt;b__52_1(Int32 cnt, IntPtr p) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShapeUnion">
+            <summary>YuLinTu.tGISCNet.ShapeUnion 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.#ctor(YuLinTu.tGISCNet.ShapeUnion)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.AllInstances.SetCallbackWriteDblShapeUniontGISCallback3_i_i_d_rd">
+            <summary>设置 ShapeUnion.SetCallbackWriteDbl(tGISCallback3_i_i_d_rd callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.AllInstances.SetCallbackWriteIntShapeUniontGISCallback3_i_i_i_ri">
+            <summary>设置 ShapeUnion.SetCallbackWriteInt(tGISCallback3_i_i_i_ri callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.AllInstances.SystemIDisposableDispose">
+            <summary>设置 ShapeUnion.System.IDisposable.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.AllInstances.UnionStringStringShapeUniontGISCallback1_i">
+            <summary>设置 ShapeUnion.Union(String outShpFileName, String shpFile, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.Constructor">
+            <summary>设置 ShapeUnion.ShapeUnion() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.SetCallbackWriteDblShapeUniontGISCallback3_i_i_d_rd">
+            <summary>设置 ShapeUnion.SetCallbackWriteDbl(tGISCallback3_i_i_d_rd callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.SetCallbackWriteIntShapeUniontGISCallback3_i_i_i_ri">
+            <summary>设置 ShapeUnion.SetCallbackWriteInt(tGISCallback3_i_i_i_ri callback) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.SystemIDisposableDispose">
+            <summary>设置 ShapeUnion.System.IDisposable.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShapeUnion.UnionStringStringShapeUniontGISCallback1_i">
+            <summary>设置 ShapeUnion.Union(String outShpFileName, String shpFile, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck">
+            <summary>YuLinTu.tGISCNet.ShortLineCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.#ctor(YuLinTu.tGISCNet.ShortLineCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.AllInstances.DoCheckDoubleShortLineChecktGISCallback6_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 ShortLineCheck.DoCheck(Double minLen, tGISCallback6_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.Constructor">
+            <summary>设置 ShortLineCheck.ShortLineCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimShortLineCheck.DoCheckDoubleShortLineChecktGISCallback6_i_d_d_d_d_dTopCheckCallbackItGISCallback1_i">
+            <summary>设置 ShortLineCheck.DoCheck(Double minLen, tGISCallback6_i_d_d_d_d_d reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck">
+            <summary>YuLinTu.tGISCNet.SmallAngleCheck 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.#ctor(YuLinTu.tGISCNet.SmallAngleCheck)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.AllInstances.DoCheckDoubleSmallAngleChecktGISCallback7TopCheckCallbackItGISCallback1_i">
+            <summary>设置 SmallAngleCheck.DoCheck(Double angle, tGISCallback7 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.Constructor">
+            <summary>设置 SmallAngleCheck.SmallAngleCheck() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheck.DoCheckDoubleSmallAngleChecktGISCallback7TopCheckCallbackItGISCallback1_i">
+            <summary>设置 SmallAngleCheck.DoCheck(Double angle, tGISCallback7 reportCheck, tGISCallback1_i reportProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB">
+            <summary>YuLinTu.tGISCNet.SmallAngleCheckWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.#ctor(YuLinTu.tGISCNet.SmallAngleCheckWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.AllInstances.DoCheckByteArray">
+            <summary>设置 SmallAngleCheckWKB.DoCheck(Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ConstructorDouble">
+            <summary>设置 SmallAngleCheckWKB.SmallAngleCheckWKB(Double angle) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.DoCheckByteArray">
+            <summary>设置 SmallAngleCheckWKB.DoCheck(Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult">
+            <summary>YuLinTu.tGISCNet.SmallAngleCheckWKB+Result 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.ShimResult.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimSmallAngleCheckWKB.deg2radDouble">
+            <summary>设置 SmallAngleCheckWKB.deg2rad(Double deg) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI">
+            <summary>YuLinTu.tGISCNet.TopCheckCallbackI 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.#ctor(YuLinTu.tGISCNet.TopCheckCallbackI)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckCallbackI.Constructor">
+            <summary>设置 TopCheckCallbackI.TopCheckCallbackI() 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil">
+            <summary>YuLinTu.tGISCNet.TopCheckUtil 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.#ctor(YuLinTu.tGISCNet.TopCheckUtil)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.Constructor">
+            <summary>设置 TopCheckUtil.TopCheckUtil() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.ReportProgressActionOfInt32Int32Int32Int32Ref">
+            <summary>设置 TopCheckUtil.ReportProgress(Action`1&lt;Int32&gt; callback, Int32 count, Int32 i, Int32&amp; nOldProgress) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopCheckUtil.ReportProgressActionOfStringInt32StringInt32Int32Int32Ref">
+            <summary>设置 TopCheckUtil.ReportProgress(Action`2&lt;String,Int32&gt; callback, String msg, Int32 count, Int32 i, Int32&amp; nOldProgress) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopology">
+            <summary>YuLinTu.tGISCNet.Topology 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopology.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopology.#ctor(YuLinTu.tGISCNet.Topology)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimTopology.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.AutoCompletePolygonListOfGeometryGeometryActionOfInt32Geometry">
+            <summary>设置 Topology.AutoCompletePolygon(List`1&lt;Geometry&gt; polygons, Geometry polyline, Action`2&lt;Int32,Geometry&gt; callback) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopology.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimTopology.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.Constructor">
+            <summary>设置 Topology.Topology() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.CutGeometryGeometryListOfGeometry">
+            <summary>设置 Topology.Cut(Geometry g, Geometry cutter, List`1&lt;Geometry&gt; result) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.DisjointByteArrayByteArray">
+            <summary>设置 Topology.Disjoint(Byte[] wkb1, Byte[] wkb2) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.IntersectByteArrayByteArray">
+            <summary>设置 Topology.Intersect(Byte[] wkb1, Byte[] wkb2) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.SimplifyGeometryInt32">
+            <summary>设置 Topology.Simplify(Geometry g, Int32 srid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimTopology.SortPolygonByteArray">
+            <summary>设置 Topology.SortPolygon(Byte[] wkb) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimWKBIndex">
+            <summary>YuLinTu.tGISCNet.WKBIndex 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.#ctor(YuLinTu.tGISCNet.WKBIndex)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AddFeatureIDInt32">
+            <summary>设置 WKBIndex.AddFeatureID(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.AddFeatureIDInt32">
+            <summary>设置 WKBIndex.AddFeatureID(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.GetExtentInt32">
+            <summary>设置 WKBIndex.GetExtent(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.GetWKBInt32">
+            <summary>设置 WKBIndex.GetWKB(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.SetFullExtentDoubleDoubleDoubleDouble">
+            <summary>设置 WKBIndex.SetFullExtent(Double xmin, Double ymin, Double xmax, Double ymax) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.AllInstances.SetFullExtentEnvelope">
+            <summary>设置 WKBIndex.SetFullExtent(Envelope env) 的 填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.Bind(System.IDisposable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.ConstructorFuncOfInt32EnvelopeFuncOfInt32ByteArrayDouble">
+            <summary>设置 WKBIndex.WKBIndex(Func`2&lt;Int32,Envelope&gt; callExtent, Func`2&lt;Int32,Byte[]&gt; callWKB, Double tolerance) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.GetExtentInt32">
+            <summary>设置 WKBIndex.GetExtent(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.GetWKBInt32">
+            <summary>设置 WKBIndex.GetWKB(Int32 oid) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.SetFullExtentDoubleDoubleDoubleDouble">
+            <summary>设置 WKBIndex.SetFullExtent(Double xmin, Double ymin, Double xmax, Double ymax) 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.ShimWKBIndex.SetFullExtentEnvelope">
+            <summary>设置 WKBIndex.SetFullExtent(Envelope env) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck">
+            <summary>YuLinTu.tGISCNet.AreaAdjacentPointCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.InitializeStub">
+            <summary>初始化 type StubAreaAdjacentPointCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaAdjacentPointCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.#ctor(System.Func{System.Int32,GeoAPI.Geometries.Envelope},System.Func{System.Int32,System.Byte[]},System.Double)">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.Dispose01">
+            <summary>设置 WKBIndex.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.InitializeStub">
+            <summary>初始化 type StubAreaAdjacentPointCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaAdjacentPointCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck">
+            <summary>YuLinTu.tGISCNet.AreaBoundaryCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.InitializeStub">
+            <summary>初始化 type StubAreaBoundaryCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaBoundaryCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck">
+            <summary>YuLinTu.tGISCNet.AreaLineOverlapCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck.InitializeStub">
+            <summary>初始化 type StubAreaLineOverlapCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaLineOverlapCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB.#ctor(System.Func{System.Int32,System.Byte[]},System.Func{System.Int32,System.Byte[]})">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB.InitializeStub">
+            <summary>初始化 type StubAreaLineOverlapCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaLineOverlapCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck">
+            <summary>YuLinTu.tGISCNet.AreaOverlapCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.InitializeStub">
+            <summary>初始化 type StubAreaOverlapCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaOverlapCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.#ctor(System.Func{System.Int32,GeoAPI.Geometries.Envelope},System.Func{System.Int32,System.Byte[]})">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.Dispose01">
+            <summary>设置 WKBIndex.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.InitializeStub">
+            <summary>初始化 type StubAreaOverlapCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaOverlapCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck">
+            <summary>YuLinTu.tGISCNet.AreaRepeatPointCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.InitializeStub">
+            <summary>初始化 type StubAreaRepeatPointCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaRepeatPointCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB.InitializeStub">
+            <summary>初始化 type StubAreaRepeatPointCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaRepeatPointCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB">
+            <summary>YuLinTu.tGISCNet.AreaVertexOnEdgeCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB.#ctor(System.Double)">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB.InitializeStub">
+            <summary>初始化 type StubAreaVertexOnEdgeCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubAreaVertexOnEdgeCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubBuildPyramid">
+            <summary>YuLinTu.tGISCNet.BuildPyramid 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubBuildPyramid.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubBuildPyramid.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubBuildPyramid.InitializeStub">
+            <summary>初始化 type StubBuildPyramid 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubBuildPyramid.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubBuildPyramid.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubCgl">
+            <summary>YuLinTu.tGISCNet.Cgl 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubCgl.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubCgl.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubCgl.InitializeStub">
+            <summary>初始化 type StubCgl 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubCgl.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubCgl.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubICancelTracker">
+            <summary>YuLinTu.tGISCNet.ICancelTracker 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubICancelTracker.#ctor">
+            <summary>初始化 type StubICancelTracker 的新实例</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubICancelTracker.Cancel">
+            <summary>设置 ICancelTracker.Cancel() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubICancelTracker.YuLinTu#tGISCNet#ICancelTracker#Cancel">
+            <summary>设置 ICancelTracker.Cancel() 的 存根</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubLineHangCheck">
+            <summary>YuLinTu.tGISCNet.LineHangCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.InitializeStub">
+            <summary>初始化 type StubLineHangCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineHangCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.Dispose">
+            <summary>设置 LineIntersectionCheck.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.Dispose01">
+            <summary>设置 LineIntersectionCheck.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.InitializeStub">
+            <summary>初始化 type StubLineIntersectionCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheck2 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.InitializeStub">
+            <summary>初始化 type StubLineIntersectionCheck2 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheck2.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB">
+            <summary>YuLinTu.tGISCNet.LineIntersectionCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.#ctor(System.Func{System.Int32,GeoAPI.Geometries.Envelope},System.Func{System.Int32,System.Byte[]})">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.Dispose01">
+            <summary>设置 WKBIndex.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.InitializeStub">
+            <summary>初始化 type StubLineIntersectionCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineIntersectionCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.LineSelfOverlapCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB.InitializeStub">
+            <summary>初始化 type StubLineSelfOverlapCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubLineSelfOverlapCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck">
+            <summary>YuLinTu.tGISCNet.MultiPartCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.InitializeStub">
+            <summary>初始化 type StubMultiPartCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubMultiPartCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker">
+            <summary>YuLinTu.tGISCNet.NotCancelTracker 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker.InitializeStub">
+            <summary>初始化 type StubNotCancelTracker 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubNotCancelTracker.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck">
+            <summary>YuLinTu.tGISCNet.PointAreaRelationCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck.InitializeStub">
+            <summary>初始化 type StubPointAreaRelationCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointAreaRelationCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck">
+            <summary>YuLinTu.tGISCNet.PointLineOverlapCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck.InitializeStub">
+            <summary>初始化 type StubPointLineOverlapCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.PointLineOverlapCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB.InitializeStub">
+            <summary>初始化 type StubPointLineOverlapCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointLineOverlapCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck">
+            <summary>YuLinTu.tGISCNet.PointOnLineCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck.InitializeStub">
+            <summary>初始化 type StubPointOnLineCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOnLineCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck">
+            <summary>YuLinTu.tGISCNet.PointOverlapCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.InitializeStub">
+            <summary>初始化 type StubPointOverlapCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB">
+            <summary>YuLinTu.tGISCNet.PointOverlapCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB.InitializeStub">
+            <summary>初始化 type StubPointOverlapCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubPointOverlapCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB">
+            <summary>YuLinTu.tGISCNet.SelfIntersectCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB.InitializeStub">
+            <summary>初始化 type StubSelfIntersectCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSelfIntersectCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubShapeFile">
+            <summary>YuLinTu.tGISCNet.ShapeFile 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShapeFile.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeFile.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShapeFile.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubShapeFile.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShapeFile.InitializeStub">
+            <summary>初始化 type StubShapeFile 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeFile.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeFile.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubShapeUnion">
+            <summary>YuLinTu.tGISCNet.ShapeUnion 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShapeUnion.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeUnion.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShapeUnion.InitializeStub">
+            <summary>初始化 type StubShapeUnion 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeUnion.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShapeUnion.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubShortLineCheck">
+            <summary>YuLinTu.tGISCNet.ShortLineCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.InitializeStub">
+            <summary>初始化 type StubShortLineCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubShortLineCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck">
+            <summary>YuLinTu.tGISCNet.SmallAngleCheck 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.Dispose">
+            <summary>设置 ShapeFile.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.Dispose01">
+            <summary>设置 ShapeFile.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.InitializeStub">
+            <summary>初始化 type StubSmallAngleCheck 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheck.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB">
+            <summary>YuLinTu.tGISCNet.SmallAngleCheckWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB.#ctor(System.Double)">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB.InitializeStub">
+            <summary>初始化 type StubSmallAngleCheckWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubSmallAngleCheckWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI">
+            <summary>YuLinTu.tGISCNet.TopCheckCallbackI 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI.InitializeStub">
+            <summary>初始化 type StubTopCheckCallbackI 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckCallbackI.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil">
+            <summary>YuLinTu.tGISCNet.TopCheckUtil 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil.InitializeStub">
+            <summary>初始化 type StubTopCheckUtil 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopCheckUtil.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubTopology">
+            <summary>YuLinTu.tGISCNet.Topology 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopology.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopology.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubTopology.InitializeStub">
+            <summary>初始化 type StubTopology 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopology.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubTopology.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.Fakes.StubWKBIndex">
+            <summary>YuLinTu.tGISCNet.WKBIndex 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubWKBIndex.#ctor(System.Func{System.Int32,GeoAPI.Geometries.Envelope},System.Func{System.Int32,System.Byte[]},System.Double)">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubWKBIndex.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubWKBIndex.Dispose">
+            <summary>设置 WKBIndex.Dispose() 的 存根</summary>
+        </member>
+        <member name="F:YuLinTu.tGISCNet.Fakes.StubWKBIndex.Dispose01">
+            <summary>设置 WKBIndex.Dispose() 的 stub</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.Fakes.StubWKBIndex.InitializeStub">
+            <summary>初始化 type StubWKBIndex 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubWKBIndex.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.Fakes.StubWKBIndex.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB">
+            <summary>YuLinTu.tGISCNet.TopologyCheckForWKB.ShortLineCheckForWKB 的填充码类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.#ctor(YuLinTu.tGISCNet.TopologyCheckForWKB.ShortLineCheckForWKB)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.Constructor">
+            <summary>设置 ShortLineCheckForWKB.ShortLineCheckForWKB() 的 填充码</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.ShimShortLineCheckForWKB.IsShortLineIGeometryDouble">
+            <summary>设置 ShortLineCheckForWKB.IsShortLine(IGeometry g, Double len) 的 填充码</summary>
+        </member>
+        <member name="T:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB">
+            <summary>YuLinTu.tGISCNet.TopologyCheckForWKB.ShortLineCheckForWKB 的存根类型</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="M:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB.InitializeStub">
+            <summary>初始化 type StubShortLineCheckForWKB 的新实例</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:YuLinTu.tGISCNet.TopologyCheckForWKB.Fakes.StubShortLineCheckForWKB.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+    </members>
+</doc>
