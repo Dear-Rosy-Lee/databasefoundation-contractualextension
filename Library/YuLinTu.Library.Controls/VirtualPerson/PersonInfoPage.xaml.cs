@@ -277,11 +277,12 @@ namespace YuLinTu.Library.Controls
                 if (Virtualperson.FamilyExpand.ContractorType == eContractorType.Unit)
                     cbCardType.IsEnabled = false;
             }
-            if (string.IsNullOrEmpty(person.Comment))
+            var cblist = cb_Comment.ItemsSource as List<string>;
+            if (string.IsNullOrEmpty(person.Comment) || !cblist.Contains(person.Comment))
             {
                 cb_Comment.SelectedValue = "其他备注";
             }
-            else
+            else if (!string.IsNullOrEmpty(person.Comment))
             {
                 cb_Comment.SelectedValue = person.Comment;
             }
@@ -441,14 +442,14 @@ namespace YuLinTu.Library.Controls
             {
                 person.Gender = eGender.Unknow;
             }
-            if (cb_Comment.SelectedItem.ToString() != "其他备注")
+            person.Comment = txt_Comment.Text;
+            if (cb_Comment.SelectedItem.ToString() == "其他备注")
             {
-                person.Comment = cb_Comment.SelectedItem.ToString();
-                person.Opinion = cb_Comment.SelectedItem.ToString();
+                person.Description = "9";
             }
             else
             {
-                person.Comment = "";
+                person.Description = (cb_Comment.SelectedIndex + 1).ToString();
             }
             ConfirmAsync();
         }
@@ -697,12 +698,12 @@ namespace YuLinTu.Library.Controls
             var selectvalue = (sender as MetroComboBox).SelectedItem;
             if (selectvalue != null && selectvalue.ToString() == "其他备注")
             {
-                txt_Opinion.IsEnabled = true;
+                txt_Comment.IsEnabled = true;
             }
             else
             {
-                txt_Opinion.Text = selectvalue.ToString();
-                txt_Opinion.IsEnabled = false;
+                txt_Comment.Text = selectvalue.ToString();
+                txt_Comment.IsEnabled = false;
             }
         }
     }

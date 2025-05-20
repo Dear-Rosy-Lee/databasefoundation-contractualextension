@@ -378,7 +378,7 @@ namespace YuLinTu.Library.Controls
             FamilyID = (Guid)p.FamilyID;
             Name = p.Name;
             Relationship = p.Relationship;
-            Comment = p.Opinion;
+            Comment = p.Comment;           
             Gender = p.Gender;
             Tag = p;
             Img = VirtualPersonItemHelper.ChangeByGender(p.Gender);
