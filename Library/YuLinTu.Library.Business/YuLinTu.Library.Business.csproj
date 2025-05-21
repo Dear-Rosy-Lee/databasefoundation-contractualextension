@@ -738,6 +738,7 @@
     <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookArgument.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookOperation.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportSurveyBook.cs" />
+    <Compile Include="VirtualPerson\FamailyRelationProcessor.cs" />
     <Compile Include="VirtualPerson\ImportData\ImportContractorSurveyTable.cs" />
     <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableArgument.cs" />
     <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableOperation.cs" />

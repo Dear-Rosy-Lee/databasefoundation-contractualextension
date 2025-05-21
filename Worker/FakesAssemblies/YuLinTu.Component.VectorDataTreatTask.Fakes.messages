@@ -1,0 +1,3 @@
+D:\WorkCode\databasefoundation-contractualextension\Worker\Fakes\YuLinTu.Component.VectorDataTreatTask.fakes : warning : 无法为 YuLinTu.Component.VectorDataTreatTask.TopCheckUtil 生成存根: 类型已密封。
+D:\WorkCode\databasefoundation-contractualextension\Worker\Fakes\YuLinTu.Component.VectorDataTreatTask.fakes : warning : 无法为 YuLinTu.Component.VectorDataTreatTask.Core.PostGetAPIEntity 生成存根: 类型对 exported or assembly(YuLinTu.Component.VectorDataTreatTask.Fakes) 不可见。
+D:\WorkCode\databasefoundation-contractualextension\Worker\Fakes\YuLinTu.Component.VectorDataTreatTask.fakes : warning : 无法为 YuLinTu.Component.VectorDataTreatTask.Core.PostGetAPIEntity 生成填充码: 类型对 exported or assembly(YuLinTu.Component.VectorDataTreatTask.Fakes) 不可见。
