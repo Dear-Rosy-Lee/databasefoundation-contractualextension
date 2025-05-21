@@ -6,6 +6,7 @@ using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase.Bussiness
 {
@@ -35,7 +36,7 @@ namespace YuLinTu.Component.StockRightBase.Bussiness
                 land.LandExpand.ImageNumber = GetString(_allItem[currentIndex, ColumnDefine.LAND_PICTURE_NUM]);//字段：图幅编号
                 var tableArea = DataHelper.GetDouble(GetString(_allItem[currentIndex, ColumnDefine.LAND_TABLEAREA]));
                 var area = tableArea.HasValue ? tableArea.Value : 0;
-                land.TableArea = Math.Round(area, 2);//字段：二轮合同面积（台账面积）
+                land.TableArea = ToolMath.RoundNumericFormat(area, 2);//字段：二轮合同面积（台账面积）
                 var actualArea = GetString(_allItem[currentIndex, ColumnDefine.LAND_ACTUALAREA]);
                 land.ActualArea = GetDouble(actualArea);//字段：实测面积
                 land.NeighborEast = GetString(_allItem[currentIndex, ColumnDefine.LAND_EAST]);//字段：东至
@@ -69,7 +70,7 @@ namespace YuLinTu.Component.StockRightBase.Bussiness
 
                 //确股信息
                 var shareArea = GetString(_allItem[currentIndex, ColumnDefine.LAND_SHAREAREA]);//字段：共用面积
-                land.ShareArea = Math.Round(GetDouble(shareArea), 2).ToString();
+                land.ShareArea = ToolMath.RoundNumericFormat(GetDouble(shareArea), 2).ToString();
                 land.ConcordArea = GetString(_allItem[currentIndex, ColumnDefine.LAND_CONCORDAREA]);//字段：合同面积
                 land.QuantificicationArea = GetDouble(_allItem[currentIndex, ColumnDefine.LAND_QUAAREA]);//字段：量化户面积
 

@@ -1,11 +1,8 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -21,26 +18,46 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 地块
         /// </summary>
-        public static BitmapImage imgLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"));
+        public BitmapImage imgLand { get; set; } //= new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"));
 
         /// <summary>
         /// 空间地块
         /// </summary>
-        public static BitmapImage imgGeoLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/landGeo.png"));
+        public BitmapImage imgGeoLand { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/landGeo.png"));
 
         /// <summary>
         /// 家庭
         /// </summary>
-        public static BitmapImage imgFamily = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
+        public BitmapImage imgFamily { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
 
         /// <summary>
         /// 锁定
         /// </summary>
-        public static BitmapImage imgLock = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
+        public BitmapImage imgLock { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
 
         #endregion
 
         #region Methods
+
+        public ContractAccountImgConvert()
+        {
+            imgLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"));
+            imgGeoLand = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/landGeo.png"));
+            imgFamily = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
+            imgLock = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
+            imgLand.CacheOption = BitmapCacheOption.OnLoad;
+            imgLand.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
+            imgGeoLand.CacheOption = BitmapCacheOption.OnLoad;
+            imgGeoLand.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
+            imgFamily.CacheOption = BitmapCacheOption.OnLoad;
+            imgFamily.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+
+            imgLock.CacheOption = BitmapCacheOption.OnLoad;
+            imgLock.CreateOptions = BitmapCreateOptions.DelayCreation‌;
+        }
+
 
         /// <summary>
         /// 转换

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -124,6 +124,7 @@ namespace YuLinTu.Library.Business
             landBusiness.UseContractorNumberImport = metadata.UseContractorNumberImport;
             landBusiness.UseOldLandCodeBindImport = metadata.UseOldLandCodeBindImport;
             landBusiness.shapeAllcolNameList = metadata.shapeAllcolNameList;
+            landBusiness.DelLandImport = metadata.DelLandImport;
             var zoneStation = dbContext.CreateZoneWorkStation();
             List<Zone> childrenZone = zoneStation.GetChildren(zone.FullCode, eLevelOption.Subs);
             Zone parent = landBusiness.GetParent(zone);

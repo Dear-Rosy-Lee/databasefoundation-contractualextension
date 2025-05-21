@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,8 @@ namespace YuLinTu.Library.WorkStation
 
         int UpdateLandBoundary(ContractLand entity);
 
-        int UpdateOldLandCode(ContractLand entity);
+        int UpdateOldLandCode(ContractLand entity, bool onlycode);
+        int UpdateOldLandCode(List<ContractLand> entity, bool onlycode);
 
         /// <summary>
         /// 批量更新地块编码
@@ -506,7 +507,7 @@ namespace YuLinTu.Library.WorkStation
         /// 导出承包方Word调查表
         /// </summary>
         void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
-            string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
+            ContractConcord concord, CollectivityTissue sender, List<Dictionary> diclist,
             string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool keepName, Func<string> GetReplace = null);
 
         /// <summary>

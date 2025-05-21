@@ -1,6 +1,6 @@
-﻿using YuLinTu.Windows;
-using YuLinTu.Appwork;
+﻿using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.AssociateLandCode
 {
@@ -23,6 +23,11 @@ namespace YuLinTu.Component.AssociateLandCode
                 TypeTask = typeof(AssociateLandCodeTask),
                 TypeArgument = typeof(AssociateLandCodeArgument)
             });
+            e.Templates.Add(new TaskDescriptor
+            {
+                TypeTask = typeof(AssociatePersonAndLandTask),
+                TypeArgument = typeof(AssociatePersonAndLandArgument)
+            });
         }
 
         protected override bool NeedHandleMessage()
@@ -37,6 +42,7 @@ namespace YuLinTu.Component.AssociateLandCode
         [MessageHandler(ID = EdTask.langViewTaskAlertDetails)]
         private void ViewTaskAlterDetails(object sender, ViewTaskAlertDetailsEventArgs e)
         {
+
         }
 
         #endregion Methods - Private

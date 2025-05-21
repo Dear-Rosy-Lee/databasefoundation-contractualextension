@@ -389,8 +389,8 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
                     shp.WriteFieldString(_nCurrShapeID, _jzdDbfFieldIndex[++i], _p._param.sJZDLXVal);// jzdEn.JZDLX);
                     shp.WriteFieldString(_nCurrShapeID, _jzdDbfFieldIndex[++i], _p._param.sJBLXVal);// jzdEn.jblx);
                     shp.WriteFieldString(_nCurrShapeID, _jzdDbfFieldIndex[++i], dkbm);
-                    shp.WriteFieldDouble(_nCurrShapeID, _jzdDbfFieldIndex[++i], Math.Round(jzdEn.shape.Y, 3));
-                    shp.WriteFieldDouble(_nCurrShapeID, _jzdDbfFieldIndex[++i], Math.Round(jzdEn.shape.X, 3));
+                    shp.WriteFieldDouble(_nCurrShapeID, _jzdDbfFieldIndex[++i], (double)Math.Round((decimal)jzdEn.shape.Y, 3));
+                    shp.WriteFieldDouble(_nCurrShapeID, _jzdDbfFieldIndex[++i], (double)Math.Round((decimal)jzdEn.shape.X, 3));
                     ++_nCurrShapeID;
                 }
                 catch (Exception ex)
@@ -495,7 +495,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
                     Coordinate[] shape;
                     ShortZd_cbd pld;//毗邻地
                     bool fTwin;//是否同毗邻地田挨田（无间隙）
-                    var JZXCD = Math.Round(calcLength(cbd, points, out shape, out pld, out fTwin), 2);
+                    var JZXCD = (double)Math.Round((decimal)calcLength(cbd, points, out shape, out pld, out fTwin), 2);
                     //if (pld == null)
                     //{//如果没有权利人则取该地块的村名称（含乡镇名）
                     //    //jzxEn.PLDWQLR = _p._xzdyUtil.GetShortQmc(cbd.zlDM);
@@ -3215,8 +3215,8 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
 
         public int GetHashCode(Coordinate obj)
         {
-            _tmpC.X = func(obj.X);// Math.Round(obj.X, 3);
-            _tmpC.Y = func(obj.Y);// Math.Round(obj.Y, 3);
+            _tmpC.X = func(obj.X);// ToolMath.RoundNumericFormat(obj.X, 3);
+            _tmpC.Y = func(obj.Y);// ToolMath.RoundNumericFormat(obj.Y, 3);
             return _tmpC.GetHashCode();
         }
         private static double func(double x)

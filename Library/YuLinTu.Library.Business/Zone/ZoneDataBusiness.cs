@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -218,7 +218,7 @@ namespace YuLinTu.Library.Business
             bool result = true;
             try
             {
-                result = (Station.UpdateCodeName(zone) == 1) ? true : false; ;
+                result = (Station.UpdateCodeName(zone) >0) ? true : false; 
             }
             catch (Exception ex)
             {

@@ -1,32 +1,14 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Library.Business;
-using YuLinTu.Windows;
-using System.Threading;
-using YuLinTu.Appwork;
 using YuLinTu.Library.Controls;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Data;
-using YuLinTu.Data.Dynamic;
-using System.Collections;
-using System.Reflection;
-using System.IO;
-using Xceed.Wpf.Toolkit;
 
 namespace YuLinTu.Component.MapFoundation
 {

@@ -7,7 +7,7 @@
              xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
              xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro" 
              Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
-             MinHeight="200" Width="500" Header="户号详情">
+             Height="300" Width="500" Header="户号详情">
     <Grid Background="{DynamicResource Metro_Window_Style_Background_Content}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -34,7 +34,7 @@
 
             <Label Content="缺失户号:" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Left"/>
             <cmps:MetroTextBox Name="missNumbers" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalContentAlignment="Top" 
-                               Height="70" TextWrapping="Wrap" IsReadOnly="True"/>
+                               Height="150" TextWrapping="Wrap" IsReadOnly="True"/>
 
         </Grid>
 

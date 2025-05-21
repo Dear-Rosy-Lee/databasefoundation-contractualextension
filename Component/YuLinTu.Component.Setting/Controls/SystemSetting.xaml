@@ -224,9 +224,9 @@
                                        x:Name="dockPanelEmptyReplacement" Visibility="Visible" x:FieldModifier="public">
                                 <TextBlock DockPanel.Dock="Left"
                                            VerticalAlignment="Center"
-                                           Text="空数据替换" />
-                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Right" Text="{Binding SystemSettingDefine.EmptyReplacement, Mode=TwoWay}" />
-                               
+                                           Text="空数据替换" Margin="0,0,10,0"/>
+                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Left" Text="{Binding SystemSettingDefine.EmptyReplacement, Mode=TwoWay}" />
+
                             </DockPanel>
                         </Grid>
                     </StackPanel>
@@ -236,6 +236,8 @@
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -253,20 +255,32 @@
                                       IsChecked="{Binding SystemSettingDefine.UpDownSet, Mode=TwoWay}"
                                       Content="行政区域限制到组级下使用" />
 
-                            <CheckBox Grid.Row="0"
+                            <DockPanel Grid.Row="0" Style="{StaticResource grid_item}">
+                                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="面积小数位数" Margin="0,0,10,0"/>
+                                <wpftoolkit:IntegerUpDown x:Name="txt_DecimalPlaces" Minimum="2" Maximum="3" Height="25" Width="150" Margin="0,0,0,0"
+                                                    HorizontalAlignment="Left"  VerticalAlignment="Center" BorderThickness="1" Value="{Binding SystemSettingDefine.DecimalPlaces, Mode=TwoWay}"/>
+                            </DockPanel>
+                            <CheckBox Grid.Row="1"
                                       IsChecked="{Binding SystemSettingDefine.VillageInlitialSet, Mode=TwoWay}"
                                       Content="以村为单位进行承包方编码、地块编码统一编码" />
                             <CheckBox IsChecked="{Binding SystemSettingDefine.ExportVPTableCountContainsDiedPerson,Mode=TwoWay}"
-                                      Grid.Row="1"
+                                      Grid.Row="2"
                                       VerticalAlignment="Center"
                                       Margin="0,10,0,0">导出承包方调查表家庭成员总数包括已故共有人</CheckBox>
-                            <CheckBox Grid.Row="2"
+                            <CheckBox Grid.Row="3"
                                       IsChecked="{Binding SystemSettingDefine.KeepRepeatFlag, Mode=TwoWay}"
                                       Content="所有导出报表中涉及姓名时去除重复标识" />
-                            <CheckBox Grid.Row="3"
+                            <CheckBox Grid.Row="4"
                                       IsChecked="{Binding SystemSettingDefine.StatisticsDeadPersonInfo, Mode=TwoWay}"
-                                      Content="是否统计去世成员信息" />
-                            <DockPanel Grid.Row="4"
+                                      Content="统计去世成员信息" />
+
+                            <CheckBox Grid.Row="4" IsChecked="{Binding SystemSettingDefine.StatisticsDeadPersonInfo, Mode=TwoWay}" Content="统计去世成员信息" />
+                            <!--<DockPanel Grid.Row="4" Style="{StaticResource grid_item}" x:Name="dp_Rewriting" Visibility="Visible" x:FieldModifier="public">
+                                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,10,0" Text="初始化数据起始编号" />
+                                <cmps:MetroTextBox  Width="150" Height="25" HorizontalAlignment="Left" Text="{Binding SystemSettingDefine.RewritingStartNumber, Mode=TwoWay}" />
+
+                            </DockPanel>-->
+                            <DockPanel Grid.Row="5"
                                        Style="{StaticResource grid_item}">
                                 <TextBlock DockPanel.Dock="Left"
                                            VerticalAlignment="Center"

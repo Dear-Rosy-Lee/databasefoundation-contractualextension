@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Appwork;
 using YuLinTu.Component.StockRightBase.Bussiness;
+using YuLinTu.Component.StockRightBase.ExportTask;
+using YuLinTu.Component.StockRightBase.Helper;
 using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Controls;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Component.StockRightBase.ExportTask;
-using YuLinTu.Component.StockRightBase.Helper;
 
 namespace YuLinTu.Component.StockRightBase.Control
 {
@@ -35,8 +35,11 @@ namespace YuLinTu.Component.StockRightBase.Control
     {
 
         private IDbContext _dbContext;
+        private IBelongRelationWorkStation belongRelationWorkStation;
         private ImportLandBussness _bussinessData;
         private Zone _currentZone;
+        private StockRightBussinessObject stockRightBussinessObject;
+        private List<BelongRelation> belongRelations = new List<BelongRelation>();
 
         /// <summary>
         /// 是否需要授权
@@ -60,8 +63,13 @@ namespace YuLinTu.Component.StockRightBase.Control
                 _dbContext = value;
                 personPanel.DbContext = _dbContext;
                 landPanel.DbContext = _dbContext;
-                new UpdateDatabaseHelper().AddTable(DbContext);
-                ImportLandBussness = new ImportLandBussness(DbContext, CurrentZone);
+                personPanel.personGrid.DataSource = _dbContext;
+                if (_dbContext != null)
+                {
+                    new UpdateDatabaseHelper().AddTable(DbContext);
+                    ImportLandBussness = new ImportLandBussness(DbContext, CurrentZone);
+                    belongRelationWorkStation = _dbContext.CreateBelongRelationWorkStation();
+                }
             }
         }
 
@@ -77,6 +85,11 @@ namespace YuLinTu.Component.StockRightBase.Control
             set
             {
                 _currentZone = value;
+                if (_currentZone != null)
+                {
+                    stockRightBussinessObject = _bussinessData.GetBussinessObject(_currentZone);
+                    belongRelations = belongRelationWorkStation.GetdDataByZoneCode(_currentZone.FullCode, eLevelOption.Self);
+                }
             }
         }
 
@@ -90,7 +103,6 @@ namespace YuLinTu.Component.StockRightBase.Control
             landPanel.ItemDoubleClick += ItemDoubleClick;
             landPanel.SelectChangedAction += SelectChangeAction;
             personPanel.personGrid.view.SelectionChanged += Selector_OnSelectionChanged;
-
             personPanel.Initlized();
             landPanel.Initlized();
             //ImportLandBussness = new ImportLandBussness(DbContext, CurrentZone);
@@ -109,14 +121,14 @@ namespace YuLinTu.Component.StockRightBase.Control
                 try
                 {
                     var person = currentPerson.VirtualPerson;
-                    var importLandBussness = new ImportLandBussness(DbContext, CurrentZone);
-                    var data = importLandBussness.GetBussinessObject(_currentZone);
+                    //var importLandBussness = new ImportLandBussness(DbContext, CurrentZone);
+                    var data = stockRightBussinessObject == null ? _bussinessData.GetBussinessObject(_currentZone) : stockRightBussinessObject;
                     if (person != null && data.ContractLands != null)
                     {
                         var currentPersonID = person.ID;
-                        var belongRelationStation = _dbContext.CreateBelongRelationWorkStation();
-                        var personRelations = belongRelationStation.Get().Where(p => p.VirtualPersonID == currentPersonID).ToList();
-                        var personLands = belongRelationStation.GetLandByPerson(currentPersonID, _currentZone.FullCode)?.Where(s => s.IsStockLand).ToList();//获取人的确股地
+                        var personRelations = belongRelations.FindAll(f => f.VirtualPersonID == currentPersonID);
+                        //belongRelationWorkStation.Get().Where(p => p.VirtualPersonID == currentPersonID).ToList();
+                        var personLands = belongRelationWorkStation.GetLandByPerson(currentPersonID, _currentZone.FullCode)?.Where(s => s.IsStockLand).ToList();//获取人的确股地
                         if (personRelations != null && personRelations.Count > 0 && personLands != null && personLands.Count > 0)
                         {
                             foreach (var land in personLands)
@@ -128,6 +140,10 @@ namespace YuLinTu.Component.StockRightBase.Control
                                 landList.Add(land);
                             }
                         }
+                        personPanel.personGrid.LandList = landList.ToList();
+                        personPanel.personGrid.PersonbelongRelations = personRelations;
+                        personPanel.personGrid.CurrentZone = CurrentZone;
+                        personPanel.personGrid.VirPerson = person;
                     }
                     landPanel.LandGrid.view.Roots = landList;
                 }
@@ -151,6 +167,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             base.OnWorkpageChanged();
             personPanel.Workpage = Workpage;
             landPanel.Workpage = Workpage;
+            personPanel.personGrid.TheWorkpage = Workpage;
         }
 
         /// <summary>
@@ -387,7 +404,7 @@ namespace YuLinTu.Component.StockRightBase.Control
             //{
             //    dlg.Model.StockTotality += person.SharePersonList.Count;
             //}
-            //dlg.Model.SingleStockArea = Math.Round(dlg.Model.AreaTotality / dlg.Model.StockTotality, 2);
+            //dlg.Model.SingleStockArea = ToolMath.RoundNumericFormat(dlg.Model.AreaTotality / dlg.Model.StockTotality, 2);
             //Workpage.Workspace.ApplyTheme(dlg);
             //if (dlg.ShowDialog() == true)
             //{
@@ -535,6 +552,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         {
             landPanel.Refresh();
             personPanel.Refresh();
+            belongRelations = belongRelationWorkStation.GetdDataByZoneCode(_currentZone.FullCode, eLevelOption.Self);
             RefreshContractAcount();
         }
 
@@ -795,7 +813,7 @@ namespace YuLinTu.Component.StockRightBase.Control
                 ShowBox(ContractAccountInfo.ImportZone, "未选择行政地域");
                 return;
             }
-            ImportLandShapePage addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(Workpage, "导入地块图斑");
             addPage.ThePage = Workpage;
             addPage.Db = DbContext;
             Workpage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -823,7 +841,7 @@ namespace YuLinTu.Component.StockRightBase.Control
         /// </summary>
         private void ImportLandShapeData(TaskContractAccountArgument meta, IDbContext dbContext)
         {
-            TaskContractAccountOperation import = new TaskContractAccountOperation();
+            var import = new TaskContractAccountOperation();
             import.Argument = meta;
             import.Description = ContractAccountInfo.ImportShapeData;
             import.Name = ContractAccountInfo.ImportShpData;
@@ -873,12 +891,12 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void Btn_PreviewConcord_Click(object sender, RoutedEventArgs e)
         {
-            Preview("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Preview("合同(确股)", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         private void Btn_ExportConcord_Click(object sender, RoutedEventArgs e)
         {
-            Export("合同", "农村土地（耕地）承包合同", new ConcordWord());
+            Export("合同（确股）", "农村土地承包经营权承包合同", new ConcordWord());
         }
 
         #endregion
@@ -988,7 +1006,7 @@ namespace YuLinTu.Component.StockRightBase.Control
 
         private void ExportSingle(string name, string tempName, AgricultureWordBook book, List<VirtualPerson> persons)
         {
-            ExportDataPage extPage = new ExportDataPage(CurrentZone.FullName, Workpage, name);
+            var extPage = new ExportDataPage(CurrentZone.FullName, Workpage, name);
             extPage.Workpage = Workpage;
             Workpage.Page.ShowMessageBox(extPage, (bb, rr) =>
             {

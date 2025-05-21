@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -411,8 +411,8 @@ namespace YuLinTu.Library.Controls
             }
             summaryConcordArea += double.Parse(Summary.ConcordAreaCount);
             Summary.ActualAreaCount = WorkStation.ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//summaryConcordArea.ToString("f2");
-            Summary.AwareAreaCount += Math.Round(summaryAwareArea, 4);
-            Summary.ConcordAreaCount += Math.Round(summaryConcordArea, 4);
+            Summary.AwareAreaCount += ToolMath.RoundNumericFormat(summaryAwareArea, 4);
+            Summary.ConcordAreaCount += ToolMath.RoundNumericFormat(summaryConcordArea, 4);
         }
 
         /// <summary>
@@ -442,13 +442,13 @@ namespace YuLinTu.Library.Controls
                     summaryAwareArea += (child.Visibility == Visibility.Visible) ? double.Parse(child.AwareArea) : 0;
                 }
             }
-            summaryConcordArea = Business.ToolMath.SetNumericFormat(summaryConcordArea, 4, 1);
-            summaryActualArea = Business.ToolMath.SetNumericFormat(summaryActualArea, 4, 1);
-            summaryAwareArea = Business.ToolMath.SetNumericFormat(summaryAwareArea, 4, 1);
+            summaryConcordArea = ToolMath.RoundNumericFormat(summaryConcordArea, 4);
+            summaryActualArea = ToolMath.RoundNumericFormat(summaryActualArea, 4);
+            summaryAwareArea = ToolMath.RoundNumericFormat(summaryAwareArea, 4);
 
-            Summary.ActualAreaCount = ToolMath.SetNumbericFormat(summaryActualArea.ToString(), 2);//Math.Round(summaryActualArea, 4);
-            Summary.AwareAreaCount = ToolMath.SetNumbericFormat(summaryAwareArea.ToString(), 2);//Math.Round(summaryAwareArea, 4);
-            Summary.ConcordAreaCount = ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//Math.Round(summaryConcordArea, 4);
+            Summary.ActualAreaCount = ToolMath.SetNumbericFormat(summaryActualArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryActualArea, 4);
+            Summary.AwareAreaCount = ToolMath.SetNumbericFormat(summaryAwareArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryAwareArea, 4);
+            Summary.ConcordAreaCount = ToolMath.SetNumbericFormat(summaryConcordArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryConcordArea, 4);
         }
 
         #endregion Methods - 初始数据
@@ -1293,7 +1293,7 @@ namespace YuLinTu.Library.Controls
             }
             if (startTime != null && finishTime != null)
             {
-                kvs.Add("ManagementTime", Business.ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value));
+                kvs.Add("ManagementTime", ToolDateTime.CalcateTerm((DateTime)kvs[0].Value, (DateTime)kvs[1].Value));
                 kvs.Add("Flag", 0);
             }
             kvs.Add("Comment", comment);

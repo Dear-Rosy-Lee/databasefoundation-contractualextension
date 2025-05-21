@@ -6,6 +6,7 @@ using System.Text;
 using YuLinTu.Component.StockRightBase.Entity;
 using YuLinTu.Component.StockRightBase.Enum;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase.Model
 {
@@ -157,7 +158,7 @@ namespace YuLinTu.Component.StockRightBase.Model
                     UnitStockArea = (AreaAll - CollectiveRemainStock) / StockTotality;
                     UnitStockNum = (StockTotality - CollectRemainStockNum) / _houseNum;
                 }
-                _stockAreaAll = Math.Round(AreaAll, 2);
+                _stockAreaAll = ToolMath.RoundNumericFormat(AreaAll, 2);
                 NotifyPropertyChanged(nameof(AreaAll));
 
             }
@@ -182,7 +183,7 @@ namespace YuLinTu.Component.StockRightBase.Model
                     UnitStockArea = (AreaAll -(double)CollectiveRemainStock)/ StockTotality;
                     UnitStockNum = (StockTotality-CollectRemainStockNum) / _houseNum;
                 }
-                _stockTotality = Math.Round(StockTotality, 2);
+                _stockTotality = ToolMath.RoundNumericFormat(StockTotality, 2);
                 NotifyPropertyChanged(nameof(StockTotality));
             }
         }
@@ -197,7 +198,7 @@ namespace YuLinTu.Component.StockRightBase.Model
             set
             {
                 _collectiveRemainStock = value;
-                _collectiveRemainStock = Math.Round(CollectiveRemainStock, 2);
+                _collectiveRemainStock = ToolMath.RoundNumericFormat(CollectiveRemainStock, 2);
                 NotifyPropertyChanged(nameof(CollectiveRemainStock));
             }
         }
@@ -211,7 +212,7 @@ namespace YuLinTu.Component.StockRightBase.Model
             set
             {
                 _unitStock = value;
-                _unitStock = Math.Round(UnitStockArea,2);
+                _unitStock = ToolMath.RoundNumericFormat(UnitStockArea,2);
                 NotifyPropertyChanged(nameof(UnitStockArea));
             }
         }
@@ -283,7 +284,7 @@ namespace YuLinTu.Component.StockRightBase.Model
                     UnitStockArea = (AreaAll - CollectiveRemainStock) / StockTotality;
                     UnitStockNum = (StockTotality - CollectRemainStockNum) / _houseNum;
                 }
-                _collectRemainStock = Math.Round(CollectRemainStockNum, 2);
+                _collectRemainStock = ToolMath.RoundNumericFormat(CollectRemainStockNum, 2);
                 NotifyPropertyChanged(nameof(CollectRemainStockNum));
             }
         }
@@ -297,7 +298,7 @@ namespace YuLinTu.Component.StockRightBase.Model
             set
             {
                 _unitStockNum = value;
-                _unitStockNum = Math.Round(UnitStockNum,2);
+                _unitStockNum = ToolMath.RoundNumericFormat(UnitStockNum,2);
                 NotifyPropertyChanged(nameof(UnitStockNum));
             }
         }

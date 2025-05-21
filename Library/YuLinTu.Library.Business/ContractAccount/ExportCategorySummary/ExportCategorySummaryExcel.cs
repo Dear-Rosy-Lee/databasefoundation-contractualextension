@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -211,17 +211,17 @@ namespace YuLinTu.Library.Business
                         MAarea += c.ActualArea;
                     }
                 });
-                tablearea = ToolMath.SetNumericFormat(tablearea, 4, 1);
-                actularea = ToolMath.SetNumericFormat(actularea, 4, 1);
-                CTarea = ToolMath.SetNumericFormat(CTarea, 4, 1);
-                CAarea = ToolMath.SetNumericFormat(CAarea, 4, 1);
-                CAwarearea = ToolMath.SetNumericFormat(CAwarearea, 4, 1);
-                PTarea = ToolMath.SetNumericFormat(PTarea, 4, 1);
-                PAarea = ToolMath.SetNumericFormat(PAarea, 4, 1);
-                WTarea = ToolMath.SetNumericFormat(WTarea, 4, 1);
-                WAarea = ToolMath.SetNumericFormat(WAarea, 4, 1);
-                MTarea = ToolMath.SetNumericFormat(MTarea, 4, 1);
-                MAarea = ToolMath.SetNumericFormat(MAarea, 4, 1);
+                tablearea = ToolMath.RoundNumericFormat(tablearea, 4);
+                actularea = ToolMath.RoundNumericFormat(actularea, 4);
+                CTarea = ToolMath.RoundNumericFormat(CTarea, 4);
+                CAarea = ToolMath.RoundNumericFormat(CAarea, 4);
+                CAwarearea = ToolMath.RoundNumericFormat(CAwarearea, 4);
+                PTarea = ToolMath.RoundNumericFormat(PTarea, 4);
+                PAarea = ToolMath.RoundNumericFormat(PAarea, 4);
+                WTarea = ToolMath.RoundNumericFormat(WTarea, 4);
+                WAarea = ToolMath.RoundNumericFormat(WAarea, 4);
+                MTarea = ToolMath.RoundNumericFormat(MTarea, 4);
+                MAarea = ToolMath.RoundNumericFormat(MAarea, 4);
 
                 staticinfo.AllTarea = tablearea;
                 staticinfo.AllAarea = actularea;
@@ -231,7 +231,7 @@ namespace YuLinTu.Library.Business
                 staticinfo.CTarea = CTarea;
                 staticinfo.CAarea = CAarea;
                 staticinfo.CAwarearea = CAwarearea;
-                
+
 
                 staticinfo.Pcount = Pcount;
                 staticinfo.PTarea = PTarea;
@@ -339,14 +339,14 @@ namespace YuLinTu.Library.Business
                     MAarea += c.ActualArea;
                 }
             });
-            CTarea = ToolMath.SetNumericFormat(CTarea, 4, 1);
-            CAarea = ToolMath.SetNumericFormat(CAarea, 4, 1);
-            PTarea = ToolMath.SetNumericFormat(PTarea, 4, 1);
-            PAarea = ToolMath.SetNumericFormat(PAarea, 4, 1);
-            WTarea = ToolMath.SetNumericFormat(WTarea, 4, 1);
-            WAarea = ToolMath.SetNumericFormat(WAarea, 4, 1);
-            MTarea = ToolMath.SetNumericFormat(MTarea, 4, 1);
-            MAarea = ToolMath.SetNumericFormat(MAarea, 4, 1);
+            CTarea = ToolMath.RoundNumericFormat(CTarea, 4);
+            CAarea = ToolMath.RoundNumericFormat(CAarea, 4);
+            PTarea = ToolMath.RoundNumericFormat(PTarea, 4);
+            PAarea = ToolMath.RoundNumericFormat(PAarea, 4);
+            WTarea = ToolMath.RoundNumericFormat(WTarea, 4);
+            WAarea = ToolMath.RoundNumericFormat(WAarea, 4);
+            MTarea = ToolMath.RoundNumericFormat(MTarea, 4);
+            MAarea = ToolMath.RoundNumericFormat(MAarea, 4);
 
             SetRange("G" + index, "G" + index, Ccount.ToString());//地块数
             SetRange("H" + index, "H" + index, ToolMath.SetNumbericFormat(CTarea.ToString(), 2));//二轮合同面积
@@ -377,20 +377,20 @@ namespace YuLinTu.Library.Business
                 SetRange("B" + index, "B" + index, item.AllvpCount.ToString());//总户数
                 SetRange("C" + index, "C" + index, item.AllpersonsCount.ToString());//总人数
                 SetRange("D" + index, "D" + index, item.AlllandCount.ToString());//总地块数
-                var tablearea = ToolMath.SetNumericFormat(item.AllTarea, 4, 1);
-                var actularea = ToolMath.SetNumericFormat(item.AllAarea, 4, 1);
+                var tablearea = ToolMath.RoundNumericFormat(item.AllTarea, 4);
+                var actularea = ToolMath.RoundNumericFormat(item.AllAarea, 4);
                 SetRange("E" + index, "E" + index, ToolMath.SetNumbericFormat(tablearea.ToString(), 2));//二轮合同面积
                 SetRange("F" + index, "F" + index, ToolMath.SetNumbericFormat(actularea.ToString(), 2));//实测面积
 
-                var CTarea = ToolMath.SetNumericFormat(item.CTarea, 4, 1);
-                var CAarea = ToolMath.SetNumericFormat(item.CAarea, 4, 1);
-                var CAwarearea = ToolMath.SetNumericFormat(item.CAwarearea, 4, 1);
-                var PTarea = ToolMath.SetNumericFormat(item.PTarea, 4, 1);
-                var PAarea = ToolMath.SetNumericFormat(item.PAarea, 4, 1);
-                var WTarea = ToolMath.SetNumericFormat(item.WTarea, 4, 1);
-                var WAarea = ToolMath.SetNumericFormat(item.WAarea, 4, 1);
-                var MTarea = ToolMath.SetNumericFormat(item.MTarea, 4, 1);
-                var MAarea = ToolMath.SetNumericFormat(item.MAarea, 4, 1);
+                var CTarea = ToolMath.RoundNumericFormat(item.CTarea, 4);
+                var CAarea = ToolMath.RoundNumericFormat(item.CAarea, 4);
+                var CAwarearea = ToolMath.RoundNumericFormat(item.CAwarearea, 4);
+                var PTarea = ToolMath.RoundNumericFormat(item.PTarea, 4);
+                var PAarea = ToolMath.RoundNumericFormat(item.PAarea, 4);
+                var WTarea = ToolMath.RoundNumericFormat(item.WTarea, 4);
+                var WAarea = ToolMath.RoundNumericFormat(item.WAarea, 4);
+                var MTarea = ToolMath.RoundNumericFormat(item.MTarea, 4);
+                var MAarea = ToolMath.RoundNumericFormat(item.MAarea, 4);
 
                 SetRange("G" + index, "G" + index, item.Ccount.ToString());//地块数
                 SetRange("H" + index, "H" + index, ToolMath.SetNumbericFormat(CTarea.ToString(), 2));//二轮合同面积

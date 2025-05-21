@@ -1,4 +1,4 @@
-﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,6 +137,8 @@ namespace YuLinTu.Library.Repository
         /// <param name="virtualPerson">承包方对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(VirtualPerson virtualPerson, bool onlycode = false);
+
+        void UpdateListZoneCode(List<LandVirtualPerson> virtualPersons);
 
         int UpdateZoneCode(VirtualPerson virtualPerson);
         /// <summary>

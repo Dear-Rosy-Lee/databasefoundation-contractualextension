@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -1509,7 +1509,10 @@ namespace YuLinTu.Library.Business
                 {
                     var stockLands = dbContext.CreateBelongRelationWorkStation().GetLandByPerson(curVp.ID, currentZone.FullCode);
                     if (stockLands.Count > 0)
+                    {
+                        stockLands.ForEach(e => { e.AwareArea = e.QuantificicationArea; });
                         lands.AddRange(stockLands);
+                    }
                 }
                 lands.LandNumberFormat(SystemSet);
                 exportConcord.ListLand = lands;

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,9 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int Update(T entity, bool onlycode = false);
 
-        int UpdateOldLandsCode(T entity);
+        void UpdateListZoneCode(List<T> entitys);
+
+        int UpdateOldLandsCode(T entity, bool onlycode);
 
         /// <summary>
         /// 根据承包方id更新承包方名称
@@ -416,5 +418,5 @@ namespace YuLinTu.Library.Repository
 
         #endregion
     }
-    
+
 }

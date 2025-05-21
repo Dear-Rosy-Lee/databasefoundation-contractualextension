@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -119,6 +119,7 @@ namespace YuLinTu.Library.Business
                     export.ListGeoLand = listGeoLand;
                     export.DictList = metadata.DictList;
                     export.Lang = eLanguage.CN;
+                    export.Exportway = 1;
                     export.ProgressChanged += ReportPercent;
                     export.Alert += ReportInfo;
                     export.ExportToShape();

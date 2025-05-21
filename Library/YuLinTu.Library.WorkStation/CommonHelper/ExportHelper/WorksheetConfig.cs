@@ -24,7 +24,15 @@ namespace YuLinTu.Library.WorkStation
 
                 // 必须是Enabled的Region,并且Module、Template的名称和Type完全匹配
                 var region = _worksheet.Regions.Find(r => r.IsEnabled);
-                Template temp = region.Templates.Find(t => t.Name.Equals(target.TemplateName) && t.Type.Equals(target.TemplateType.ToString()));
+                var temps = region.Templates.FindAll(t => t.Name.Equals(target.TemplateName) && t.Type.Equals(target.TemplateType.ToString()));
+
+                Template temp = null;
+                if (temps.Count == 1)
+                    temp = temps[0];
+                else if (temps.Count > 1)
+                {
+                    temp = temps.Find(t => t.BaseClass != null && t.BaseClass.Equals(target.GetType().Name));
+                }
 
                 if (temp != null && temp.ClassName != null)
                 {
@@ -59,7 +67,6 @@ namespace YuLinTu.Library.WorkStation
             }
             return template;
         }
-
 
         /// <summary>
         /// 任务类型

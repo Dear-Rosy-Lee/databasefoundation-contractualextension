@@ -1,0 +1,308 @@
+﻿<am:InfoPageBase
+    x:Class="YuLinTu.Component.StockRightBase.Control.StockLandPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:am="clr-namespace:YuLinTu.Library.Controls;assembly=YuLinTu.Library.Controls"
+    xmlns:cmps="clr-namespace:YuLinTu.Windows.Wpf.Metro.Components;assembly=YuLinTu.Windows.Wpf.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
+    xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:convert="clr-namespace:YuLinTu.Component.StockRightBase.ConvertUI"
+    Width="830"
+    MinHeight="400"
+    Header="确股地块信息"
+    Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png">
+    <am:InfoPageBase.Resources>
+        <convert:ContractAccountImgConvert x:Key="imgConvert" />
+    </am:InfoPageBase.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style x:Key="LableStyle" TargetType="Label">
+                <Setter Property="Height" Value="25" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+        </Grid.Resources>
+        <ScrollViewer
+            Name="scrollViewer"
+            HorizontalScrollBarVisibility="Hidden"
+            PanningMode="VerticalOnly"
+            VerticalScrollBarVisibility="Auto">
+            <Grid >
+                <cmps:LoadingIcon
+                    Width="16"
+                    Height="16"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    RenderOptions.BitmapScalingMode="NearestNeighbor"
+                    Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Grid Margin="10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="40*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <cmps:VirtualizingMetroTreeView
+                                Name="dotView"
+                                Grid.Row="0"
+                                x:FieldModifier="public"
+                                BorderBrush="LightGray"
+                                BorderThickness="0,0,1,0"
+                                ExpandItemWhenLeftMouseDoubleClick="False"
+                                HeaderBorderThickness="0"
+                                HeaderFontWeight="Bold"
+                                HeaderThumbBorderWidth="0"
+                                HeaderVisibility="Visible"
+                                ItemAutoExpand="False"
+                                ItemPadding="3,5"
+                                SelectedItemChanged="dotView_MouseDoubleClick">
+                        <cmps:VirtualizingMetroTreeView.View>
+                            <GridView x:Name="dotGridView" x:FieldModifier="public">
+
+                                <GridViewColumn
+                                            x:Name="dotNumber"
+                                            Width="200"
+                                            Header="地块编码">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <cmps:VirtualizingMetroTreeViewItemToggleButton />
+                                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                    <cmps:ImageTextItem
+                                                                Margin="2,0,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalContentAlignment="Left"
+                                                                Image="{Binding Img,Converter={StaticResource imgConvert}}"
+                                                                Text="{Binding DKBM}" />
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                            x:Name="unityNumber"
+                                            Width="100"
+                                            Header="地块名称">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding DKMC}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn
+                                            x:Name="xCoordinateValue"
+                                            Width="100"
+                                            Header="实测面积(亩)">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding SCMJM}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn
+                                            x:Name="yCoordinateValue"
+                                            Width="100"
+                                            Header="确股面积(亩)">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding QuanficationArea,Mode=TwoWay}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </cmps:VirtualizingMetroTreeView.View>
+                    </cmps:VirtualizingMetroTreeView>
+
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+
+
+                        <Label  Grid.Row="0" 
+                                Content="地块名称:"
+                                Style="{StaticResource LableStyle}" />
+                        <cmps:MetroTextBox IsReadOnly="True"
+                            x:Name="txtName"
+                            Grid.Row="0"
+                            Grid.Column="1" 
+                            Height="30"
+                            VerticalContentAlignment="Center" 
+                            MaxLength="50"
+                            TabIndex="3"/>
+                        <cmps:ImageTextItem  Grid.Row="1" Grid.Column="0"
+                            Margin="5,0,0,0"
+                            IsRequired="True"
+                            Text="地块编码:" />
+                        <cmps:MetroTextBox  Grid.Row="1" Grid.Column="1"                      
+                            x:Name="txtCode" IsReadOnly="True"
+                            Height="30"
+                            VerticalContentAlignment="Center"
+                            MaxLength="19"
+                            TabIndex="4"
+                            Text="{Binding SelectLand.DKBM, Mode=TwoWay}">
+                        </cmps:MetroTextBox>
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Content="实测面积:"
+                               Style="{StaticResource LableStyle}" />
+                        <DockPanel  Grid.Row="2"  Grid.Column="1"
+                                    LastChildFill="True">
+                            <Label Content="(亩)" DockPanel.Dock="Right" Style="{StaticResource LableStyle}" />
+                            <wpftoolkit:DoubleUpDown  x:Name="cmbActualArea" Height="30" MaxWidth="490" IsReadOnly="True"
+                                                      VerticalAlignment="Center"
+                                                      Increment="1"
+                                                      Maximum="10000000"
+                                                      Minimum="0"
+                                                      TabIndex="11"
+                                                      Value="{Binding SelectLand.SCMJM}" />
+                        </DockPanel>
+
+                        <Label x:Name="Label1"   Grid.Row="3" Grid.Column="0"
+                               Content="确股面积:"
+                               Style="{StaticResource LableStyle}" />
+                        <DockPanel  Grid.Row="3" Grid.Column="1"
+                                    LastChildFill="True">
+                            <Label  Content="(亩)" DockPanel.Dock="Right" Style="{StaticResource LableStyle}" />
+                            <wpftoolkit:DoubleUpDown x:Name="cmbAwareArea" Height="30" MaxWidth="490"
+                                                     VerticalAlignment="Center"
+                                                     Increment="1"
+                                                     Maximum="10000000"
+                                                     Minimum="0.01"
+                                                     TabIndex="12" 
+                                                     Value="{Binding SelectLand.QuanficationArea, Mode=TwoWay}" 
+                                                     ValueChanged="cmbAwareArea_ValueChanged"/>
+                        </DockPanel>
+
+
+                        <Label Grid.Row="4" Visibility="Collapsed" VerticalAlignment="Top" Content="备注:" Style="{StaticResource LableStyle}" />
+                        <cmps:MetroTextBox  Visibility="Collapsed" x:Name="txtComment" Grid.Row="4" IsReadOnly="True"
+                                           Grid.RowSpan="1"
+                                           Grid.Column="1"
+                                           Grid.ColumnSpan="4"
+                                           Height="60"
+                                           Margin="0,5,0,0"
+                                           VerticalContentAlignment="Stretch"
+                                           AcceptsReturn="True"
+                                           MaxLength="300"
+                                           TabIndex="24" 
+                                           TextWrapping="Wrap"
+                                           VerticalScrollBarVisibility="Auto" />
+                        <metro:MetroButton Height="30" Name="btnNeedSave" Padding="10,0" Grid.Row="7" Grid.ColumnSpan="2"       
+                            DockPanel.Dock="Right" Visibility="Hidden"  IsEnabled="{Binding CanClose}" 
+                                           Width="75" BorderBrush="LightGray"
+                                           Click="btnNeedSave_Click"
+                                           Style="{StaticResource Metro_Button_Paneled_Style}" TabIndex="14"> 
+                            <StackPanel Orientation="Horizontal">
+                                <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/Save.png" Text="保存" />
+                            </StackPanel>
+                        </metro:MetroButton>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <Border
+            Grid.Row="1"
+            Margin="10,0,10,0"
+            BorderBrush="LightGray"
+            BorderThickness="0,1,0,0"
+            SnapsToDevicePixels="True">
+            <DockPanel Margin="10,5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                DockPanel.Dock="Bottom"
+                LastChildFill="False">
+
+                <metro:MetroButton Height="30" Padding="10,0"  Margin="0,0,10,0"
+                                   DockPanel.Dock="Left" 
+                                   Style="{StaticResource Metro_Button_Paneled_Style}"
+                                   TabIndex="15"
+                                   x:Name="addland"
+                                   Click="addland_Click" >
+                    <StackPanel Orientation="Horizontal">
+                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/document--plus.png" Text="增加" />
+                    </StackPanel>
+                </metro:MetroButton>
+                <metro:MetroButton Height="30" Padding="10,0"  Margin="10,0"
+                                   DockPanel.Dock="Left" 
+                                   Style="{StaticResource Metro_Button_Paneled_Style}"
+                                   TabIndex="16"
+                                   Click="MetroButton_Click" >
+                <StackPanel Orientation="Horizontal">
+                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/document--minus.png" Text="删除" />
+                </StackPanel>
+                </metro:MetroButton>
+
+                <metro:MetroButton
+                    Height="30"
+                    Padding="10,0"
+                    Command="{x:Static metro:MetroCommands.CloseTabMessageBoxCommand}"
+                    DockPanel.Dock="Right"
+                    IsEnabled="{Binding CanClose}"
+                    Style="{StaticResource Metro_Button_Paneled_Style}"
+                    TabIndex="14">
+                    <StackPanel Orientation="Horizontal">
+                        <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/application--minus.png" Text="取消" />
+                    </StackPanel>
+                </metro:MetroButton>
+                <metro:MetroButton
+                    x:Name="mbtnLandOK"
+                    Height="30"
+                    Margin="0,0,5,0"
+                    Padding="10,0"
+                    Click="mbtnLandOK_Click"
+                    DockPanel.Dock="Right"
+                    IsEnabled="{Binding CanClose}"
+                    Style="{StaticResource Metro_Button_Paneled_Style}">
+                    <cmps:ImageTextItem Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/tick.png" Text="提交修改" />
+                </metro:MetroButton>
+                <cmps:LoadingIcon
+                    Width="16"
+                    Height="16"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Right" 
+                    RenderOptions.BitmapScalingMode="NearestNeighbor"
+                    Visibility="Hidden" />
+            </DockPanel>
+        </Border>
+    </Grid>
+</am:InfoPageBase>

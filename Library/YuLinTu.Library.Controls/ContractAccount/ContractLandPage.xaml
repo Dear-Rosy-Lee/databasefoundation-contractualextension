@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
     xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:ctr="clr-namespace:Utils.Controls;assembly=Utils.Controls"
     Width="720"
     MinHeight="500"
     Header="地块信息"
@@ -144,23 +145,52 @@
                                 Grid.Row="2"
                                 Content="承包方名称:"
                                 Style="{StaticResource LableStyle}" />
+
                             <cmps:MetroComboBox
-                                x:Name="cmbVirtualPersonName"
+                                x:Name="cmbVirtualPersonName0"
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Height="30"
                                 Padding="7,0,0,0"
                                 SelectionChanged="cmbVirtualPersonName_SelectionChanged"
-                                TabIndex="5" />
+                                TabIndex="5" Visibility="Collapsed"/>
+
+                            <ctr:AutoComplete x:Name="cmbVirtualPersonName" Grid.Row="2" Grid.Column="1" 
+                                              SelectedValuePath="ID" DisplayMemberPath="Name"
+                                              SelectionChanged="cmbVirtualPersonName_SelectionChanged"
+                                              PatternChanged="autoCities_PatternChanged" 
+                                              Style="{StaticResource AutoCompleteComboBox}"
+                                              Delay="200" SelectedValue="2" Height="32"                                               
+                                              MaxDropDownHeight="200" Width="250" />
+
+                            <cmps:ImageTextItem
+                                Grid.Row="2"
+                                Grid.Column="3"
+                                Margin="5,0,0,0"
+                                IsRequired="True"
+                                Text="确权地块编码:" />
+                            <DockPanel
+                                Grid.Row="2"
+                                Grid.Column="4"
+                                Grid.ColumnSpan="1"
+                                LastChildFill="True">
+                                <cmps:MetroTextBox
+                                    x:Name="txtOldCode"
+                                    Height="30"
+                                    VerticalContentAlignment="Center"
+                                    MaxLength="19"
+                                    TabIndex="4"
+                                    Text="{Binding CurrentLand.OldLandNumber, Mode=TwoWay}" />
+                            </DockPanel>
 
                             <Label
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="3"
                                 Content="共有人名称:"
                                 Style="{StaticResource LableStyle}" />
                             <cmps:MetroTextBox
                                 x:Name="txtOwnerName"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="5"
                                 Height="30"
                                 VerticalContentAlignment="Center"
@@ -183,7 +213,7 @@
 
                             <CheckBox
                                 x:Name="cbLandNameSecond"
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 Grid.Column="3"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
@@ -191,7 +221,7 @@
                                 Content="二级地类:" />
                             <cmps:MetroComboBox
                                 x:Name="cmbLandNameSecond"
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 Grid.Column="4"
                                 Height="30"
                                 Padding="7,0,0,0"
@@ -201,7 +231,7 @@
 
                             <CheckBox
                                 x:Name="cbLandNameAlise"
-                                Grid.Row="4"
+                                Grid.Row="5"
                                 Grid.Column="3"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
@@ -209,11 +239,11 @@
                                 Content="地类名称:" />
                             <cmps:MetroTextBox
                                 x:Name="txtLandNameAlise"
-                                Grid.Row="4"
+                                Grid.Row="5"
                                 Grid.Column="4"
                                 Height="30"
                                 VerticalContentAlignment="Center"
-                                IsEnabled="{Binding ElementName=txtLandNameAlise, Path=IsChecked}"
+                                IsEnabled="{Binding ElementName=cbLandNameAlise, Path=IsChecked}"
                                 MaxLength="25"
                                 TabIndex="9" />
 
@@ -261,12 +291,12 @@
 
                             <Label
                                 x:Name="Label1"
-                                Grid.Row="5"
+                                Grid.Row="6"
                                 Grid.Column="3"
                                 Content="确权面积:"
                                 Style="{StaticResource LableStyle}" />
                             <DockPanel
-                                Grid.Row="5"
+                                Grid.Row="6"
                                 Grid.Column="4"
                                 LastChildFill="True">
                                 <Label
@@ -315,12 +345,12 @@
 
                             <Label
                                 x:Name="Label3"
-                                Grid.Row="6"
+                                Grid.Row="7"
                                 Grid.Column="3"
                                 Content="机动面积:"
                                 Style="{StaticResource LableStyle}" />
                             <DockPanel
-                                Grid.Row="6"
+                                Grid.Row="7"
                                 Grid.Column="4"
                                 Margin="0,5,0,0"
                                 LastChildFill="True">

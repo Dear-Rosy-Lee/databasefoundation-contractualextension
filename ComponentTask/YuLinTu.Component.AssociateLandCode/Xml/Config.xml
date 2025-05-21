@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Order>311</Order>
+  <Name>系统插件</Name>
+  <Catalog>系统插件</Catalog>
+  <ImageUri>pack://application:,,,/YuLinTu.Resources;component/Images/32/Publish32.png</ImageUri>
+  <Version>8.3.1.0202</Version>
+  <Author>鱼鳞图</Author>
+  <Description>系统相关功能</Description>
+  <EntranceType>YuLinTu.Component.AssociateLandCode.Entrance</EntranceType>
+  <EntrancePath>.\Components\YuLinTu.Component.AssociateLandCode\Binary\YuLinTu.Component.AssociateLandCode.dll</EntrancePath>
+  <IsSystemManaged>true</IsSystemManaged>
+  <IsApplicationDependency>true</IsApplicationDependency>,
+  <IsConnected>true</IsConnected>
+  <IsEnabled>true</IsEnabled>
+</WinComponent>

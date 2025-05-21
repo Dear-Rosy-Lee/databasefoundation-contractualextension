@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,8 @@ namespace YuLinTu.Library.Business
         /// 地域集合
         /// </summary>
         public List<Zone> ZoneList { get; set; }
+
+        public ContractBusinessSettingDefine ContractSettingDefine { get; set; }
 
         #endregion
 

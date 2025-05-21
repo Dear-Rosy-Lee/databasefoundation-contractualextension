@@ -1,14 +1,10 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using YuLinTu.Data;
-using System.Xml;
-using YuLinTu;
 using System.ComponentModel.DataAnnotations;
+using YuLinTu.Data;
 
 namespace YuLinTu.Library.Entity
 {
@@ -413,12 +409,12 @@ namespace YuLinTu.Library.Entity
         ///变化情况
         /// </summary>
         [DataColumn("BHQK")]
-        public string ChangeSituation
+        public eBHQK ChangeSituation
         {
             get { return changeSituation; }
             set { changeSituation = value; NotifyPropertyChanged("ChangeSituation"); }
         }
-        private string changeSituation;
+        private eBHQK changeSituation;
 
         #endregion
         private VirtualPersonExpand expand;

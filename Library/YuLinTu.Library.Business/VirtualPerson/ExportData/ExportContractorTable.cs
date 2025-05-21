@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Text;
 using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
 using YuLinTu.Data;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -140,12 +141,12 @@ namespace YuLinTu.Library.Business
                 zoneCode = family.ZoneCode.Substring(0, Zone.ZONE_VILLAGE_LENGTH) + family.ZoneCode.Substring(Zone.ZONE_VILLAGE_LENGTH + 2);
             }
             string number = string.Format("{0:D4}", familyNumber);
-            SetBookmarkValue("ContractorNumber", number.IsNullOrEmpty() ? "/" : number);//承包方编码
+            SetBookmarkValue("ContractorNumber", number.IsNullOrEmpty() ? "".GetSettingEmptyReplacement() : number);//承包方编码
             SetBookmarkValue("ContractorName", InitalizeFamilyName(family.Name));//承包方名称
             SetBookmarkValue("ContractorTelephone", family.Telephone.GetSettingEmptyReplacement());//承包方联系电话
-            SetBookmarkValue("ContractorAddress", family.Address.IsNullOrEmpty() ? "/" : family.Address);//承包方地址
-            SetBookmarkValue("ContractorPostNumber", family.PostalNumber.IsNullOrEmpty() ? "/" : family.PostalNumber);//承包方邮政编码
-            SetBookmarkValue("ContractorIdentifyNumber", family.Number.IsNullOrEmpty() ? "/" : family.Number);//承包方证件号码
+            SetBookmarkValue("ContractorAddress", family.Address.IsNullOrEmpty() ? "".GetSettingEmptyReplacement() : family.Address);//承包方地址
+            SetBookmarkValue("ContractorPostNumber", family.PostalNumber.IsNullOrEmpty() ? "".GetSettingEmptyReplacement() : family.PostalNumber);//承包方邮政编码
+            SetBookmarkValue("ContractorIdentifyNumber", family.Number.IsNullOrEmpty() ? "".GetSettingEmptyReplacement() : family.Number);//承包方证件号码
             SetBookmarkValue("ContractorCount", family.SharePersonList.Count.ToString());//承包方共有人数
             string name = (family != null && (int)family.CardType != 0) ? family.CardType.ToString() : eCredentialsType.IdentifyCard.ToString();
             if (name == "Other")
@@ -227,8 +228,8 @@ namespace YuLinTu.Library.Business
                               + string.Format("{0}年{1}月{2}日", expand.ConcordEndTime.Value.Year, expand.ConcordEndTime.Value.Month, expand.ConcordEndTime.Value.Day);
                 term = ToolDateTime.CalcateTerm(expand.ConcordStartTime, expand.ConcordEndTime);
             }
-            SetBookmarkValue("ConcordDate", date.IsNullOrEmpty() ? "/" : date);//合同日期
-            SetBookmarkValue("ConcordTrem", !string.IsNullOrEmpty(term) ? term : "/");//合同年限
+            SetBookmarkValue("ConcordDate", date.IsNullOrEmpty() ? "".GetSettingEmptyReplacement() : date);//合同日期
+            SetBookmarkValue("ConcordTrem", !string.IsNullOrEmpty(term) ? term : "".GetSettingEmptyReplacement());//合同年限
 
             if (expand != null && !string.IsNullOrEmpty(expand.ConcordNumber)) //(concord != null && !string.IsNullOrEmpty(concord.ConcordNumber))
             {
@@ -239,18 +240,18 @@ namespace YuLinTu.Library.Business
             else
             {
                 SetBookmarkValue("ConcordNothing", "R");//证件号码
-                SetBookmarkValue("ConcordNumber", "/");
+                SetBookmarkValue("ConcordNumber", "".GetSettingEmptyReplacement());
             }
             if (expand != null && !string.IsNullOrEmpty(expand.WarrantNumber))//(Book != null && !string.IsNullOrEmpty(Book.Number)) 
             {
                 SetBookmarkValue("WarrantHave", "R");//证件号码
-                SetBookmarkValue("BookNumber", expand.WarrantNumber);//权证编号
+                SetBookmarkValue("BookNumber", expand.WarrantNumber.GetSettingEmptyReplacement());//权证编号
                 //SetBookmarkValue("BookNumber", Book != null ? (string.IsNullOrEmpty(Book.Number) ? "/" : Book.Number) : "/");//权证编号
             }
             else
             {
                 SetBookmarkValue("WarrantNothing", "R");//证件号码
-                SetBookmarkValue("BookNumber", "/");
+                SetBookmarkValue("BookNumber", "".GetSettingEmptyReplacement());
             }
             var dbContext = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
             DictionaryBusiness dictBusiness = new DictionaryBusiness(dbContext);

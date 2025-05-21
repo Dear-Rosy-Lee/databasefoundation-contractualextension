@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ namespace YuLinTu.Library.Controls
         /// 编辑共有人
         /// </summary>
         public const string EditSharePerson = "编辑共有人";
-        
+
         /// <summary>
         /// 添加共有人失败
         /// </summary>
@@ -148,7 +148,7 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         ///  确定删除此承包方
         /// </summary>
-        public const string DelVPersonWarring = "确定删除此承包方?";
+        public const string DelVPersonWarring = "删除承包方会关联删除成员、地块、合同等信息，确定删除?";
 
         /// <summary>
         ///  确定删除此共有人

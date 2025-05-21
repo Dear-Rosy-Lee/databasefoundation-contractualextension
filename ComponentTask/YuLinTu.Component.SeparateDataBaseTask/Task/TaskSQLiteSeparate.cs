@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -72,7 +72,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             {
                 if (!BuildDataBaseSeparatePro())
                 {
-                    this.ReportError(string.Format("数据库分离出错!"));
+                    //this.ReportError(string.Format("数据库分离出错!"));
                     return;
                 }
             }
@@ -165,6 +165,14 @@ namespace YuLinTu.Component.SeparateDataBaseTask
                     this.ReportError("创建新数据库失败,无法进行分库操作!");
                     return false;
                 }
+                else
+                {
+                    if (!UpgradeDatabase(dbContextTarget))
+                    {
+                        this.ReportError("待分离数据库未升级到最新版,请检查!");
+                        return false;
+                    }
+                }
                 this.ReportProgress(5, "开始分离新数据库...");
                 this.ReportInfomation("开始分离新数据库...");
 
@@ -221,7 +229,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             catch (System.Exception ex)
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "BuildDataBaseSeparatePro(处理分离数据库业务失败!)", ex.Message + ex.StackTrace);
-                this.ReportError("处理分离数据库业务失败!");
+                this.ReportError("处理分离数据库业务失败! 详细错误请查看日志信息");
                 return false;
             }
             finally

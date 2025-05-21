@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections;
@@ -335,11 +335,11 @@ namespace YuLinTu.Component.ContractAccount
                     Editor = new ContractAccountSingleFamilySurveyConfigPage(Workpage),
                 });
 
-                e.Editors.Add(new WorkpageOptionsEditorMetadata()
-                {
-                    Name = "摸底核实表",
-                    Editor = new ContractAccountLandVerifyConfigPage(Workpage),
-                });
+                //e.Editors.Add(new WorkpageOptionsEditorMetadata()
+                //{
+                //    Name = "摸底核实表",
+                //    Editor = new ContractAccountLandVerifyConfigPage(Workpage),
+                //});
 
                 e.Editors.Add(new WorkpageOptionsEditorMetadata()
                 {

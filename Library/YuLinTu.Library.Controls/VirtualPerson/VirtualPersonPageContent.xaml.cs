@@ -1,24 +1,15 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Library.Controls
@@ -51,6 +42,11 @@ namespace YuLinTu.Library.Controls
         private List<EnumStore<eNation>> nationList;
 
         /// <summary>
+        /// 变化情况
+        /// </summary>
+        private List<EnumStore<eBHQK>> bhqkList;
+
+        /// <summary>
         /// 承包方类型
         /// </summary>
         private KeyValueList<string, string> contractorTypeList;  //eContractorType
@@ -79,6 +75,9 @@ namespace YuLinTu.Library.Controls
         /// 当前承包方式
         /// </summary>
         private eConstructMode eMode;
+
+        private eBHQK eBHQK;
+
         private string cMode;
 
         /// <summary>
@@ -220,7 +219,6 @@ namespace YuLinTu.Library.Controls
             InitializeComponent();
             DataContext = this;
             InlitiallCombox();
-
             cNation = eNation.Han;
             eMode = eConstructMode.Family;
             cMode = ((int)eConstructMode.Family).ToString();
@@ -244,10 +242,10 @@ namespace YuLinTu.Library.Controls
             {
                 errorMsg += VirtualPersonInfo.VpCodeNull + ",";
             }
-            if (otherDefine.HasTelephoneNumber && string.IsNullOrEmpty(contractor.Telephone))        //检查承包方电话号码是否填写
-            {
-                errorMsg += VirtualPersonInfo.VpTelNull + ",";
-            }
+            //if (otherDefine.HasTelephoneNumber && string.IsNullOrEmpty(contractor.Telephone))        //检查承包方电话号码是否填写
+            //{
+            //    errorMsg += VirtualPersonInfo.VpTelNull + ",";
+            //}
             EnumStore<eCredentialsType> cardType = cbCardType.SelectedItem as EnumStore<eCredentialsType>;
             bool right = ToolICN.Check(contractor.Number);
             if (otherDefine.IsCheckCardNumber && cardType != null && cardType.Value == eCredentialsType.IdentifyCard && !right)
@@ -343,6 +341,7 @@ namespace YuLinTu.Library.Controls
                     return;
                 }
                 List<Person> plist = vp.SharePersonList;
+                cbBHQK.SelectedItem = bhqkList.Find(t => t.Value == vp.ChangeSituation);
                 Person p = (plist == null) ? null : (plist.Find(t => t.Name == vp.Name));
                 if (p != null)
                 {
@@ -360,7 +359,11 @@ namespace YuLinTu.Library.Controls
                 var contractWay = constructModeList.Find(t => t.Key == ((int)FamilyExpand.ConstructMode).ToString());
                 if (contractWay != null)
                     cbContractWay.SelectedItem = contractWay;
-               
+
+                if (vp.Name != null && vp.Name.Contains("集体") && vp.FamilyExpand.ContractorType != eContractorType.Unit)
+                {
+                    cbType.IsEnabled = true;
+                }
 
                 txtNum.Text = familyNumber;
                 string splitContent = (familyNumber.PadLeft(4, '0').Replace(familyNumber, ""));
@@ -409,6 +412,10 @@ namespace YuLinTu.Library.Controls
             cbContractWay.DisplayMemberPath = "Value";
             cbContractWay.ItemsSource = constructModeList;
             cbContractWay.SelectedIndex = 0;
+
+            cbBHQK.DisplayMemberPath = "DisplayName";
+            bhqkList = EnumStore<eBHQK>.GetListByType();
+            cbBHQK.ItemsSource = bhqkList;
         }
 
         /// <summary>
@@ -467,6 +474,7 @@ namespace YuLinTu.Library.Controls
             }
             FamilyExpand.ConstructMode = eMode;
             contractor.CardType = eCard;
+            contractor.ChangeSituation = eBHQK;
             contractor.SharePersonList = personList;
             FamilyExpand.ContractorType = eType;
             FamilyExpand.BusinessStatus = eBusinessStatus.End;
@@ -790,7 +798,22 @@ namespace YuLinTu.Library.Controls
             DateTime now = DateTime.Now;
             int age = now.Year - ds.Value.Year;
             if (now.Month < ds.Value.Month || (now.Month == ds.Value.Month && now.Day < ds.Value.Day)) age--;
-            txt_Age.Text = age.ToString();           
+            txt_Age.Text = age.ToString();
+        }
+
+        private void cbBHQK_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectItem = cbBHQK.SelectedItem;
+            if (selectItem == null)
+            {
+                return;
+            }
+            EnumStore<eBHQK> eValue = selectItem as EnumStore<eBHQK>;
+            if (eValue == null)
+            {
+                return;
+            }
+            eBHQK = eValue.Value;
         }
     }
 }

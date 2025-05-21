@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace YuLinTu.Library.Business
         public int ToAreaNumeric { get; set; }
 
         /// <summary>
-        /// 面积截取模式
+        /// 小数点处理模式
         /// </summary>
         public int ToAreaModule { get; set; }
 

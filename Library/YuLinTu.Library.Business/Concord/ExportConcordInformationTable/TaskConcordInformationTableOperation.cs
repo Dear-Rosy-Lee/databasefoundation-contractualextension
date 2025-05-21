@@ -1,18 +1,13 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using YuLinTu.Library.Entity;
 using YuLinTu;
 using YuLinTu.Data;
-using System.Diagnostics;
-using System.IO;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -308,7 +303,7 @@ namespace YuLinTu.Library.Business
                         metadata.SummaryDefine.ColumnCount = metadata.SummaryDefine.ColumnCount - 1;
                     }
                     concordInfoExport.PostErrorInfoEvent += export_PostErrorInfoEvent;
-                    returnValue = concordInfoExport.BeginExcel(tempPath);   //开始导表 
+                    returnValue = concordInfoExport.BeginExcel(tempPath);//开始导表 
                     if (metadata.IsShow)
                         concordInfoExport.PrintView(savePath);
                 }

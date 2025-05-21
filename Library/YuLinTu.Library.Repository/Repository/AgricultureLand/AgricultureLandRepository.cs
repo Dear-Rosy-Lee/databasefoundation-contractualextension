@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -110,6 +110,31 @@ namespace YuLinTu.Library.Repository
             return base.Delete(c => c.OwnerId.Equals(guid));
         }
 
+        public void UpdateListZoneCode(List<T> entitys)
+        {
+            //if (!CheckTableExist())
+            //{
+            //    throw new ArgumentNullException("数据库不存在表："
+            //        + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            //}
+            if (entitys == null)
+                return;
+            var q = DataSource.CreateQuery<ContractLand>();
+            foreach (var entity in entitys)
+            {
+                AppendEdit(q.Where(c => c.ID.Equals(entity.ID)).Update(
+                   c => new ContractLand
+                   {
+                       LandNumber = entity.LandNumber,
+                       ZoneCode = entity.ZoneCode,
+                       SenderCode = entity.SenderCode,
+                       CadastralNumber = entity.CadastralNumber,
+                       ModifiedTime = entity.ModifiedTime
+                   }));
+            }
+        }
+
+
         public int Update(T entity, bool onlycode = false)
         {
             //if (!CheckTableExist())
@@ -133,23 +158,41 @@ namespace YuLinTu.Library.Repository
                          ZoneCode = entity.ZoneCode,
                          SenderCode = entity.SenderCode,
                          CadastralNumber = entity.CadastralNumber,
-                         ModifiedTime = entity.ModifiedTime
+                         ModifiedTime = entity.ModifiedTime,
                      }));
             }
         }
-
-        public int UpdateOldLandsCode(T entity)
+        public int UpdateOldLandsCode(T entity, bool onlycode)
         {
+            //if (!CheckTableExist())
+            //{
+            //    throw new ArgumentNullException("数据库不存在表："
+            //        + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            //}
             if (entity == null)
-                return -1;
-
-            int cnt = 0;
-            cnt = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID == entity.ID).
-                Update(s => new ContractLand()
-                {
-                    OldLandNumber = entity.OldLandNumber
-                }));
-            return cnt;
+                return 0;
+            entity.ModifiedTime = DateTime.Now;
+            if (onlycode)
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractLand
+                     {
+                         OldLandNumber = entity.OldLandNumber
+                     }));
+            }
+            else
+            {
+                return AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => c.ID.Equals(entity.ID)).Update(
+                     c => new ContractLand
+                     {
+                         LandNumber = entity.LandNumber,
+                         ZoneCode = entity.ZoneCode,
+                         SenderCode = entity.SenderCode,
+                         CadastralNumber = entity.CadastralNumber,
+                         ModifiedTime = entity.ModifiedTime,
+                         OldLandNumber = entity.OldLandNumber
+                     }));
+            }
         }
 
         /// <summary>
@@ -598,7 +641,7 @@ namespace YuLinTu.Library.Repository
                 return -1;
 
             int delAppend = 0;
-            
+
             var lands = DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).ToList();
             //删除地块
             delAppend = AppendEdit(DataSource.CreateQuery<ContractLand>().Where(c => ids.Contains(c.ID)).Delete());
@@ -1570,5 +1613,5 @@ namespace YuLinTu.Library.Repository
 
         #endregion
     }
-    
+
 }

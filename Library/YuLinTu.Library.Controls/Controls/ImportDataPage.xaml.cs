@@ -1,6 +1,7 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Library.Business;
@@ -31,11 +32,34 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public eImportTypes ImportType { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Multiselect { get; set; }
+
+        public List<KeyValue<string, string>> TypeValueList
+        {
+            set
+            {
+                if (value != null)
+                {
+                    iptctl.Visibility = Visibility.Visible;
+                    var lst = new List<ComboBoxItem>();
+                    foreach (var item in value)
+                    {
+                        lst.Add(new ComboBoxItem() { Tag = item.Key, Content = item.Value });
+                    }
+                    cbtype.ItemsSource = lst;
+                    cbtype.SelectedIndex = 0;
+                }
+            }
+        }
+
         #endregion
 
         #region Ctor
 
-        public ImportDataPage(IWorkpage page, string header, string desc = "", string filter = "")
+        public ImportDataPage(IWorkpage page, string header, string desc = "", string filter = "", bool multise = false)
         {
             InitializeComponent();
 
@@ -43,8 +67,7 @@ namespace YuLinTu.Library.Controls
             this.Header = header;
             this.Workpage = page;
             this.filter = filter;
-            if (!header.Contains("摸底核实"))
-                iptctl.Visibility = Visibility.Hidden;
+            this.Multiselect = multise;
         }
 
         #endregion
@@ -57,7 +80,7 @@ namespace YuLinTu.Library.Controls
         private void btnFileSelect_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Multiselect = false;
+            ofd.Multiselect = Multiselect;
             ofd.Filter = string.IsNullOrEmpty(filter) ? "文件类型(*.xls,*.xlsx)|*.xls;*.xlsx" : filter;
             var val = ofd.ShowDialog();
             if (val == null || !val.Value)
@@ -91,18 +114,25 @@ namespace YuLinTu.Library.Controls
         private void btnExcuteImport_Click_1(object sender, RoutedEventArgs e)
         {
             ComboBoxItem cbi = cbtype.SelectedItem as ComboBoxItem;
-            string typestr = cbi.Tag.ToString();
-            if (typestr == eImportTypes.Clear.ToString())
+            if (cbi != null)
             {
-                ImportType = eImportTypes.Clear;
-            }
-            if (typestr == eImportTypes.Over.ToString())
-            {
-                ImportType = eImportTypes.Over;
-            }
-            if (typestr == eImportTypes.Ignore.ToString())
-            {
-                ImportType = eImportTypes.Ignore;
+                string typestr = cbi.Tag.ToString();
+                if (typestr == eImportTypes.Clear.ToString())
+                {
+                    ImportType = eImportTypes.Clear;
+                }
+                else if (typestr == eImportTypes.Over.ToString())
+                {
+                    ImportType = eImportTypes.Over;
+                }
+                else if (typestr == eImportTypes.Ignore.ToString())
+                {
+                    ImportType = eImportTypes.Ignore;
+                }
+                else if (typestr == eImportTypes.IgnorePart.ToString())
+                {
+                    ImportType = eImportTypes.IgnorePart;
+                }
             }
             Workpage.Page.CloseMessageBox(true);
         }

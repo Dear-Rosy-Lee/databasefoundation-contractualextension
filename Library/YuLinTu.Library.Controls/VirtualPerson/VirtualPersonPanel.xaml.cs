@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -7,14 +7,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls
 {
@@ -905,8 +908,9 @@ namespace YuLinTu.Library.Controls
                     {
                         if (currentItem != null)
                         {
-                            // DbContext = CreateDb();
                             var landStation = DbContext.CreateContractLandWorkstation();
+                            SaveDelPersonLand(currentItem.Tag.ZoneCode, landStation);
+                            // DbContext = CreateDb();
                             landStation.DeleteSelectVirtualPersonAllData(currentItem.Tag.ID);
                             ModuleMsgArgs args = MessageExtend.VirtualPersonMsg(DbContext, VirtualPersonMessage.VIRTUALPERSON_DEL_COMPLATE, currentItem.Tag);
                             SendMessasge(args);
@@ -921,6 +925,34 @@ namespace YuLinTu.Library.Controls
                     }
                 });
                 ShowBox(VirtualPersonInfo.DelVirtualPerson, VirtualPersonInfo.DelVPersonWarring, eMessageGrade.Warn, action);
+            }
+        }
+
+        /// <summary>
+        /// 保存删除的人和地块
+        /// </summary>
+        private void SaveDelPersonLand(string zoneCode, IContractLandWorkStation landWorkStation)
+        {
+            try
+            {
+                DbContext.BeginTransaction();
+                var vpdquery = DbContext.CreateQuery<VirtualPerson_Del>();
+                var cldquery = DbContext.CreateQuery<ContractLand_Del>();
+
+                var delvp = currentItem.Tag.ConvertTo<VirtualPerson_Del>();
+                vpdquery.Add(delvp).Save();
+                var lands = landWorkStation.GetCollection(currentItem.Tag.ID);
+                //TO 删除地块入库
+                foreach (var dld in lands)
+                {
+                    cldquery.Add(ContractLand_Del.ChangeDataEntity(zoneCode, dld)).Save();
+                }
+                DbContext.CommitTransaction();
+            }
+            catch (Exception ex)
+            {
+                DbContext.RollbackTransaction();
+                throw new Exception("存储删除信息出错!" + ex.Message);
             }
         }
 
@@ -1510,6 +1542,84 @@ namespace YuLinTu.Library.Controls
                 }
             });
         }
+        /// <summary>
+        /// 调整发包方
+        /// </summary>
+        public void AdjustSender()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("调整发包方", "请选择行政区域进行调整发包方!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DbContext.CreateContractLandWorkstation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
+                    currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("调整发包方", "请选择在组级地域进行调整发包方!");
+                    return;
+                }
+
+                else
+                {
+
+                    List<VirtualPerson> persons = new List<VirtualPerson>();
+                    persons = vpStation.GetByZoneCode(currentZone.FullCode);
+                    List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
+                    var senderStation = DbContext.CreateCollectivityTissueWorkStation();
+                    var senders = senderStation.Get();
+                    var dialog = new AdjustSenderPage(persons, senders, lands);
+                    ThePage.Page.ShowMessageBox(dialog, (s, t) =>
+                    {
+                        if (s == null || !s.Value)
+                            return;
+                        var vps = new List<VirtualPerson>();
+                        foreach ( var item in dialog.SelectSenderData.Select(tuple => tuple.Item1).ToList())
+                        {
+                            vps.Add(persons.Where(q => q.ID == item.Id).FirstOrDefault());
+                        }
+                        AdjustSenderTask(vps, dialog.NewSenderName);
+                    });
+                }
+            
+                
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "调整发包方", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+       
+        public void AdjustSenderTask(List<VirtualPerson> vps,string NewSenderName)
+        {
+            TaskAdjustSenderArgument argument = new TaskAdjustSenderArgument();
+            argument.Database = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.VirtualPeoples = vps;
+            argument.NewSenderName = NewSenderName;
+
+            TaskAdjustSenderOperation task = new TaskAdjustSenderOperation();
+            task.Argument = argument;
+            task.Name = "调整发包方";
+            task.Description = "批量调整发包方";
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            ThePage.TaskCenter.Add(task);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            task.StartAsync();
+        }
 
         #endregion 数据处理
 
@@ -1603,7 +1713,7 @@ namespace YuLinTu.Library.Controls
                     ShowBox(VirtualPersonInfo.PersonInitiall, VirtualPersonInfo.InitialPersonSelectZoneError);
                     return;
                 }
-                PersonInitallizePage page = new PersonInitallizePage();
+                var page = new PersonInitallizePage();
                 page.Workpage = ThePage;
                 page.Address = currentZone.FullName;
                 ThePage.Page.ShowMessageBox(page, (b, r) =>
@@ -1679,12 +1789,14 @@ namespace YuLinTu.Library.Controls
             argument.Expand = page.Expand;
             argument.CNation = page.CNation;
             argument.VirtualType = this.VirtualType;
+            argument.InitAllNum = page.InstallerAllNumber;
             argument.ListPerson = VirtualPersonFilter(persons);
             argument.VillageInlitialSet = false;
+            argument.InitiallStartNum = page.InitiallStartNum;
             argument.FarmerFamilyNumberIndex = new int[] { 1 };  //农户
             argument.PersonalFamilyNumberIndex = new int[] { 8001 };  //个人
             argument.UnitFamilyNumberIndex = new int[] { 9001 };  //单位
-            TaskInitialVirtualPersonOperation operation = new TaskInitialVirtualPersonOperation();
+            var operation = new TaskInitialVirtualPersonOperation();
             operation.Argument = argument;
             operation.Description = VirtualPersonInfo.PersonInitialDesc;   //任务描述
             operation.Name = VirtualPersonInfo.PersonInitiall;       //任务名称
@@ -1711,7 +1823,7 @@ namespace YuLinTu.Library.Controls
         {
             if (page == null)
                 return;
-            TaskGroupInitialVirtualPersonArgument groupArgument = new TaskGroupInitialVirtualPersonArgument();
+            var groupArgument = new TaskGroupInitialVirtualPersonArgument();
             groupArgument.Database = DbContext == null ? DataBaseSource.GetDataBaseSource() : DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.InitiallNumber = page.InitiallNumber;
@@ -1744,8 +1856,9 @@ namespace YuLinTu.Library.Controls
             groupArgument.CNation = page.CNation;
             groupArgument.VirtualType = this.VirtualType;
             groupArgument.FamilyOtherSet = FamilyOtherSet;
+            groupArgument.InitiallStartNum = page.InitiallStartNum;
             groupArgument.VillageInlitialSet = currentZone.Level == eZoneLevel.Village ? SystemSet.VillageInlitialSet : false;
-            TaskGroupInitialVirtualPersonOperation groupOperation = new TaskGroupInitialVirtualPersonOperation();
+            var groupOperation = new TaskGroupInitialVirtualPersonOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = VirtualPersonInfo.PersonInitialDesc;   //任务描述
             groupOperation.Name = VirtualPersonInfo.PersonInitiall;       //任务名称
@@ -2558,7 +2671,7 @@ namespace YuLinTu.Library.Controls
             meta.VirtualType = virtualType;
             meta.FamilyOtherSet = FamilyOtherSet;
             meta.SystemSet = SystemSet;
-            TaskExportVirtualPersonWordOperation import = new TaskExportVirtualPersonWordOperation();
+            var import = new TaskExportVirtualPersonWordOperation();
             import.Argument = meta;
             import.Description = VirtualPersonInfo.ExportDataWord;
             import.Name = VirtualPersonInfo.ExportTable;
@@ -4159,6 +4272,8 @@ namespace YuLinTu.Library.Controls
             List<int> familyNumberList = new List<int>();       //当前地域下的所有编号
             foreach (var item in Items)
             {
+                if (item.Tag.FamilyExpand.ContractorType != eContractorType.Farmer)
+                    continue;
                 int numberInt = 0;
                 int.TryParse(item.FamilyNumber, out numberInt);
                 familyNumberList.Add(numberInt);

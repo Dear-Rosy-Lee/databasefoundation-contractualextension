@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -77,6 +77,16 @@ namespace YuLinTu.Library.Controls
             get { return initiallNumber; }
             set { initiallNumber = value; }
         }
+
+        /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum
+        {
+            get { return initiallStartNum; }
+            set { initiallStartNum = value; }
+        }
+        private int initiallStartNum;
 
         /// <summary>
         /// 初始化邮编
@@ -225,6 +235,9 @@ namespace YuLinTu.Library.Controls
             get { return personComment; }
             set { personComment = value; }
         }
+
+        public bool InstallerAllNumber { get; set; }
+
         #endregion
 
         #region Methods
@@ -243,6 +256,8 @@ namespace YuLinTu.Library.Controls
             InitiallControl();
             btnAdd.IsEnabled = false;
             eMode = eConstructMode.Family;
+            InitiallStartNum = 1;
+            txtInitiallStartNum.Text = InitiallStartNum.ToString();
         }
 
         #endregion
@@ -332,6 +347,10 @@ namespace YuLinTu.Library.Controls
                 InitEndTime = (bool)cbEndTime.IsChecked;
                 InitPersonComment = (bool)cbPersonComment.IsChecked;
                 InitSharePersonComment = (bool)cbSharePersonComment.IsChecked;
+                InstallerAllNumber = (bool)cbNumberAll.IsChecked;
+                int pinstartnun = 0;
+                int.TryParse(txtInitiallStartNum.Text, out pinstartnun);
+                InitiallStartNum = pinstartnun == 0 ? 1 : pinstartnun;
             }));
 
             if (!InitialContractWay && !InitConcordNumber && !InitWarrentNumber && !initiallNumber && !initiallNation && !initiallZip && !InitiallVpAddress && !InitiallSurveyPerson
@@ -469,6 +488,8 @@ namespace YuLinTu.Library.Controls
         private void cbCheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox ck = sender as CheckBox;
+            if (ck == null)
+                return;
             if ((bool)ck.IsChecked)
                 chkNum++;
             else

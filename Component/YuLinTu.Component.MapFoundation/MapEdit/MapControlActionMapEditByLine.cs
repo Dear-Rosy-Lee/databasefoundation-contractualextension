@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  * 绘制线条来修边
  */
 using System;
@@ -17,6 +17,7 @@ using YuLinTu.Windows.Wpf.Metro;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -431,7 +432,7 @@ namespace YuLinTu.Component.MapFoundation
             }
 
             selectLand.Shape = resGeometry;
-            selectLand.ActualArea = ToolMath.CutNumericFormat(resGeometry.Area() * projectionUnit, 2);
+            selectLand.ActualArea = ToolMath.RoundNumericFormat(resGeometry.Area() * projectionUnit, 2);
             landbus.ModifyLand(selectLand);
 
             MapControl.SelectedItems[0].Object.Geometry = resGeometry;

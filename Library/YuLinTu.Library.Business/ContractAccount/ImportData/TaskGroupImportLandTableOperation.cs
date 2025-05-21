@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -73,12 +73,13 @@ namespace YuLinTu.Library.Business
             }
             foreach (var zone in allZones)
             {
-                TaskImportLandTableArgument argument = new TaskImportLandTableArgument();
+                var argument = new TaskImportLandTableArgument();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.FileName = GetMatchFilePath(fileName, zone, zoneStation);
                 argument.VirtualType = groupArgument.VirtualType;
-                TaskImportLandTableOperation operation = new TaskImportLandTableOperation();
+                argument.ImportType = groupArgument.ImportType;
+                var operation = new TaskImportLandTableOperation();
                 operation.Argument = argument;
                 operation.Name = "批量导入地块调查表";
                 operation.Description = zone.FullName;

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  * 绘制线条来分裂面
  */
 
@@ -18,6 +18,7 @@ using DotSpatial.Data;
 using YuLinTu.Library.Business;
 using System.IO;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -46,6 +47,7 @@ namespace YuLinTu.Component.MapFoundation
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion Fields
 
@@ -54,6 +56,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionQueryMapClipByLine(MapControl map)
             : base(map)
         {
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion Ctor
@@ -396,7 +399,7 @@ namespace YuLinTu.Component.MapFoundation
                                 if (i == 0)
                                 {
                                     selectContractLandCollection[m].Shape = returnClipGeo;
-                                    selectContractLandCollection[m].ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
+                                    selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                                     selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                                     selectContractLandCollection[m].TableArea = 0;
                                     selectContractLandCollection[m].OldLandNumber = selectContractLandCollection[m].LandNumber;
@@ -416,7 +419,7 @@ namespace YuLinTu.Component.MapFoundation
                                     clipLanditem.OldLandNumber = clipLanditem.LandNumber;
                                     clipLanditem.LandNumber = newLandNumber;
                                     clipLanditem.SurveyNumber = surverNumber;
-                                    clipLanditem.ActualArea = ToolMath.SetNumericFormat(returnClipGeo.Area() * projectionUnit, 2, 1);
+                                    clipLanditem.ActualArea = ToolMath.RoundNumericFormat(returnClipGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                                     clipLanditem.AwareArea = clipLanditem.ActualArea;
                                     clipLanditem.TableArea = 0;
                                     lands.Add(clipLanditem);
@@ -521,7 +524,7 @@ namespace YuLinTu.Component.MapFoundation
             while (index < getGeoList.Count)
             {
                 YuLinTu.Spatial.Geometry geo = getGeoList[index];
-                var geoarea = ToolMath.SetNumericFormat(geo.Area() * projectionUnit, 5, 1);
+                var geoarea = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, 5);
                 for (int i = 0; i < getGeoList.Count; i++)
                 {
                     if (index == i)
@@ -529,7 +532,7 @@ namespace YuLinTu.Component.MapFoundation
                         continue;
                     }
                     YuLinTu.Spatial.Geometry geo1 = getGeoList[i];//.Find(t => t.Within(geo));
-                    var geoarea1 = ToolMath.SetNumericFormat(geo1.Area() * projectionUnit, 5, 1);
+                    var geoarea1 = ToolMath.RoundNumericFormat(geo1.Area() * projectionUnit, 5);
                     if (geo.Within(geo1))
                     {
                         getGeoList.Remove(geo);
@@ -554,7 +557,7 @@ namespace YuLinTu.Component.MapFoundation
 
             for (int i = 0; i < getGeoList.Count; i++)
             {
-                var area = ToolMath.SetNumericFormat(getGeoList[i].Area() * projectionUnit, 2, 1);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();
@@ -566,7 +569,7 @@ namespace YuLinTu.Component.MapFoundation
                     {
                         layerLabel.Graphics[i].Geometry = getGeoList[i].Centroid();
                     }
-                    objectLabelList[i].LabelText = string.Format("面积: {0:F2} {1}", area, "亩");
+                    objectLabelList[i].LabelText =$"面积: {area}亩";
                     layerLabel.Graphics[i].Object.SetPropertyValue("Object", objectLabelList[i]);
                 }
             }

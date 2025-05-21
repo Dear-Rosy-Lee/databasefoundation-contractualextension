@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -468,8 +468,10 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public static double RoundNumericFormat(double value, int digits)
         {
+            return (double)ToolMath.RoundNumericFormat((decimal)value, digits);
+            /*
             double number = value + 0.00000001;
-         //   double numeric = Math.Round(number, digits);
+         //   double numeric = ToolMath.RoundNumericFormat(number, digits);
 
             double numeric = Convert.ToUInt64(number * 100) / 100.0;
             switch (digits)
@@ -496,7 +498,7 @@ namespace YuLinTu.Library.Business
                     numeric = Convert.ToUInt64(number * 100000000) / 100000000.0;
                     break;
             }
-            return numeric;
+            return numeric;*/
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -23,22 +23,22 @@ namespace YuLinTu.Library.Business
     {
         #region Fields
 
-        private ToolProgress toolProgress;//进度条
-        private int index;//下标
-        private int cindex;
-        private string templatePath;
-        private string contracteeName;
-        private bool showContractee;
-        private int familyCount;//户数
-        private int tableCount;//总地块数
-        private int landCount;//总地块数
-        private double tableArea;//合同面积
-        private double actualArea;//实测面积
-        private bool useTableArea;//使用台账面积
-        private int peopleCount;//家人数
-        private double AwareArea;//颁证面积
-        private double TableArea = 0;//合同面积
-        private double ActualArea;//实测面积
+        protected ToolProgress toolProgress;//进度条
+        protected int index;//下标
+        protected int cindex;
+        protected string templatePath;
+        protected string contracteeName;
+        protected bool showContractee;
+        protected int familyCount;//户数
+        protected int tableCount;//总地块数
+        protected int landCount;//总地块数
+        protected double tableArea;//合同面积
+        protected double actualArea;//实测面积
+        protected bool useTableArea;//使用台账面积
+        protected int peopleCount;//家人数
+        protected double AwareArea;//颁证面积
+        protected double TableArea = 0;//合同面积
+        protected double ActualArea;//实测面积
 
         #endregion
 
@@ -256,12 +256,12 @@ namespace YuLinTu.Library.Business
             });
             if (yes)
             {
-            //    //List<ContractAccountLandFamily> vpList = AccountLandFamily.FindAll(fm => (fm.CurrentFamily.Name.IndexOf("机动地") >= 0 || fm.CurrentFamily.Name.IndexOf("集体") >= 0));
-            //    //foreach (ContractAccountLandFamily vpn in vpList)
-            //    //{
-            //    //    vpList.Remove(vpn);
-            //    //}
-            //    //vpList.Clear();
+                //    //List<ContractAccountLandFamily> vpList = AccountLandFamily.FindAll(fm => (fm.CurrentFamily.Name.IndexOf("机动地") >= 0 || fm.CurrentFamily.Name.IndexOf("集体") >= 0));
+                //    //foreach (ContractAccountLandFamily vpn in vpList)
+                //    //{
+                //    //    vpList.Remove(vpn);
+                //    //}
+                //    //vpList.Clear();
                 //AccountLandFamily.RemoveAll(fm => (fm.CurrentFamily.Name.IndexOf("机动地") >= 0 || fm.CurrentFamily.Name.IndexOf("集体") >= 0));
                 AccountLandFamily.RemoveAll(c => c.CurrentFamily.FamilyExpand.ContractorType != eContractorType.Farmer);
             }
@@ -291,7 +291,7 @@ namespace YuLinTu.Library.Business
             if (landFamily == null)
                 return;
 
-            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count  : landFamily.Persons.Count;
+            int height = (landFamily.LandCollection.Count > landFamily.Persons.Count) ? landFamily.LandCollection.Count : landFamily.Persons.Count;
             double TotalLandAware = 0;
             double TotalLandActual = 0;
             double TotalLandTable = 0;
@@ -333,7 +333,7 @@ namespace YuLinTu.Library.Business
                 SetRowHeight(aindex, 27.75);
                 aindex++;
             }
-            
+
 
             landCount += lands.Count;
             if (lands.Count == 0)
@@ -343,14 +343,15 @@ namespace YuLinTu.Library.Business
             AwareArea += TotalLandAware;
             ActualArea += TotalLandActual;
             TableArea += TotalLandTable;
-            
+
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
             InitalizeRangeValue("A" + index, "A" + (index + height - 1), cindex);
             InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
             InitalizeRangeValue("C" + index, "C" + (index + height - 1), result);
             var tel = landFamily.CurrentFamily.Telephone;
-            if(tel.IsNotNullOrEmpty())
-                InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{tel.Substring(0,3)}****{tel.Substring(tel.Length-4)}");
+            InitalizeRangeValue("D" + index, "D" + (index + height - 1), tel);
+            if (tel.IsNotNullOrEmpty() && tel.Length >= 11)
+                InitalizeRangeValue("D" + index, "D" + (index + height - 1), $"{tel.Substring(0, 3)}****{tel.Substring(tel.Length - 4)}");
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.Persons.Count);
             index += height;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
@@ -360,19 +361,20 @@ namespace YuLinTu.Library.Business
 
         private void WritePersonInformation(Person person, int index, bool flag)
         {
+            string icnstr = string.IsNullOrEmpty(person.ICN) ? person.ICN : $"{person.ICN.Substring(0, 6)}*********{person.ICN.Substring(person.ICN.Length - 4)}";
             InitalizeRangeValue("F" + index, "F" + index, person.Name.IsNullOrEmpty() ? "/" : person.Name);
-            InitalizeRangeValue("G" + index, "G" + index, $"{person.ICN.Substring(0, 6)}*********{person.ICN.Substring(person.ICN.Length - 4)}");
+            InitalizeRangeValue("G" + index, "G" + index, icnstr);
             InitalizeRangeValue("H" + index, "H" + index, person.Relationship);
             InitalizeRangeValue("I" + index, "I" + index, person.Comment);
         }
-       
+
         /// <summary>
         /// 书写当前地域信息
         /// </summary> 
         private void WriteCurrentZoneInformation(ContractLand land, int index)
         {
             InitalizeRangeValue("J" + index, "J" + index, land.Name.IsNullOrEmpty() ? "/" : land.Name);
-            InitalizeRangeValue("K" + index, "K" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber.Substring(land.LandNumber.Length-5));
+            InitalizeRangeValue("K" + index, "K" + index, land.LandNumber.IsNullOrEmpty() ? "/" : land.LandNumber.Substring(land.LandNumber.Length - 5));
             InitalizeRangeValue("L" + index, "L" + index, land.NeighborEast != null ? land.NeighborEast : "/");
             InitalizeRangeValue("M" + index, "M" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("N" + index, "N" + index, land.NeighborWest != null ? land.NeighborWest : "/");
@@ -395,7 +397,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("J" + 2, "M" + 2, string.Format("发包方负责人姓名:{0}", Tissue.LawyerName));
             if (StartDate != null && StartDate.HasValue && EndDate != null && EndDate.HasValue)
             {
-                int days = ((TimeSpan)(EndDate - StartDate)).Days+1;
+                int days = ((TimeSpan)(EndDate - StartDate)).Days + 1;
                 //int year = EndDate.Value.Year - StartDate.Value.Year;
                 //int month = EndDate.Value.Month - StartDate.Value.Month;
                 //int day = EndDate.Value.Day - StartDate.Value.Day + 1;
@@ -403,12 +405,12 @@ namespace YuLinTu.Library.Business
                 //year = year * 365;
                 //month = month * 30;
                 //day = year + month + day;
-                
+
                 InitalizeRangeValue("N" + 2, "R" + 2, string.Format("日期：{0}", dateString));
             }
             WriteCount();
             index++;
-            
+
             //InitalizeRangeValue("B" + index, "C" + index, DrawPerson);
             //InitalizeRangeValue("D" + index, "D" + index, "制表日期");
             //InitalizeRangeValue("E" + index, "F" + index, (DrawDate != null && DrawDate.HasValue) ? ToolDateTime.GetLongDateString(DrawDate.Value) : "");
@@ -425,7 +427,7 @@ namespace YuLinTu.Library.Business
         {
             SetRange("A" + index, "A" + index, 42.25, "合计");
             InitalizeRangeValue("B" + index, "D" + index, familyCount > 0 ? familyCount.ToString() : "");
-            
+
             InitalizeRangeValue("E" + index, "I" + index, peopleCount);
             InitalizeRangeValue("J" + index, "K" + index, landCount);
             InitalizeRangeValue("L" + index, "L" + index, "\\");

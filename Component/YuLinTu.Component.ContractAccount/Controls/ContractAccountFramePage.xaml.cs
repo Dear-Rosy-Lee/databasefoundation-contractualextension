@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -298,7 +298,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnAreaMeasurement, command.AreaMeasurement, command.AreaMeasurementBind);
             SetCommandBinding(btnSetAreaNumericFormat, command.AreaNumericFormat, command.AreaNumericFormatBind);
             SetCommandBinding(btnFarmerLand, command.FarmerLand, command.FarmerLandBind);
-            SetCommandBinding(btnGetLandCode, command.GetLandCode, command.GetLandCodeBind);
+            //SetCommandBinding(btnGetLandCode, command.GetLandCode, command.GetLandCodeBind);
             SetCommandBinding(btnLandNameNull, command.LandNameNull, command.LandNameNullBind);
             SetCommandBinding(btnContractAreaNull, command.ContractAreaNull, command.ContractAreaNullBind);
             SetCommandBinding(btnActualAreaNull, command.ActualAreaNull, command.ActualAreaNullBind);
@@ -307,6 +307,8 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandLevelNull, command.LandLevelNull, command.LandLevelNullBind);
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
+            SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
+            SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
             SetCommandBinding(mbtnDownLoad, command.DownLoad, command.DownLoadBind);
@@ -641,6 +643,14 @@ namespace YuLinTu.Component.ContractAccount
                     FindLand();    //空间查看
                     break;
 
+                case ContractAccountCommand.DataQualityName:
+                    contractAccountPanel.DataQuality();    
+                    break;
+
+                case ContractAccountCommand.AdjustLandName:
+                    contractAccountPanel.AdjustLand();
+                    break;
+
                 case ContractAccountCommand.ClearName:
                     contractAccountPanel.Clear();
                     break;
@@ -694,6 +704,8 @@ namespace YuLinTu.Component.ContractAccount
                 btnExportData.IsEnabled = isEnable;
                 btnTemplate.IsEnabled = isEnable;
                 btnExportContractInformation.IsEnabled = isEnable;
+                mbtnDataQuality.IsEnabled = isEnable;
+                mbtnAdjustLand.IsEnabled = isEnable;
             }));
         }
 

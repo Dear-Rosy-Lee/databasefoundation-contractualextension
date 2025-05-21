@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -481,8 +481,8 @@ namespace YuLinTu.Library.Controls
                 Summary.LandCount += (child.Visibility == Visibility.Visible) ? child.CountLand : 0;
             }
 
-            Summary.ArwareAreaCount += Math.Round(summaryAwareArea, 4);
-            Summary.ActualAreaCount += Math.Round(summaryActualArea, 4);
+            Summary.ArwareAreaCount += ToolMath.RoundNumericFormat(summaryAwareArea, 4);
+            Summary.ActualAreaCount += ToolMath.RoundNumericFormat(summaryActualArea, 4);
         }
 
         /// <summary>
@@ -513,11 +513,11 @@ namespace YuLinTu.Library.Controls
                     Summary.LandCount += (child.Visibility == Visibility.Visible) ? child.CountLand : 0;
                 }
             }
-            summaryActualArea = Business.ToolMath.SetNumericFormat(summaryActualArea, 4, 1);
-            summaryAwareArea = Business.ToolMath.SetNumericFormat(summaryAwareArea, 4, 1);
+            summaryActualArea = ToolMath.RoundNumericFormat(summaryActualArea, 4);
+            summaryAwareArea = ToolMath.RoundNumericFormat(summaryAwareArea, 4);
 
-            Summary.ArwareAreaCount = Business.ToolMath.SetNumbericFormat(summaryAwareArea.ToString(), 2);//Math.Round(summaryAwareArea, 4);
-            Summary.ActualAreaCount = Business.ToolMath.SetNumbericFormat(summaryActualArea.ToString(), 2);//Math.Round(summaryActualArea, 4);
+            Summary.ArwareAreaCount = ToolMath.SetNumbericFormat(summaryAwareArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryAwareArea, 4);
+            Summary.ActualAreaCount = ToolMath.SetNumbericFormat(summaryActualArea.ToString(), 2);//ToolMath.RoundNumericFormat(summaryActualArea, 4);
         }
 
         #endregion Methods - Public

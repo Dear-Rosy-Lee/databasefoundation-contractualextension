@@ -38,7 +38,8 @@
             <RowDefinition Height="60" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Label Content="发包方名称:" Style="{StaticResource LeftStyle}" />
+        <cmps:ImageTextItem  Margin="5,0,0,0" IsRequired="True" Text="发包方名称:"/>
+        <!--<Label Content="发包方名称:" Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroTextBox
             Name="mtbName"
             Grid.Column="1" 
@@ -92,11 +93,13 @@
             TabIndex="3"
             Text="{Binding LawyerPosterNumber, Mode=TwoWay}" />
 
-        <Label
+        <cmps:ImageTextItem  Grid.Row="2"
+ Grid.Column="2" Margin="5,0,0,0" IsRequired="True" Text="负责人证件类型:"/>
+        <!--<Label
             Grid.Row="2"
             Grid.Column="2"
             Content="负责人证件类型:"
-            Style="{StaticResource LeftStyle}" />
+            Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroComboBox
             x:Name="cbCredtype"
             Grid.Row="2"
@@ -108,11 +111,12 @@
             BorderThickness="1"
             SelectionChanged="cbCredtype_SelectionChanged"
             TabIndex="5" />
-
-        <Label
+        
+        <cmps:ImageTextItem  Grid.Row="2"  Margin="5,0,0,0" IsRequired="True" Text="负责人姓名:"/>
+        <!--<Label
             Grid.Row="2"
             Content="负责人姓名:"
-            Style="{StaticResource LeftStyle}" />
+            Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroTextBox
             Grid.Row="2"
             Grid.Column="1"
@@ -124,10 +128,11 @@
             TabIndex="4"
             Text="{Binding Path=LawyerName, Mode=TwoWay}" />
 
-        <Label
+        <cmps:ImageTextItem  Grid.Row="3"  Margin="5,0,0,0" IsRequired="True" Text="负责人电话:"/>
+        <!--<Label
             Grid.Row="3"
             Content="负责人电话:"
-            Style="{StaticResource LeftStyle}" />
+            Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroTextBox
             Grid.Row="3"
             Grid.Column="1"
@@ -139,11 +144,12 @@
             TabIndex="6"
             Text="{Binding Path=LawyerTelephone, Mode=TwoWay}" />
 
-        <Label
+        <cmps:ImageTextItem  Grid.Row="3"  Grid.Column="2" Margin="5,0,0,0" IsRequired="True" Text="负责人证件号码:"/>
+        <!--<Label
             Grid.Row="3"
             Grid.Column="2"
             Content="负责人证件号码:"
-            Style="{StaticResource LeftStyle}" />
+            Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroTextBox
             Grid.Row="3"
             Grid.Column="3"
@@ -155,10 +161,11 @@
             TabIndex="7"
             Text="{Binding Path=LawyerCartNumber, Mode=TwoWay}" />
 
-        <Label
+        <cmps:ImageTextItem  Grid.Row="4" Margin="5,0,0,0" IsRequired="True" Text="负责人地址:"/>
+        <!--<Label
             Grid.Row="4"
             Content="负责人地址:"
-            Style="{StaticResource LeftStyle}" />
+            Style="{StaticResource LeftStyle}" />-->
         <cmps:MetroTextBox
             Grid.Row="4"
             Grid.Column="1"

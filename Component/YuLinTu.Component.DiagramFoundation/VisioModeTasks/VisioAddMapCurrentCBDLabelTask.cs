@@ -18,6 +18,7 @@ using YuLinTu.Visio.Designer;
 using YuLinTu.Visio.Designer.Elements;
 using YuLinTu.Windows;
 using YuLinTu;
+using YuLinTu.Library.WorkStation;
 namespace YuLinTu.Component.DiagramFoundation
 {
     /// <summary>
@@ -262,7 +263,8 @@ namespace YuLinTu.Component.DiagramFoundation
                         string showLandSurveyNumber = string.Empty;
                         double landscmj = obj.Object.GetPropertyValue<double>("SCMJ");
                         double landqqmj = obj.Object.GetPropertyValue<double>("BZMJ");
-                        double landtzmj = obj.Object.GetPropertyValue<double>("TZMJ");
+                        var tzmjobj = obj.Object.GetPropertyValue("TZMJ");
+                        double landtzmj = (tzmjobj == null||tzmjobj.ToString()=="") ? 0 : Convert.ToDouble(tzmjobj.ToString());// obj.Object.GetPropertyValue<double>("TZMJ");
 
                         if (dflcsetting.IsUseContractorName)
                         {

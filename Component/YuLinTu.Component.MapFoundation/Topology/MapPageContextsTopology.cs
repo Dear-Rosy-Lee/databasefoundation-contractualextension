@@ -10,6 +10,11 @@ using YuLinTu.Library.Entity;
 using System.Collections.Generic;
 using OSGeo.OGR;
 using YuLinTu.Data;
+using System.Windows.Interop;
+using System.Windows.Threading;
+using System.Windows;
+using YuLinTu.Appwork;
+using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -43,6 +48,7 @@ namespace YuLinTu.Component.MapFoundation
                         var landStation = db.CreateContractLandWorkstation();
                         var flag = bool.Parse(s.GetPropertyValue("Flag").ToString());
                         var items = s.GetPropertyValue("SplitItems") as List<SplitItem>;
+                        var oldlandNumber = s.GetPropertyValue("SelectOldLandNumber") as string;
                         var entities = new List<ContractLand>();
                         items.ForEach(x =>
                         {
@@ -51,10 +57,10 @@ namespace YuLinTu.Component.MapFoundation
                             entities.Add(x.Land);
                         });
 
-
-                        if (flag == true)
+                        if (flag)
                         {
-                            var oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;
+                            if (string.IsNullOrEmpty(oldlandNumber))
+                                oldlandNumber = entities[0].ZoneCode.PadRight(14, '0') + items[0].OldNumber;
                             bool deloldLand = true;
                             for (int i = 0; i < items.Count; i++)
                             {
@@ -65,14 +71,23 @@ namespace YuLinTu.Component.MapFoundation
                                 {
                                     deloldLand = false;
                                 }
+                                if (entities[i].LandNumber == entities[i].OldLandNumber)
+                                    entities[i].OldLandNumber = "";
                                 var dbland = landStation.GetByLandNumber(entities[i].LandNumber);// (l => l.ID == entities[i].ID)
                                 if (dbland != null)
                                 {
                                     entities[i].ID = dbland.ID;
-                                    landStation.Update(entities[i]);
+
+                                    //查询是否在数据库中存在该地块
+                                    //if (VerifyLandCode(entities))
+                                    {
+                                        landStation.Update(entities[i]);
+                                    }
+
                                 }
                                 else
                                 {
+                                    entities[i].OldLandNumber = "";
                                     landStation.Add(entities[i]);
                                 }
                             }
@@ -102,6 +117,25 @@ namespace YuLinTu.Component.MapFoundation
                 };
                 Workpage.Page.ShowDialog(dlg, (b, r) => { dlg.Uninstall(); });
             }));
+
         }
+        private bool VerifyLandCode(List<ContractLand> contractLands)
+        {
+            
+            Workpage.Workspace.Window.ShowDialog(new MessageDialog()
+            {
+                Message = "是否确定地块编码编辑完成并保存？",
+                Header = "地块编码"
+            }, (b, r) =>
+            {
+                if (b.HasValue && b.Value)
+                {
+                    
+                }
+                  
+            });
+            return true;
+        }
+
     }
 }

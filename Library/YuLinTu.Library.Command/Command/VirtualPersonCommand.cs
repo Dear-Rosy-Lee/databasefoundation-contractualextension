@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -195,6 +195,11 @@ namespace YuLinTu.Library.Command
         /// </summary>
         public const string RelationReplaceName = "RelationReplace";
 
+        /// <summary>
+        /// 调整发包方
+        /// </summary>
+        public const string AdjustSenderName = "AdjustSender";
+
         public const string SharePersonRepairName = "SharePersonRepair";
 
         #endregion Files - Const
@@ -374,6 +379,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand RelationCheck = new RoutedCommand(RelationCheckName, typeof(Button));
 
         public RoutedCommand RelationReplace = new RoutedCommand(RelationReplaceName, typeof(Button));
+
+        /// <summary>
+        /// 调整发包方
+        /// </summary>
+        public RoutedCommand AdjustSender = new RoutedCommand(AdjustSenderName, typeof(Button));
 
         /// <summary>
         /// 家庭成员数据修复
@@ -560,6 +570,11 @@ namespace YuLinTu.Library.Command
 
         public CommandBinding RelationReplaceBind = new CommandBinding();
 
+        /// <summary>
+        /// 调整发包方
+        /// </summary>
+        public CommandBinding AdjustSenderBind = new CommandBinding();
+
         public CommandBinding SharePersonRepairBind = new CommandBinding();
 
         #endregion 权利选择
@@ -617,7 +632,7 @@ namespace YuLinTu.Library.Command
             SetFamilyBind.Command = SetFamily;
             SearchDataBind.Command = SearchData;
             InitiallDataBind.Command = InitiallData;
-
+            AdjustSenderBind.Command = AdjustSender;
             #region 权利选择
 
             ContractBind.Command = Contract;

@@ -1,14 +1,12 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
 using System.IO;
-using System.Windows.Forms;
+using YuLinTu.Library.Entity;
+using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 
 namespace YuLinTu.Library.Business
@@ -237,7 +235,7 @@ namespace YuLinTu.Library.Business
                     SetRange("K" + index, "K" + (index + length - 1), height, 11, false, vp != null && !string.IsNullOrEmpty(vp.TotalTableArea.ToString()) ? ToolMath.SetNumbericFormat(vp.TotalTableArea.ToString(), 2) : "");
                     if (!string.IsNullOrEmpty(vp.TotalArea))
                     {
-                        totalTebleArea += ToolMath.SetNumericFormat(Convert.ToDouble(vp.TotalArea), 2, 1);
+                        totalTebleArea += ToolMath.RoundNumericFormat(Convert.ToDouble(vp.TotalArea), 2);
                     }
                     #endregion
 

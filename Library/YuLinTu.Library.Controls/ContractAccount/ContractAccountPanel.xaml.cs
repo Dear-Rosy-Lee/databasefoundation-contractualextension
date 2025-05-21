@@ -1,22 +1,22 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using YuLinTu.Library.Entity;
-using YuLinTu.Windows;
-using YuLinTu.Library.Business;
+using System.Windows.Forms;
 using YuLinTu.Data;
-using YuLinTu.Windows.Wpf.Metro.Components;
+using YuLinTu.Library.Business;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using System.IO;
-using NetTopologySuite.Triangulate;
+using YuLinTu.Windows;
+using YuLinTu.Windows.Wpf.Metro.Components;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls
 {
@@ -390,7 +390,7 @@ namespace YuLinTu.Library.Controls
                 arg.Instance.ReportProgress(1, zoneFullName);
             string zoneCode = currentZone.FullCode;
             currentPersonList = PersonBusiness.GetByZone(zoneCode);
-            landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self);
+            landList = ContractAccountBusiness.GetCollection(zoneCode, eLevelOption.Self, true);
             if (IsStockLand)
             {
                 //landStockAll = DataBaseSource.GetDataBaseSource().CreateContractLandWorkstation().Get(o => o.ZoneCode == CurrentZone.FullCode);
@@ -415,13 +415,27 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        /// <summary>
+        /// 设置关联
+        /// </summary>
+        /// <param name="arg"></param>
         private void ChangeDataAndSend(TaskGoEventArgs arg)
         {
+            var dicdklb = new Dictionary<string, Dictionary>();
+            var dicdldj = new Dictionary<string, Dictionary>();
+            foreach (var item in listDKLB)
+            {
+                dicdklb.Add(item.Code, item);
+            }
+            foreach (var item in listDLDJ)
+            {
+                dicdldj.Add(item.Code, item);
+            }
             if (arg == null)
             {
                 foreach (var item in currentPersonList)
                 {
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations, true, SystemSetDefine.DecimalPlaces);
                     if (svpi != null && FamilyOtherDefine.ShowFamilyInfomation && svpi.Name.Equals("集体"))
                     {
                         continue;
@@ -439,7 +453,7 @@ namespace YuLinTu.Library.Controls
                 {
                     if (arg.Instance.IsStopPending)
                         break;
-                    var svpi = item.ConvertItem(landList, listDKLB, listDLDJ, IsStockLand, ralations);
+                    var svpi = item.ConvertItem(landList, dicdklb, dicdldj, IsStockLand, ralations, true, SystemSetDefine.DecimalPlaces);
                     arg.Instance.ReportProgress(50, svpi);
                 }
             }
@@ -474,6 +488,7 @@ namespace YuLinTu.Library.Controls
         {
             int familyCount = 0;
             int landCount = 0;
+            int stockLandCount = 0;
             double summaryTableArea = 0;
             double summaryActualArea = 0;
             double summaryAwareArea = 0;
@@ -500,9 +515,9 @@ namespace YuLinTu.Library.Controls
                     {
                         continue;
                     }
+                    landCount++;
                     if (!land.IsStockLand)
                     {
-                        landCount++;
                         double tableArea = land.Tag.TableArea == null ? 0 : land.Tag.TableArea.Value;
                         double contractDelayArea = land.Tag.ContractDelayArea;
                         summaryTableArea += tableArea;
@@ -515,16 +530,16 @@ namespace YuLinTu.Library.Controls
                         virtualPersonContractDelayArea += contractDelayArea;
                     }
                 }
-                item.ActualAreaUI = virtualPersonActualArea.AreaFormat(2);
-                item.AwareAreaUI = virtualPersonAwareArea.AreaFormat(2);
-                item.TableAreaUI = virtualPersonTableArea.AreaFormat(2);
-                item.ContractDelayAreaUI = virtualPersonContractDelayArea.AreaFormat(2);
+                item.ActualAreaUI = virtualPersonActualArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.AwareAreaUI = virtualPersonAwareArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.TableAreaUI = virtualPersonTableArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+                item.ContractDelayAreaUI = virtualPersonContractDelayArea.AreaFormat(SystemSetDefine.DecimalPlaces);
             }
 
             //加上确股地块统计信息
             if (IsStockLand)
             {
-                if (CurrentZone != null)
+                if (CurrentZone != null && landList != null)
                 {
                     var landStock = new List<ContractLand>();
                     landList.ForEach(l =>
@@ -536,7 +551,8 @@ namespace YuLinTu.Library.Controls
                     });
                     if (landStock.Count > 0)
                     {
-                        landCount = landCount + landStock.Count;
+                        stockLandCount += landStock.Count;
+                        //landCount = landCount + landStock.Count;
                         summaryTableArea = summaryTableArea + Convert.ToDouble(landStock.Sum(o => (o.TableArea == null ? 0d : o.TableArea)));
                         summaryActualArea = summaryActualArea + Convert.ToDouble(landStock.Sum(o => o.ActualArea));
                         summaryAwareArea = summaryAwareArea + Convert.ToDouble(landStock.Sum(o => o.AwareArea));
@@ -546,7 +562,7 @@ namespace YuLinTu.Library.Controls
             }
 
             AccountSummary.FamilyCount = familyCount;
-            AccountSummary.LandCount = landCount;
+            AccountSummary.LandCount = $"地块数：{landCount} (确股:{stockLandCount})";//landCount;
             AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
             AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
             AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
@@ -602,7 +618,7 @@ namespace YuLinTu.Library.Controls
                 }
             }
             AccountSummary.FamilyCount++;
-            AccountSummary.LandCount += item.Children.Count;
+            //AccountSummary.LandCount += item.Children.Count;
             AccountSummary.TableAreaCount = (ConvertDouble(AccountSummary.TableAreaCount) + summaryTableArea) + "";
             AccountSummary.ActualAreaCount = (ConvertDouble(AccountSummary.ActualAreaCount) + summaryActualArea) + "";
             AccountSummary.ArwareAreaCount = (ConvertDouble(AccountSummary.ArwareAreaCount) + summaryAwareArea) + "";
@@ -794,7 +810,8 @@ namespace YuLinTu.Library.Controls
         /// <param name="TableType">表格类型(适用于台账报表中4个公用底层的表格)</param>
         /// <param name="listPerson">承包方集合</param>
         public void ExportDataCommonOperate(string zoneName, string header, eContractAccountType type, string taskDes, string taskName,
-           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false, List<ContractLand> vcontractLands = null)
+           int TableType = 1, List<VirtualPerson> listPerson = null, bool? isStockLand = false, List<ContractLand> vcontractLands = null,
+           Action<string> ExportMethods = null)
         {
             ExportDataPage extPage = new ExportDataPage(zoneName, TheWorkPage, header);
             extPage.Workpage = TheWorkPage;
@@ -883,6 +900,7 @@ namespace YuLinTu.Library.Controls
                     //    break;
                     case eContractAccountType.ExportSingleFamilyConfirmExcel:
                         TaskExportContractAccountExcel(type, null, null, taskDes, taskName, saveFilePath, listPerson, TableType);
+
                         break;
 
                     case eContractAccountType.ExportSendTableExcel:   //发包方调查表Excel
@@ -890,11 +908,18 @@ namespace YuLinTu.Library.Controls
                         break;
 
                     case eContractAccountType.VolumnExportContractAccountExcel:
-                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, taskDes, taskName, saveFilePath, TableType);
+                        if (ExportMethods != null)
+                        {
+                            ExportMethods(saveFilePath);
+                        }
+                        else
+                        {
+                            TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, taskDes, taskName, null, null, saveFilePath, TableType);
+                        }
                         break;
 
                     case eContractAccountType.VolumnExportSingleFamilyConfirmExcel:
-                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportSingleFamilyConfirmExcel, taskDes, taskName, saveFilePath, TableType);
+                        TaskGroupExportContractAccountExcel(eContractAccountType.ExportSingleFamilyConfirmExcel, taskDes, taskName, null, null, saveFilePath, TableType);
                         break;
 
                     case eContractAccountType.ExportVillageDeclare:   //导出村组公示表
@@ -1062,8 +1087,8 @@ namespace YuLinTu.Library.Controls
         /// <param name="filePath"></param>
         /// <param name="listPerson"></param>
         /// <param name="TableType"></param>
-        private void TaskGroupExportContractAccountExcel(eContractAccountType type, string taskDes, string taskName, string filePath = "",
-           int TableType = 1)
+        private void TaskGroupExportContractAccountExcel(eContractAccountType type, string taskDes, string taskName,
+           DateTime? time, DateTime? pubTime, string filePath = "", int TableType = 1)
         {
             DateTime? date = SetPublicyTableDate();
             if (date == null)
@@ -1087,6 +1112,8 @@ namespace YuLinTu.Library.Controls
             meta.TableType = TableType;
             meta.SelfAndSubsZones = SelfAndSubsZones;
             meta.AllZones = allZones;
+            meta.DelcTime = time;
+            meta.PubTime = pubTime;
             //if (TableType == 4)
             //{
             //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
@@ -1098,7 +1125,7 @@ namespace YuLinTu.Library.Controls
             //}
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
-            TaskGroupAccountFiveTableOperation import = new TaskGroupAccountFiveTableOperation();
+            var import = new TaskGroupAccountFiveTableOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -1878,7 +1905,7 @@ namespace YuLinTu.Library.Controls
             queueFilter.DoWithInterruptCurrent(
                 go =>
                 {
-                    this.Dispatcher.Invoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         SetItemVisible(go);
                     }));
@@ -1903,7 +1930,7 @@ namespace YuLinTu.Library.Controls
         private void SetItemVisible(TaskGoEventArgs arg)
         {
             string whString = arg.Instance.Argument.UserState.ToString();
-
+            view.EnableRowVirtualization = true;
             view.Filter(obj =>
             {
                 if (whString.IsNullOrBlank())
@@ -1960,12 +1987,12 @@ namespace YuLinTu.Library.Controls
                     if (has)
                         return true;
 
-                    txt = landbind.LandLevelUI;
-                    has = (
-                        !txt.IsNullOrBlank() && allCheck && txt.Equals(whString)) || (
-                        !txt.IsNullOrBlank() && !allCheck && txt.Contains(whString));
-                    if (has)
-                        return true;
+                    //txt = landbind.LandLevelUI;
+                    //has = (
+                    //    !txt.IsNullOrBlank() && allCheck && txt.Equals(whString)) || (
+                    //    !txt.IsNullOrBlank() && !allCheck && txt.Contains(whString));
+                    //if (has)
+                    //    return true;
                 }
 
                 return has;
@@ -2307,6 +2334,7 @@ namespace YuLinTu.Library.Controls
                     return null;
                 var personStation = db.CreateVirtualPersonStation<LandVirtualPerson>();
                 listPerson = personStation.GetByZoneCode(currentZone.FullCode, eLevelOption.Self);
+                listPerson = listPerson.OrderBy(o => int.Parse(o.FamilyNumber)).ToList();
                 if (ContractBusinessSettingDefine.DisplayCollectUsingCBdata)
                 {
                     var persons = listPerson.FindAll(c => c.Name == "集体");
@@ -2376,9 +2404,9 @@ namespace YuLinTu.Library.Controls
                     landStation.AddDelLand(landdel);
                     landStation.DeleteRelationDataByLand(landIds);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    ShowBox(ContractAccountInfo.ContractLandDel, "删除承包地块失败!", showConfirm: false);
+                    ShowBox(ContractAccountInfo.ContractLandDel, "删除承包地块失败!" + ex.Message, showConfirm: false);
                     return;
                 }
                 Dispatcher.Invoke(new Action(() =>
@@ -2406,7 +2434,7 @@ namespace YuLinTu.Library.Controls
             });
             ShowBox(ContractAccountInfo.ContractLandDel, ContractAccountInfo.CurrentLandDelSure, eMessageGrade.Infomation, action);
         }
-        
+
         /// <summary>
         /// 修改地块所有人名称
         /// </summary>
@@ -2443,20 +2471,20 @@ namespace YuLinTu.Library.Controls
                     {
                         return;
                     }
-                    ImportLandInformationTask(importLand.FileName);
+                    ImportLandInformationTask(importLand.FileName, importLand.ImportType);
                 });
             }
             else if (currentZone.Level == eZoneLevel.Village && childrenZones != null && childrenZones.Count > 0)
             {
                 //选择为村级地域并且地域下有子级地域(多个表格导入)
-                ExportDataPage batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入地块数据调查表", "请选择保存文件路径", "导入", "导入路径:");
+                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入地块数据调查表", "请选择保存文件路径", "导入", "导入路径:");
                 TheWorkPage.Page.ShowMessageBox(batchImportDlg, (b, r) =>
                 {
                     if (!(bool)b || string.IsNullOrEmpty(batchImportDlg.FileName))
                     {
                         return;
                     }
-                    ImportLandInformationTaskGroup(batchImportDlg.FileName);
+                    ImportLandInformationTaskGroup(batchImportDlg.FileName, batchImportDlg.ImportType);
                 });
             }
             else
@@ -2482,13 +2510,35 @@ namespace YuLinTu.Library.Controls
             {
                 //选择为组级地域或者选择为村级地域的同时地域下没有子级地域(单个表格导入,执行单个任务)
                 var importLand = new ImportDataPage(TheWorkPage, "导入摸底核实表");
+                importLand.TypeValueList = new List<KeyValue<string, string>>() {
+                    new KeyValue<string, string>("IgnorePart","覆盖属性保留图形数据"),
+                    new KeyValue<string, string>("Ignore","覆盖全部数据"),
+                    new KeyValue<string, string>("Over","只覆盖承包方数据") };
+
                 TheWorkPage.Page.ShowMessageBox(importLand, (b, r) =>
                 {
                     if (string.IsNullOrEmpty(importLand.FileName) || b == false)
                     {
                         return;
                     }
-                    ImportLandTiesTask(importLand.FileName, importLand.ImportType);
+                    ImportLandTiesTask(currentZone, importLand.FileName, importLand.ImportType);
+                });
+            }
+            else if (currentZone.Level == eZoneLevel.Village && childrenZones != null && childrenZones.Count > 0)
+            {
+                //选择为村级地域并且地域下有子级地域(多个表格导入)
+                var batchImportDlg = new ExportDataPage(CurrentZone.FullName, TheWorkPage, "批量导入摸底核实表", "请选择保存文件路径", "导入", "导入路径:");
+                batchImportDlg.TypeValueList = new List<KeyValue<string, string>>() {
+                    new KeyValue<string, string>("IgnorePart","覆盖属性保留图形数据"),
+                    new KeyValue<string, string>("Ignore","覆盖全部数据"),
+                    new KeyValue<string, string>("Over","只覆盖承包方数据") };
+                TheWorkPage.Page.ShowMessageBox(batchImportDlg, (b, r) =>
+                {
+                    if (!(bool)b || string.IsNullOrEmpty(batchImportDlg.FileName))
+                    {
+                        return;
+                    }
+                    ImportLandTiesTaskGroup(batchImportDlg.FileName, childrenZones, batchImportDlg.ImportType);
                 });
             }
             else
@@ -2503,13 +2553,14 @@ namespace YuLinTu.Library.Controls
         /// 导入地块调查表任务
         /// </summary>
         /// <param name="fileName">选择文件路径</param>
-        private void ImportLandInformationTask(string fileName)
+        private void ImportLandInformationTask(string fileName, eImportTypes importType)
         {
-            TaskImportLandTableArgument meta = new TaskImportLandTableArgument();
+            var meta = new TaskImportLandTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
             meta.CurrentZone = currentZone;    //当前地域
             meta.FileName = fileName;
             meta.VirtualType = virtualType;
+            meta.ImportType = importType;
             TaskImportLandTableOperation import = new TaskImportLandTableOperation();
             import.Argument = meta;
             import.Description = ContractAccountInfo.ImportDataComment;
@@ -2536,20 +2587,25 @@ namespace YuLinTu.Library.Controls
         /// 批量导入地块调查表任务
         /// </summary>
         /// <param name="fileName">选择文件夹路径</param>
-        private void ImportLandInformationTaskGroup(string fileName)
+        private void ImportLandInformationTaskGroup(string fileName, eImportTypes importType)
         {
-            TaskGroupImportLandTableArgument groupArgument = new TaskGroupImportLandTableArgument();
+            var groupArgument = new TaskGroupImportLandTableArgument();
             groupArgument.FileName = fileName;
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.VirtualType = virtualType;
-            TaskGroupImportLandTableOperation groupOperation = new TaskGroupImportLandTableOperation();
+            groupArgument.ImportType = importType;
+            var groupOperation = new TaskGroupImportLandTableOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = ContractAccountInfo.ImportDataComment;
             groupOperation.Name = ContractAccountInfo.VolumnImportDataTable;
             groupOperation.Completed += new TaskCompletedEventHandler((o, t) =>
             {
-                Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    Refresh();
+                    RefreshStockRight();
+                }), null);
                 TheBns.Current.Message.Send(this, MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode));
             });
             groupOperation.Terminated += new TaskTerminatedEventHandler((o, t) =>
@@ -2564,33 +2620,90 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
-        public void ImportLandTiesTask(string fileName, eImportTypes eImport = eImportTypes.Over)
+        /// <summary>
+        /// 导入摸底调查表任务
+        /// </summary>
+        public TaskImportLandTiesTableOperation ImportLandTiesTask(Zone czone, string fileName, eImportTypes eImport = eImportTypes.Over, bool syncstart = true)
         {
             var meta = new TaskImportLandTiesTableArgument();
             meta.DbContext = DbContext;       //当前使用的数据库
-            meta.CurrentZone = currentZone;    //当前地域
+            meta.CurrentZone = czone;    //当前地域
             meta.FileName = fileName;
             meta.ImportType = eImport;
             var import = new TaskImportLandTiesTableOperation();
             import.Argument = meta;
-            import.Description = $"导入承包关系表中地块数据-{Path.GetFileName(fileName)}";
-            import.Name = $"导入承包关系表-{currentZone.Name}";
+            import.Description = $"导入摸底调查核实表中的数据-{Path.GetFileName(fileName)}";
+            import.Name = $"导入摸底调查表-{czone.Name}";
             import.Completed += new TaskCompletedEventHandler((o, t) =>
             {
                 Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
-                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode);
+                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, czone.FullCode);
                 SendMessasge(args);
             });
             import.Terminated += new TaskTerminatedEventHandler((o, t) =>
             {
                 ShowBox(ContractAccountInfo.ImportData, ContractAccountInfo.ImportDataFail);
             });
-            TheWorkPage.TaskCenter.Add(import);
+            if (syncstart)
+            {
+                TheWorkPage.TaskCenter.Add(import);
+                if (ShowTaskViewer != null)
+                {
+                    ShowTaskViewer();
+                }
+                import.StartAsync();
+            }
+            return import;
+        }
+
+        /// <summary>
+        /// 批量导入摸底调查表任务
+        /// </summary>
+        /// <param name="fileName">选择文件夹路径</param>
+        private void ImportLandTiesTaskGroup(string path, List<Zone> childrenZones, eImportTypes eImport = eImportTypes.Over)
+        {
+            List<string> files = new List<string>();
+            FindAllFile(path, files);
+            var importgroup = new TaskGroup();
+            importgroup.Argument = null;
+            importgroup.Description = $"批量导入摸底调查核实表";
+            importgroup.Name = $"导入摸底调查表-{currentZone.Name}";
+            importgroup.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                Dispatcher.Invoke(new Action(() => { Refresh(); RefreshStockRight(); }), null);
+                var args = MessageExtend.VirtualPersonMsg(DbContext, ContractAccountMessage.CONTRACTACCOUNT_IMPORT_COMPLETE, currentZone.FullCode);
+                SendMessasge(args);
+            });
+            importgroup.Terminated += new TaskTerminatedEventHandler((o, t) =>
+            {
+                ShowBox(ContractAccountInfo.ImportData, ContractAccountInfo.ImportDataFail);
+            });
+            foreach (var item in childrenZones)
+            {
+                var filename = files.Find(t => Path.GetFileNameWithoutExtension(t).Contains(item.Name));
+                if (string.IsNullOrEmpty(filename))
+                {
+                    continue;
+                }
+                importgroup.Add(ImportLandTiesTask(item, filename, eImport, false));
+            }
+            TheWorkPage.TaskCenter.Add(importgroup);
             if (ShowTaskViewer != null)
             {
                 ShowTaskViewer();
             }
-            import.StartAsync();
+            importgroup.StartAsync();
+        }
+
+        public void FindAllFile(string path, List<string> files)
+        {
+            var dires = Directory.GetDirectories(path);
+            var fs = Directory.GetFiles(path);
+            files.AddRange(fs.ToList());
+            foreach (var dir in dires)
+            {
+                FindAllFile(dir, files);
+            }
         }
 
         /// <summary>
@@ -2631,7 +2744,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var dbContext = CreateDb();
-            ImportLandShapePage addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
+            var addPage = new ImportLandShapePage(TheWorkPage, "导入地块图斑");
             addPage.ThePage = TheWorkPage;
             addPage.Db = dbContext;
             TheWorkPage.Page.ShowMessageBox(addPage, (b, r) =>
@@ -2652,6 +2765,7 @@ namespace YuLinTu.Library.Controls
                 meta.UseContractorNumberImport = addPage.UseContractorNumberImport;
                 meta.UseOldLandCodeBindImport = addPage.UseOldLandCodeBindImport;
                 meta.shapeAllcolNameList = addPage.shapeAllcolNameList;
+                meta.DelLandImport = addPage.DelLandImport;
                 ImportLandShapeData(meta, dbContext);
             });
         }
@@ -3197,7 +3311,7 @@ namespace YuLinTu.Library.Controls
                             person = person.FindAll(c => c.IsSharedLand.Equals("是"));
                             vp.SharePersonList = person;
                         }
-                        landStation.ExportObligeeWord(currentZone, vp, masdsc, concordnumber, sender, DictList, warrentnumber, book,
+                        landStation.ExportObligeeWord(currentZone, vp, masdsc, concords.Count > 0 ? concords[0] : null, sender, DictList, warrentnumber, book,
                             SystemSet.DefaultPath, SystemSet.ExportVPTableCountContainsDiedPerson, SystemSet.KeepRepeatFlag, () => { return WorkStationExtend.GetSystemSetReplacement(); });
                     }
                 }
@@ -3469,7 +3583,8 @@ namespace YuLinTu.Library.Controls
                     {
                         List<ContractLand> lands = ContractAccountBusiness.GetPersonCollection(CurrentAccountItem.Tag.ID);
                         lands.LandNumberFormat(SystemSetDefine);
-                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands);   //导出单个
+                        bool flag = ContractAccountBusiness.ExportPublishWord(currentZone, CurrentAccountItem.Tag, lands, "",
+                            SettingDefine.ExportPublicTableDeleteEmpty, SettingDefine.ExportPublicTableUseAwareArea);   //导出单个
                     }
                 }
                 else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
@@ -3497,12 +3612,13 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportPublishWordTask(string fileName, string taskDes, string taskName, List<VirtualPerson> selectedPersons)
         {
-            TaskExportPublishWordArgument argument = new TaskExportPublishWordArgument();
+            var argument = new TaskExportPublishWordArgument();
             argument.DbContext = DbContext;
             argument.CurrentZone = currentZone;
             argument.FileName = fileName;
             argument.SelectedPersons = selectedPersons;
-            TaskExportPublishWordOperation operation = new TaskExportPublishWordOperation();
+            argument.ContractSettingDefine = SettingDefine;
+            var operation = new TaskExportPublishWordOperation();
             operation.Argument = argument;
             operation.Description = taskDes;
             operation.Name = taskName;
@@ -3522,11 +3638,12 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportPublishWordTaskGroup(string fileName, string taskDes, string taskName)
         {
-            TaskGroupExportPublishWordArgument groupArgument = new TaskGroupExportPublishWordArgument();
+            var groupArgument = new TaskGroupExportPublishWordArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.FileName = fileName;
-            TaskGroupExportPublishWordOperation groupOperation = new TaskGroupExportPublishWordOperation();
+            groupArgument.ContractSettingDefine = SettingDefine;
+            var groupOperation = new TaskGroupExportPublishWordOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = taskDes;
             groupOperation.Name = taskName;
@@ -3582,11 +3699,11 @@ namespace YuLinTu.Library.Controls
                 {
                     ShowBox(ContractAccountInfo.ExportSenderDataExcel, "未获取发包方数据!", showConfirm: false);
                 }
-                else
-                {
-                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
-                                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
-                }
+                //else
+                //{
+                //    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportSenderDataExcel, eContractAccountType.ExportSendTableExcel,
+                //                   ContractAccountInfo.ExportSenderDataExcel, ContractAccountInfo.ExportSurveyTableData, 1, null);
+                //}
             }
             catch (Exception ex)
             {
@@ -4449,7 +4566,14 @@ namespace YuLinTu.Library.Controls
                 }
                 else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
                 {
-                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable, ContractAccountInfo.ExportTable, TableType, null);
+                    ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractAccountExcel, ContractAccountInfo.ExportVillageGroupTable,
+                        ContractAccountInfo.ExportTable, TableType, null, null, null, (saveFilePath) =>
+                        {
+                            TaskGroupExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, ContractAccountInfo.ExportTable, ContractAccountInfo.ExportVillageGroupTable,
+                                delcTime, pubTime, saveFilePath, TableType);
+                            //TaskExportContractAccountExcel(eContractAccountType.ExportContractAccountExcel, delcTime, pubTime, ContractAccountInfo.ExportTable,
+                            //    ContractAccountInfo.ExportVillageGroupTable, saveFilePath, null, TableType);
+                        });
                 }
             });
         }
@@ -5515,6 +5639,7 @@ namespace YuLinTu.Library.Controls
                             return;
                         }
                     }
+                    //lands.AddRange(geoLandOfFamily);
                     var confirmPage = new ConfirmPage(TheWorkPage, ContractAccountInfo.PreviewMultiParcelOfFamily,
                         string.Format("是否预览{0}地块示意图?", CurrentAccountItem.Tag.Name));
                     confirmPage.Confirm += (a, c) =>
@@ -5522,7 +5647,8 @@ namespace YuLinTu.Library.Controls
                         try
                         {
                             string fileName = SystemSet.DefaultPath;
-                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, landList, CurrentAccountItem.Tag, fileName, false, "", null);
+                            //ContractAccountBusiness.
+                            ContractAccountBusiness.ExportMultiParcelWord(currentZone, geoLands, CurrentAccountItem.Tag, fileName, false, "", null);
                         }
                         catch (Exception ex)
                         {
@@ -5762,7 +5888,7 @@ namespace YuLinTu.Library.Controls
             //    return;
             //}
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
-            ContractLandInitializePage initialPage = new ContractLandInitializePage(isBatch);
+            var initialPage = new ContractLandInitializePage(isBatch);
             initialPage.Workpage = TheWorkPage;
             initialPage.LandBusiness = ContractAccountBusiness;
             initialPage.CurrentZone = CurrentZone;
@@ -6397,8 +6523,10 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
+
             ContractLandInitializeArea initialAreaPage = new ContractLandInitializeArea(isBatch);
             initialAreaPage.Workpage = TheWorkPage;
+            initialAreaPage.ToAreaNumeric = SystemSetDefine.DecimalPlaces;
             initialAreaPage.CurrentZone = CurrentZone;
             TheWorkPage.Page.ShowMessageBox(initialAreaPage, (b, r) =>
             {
@@ -6539,9 +6667,11 @@ namespace YuLinTu.Library.Controls
                 var vplands = lands.Where(x => x.OwnerId == vp.ID).ToList();
                 vplands.ForEach(x =>
                 {
+                    x.OldLandNumber = x.LandNumber;
                     x.LandNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
+                    x.CadastralNumber = currentZone.FullCode + index.ToString().PadLeft(5, '0');
                     index++;
-                    
+
                 });
                 landStation.UpdateLandCode(vplands);
             }
@@ -6798,8 +6928,8 @@ namespace YuLinTu.Library.Controls
             var landDel = new ContractLand_Del();
             landDel.ID = land.ID;
             landDel.DKBM = land.LandNumber;
-            landDel.YDKBM = land.OldLandNumber;
-            landDel.DKMC = land.LandName;
+            landDel.QQDKBM = land.OldLandNumber;
+            landDel.DKMC = land.Name;
             landDel.QQMJ = land.AwareArea;
             landDel.SCMJ = land.ActualArea;
             landDel.CBFID = (Guid)land.OwnerId;
@@ -6869,7 +6999,7 @@ namespace YuLinTu.Library.Controls
                 bool has = false;
                 if (landBind != null)
                 {
-                    has = landBind.Tag.LandCategory.Equals(landCategory);
+                    has = landBind.Tag.LandCategory != null && landBind.Tag.LandCategory.Equals(landCategory);
                     if (has)
                     {
                         landBind.Visibility = Visibility.Visible;
@@ -6941,8 +7071,11 @@ namespace YuLinTu.Library.Controls
             argument.InitialNull = initialLand.InitializeNull;
             argument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             argument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
+            argument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
+            argument.IsNewPart = initialLand.IsNewPart;
+            argument.InitiallStartNum = initialLand.InitiallStartNum;
 
-            TaskInitialLandInfoOperation operation = new TaskInitialLandInfoOperation();
+            var operation = new TaskInitialLandInfoOperation();
             operation.Argument = argument;
             argument.InitLandComment = initialLand.InitLandComment;
             argument.LandComment = initialLand.LandComment;
@@ -7041,7 +7174,7 @@ namespace YuLinTu.Library.Controls
         private void InitialLandInfoTaskGroup(object page, List<Zone> allZones)
         {
             var initialLand = page as ContractLandInitializePage;
-            TaskGroupInitialLandInfoArgument groupArgument = new TaskGroupInitialLandInfoArgument();
+            var groupArgument = new TaskGroupInitialLandInfoArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.AllZones = allZones;
@@ -7059,6 +7192,7 @@ namespace YuLinTu.Library.Controls
             groupArgument.InitialLandLevel = initialLand.InitialLandLevel;
             groupArgument.InitialLandName = initialLand.InitialLandName;
             groupArgument.InitialLandNumber = initialLand.InitialLandNumber;
+            groupArgument.InitialLandOldNumber = initialLand.InitialLandOldNumber;
             groupArgument.InitialLandNumberByUpDown = initialLand.InitialLandNumberByUpDown;
             groupArgument.InitialLandPurpose = initialLand.InitialLandPurpose;
             groupArgument.HandleContractLand = initialLand.HandleContractLand;
@@ -7076,11 +7210,13 @@ namespace YuLinTu.Library.Controls
             groupArgument.InitialNull = initialLand.InitializeNull;
             groupArgument.InitialLandNeighbor = initialLand.InitialLandNeighbor;
             groupArgument.InitialLandNeighborInfo = initialLand.InitialLandNeighborInfo;
-
+            groupArgument.IsNewPart = initialLand.IsNewPart;
             groupArgument.VillageInlitialSet = SystemSetDefine.VillageInlitialSet;
             groupArgument.InitLandComment = initialLand.InitLandComment;
             groupArgument.LandComment = initialLand.LandComment;
-            TaskGroupInitialLandInfoOperation groupOperation = new TaskGroupInitialLandInfoOperation();
+            groupArgument.InitiallStartNum = initialLand.InitiallStartNum;
+
+            var groupOperation = new TaskGroupInitialLandInfoOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;
             groupOperation.Description = ContractAccountInfo.InitialLandInfo;   //任务描述
@@ -7728,8 +7864,145 @@ namespace YuLinTu.Library.Controls
             return section.Settings;
         }
 
+
+
         #endregion Methods -上传下载
 
+        #region Method-质检 
+        public void DataQuality()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("数据检查", "请选择行政区域进行数据检查!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.County || currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("数据检查", "请选择在镇级以下(包括镇)地域进行数据检查!");
+                    return;
+                }
+
+                else
+                {
+                    var dialog = new DataCheckPage();
+                    dialog.Page = TheWorkPage;
+                    dialog.Header = "配置检查项";
+                    TheWorkPage.Page.ShowMessageBox(dialog, (b, r) =>
+                    {
+                        if (b == null || !b.Value)
+                            return;
+                        DataQualityTask(dialog.TaskArgument);
+                    });
+
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "数据质量检查", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+        public void DataQualityTask(TaskAttributeDataCheckerArgument argument)
+        {
+            argument.CurrentZone = currentZone;
+            argument.DbContext = DbContext;
+            TaskAttributeDataCheckerOperation operation = new TaskAttributeDataCheckerOperation();
+            operation.Argument = argument;
+            operation.Description = "属性数据质量检查";
+            operation.Name = "属性数据质量检查";
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+        #endregion Method-质检
+        #region Method-批量调整地块
+        public void AdjustLand()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox("调整地块", "请选择行政区域进行调整地块!");
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var landStation = DbContext.CreateContractLandWorkstation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
+                    currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                {
+                    //选择地域大于镇
+                    ShowBox("调整地块", "请选择在组级地域进行调整地块!");
+                    return;
+                }
+
+                else
+                {
+                    var dictStation = DbContext.CreateDictWorkStation();
+                    var DictList = dictStation.Get();
+                    List<VirtualPerson> persons = new List<VirtualPerson>();
+                    persons = vpStation.GetByZoneCode(currentZone.FullCode);
+                    List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
+                    var dialog = new AdjustLandPage(persons, lands, DictList);
+                    TheWorkPage.Page.ShowMessageBox(dialog, (s, t) =>
+                    {
+                        if (s == null || !s.Value)
+                            return;
+                        var Lands = new List<ContractLand>();
+                        foreach (var item in dialog.SelectLandData.Select(tuple => tuple.Item1).ToList())
+                        {
+                            Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
+                        }
+                        AdjustLandTask(Lands,dialog.NewVPName);
+                    });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "调整地块", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+        private void AdjustLandTask(List<ContractLand> Lands,string NewVPName)
+        {
+            TaskAdjustLandArgument argument = new TaskAdjustLandArgument();
+            argument.Database = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.Lands = Lands;
+            argument.NewVPName = NewVPName;
+
+            TaskAdjustLandOperation task = new TaskAdjustLandOperation();
+            task.Argument = argument;
+            task.Name = "调整地块";
+            task.Description = "批量调整地块";
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(task);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            task.StartAsync();
+        }
+        #endregion Method-批量调整地块
         #endregion Method-工具
 
         #endregion Methods

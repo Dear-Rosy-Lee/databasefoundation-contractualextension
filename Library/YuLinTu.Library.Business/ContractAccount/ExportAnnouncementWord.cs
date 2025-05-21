@@ -1,9 +1,10 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System.Collections.Generic;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -200,13 +201,13 @@ namespace YuLinTu.Library.Business
         private void WriteOtherInformations()
         {
 
-            actualArea = Business.ToolMath.SetNumericFormat(actualArea, 4, 1);
-            awareArea = Business.ToolMath.SetNumericFormat(awareArea, 4, 1);
-            tableArea = Business.ToolMath.SetNumericFormat(tableArea, 4, 1);
+            actualArea = ToolMath.RoundNumericFormat(actualArea, 4);
+            awareArea = ToolMath.RoundNumericFormat(awareArea, 4);
+            tableArea = ToolMath.RoundNumericFormat(tableArea, 4);
             SetBookmarkValue("FamilyNumber", (ListPerson != null && ListPerson.Count > 0) ? ListPerson.Count.ToString() : "   ");
             SetBookmarkValue("LandNumber", (ListLand != null && ListLand.Count > 0) ? ListLand.Count.ToString() : "   ");
             double area = CalArea();
-            area = ToolMath.SetNumericFormat(area, 4, 1);
+            area = ToolMath.RoundNumericFormat(area, 4);
             SetBookmarkValue("TotalAwareArea", area > 0 ? ToolMath.SetNumbericFormat(area.ToString(), 2) : "    ");
             SetBookmarkValue(AgricultureBookMark.AgricultureActualAreaCount, actualArea > 0 ? actualArea.ToString("0.00") : "    ");
             SetBookmarkValue(AgricultureBookMark.AgricultureAwareAreaCount, awareArea > 0 ? ToolMath.SetNumbericFormat(awareArea.ToString(), 2) : "    ");

@@ -12,11 +12,11 @@ namespace YuLinTu.Library.Entity
     {
         #region Fields
         private Guid id;
-        private string dkmc; 
+        private string dkmc;
         private string dkbm;
         private double bzmj;
         private double scmj;
-        private Guid cbfid;
+        private Guid? cbfid;
         private string dkdz;
         private string dknz;
         private string dkxz;
@@ -56,17 +56,17 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("DKBM");
             }
         }
-        [DataColumn("YDKBM")]
-        public string YDKBM
+        [DataColumn("QQDKBM")]
+        public string QQDKBM
         {
-            get { return ydkbm; }
+            get { return qqdkbm; }
             set
             {
-                ydkbm = value;
+                qqdkbm = value;
                 NotifyPropertyChanged("DKBM");
             }
         }
-        private string ydkbm;
+        private string qqdkbm;
         /// <summary>
         /// 实测面积
         /// </summary>
@@ -99,7 +99,7 @@ namespace YuLinTu.Library.Entity
         /// 承包方id
         /// </summary>
         [DataColumn("CBFID")]
-        public Guid CBFID
+        public Guid? CBFID
         {
             get { return cbfid; }
             set
@@ -108,7 +108,20 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("CBFID");
             }
         }
-
+        /// <summary>
+        /// 承包方id
+        /// </summary>
+        [DataColumn("CBFBM")]
+        public string CBFBM
+        {
+            get { return cbfbm; }
+            set
+            {
+                cbfbm = value;
+                NotifyPropertyChanged("CBFBM");
+            }
+        }
+        private string cbfbm;
 
         [DataColumn("DKDZ")]
         public string DKDZ
@@ -170,6 +183,74 @@ namespace YuLinTu.Library.Entity
                 NotifyPropertyChanged("DYBM");
             }
         }
+
+        [DataColumn("SYQXZ")]
+        public string SYQXZ
+        {
+            get; set;
+        }
+
+        [DataColumn("DKLB")]
+        public string DKLB
+        {
+            get; set;
+        }
+
+        [DataColumn("TDLYLX")]
+        public string TDLYLX
+        {
+            get; set;
+        }
+
+        [DataColumn("TDYT")]
+        public string TDYT
+        {
+            get; set;
+        }
+
+        [DataColumn("SFJBNT")]
+        public string SFJBNT
+        {
+            get; set;
+        }
+
+        [DataColumn("DLDJ")]
+        public string DLDJ
+        {
+            get; set;
+        }
+
         #endregion Properties
+
+        /// <summary>
+        /// 转换对象
+        /// </summary> 
+        public static ContractLand_Del ChangeDataEntity(string zoneCode, ContractLand ld, string fnum = "")
+        {
+            var data = new ContractLand_Del()
+            {
+                BZXX = ld.Comment,
+                DKBM = ld.LandNumber,
+                DKBZ = ld.NeighborNorth,
+                DKXZ = ld.NeighborWest,
+                DKNZ = ld.NeighborSouth,
+                DKDZ = ld.NeighborEast,
+                DKMC = ld.Name,
+                DYBM = zoneCode,
+                ID = ld.ID,
+                QQDKBM = ld.OldLandNumber,
+                QQMJ = ld.AwareArea,
+                SCMJ = ld.ActualArea,
+                CBFID = ld.OwnerId,
+                TDYT = ld.Purpose,
+                TDLYLX = ld.LandCode,
+                SYQXZ = ld.OwnRightType,
+                DLDJ = ld.LandLevel,
+                DKLB = ld.LandCategory,
+                CBFBM = fnum,
+                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
+            };
+            return data;
+        }
     }
 }

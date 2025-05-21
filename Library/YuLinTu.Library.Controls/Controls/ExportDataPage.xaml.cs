@@ -1,9 +1,11 @@
 ﻿/*
  * (C) 2024  鱼鳞图公司版权所有,保留所有权利 
  */
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using YuLinTu.Library.Business;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Library.Controls
@@ -26,6 +28,29 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public string FileName { get; private set; }
 
+        /// <summary>
+        /// 导入类型
+        /// </summary>
+        public eImportTypes ImportType { get; private set; }
+
+        public List<KeyValue<string, string>> TypeValueList
+        {
+            set
+            {
+                if (value != null)
+                {
+                    iptctl.Visibility = Visibility.Visible;
+                    var lst = new List<ComboBoxItem>();
+                    foreach (var item in value)
+                    {
+                        lst.Add(new ComboBoxItem() { Tag = item.Key, Content = item.Value });
+                    }
+                    cbtype.ItemsSource = lst;
+                    cbtype.SelectedIndex = 0;
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -47,15 +72,37 @@ namespace YuLinTu.Library.Controls
             if (!string.IsNullOrEmpty(lbPathName))
                 lbPath.Content = lbPathName;
             btnExcuteImport.IsEnabled = false;
+           // iptctl.Visibility = biptctl ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        ///// <summary>
-        ///// 执行
-        ///// </summary>
-        //private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Workpage.Page.CloseMessageBox(true);
-        //}
+        /// <summary>
+        /// 执行
+        /// </summary>
+        private void btnExcuteImport_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem cbi = cbtype.SelectedItem as ComboBoxItem;
+            if (cbi != null)
+            {
+                string typestr = cbi.Tag.ToString();
+                if (typestr == eImportTypes.Clear.ToString())
+                {
+                    ImportType = eImportTypes.Clear;
+                }
+                else if (typestr == eImportTypes.Over.ToString())
+                {
+                    ImportType = eImportTypes.Over;
+                }
+                else if (typestr == eImportTypes.Ignore.ToString())
+                {
+                    ImportType = eImportTypes.Ignore;
+                }
+                else if (typestr == eImportTypes.IgnorePart.ToString())
+                {
+                    ImportType = eImportTypes.IgnorePart;
+                }
+            }
+            Workpage.Page.CloseMessageBox(true);
+        }
 
         /// <summary>
         /// 文件浏览

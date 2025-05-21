@@ -1,4 +1,4 @@
-﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using Aspose.Cells;
 using Aspose.Cells.Rendering;
 using System;
@@ -408,7 +408,7 @@ namespace YuLinTu.Library.Office
         /// 保存所有更改。
         /// </summary>
         /// <history>
-        ///     2011年1月23日 1:40:40   Roc 创建
+        /// 2011年1月23日 1:40:40   Roc 创建
         /// </history>
         public void Save()
         {
@@ -428,6 +428,11 @@ namespace YuLinTu.Library.Office
             }
             WordOperator.InitalzieDirectory(fileName);
             workbook.Save(fileName, SaveFormat.Excel97To2003);
+            SaveEnd(fileName);
+        }
+
+        protected virtual void SaveEnd(string fileName)
+        {
         }
 
         /// <summary>
@@ -443,6 +448,7 @@ namespace YuLinTu.Library.Office
             {
                 return;
             }
+            WordOperator.InitalzieDirectory(fileName);
             fileName = WordOperator.InitalizeValideFileName(fileName);
             string extension = System.IO.Path.GetExtension(fileName);
             if (string.IsNullOrEmpty(extension))
@@ -451,10 +457,17 @@ namespace YuLinTu.Library.Office
             }
             else
             {
-                fileName = extension == ".xls" ? fileName : fileName.Replace(extension, ".xls");
+                if (extension == ".xlsx")
+                {
+                    workbook.Save(fileName, SaveFormat.Xlsx);
+                }
+                else
+                {
+                    fileName = extension == ".xls" ? fileName : fileName.Replace(extension, ".xls");
+                    workbook.Save(fileName, SaveFormat.Excel97To2003);
+                }
             }
-            WordOperator.InitalzieDirectory(fileName);
-            workbook.Save(fileName, SaveFormat.Excel97To2003);
+            SaveEnd(fileName);
         }
 
         #endregion
@@ -482,7 +495,7 @@ namespace YuLinTu.Library.Office
             //cell.PutValue(value);
             SetCellValue(cell, value);
         }
-        public void InitalizeSheet2CellValue(int start, int end, object value,Worksheet sheet2)
+        public void InitalizeSheet2CellValue(int start, int end, object value, Worksheet sheet2)
         {
             if (workbook == null || workSheet == null)
             {
@@ -598,7 +611,7 @@ namespace YuLinTu.Library.Office
                 cell.PutValue(value);
             }
         }
-        
+
         /// <summary>
         /// 初始化范围值
         /// </summary>

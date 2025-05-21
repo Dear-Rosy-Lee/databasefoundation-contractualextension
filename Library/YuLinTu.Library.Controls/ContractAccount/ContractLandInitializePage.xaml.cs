@@ -1,8 +1,9 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using YuLinTu.Data;
@@ -56,11 +57,13 @@ namespace YuLinTu.Library.Controls
         private bool initialAwareArea;  //是否初始化确权面积等于
         private bool initialLandPurpose;  //是否初始化土地用途
         private bool initialLandNumber;   //是否初始化地块编码
+        private bool initialLandOldNumber = true;   //是否初始化确权地块编码
         private bool initialLandNumberByUpDown;//是否初始化地块编码-从上往下，从左到右
         private bool handleContractLand;  //是否只处理承包地块
         private AgricultureLandExpand landExpand = null;
         private bool isCombination;  //地块编码是否按组合方式生成
         private bool isNew;   //地块编码是否按统一重新生成
+        private bool isNewPart;   //地块编码是否按统一重新生成
         //private bool initialLandExpand; //是否初始化地块调查信息
 
         private bool initialMapNumber;     //是否初始化图幅编号
@@ -83,6 +86,7 @@ namespace YuLinTu.Library.Controls
 
         private bool initialLandNeighbor;//是否获取四至(前信息
         private bool initialLandNeighborInfo;//是否获取地块周边地块集合
+
         #endregion
 
         #region Properties
@@ -216,6 +220,15 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
+        /// 是否初始化地块编码
+        /// </summary>
+        public bool InitialLandOldNumber
+        {
+            get { return initialLandOldNumber; }
+            set { initialLandOldNumber = value; }
+        }
+
+        /// <summary>
         /// 是否初始化地块编码-从上往下
         /// </summary>
         public bool InitialLandNumberByUpDown
@@ -249,6 +262,15 @@ namespace YuLinTu.Library.Controls
         {
             get { return isNew; }
             set { isNew = value; }
+        }
+
+        /// <summary>
+        /// 地块编码是否按统一重新生成
+        /// </summary>
+        public bool IsNewPart
+        {
+            get { return isNewPart; }
+            set { isNewPart = value; }
         }
 
         /// <summary>
@@ -390,6 +412,17 @@ namespace YuLinTu.Library.Controls
             get { return landComment; }
             set { landComment = value; }
         }
+
+        /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum
+        {
+            get { return initiallStartNum; }
+            set { initiallStartNum = value; }
+        }
+        private int initiallStartNum;
+
         #endregion
 
         #region Methods-Override
@@ -446,6 +479,7 @@ namespace YuLinTu.Library.Controls
             cmbQSXZ.ItemsSource = qsxzList;
             cmbQSXZ.DisplayMemberPath = "Name";
             cmbQSXZ.SelectedIndex = 0;
+            txtInitiallStartNum.Text = "1";
         }
 
         #endregion
@@ -462,14 +496,49 @@ namespace YuLinTu.Library.Controls
                 return;
             }
 
-            ConfirmAsync(goCallback =>
+            var lands = LandBusiness.GetCollection(CurrentZone.FullCode, eLevelOption.SelfAndSubs);
+            if (initialLandNumber && lands.Any(t => !string.IsNullOrEmpty(t.OldLandNumber)))
             {
-                return SetAndCheckValue();
-            }, completedCallback =>
-            {
-                Close(true);
-            });
+                var message = new TabMessageBoxDialog
+                {
+                    Header = "提示",
+                    Message = "地块数据中已有 确权地块编码，若确权地块编码存在错误才执行覆盖，是否覆盖？",
+                    MessageGrade = eMessageGrade.Warn,
+                    ConfirmButtonText = "覆盖",
+                    CancelButtonText = "不覆盖",
+                    CloseButtonVisibility = Visibility.Collapsed
+                };
 
+                Workpage.Page.ShowDialog(message, (b, c) =>
+                {
+                    if ((bool)b)
+                    {
+                        InitialLandOldNumber = true;
+                    }
+                    else
+                    {
+                        InitialLandOldNumber = false;
+                    }
+                    ConfirmAsync(goCallback =>
+                    {
+                        return SetAndCheckValue();
+                    }, completedCallback =>
+                    {
+                        Close(true);
+                    });
+
+                });
+            }
+            else
+            {
+                ConfirmAsync(goCallback =>
+                {
+                    return SetAndCheckValue();
+                }, completedCallback =>
+                {
+                    Close(true);
+                });
+            }
             // Workpage.Page.CloseMessageBox(true);
         }
 
@@ -491,6 +560,7 @@ namespace YuLinTu.Library.Controls
                 handleContractLand = (bool)cbHandleContractLand.IsChecked;
                 isCombination = (bool)rbCombination.IsChecked;
                 isNew = (bool)rbNew.IsChecked;
+                IsNewPart = (bool)rbNewPart.IsChecked;
                 //initialMapNumber = (bool)cbMapNumber.IsChecked;
                 initialQSXZ = (bool)cbQSXZ.IsChecked;
                 initialSurveyPerson = (bool)cbSurveyPerson.IsChecked;
@@ -505,9 +575,12 @@ namespace YuLinTu.Library.Controls
                 initialLandNeighborInfo = (bool)cbInitializeLandNeighborInfo.IsChecked;
                 initialReferPersonByOwner = (bool)cbReferPersonExpand.IsChecked;
                 initLandComment = (bool)cbLandComment.IsChecked;
+                int pinstartnun = 0;
+                int.TryParse(txtInitiallStartNum.Text, out pinstartnun);
+                InitiallStartNum = pinstartnun == 0 ? 1 : pinstartnun;
             }));
             if (!initialQSXZ && !initialLandName && !initialLandLevel && !initialLandPurpose && !initialLandNumber && !initialIsFamer
-             && !initialAwareArea && !handleContractLand && !initialMapNumber && !initialSurveyPerson && !initialLandNeighbor &&!initialLandNeighborInfo
+             && !initialAwareArea && !handleContractLand && !initialMapNumber && !initialSurveyPerson && !initialLandNeighbor && !initialLandNeighborInfo
              && !initialSurveyDate && !initialSurveyInfo && !initialCheckPerson && !initialCheckDate && !initialCheckInfo && !initialReferPerson && !initLandComment)
             {
                 return false;
@@ -643,14 +716,12 @@ namespace YuLinTu.Library.Controls
                 if (villageInlitialSet)
                 {
                     rbCombination.IsChecked = false;
-                    rbNew.IsChecked = true;
                     rbCombination.IsEnabled = false;
                     rbNew.IsEnabled = true;
                 }
                 else
                 {
                     rbCombination.IsChecked = false;
-                    rbNew.IsChecked = true;
                 }
                 cbLandNumberByUpdown.IsEnabled = true;
 
@@ -677,9 +748,6 @@ namespace YuLinTu.Library.Controls
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
             count++;
-            CheckBox chk = sender as CheckBox;
-            if (chk.Name == "cbLandNumber")
-                rbNew.IsChecked = true;
         }
 
         private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
@@ -699,7 +767,7 @@ namespace YuLinTu.Library.Controls
         private void cmbQSXZ_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             qsxz = cmbQSXZ.SelectedItem as Dictionary;
-            if(qsxz==null)
+            if (qsxz == null)
             {
                 return;
             }
@@ -708,10 +776,10 @@ namespace YuLinTu.Library.Controls
         private void rbNew_Click(object sender, RoutedEventArgs e)
         {
             RadioButton btn = sender as RadioButton;
-           cbLandNumber.IsChecked = btn.IsChecked;
+            cbLandNumber.IsChecked = btn.IsChecked;
 
         }
-        
+
         //private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         //{
         //    throw new NotImplementedException();

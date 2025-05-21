@@ -1049,7 +1049,8 @@
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"
                                 VerticalContentAlignment="Stretch"
-                                x:FieldModifier="public">
+                                x:FieldModifier="public"
+                                Visibility="Collapsed">
                                 <cmps:ImageTextItem
                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/AreaNumericFormat.png"
                                     ImagePosition="Left"
@@ -1068,7 +1069,7 @@
                                     Text="基本农田"
                                     ToolTip="利用选择地域下地块图斑数据与基本农田数据计算地块是否为基本农田" />
                             </metro:MetroButton>
-                            <metro:MetroButton
+                            <!--<metro:MetroButton
                                 x:Name="btnGetLandCode"
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"
@@ -1079,7 +1080,7 @@
                                     ImagePosition="Left"
                                     Text="自动编码"
                                     ToolTip="自动对当前地域的地块进行重新编码" />
-                            </metro:MetroButton>
+                            </metro:MetroButton>-->
                         </StackPanel>
                     </tk:DropDownButton.DropDownContent>
                 </tk:DropDownButton>
@@ -1216,6 +1217,30 @@
                         Text="空间查看"
                         ToolTip="查看承包地块空间形状与位置" />
                 </metro:MetroButton>
+
+                <metro:MetroButton
+                    x:Name="mbtnDataQuality"
+                    Padding="4,2,4,2"
+                    VerticalContentAlignment="Stretch"
+                    x:FieldModifier="public">
+                    <cmps:ImageTextItem
+                        Image="pack://application:,,,/YuLinTu.Resources;component/images/32/filepreparemenu.png"
+                        ImagePosition="Top"
+                        Text="数据检查"
+                        ToolTip="具备按标准规范对属性数据进行质量检查" />
+                </metro:MetroButton>
+                <metro:MetroButton
+                    x:Name="mbtnAdjustLand"
+                    Padding="4,2,4,2"
+                    VerticalContentAlignment="Stretch"
+                    x:FieldModifier="public">
+                    <cmps:ImageTextItem
+                        Image="pack://application:,,,/YuLinTu.Resources;component/images/32/groupsharepointlists.png"
+                        ImagePosition="Top"
+                        Text="调整地块"
+                        ToolTip="调整地块" />
+                </metro:MetroButton>
+
                 <metro:MetroButton
                     x:Name="mbtnUpdateData"
                     Padding="4,2,4,2"

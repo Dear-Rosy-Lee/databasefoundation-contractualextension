@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -73,11 +73,11 @@ namespace YuLinTu.Library.Business
                 }
 
                 var settingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
-                if (VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
+                if (VillageContractLands == null || VillageContractLands.Count == 0 && listPerson.Count > 1)//如果未获取地块并且承包方数量大于1（等于1时单独查找，不获取整村数据）
                 {
                     VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(argument.CurrentZone, dbContext, settingDefine.Neighborlandbufferdistence);
                 }
-                var listLand = VillageContractLands.FindAll(t => t.LandCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                var listLand = VillageContractLands.FindAll(t => t.ZoneCode != null && t.ZoneCode.StartsWith(zone.FullCode));// landStation.GetCollection(zone.FullCode, eLevelOption.Self);
                 if (settingDefine.ContainsOtherZoneLand)
                     listLand = VillageContractLands;
                 if (listLand == null || listLand.Count == 0)
@@ -95,7 +95,9 @@ namespace YuLinTu.Library.Business
                         foreach (var stockLand in stockLandsvp)
                         {
                             if (!listLand.Any(t => t.ID.Equals(stockLand.ID)))
+                            {
                                 listLand.Add(stockLand);
+                            }
                         }
                     }
                 }
@@ -105,8 +107,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出公示结果归户表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出公示结果归户表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出地块示意图任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出地块示意图出现异常! " + ex.Message);
             }
         }
 

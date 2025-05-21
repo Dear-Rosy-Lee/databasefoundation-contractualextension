@@ -1,8 +1,9 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System.Collections.Generic;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 
 namespace YuLinTu.Component.StockRightBase

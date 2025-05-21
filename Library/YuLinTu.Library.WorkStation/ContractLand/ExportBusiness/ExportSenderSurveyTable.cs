@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -158,7 +158,7 @@ namespace YuLinTu.Library.WorkStation
         private bool BeginWrite()
         {
             string titleName = UnitName + "农村土地承包经营权发包方调查表";
-            SetRange("A1", "O1", titleName);
+            SetRange("A1", "P1", titleName);
             //if (TissueCollection.Count > 31)
             //{
             //    int rowCount = TissueCollection.Count - 31;
@@ -230,7 +230,7 @@ namespace YuLinTu.Library.WorkStation
             SetRange("M" + index, "M" + index, "\\");
             SetRange("N" + index, "N" + index, "\\");
             SetRange("O" + index, "O" + index, "\\");
-            SetLineType("A1", "O" + index, true);
+            SetLineType("A1", "P" + index, true);
             //index++;
         }
 

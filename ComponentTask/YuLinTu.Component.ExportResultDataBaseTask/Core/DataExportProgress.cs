@@ -55,12 +55,17 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         public int AreaType { get; set; }
 
         /// <summary>
+        /// 导出界址
+        /// </summary>
+        public bool ContainDotLine { get; set; }
+
+        /// <summary>
         /// 是否导出扫描资料
         /// </summary>
         public bool IsExportScan { get; set; }
 
-        /// <summary>示意图
-        /// 是否导出
+        /// <summary>
+        /// 是否导出示意图
         /// </summary>
         public bool IsExportDKSYT { get; set; }
 
@@ -94,7 +99,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// </summary>
         public string ExportDataFile(List<ExchangeRightEntity> rightEntitys,/* SqliteManager sqliteManager,*/
             string zoneName, string zoneCode, int persent, string rootFolderName, DataSummary summary,
-            /*bool containJzdJzx, */CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqlitLandList)
+            /*bool containJzdJzx, */CbdkxxAwareAreaExportEnum cBDKXXAwareAreaExportSet, List<SqliteDK> sqlitLandList, int datanum)
         {
             string info = string.Empty;
             this.rootFolderName = rootFolderName;
@@ -103,7 +108,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 collection = SetDataToProgress(rightEntitys);
                 rightEntitys.Clear();
-                ExportSummaryTable.SummaryData(collection, summary, cBDKXXAwareAreaExportSet, sqlitLandList);
+                ExportSummaryTable.SummaryData(collection, summary, cBDKXXAwareAreaExportSet, sqlitLandList, datanum);
                 //if (containJzdJzx == false)
                 //{
                 //    sqliteManager.InsertData(collection.KJDKJH, Srid);
@@ -464,7 +469,14 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 }
                 if (entity.CBF != null)
                 {
-                    data.CBFJH.Add(entity.CBF.Initialize());
+                    //if (entity.CBF is CBF)
+                    {
+                        data.CBFJH.Add((entity.CBF as CBF).Initialize());
+                    }
+                    //else if (entity.CBF is cb)
+                    //{
+                    //    data.CBFJH.Add((entity.CBF as CBF).Initialize());
+                    //}
                 }
                 if (entity.FBF != null)
                 {
@@ -487,7 +499,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     {
                         if (h.CBQXZ == null)
                             h.CBQXZ = now;
-                        data.HTJH.Add(h.Initialize());
+                        data.HTJH.Add((h as CBHT).Initialize());
                     });
                 }
                 if (entity.DJB != null)
@@ -616,7 +628,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         /// <param name="filePath">选择导出目录</param>
         /// <param name="codeYear">6位县级地域编码+4位年份编码</param>
         /// <param name="zoneName">县级地域名称</param>
-        public bool CreatFolderFile(string filePath, string code, string year, string zoneName, ExportFileEntity exportFile)
+        public bool CreatFolderFile(string filePath, string code, string year, string zoneName, ExportFileEntity exportFile, int datanum)
         {
             try
             {
@@ -637,7 +649,10 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 ShapeFilePath = dic[fpm.VictorName];
                 if ((hasDataExport && !File.Exists(DataBasePath) && !exportFile.IsAllExport) || exportFile.IsAllExport)
                 {
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database.mdb", DataBasePath, true);
+                    if (datanum == 3)
+                        File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database3.mdb", DataBasePath, true);
+                    else
+                        File.Copy(AppDomain.CurrentDomain.BaseDirectory + @"Template\database.mdb", DataBasePath, true);
                 }
                 logFileName = Path.Combine(rootFolder, DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt");
                 string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ShapeTemplate");
@@ -650,8 +665,13 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         {
                             string filename = Path.GetFileNameWithoutExtension(files[i]);
                             FileEntity fe = FileEntityExport(exportFile, filename);
+                            if (!ContainDotLine && (filename == JZD.TableName || filename == JZX.TableName))
+                            {
+                                continue;
+                            }
                             string destionName = Path.Combine(ShapeFilePath, filename + code + year + Path.GetExtension(files[i]));
-                            if ((fe.IsExport && !File.Exists(destionName) && !exportFile.IsAllExport) || exportFile.IsAllExport)
+                            if ((fe.IsExport && !File.Exists(destionName) && !exportFile.IsAllExport)
+                                || exportFile.IsAllExport)
                                 File.Copy(files[i], destionName, true);
                         }
                     }

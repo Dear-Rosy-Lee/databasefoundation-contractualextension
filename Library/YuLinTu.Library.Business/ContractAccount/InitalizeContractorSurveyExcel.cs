@@ -7,6 +7,7 @@ using YuLinTu.Library.Entity;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -18,7 +19,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 开始书写数据
         /// </summary>
-        private void BeginWrite(DateTime? time, DateTime? pubTime)
+        public virtual void BeginWrite(DateTime? time, DateTime? pubTime)
         {
             WriteTitle(time, pubTime);//写标题信息
             WriteContent();//开始写内容 
@@ -29,7 +30,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="ps"></param>
         /// <param name="ts"></param>
-        private int WritePerson(List<Person> ps, List<Person> ts, VirtualPerson vp, VirtualPerson sp, int height)
+        public virtual int WritePerson(List<Person> ps, List<Person> ts, VirtualPerson vp, VirtualPerson sp, int height)
         {
             int pindex = index;
             int age = 0;//家庭成员年龄
@@ -218,7 +219,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="person"></param>
         /// <param name="pindex"></param>
-        private void WriteTablePerson(Person person, int pindex)
+        public virtual void WriteTablePerson(Person person, int pindex)
         {
             if (contractLandOutputSurveyDefine.SecondNumberNameValue)
             {
@@ -324,7 +325,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写二轮延包信息
         /// </summary>
-        private void WriteTableInformation()
+        public virtual void WriteTableInformation()
         {
             if (contractLandOutputSurveyDefine.SecondNumberNameValue)
             {
@@ -409,7 +410,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="person"></param>
         /// <param name="pindex"></param>
-        private void WriteTablePersonInformation(int pindex, VirtualPerson family, int rowCount)
+        public virtual void WriteTablePersonInformation(int pindex, VirtualPerson family, int rowCount)
         {
             VirtualPersonExpand familyExpand = null;
             if (family != null)
@@ -502,7 +503,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写承包方信息
         /// </summary>
-        private void WriteContractorInformation()
+        public virtual void WriteContractorInformation()
         {
             if (contractLandOutputSurveyDefine.NumberNameValue)
             {
@@ -612,7 +613,7 @@ namespace YuLinTu.Library.Business
         /// <param name="cs"></param>
         /// <param name="hight"></param>
         /// <param name="telephone"></param>
-        private int WriteContractLand(List<ContractLand> cs, int hight, int cindexx, string telephone)
+        public virtual int WriteContractLand(List<ContractLand> cs, int hight, int cindexx, string telephone)
         {
             if (cs == null || cs.Count < 0)
             {
@@ -941,7 +942,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写地块扩展信息
         /// </summary>
-        private void WriteLandExpandInformation(List<ContractLand> cs, int hight)
+        public virtual void WriteLandExpandInformation(List<ContractLand> cs, int hight)
         {
             if (cs == null || cs.Count < 1)
             {
@@ -1017,7 +1018,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="cs"></param>
         /// <param name="hight"></param>
-        private void WriteLandSurveyInformation(List<ContractLand> cs, int hight)
+        public virtual void WriteLandSurveyInformation(List<ContractLand> cs, int hight)
         {
             if (cs == null || cs.Count < 1)
             {
@@ -1068,7 +1069,7 @@ namespace YuLinTu.Library.Business
         /// <param name="cs"></param>
         /// <param name="hight"></param>
         /// <param name="telephone"></param>
-        private void WriteSecondTableLand(List<SecondTableLand> cs, int hight, string allArea)
+        public virtual void WriteSecondTableLand(List<SecondTableLand> cs, int hight, string allArea)
         {
             if (cs == null || cs.Count < 1)
             {
@@ -1160,7 +1161,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 初始化二轮地块信息
         /// </summary>
-        private void InitalizeSecondLandInformation()
+        public virtual void InitalizeSecondLandInformation()
         {
             if (contractLandOutputSurveyDefine.SecondLandNumberValue)
             {
@@ -1219,7 +1220,7 @@ namespace YuLinTu.Library.Business
         /// <param name="number"></param>
         /// <param name="HouseholderName"></param>
         /// <param name="Count"></param>
-        private void InitalizeContractorInformation(int high, string number, string HouseholderName, string Count, VirtualPerson item)
+        public virtual void InitalizeContractorInformation(int high, string number, string HouseholderName, string Count, VirtualPerson item)
         {
             try
             {
@@ -1246,7 +1247,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写其他信息
         /// </summary>
-        private void WriteFamilyExpandInformation(int high, VirtualPerson family, VirtualPersonExpand expand)
+        public virtual void WriteFamilyExpandInformation(int high, VirtualPerson family, VirtualPersonExpand expand)
         {
             if (expand == null)
             {
@@ -1340,7 +1341,7 @@ namespace YuLinTu.Library.Business
         /// <param name="number"></param>
         /// <param name="HouseholderName"></param>
         /// <param name="Count"></param>
-        private void WriteTableNumber(int high, string number, string HouseholderName, string count, int familyIndex)
+        public virtual void WriteTableNumber(int high, string number, string HouseholderName, string count, int familyIndex)
         {
             if (contractLandOutputSurveyDefine.SecondNameValue)
             {
@@ -1359,7 +1360,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="cs"></param>
         /// <param name="high"></param>
-        private void WriteContract(List<ContractLand> cs, int high, List<ContractConcord> concords)
+        public virtual void WriteContract(List<ContractLand> cs, int high, List<ContractConcord> concords)
         {
             if (concords == null || concords.Count == 0)
             {
@@ -1432,7 +1433,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="personCollection"></param>
         /// <returns></returns>
-        private List<Person> SortSharePerson(List<Person> personCollection, string houseName)
+        public virtual List<Person> SortSharePerson(List<Person> personCollection, string houseName)
         {
             if (personCollection == null || personCollection.Count == 0)
             {
@@ -1463,7 +1464,7 @@ namespace YuLinTu.Library.Business
         /// <param name="localPerson"></param>
         /// <param name="tablePerson"></param>
         /// <returns></returns>
-        private int ComparePersonValue(List<Person> localPerson, List<Person> tablePerson)
+        public virtual int ComparePersonValue(List<Person> localPerson, List<Person> tablePerson)
         {
             foreach (Person person in localPerson)
             {
@@ -1479,7 +1480,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写结束信息
         /// </summary>
-        private void WriteCount()
+        public virtual void WriteCount()
         {
             columnIndex = 2;
             SetRange("A" + index, "A" + index, "合计");//合计

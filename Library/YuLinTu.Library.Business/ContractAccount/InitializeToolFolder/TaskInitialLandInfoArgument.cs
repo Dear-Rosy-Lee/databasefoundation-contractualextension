@@ -1,10 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
@@ -96,6 +93,11 @@ namespace YuLinTu.Library.Business
         public bool InitialLandNumber { get; set; }
 
         /// <summary>
+        /// 是否初始化确权地块编码
+        /// </summary>
+        public bool InitialLandOldNumber { get; set; }
+
+        /// <summary>
         /// 是否初始化地块编码-从上往下
         /// </summary>
         public bool InitialLandNumberByUpDown { get; set; }
@@ -114,6 +116,11 @@ namespace YuLinTu.Library.Business
         /// 地块编码是否按统一重新生成
         /// </summary>
         public bool IsNew { get; set; }
+
+        /// <summary>
+        /// 地块编码是否重新生成不匹配部分
+        /// </summary>
+        public bool IsNewPart { get; set; }
 
         /// <summary>
         /// 承包地块扩展信息
@@ -205,11 +212,13 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 地块备注
         /// </summary>
-        public string LandComment
-        {
-            get;
-            set;
-        }
+        public string LandComment { get; set; }
+
+        /// <summary>
+        /// 初始化起始编号
+        /// </summary>
+        public int InitiallStartNum { get; set; }
+
         #endregion
 
         #region Ctor

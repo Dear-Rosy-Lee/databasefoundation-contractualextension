@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
 using System.IO;
 using YuLinTu.Data;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -275,7 +276,7 @@ namespace YuLinTu.Library.Business
                     SetRange("U" + index, "U" + (index + length - 1), height, 11, false, exportData ? "" : totalArea.ToString());
                     if (!string.IsNullOrEmpty(item.CurrentFamily.TotalArea))
                     {
-                        totalTebleArea += ToolMath.SetNumericFormat(Convert.ToDouble(item.CurrentFamily.TotalArea), 2, 1);
+                        totalTebleArea += ToolMath.RoundNumericFormat(Convert.ToDouble(item.CurrentFamily.TotalArea), 2);
                     }
                     #endregion
 

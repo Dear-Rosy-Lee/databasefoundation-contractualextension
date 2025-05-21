@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 
 #define PERSON_NAME_EMPTY    //共有人姓名为空时不执行导入
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using YuLinTu.Windows;
 using YuLinTu.Library.Business;
 using YuLinTu.Component.StockRightBase.Model;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase.Bussiness
 {

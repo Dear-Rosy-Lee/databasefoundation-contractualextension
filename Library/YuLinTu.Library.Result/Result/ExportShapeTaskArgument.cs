@@ -23,6 +23,11 @@ namespace YuLinTu.Library.Result
 
         public bool UseUniteNumberExport { get; set; }
 
+        /// <summary>
+        /// 小数位数
+        /// </summary>
+        public int DataNumber { get; set; }
+
         public override string ToString()
         {
             return "DbFile:" + DbFile +

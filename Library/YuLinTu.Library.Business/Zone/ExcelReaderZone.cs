@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -50,7 +50,7 @@ namespace YuLinTu.Library.Business
             int count = GetRangeRowCount();
             if(ranges[0, 2] != null && ranges[0, 3] != null)
             {
-                if (ranges[0, 2].ToString() == "地域编码" && ranges[0, 3].ToString() == "地域名称")
+                if (ranges[0, 2].ToString() == "原区域代码" && ranges[0, 3].ToString() == "原区域名称")
                 {
                     for (int i = 1; i < count; i++)
                     {
@@ -107,45 +107,45 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                for (int i = 1; i < count; i++)
                 {
-                    for (int i = 1; i < count; i++)
+                    if (ranges[i, 0] == null || ranges[i, 0].ToString().Length < 1)
+                        ranges[i, 0] = "";
+                    if (ranges[i, 1] == null || ranges[i, 1].ToString().Length < 1)
+                        ranges[i, 1] = "";
+                    if (ranges[i, 2] == null || ranges[i, 2].ToString().Length < 1)
+                        ranges[i, 2] = "";
+                    if (ranges[i, 3] == null || ranges[i, 3].ToString().Length < 1)
+                        ranges[i, 3] = "";
+                    string key = ranges[i, 0].ToString().TrimSafe();
+                    string value = ranges[i, 1].ToString();
+                    string bkey = ranges[i, 2].ToString();
+                    string bvalue = ranges[i, 3].ToString();
+                    if (key == "合计" || key == "共计" || key == "总计")
                     {
-                        if (ranges[i, 0] == null || ranges[i, 0].ToString().Length < 1)
-                            ranges[i, 0] = "";
-                        if (ranges[i, 1] == null || ranges[i, 1].ToString().Length < 1)
-                            ranges[i, 1] = "";
-                        if (ranges[i, 2] == null || ranges[i, 2].ToString().Length < 1)
-                            ranges[i, 2] = "";
-                        if (ranges[i, 3] == null || ranges[i, 3].ToString().Length < 1)
-                            ranges[i, 3] = "";
-                        string key = ranges[i, 0].ToString().TrimSafe();
-                        string value = ranges[i, 1].ToString();
-                        string bkey = ranges[i, 2].ToString();
-                        string bvalue = ranges[i, 3].ToString();
-                        if (key == "合计" || key == "共计" || key == "总计")
+                        break;
+                    }
+                    if (zoneList.Any(t => t.FullCode == key))
+                    {
+                        if (!string.IsNullOrEmpty(key))
                         {
-                            break;
+                            ErrorList.Add(string.Format("第{0}行数据地域编码{1}在表中重复存在!", i + 1, key));
                         }
-                        if (zoneList.Any(t => t.FullCode == key))
-                        {
-                            if (!string.IsNullOrEmpty(key))
-                            {
-                                ErrorList.Add(string.Format("第{0}行数据地域编码{1}在表中重复存在!", i + 1, key));
-                            }
-                        }
-                        else
-                        {
-                            zoneList.Add(new Zone() { FullCode = key, Name = value, AliasName = bvalue, AliasCode = bkey });
-                        }
-                        if (string.IsNullOrEmpty(key))
-                        {
-                            ErrorList.Add(string.Format("第{0}行数据地域编码为空!", i + 1));
-                        }
-                        if (string.IsNullOrEmpty(value))
-                        {
-                            ErrorList.Add(string.Format("第{0}行数据地域名称为空!", i + 1));
-                        }
+                    }
+                    else
+                    {
+                        zoneList.Add(new Zone() { FullCode = key, Name = value, AliasName = bvalue, AliasCode = bkey });
+                    }
+                    if (string.IsNullOrEmpty(key))
+                    {
+                        ErrorList.Add(string.Format("第{0}行数据地域编码为空!", i + 1));
+                    }
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        ErrorList.Add(string.Format("第{0}行数据地域名称为空!", i + 1));
                     }
                 }
             }

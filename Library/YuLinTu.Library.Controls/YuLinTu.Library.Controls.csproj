@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
@@ -12,7 +13,6 @@
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -166,6 +166,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -216,6 +219,7 @@
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Common\Convert\BoolConvert.cs" />
     <Compile Include="Common\Convert\UserConfigValueConvert.cs" />
+    <Compile Include="Common\Convert\BooleanToVisibilityConverter.cs" />
     <Compile Include="Concord\BatchModel.cs" />
     <Compile Include="Concord\ConcordApplicationTableSetting.xaml.cs">
       <DependentUpon>ConcordApplicationTableSetting.xaml</DependentUpon>
@@ -232,8 +236,14 @@
     <Compile Include="Concord\InitializeConcordPersonPage.xaml.cs">
       <DependentUpon>InitializeConcordPersonPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContractAccount\AdjustLand\AdjustLandPage.xaml.cs">
+      <DependentUpon>AdjustLandPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContractAccount\ContractLandInitializeCoil.xaml.cs">
       <DependentUpon>ContractLandInitializeCoil.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\DataChecker\DataCheckPage.xaml.cs">
+      <DependentUpon>DataCheckPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ContractAccount\MapCoordinateItem.cs" />
     <Compile Include="ContractAccount\ContractAccountDateSetting.xaml.cs">
@@ -429,6 +439,9 @@
     </Compile>
     <Compile Include="Concord\ConcordSummary.cs" />
     <Compile Include="Concord\ConcordValueConvert.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\AdjustSenderPage.xaml.cs">
+      <DependentUpon>AdjustSenderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VirtualPerson\FamilyNumberDetail.xaml.cs">
       <DependentUpon>FamilyNumberDetail.xaml</DependentUpon>
     </Compile>
@@ -519,6 +532,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YuLinTu.Library.Aux\YuLinTu.Library.Aux.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.Aux</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
       <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
       <Name>YuLinTu.Library.Business</Name>
@@ -532,7 +549,6 @@
     <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
       <Name>YuLinTu.Library.Entity</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
@@ -553,10 +569,6 @@
       <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
       <Name>YuLinTu.Library.Resources</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
-      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.Aux</Name>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
@@ -581,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Concord\InitializeConcordPersonPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContractAccount\AdjustLand\AdjustLandPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -641,6 +657,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ContractAccount\ContractAccountPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContractAccount\DataChecker\DataCheckPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -792,6 +812,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VirtualPerson\AdjustSender\AdjustSenderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VirtualPerson\FamilyNumberDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -912,8 +936,6 @@
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props'))" />
@@ -938,8 +960,9 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets'))" />
   </Target>
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" />
@@ -952,6 +975,7 @@
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -162,6 +162,12 @@
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="YuLinTu.NetAux">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.NetAux.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.tGIS.Client">
+      <HintPath>..\..\Library\YuLinTu.Library.Controls\bin\Debug\YuLinTu.tGIS.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
@@ -175,8 +181,14 @@
     <Compile Include="Bussiness\ImportStockRightTask.cs" />
     <Compile Include="Common\DataHelper.cs" />
     <Compile Include="Common\SpecialBookmarks.cs" />
+    <Compile Include="Control\AllLandPage.xaml.cs">
+      <DependentUpon>AllLandPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\ConcordSetting.xaml.cs">
       <DependentUpon>ConcordSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\StockLandPage.xaml.cs">
+      <DependentUpon>StockLandPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Control\LandGrid.xaml.cs">
       <DependentUpon>LandGrid.xaml</DependentUpon>
@@ -251,9 +263,17 @@
     <Resource Include="Resources\FNAnalyITI.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Control\AllLandPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Control\ConcordSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\StockLandPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Control\LandGrid.xaml">
       <SubType>Designer</SubType>
@@ -353,11 +373,6 @@
     <ProjectReference Include="..\..\Library\YuLinTu.Library.Result\YuLinTu.Library.Result.csproj">
       <Project>{87e62c5a-6ec3-4034-a2b7-96f0e0327dff}</Project>
       <Name>YuLinTu.Library.Result</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
-      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.Aux</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">

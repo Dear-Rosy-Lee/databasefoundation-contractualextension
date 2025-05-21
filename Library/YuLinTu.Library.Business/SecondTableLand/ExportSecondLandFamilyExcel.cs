@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
 using System.IO;
 using System.Windows.Forms;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {

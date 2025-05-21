@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
@@ -239,6 +240,8 @@ namespace YuLinTu.Library.Controls
             cbShare.ItemsSource = new List<string> { "是", "否" };
             cbShare.SelectedIndex = 0;
 
+            cb_Comment.ItemsSource = new List<string> { "外嫁女", "入赘男", "在校大学生", "国家公职人员", "军人（军官、士兵）", "新生儿", "去世", "其他备注" };
+
             if (Virtualperson.Status == eVirtualPersonStatus.Lock)
                 btnAdd.IsEnabled = false;
         }
@@ -274,7 +277,15 @@ namespace YuLinTu.Library.Controls
                 if (Virtualperson.FamilyExpand.ContractorType == eContractorType.Unit)
                     cbCardType.IsEnabled = false;
             }
-
+            var cblist = cb_Comment.ItemsSource as List<string>;
+            if (string.IsNullOrEmpty(person.Comment) || !cblist.Contains(person.Comment))
+            {
+                cb_Comment.SelectedValue = "其他备注";
+            }
+            else if (!string.IsNullOrEmpty(person.Comment))
+            {
+                cb_Comment.SelectedValue = person.Comment;
+            }
         }
 
         /// <summary>
@@ -285,6 +296,7 @@ namespace YuLinTu.Library.Controls
             Result = false;
             person.Nation = cNation;
             person.CardType = eCardType;
+            person.Name = person.Name.Trim();
             if (isAdd)
             {
                 item.AddSharePerson(person);
@@ -337,7 +349,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             var cardType = cbCardType.SelectedItem as KeyValue<string, string>;
-            person.Relationship = cbRelationship.SelectedValue==null?"": cbRelationship.SelectedValue.ToString();
+            person.Relationship = cbRelationship.SelectedValue == null ? "" : cbRelationship.SelectedValue.ToString();
             bool right = ToolICN.Check(person.ICN);
             string errorMsg = string.Empty;
             if (string.IsNullOrEmpty(person.Name))
@@ -429,6 +441,15 @@ namespace YuLinTu.Library.Controls
             else
             {
                 person.Gender = eGender.Unknow;
+            }
+            person.Comment = txt_Comment.Text;
+            if (cb_Comment.SelectedItem.ToString() == "其他备注")
+            {
+                person.Description = "9";
+            }
+            else
+            {
+                person.Description = (cb_Comment.SelectedIndex + 1).ToString();
             }
             ConfirmAsync();
         }
@@ -670,6 +691,21 @@ namespace YuLinTu.Library.Controls
         private void InfoPageBase_Loaded(object sender, RoutedEventArgs e)
         {
             cbRelationship.Focus();
+        }
+
+        private void cb_Comment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectvalue = (sender as MetroComboBox).SelectedItem;
+            if (selectvalue != null && selectvalue.ToString() == "其他备注")
+            {
+                txt_Comment.IsEnabled = true;
+                txt_Comment.Text = "";
+            }
+            else
+            {
+                txt_Comment.Text = selectvalue.ToString();
+                txt_Comment.IsEnabled = false;
+            }
         }
     }
 }

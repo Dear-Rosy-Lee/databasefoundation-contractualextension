@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -136,13 +136,17 @@ namespace YuLinTu.Library.Business
                 openFilePath = openFilePath + @"\" + savePath;
                 var concordStation = argument.DbContext.CreateConcordStation();
                 var concordlist = concordStation.GetByZoneCode(argument.CurrentZone.FullCode);
+                if (SystemSetDefine.ExportTableSenderDesToVillage)
+                {
+                    tissue.Name = GetVillageLevelDesc(argument.CurrentZone, argument.DbContext);
+                }
                 //var landStocks = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 foreach (VirtualPerson family in listPerson)
                 {
                     var concords = concordlist.FindAll(t => t.ContracterId == family.ID);
                     var landsOfFamily = listLand.FindAll(c => c.OwnerId == family.ID);
                     string tempPath = TemplateHelper.WordTemplate(TemplateFile.PublicityWord);
-                    ExportPublicityWordTable export = new ExportPublicityWordTable();
+                    var export = new ExportPublicityWordTable();
 
                     #region 通过反射等机制定制化具体的业务处理类
                     var temp = WorksheetConfigHelper.GetInstance(export);
@@ -160,12 +164,11 @@ namespace YuLinTu.Library.Business
                     export.Contractor = family;
                     export.DictList = listDict == null ? new List<Dictionary>() : listDict;
                     export.LandCollection = landsOfFamily == null ? new List<ContractLand>() : landsOfFamily;  //地块集合
+                    export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
+                    export.ExportPublicAwareArea = argument.ContractSettingDefine.ExportPublicTableUseAwareArea;
                     //if(family.IsStockFarmer)
                     //    export.LandCollection.AddRange(landStocks);
-                    if (SystemSetDefine.ExportTableSenderDesToVillage)
-                    {
-                        tissue.Name = GetVillageLevelDesc(argument.CurrentZone, argument.DbContext);
-                    }
+
                     if (concords != null && concords.Count > 0)
                     {
                         export.Concord = concords.Find(d => d.ArableLandType == "110");

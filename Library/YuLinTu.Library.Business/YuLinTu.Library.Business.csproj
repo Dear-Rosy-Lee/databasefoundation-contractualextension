@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
@@ -13,7 +14,6 @@
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
   <Import Project="..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props" Condition="Exists('..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" />
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -94,6 +94,9 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\Dependencies\Aspose\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="ContractLand.Exchange2">
       <HintPath>..\..\Dependencies\Exchange\ContractLand.Exchange2.dll</HintPath>
     </Reference>
@@ -145,6 +148,15 @@
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.50506.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -183,6 +195,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -244,6 +257,7 @@
     <Compile Include="Common\LandEntityOperator.cs" />
     <Compile Include="Common\SearchNeighborCommon.cs" />
     <Compile Include="Common\SelectPersons.cs" />
+    <Compile Include="Common\UpdateProgram.cs" />
     <Compile Include="Concord\ConcordApplicationPrinter.cs" />
     <Compile Include="Concord\ConcordApplicationPrinterData.cs" />
     <Compile Include="Common\Extend\PersonSelectedInfo.cs" />
@@ -300,6 +314,16 @@
     <Compile Include="Configuration\ImportBoundaryAddressDotDefine.cs" />
     <Compile Include="Configuration\ImportZDBZDefine.cs" />
     <Compile Include="Configuration\LandParcelExpressProgress.cs" />
+    <Compile Include="ContractAccount\AdjustLand\AdjustLand.cs" />
+    <Compile Include="ContractAccount\AdjustLand\TaskAdjustLandArgument.cs" />
+    <Compile Include="ContractAccount\AdjustLand\TaskAdjustLandOperation.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\CheckItemConfig.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\CheckItemConfigHelper.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerArgument.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckerAttribute.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\DataCheckProgress.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerArgument.cs" />
+    <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerOperation.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelArgument.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelOperation.cs" />
@@ -678,13 +702,12 @@
     <Compile Include="SharpZip\SharpZipOperation.cs" />
     <Compile Include="Tool\ToolAssemblyInfoConfig.cs" />
     <Compile Include="Tool\ToolConfiguration.cs" />
-    <Compile Include="Tool\ToolDateTime.cs" />
     <Compile Include="Tool\ToolException.cs" />
-    <Compile Include="Tool\ToolICN.cs" />
-    <Compile Include="Tool\ToolMath.cs" />
     <Compile Include="Tool\ToolProgress.cs" />
     <Compile Include="Tool\ToolSerialization.cs" />
-    <Compile Include="Tool\ToolString.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\AdjustSender.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\TaskAdjustSenderArgument.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\TaskAdjustSenderOperation.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorTable.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportApplyBook.cs" />
     <Compile Include="VirtualPerson\ExportData\ExportContractorExcel.cs" />
@@ -715,6 +738,7 @@
     <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookArgument.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\TaskGroupExportSurveyBookOperation.cs" />
     <Compile Include="VirtualPerson\ExportMaterial\ExportSurveyBook.cs" />
+    <Compile Include="VirtualPerson\FamailyRelationProcessor.cs" />
     <Compile Include="VirtualPerson\ImportData\ImportContractorSurveyTable.cs" />
     <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableArgument.cs" />
     <Compile Include="VirtualPerson\ImportData\TaskGroupImportVirtualPersonTableOperation.cs" />
@@ -767,10 +791,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YuLinTu.Library.Aux\YuLinTu.Library.Aux.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.Aux</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
       <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
       <Name>YuLinTu.Library.Entity</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
       <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
@@ -787,14 +814,9 @@
       <Name>YuLinTu.Library.Repository</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\YuLinTu.Library.WinFoundationAux2018\YuLinTu.Library.Aux.csproj">
-      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
-      <Name>YuLinTu.Library.Aux</Name>
-    </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
       <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
       <Name>YuLinTu.Library.WorkStation</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -806,8 +828,6 @@
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props'))" />
@@ -834,8 +854,10 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets'))" />
   </Target>
-  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\build\YuLinTu.tGIS.Client.targets')" />
   <Import Project="..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets" Condition="Exists('..\..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -849,6 +871,8 @@
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
+  <Import Project="..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\..\packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" />
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,10 +1,9 @@
 ﻿/*
- * (C) 2014  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2024  鱼鳞图公司版权所有,保留所有权利
  * http://www.yulintu.com
 */
 using System;
 using System.Configuration;
-using System.IO;
 using Quality.Business.TaskBasic;
 
 namespace YuLinTu.Component.BatchDataBaseTask
@@ -13,8 +12,8 @@ namespace YuLinTu.Component.BatchDataBaseTask
     /// 农业部数据交换任务导入
     /// </summary>
     [TaskDescriptor(Name = "批量导入地块Shape数据", Gallery = "矢量数据处理",
-        UriImage16 = "pack://application:,,,/YuLinTu.Component.BatchDataBaseTask;component/Resources/import16.png",
-        UriImage24 = "pack://application:,,,/YuLinTu.Component.BatchDataBaseTask;component/Resources/import24.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/table-import.png",
+        UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/table-import.png")]
     public class TaskInstalllerServiceAccount : YuLinTu.Task
     {
         #region Ctor

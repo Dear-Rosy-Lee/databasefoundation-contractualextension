@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {
@@ -65,6 +66,7 @@ namespace YuLinTu.Library.Controls
         private string _quantificitionArea;
         private string _obligateArea;
         private string _landPurpose;
+        private string oldLandCode = "1";
 
         #endregion Fields
 
@@ -89,6 +91,19 @@ namespace YuLinTu.Library.Controls
             {
                 name = value;
                 NotifyPropertyChanged("Name");
+            }
+        }
+
+        /// <summary>
+        /// 原地块编码
+        /// </summary>
+        public string OldLandCode
+        {
+            get { return oldLandCode; }
+            set
+            {
+                oldLandCode = value;
+                NotifyPropertyChanged("OldLandCode");
             }
         }
 
@@ -301,9 +316,25 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private string awareAreaUI;
 
+        private string oldLandCode;
+
         #endregion Fields
 
         #region Properties
+
+        /// <summary>
+        /// 原地块编码
+        /// </summary>
+        public string OldLandCode
+        {
+            get { return oldLandCode; }
+            set
+            {
+                oldLandCode = value;
+                NotifyPropertyChanged("OldLandCode");
+            }
+        }
+
 
         /// <summary>
         /// 地块可见性
@@ -442,6 +473,7 @@ namespace YuLinTu.Library.Controls
             Comment = land.Comment;
             Img = land.Shape != null ? 1 : 2;
             IsStockLand = land.IsStockLand;
+            OldLandCode = land.OldLandNumber;
             //Tag.Shape = null;
             //if (land.Shape != null)
             //{

@@ -238,7 +238,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
                 if (setmj && index > -1)
                 {
                     var v = feature.GetFieldAsDouble(index);
-                    var vm = Math.Round(v * 0.0015, 2);
+                    var vm = (double)Math.Round((decimal)(v * 0.0015), 2);
                     f.SetField("SCMJM", vm);
                 }
                 layer.CreateFeature(f);
@@ -402,7 +402,7 @@ namespace YuLinTu.Component.ContractedLand.BoundaryCalculateTask
             Info(string.Format("按{0}条记录分割文件{1}", number, name + ".shp"));
             for (int i = 0; i < count; i++)
             {
-                Process(Math.Round(per * i, 2));
+                Process((double)Math.Round((decimal)(per * i), 2));
                 if (i == 0 || i % number == 0 || i == count - 1)
                 {
                     if (i == count - 1)

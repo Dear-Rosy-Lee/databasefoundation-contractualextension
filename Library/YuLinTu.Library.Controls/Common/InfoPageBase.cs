@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,9 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         public InfoPageBase()
         {
+            ResourceDictionary resourceDictionary = new ResourceDictionary();
+            resourceDictionary.Source = new Uri("/Utils.Controls;component/Styles/AutoComplete.Styles.xaml", UriKind.RelativeOrAbsolute);
+            this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         #endregion

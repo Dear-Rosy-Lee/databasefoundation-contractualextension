@@ -1,12 +1,12 @@
-﻿using Aspose.Cells;
-using Aspose.Cells.Charts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Aspose.Cells;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -196,13 +196,16 @@ namespace YuLinTu.Library.Business
             toolProgress.DynamicProgress(ZoneDesc + AccountLandFamily.CurrentFamily.Name);
             WriteInformation(AccountLandFamily);
             InitalizeRangeValue("A" + 2, "E" + 2, $"单位:{Tissue.Name}");
-            //index++;
-            SetLineType("A7", "Q" + (index - 1), false);
-            InitalizeRangeValue("A" + index, "C" + index, $"户主签名(按印)：");
-            InitalizeRangeValue("D" + index, "E" + index, $"");
-            InitalizeRangeValue("F" + index, "J" + index, $"联系电话：{AccountLandFamily.CurrentFamily.Telephone}");
-            InitalizeRangeValue("K" + index, "M" + index, $"是否同意延包：");
-            InitalizeRangeValue("N" + index, "Q" + index, $"日期:");
+            index++;
+            SetLineType("A7", "Q" + (index + 1), false);
+            InitalizeRangeValue("A" + index, "B" + index, $"户主签名(按印)：");
+            InitalizeRangeValue("C" + index, "D" + index, $"");
+            InitalizeRangeValue("E" + index, "G" + index, $"联系电话：{AccountLandFamily.CurrentFamily.Telephone}");
+            InitalizeRangeValue("H" + index, "I" + index, $"摸底人员签名(按印):");
+            InitalizeRangeValue("J" + index, "K" + index, "");
+            InitalizeRangeValue("L" + index, "M" + index, $"是否同意延包：");
+            InitalizeRangeValue("N" + index, "N" + index, $"日期:");
+            InitalizeRangeValue("O" + index, "Q" + index, $"");
             //WriteTempLate();
             AccountLandFamily = null;
             return true;
@@ -227,7 +230,7 @@ namespace YuLinTu.Library.Business
 
             int rowcount = lands.Count > peoples.Count ? lands.Count : peoples.Count;
             Cells cells = workSheet.Cells;
-            for (int i = 0; i < rowcount - 1; i++)
+            for (int i = 0; i < rowcount + 2; i++)
             {
                 cells.InsertRow(6);
             }
@@ -268,12 +271,12 @@ namespace YuLinTu.Library.Business
             int getcode = GetCBFLXNumber(landFamily.CurrentFamily.FamilyExpand.ContractorType);
             Dictionary cardtype = dictCBFLX.Find(c => c.Code.Equals(getcode.ToString()));
             string result = landFamily.CurrentFamily.FamilyNumber.PadLeft(4, '0');
-            InitalizeRangeValue("A" + index, "A" + (index + height - 1), $"{landFamily.CurrentFamily.FamilyNumber}");
-            InitalizeRangeValue("B" + index, "B" + (index + height - 1), landFamily.CurrentFamily.Name);
-            InitalizeRangeValue("I" + index, "I" + (index + height - 1), landinfo);
+            InitalizeRangeValue("A" + index, "A" + (index + height + 2), $"{landFamily.CurrentFamily.FamilyNumber}");
+            InitalizeRangeValue("B" + index, "B" + (index + height + 2), landFamily.CurrentFamily.Name);
+            InitalizeRangeValue("I" + index, "I" + (index + height + 2), landinfo);
             //InitalizeRangeValue("O" + index, "O" + (index + height - 1), "");
             //InitalizeRangeValue("P" + index, "P" + (index + height - 1), "");
-            index += height;
+            index += height + 2;
             //workbook.Worksheets[0].HorizontalPageBreaks.Add("A" + index);
             //workbook.Worksheets[0].VerticalPageBreaks.Add("A" + index);
             lands.Clear();
@@ -307,6 +310,7 @@ namespace YuLinTu.Library.Business
             }
             InitalizeRangeValue("E" + index, "E" + index, person.ICN);
             InitalizeRangeValue("F" + index, "F" + index, person.Relationship);
+            InitalizeRangeValue("H" + index, "H" + index, person.Comment);
         }
 
 

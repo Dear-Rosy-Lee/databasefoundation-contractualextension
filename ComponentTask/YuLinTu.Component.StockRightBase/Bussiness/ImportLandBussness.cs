@@ -94,9 +94,9 @@ namespace YuLinTu.Component.StockRightBase.Bussiness
                         belongRelation.LandID = land.ID;
                         belongRelation.VirtualPersonID = entity.Contractor.ID;
                         belongRelation.ZoneCode = m_currentZone.FullCode;
-                        belongRelation.QuanficationArea = Math.Round(land.QuantificicationArea, 2);
+                        belongRelation.QuanficationArea = ToolMath.RoundNumericFormat(land.QuantificicationArea, 2);
                         double tableArea = (land.TableArea.HasValue ? land.TableArea.Value : 0);//台账面积
-                        double formatArea = Math.Round(tableArea, 2);
+                        double formatArea = ToolMath.RoundNumericFormat(tableArea, 2);
                         belongRelation.TableArea = tableArea;
                         var belongRelationTemp = m_personStation.GetRelationByID(entity.Contractor.ID, land.ID);
 

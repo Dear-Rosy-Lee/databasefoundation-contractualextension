@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
-using System.IO;
-using System.Windows.Forms;
-using System.Collections;
 using YuLinTu.Data;
+using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
 {
@@ -44,23 +37,26 @@ namespace YuLinTu.Library.Business
             titleName = UnitName + titleName;
             if (SystemSet.TempTableHead && !string.IsNullOrEmpty(titleName))
             {
-                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
+                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? 
+                    contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
 
             string delctime = time?.ToString("yyyy年M月dd日");
             string pubtime = pubTime?.ToString("yyyy年M月d日");
-
+            string timestr = (delctime == null || pubtime == null) ? "" : $"{pubtime}-{delctime}";
             InitalizeRangeValue("A3", "A5", "承包方编号");
             SetRange("A3", "A5", "承包方编号");
             InitalizeRangeValue("B3", "B5", "承包方名称");
             SetRange("B3", "B5", "承包方名称");
             if (TableType == 4)
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, $"日期：{pubtime}-{delctime}");
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2",
+                    21.75, 11, false, 3, 2, $"日期：{timestr}");
             }
             else
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 
+                    21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
             }
             SetRange("A2", "D2", "单位:  " + ExcelName);
             columnIndex = 2;
@@ -653,7 +649,7 @@ namespace YuLinTu.Library.Business
             }
             if (contractLandOutputSurveyDefine.IsTransterValue || contractLandOutputSurveyDefine.TransterModeValue || contractLandOutputSurveyDefine.TransterTermValue)
             {
-                SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地流转情况", true);
+                //SetRange(PublicityConfirmDefine.GetColumnValue(startIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, "承包地流转情况", true);
             }
             startIndex = columnIndex + 1;
             if (contractLandOutputSurveyDefine.UseSituationValue)
@@ -798,6 +794,11 @@ namespace YuLinTu.Library.Business
             {
                 columnIndex++;
                 SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "审核意见", true);
+            }
+            if (contractLandOutputSurveyDefine.WriteInfoOpinionValue)
+            {
+                columnIndex++;
+                SetRange(PublicityConfirmDefine.GetColumnValue(columnIndex) + 3, PublicityConfirmDefine.GetColumnValue(columnIndex) + 5, "户主或委托人签字、按手印", true);
             }
             //if ((columnIndex - startIndex) >= 0)
             //{

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -11,6 +11,7 @@ using System.Windows;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -648,25 +649,25 @@ namespace YuLinTu.Library.Business
             if (CheckAreaLength(landFamily.Concord.CountActualArea))
             {
                 landFamily.Concord.CountActualArea += 0.0000001;
-                landFamily.Concord.CountActualArea = Math.Round(landFamily.Concord.CountActualArea, 4, MidpointRounding.AwayFromZero);
+                landFamily.Concord.CountActualArea = ToolMath.RoundNumericFormat(landFamily.Concord.CountActualArea, 4);
             }
 
             if (CheckAreaLength(landFamily.Concord.CountAwareArea))
             {
                 landFamily.Concord.CountAwareArea += 0.0000001;
-                landFamily.Concord.CountAwareArea = Math.Round(landFamily.Concord.CountAwareArea, 4, MidpointRounding.AwayFromZero);
+                landFamily.Concord.CountAwareArea = ToolMath.RoundNumericFormat(landFamily.Concord.CountAwareArea, 4);
             }
 
             if (CheckAreaLength(landFamily.Concord.CountMotorizeLandArea))
             {
                 landFamily.Concord.CountMotorizeLandArea += 0.0000001;
-                landFamily.Concord.CountMotorizeLandArea = Math.Round(landFamily.Concord.CountMotorizeLandArea, 4, MidpointRounding.AwayFromZero);
+                landFamily.Concord.CountMotorizeLandArea = ToolMath.RoundNumericFormat(landFamily.Concord.CountMotorizeLandArea, 4);
             }
 
             if (CheckAreaLength(landFamily.Concord.TotalTableArea.Value))
             {
                 landFamily.Concord.TotalTableArea += 0.0000001;
-                landFamily.Concord.TotalTableArea = Math.Round(landFamily.Concord.TotalTableArea.Value, 4, MidpointRounding.AwayFromZero);
+                landFamily.Concord.TotalTableArea = ToolMath.RoundNumericFormat(landFamily.Concord.TotalTableArea.Value, 4);
             }
         }
 
@@ -686,19 +687,19 @@ namespace YuLinTu.Library.Business
             if (CheckAreaLength(countActualArea))
             {
                 countActualArea += 0.0000001;
-                countActualArea = Math.Round(countActualArea, 4, MidpointRounding.AwayFromZero);
+                countActualArea = ToolMath.RoundNumericFormat(countActualArea, 4);
                 AddErrorMessage(this.ExcelName + string.Format(errorStr, familyName, "实测"));
             }
             if (CheckAreaLength(countAwareArea))
             {
                 countAwareArea += 0.0000001;
-                countAwareArea = Math.Round(countAwareArea, 4, MidpointRounding.AwayFromZero);
+                countAwareArea = ToolMath.RoundNumericFormat(countAwareArea, 4);
                 AddErrorMessage(this.ExcelName + string.Format(errorStr, familyName, "确权"));
             }
             if (CheckAreaLength(countTotalTableArea))
             {
                 countTotalTableArea += 0.0000001;
-                countTotalTableArea = Math.Round(countTotalTableArea, 4, MidpointRounding.AwayFromZero);
+                countTotalTableArea = ToolMath.RoundNumericFormat(countTotalTableArea, 4);
                 if (CheckAreaLength(countTotalTableArea))
                 {
                     AddErrorMessage(this.ExcelName + string.Format(errorStr, familyName, "二轮台账"));
@@ -710,9 +711,9 @@ namespace YuLinTu.Library.Business
                 if (CheckAreaLength(countMotorizeLandArea))
                 {
                     countMotorizeLandArea += 0.0000001;
-                    countMotorizeLandArea = Math.Round(countMotorizeLandArea,
+                    countMotorizeLandArea = ToolMath.RoundNumericFormat(countMotorizeLandArea,
                         GetDoubleLength(countActualArea) > GetDoubleLength(countAwareArea) ?
-                        GetDoubleLength(countActualArea) : GetDoubleLength(countAwareArea), MidpointRounding.AwayFromZero);
+                        GetDoubleLength(countActualArea) : GetDoubleLength(countAwareArea));
                     if (CheckAreaLength(countMotorizeLandArea))
                     {
                         AddErrorMessage(this.ExcelName + string.Format(errorStr, familyName, "机动地"));

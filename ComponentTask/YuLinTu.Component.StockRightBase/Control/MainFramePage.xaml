@@ -29,7 +29,7 @@
                                    Click="Btn_AddPerson_Click">
                     <cmps:ImageTextItem ImagePosition="Top"
                                         Text="添加"
-                                        ToolTip="在当前地域下选中承包方下添加地块"
+                                        ToolTip="从当前地域下选择承包方设置为股农"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Add.png" />
                 </metro:MetroButton>
                 <metro:MetroButton 
@@ -38,7 +38,7 @@
                                    Click="Btn_DeletePerson_Click">
                     <cmps:ImageTextItem ImagePosition="Top"
                                         Text="删除"
-                                        ToolTip="删除选中的承包地块"
+                                        ToolTip="删除选中的股农"
                                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Clear.png" />
                 </metro:MetroButton>
             </cmps:TabControlItemRibbonContainer>
@@ -428,6 +428,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:LandPanel x:Name="landPanel" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <local:PersonPanel x:Name="personPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <local:PersonPanel x:Name="personPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </core:NavigatableWorkpageFrame>

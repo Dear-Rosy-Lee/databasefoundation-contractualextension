@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  * 添加测量地图面积
  */
 using System;
@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using YuLinTu.Library.Business;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Spatial;
 using YuLinTu.tGIS;
 using YuLinTu.tGIS.Client;
@@ -53,6 +54,8 @@ namespace YuLinTu.Component.MapFoundation
         /// </summary>
         private string projectionUnit = "Unkown";
 
+        private readonly SystemSetDefine SystemSet;
+
         #endregion
 
         #region Fields
@@ -69,7 +72,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionMeasureArea(MapControl map)
             : base(map)
         {
-
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -331,8 +334,9 @@ namespace YuLinTu.Component.MapFoundation
             if (draw.GeometryGraphic == null || draw.GeometryGraphic.Geometry == null)
                 return;
 
-            var area = ToolMath.SetNumericFormat(draw.GeometryGraphic.Geometry.Area(), 2, 0);
-            objectLabel.LabelText = string.Format("面积:{0} {1}/{2} 亩", area, projectionUnit, ToolMath.SetNumericFormat(area * 0.0015, 2, 0));
+            var area = ToolMath.RoundNumericFormat(draw.GeometryGraphic.Geometry.Area(), SystemSet.DecimalPlaces);
+            objectLabel.LabelText = string.Format("面积:{0} {1}/{2} 亩", area, projectionUnit, 
+                ToolMath.RoundNumericFormat(area * 0.0015, SystemSet.DecimalPlaces));
 
             //如果获取的中点为null，则将绘制的第一个点赋值过来
             if (RefreshCenterGeometry())

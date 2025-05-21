@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  * 绘制线条来修角
  */
 using System;
@@ -17,6 +17,7 @@ using DotSpatial.Data;
 using YuLinTu.Library.Business;
 using System.IO;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -46,6 +47,7 @@ namespace YuLinTu.Component.MapFoundation
         private List<ContractLand> selectContractLandCollection = new List<ContractLand>();
         private DrawPolyline draw = null;
         private bool isDrawing = false;
+        private readonly SystemSetDefine SystemSet;
 
         #endregion
 
@@ -58,7 +60,7 @@ namespace YuLinTu.Component.MapFoundation
         public MapControlActionQueryMapClipAngleByLine(MapControl map)
             : base(map)
         {
-
+            SystemSet = SystemSetDefine.GetIntence();
         }
 
         #endregion
@@ -394,7 +396,7 @@ namespace YuLinTu.Component.MapFoundation
                             }
                             //将第一个分割的赋给原始的，这样就不用裁剪了。                        
                             selectContractLandCollection[m].Shape = MaxAreaGeo;
-                            selectContractLandCollection[m].ActualArea = ToolMath.CutNumericFormat(MaxAreaGeo.Area() * projectionUnit, 2);
+                            selectContractLandCollection[m].ActualArea = ToolMath.RoundNumericFormat(MaxAreaGeo.Area() * projectionUnit, SystemSet.DecimalPlaces);
                             selectContractLandCollection[m].AwareArea = selectContractLandCollection[m].ActualArea;
                             selectContractLandCollection[m].TableArea = 0;
                             landbus.ModifyLand(selectContractLandCollection[m]);
@@ -456,7 +458,7 @@ namespace YuLinTu.Component.MapFoundation
             while (index < getGeoList.Count)
             {
                 YuLinTu.Spatial.Geometry geo = getGeoList[index];
-                var geoarea = ToolMath.CutNumericFormat(geo.Area() * projectionUnit, 5);
+                var geoarea = ToolMath.RoundNumericFormat(geo.Area() * projectionUnit, 5);
                 for (int i = 0; i < getGeoList.Count; i++)
                 {
                     if (index == i)
@@ -464,7 +466,7 @@ namespace YuLinTu.Component.MapFoundation
                         continue;
                     }
                     YuLinTu.Spatial.Geometry geo1 = getGeoList[i];//.Find(t => t.Within(geo));
-                    var geoarea1 = ToolMath.CutNumericFormat(geo1.Area() * projectionUnit, 5);
+                    var geoarea1 = ToolMath.RoundNumericFormat(geo1.Area() * projectionUnit, 5);
                     if (geo.Within(geo1))
                     {
                         getGeoList.Remove(geo);
@@ -489,7 +491,7 @@ namespace YuLinTu.Component.MapFoundation
 
             for (int i = 0; i < getGeoList.Count; i++)
             {
-                var area = ToolMath.CutNumericFormat(getGeoList[i].Area() * projectionUnit, 2);
+                var area = ToolMath.RoundNumericFormat(getGeoList[i].Area() * projectionUnit, SystemSet.DecimalPlaces);
                 if (area != 0.00)
                 {
                     var cds = getGeoList[i].Centroid().ToCoordinates();

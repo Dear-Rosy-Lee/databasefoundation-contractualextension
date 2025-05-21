@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using YuLinTu.Data;
-using YuLinTu;
-using System.Xml.Linq;
 using System.IO;
 using System.Linq;
-using YuLinTu.Library.Entity;
+using YuLinTu;
+using YuLinTu.Data;
 
 namespace YuLinTu.Library.Business
 {
@@ -70,7 +66,7 @@ namespace YuLinTu.Library.Business
                 upList.Add(fbf);
                 upList.Add(QGQZ);
                 upList.Add(QGHT);
-                ToolSerialization.SerializeXml(fileName, upList);
+                //ToolSerialization.SerializeXml(fileName, upList);
                 return true;
             }
             catch
@@ -99,12 +95,12 @@ namespace YuLinTu.Library.Business
             DKBM.IsAdd = true;
             upCBD_DeleteFields.Add(DKBM);
 
-            UpdateField YDKBM = new UpdateField();
-            YDKBM.FieldName = "YDKBM";
-            YDKBM.FieldType = "TEXT";
-            YDKBM.IsNull = true;
-            YDKBM.IsAdd = true;
-            upCBD_DeleteFields.Add(YDKBM);
+            UpdateField QQDKBM = new UpdateField();
+            QQDKBM.FieldName = "QQDKBM";
+            QQDKBM.FieldType = "TEXT";
+            QQDKBM.IsNull = true;
+            QQDKBM.IsAdd = true;
+            upCBD_DeleteFields.Add(QQDKBM);
 
             UpdateField SCMJ = new UpdateField();
             SCMJ.FieldName = "SCMJ";
@@ -959,13 +955,13 @@ namespace YuLinTu.Library.Business
             upCBDFields.Add(ybmj);
             upCBD.FieldList = upCBDFields;
 
-            UpdateField ydkbm = new UpdateField(); // 权属性质
-            ydkbm.FieldName = "YDKBM";
-            ydkbm.FieldType = "TEXT";
-            ydkbm.IsNull = true;
-            ydkbm.IsAdd = true;
-            ydkbm.FieldLength = "100";
-            upCBDFields.Add(ydkbm);
+            UpdateField qqdkbm = new UpdateField(); // 权属性质
+            qqdkbm.FieldName = "QQDKBM";
+            qqdkbm.FieldType = "TEXT";
+            qqdkbm.IsNull = true;
+            qqdkbm.IsAdd = true;
+            qqdkbm.FieldLength = "100";
+            upCBDFields.Add(qqdkbm);
             upCBD.FieldList = upCBDFields;
             return upCBD;
         }
@@ -1322,7 +1318,7 @@ namespace YuLinTu.Library.Business
                 var elements = dbContext.DataSource.CreateSchema().GetElements();
                 var srid = dbContext.DataSource.CreateSchema().GetElementSpatialReference(
                  ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).Schema,
-                 ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).TableName).WKID;
+                 ObjectContext.Create(typeof(YuLinTu.Library.Entity.Zone)).TableName)?.WKID;
                 var query = dbContext.CreateQuery();
                 string commandStrTableAdd = string.Empty;
                 string commandStrFieldAdd = string.Empty;
@@ -1385,7 +1381,7 @@ namespace YuLinTu.Library.Business
                         }
                         if (field.FieldName == "Shape")
                         {
-                            commandStrFieldAdd = string.Format("Select AddGeometryColumn('{0}', 'Shape',{1}, 'GEOMETRY', 'XY')", table.TableName, srid);
+                            commandStrFieldAdd = string.Format("Select AddGeometryColumn('{0}', 'Shape',{1}, 'GEOMETRY', 'XY')", table.TableName, srid == null ? 0 : srid);
                             query.CommandContext.CommandText.Append(commandStrFieldAdd);
                             query.Execute();
                             query.CommandContext.CommandText.Clear();

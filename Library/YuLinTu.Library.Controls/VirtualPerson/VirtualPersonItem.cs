@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {
@@ -23,6 +24,7 @@ namespace YuLinTu.Library.Controls
         private eVirtualPersonStatus status;
         private string contractorNumber;
         private double? totalTableArea;
+        private string oldVirtualCode;
 
         #endregion
 
@@ -49,6 +51,15 @@ namespace YuLinTu.Library.Controls
         {
             get { return iCN; }
             set { iCN = value; NotifyPropertyChanged("ICN"); }
+        }
+
+        /// <summary>
+        /// 原承包方编码
+        /// </summary>
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
         }
 
         /// <summary>
@@ -101,7 +112,7 @@ namespace YuLinTu.Library.Controls
         /// 备注
         /// </summary>
         public string Comment { get; set; }
-        
+
         /// <summary>
         /// 承包方
         /// </summary>
@@ -189,6 +200,7 @@ namespace YuLinTu.Library.Controls
         private eGender gender;
         private Guid id;
         private Guid fid;
+        private string oldVirtualCode = "1";
 
         #endregion
 
@@ -258,6 +270,19 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        /// <summary>
+        /// 身份证号码
+        /// </summary>
+        public string OldVirtualCode
+        {
+            get { return oldVirtualCode; }
+            set
+            {
+                oldVirtualCode = value;
+                NotifyPropertyChanged("OldVirtualCode");
+
+            }
+        }
         /// <summary>
         /// 关系
         /// </summary>
@@ -353,7 +378,7 @@ namespace YuLinTu.Library.Controls
             FamilyID = (Guid)p.FamilyID;
             Name = p.Name;
             Relationship = p.Relationship;
-            Comment = p.Comment;
+            Comment = p.Comment;           
             Gender = p.Gender;
             Tag = p;
             Img = VirtualPersonItemHelper.ChangeByGender(p.Gender);
@@ -367,7 +392,7 @@ namespace YuLinTu.Library.Controls
                 Age = p.Age;
                 if (string.IsNullOrEmpty(Age))
                 {
-                    int age = YuLinTu.Library.Business.ToolDateTime.GetAge(p.Birthday);
+                    int age = ToolDateTime.GetAge(p.Birthday);
                     if (age != -1)
                         Age = age.ToString();
                 }

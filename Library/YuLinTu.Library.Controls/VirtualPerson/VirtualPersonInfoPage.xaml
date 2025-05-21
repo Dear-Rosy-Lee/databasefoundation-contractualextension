@@ -9,8 +9,8 @@
                  xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                  Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                  Header="承包方"
-                 MinHeight="150"
-                 MinWidth="580">
+                 Height="520"
+                 Width="640">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

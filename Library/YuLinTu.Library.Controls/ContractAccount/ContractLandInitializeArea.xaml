@@ -49,10 +49,9 @@
                 <Label Content="位"
                        DockPanel.Dock="Right"
                        VerticalAlignment="Center" />
-                <wpftoolkit:IntegerUpDown x:Name="txt_Point"
+                <wpftoolkit:IntegerUpDown x:Name="txt_Point" IsReadOnly="True"
                                           IsEnabled="{Binding ElementName=cbPointSet,Path=IsChecked}"
                                           Minimum="1"
-                                          Value="2"
                                           Height="30"
                                           VerticalAlignment="Center"
                                           Increment="1"                                          

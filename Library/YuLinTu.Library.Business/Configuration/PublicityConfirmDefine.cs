@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -1774,6 +1774,22 @@ namespace YuLinTu.Library.Business
 
         private bool landCheckOpinionValue;
 
+
+        /// <summary>
+        ///签字意见
+        /// </summary>
+        [DisplayLanguage("签字意见", IsLanguageName = false)]
+        [DescriptionLanguage("签字意见", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "签字意见", Gallery = "扩展信息",
+            Builder = typeof(PropertyDescriptorBoolean))]
+        public bool WriteInfoOpinionValue
+        {
+            get { return writeInfoOpinionValue; }
+            set { writeInfoOpinionValue = value; NotifyPropertyChanged("WriteInfoOpinionValue"); }
+        }
+
+        private bool writeInfoOpinionValue;
+
         /// <summary>
         /// 是否含有二轮承包方信息
         /// </summary>
@@ -2065,6 +2081,7 @@ namespace YuLinTu.Library.Business
             count += outputValueValue ? 1 : 0;
             count += familyCheckOpinionValue ? 1 : 0;
             count += yieldValue ? 1 : 0;
+            count += writeInfoOpinionValue ? 1 : 0;
             return count;
         }
 

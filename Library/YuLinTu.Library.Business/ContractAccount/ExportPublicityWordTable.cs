@@ -1,12 +1,16 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Microsoft.Scripting.Runtime;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -33,6 +37,10 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public string Day { get; set; }
 
+        public bool ExportPublicTableDeleteEmpty { get; set; }
+
+        public bool ExportPublicAwareArea { get; set; }
+
         #endregion Properties
 
         #region Ctor
@@ -55,7 +63,10 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         protected override bool OnSetParamValue(object data)
         {
-            base.OnSetParamValue(data);
+            //base.OnSetParamValue(data);
+            InitialEntity(data);
+            WriteZoneInformation();
+            WriteContractorInformaion(false);
             if (!CheckDataInformation(data))
             {
                 return false;
@@ -101,9 +112,9 @@ namespace YuLinTu.Library.Business
             }
             SetBookmarkValue("ContractorName", InitalizeFamilyName(Contractor.Name));//承包方姓名
             SetBookmarkValue("ContractorTelephone", Contractor.Telephone.GetSettingEmptyReplacement());//联系电话
-            SetBookmarkValue("ContractorIdentifyNumber", string.IsNullOrEmpty(Contractor.Number) ? "/" : Contractor.Number);//证件号码
-            SetBookmarkValue("ContractorAddress", string.IsNullOrEmpty(Contractor.Address) ? "/" : Contractor.Address);//地址
-            SetBookmarkValue("ContractorPostNumber", string.IsNullOrEmpty(Contractor.PostalNumber) ? "/" : Contractor.PostalNumber);//邮政编码
+            SetBookmarkValue("ContractorIdentifyNumber", string.IsNullOrEmpty(Contractor.Number) ? "".GetSettingEmptyReplacement() : Contractor.Number);//证件号码
+            SetBookmarkValue("ContractorAddress", string.IsNullOrEmpty(Contractor.Address) ? "".GetSettingEmptyReplacement() : Contractor.Address);//地址
+            SetBookmarkValue("ContractorPostNumber", string.IsNullOrEmpty(Contractor.PostalNumber) ? "".GetSettingEmptyReplacement() : Contractor.PostalNumber);//邮政编码
             string alloctioonPerson = Contractor.FamilyExpand != null ? Contractor.FamilyExpand.AllocationPerson : "";
             if (alloctioonPerson == Contractor.PersonCount)
             {
@@ -201,7 +212,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写合同信息
         /// </summary>
-        private void WriteConcordInformations()
+        protected virtual void WriteConcordInformations()
         {
             WitePersonInformaion();
 
@@ -214,6 +225,7 @@ namespace YuLinTu.Library.Business
             {
                 if (Concord != null)
                 {
+                    SetBookmarkValue("ConcordNumber", Concord.ConcordNumber);
                     string mode = GetConstructMode();
                     if (Contractor != null && !string.IsNullOrEmpty(mode))
                     {
@@ -251,7 +263,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写调查信息
         /// </summary>
-        private void WritePublicyInformation()
+        public virtual void WritePublicyInformation()
         {
             if (Concord == null)
             {
@@ -282,19 +294,31 @@ namespace YuLinTu.Library.Business
         {
             if (Concord == null)
             {
-                SetBookmarkValue("ConcordDate", "/");//结束时间-日
+                SetBookmarkValue("ConcordDate", "".GetSettingEmptyReplacement());//结束时间-日
                 return;
             }
-            //DateTime? startTime = Concord.ArableLandStartTime;
-            //DateTime? endTime = Concord.ArableLandEndTime;
+            DateTime? cstartTime = Concord.ArableLandStartTime;
+            DateTime? cendTime = Concord.ArableLandEndTime;
             DateTime? startTime = Contractor.FamilyExpand.ConcordStartTime;
             DateTime? endTime = Contractor.FamilyExpand.ConcordEndTime;
-            string date = "/";
+            string date = GetConcorDate(startTime, endTime);
+            string cdate = GetConcorDate(cstartTime, cendTime);
+            SetBookmarkValue("SecondConcordDate", date.GetSettingEmptyReplacement());//结束时间-日
+            SetBookmarkValue("ConcordDate", cdate.GetSettingEmptyReplacement());//结束时间-日
+            if (Concord.ManagementTime == "长久")
+            {
+                SetBookmarkValue("ConcordDate", "长久");//结束时间-日
+            }
+        }
+
+        protected string GetConcorDate(DateTime? startTime, DateTime? endTime)
+        {
+            string date = "";
             if (startTime != null && startTime.HasValue && startTime.Value.Year > 1753)
             {
                 date = string.Format("{0}年{1}月{2}日", startTime.Value.Year, startTime.Value.Month, startTime.Value.Day) + "至";
             }
-            if (date != "/")
+            if (!string.IsNullOrEmpty(date))
             {
                 if (endTime != null && endTime.HasValue && endTime.Value.Year > 1753)
                 {
@@ -305,11 +329,7 @@ namespace YuLinTu.Library.Business
                     date += "     年   月   日";
                 }
             }
-            SetBookmarkValue("ConcordDate", date);//结束时间-日
-            if (Concord.ManagementTime == "长久")
-            {
-                SetBookmarkValue("ConcordDate", "长久");//结束时间-日
-            }
+            return date;
         }
 
         /// <summary>
@@ -368,7 +388,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 写表头信息
         /// </summary>
-        private void WriteTitleInformation()
+        protected virtual void WriteTitleInformation()
         {
             int familyNumber = 0;
             Int32.TryParse(Contractor.FamilyNumber, out familyNumber);
@@ -385,8 +405,8 @@ namespace YuLinTu.Library.Business
             string alloctioonPerson = Contractor.FamilyExpand != null ? Contractor.FamilyExpand.AllocationPerson : "";
             VirtualPersonExpand expand = Contractor.FamilyExpand;
 
-            var concordNumber = string.IsNullOrEmpty(expand.ConcordNumber) ? "/" : expand.ConcordNumber;
-            var warrantNumber = string.IsNullOrEmpty(expand.WarrantNumber) ? "/" : expand.WarrantNumber;
+            var concordNumber = string.IsNullOrEmpty(expand.ConcordNumber) ? "".GetSettingEmptyReplacement() : expand.ConcordNumber;
+            var warrantNumber = string.IsNullOrEmpty(expand.WarrantNumber) ? "".GetSettingEmptyReplacement() : expand.WarrantNumber;
 
             if (string.IsNullOrEmpty(expand.ConcordNumber) == false && string.IsNullOrEmpty(expand.WarrantNumber) == false)
             {
@@ -394,7 +414,7 @@ namespace YuLinTu.Library.Business
             }
             else if (string.IsNullOrEmpty(expand.ConcordNumber) && string.IsNullOrEmpty(expand.WarrantNumber))
             {
-                concordNumber = "/";
+                concordNumber = "".GetSettingEmptyReplacement();
             }
             else if (string.IsNullOrEmpty(expand.ConcordNumber) && string.IsNullOrEmpty(expand.WarrantNumber) == false)
             {
@@ -413,7 +433,7 @@ namespace YuLinTu.Library.Business
             if (SystemSet.PersonTable)
                 persons = persons.FindAll(c => c.IsSharedLand.Equals("是"));
             SetBookmarkValue("SenderName", Tissue != null ? Tissue.Name : Concord.SenderName);
-            SetBookmarkValue("SenderLawyerName", Tissue != null ? Tissue.LawyerName : "/");
+            SetBookmarkValue("SenderLawyerName", Tissue != null ? Tissue.LawyerName : "".GetSettingEmptyReplacement());
             WritLandInfo(LandCollection);
 
             bool isErlun = IsHaveBookmark("SecondFamily");
@@ -449,9 +469,10 @@ namespace YuLinTu.Library.Business
             }
             SetBookmarkValue(cardType, "R");
 
-            //二轮合同信息
-            var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ? Contractor.FamilyExpand.ConcordNumber : "") : "/";
-            SetBookmarkValue("SecondConcordNumber", number);
+            ////二轮合同信息
+            //var number = Contractor.FamilyExpand != null ? (!string.IsNullOrEmpty(Contractor.FamilyExpand.ConcordNumber) ?
+            //    Contractor.FamilyExpand.ConcordNumber : "") : "".GetSettingEmptyReplacement();
+            //SetBookmarkValue("SecondConcordNumber", number);
         }
 
         /// <summary>
@@ -473,6 +494,23 @@ namespace YuLinTu.Library.Business
                     rowCount = 1;
                 }
                 InsertTableRow(0, row + 2, rowCount * 13);
+            }
+            if (ExportPublicTableDeleteEmpty)
+            {
+                if (addrow < 0)
+                {
+                    for (int i = 0; i < Math.Abs(addrow); i++)
+                    {
+                        DeleteRow(0, row + 1);
+                    }
+                }
+                else if (addrow > 0)
+                {
+                    for (int i = 0; i < (12 * rowCount - addrow); i++)
+                    {
+                        DeleteRow(0, i + 9);
+                    }
+                }
             }
             int rowValue = 16;//16为第一个插入表头位置
             int increment = 13;//13为增量行数
@@ -497,6 +535,7 @@ namespace YuLinTu.Library.Business
 
                 double? tableArea = landCollection[i].TableArea;
                 double actualArea = landCollection[i].ActualArea;
+                double awareArea = landCollection[i].AwareArea;
                 string purpose = landCollection[i].Purpose;
 
                 if (!ToolMath.MatchEntiretyNumber(purpose.ToString()))
@@ -523,15 +562,22 @@ namespace YuLinTu.Library.Business
                 int colBase = 0;
                 string sfcbd = (dklb == "承包地块") ? "是" : "否";
                 SetTableCellValue(0, row, colBase, name);
-                SetTableCellValue(0, row, colBase + 1, canumber);
+                SetTableCellValue(0, row, colBase + 1, canumber); 
+                SetTableCellValue(0, 0, row, colBase + 2, InitalizeLandNeightors(LandCollection[i]));//, "东：" + east + "\n" + "南：" + south + "\n" + "西：" + west + "\n" + "北：" + north);
+                //SetTableCellValue(0, row, colBase + 2, sz, "");// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
+                                                               //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
+                                                               //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
+                                                               //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
+                                                               //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
 
-                SetTableCellValue(0, row, colBase + 2, InitalizeLandNeightors(LandCollection[i]));// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
-                                                                                                  //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
-                                                                                                  //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
-                                                                                                  //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
-                                                                                                  //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
-
-                SetTableCellValue(0, row, colBase + 3, (tableArea == null || !tableArea.HasValue || tableArea.Value <= 0.0) ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(tableArea.Value.ToString(), 2));
+                if (!ExportPublicAwareArea)
+                {
+                    SetTableCellValue(0, row, colBase + 3, (tableArea == null || !tableArea.HasValue || tableArea.Value <= 0.0) ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(tableArea.Value.ToString(), 2));
+                }
+                else
+                {
+                    SetTableCellValue(0, row, colBase + 3, awareArea <= 0.0 ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(awareArea.ToString(), 2));
+                }
                 SetTableCellValue(0, row, colBase + 4, actualArea == 0 ? SystemSet.InitalizeAreaString() : ToolMath.SetNumbericFormat(actualArea.ToString(), 2));
                 SetTableCellValue(0, row, colBase + 5, listTDYT.Find(c => c.Code == purpose).Name);
                 SetTableCellValue(0, row, colBase + 6, levelString);
@@ -574,7 +620,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="tableIndex"></param>
         /// <param name="row"></param>
-        protected void InsertTableTitle(int tableIndex, int row, int column)
+        protected virtual void InsertTableTitle(int tableIndex, int row, int column)
         {
             SetTableCellValue(tableIndex, row, column, "地块名称");
             SetTableCellValue(tableIndex, row, column + 1, "地块编码");
@@ -597,9 +643,17 @@ namespace YuLinTu.Library.Business
                 return;
             }
             int row = 2;
-            if (personList.Count - 15 > 0)
+            var addrow = personList.Count - 15;
+            if (addrow > 0)
             {
-                InsertTableRow(1, 3, personList.Count - 15);
+                InsertTableRow(1, 3, addrow);
+            }
+            if (ExportPublicTableDeleteEmpty && addrow < 0)
+            {
+                for (int i = 0; i < Math.Abs(addrow); i++)
+                {
+                    DeleteRow(1, row + 1);
+                }
             }
             for (int i = 0; i < personList.Count; i++)
             {
@@ -640,7 +694,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private bool CheckDataInformation(object data)
+        protected virtual bool CheckDataInformation(object data)
         {
             var dbContext = DataBaseSource.GetDataBaseSource();
             if (dbContext == null)
@@ -655,15 +709,18 @@ namespace YuLinTu.Library.Business
             else
             {
                 Contractor = data as VirtualPerson;
-                var concordStation = dbContext.CreateConcordStation();
-                var concords = concordStation.GetAllConcordByFamilyID(Contractor.ID);
-                if (concords.Count > 1)
+                if (Concord == null)
                 {
-                    string familyMode = ((int)eConstructMode.Family).ToString();
-                    Concord = concords.Find(c => !string.IsNullOrEmpty(c.ArableLandType) && c.ArableLandType == familyMode);
+                    var concordStation = dbContext.CreateConcordStation();
+                    var concords = concordStation.GetAllConcordByFamilyID(Contractor.ID);
+                    if (concords.Count > 1)
+                    {
+                        string familyMode = ((int)eConstructMode.Family).ToString();
+                        Concord = concords.Find(c => !string.IsNullOrEmpty(c.ArableLandType) && c.ArableLandType == familyMode);
+                    }
+                    else if (concords.Count == 1)
+                        Concord = concords[0];
                 }
-                else if (concords.Count == 1)
-                    Concord = concords[0];
             }
             if (Contractor == null)
             {

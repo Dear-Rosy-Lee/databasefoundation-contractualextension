@@ -9,7 +9,7 @@
                              xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="初始化地块基本属性信息"
-                            MinHeight="150" MinWidth="500">
+                            Height="480" Width="610">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -41,11 +41,11 @@
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="7"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="170"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="170"/>
                             </Grid.ColumnDefinitions>
 
 
@@ -97,25 +97,27 @@
 
                             <CheckBox x:Name="cbLandNumber" Content="地块编码:" Unchecked="ToggleButton_OnUnchecked" Checked="ToggleButton_OnChecked" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="6,7,0,7" Click="cbLandNumber_Checked" Grid.ColumnSpan="2" />
 
-                            <DockPanel Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Height="30" LastChildFill="True">
-                                <RadioButton x:Name="rbCombination" Content="发包方编码 + 调查编码" VerticalAlignment="Center"
-                                             Grid.Row="4"
-                                             GroupName="gn_land"
-                                             Grid.Column="1"
-                                             Grid.ColumnSpan="3"
-                                             Click="rbNew_Click"
-                                             Width="227" />
-                            </DockPanel>
- 
-                            <DockPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="1" Height="30" LastChildFill="True">
+                            <DockPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Height="30" LastChildFill="True" 
+                                       IsEnabled="{Binding ElementName=cbLandNumber,Path=IsChecked }">
+
+                                <RadioButton x:Name="rbNewPart" Content="重编合并部分"  IsChecked="True"
+                                             ToolTip="将前14位与当前地域不匹配的地块进行重新编码，不填充缺失部分"
+                                             HorizontalAlignment="Left"
+                                             GroupName="gn_land" Click="rbNew_Click" Margin="0,0,70,0"  />
                                 <RadioButton x:Name="rbNew" Click="rbNew_Click"
-                                             Content="统一生成地块编码"
+                                             Content="全部重新生成"
                                              ToolTip="统一生成地块编码"
-                                             HorizontalAlignment="Left" VerticalAlignment="Center"  GroupName="gn_land" Margin="0,6"  />
+                                             HorizontalAlignment="Left" VerticalAlignment="Center"  GroupName="gn_land"/>
+                                
+                                <cmps:MetroTextBox Margin="35,0,0,0" x:Name="txtInitiallStartNum" IsEnabled="{Binding ElementName=rbNew,Path=IsChecked}" ToolTip="编码的起始编号" 
+                                                   Width="150" VerticalAlignment="Center"></cmps:MetroTextBox>
+
                             </DockPanel>
 
-                            <CheckBox  Content="地块编码从上往下从左往右排序"  x:Name="cbLandNumberByUpdown"                                     
-                                       Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="6,7,0,7"  Grid.ColumnSpan="3" />
+                            <DockPanel  Grid.Row="5" Grid.Column="1"  Grid.ColumnSpan="4" Height="30" LastChildFill="True" IsEnabled="{Binding ElementName=cbLandNumber,Path=IsChecked }">
+                                <CheckBox Content="地块编码从上往下从左往右排序"  x:Name="cbLandNumberByUpdown"  VerticalAlignment="Center" Margin="6,0,10,0"  />
+                                <CheckBox x:Name="rbCombination" Content="发包方编码 + 调查编码" HorizontalAlignment="Left" Margin="10,0,0,0" Width="227" />
+                            </DockPanel>
 
                             <CheckBox Content="地块备注:" Grid.Row="6" VerticalAlignment="Center" Name="cbLandComment" Margin="6,0,0,0" 
                                       Unchecked="ToggleButton_OnUnchecked" 
@@ -149,10 +151,10 @@
                                                 SelectionChanged="cmbQSXZ_SelectionChanged"
                                                 Margin="0,0,0,0" />
 
-                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取地块四至(前的信息"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
+                            <CheckBox x:Name="cbInitalContractLandNeighborInfo"  Content="获取四至 ( 前的内容" ToolTip="获取四至括号前内容" Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
                                       Checked="ToggleButton_OnChecked"  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3"  VerticalAlignment="Center"  />
 
-                            <CheckBox x:Name="cbInitializeLandNeighborInfo"  Content="获取地块周边相邻地块"  Margin="6,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
+                            <CheckBox x:Name="cbInitializeLandNeighborInfo"  Content="获取地块周边相邻地块"  Margin="10,0,0,0"  Unchecked="ToggleButton_OnUnchecked" 
                                       Checked="ToggleButton_OnChecked"  Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3"  VerticalAlignment="Center"  />
 
                         </Grid>
@@ -160,11 +162,11 @@
                     <TabItem Header="调查信息">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="95"/>
-                                <ColumnDefinition Width="160"/>
-                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="115"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="105"/>
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="180"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45"/>
@@ -177,7 +179,7 @@
                             <!--<CheckBox x:Name="cbMapNumber" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked" Content="图幅编号:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,0,0"/>
                             <cmps:MetroTextBox x:Name="txtMapNumber" Height="30" Grid.Row="0" Grid.Column="1"  VerticalContentAlignment="Center"
                                                IsEnabled="{Binding ElementName=cbMapNumber,Path=IsChecked}" Grid.ColumnSpan="4" />-->
-                     
+
 
 
                             <CheckBox x:Name="cbSurveyPerson" Content="调查员:" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="6,0,0,0"/>

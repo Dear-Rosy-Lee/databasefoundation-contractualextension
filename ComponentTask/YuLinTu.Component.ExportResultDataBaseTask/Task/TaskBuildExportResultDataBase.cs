@@ -3,6 +3,7 @@ using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Component.ExportResultDataBaseTask
@@ -42,20 +43,20 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             set;
         }
 
-        /// <summary>
-        /// 系统信息常规设置
-        /// </summary>
-        public SystemSetDefine SystemSet
-        {
-            get
-            {
-                var center = TheApp.Current.GetSystemSettingsProfileCenter();
-                var profile = center.GetProfile<SystemSetDefine>();
-                var section = profile.GetSection<SystemSetDefine>();
-                var config = section.Settings as SystemSetDefine;
-                return config;
-            }
-        }
+        ///// <summary>
+        ///// 系统信息常规设置
+        ///// </summary>
+        //public SystemSetDefine SystemSet
+        //{
+        //    get
+        //    {
+        //        var center = TheApp.Current.GetSystemSettingsProfileCenter();
+        //        var profile = center.GetProfile<SystemSetDefine>();
+        //        var section = profile.GetSection<SystemSetDefine>();
+        //        var config = section.Settings as SystemSetDefine;
+        //        return config;
+        //    }
+        //}
 
         #endregion Fields
 
@@ -86,10 +87,24 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
         private void BuildPyramidProc(IDbContext dbContext)
         {
             var args = Argument as TaskBuildExportResultDataBaseArgument;
-
+            var systemSet = SystemSetDefine.GetIntence();
             #region 新版本入口
 
             ArcDataExportProgress dataProgress = new ArcDataExportProgress(dbContext);
+
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(dataProgress);
+            if (temp != null)
+            {
+                if (temp is ArcDataExportProgress)
+                {
+                    dataProgress = (ArcDataExportProgress)temp;
+                    dataProgress.DbContext = dbContext;
+                }
+            }
+
+            #endregion
+
             dataProgress.ProgressChanged += ReportPercent;
             dataProgress.Alert += ReportInfo;
             dataProgress.Argument = args;
@@ -105,13 +120,14 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             dataProgress.ContainDotLine = true;
             dataProgress.CanChecker = args.InspectionData;
             dataProgress.DictList = DictList;
-            dataProgress.CheckCardNumber = args.InspectionDocNumRepeat;
+            dataProgress.CheckCardNumber = args.InspectionData; //args.InspectionDocNumRepeat;
             dataProgress.IsReportNoConcordLands = args.IsReportNoConcordLands;
             dataProgress.IsSaveParcelPathAsPDF = args.IsSaveParcelPathAsPDF;
             dataProgress.IsReportNoConcordNoLandsFamily = args.IsReportNoConcordNoLandsFamily;
             dataProgress.TaskExportLandDotCoilDefine = TaskExportLandDotCoilDefine;
             dataProgress.CBDKXXAwareAreaExportSet = args.CBDKXXAwareAreaExportSet;
-            dataProgress.KeepRepeatFlag = SystemSet.KeepRepeatFlag;
+            dataProgress.KeepRepeatFlag = systemSet.KeepRepeatFlag;
+            dataProgress.DecimalPlaces = systemSet.DecimalPlaces;
             dataProgress.OnlyKey = args.OnlyExportKey;
             dataProgress.UseUniteNumberExport = args.UseUniteNumberExport;
             dataProgress.OnlyExportLandResult = args.OnlyExportLandResult;

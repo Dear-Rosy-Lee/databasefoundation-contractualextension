@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -97,6 +97,26 @@ namespace YuLinTu.Library.WorkStation
             }
             return year.ToString();
         }
+
+        /// <summary>
+        /// 计算起始到结束间期限
+        /// </summary>
+        public static string CalcateTerm(DateTime? startTime, DateTime? endTime)
+        {
+            if (startTime == null || endTime == null)
+            {
+                return null;
+            }
+            int year = endTime.Value.Year - startTime.Value.Year;
+            int month = endTime.Value.Month - startTime.Value.Month;
+            int day = endTime.Value.Day - startTime.Value.Day;
+            if (day == 30 && month == 11)
+            {
+                year += 1;
+            }
+            return year.ToString();
+        }
+
 
         /// <summary>
         /// 根据时间转换为年龄

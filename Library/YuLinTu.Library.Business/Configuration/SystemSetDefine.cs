@@ -1,16 +1,12 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Library.Business
 {
@@ -256,6 +252,13 @@ namespace YuLinTu.Library.Business
             set { statisticsDeadPersonInfo = value; NotifyPropertyChanged("StatisticsDeadPersonInfo"); }
         }
 
+        public int rewritingStartNumber;
+        public int RewritingStartNumber
+        {
+            get { return rewritingStartNumber; }
+            set { rewritingStartNumber = value; NotifyPropertyChanged("RewritingStartNumber"); }
+        }
+
         /// <summary>
         /// 截取地块编码长度
         /// </summary>
@@ -309,6 +312,17 @@ namespace YuLinTu.Library.Business
             get { return versionNumber; }
             set { versionNumber = value; NotifyPropertyChanged("VersionNumber"); }
         }
+
+        /// <summary>
+        /// 小数位数
+        /// </summary>
+        public int DecimalPlaces
+        {
+            get { return decimalPlaces; }
+            set { decimalPlaces = value; NotifyPropertyChanged("DecimalPlaces"); }
+        }
+
+        private int decimalPlaces;
 
         /// <summary>
         /// 备份路径
@@ -366,35 +380,36 @@ namespace YuLinTu.Library.Business
                 return Name;
             var dbContext = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
             var zoneStation = dbContext.CreateZoneWorkStation();
+            var zonelist = zoneStation.GetParentsToProvince(currentZone);
             if (currentZone.Level == eZoneLevel.Group)
             {
                 if (groupTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.Village)
             {
                 if (countryTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.Town)
             {
                 if (townTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.County)
             {
                 if (countTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             if (currentZone.Level == eZoneLevel.City)
             {
                 if (cityTableHead)
                     Name = currentZone.Name + Name;
-                currentZone = zoneStation.Get(currentZone.UpLevelCode);
+                currentZone = zonelist.Find(f => f.FullCode == currentZone.UpLevelCode);
             }
             return Name;
         }
@@ -464,6 +479,8 @@ namespace YuLinTu.Library.Business
             backUpPath = Path.Combine(TheApp.Current.GetDataPath(), "Backup");
             backUperDate = DateTime.Now;
             emptyReplacement = "/";
+            RewritingStartNumber = 1;
+            decimalPlaces = 2;
         }
 
         private static SystemSetDefine _familyOtherDefine;

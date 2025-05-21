@@ -1,33 +1,17 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YuLinTu.Windows;
-using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Appwork;
-
-using YuLinTu.Library.Business;
-using AutoUpdaterDotNET;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net;
-using System.Windows.Forms;
+using System.Reflection;
+using System.Threading;
+using System.Windows;
+using AutoUpdaterDotNET;
+using YuLinTu.Appwork;
+using YuLinTu.Library.Business;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.Setting
 {
@@ -64,6 +48,7 @@ namespace YuLinTu.Component.Setting
         {
             InitializeComponent();
             InitializeData();
+            ServiceSettingDefine = ServiceSettingDefine == null ? ServiceSetDefine.GetIntence() : ServiceSettingDefine;
             DataContext = this;
         }
 
@@ -87,7 +72,7 @@ namespace YuLinTu.Component.Setting
                 var profile = center.GetProfile<ServiceSetDefine>();
                 var section = profile.GetSection<ServiceSetDefine>();
                 serviceSet = (section.Settings as ServiceSetDefine);
-                ServiceSettingDefine = serviceSet.Clone() as ServiceSetDefine;
+                ServiceSettingDefine.CopyPropertiesFrom(serviceSet);//.Clone() as ServiceSetDefine;
             }));
         }
 
@@ -103,56 +88,49 @@ namespace YuLinTu.Component.Setting
         private void InitializeData()
         {
             var asm = Assembly.GetEntryAssembly();
-
             var ver = asm.GetAttribute<AssemblyFileVersionAttribute>();
             if (ver != null)
                 txtVer.Text = ver.Version;
+            //AutoUpdater.RemindLaterTimeSpan = RemindLaterFormat.Days;
+            //Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh");
+            //AutoUpdater.AppTitle = "升级更新";
+            //AutoUpdater.RemindLaterAt = 2;
+            //AutoUpdater.Synchronous = true;
+            //AutoUpdater.InstallationPath = AppDomain.CurrentDomain.BaseDirectory;
+            //AutoUpdater.DownloadPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        private async void CheckUpdate_Click(object sender, RoutedEventArgs e)
+        private  void CheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            string updateUrl = "http://192.168.20.16:8080/view/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E7%A1%AE%E6%9D%83%E5%B7%A5%E5%85%B7/job/%E6%89%BF%E5%8C%85%E7%BB%8F%E8%90%A5%E6%9D%83%E5%BB%B6%E5%8C%85%E5%BB%BA%E5%BA%93%E5%B7%A5%E5%85%B7/ws/update.xml";
-            await VerifyLink(updateUrl);
+            UpdateProgram.CheckUpdate();
+            //string updateUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/update.xml";
+            //string uplogUrl = $"{ServiceSettingDefine.BusinessSecurityAddress}/changelog.html";
+            //await VerifyLink(updateUrl);
+            ////("https://yourdomain.com/updates.xml", new TimeSpan(0, 24, 0));
         }
 
         private async System.Threading.Tasks.Task VerifyLink(string updateUrl)
         {
             string username = "admin";
-            string password = "jenkins@Admin2023";
+            string password = "yltadmin";
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
-
             HttpResponseMessage response = await client.GetAsync(updateUrl);
-
             if (response.IsSuccessStatusCode)
             {
                 BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                 AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
-
+                AutoUpdater.OpenDownloadPage = true;
                 AutoUpdater.Start(updateUrl);
             }
-        }
-
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        } 
+       
+        private void AutoUpdater_ApplicationExitEvent()
         {
-            if (args != null)
-            {
-                if (args.IsUpdateAvailable)
-                {
-                    DialogResult result = (DialogResult)System.Windows.MessageBox.Show("当前软件有更新，是否下载", "提示", MessageBoxButton.YesNo);
-                    if (result == DialogResult.Yes)
-                    {
-                        AutoUpdater.DownloadUpdate(args);
-                    }
-                }
-           
-            }
-            else
-            {
-                Console.WriteLine("Your application is up to date.");
-            }
+            Thread.Sleep(5000);
+            System.Windows.Application.Current.Shutdown();
+
         }
     }
 

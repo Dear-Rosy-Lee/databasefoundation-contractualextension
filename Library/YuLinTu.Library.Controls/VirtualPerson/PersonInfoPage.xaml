@@ -14,7 +14,7 @@
     Header="共有人信息" Loaded="InfoPageBase_Loaded"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png">
     <am:InfoPageBase.Resources>
-        <ResourceDictionary Source="/Utils.Controls;component/Styles/AutoComplete.Styles.xaml" />
+        <!--<ResourceDictionary Source="/Utils.Controls;component/Styles/AutoComplete.Styles.xaml" />-->
     </am:InfoPageBase.Resources>
 
     <Grid>
@@ -207,7 +207,7 @@
                     MaxDropDownHeight="150"  Visibility="Collapsed" />
                 <ctr:AutoComplete x:Name="cbRelationship" Grid.Row="8" Grid.Column="3" SelectedValuePath="Code" DisplayMemberPath="Code"
            PatternChanged="autoCities_PatternChanged" Style="{StaticResource AutoCompleteComboBox}"
-           Delay="300" SelectedValue="2" Height="32" MaxDropDownHeight="150"  Width="225"/>
+           Delay="200" SelectedValue="2" Height="32" MaxDropDownHeight="150"  Width="225"/>
                 <Label
                     Grid.Row="10"
                     Content="是否共有人:"
@@ -222,16 +222,44 @@
                     Text="{Binding IsSharedLand, Mode=TwoWay}" />
 
                 <Label
-                    Grid.Row="12"
+                    Grid.Row="10"
+                    Grid.Column="2"
                     Margin="0,5"
                     VerticalAlignment="Top"
-                    Content="备注:"
+                    Content="成员备注:"
                     Style="{StaticResource LableStyle}" />
+                <cmps:MetroComboBox
+                    Grid.Row="10"
+                    Grid.Column="3"
+                    Name="cb_Comment" 
+                    Grid.ColumnSpan="3"
+                    Height="30" SelectionChanged="cb_Comment_SelectionChanged"
+                    VerticalContentAlignment="Stretch" 
+                    >
+                    <!--Text="{Binding Comment, Mode=TwoWay}"
+                    <ComboBoxItem >外嫁女</ComboBoxItem>
+                    <ComboBoxItem >入赘男</ComboBoxItem>
+                    <ComboBoxItem >在校大学生</ComboBoxItem>
+                    <ComboBoxItem >国家公职人员</ComboBoxItem>
+                    <ComboBoxItem >军人（军官、士兵）</ComboBoxItem>
+                    <ComboBoxItem >新生儿</ComboBoxItem>
+                    <ComboBoxItem >去世</ComboBoxItem>
+                    <ComboBoxItem >其他备注</ComboBoxItem>-->
+                </cmps:MetroComboBox>
+
+                <TextBlock 
+                    Grid.Row="14"
+                    HorizontalAlignment="Left"
+                    TextWrapping="WrapWithOverflow"
+                    Margin="0,5"
+                    Width="65"
+                    Foreground="Black"
+                    VerticalAlignment="Top"
+                    Text="成员备注说明:"/>
                 <cmps:MetroTextBox
                     Name="txt_Comment"
-                    Grid.Row="12"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
+                    Grid.Row="14"
+                    Grid.Column="1" 
                     Height="60"
                     VerticalContentAlignment="Stretch"
                     MaxLength="100"
@@ -239,21 +267,21 @@
                     TextWrapping="Wrap" />
 
                 <Label
-                    Grid.Row="14"
-                    Margin="0,5"
-                    VerticalAlignment="Top"
-                    Content="修改意见:"
-                    Style="{StaticResource LableStyle}" />
+     Grid.Row="14"
+     Grid.Column="2" 
+     VerticalAlignment="Top"
+     Content="修改说明:"
+     Style="{StaticResource LableStyle}" />
+
                 <cmps:MetroTextBox
-                    Name="txt_Opinion"
-                    Grid.Row="14"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
-                    Height="60"
-                    VerticalContentAlignment="Stretch"
-                    MaxLength="100"
-                    Text="{Binding Opinion, Mode=TwoWay}"
-                    TextWrapping="Wrap" />
+     Name="txt_Opinion"
+     Grid.Row="14"
+     Grid.Column="3" 
+     Height="60"
+     VerticalContentAlignment="Stretch"
+     MaxLength="100"
+     Text="{Binding Opinion, Mode=TwoWay}"
+     TextWrapping="Wrap" />
             </Grid>
 
 

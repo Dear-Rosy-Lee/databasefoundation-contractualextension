@@ -1,4 +1,4 @@
-﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+﻿// (C) 2024 鱼鳞图公司版权所有，保留所有权利
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -288,6 +288,33 @@ namespace YuLinTu.Library.Office
                 Close();
             }
         }
+        public void SaveAsDocx(object data, string fileName)
+        {
+            if (doc == null)
+            {
+                throw new Exception(TEMPLATEFILE_NOT_OPEN);
+            }
+            fileName = WordOperator.InitalizeValideFileName(fileName);
+            string extension = System.IO.Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+            {
+                fileName += ".docx";
+            }
+            else
+            {
+                fileName = extension == ".docx" ? fileName : fileName.Replace(extension, ".docx");
+            }
+
+            this.savedFileName = fileName;
+
+            bool success = OnSetParamValue(data);
+            if (success)
+            {
+                WordOperator.InitalzieDirectory(fileName);
+                doc.Save(fileName, SaveFormat.Docx);
+                Close();
+            }
+        }
 
         /// <summary>
         /// 另存为
@@ -391,7 +418,7 @@ namespace YuLinTu.Library.Office
         /// <param name="data">数据</param>
         /// <param name="fileName">文件名称</param>
         /// <param name="close">是否关闭</param>
-        public void SaveAsMultiFile(object data, string fileName, bool isSavePcAsPDF = false)
+        public void SaveAsMultiFile(object data, string fileName, bool isSavePcAsPDF = false, bool isSavePcAsJpg = true)
         {
             if (doc == null)
             {
@@ -410,30 +437,32 @@ namespace YuLinTu.Library.Office
             bool success = OnSetParamValue(data);
             if (success)
             {
+                WordOperator.InitalzieDirectory(fileName);
                 if (isSavePcAsPDF)
                 {
-                    WordOperator.InitalzieDirectory(fileName);
-                    //doc.Save(fileName, SaveFormat.Doc);
-
                     fileName = System.IO.Path.ChangeExtension(fileName, ".pdf");
-                    //fileName = fileName.Replace(".doc", ".pdf");//效果一致
                     doc.Save(fileName, SaveFormat.Pdf);
                 }
                 else
                 {
-                    WordOperator.InitalzieDirectory(fileName);
-                    doc.Save(fileName, SaveFormat.Doc);
-                    ImageSaveOptions options = new ImageSaveOptions(SaveFormat.Jpeg);
-                    options.Resolution = 300;
-                    fileName = fileName.Replace(".doc", "");
-                    int order = 1;
-                    string nameFile = fileName + order.ToString() + ".jpg";
-                    for (int i = 0; i < doc.PageCount; i++)
+                    if (isSavePcAsJpg)
                     {
-                        options.PageIndex = i;
-                        doc.Save(nameFile, options);
-                        order++;
-                        nameFile = fileName + order.ToString() + ".jpg";
+                        ImageSaveOptions options = new ImageSaveOptions(SaveFormat.Jpeg);
+                        options.Resolution = 300;
+                        fileName = fileName.Replace(".doc", "");
+                        int order = 1;
+                        string nameFile = fileName + order.ToString() + ".jpg";
+                        for (int i = 0; i < doc.PageCount; i++)
+                        {
+                            options.PageIndex = i;
+                            doc.Save(nameFile, options);
+                            order++;
+                            nameFile = fileName + order.ToString() + ".jpg";
+                        }
+                    }
+                    else
+                    {
+                        doc.Save(fileName, SaveFormat.Doc);
                     }
                 }
                 Close();
@@ -738,7 +767,7 @@ namespace YuLinTu.Library.Office
         /// <param name="rowIndex"></param>
         /// <param name="colIndex"></param>
         /// <param name="value"></param>
-        protected void SetTableCellValue(int tableIndex, int rowIndex, int colIndex, string value)
+        protected void SetTableCellValue(int tableIndex, int rowIndex, int colIndex, string value, string fontName = "")
         {
             if (doc == null)
             {
@@ -764,9 +793,15 @@ namespace YuLinTu.Library.Office
                 Cell cell = row.Cells[colIndex];
                 if (cell != null)
                 {
-                    builder.MoveToCell(tableIndex, rowIndex, colIndex, 0);
-                    //2018.3.26 修改，空字符替换
-                    builder.Write(string.IsNullOrEmpty(value) ? EmptyReplacement : value);
+                    cell.RemoveAllChildren();
+                    Paragraph para = new Paragraph(doc);
+                    var run = new Run(doc, string.IsNullOrEmpty(value) ? EmptyReplacement : value);
+                    if (!string.IsNullOrEmpty(fontName))
+                    {
+                        run.Font.Name = fontName;
+                    }
+                    para.AppendChild(run);
+                    cell.AppendChild(para);
                 }
                 cell = null;
                 row = null;
@@ -1677,7 +1712,7 @@ namespace YuLinTu.Library.Office
                 for (int index = 0; index < rowCount; index++)
                 {
                     Node node = table.Rows[startRow].Clone(false);
-                    table.Rows.Add(node); 
+                    table.Rows.Add(node);
                 }
             }
             catch (SystemException ex)

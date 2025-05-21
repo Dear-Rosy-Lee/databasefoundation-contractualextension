@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
@@ -70,8 +70,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         ///原地块编码
         /// </summary>
-        [DisplayLanguage("原地块编码", IsLanguageName = false)]
-        [DescriptionLanguage("YDKBM", IsLanguageName = false)]
+        [DisplayLanguage("确权地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("QQDKBM", IsLanguageName = false)]
         [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
            Builder = typeof(PropertyDescriptorBuilderString), Trigger = typeof(PropertyTriggerFamilyImportConfigState))]
         public string YCadastralNumberIndex

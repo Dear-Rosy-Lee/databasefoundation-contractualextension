@@ -1,7 +1,6 @@
 ﻿/*
- * (C) 2015 - 2016 鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025 - 2016 鱼鳞图公司版权所有,保留所有权利
 */
-using Quality.Business.TaskBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -109,7 +108,7 @@ namespace YuLinTu.Component.BatchDataBaseTask
             {
                 if (ex.GetType().Name == "TaskStopException")
                     return;
-                LogWrite.WriteErrorLog(ex.Message + ex.StackTrace);
+                Quality.Business.TaskBasic.LogWrite.WriteErrorLog(ex.Message + ex.StackTrace);
 
                 this.ReportError("导出数据库出错，详细信息请查看日志!");
                 this.ReportProgress(100, "完成");
@@ -303,8 +302,8 @@ namespace YuLinTu.Component.BatchDataBaseTask
             }
             public Point(double x, double y)
             {
-                this.X = Math.Round(x, 4);
-                this.Y = Math.Round(y, 4);
+                this.X = ToolMath.RoundNumericFormat(x, 4);
+                this.Y = ToolMath.RoundNumericFormat(y, 4);
             }
 
             public override bool Equals(object obj)

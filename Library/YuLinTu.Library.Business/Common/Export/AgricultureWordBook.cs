@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -259,7 +259,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写承包方信息
         /// </summary>
-        protected virtual void WriteContractorInformaion()
+        protected virtual void WriteContractorInformaion(bool writeperson = true)
         {
             if (Contractor == null)
                 return;
@@ -293,6 +293,7 @@ namespace YuLinTu.Library.Business
                 {
                     SetBookmarkValue(AgricultureBookMark.ContractorOtherCardNumber + (i == 0 ? "" : i.ToString()), Contractor.Number.GetSettingEmptyReplacement());  //其他证件号码
                 }
+
                 SetBookmarkValue(AgricultureBookMark.ContractorAllocationPerson + (i == 0 ? "" : i.ToString()), expand.AllocationPerson);//承包方实际分配人数
                 SetBookmarkValue(AgricultureBookMark.ContractorComment + (i == 0 ? "" : i.ToString()), Contractor.Comment);//承包方备注
                 SetBookmarkValue(AgricultureBookMark.ContractorLocation + (i == 0 ? "" : i.ToString()), Contractor.Address.GetSettingEmptyReplacement());//坐落地域
@@ -314,6 +315,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue(AgricultureBookMark.ContractorPublicityDate + (i == 0 ? "" : i.ToString()),
                     ToolDateTime.GetLongDateString(expand.PublicityDate.GetValueOrDefault()).GetSettingEmptyReplacement());//承包方公式日期
                 SetBookmarkValue(AgricultureBookMark.ContractorPublicityChronicle + (i == 0 ? "" : i.ToString()), expand.PublicityChronicle.GetSettingEmptyReplacement());//承包方公示记事
+                SetBookmarkValue(AgricultureBookMark.ContractorConcordNumber + (i == 0 ? "" : i.ToString()), expand.ConcordNumber);//承包方上的合同编码
 
                 DateTime? startTime = expand.ConcordStartTime;
                 DateTime? endTime = expand.ConcordEndTime;
@@ -326,9 +328,9 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartYear + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartMonth + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordStartDay + (i == 0 ? "" : i.ToString()), "/");//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartYear + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartMonth + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordStartDay + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//开始时间-日
                 }
                 if (endTime != null)
                 {
@@ -338,13 +340,14 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndYear + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndMonth + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
-                    SetBookmarkValue(AgricultureBookMark.ConcordEndDay + (i == 0 ? "" : i.ToString()), "/");//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndYear + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndMonth + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
+                    SetBookmarkValue(AgricultureBookMark.ConcordEndDay + (i == 0 ? "" : i.ToString()), "".GetSettingEmptyReplacement());//结束时间-日
                 }
             }
             WriteCredentialsInformation();
-            WriteSharePersonInformation();
+            if (writeperson)
+                WriteSharePersonInformation();
         }
 
         /// <summary>
@@ -1046,6 +1049,7 @@ namespace YuLinTu.Library.Business
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), Tissue.Name.GetSettingEmptyReplacement());//发包方名称
+                SetBookmarkValue(AgricultureBookMark.SenderLawyerCode + (i == 0 ? "" : i.ToString()), Tissue.SocialCode);//发包方名称
                 SetBookmarkValue(AgricultureBookMark.SenderNameExpress + (i == 0 ? "" : i.ToString()), senderNameExpress);//发包方名称扩展如(第一村民小组)
                 SetBookmarkValue(AgricultureBookMark.SenderLawyerName + (i == 0 ? "" : i.ToString()), Tissue.LawyerName);//发包方法人名称
                 SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone + (i == 0 ? "" : i.ToString()), Tissue.LawyerTelephone);//发包方法人联系方式

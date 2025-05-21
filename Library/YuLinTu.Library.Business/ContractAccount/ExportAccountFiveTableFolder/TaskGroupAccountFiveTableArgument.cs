@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -420,7 +420,15 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public List<Zone> AllZones { get; set; }
 
+        /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? DelcTime { get; set; }
 
+        /// <summary>
+        /// 日期
+        /// </summary>
+        public DateTime? PubTime { get; set; }
         #endregion
 
         #region Ctor

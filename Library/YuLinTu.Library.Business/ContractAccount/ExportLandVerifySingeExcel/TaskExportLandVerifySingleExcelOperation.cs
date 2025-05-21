@@ -1,13 +1,10 @@
-﻿using Microsoft.Scripting.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
-using YuLinTu.Windows;
-using static YuLinTu.tGISCNet.SmallAngleCheckWKB;
 
 namespace YuLinTu.Library.Business
 {
@@ -78,8 +75,8 @@ namespace YuLinTu.Library.Business
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出摸底核实表任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出摸底核实表出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportSurveyPublishExcelOperation(导出单户摸底核实表任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出单户摸底核实表出现异常!");
             }
         }
 
@@ -129,6 +126,7 @@ namespace YuLinTu.Library.Business
 
                 var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
+                vps = vps.OrderBy(o => o.FamilyNumber).ToList();
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);

@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -750,6 +750,19 @@ namespace YuLinTu.Library.Business
         }
         private bool commentIndex;
 
+        /// <summary>
+        ///QQDKBM
+        /// </summary>
+        [DisplayLanguage("确权地块编码", IsLanguageName = false)]
+        [DescriptionLanguage("确权地块编码", IsLanguageName = false)]
+        [PropertyDescriptor(Catalog = "地块信息", Gallery = "",
+           Builder = typeof(PropertyDescriptorBoolean))]
+        public bool QQDKBM
+        {
+            get { return qqDKBM; }
+            set { qqDKBM = value; NotifyPropertyChanged("QQDKBM"); }
+        }
+        private bool qqDKBM;
 
 
         public ExportContractLandShapeDefine()
@@ -802,6 +815,7 @@ namespace YuLinTu.Library.Business
             LandCheckOpinionIndex = false;
             LandNumberGetCount = 0;//截取位数默认为0
             familyIndex = true;
+            qqDKBM = true;
         }
 
         /// <summary>

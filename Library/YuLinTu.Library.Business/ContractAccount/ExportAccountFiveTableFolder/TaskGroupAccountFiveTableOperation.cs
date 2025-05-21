@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -69,6 +69,8 @@ namespace YuLinTu.Library.Business
                 meta.SelfAndSubsZones = groupMeta.SelfAndSubsZones;
                 meta.IsBatch = groupMeta.IsBatch;
                 meta.DictList = groupMeta.DictList;
+                meta.DelcTime = groupMeta.DelcTime;
+                meta.PubTime = groupMeta.PubTime;
                 var import = new TaskAccountFiveTableOperation();
                 import.Argument = meta;
                 import.Description = "导出" + zone.FullName;

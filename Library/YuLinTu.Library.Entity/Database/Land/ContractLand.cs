@@ -1,4 +1,4 @@
-﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using System;
 using YuLinTu.Data;
 using YuLinTu.Spatial;
@@ -483,7 +483,7 @@ namespace YuLinTu.Library.Entity
         /// <summary>
         /// 原地块编码
         /// </summary>
-        [DataColumn("YDKBM")]
+        [DataColumn("QQDKBM")]
         public string OldLandNumber
         {
             get { return oldLandNumber; }

@@ -1,12 +1,9 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YuLinTu.Component.StockRightBase.Helper;
-using YuLinTu.Component.StockRightBase.Model;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -63,30 +60,30 @@ namespace YuLinTu.Component.StockRightBase.ExportTask
                 var bookStation = DbContext.CreateRegeditBookStation();
                 var connordStation = DbContext.CreateConcordStation();
                 var connords = connordStation.GetByZoneCode(CurrentZone.FullCode);
-                var books=bookStation.GetByZoneCode(CurrentZone.FullCode,eSearchOption.Precision);
+                var books = bookStation.GetByZoneCode(CurrentZone.FullCode, eSearchOption.Precision);
                 var zoneList = DbContext.CreateZoneWorkStation().Get();
-                var dotList = DbContext.CreateBoundaryAddressDotWorkStation().Get(o=>o.ZoneCode==CurrentZone.FullCode);
+                var dotList = DbContext.CreateBoundaryAddressDotWorkStation().Get(o => o.ZoneCode == CurrentZone.FullCode);
                 if (listPerson == null || listPerson.Count == 0)
                 {
                     this.ReportProgress(100, null);
                     this.ReportWarn(string.Format("{0}未获取承包方数据!", CurrentZone.FullName));
                     return;
                 }
-                var listLand = landStation.Get(o=>o.ZoneCode.StartsWith(CurrentZone.FullCode)&&o.IsStockLand);
+                var listLand = landStation.Get(o => o.ZoneCode.StartsWith(CurrentZone.FullCode));
                 if (listLand == null || listLand.Count == 0)
                 {
                     this.ReportProgress(100, null);
                     this.ReportWarn(string.Format("{0}未获取承包地块数据!", CurrentZone.FullName));
                     return;
                 }
-                bool canOpen = ExportLandSurveyWordTable(zoneList, listPerson, listLand, listDict, sender,books,dotList);
+                bool canOpen = ExportLandSurveyWordTable(zoneList, listPerson, listLand, listDict, sender, books, dotList);
                 if (canOpen)
                     CanOpenResult = true;
             }
             catch (Exception ex)
             {
-                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出"+Name+"任务)", ex.Message + ex.StackTrace);
-                this.ReportException(ex, "导出"+Name+"出现异常!");
+                YuLinTu.Library.Log.Log.WriteException(this, "TaskExportPublishWordOperation(导出" + Name + "任务)", ex.Message + ex.StackTrace);
+                this.ReportException(ex, "导出" + Name + "出现异常!");
             }
         }
 
@@ -102,7 +99,7 @@ namespace YuLinTu.Component.StockRightBase.ExportTask
         /// <summary>
         /// 导出数据到承包地块调查表
         /// </summary>
-        public virtual bool ExportLandSurveyWordTable(List<Zone> zoneList,List<VirtualPerson> listPerson, List<ContractLand> listLand,
+        public virtual bool ExportLandSurveyWordTable(List<Zone> zoneList, List<VirtualPerson> listPerson, List<ContractLand> listLand,
             List<Dictionary> listDict, CollectivityTissue tissue, List<Library.Entity.ContractRegeditBook> books, List<BuildLandBoundaryAddressDot> dotList)
         {
             bool result = false;
@@ -127,6 +124,7 @@ namespace YuLinTu.Component.StockRightBase.ExportTask
                             continue;
                         Book.StockLands = stockLandsvp;
                     }
+                    Book.LandCollection = listLand.FindAll(f => f.OwnerId == person.ID);
                     string tempPath = TemplateHelper.WordTemplate(TempName);
                     Book.DbContext = DbContext;
                     Book.CurrentZone = CurrentZone;
@@ -157,7 +155,7 @@ namespace YuLinTu.Component.StockRightBase.ExportTask
                     {
                         Book.OpenTemplate(tempPath);
                         Book.SaveAs(person, fileName);
-                    } 
+                    }
                     else
                     {
                         var warrant = Book as WarrantWord;
@@ -168,21 +166,21 @@ namespace YuLinTu.Component.StockRightBase.ExportTask
                     indexOfVp++;
                 }
                 result = true;
-                string info = string.Format("{0}导出{1}户承包方,共{2}个"+Name, CurrentZone.FullName, listPerson.Count, indexOfVp - 1);
+                string info = string.Format("{0}导出{1}户承包方,共{2}个" + Name, CurrentZone.FullName, listPerson.Count, indexOfVp - 1);
                 this.ReportInfomation(info);
                 this.ReportProgress(100, "完成");
             }
             catch (Exception ex)
             {
                 result = false;
-                this.ReportError("导出"+Name+"失败");
-                YuLinTu.Library.Log.Log.WriteException(this, "ExportLandWord(导出"+Name+")", ex.Message + ex.StackTrace);
+                this.ReportError("导出" + Name + "失败,错误：" + ex.Message);
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportLandWord(导出" + Name + ")", ex.Message + ex.StackTrace);
             }
             return result;
         }
 
 
-   
+
 
     }
 }

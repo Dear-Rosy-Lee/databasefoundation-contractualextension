@@ -257,12 +257,14 @@
     <Compile Include="Database\SurveyLandObject\ZoneBoundary.cs" />
     <Compile Include="Database\VirtualPerson\CollectiveLandVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\TableVirtualPerson.cs" />
+    <Compile Include="Database\VirtualPerson\VirtualPerson _Del.cs" />
     <Compile Include="Database\VirtualPerson\WoodVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\YardVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\LandVirtualPerson.cs" />
     <Compile Include="Database\VirtualPerson\HouseVirtualPerson.cs" />
     <Compile Include="Database\Zone\CadastralZoneCollection.cs" />
     <Compile Include="Database\Land\ContractLand_Del.cs" />
+    <Compile Include="Enum\eBHQK.cs" />
     <Compile Include="Enum\eCombineWordType.cs" />
     <Compile Include="Enum\eIrrigationType.cs" />
     <Compile Include="Enum\eAppBuildType.cs" />

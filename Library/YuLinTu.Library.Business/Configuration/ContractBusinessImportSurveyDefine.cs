@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -1961,7 +1961,7 @@ namespace YuLinTu.Library.Business
             FamilySurveyChronicleIndex = 17;
             FamilyCheckPersonIndex = 18;
             FamilyCheckDateIndex = 19;
-            FamilyCheckOpinionIndex = 120;
+            FamilyCheckOpinionIndex = 20;
             LandNameIndex = 21;
             CadastralNumberIndex = 22;
             ImageNumberIndex = 23;

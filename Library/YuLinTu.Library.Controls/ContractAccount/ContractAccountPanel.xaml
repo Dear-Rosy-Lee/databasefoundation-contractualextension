@@ -66,7 +66,7 @@
                         Margin="8,0,0,0"
                         VerticalAlignment="Center"
                         Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/承包地16.png"
-                        Text="{Binding AccountSummary.LandCount}"
+                        Text="{Binding AccountSummary.LandCount}" Width="180"
                         ToolTip="总地块数" />
 
                     <cmps:ImageTextItem
@@ -132,6 +132,7 @@
             cmps:DataGridAttacher.ColumnHeaderThumbWidth="1"
             cmps:DataGridAttacher.ContentBorderThickness="0,1,0,0"
             x:FieldModifier="public"
+            RenderOptions.BitmapScalingMode="LowQuality"
             AutoGenerateColumns="False"
             BorderThickness="0"
             ExpandItemWhenLeftMouseDoubleClick="False"
@@ -140,7 +141,7 @@
             MouseRightButtonDown="view_MouseRightButtonDown"
             PreviewMouseDown="view_PreviewMouseDown"
             SelectionChanged="view_SelectionChanged"
-            VirtualizingStackPanel.IsVirtualizing="True" 
+            VirtualizingStackPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
             <cmps:MetroTreeGrid.Columns>
                 <DataGridTemplateColumn
@@ -150,6 +151,7 @@
                     SortMemberPath="Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+
                             <DockPanel>
                                 <cmps:MetroTreeGridRowToggleButton />
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
@@ -170,6 +172,14 @@
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Object.Tag.Status}" Value="1">
                                     <Setter TargetName="tbName" Property="Foreground" Value="#BF2F0B" />
+                                    <Setter TargetName="tbName" Property="FontWeight" Value="Bold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Object.OldLandCode}" Value="{x:Null}">
+                                    <Setter TargetName="tbName" Property="Foreground" Value="#0b41bf" />
+                                    <Setter TargetName="tbName" Property="FontWeight" Value="Bold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Object.OldLandCode}" Value="">
+                                    <Setter TargetName="tbName" Property="Foreground" Value="#0b41bf" />
                                     <Setter TargetName="tbName" Property="FontWeight" Value="Bold" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Object.Tag.Status}" Value="2">
@@ -326,7 +336,8 @@
                     Width="80"
                     cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
                     Header="地力等级"
-                    SortMemberPath="LandLevelUI" Visibility="Collapsed">
+                    SortMemberPath="LandLevelUI"
+                    Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DockPanel>
@@ -352,9 +363,9 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Object.IsStockLand, Converter={StaticResource boolConvert}}" 
-                                    Foreground="{Binding Object.IsStockLand,Converter={StaticResource colorConvert}}"/>
-                           
+                                    Foreground="{Binding Object.IsStockLand, Converter={StaticResource colorConvert}}"
+                                    Text="{Binding Object.IsStockLand, Converter={StaticResource boolConvert}}" />
+
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -512,11 +523,12 @@
                                     Stretch="Uniform" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem    Name="miSearchLandCodeRepeat"
-                                     Click="miSearchLandCodeRepeat_Click"
-                                     Header="地块编码重复">
+                        <MenuItem
+                            Name="miSearchLandCodeRepeat"
+                            Click="miSearchLandCodeRepeat_Click"
+                            Header="地块编码重复">
                             <MenuItem.Icon>
-                                <Image 
+                                <Image
                                     Height="16"
                                     RenderOptions.BitmapScalingMode="NearestNeighbor"
                                     SnapsToDevicePixels="True"

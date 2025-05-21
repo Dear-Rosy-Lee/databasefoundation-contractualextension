@@ -22,5 +22,5 @@ using System.Runtime.InteropServices;
 //      ÄÚ²¿°æ±¾ºÅ
 //      ÐÞ¶©ºÅ
 //
-[assembly: AssemblyVersion("8.3.1.08602")]
-[assembly: AssemblyFileVersion("8.3.1.0802")]
+[assembly: AssemblyVersion("9.3.1.08602")]
+[assembly: AssemblyFileVersion("9.3.1.0802")]

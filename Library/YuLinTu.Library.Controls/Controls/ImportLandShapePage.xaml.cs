@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -62,6 +62,8 @@ namespace YuLinTu.Library.Controls
         /// 按照原地块编码绑定导入
         /// </summary>
         public bool UseOldLandCodeBindImport { get; private set; }
+
+        public bool DelLandImport { get; private set; }
 
         /// <summary>
         /// 数据汇总设置实体属性
@@ -297,6 +299,7 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void btnExcuteImport_Click_1(object sender, RoutedEventArgs e)
         {
+            DelLandImport = (bool)landdelCheck.IsChecked;
             //保存当前配置
             Dispatcher.Invoke(new Action(() =>
             {

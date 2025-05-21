@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,9 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public static string ExcelTemplate(string templateName)
         {
-            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                string.Format(@"Template\{0}.xlt", templateName));
+            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Template\\{templateName}.xlt");
+            if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Template\\{templateName}.xltx");
             if (!File.Exists(fileName))
                 throw new Exception(string.Format("模板文件:{0}.xlt不存在", templateName));
             return fileName;
@@ -58,6 +59,19 @@ namespace YuLinTu.Library.Business
                 string.Format(@"Template\{0}.dot", templateName));
             if (!File.Exists(fileName))
                 throw new Exception(string.Format("模板文件:{0}.dot不存在", templateName));
+            return fileName;
+        }
+        /// <summary>
+        /// 获取模板
+        /// </summary>
+        /// <param name="templateName"></param>
+        /// <returns></returns>
+        public static string WordDocxTemplate(string templateName)
+        {
+            string fileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                string.Format(@"Template\{0}.docx", templateName));
+            if (!File.Exists(fileName))
+                throw new Exception(string.Format("模板文件:{0}.docx不存在", templateName));
             return fileName;
         }
 
@@ -119,8 +133,12 @@ namespace YuLinTu.Library.Business
                 {
                     Shape = c.Shape,
                     ID = c.ID,
+                    OwnerId = c.OwnerId,
+                    ZoneCode = c.ZoneCode,
                     LandNumber = c.LandNumber,
-                    OwnerName = c.OwnerName
+                    OwnerName = c.OwnerName,
+                    AwareArea = c.AwareArea,
+                    ActualArea = c.ActualArea
                 }).ToList();
             return VillageLands;
         }
@@ -167,6 +185,7 @@ namespace YuLinTu.Library.Business
                 NeighborSouth = c.NeighborSouth,
                 NeighborWest = c.NeighborWest,
                 OwnerId = c.OwnerId,
+                ZoneCode = c.ZoneCode
                 //Purpose = c.Purpose,
                 //PlatType = c.PlatType,
             }).ToList();

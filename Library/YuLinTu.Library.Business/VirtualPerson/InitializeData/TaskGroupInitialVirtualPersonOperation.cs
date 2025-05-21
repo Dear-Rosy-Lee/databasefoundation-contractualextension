@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,9 @@ namespace YuLinTu.Library.Business
             foreach (var zone in allZones)
             {
                 currentVps = listAllPersons.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
-                TaskInitialVirtualPersonArgument argument = new TaskInitialVirtualPersonArgument();
+                var argument = groupArgument.ConvertTo<TaskInitialVirtualPersonArgument>();
+                /*
+                new TaskInitialVirtualPersonArgument();
                 argument.Database = dbContext;
                 argument.CurrentZone = currentZone;
                 argument.InitiallNumber = groupArgument.InitiallNumber;
@@ -110,12 +112,16 @@ namespace YuLinTu.Library.Business
                 argument.Expand = groupArgument.Expand;
                 argument.CNation = groupArgument.CNation;
                 argument.VirtualType = groupArgument.VirtualType;
-                argument.ListPerson = VirtualPersonFilter(groupArgument, currentVps);
+
                 argument.FarmerFamilyNumberIndex = farmerFamilyNumberIndex;
                 argument.PersonalFamilyNumberIndex = personalFamilyNumberIndex;
                 argument.UnitFamilyNumberIndex = unitFamilyNumberIndex;
                 argument.VillageInlitialSet = groupArgument.VillageInlitialSet;
-                TaskInitialVirtualPersonOperation operation = new TaskInitialVirtualPersonOperation();
+                */
+
+                argument.ListPerson = VirtualPersonFilter(groupArgument, currentVps);
+
+                var operation = new TaskInitialVirtualPersonOperation();
                 operation.Argument = argument;
                 operation.Name = "批量初始化承包方基本信息";
                 operation.Description = zone.FullName;

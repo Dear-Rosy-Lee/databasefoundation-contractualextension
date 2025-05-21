@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -267,7 +267,7 @@ namespace YuLinTu.Library.Business
             {
                 SetRange("B3", "B3", conLand.OwnerName.InitalizeFamilyName(systemset.KeepRepeatFlag), true);
                 SetRange("B4", "B4", conLand.LandNumber, true);
-                SetRange("B5", "B5", Math.Round(conLand.ActualArea, 4).ToString() + "(亩)");
+                SetRange("B5", "B5", ToolMath.RoundNumericFormat(conLand.ActualArea, 4).ToString() + "(亩)");
                 SetRange("E3", "E3", conLand.Name, true);
                 SetRange("E4", "E4", conLand.LandName, true);
                 SetRange("E5", "E5", (conLand.IsFarmerLand != null && conLand.IsFarmerLand.HasValue) ? (conLand.IsFarmerLand.Value ? "是" : "否") : "");

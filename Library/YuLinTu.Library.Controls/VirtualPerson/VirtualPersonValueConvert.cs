@@ -1,12 +1,7 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel; 
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,31 +19,46 @@ namespace YuLinTu.Library.Controls
         /// <summary>
         /// 锁定
         /// </summary>
-        public static BitmapImage imgLock = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
+        public static BitmapImage imgLock { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
 
         /// <summary>
         /// 家庭
         /// </summary>
-        public static BitmapImage imgFamily = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
+        public static BitmapImage imgFamily { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
 
         /// <summary>
         /// 男
         /// </summary>
-        public static BitmapImage imgMan = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/男16.png"));
+        public static BitmapImage imgMan { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/男16.png"));
 
         /// <summary>
         /// 女
         /// </summary>
-        public static BitmapImage imgWoman = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/女16.png"));
+        public static BitmapImage imgWoman { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/女16.png"));
 
         /// <summary>
         /// 未知
         /// </summary>
-        public static BitmapImage imgUnKnown = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主_黑16.png"));
+        public static BitmapImage imgUnKnown { get; set; } // = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主_黑16.png"));
 
         #endregion
 
         #region Methods
+
+        public ImageValueConvert()
+        {
+            imgLock = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/锁定承包方_16.png"));
+            imgFamily = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主16.png"));
+            imgMan = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/男16.png"));
+            imgWoman = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/女16.png"));
+            imgUnKnown = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/户主_黑16.png"));
+            imgMan.CacheOption = BitmapCacheOption.OnLoad;
+            imgWoman.CacheOption = BitmapCacheOption.OnLoad;
+            imgFamily.CacheOption = BitmapCacheOption.OnLoad;
+            imgLock.CacheOption = BitmapCacheOption.OnLoad;
+            imgUnKnown.CacheOption = BitmapCacheOption.OnLoad;
+        }
+
 
         /// <summary>
         /// 转换
@@ -204,7 +214,7 @@ namespace YuLinTu.Library.Controls
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null)
-                return Brushes.DimGray ;
+                return Brushes.DimGray;
             bool gender = (bool)value;
             return gender ? Brushes.Brown : Brushes.DimGray;
         }

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 

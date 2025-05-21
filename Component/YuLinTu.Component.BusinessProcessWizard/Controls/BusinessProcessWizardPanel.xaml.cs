@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -279,21 +279,6 @@ namespace YuLinTu.Component.BusinessProcessWizard
         }
 
         #endregion
-
-        /// <summary>
-        /// 系统信息常规设置
-        /// </summary>
-        public SystemSetDefine SystemSet
-        {
-            get
-            {
-                var center = TheApp.Current.GetSystemSettingsProfileCenter();
-                var profile = center.GetProfile<SystemSetDefine>();
-                var section = profile.GetSection<SystemSetDefine>();
-                var config = section.Settings as SystemSetDefine;
-                return config;
-            }
-        }
 
         /// <summary>
         /// 数据字典

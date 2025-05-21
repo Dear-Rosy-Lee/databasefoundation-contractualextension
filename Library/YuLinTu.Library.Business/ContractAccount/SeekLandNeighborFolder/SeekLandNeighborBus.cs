@@ -1,10 +1,11 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NPOI.SS.Formula.Functions;
 using YuLinTu;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
@@ -74,6 +75,8 @@ namespace YuLinTu.Library.Business
         /// 查询阈值(米)
         /// </summary>
         public double queryThreshold { set; get; }
+
+        public bool onlyCurrentZone { get; set; }
 
         private List<Dictionary> DKLBdics;
         private List<Dictionary> TDLYLXdics;
@@ -204,6 +207,7 @@ namespace YuLinTu.Library.Business
             isQueryXMzdw = meta.seekLandNeighborSet.IsQueryXMzdw;
             queryThreshold = meta.seekLandNeighborSet.QueryThreshold;
             SearchDeteilRule = meta.seekLandNeighborSet.SearchDeteilRule;
+            onlyCurrentZone = meta.seekLandNeighborSet.OnlyCurrentZone;
 
             TDLYLXdics = meta.DicList.FindAll(d => d.GroupCode == DictionaryTypeInfo.TDLYLX);
             DKLBdics = meta.DicList.FindAll(d => d.GroupCode == DictionaryTypeInfo.DKLB);
@@ -599,7 +603,6 @@ namespace YuLinTu.Library.Business
                 string landneiborghsouthStr = "";
                 string landneiborghwestStr = "";
                 string landneiborghnorthtStr = "";
-
                 var landinfos = landneiborghinfos[i].Split(':');
                 //var targetlandnumber = landinfos[0];
                 //if (targetlandnumber != null)
@@ -607,15 +610,15 @@ namespace YuLinTu.Library.Business
                 //    targetLand = currentZoneLandList.Find(cf => cf.LandNumber == targetlandnumber);
                 //    if (targetLand == null) continue;
                 //}
-
                 var targetlandid = landinfos[0];
                 if (targetlandid != null)
                 {
                     Guid landid = Guid.NewGuid();
                     Guid.TryParse(targetlandid, out landid);
                     targetLand = currentZoneQueryLandList.Find(cf => cf.ID == landid);
-                    if (targetLand == null || targetLand.ZoneCode == null ||
-                        !targetLand.ZoneCode.StartsWith(currentZone.FullCode))
+                    if (targetLand == null || targetLand.ZoneCode == null)
+                        continue;
+                    if (onlyCurrentZone && !targetLand.ZoneCode.StartsWith(currentZone.FullCode))
                         continue;
                 }
 
@@ -646,10 +649,20 @@ namespace YuLinTu.Library.Business
                 updateLands.Add(targetLand);
                 this.ReportProgress(40 + (int)(landPercent * index), string.Format("更新{0}的地块四至信息", markDesc + targetLand.OwnerName));
             }
-
-            this.ReportProgress(98, "查找完成，开始上传");
-            landStation.UpdateRange(updateLands);
-
+            if (updateLands.Count > 0)
+            {
+                this.ReportProgress(98, "查找完成，开始更新数据库");
+                var metadata = Argument as TaskSeekLandNeighborArgument;
+                if (metadata.UpdateLandList != null && metadata.UpdateLandList.Count > 0)
+                {
+                    var tuplist = updateLands.FindAll(t => metadata.UpdateLandList.Any(a => a.LandNumber == t.LandNumber));
+                    landStation.UpdateRange(tuplist);
+                }
+                else
+                {
+                    landStation.UpdateRange(updateLands);
+                }
+            }
             this.ReportInfomation(string.Format("在{0}下共查找{1}个地块", markDesc, currentZoneLandList.Count));
         }
 

@@ -42,7 +42,7 @@
                 </cmps:MetroListBox.ItemsPanel>
                 <cmps:MetroListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}" Tag="{Binding ID}" IsChecked="{Binding Status,Converter={StaticResource LockValueConvert},Mode=OneWay}" Width="80" BorderThickness="0" Click="vpItem_Click"/>
+                        <CheckBox Content="{Binding Name}" Tag="{Binding ID}" IsChecked="{Binding Status,Converter={StaticResource LockValueConvert},Mode=OneWay}" Width="80" BorderThickness="1" Click="vpItem_Click"/>
                     </DataTemplate>
                 </cmps:MetroListBox.ItemTemplate>
             </cmps:MetroListBox>

@@ -47,5 +47,8 @@ namespace YuLinTu.Library.WorkStation
         // 是否需要特别处理，如湖南的承包地块调查表
         [XmlAttribute(AttributeName = "IsSpecial")]
         public bool IsSpecial { get; set; } = false;
+
+        [XmlAttribute(AttributeName = "BaseClass")]
+        public string BaseClass { get; set; }
     }
 }

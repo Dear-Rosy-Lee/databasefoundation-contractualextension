@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
 using System;
@@ -167,7 +167,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 注销
         /// </summary>
-        private void Disponse()
+        protected void Disponse()
         {
             base.Destroyed();
             virtualPerson = null;
@@ -183,7 +183,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写承包方信息
         /// </summary>
-        private void WitePersonInformaion()
+        public virtual void WitePersonInformaion()
         {
             List<Person> persons = virtualPerson.SharePersonList;    //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name); //排序共有人，并返回人口集合
@@ -216,7 +216,7 @@ namespace YuLinTu.Library.Business
         /// 设置共有人信息
         /// </summary>
         /// <param name="dt"></param>
-        private void WriteSharePersonValue()
+        public virtual void WriteSharePersonValue()
         {
             List<Person> persons = virtualPerson.SharePersonList;    //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name); //排序共有人，并返回人口集合
@@ -240,7 +240,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写承包地块信息
         /// </summary>
-        protected virtual void WriteLandInfo()
+        public virtual void WriteLandInfo()
         {
             int rowCount = ListLand.Count;
             if (rowCount > 1)
@@ -269,7 +269,19 @@ namespace YuLinTu.Library.Business
                 SetTableCellValue(tableIndex, startRow, 3, item.NeighborWest.IsNullOrEmpty() ? "" : item.NeighborWest);
                 SetTableCellValue(tableIndex, startRow, 4, item.NeighborSouth.IsNullOrEmpty() ? "" : item.NeighborSouth);
                 SetTableCellValue(tableIndex, startRow, 5, item.NeighborNorth.IsNullOrEmpty() ? "" : item.NeighborNorth);
-                SetTableCellValue(tableIndex, startRow, 6, item.AwareArea.ToString());
+                var areastr = item.AwareArea.ToString();
+                switch (AreaType)
+                {
+                    case 0:
+                        areastr = item.TableArea.ToString();
+                        break;
+                    case 1:
+                        areastr = item.ActualArea.ToString();
+                        break;
+                    default:
+                        break;
+                }
+                SetTableCellValue(tableIndex, startRow, 6, areastr);
                 totleAwareArea += item.AwareArea;
                 if (item.LandLevel == "01")
                 {
@@ -352,7 +364,7 @@ namespace YuLinTu.Library.Business
         /// 获取性别
         /// </summary>
         /// <returns></returns>
-        private string GetGender()
+        protected string GetGender()
         {
             List<Person> persons = virtualPerson.SharePersonList;   //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name);//排序共有人，并返回人口集合
@@ -365,7 +377,7 @@ namespace YuLinTu.Library.Business
         /// 获取年龄
         /// </summary>
         /// <returns></returns>
-        private string GetAge()
+        protected string GetAge()
         {
             List<Person> persons = virtualPerson.SharePersonList;   //得到户对应的共有人
             List<Person> sharePersons = SortSharePerson(persons, virtualPerson.Name);//排序共有人，并返回人口集合
@@ -482,7 +494,7 @@ namespace YuLinTu.Library.Business
         {
             //WitePersonInformaion();
             WriteSharePersonValue();
-
+            ProcessLandParcel();
             WriteLandInfo();
 
             //WriteReclamationInformation();
@@ -501,7 +513,6 @@ namespace YuLinTu.Library.Business
                 date = ((DateTime)Concord.ArableLandStartTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "至"
                     + ((DateTime)Concord.ArableLandEndTime).ToString("yyyy年MM月dd日", DateTimeFormatInfo.InvariantInfo) + "。";
             }
-            ProcessLandParcel();
             //InsertImageCellWithoutPading(AgricultureBookMark.AgricultureAllShape, savePathOfImage + @"\" + Contractor.SenderCode + "-" + Contractor.Name + ".jpg", 180, 250);
             SetBookmarkValue("SocialCode", Tissue.SocialCode);
             SetBookmarkValue(AgricultureBookMark.ConcordTrem, Concord.Flag ? "长久" : Concord.ManagementTime + "年:");  // 合同期限
@@ -511,7 +522,7 @@ namespace YuLinTu.Library.Business
             var contractorAddress = GetSettingContractorName(concord.ZoneCode) ?? virtualPerson.Address;
             for (int i = 0; i < 6; i++)
             {
-                SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
+                SetBookmarkValue("ConcordSenderName" + (i == 0 ? "" : i.ToString()), senderName);     // 发包方名称
                 SetBookmarkValue("ContractorAddress" + (i == 0 ? "" : i.ToString()), contractorAddress);     // 承包方地址
             }
 
@@ -531,7 +542,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 处理的地块示意图
         /// </summary>
-        private void ProcessLandParcel()
+        protected void ProcessLandParcel()
         {
             DiagramsView ViewOfAllMultiParcel = null;
             DiagramsView ViewOfNeighorParcels = null;
@@ -675,7 +686,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写承包方地址
         /// </summary>
-        private void WriteZoneInfo()
+        protected void WriteZoneInfo()
         {
             if (CurrentZone == null)
             {
@@ -740,7 +751,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 根据地域编码与级别获取名称
         /// </summary>
-        private string GetSettingSenderName(string zoneCode)
+        protected string GetSettingSenderName(string zoneCode)
         {
             switch (concordSetting.SendNamePrefixLevel)
             {
@@ -758,7 +769,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 根据地域编码与级别获取名称
         /// </summary>
-        private string GetSettingContractorName(string zoneCode)
+        protected string GetSettingContractorName(string zoneCode)
         {
             switch (concordSetting.ContractorNamePrefixLevel)
             {
@@ -776,7 +787,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 根据地域编码与级别获取名称
         /// </summary>
-        private string GetZoneNameByLevel(string zoneCode, eZoneLevel zoneLevel)
+        protected string GetZoneNameByLevel(string zoneCode, eZoneLevel zoneLevel)
         {
             var zoneName = string.Empty;
             Zone zone = zoneBusiness.Get(zoneCode);
@@ -797,7 +808,7 @@ namespace YuLinTu.Library.Business
         /// <param name="zoneCode"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        private string GetZoneName(string zoneCode, eZoneLevel level)
+        protected string GetZoneName(string zoneCode, eZoneLevel level)
         {
             var zoneStation = DataBaseSource.GetDataBaseSource().CreateZoneWorkStation();
             Zone temp = zoneStation.Get(c => c.FullCode == zoneCode).FirstOrDefault();
@@ -817,7 +828,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 填写日期扩展信息
         /// </summary>
-        private void WriteDateExpressInformation()
+        protected void WriteDateExpressInformation()
         {
             for (int i = 0; i < 6; i++)
             {
@@ -850,7 +861,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 获取土地地址
         /// </summary>
-        private string GetLandLocation()
+        protected string GetLandLocation()
         {
             Zone city = zoneBusiness.Get(CurrentZone.FullCode.Substring(0, Zone.ZONE_CITY_LENGTH));
             if (city == null)
@@ -866,7 +877,7 @@ namespace YuLinTu.Library.Business
         /// 创建发包方扩展
         /// </summary>
         /// <returns></returns>
-        private string CreateSenderExpress()
+        protected string CreateSenderExpress()
         {
             if (CurrentZone == null)
             {

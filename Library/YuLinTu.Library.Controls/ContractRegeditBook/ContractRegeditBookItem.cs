@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Controls
 {
@@ -299,8 +300,13 @@ namespace YuLinTu.Library.Controls
             Name = regeditBook.Year != null ? regeditBook.Year : "";
             Name += SNumber;
             Number = regeditBook.Number != null ? regeditBook.Number : "";
-            SerialNumber = regeditBook.SerialNumber != null ? int.Parse(regeditBook.SerialNumber).ToString() : "";
-            //RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
+            if (regeditBook.SerialNumber != null)
+            {
+                int sernumber = 0;
+                int.TryParse(regeditBook.SerialNumber, out sernumber);
+                SerialNumber = sernumber == 0 ? regeditBook.SerialNumber : sernumber.ToString();
+            }
+            RegeditNumber = regeditBook.RegeditNumber != null ? regeditBook.RegeditNumber : "";
             SenderName = concord.SenderName != null ? concord.SenderName : "";
             CountActualArea = ToolMath.SetNumbericFormat(concord.CountActualArea.ToString(), 2);
             CountAwareArea = ToolMath.SetNumbericFormat(concord.CountAwareArea.ToString(), 2);

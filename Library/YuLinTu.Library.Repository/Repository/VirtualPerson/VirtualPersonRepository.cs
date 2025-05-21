@@ -1,4 +1,4 @@
-﻿// (C) 2015 鱼鳞图公司版权所有，保留所有权利
+﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -269,26 +269,22 @@ namespace YuLinTu.Library.Repository
 
             List<VirtualPerson> list = new List<VirtualPerson>();
             List<T> data = new List<T>();
-            try
-            {
-                //2011年1月18日 21:12:49    Roc 修改数据获取方法，增加在查询时的数据排序
-                if (levelOption == eLevelOption.Self)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.Equals(code)
-                            orderby q.Name
-                            select q).ToList();
-                else if (levelOption == eLevelOption.Subs)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.StartsWith(code) && q.ZoneCode != code
-                            orderby q.Name
-                            select q).ToList();
-                else if (levelOption == eLevelOption.SelfAndSubs)
-                    data = (from q in DataSource.CreateQuery<T>()
-                            where q.ZoneCode.StartsWith(code)
-                            orderby q.Name
-                            select q).ToList();
-            }
-            catch { }
+            //2011年1月18日 21:12:49    Roc 修改数据获取方法，增加在查询时的数据排序
+            if (levelOption == eLevelOption.Self)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.Equals(code)
+                        orderby q.Name
+                        select q).ToList();
+            else if (levelOption == eLevelOption.Subs)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.StartsWith(code) && q.ZoneCode != code
+                        orderby q.Name
+                        select q).ToList();
+            else if (levelOption == eLevelOption.SelfAndSubs)
+                data = (from q in DataSource.CreateQuery<T>()
+                        where q.ZoneCode.StartsWith(code)
+                        orderby q.Name
+                        select q).ToList();
             if (data != null && data.Count > 0)
             {
                 data.ForEach(t => list.Add(t));
@@ -438,6 +434,33 @@ namespace YuLinTu.Library.Repository
         /// </summary>
         /// <param name="virtualPerson">承包方对象</param>
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
+        public void UpdateListZoneCode(List<LandVirtualPerson> virtualPersons)
+        {
+            if (!CheckTableExist())
+            {
+                throw new ArgumentNullException("数据库不存在表："
+                    + this.GetType().ToString().Substring(this.GetType().ToString().LastIndexOf('.') + 1).Replace("Repository", ""));
+            }
+            if (virtualPersons == null)
+                return;
+            var q = DataSource.CreateQuery<LandVirtualPerson>();
+            foreach (var vp in virtualPersons)
+            {
+                AppendEdit(q.Where(c => c.ID.Equals(vp.ID)).Update(
+                      c => new LandVirtualPerson
+                      {
+                          OldVirtualCode = vp.OldVirtualCode,
+                          ZoneCode = vp.ZoneCode,
+                          ModifiedTime = DateTime.Now
+                      }));
+            }
+        }
+
+        /// <summary>
+        /// 更新承包方对象
+        /// </summary>
+        /// <param name="virtualPerson">承包方对象</param>
+        /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         public int Update(VirtualPerson virtualPerson, bool onlycode = false)
         {
             if (!CheckTableExist())
@@ -477,7 +500,8 @@ namespace YuLinTu.Library.Repository
             cnt = AppendEdit(DataSource.CreateQuery<LandVirtualPerson>().Where(c => c.ID == virtualPerson.ID).
                 Update(s => new LandVirtualPerson()
                 {
-                    OldVirtualCode = s.ZoneCode.PadRight(14, '0') + s.FamilyNumber.PadLeft(4, '0')
+                    ZoneCode = virtualPerson.ZoneCode,
+                    OldVirtualCode = virtualPerson.OldVirtualCode
                 }));
             return cnt;
         }

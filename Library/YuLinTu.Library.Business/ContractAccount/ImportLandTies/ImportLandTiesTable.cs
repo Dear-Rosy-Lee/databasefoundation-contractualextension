@@ -162,6 +162,21 @@ namespace YuLinTu.Library.Business
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
                     landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
+                    foreach (var ld in landFamily.LandCollection)
+                    {
+                        var yld = remainLands.Find(t => t.LandNumber == ld.LandNumber);
+                        if (yld != null)
+                        {
+                            ld.Shape = yld.Shape;
+                            ld.OwnRightType=yld.OwnRightType;
+                            ld.LandExpand = yld.LandExpand;
+                        }
+                        else 
+                        {
+                            Log.Log.WriteError(this, "ImportLandEntity", $"未在数据中找到{ld.LandNumber}的图形");
+                        }
+                    }
+
                     personStation.Add(landFamily.CurrentFamily);
                     if (ImportType != eImportTypes.Over)//只更新承包方
                     {

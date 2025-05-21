@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using System;
 using System.Collections.Generic;
@@ -200,11 +200,21 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
-        public int UpdateOldLandCode(ContractLand entity)
+        public int UpdateOldLandCode(ContractLand entity, bool onlycode)
         {
-            DefaultRepository.UpdateOldLandCode(entity);
+            DefaultRepository.UpdateOldLandsCode(entity, onlycode);
             return TrySaveChanges(DefaultRepository);
         }
+
+        public int UpdateOldLandCode(List<ContractLand> entities, bool onlycode)
+        {
+            foreach (var entity in entities)
+            {
+                DefaultRepository.UpdateOldLandsCode(entity, onlycode);
+            }
+            return TrySaveChanges(DefaultRepository);
+        }
+
 
         public int UpdateLandCode(List<ContractLand> entity)
         {
@@ -1265,7 +1275,7 @@ namespace YuLinTu.Library.WorkStation
         /// 导出承包方Word调查表
         /// </summary>
         public void ExportObligeeWord(Zone zone, VirtualPerson vp, string MarkDesc,
-            string ConcordNumber, CollectivityTissue sender, List<Dictionary> diclist,
+            ContractConcord concord, CollectivityTissue sender, List<Dictionary> diclist,
             string WarrentNumber, ContractRegeditBook book, string DefaultPath, bool ExportVPTableCountContainsDiedPerson, bool KeepRepeatFlag, Func<string> GetReplace = null)
         {
             if (vp == null || zone == null)
@@ -1291,7 +1301,8 @@ namespace YuLinTu.Library.WorkStation
             export.ExportVPTableCountContainsDiedPerson = ExportVPTableCountContainsDiedPerson;
             export.DictList = diclist;
             export.Book = book;
-            export.ConcordNumber = ConcordNumber;
+            export.Concord = concord;
+            export.ConcordNumber = concord == null ? "" : concord.ConcordNumber;
             export.Tissue = sender;  //发包方
             export.WarrentNumber = WarrentNumber;
             export.OpenTemplate(tempPath);

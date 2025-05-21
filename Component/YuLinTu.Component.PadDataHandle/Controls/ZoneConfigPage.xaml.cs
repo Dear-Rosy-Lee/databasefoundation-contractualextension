@@ -68,9 +68,9 @@ namespace YuLinTu.Component.PadDataHandle
             Dispatcher.Invoke(new Action(() =>
             {
                 systemCenter = TheApp.Current.GetSystemSettingsProfileCenter();  //系统配置
-                var profile = systemCenter.GetProfile<SystemSetDefine>();
-                var section = profile.GetSection<SystemSetDefine>();
-                config = (section.Settings);
+                //var profile = systemCenter.GetProfile<SystemSetDefine>();
+                //var section = profile.GetSection<SystemSetDefine>();
+                config = SystemSetDefine.GetIntence();// (section.Settings);
                 CurrentDefine = config.Clone() as SystemSetDefine;
                 DataContext = CurrentDefine;
             }));

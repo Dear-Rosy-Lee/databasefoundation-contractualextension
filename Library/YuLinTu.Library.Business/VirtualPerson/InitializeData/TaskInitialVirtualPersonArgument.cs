@@ -1,5 +1,5 @@
 ﻿/*
- * (C) 2015  鱼鳞图公司版权所有,保留所有权利 
+ * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
 using Microsoft.Scripting.Actions;
 using System;
@@ -196,6 +196,13 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public bool InitEndTime { get; set; }
 
+        public bool InitAllNum { get; set; }
+
+        /// <summary>
+        /// 初始化起始编码
+        /// </summary>         
+        public int InitiallStartNum { get; set; }
+
         #endregion
 
         #region Ctor
@@ -206,6 +213,7 @@ namespace YuLinTu.Library.Business
         public TaskInitialVirtualPersonArgument()
         {
             VirtualType = eVirtualType.Land;
+            FarmerFamilyNumberIndex = new int[] { 1 };
         }
 
         #endregion 
