@@ -220,7 +220,7 @@
                             Text="确定" />
                     </StackPanel>
                 </metro:MetroButton>
-
+                <CheckBox DockPanel.Dock="Left" IsChecked="True" Margin="5,0" Content="创建默认发包方" x:Name="cb_recode"></CheckBox>
                 <TextBlock
                     Name="lbTip"
                     VerticalAlignment="Center"
