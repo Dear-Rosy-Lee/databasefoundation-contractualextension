@@ -183,8 +183,6 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
-                    if (sd.Code != "51160310321001")
-                        continue;
                     var upvps = new List<VirtualPerson>();
                     var deloldvps = new List<VirtualPerson_Del>();
                     var uplands = new List<ContractLand>();

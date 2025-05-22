@@ -83,8 +83,11 @@ namespace YuLinTu.Library.Business
             double buffer = settingDefine.Neighborlandbufferdistence;
             //var currentVillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(currentGroupZone, dbContext, buffer);
             List<ContractLand> currentVillageContractLands = new List<ContractLand>();
+            List<Zone> revzones = new List<Zone>(100);
             foreach (var zone in selfAndSubsZones)
             {
+                if (revzones.Contains(zone))
+                    continue;
                 if (zone.Level > eZoneLevel.Village)
                     continue;
                 if (zone.Level == eZoneLevel.Village)
@@ -99,6 +102,7 @@ namespace YuLinTu.Library.Business
                             string savePath = CreateDirectoryHelper.CreateDirectory(allZones, item);
                             string fsavePath = fileName + @"\" + savePath;
                             Add(Operation(dbContext, listPersons, item, fsavePath, currentVillageContractLands.FindAll(t => t.ZoneCode == item.FullCode)));
+                            revzones.Add(item);
                         }
                     }
                     else
