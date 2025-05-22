@@ -997,9 +997,9 @@ namespace YuLinTu.Library.Business
                             tempLands.Add(itemland);
                         }
                     }
-                    else
+                    if (tempLands.Count == 0)
                     {
-                        tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
+                        //tempLands = landStation.GetIntersectLands(geoLand, geolandbuffershape);
                     }
                     Dictionary<string, bool> landneighborhasland = new Dictionary<string, bool>();
                     if (SettingDefine.ShowlandneighborLabel && SettingDefine.NeighborlandSearchUseUserAlgorithm == false)
