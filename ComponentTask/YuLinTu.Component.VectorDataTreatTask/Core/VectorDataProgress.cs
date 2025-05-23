@@ -98,7 +98,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
             return err;
         }
 
-        static public void InitiallShapeLandList(string filePath, int srid, Action<int, List<QCDK>> DataAction, string zoneCode = "")
+        static public void InitiallShapeLandList(string filePath, int srid, bool chekck, Action<int, List<QCDK>> DataAction, string zoneCode = "")
         {
             var dkList = new List<QCDK>();
 
@@ -112,14 +112,15 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 var err = shp.Open(filePath);
                 if (!string.IsNullOrEmpty(err))
                 {
-                    Log.WriteError(null, "", "读取地块Shape文件发生错误" + err);
-                    return;
+                    throw new Exception("读取地块Shape文件发生错误" + err);
                 }
                 var codeIndex = new Dictionary<string, int>();
-
-                ErrorInfo = CheckField(shp);
-                if (!string.IsNullOrEmpty(ErrorInfo))
-                    throw new Exception(filePath + ErrorInfo);
+                if (chekck)
+                {
+                    ErrorInfo = CheckField(shp);
+                    if (!string.IsNullOrEmpty(ErrorInfo))
+                        throw new Exception(filePath + ErrorInfo);
+                }
                 int count = shp.GetRecordCount();
                 foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, zoneCode))
                 {
@@ -152,8 +153,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 var err = shp.Open(filePath);
                 if (!string.IsNullOrEmpty(err))
                 {
-                    Log.WriteError(null, "", "读取地块Shape文件发生错误" + err);
-                    return null;
+                    throw new Exception("读取地块Shape文件发生错误" + err);
                 }
                 var codeIndex = new Dictionary<string, int>();
 

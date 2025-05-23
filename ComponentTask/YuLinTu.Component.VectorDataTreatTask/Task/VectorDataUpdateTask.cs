@@ -90,7 +90,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 catch (Exception ex)
                 {
                     Log.WriteException(this, "OnGo(数据处理失败!)", ex.Message + ex.StackTrace);
-                    this.ReportError(string.Format($"数据处理出错!{baseUrl} " + ex.Message));
+                    this.ReportError(string.Format($"数据处理出错!{ex.Message} {baseUrl}"));
                 }
             }
         }
@@ -220,7 +220,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 int index = 0;
                 int fupdatacount = 0;
                 int fcount = 0;
-                VectorDataProgress.InitiallShapeLandList(file, srid, (rowcount, landShapeList) =>
+                VectorDataProgress.InitiallShapeLandList(file, srid, false, (rowcount, landShapeList) =>
                 {
                     fcount = rowcount;
                     if (landShapeList == null)
