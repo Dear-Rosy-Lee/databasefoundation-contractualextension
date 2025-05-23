@@ -321,7 +321,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写地块信息
         /// </summary>
-        public override void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract)
+        public override void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract, int datanum = 2)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));

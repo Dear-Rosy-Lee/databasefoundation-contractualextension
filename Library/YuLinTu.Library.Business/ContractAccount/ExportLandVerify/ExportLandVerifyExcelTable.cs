@@ -306,7 +306,7 @@ namespace YuLinTu.Library.Business
                     TotalLandAware += land.AwareArea;
                 }
                 TotalLandActual += land.ActualArea;
-                WriteLandInformation(landFamily.CurrentFamily, land, aindex, land.LandCategory == familystr);
+                WriteLandInformation(landFamily.CurrentFamily, land, aindex, land.LandCategory == familystr, SystemDefine.DecimalPlaces);
                 SetRowHeight(aindex, 27.75);
                 if (!string.IsNullOrEmpty(land.OldLandNumber) && !setlandnumber.Contains(land.OldLandNumber))
                 {
@@ -566,7 +566,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写地块信息
         /// </summary>
-        public virtual void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract)
+        public virtual void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract, int datanum = 2)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
@@ -596,8 +596,8 @@ namespace YuLinTu.Library.Business
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
 
-            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, 2) : 0);
-            InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));
+            InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, datanum) : 0);
+            InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, datanum));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "");
             InitalizeRangeValue("AD" + index, "AD" + index, land.NeighborSouth != null ? land.NeighborSouth : "");
             InitalizeRangeValue("AE" + index, "AE" + index, land.NeighborWest != null ? land.NeighborWest : "");

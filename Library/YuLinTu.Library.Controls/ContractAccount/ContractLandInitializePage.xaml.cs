@@ -526,7 +526,6 @@ namespace YuLinTu.Library.Controls
                     {
                         Close(true);
                     });
-
                 });
             }
             else
