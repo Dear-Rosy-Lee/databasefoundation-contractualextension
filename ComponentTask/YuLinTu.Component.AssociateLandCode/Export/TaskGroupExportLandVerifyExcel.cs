@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
@@ -85,6 +83,8 @@ namespace YuLinTu.Library.Business
                 argument.DbContext = dbContext;
                 argument.FileName = fileName + @"\" + savePath;
                 argument.IsShow = false;
+                argument.Yqwq = groupArgument.Yqwq;
+
                 Directory.CreateDirectory(fileName + @"\" + savePath);
                 argument.VirtualType = groupArgument.VirtualType;
                 var operation = new TaskExportVerifyExcel();

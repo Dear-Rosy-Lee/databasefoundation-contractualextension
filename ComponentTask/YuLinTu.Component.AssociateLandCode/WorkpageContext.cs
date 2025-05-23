@@ -73,6 +73,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 var InitialDataPanel = btnInitialData.DropDownContent as StackPanel;
                 var exportsurvryexcelbtn = CreateInitialLandNumberBtn();
                 InitialDataPanel.Children.Add(exportsurvryexcelbtn);
+                var exportdatabtn = CreateInitialDataBtn();
+                InitialDataPanel.Children.Add(exportdatabtn);
             }
         }
 
@@ -91,6 +93,20 @@ namespace YuLinTu.Component.AssociateLandCode
             familyAccountBtn.Content = "关联数据调查成果表";
             familyAccountBtn.ToolTip = @"按区域导出调查调查表。";
             familyAccountBtn.Click += InitialLandNumberHandle;
+            return familyAccountBtn;
+        }
+
+        /// <summary>
+        /// 创建按钮
+        /// </summary>
+        private SuperButton CreateInitialDataBtn()
+        {
+            SuperButton familyAccountBtn = new SuperButton();
+            familyAccountBtn.Padding = new Thickness(8, 4, 8, 4);
+            familyAccountBtn.Image = new BitmapImage(new Uri("pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"));
+            familyAccountBtn.Content = "应确未确数据调查成果表";
+            familyAccountBtn.ToolTip = @"按区域导出应确未确数据调查成果表。";
+            familyAccountBtn.Click += InitialLandDataHandle;
             return familyAccountBtn;
         }
 
@@ -132,16 +148,49 @@ namespace YuLinTu.Component.AssociateLandCode
             });
         }
 
+        private void InitialLandDataHandle(object sender, RoutedEventArgs e)
+        {
+            if (btnInitialData != null)
+                btnInitialData.IsOpen = false;
+            string showBoxHeader = "导出应确未确数据调查成果表";
+            var currentZone = contractAccountPanel.CurrentZone;
+            if (currentZone == null)
+            {
+                ShowBox(showBoxHeader, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            if ((int)currentZone.Level > (int)eZoneLevel.County)
+            {
+                ShowBox(showBoxHeader, "请选择区县、乡镇、村级、组级地域进行数据导出");
+                return;
+            }
+            IDbContext DbContext = DataBaseSource.GetDataBaseSource();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+
+            int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+
+            ExportDataPage extPage = new ExportDataPage(currentZone.FullName, TheWorkPage, showBoxHeader);
+            extPage.Workpage = TheWorkPage;
+            TheWorkPage.Page.ShowMessageBox(extPage, (b, r) =>
+            {
+                if (b == null || !(bool)b)
+                    return;
+                ExportVerifyExcelTaskGroup(extPage.FileName, "批量导出应确未确数据调查成果表", showBoxHeader, currentZone, DbContext, true);
+            });
+        }
+
         /// <summary>
         /// 批量导出摸底调查表
         /// </summary>
-        public void ExportVerifyExcelTaskGroup(string fileName, string taskDes, string taskName, Zone currentZone, IDbContext DbContext)
+        public void ExportVerifyExcelTaskGroup(string fileName, string taskDes, string taskName, Zone currentZone, IDbContext DbContext, bool yqwq = false)
         {
             var groupArgument = new TaskGroupExportLandVerifyExcelArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = currentZone;
             groupArgument.FileName = fileName;
             groupArgument.VirtualType = eVirtualType.Land;
+            groupArgument.Yqwq = yqwq;
+
             var groupOperation = new TaskGroupExportLandVerifyExcel();
             groupOperation.Argument = groupArgument;
             groupOperation.Description = taskDes;

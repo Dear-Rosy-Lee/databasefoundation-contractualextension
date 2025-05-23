@@ -16,6 +16,11 @@ namespace YuLinTu.Library.Business
     {
         List<CheckVpEntity> checkVpEntities = new List<CheckVpEntity>();
 
+        /// <summary>
+        /// 是否应确未确
+        /// </summary>
+        public bool SFYQWQ { get; set; }
+
         #region Ctor
 
         public ExportRelationLandVerifyExcel()
@@ -281,7 +286,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
             InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), sfjt ? "" : virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), sfjt ? 0 : landFamily.Persons.Count);
@@ -327,7 +333,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
             InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
             if (dklb != null)
@@ -367,7 +374,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
             InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? landDel.DKBM : landDel.QQDKBM, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? landDel.DKBM : landDel.QQDKBM, Worksheet2);
             InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "");
