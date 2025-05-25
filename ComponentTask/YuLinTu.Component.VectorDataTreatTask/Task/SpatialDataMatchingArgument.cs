@@ -1,12 +1,10 @@
-﻿using Microsoft.Scripting.Actions;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using YuLinTu.Component.Account.Models;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace YuLinTu.Component.VectorDataTreatTask
 {

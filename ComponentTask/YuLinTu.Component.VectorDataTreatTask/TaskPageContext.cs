@@ -18,11 +18,11 @@ namespace YuLinTu.Component.VectorDataTreatTask
         [MessageHandler(ID = EdTask.LangInstallTaskTemplates)]
         private void OnInstallTaskTemplates(object sender, InstallTaskTemplatesEventArgs e)
         {
-            e.Templates.Add(new TaskDescriptor
-            {
-                TypeTask = typeof(VectorDataUpdateTask),
-                TypeArgument = typeof(VectorDataUpdateArgument)
-            });
+            //e.Templates.Add(new TaskDescriptor
+            //{
+            //    TypeTask = typeof(VectorDataUpdateTask),
+            //    TypeArgument = typeof(VectorDataUpdateArgument)
+            //});
 
             e.Templates.Add(new TaskDescriptor
             {

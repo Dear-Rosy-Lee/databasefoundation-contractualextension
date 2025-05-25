@@ -18,11 +18,11 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         [MessageHandler(ID = EdTask.LangInstallTaskTemplates)]
         private void OnInstallTaskTemplates(object sender, InstallTaskTemplatesEventArgs e)
         {
-            e.Templates.Add(new TaskDescriptor
-            {
-                TypeTask = typeof(QualityCompressionData),
-                TypeArgument = typeof(QualityCompressionDataArgument)
-            });
+            //e.Templates.Add(new TaskDescriptor
+            //{
+            //    TypeTask = typeof(QualityCompressionData),
+            //    TypeArgument = typeof(QualityCompressionDataArgument)
+            //});
         }
 
         protected override bool NeedHandleMessage()

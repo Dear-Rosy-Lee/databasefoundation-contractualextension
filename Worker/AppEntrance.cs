@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using Autofac;
 using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Product.YuLinTuTool
@@ -23,6 +20,8 @@ namespace YuLinTu.Product.YuLinTuTool
                 value = value + ";" + path + ";" + sppath;
                 Environment.SetEnvironmentVariable(variableName, value);
             }
+            UpdateProgram.InstallUpdateProgram();
+            UpdateProgram.CheckUpdate(false);
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);
         }

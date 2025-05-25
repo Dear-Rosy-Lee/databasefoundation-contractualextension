@@ -24,7 +24,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Product.YuLinTuTool</RootNamespace>
-    <AssemblyName>YuLinTuLandEncryptTool</AssemblyName>
+    <AssemblyName>ContractLandEncryptTool</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -156,7 +156,7 @@
     </Reference>
     <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
@@ -352,6 +352,7 @@
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -426,6 +427,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ServiceSetDefine.cs" />
+    <Compile Include="UpdateProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -1109,14 +1112,8 @@
   <PropertyGroup>
     <PostBuildEvent>md "$(SolutionDir)Workspace\Libraries\libs\"
 md "$(SolutionDir)Workspace\Libraries\x86\"
-md "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
-md "$(SolutionDir)Workspace\Libraries\x86\Quality\"
-md "$(SolutionDir)Workspace\Libraries\x86\Thought\"
 md "$(SolutionDir)Workspace\Libraries\x86\GDAL\"
 
-copy /Y "$(SolutionDir)Dependencies\Exchange\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Exchange\"
-copy /Y "$(SolutionDir)Dependencies\Quality\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Quality\"
-copy /Y "$(SolutionDir)Dependencies\Thought\*.dll" "$(SolutionDir)Workspace\Libraries\x86\Thought\"
 copy /Y "$(SolutionDir)Dependencies\GDAL\*.dll" "$(SolutionDir)Workspace\Libraries\x86\GDAL\" 
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.exe" "$(SolutionDir)Workspace\Libraries\libs\"
