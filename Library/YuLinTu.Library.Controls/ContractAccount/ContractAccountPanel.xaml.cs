@@ -3331,6 +3331,7 @@ namespace YuLinTu.Library.Controls
             catch (Exception ex)
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportVPWord(导出承包方Word调查表)", ex.Message + ex.StackTrace);
+                ShowBox("错误", ex.Message, eMessageGrade.Error, null, false, true);
                 return;
             }
         }

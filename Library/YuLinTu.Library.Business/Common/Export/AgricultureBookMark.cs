@@ -164,7 +164,7 @@ namespace YuLinTu.Library.Business
 
         //发包方
         public const string SenderName = "SenderName";//发包方名称
-        public const string SenderLawyerCode = "SenderLawyerCode";//发包方社会信用编码
+        public const string SenderLawyerCode = "SocialCode";//发包方社会信用编码
         public const string SenderNameExpress = "SenderNameExpress";//发包方名称扩展如(第一村民小组)。
         public const string SenderLawyerName = "SenderLawyerName";//发包方法人名称
         public const string SenderLawyerTelephone = "SenderLawyerTelephone";//发包方法人联系方式
