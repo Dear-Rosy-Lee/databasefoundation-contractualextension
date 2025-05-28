@@ -237,6 +237,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(mbtnDel, command.ContractLandDel, command.ContractLandDelBind);
             SetCommandBinding(mbtnImportLandExcel, command.ImportLandExcel, command.ImportLandExcelBind);
             SetCommandBinding(mbtnImportLandTiesExcel, command.ImportLandTiesExcel, command.ImportLandTiesExcelBind);
+            //SetCommandBinding(mbtnImportSurveyFormExcel, command.ImportSurveyFormExcel, command.ImportSurveyFormExcelBind);
             SetCommandBinding(mbtnImportBoundaryExcel, command.ImportBoundaryExcel, command.ImportBoundaryExcelBind);
             SetCommandBinding(mbtnImportVector, command.ImportVector, command.ImportVectorBind);
             SetCommandBinding(mbtnImportPoints, command.ImportPoints, command.ImportPointsBind);
@@ -307,6 +308,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandLevelNull, command.LandLevelNull, command.LandLevelNullBind);
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
+            SetCommandBinding(mbtnExportAllDelayTable, command.ExportAllDelayTable, command.ExportAllDelayTableBind);
             SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
             SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
@@ -380,7 +382,11 @@ namespace YuLinTu.Component.ContractAccount
                     break;
 
                 case ContractAccountCommand.ImportLandTiesExcelName:
-                    contractAccountPanel.ImportLandTiesExcel();//导入关系调查表
+                    contractAccountPanel.ImportLandTiesExcel();//导入调查成果表
+                    break;
+
+                case ContractAccountCommand.ImportSurveyFormExcelName:
+                    contractAccountPanel.ImportSurveyFormExcel();//导入摸底调查表
                     break;
 
                 case ContractAccountCommand.ImportBoundaryExcelName:
@@ -641,6 +647,10 @@ namespace YuLinTu.Component.ContractAccount
 
                 case ContractAccountCommand.FindName:
                     FindLand();    //空间查看
+                    break;
+
+                case ContractAccountCommand.ExportAllDelayTableName:
+                    contractAccountPanel.ExportAllDelayTable();
                     break;
 
                 case ContractAccountCommand.DataQualityName:

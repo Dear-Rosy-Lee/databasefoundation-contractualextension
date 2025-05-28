@@ -331,6 +331,19 @@ namespace YuLinTu.Library.Business
         /// 批量导出单户摸底核实表
         /// </summary>
         [Display(Name = "批量导出单户摸底核实表")]
-        ExportLandVerifySingeExcel = 114
+        ExportLandVerifySingeExcel = 114,
+
+        /// <summary>
+        /// 一键导出试点工作统计表
+        /// </summary>
+        [Display(Name = "批量导出单户摸底核实表")]
+        ExportAllDelayTable = 115,
+
+        /// <summary>
+        /// 批量一键导出试点工作统计表
+        /// </summary>
+        [Display(Name = "批量导出单户摸底核实表")]
+        VolumnExportAllDelayTable = 116,
+
     }
 }

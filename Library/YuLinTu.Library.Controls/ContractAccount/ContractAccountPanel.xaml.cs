@@ -935,6 +935,10 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportBoundaryInfoExcel:   //批量导出界址信息表
                         TaskGroupExportBoundaryInfoExcel(eContractAccountType.ExportBoundaryInfoExcel, taskDes, taskName, saveFilePath);
                         break;
+
+                    case eContractAccountType.ExportAllDelayTable:
+                        ExportAllDelayTableTask(saveFilePath, taskDes, taskName);
+                        break;
                 }
             });
         }
@@ -2496,7 +2500,7 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
-        /// 导入承包关系表数据
+        /// 导入调查成果表数据
         /// </summary>
         public void ImportLandTiesExcel()
         {
@@ -2547,6 +2551,23 @@ namespace YuLinTu.Library.Controls
                 ShowBox("导入承包关系表", ContractAccountInfo.ImportErrorZone);
                 return;
             }
+        }
+
+        /// <summary>
+        /// 导入摸底调查表数据
+        /// </summary>
+        public void ImportSurveyFormExcel()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ImportZone, ContractAccountInfo.ImportZone);
+                return;
+            }
+            ImportSurveyFormTask();
+        }
+        private void ImportSurveyFormTask()
+        {
+
         }
 
         /// <summary>
@@ -7867,6 +7888,74 @@ namespace YuLinTu.Library.Controls
 
 
         #endregion Methods -上传下载
+
+        #region Method - 一键导出工作统计表
+        public void ExportAllDelayTable()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportDataWord, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(CurrentZone.FullCode, eLevelOption.Subs);
+                if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && childrenCount == 0))
+                {
+
+                    ExportDataCommonOperate(CurrentZone.FullName, "一键导出试点工作统计表", eContractAccountType.ExportAllDelayTable,
+                        "一键导出试点工作统计表", "导出试点工作统计表");
+
+                }
+                else if ((CurrentZone.Level == eZoneLevel.Village || CurrentZone.Level == eZoneLevel.Town) && childrenCount > 0)
+                {
+                    //组任务
+                    ExportDataCommonOperate(CurrentZone.FullName, ContractAccountInfo.ExportDataWord, eContractAccountType.VolumnExportAllDelayTable,
+                        ContractAccountInfo.ExportDataWord, ContractAccountInfo.ExportSurveyTableData);
+                }
+                else
+                {
+                    //选择地域大于镇
+                    ShowBox(ContractAccountInfo.ExportDataWord, ContractAccountInfo.VolumnExportZoneError);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportVPWord(导出承包方Word调查表)", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+
+        public void ExportAllDelayTableTask(string saveFilePath, string taskDes, string taskName)
+        {
+            ExportAllDelayTableArgument argument = new ExportAllDelayTableArgument();
+            argument.DbContext = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.SaveFilePath = saveFilePath;
+            argument.IsShow = true;
+            ExportAllDelayTableOperation operation = new ExportAllDelayTableOperation();
+            operation.Argument = argument;
+            operation.Description = taskDes;
+            operation.Name = taskName;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+
+        }
+        public void ExportAllDelayTableTaskGroup()
+        {
+
+        }
+        #endregion Method - 一键导出工作统计表
 
         #region Method-质检 
         public void DataQuality()

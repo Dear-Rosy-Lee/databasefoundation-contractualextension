@@ -324,6 +324,9 @@
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckProgress.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerArgument.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerOperation.cs" />
+    <Compile Include="ContractAccount\ExportAllDelayTable\ExportAllDelayTableArgument.cs" />
+    <Compile Include="ContractAccount\ExportAllDelayTable\ExportAllDelayTableOperation.cs" />
+    <Compile Include="ContractAccount\ExportAllDelayTable\ExportCBMJQRBTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelArgument.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelOperation.cs" />

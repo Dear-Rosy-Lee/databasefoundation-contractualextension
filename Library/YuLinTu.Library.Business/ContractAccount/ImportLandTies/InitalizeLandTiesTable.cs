@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using YuLinTu.Data;
@@ -17,7 +18,6 @@ namespace YuLinTu.Library.Business
         private Zone currentZone;
         private IDbContext dbContext;
         private bool isOk;
-
         //private bool contractorClear = true;//是否清空承包方
 
         private SortedList<string, string> existPersons;
@@ -59,6 +59,8 @@ namespace YuLinTu.Library.Business
             set { _landFamilyCollection = value; }
         }
 
+        public List<SurveyForm> SurveyFormList { get; set; }
+
         /// <summary>
         /// 文件名称
         /// </summary>
@@ -87,6 +89,8 @@ namespace YuLinTu.Library.Business
 
 
         public CollectivityTissue Tissue { get; set; }
+
+        
 
         /// <summary>
         /// 错误信息
@@ -135,12 +139,13 @@ namespace YuLinTu.Library.Business
             }
             var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             var vps = vpStation.GetByZoneCode(CurrentZone.FullCode);
+            
             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
             var contractLands = landBusiness.GetLandCollection(CurrentZone.FullCode);
-
             dictList = new DictionaryBusiness(DbContext).GetAll();
-
+            List<Dictionary> listBHQK = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.BHQK);
             LandFamily landFamily = null;
+            SurveyForm surveyForm = null;
             string totalInfo = string.Empty;
             try
             {
@@ -160,49 +165,112 @@ namespace YuLinTu.Library.Business
                 existTablePersons = new SortedList<string, string>();
                 isOk = true;
                 InitalizeSender();
-                for (int index = calIndex; index < rangeCount; index++)
+                
+                if(GetString(allItem[2, 35]) == "原地域名称" && GetString(allItem[2, 36]) == "地块变化情况")
                 {
-                    try
+                    SurveyFormList = new List<SurveyForm>();
+                    for (int index = calIndex; index < rangeCount; index++)
                     {
-                        currentIndex = index;//当前行数
-                        string rowValue = GetString(allItem[index, 0]);//编号栏数据
-                        if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                        try
                         {
-                            if (!SetFamilyInfo(landFamily))
-                                isOk = false;
-                            break;
-                        }
-                        string familyName = GetString(allItem[currentIndex, 1]);
-                        string change = GetString(allItem[currentIndex, 34]);
-                        if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
-                        {
-                            if (!SetFamilyInfo(landFamily))
-                                isOk = false;
-                            originalValue = int.Parse(rowValue);
-                            landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
-                            landFamily.CurrentFamily.Name = familyName;
-                            var expand = landFamily.CurrentFamily.FamilyExpand;
-                            expand.ChangeComment = change;
-                            landFamily.CurrentFamily.FamilyExpand = expand;
-                            AddLandFamily(landFamily);
-                            InitalizeFamilyInformation(landFamily, vps);
-                            concordIndex++;
-                        }
+                            currentIndex = index;//当前行数
+                            string rowValue = GetString(allItem[index, 0]);//编号栏数据
+                            if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                            {
+                                if (!SetFamilyInfo(landFamily))
+                                    isOk = false;
+                                break;
+                            }
+                            string familyName = GetString(allItem[currentIndex, 1]);
+                            string change = GetString(allItem[currentIndex, 34]);
+                            string oldZoneName = GetString(allItem[currentIndex, 35]);
+                            if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
+                            {
+                                if (!SetFamilyInfo(landFamily))
+                                    isOk = false;
+                                originalValue = int.Parse(rowValue);
+                                landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
+                                surveyForm = new SurveyForm();
+                                landFamily.CurrentFamily.Name = familyName;
+                                var expand = landFamily.CurrentFamily.FamilyExpand;
+                                expand.ChangeComment = change;
+                                landFamily.CurrentFamily.FamilyExpand = expand;
+                                AddLandFamily(landFamily);
+                                InitalizeFamilyInformation(landFamily, vps);
+                                surveyForm.OldZoneName = oldZoneName;
+                                var bhqk = listBHQK.FirstOrDefault(t => t.Name == change);
+                                surveyForm.ChangeSituation = (eBHQK)Enum.Parse(typeof(eBHQK), bhqk.Code);
+                                GetSurveyFormInformation(landFamily, surveyForm);
+                                SurveyFormList.Add(surveyForm);
+                                concordIndex++;
+                            }
 
-                        if (string.IsNullOrEmpty(rowValue) && !string.IsNullOrEmpty(familyName))
-                        {
-                            ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
-                            continue;
+                            if (string.IsNullOrEmpty(rowValue) && !string.IsNullOrEmpty(familyName))
+                            {
+                                ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
+                                continue;
+                            }
+                            //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
+                            AddPerson(landFamily);
+                            surveyForm.SharePersonList = landFamily.CurrentFamily.SharePersonList;
+                            InitalizeLandInformation(landFamily, contractLands);
+                            surveyForm.ContractLandList = landFamily.LandCollection;
                         }
-                        //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
-                        AddPerson(landFamily);
-                        InitalizeLandInformation(landFamily, contractLands);
+                        catch (Exception ex)
+                        {
+                            this.ReportErrorInfo($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
+                        }
                     }
-                    catch (Exception ex)
+                    
+
+                }
+                else
+                {
+                    for (int index = calIndex; index < rangeCount; index++)
                     {
-                        this.ReportErrorInfo($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
+                        try
+                        {
+                            currentIndex = index;//当前行数
+                            string rowValue = GetString(allItem[index, 0]);//编号栏数据
+                            if (rowValue.Trim() == lastRowText || rowValue.Trim() == "总计" || rowValue.Trim() == "共计")
+                            {
+                                if (!SetFamilyInfo(landFamily))
+                                    isOk = false;
+                                break;
+                            }
+                            string familyName = GetString(allItem[currentIndex, 1]);
+                            string change = GetString(allItem[currentIndex, 34]);
+                            if (!string.IsNullOrEmpty(rowValue) && originalValue != int.Parse(rowValue))
+                            {
+                                if (!SetFamilyInfo(landFamily))
+                                    isOk = false;
+                                originalValue = int.Parse(rowValue);
+                                landFamily = NewFamily(rowValue, currentIndex, concordIndex);//重新创建
+                                landFamily.CurrentFamily.Name = familyName;
+                                var expand = landFamily.CurrentFamily.FamilyExpand;
+                                expand.ChangeComment = change;
+                                landFamily.CurrentFamily.FamilyExpand = expand;
+                                AddLandFamily(landFamily);
+                                InitalizeFamilyInformation(landFamily, vps);
+                                concordIndex++;
+                            }
+
+                            if (string.IsNullOrEmpty(rowValue) && !string.IsNullOrEmpty(familyName))
+                            {
+                                ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
+                                continue;
+                            }
+                            //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
+                            AddPerson(landFamily);
+                            InitalizeLandInformation(landFamily, contractLands);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.ReportErrorInfo($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
+                        }
                     }
                 }
+                    
             }
             catch (Exception ex)
             {
@@ -212,7 +280,7 @@ namespace YuLinTu.Library.Business
             }
             return isOk;
         }
-
+        
 
         private bool SetFamilyInfo(LandFamily landFamily)
         {
@@ -276,7 +344,22 @@ namespace YuLinTu.Library.Business
             }
             return startIndex == 0 ? -1 : startIndex;
         }
-
+        private void GetSurveyFormInformation(LandFamily landFamily, SurveyForm surveyForm)
+        {
+                surveyForm.OwnerId = landFamily.CurrentFamily.ID;
+                surveyForm.OwnerName = landFamily.CurrentFamily.Name;
+                surveyForm.OwnerNumber = landFamily.CurrentFamily.Number;
+                surveyForm.OwnerAddress = landFamily.CurrentFamily.Address;
+                surveyForm.ZoneCode = landFamily.CurrentFamily.ZoneCode;
+                surveyForm.VirtualType = landFamily.CurrentFamily.VirtualType;
+                surveyForm.CardType = landFamily.CurrentFamily.CardType;
+                surveyForm.Telephone = landFamily.CurrentFamily.Telephone;
+                surveyForm.LawyerPosterNumber = GetString(allItem[2, 29]);
+                surveyForm.FamilyNumber = landFamily.CurrentFamily.FamilyNumber;
+                surveyForm.PersonCount = landFamily.CurrentFamily.PersonCount;
+                surveyForm.OtherInfomation = landFamily.CurrentFamily.OtherInfomation;
+                
+        }
         private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands, List<VirtualPerson> vps)
         {
             InitalizeFamilyInformation(landFamily, vps);
@@ -421,7 +504,7 @@ namespace YuLinTu.Library.Business
                 entity.OwnerId = landFamily.CurrentFamily.ID;
                 entity.ZoneCode = CurrentZone.FullCode;
                 entity.ZoneName = CurrentZone.FullName;
-
+                entity.LandChange = GetString(allItem[currentIndex, 36]);
                 landFamily.LandCollection.Add(entity);
             }
         }

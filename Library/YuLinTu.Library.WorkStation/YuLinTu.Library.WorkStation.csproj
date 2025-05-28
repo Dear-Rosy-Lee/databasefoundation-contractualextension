@@ -255,6 +255,8 @@
     <Compile Include="StockRight\IStockConcordWorkStation.cs" />
     <Compile Include="StockRight\StockWarrantWorkStation.cs" />
     <Compile Include="StockRight\StockConcordWorkStation.cs" />
+    <Compile Include="SurveyForm\ISurveyFormWorkStation.cs" />
+    <Compile Include="SurveyForm\SurveyFormWorkStation.cs" />
     <Compile Include="VirtualPerson\IVirtualPersonWorkStation.cs" />
     <Compile Include="VirtualPerson\VirtualPersonWorkStation.cs" />
     <Compile Include="Sender\ISenderWorkStation.cs" />

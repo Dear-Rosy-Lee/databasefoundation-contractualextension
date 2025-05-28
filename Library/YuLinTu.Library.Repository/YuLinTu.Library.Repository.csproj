@@ -184,6 +184,8 @@
     <Compile Include="Repository\StockRight\IStockWarrantRespository.cs" />
     <Compile Include="Repository\StockRight\StockConcordRespository.cs" />
     <Compile Include="Repository\StockRight\StockWarrantRespository.cs" />
+    <Compile Include="Repository\SurveyForm\ISurveyFormRepository.cs" />
+    <Compile Include="Repository\SurveyForm\SurveyFormRepository.cs" />
     <Compile Include="Repository\TableVirtualPerson\ITableVirtualPersonRepository.cs" />
     <Compile Include="Repository\VirtualPerson\IVirtualPersonRepository.cs" />
     <Compile Include="Repository\WoodVirtualPerson\IWoodVirtualPersonRepository.cs" />
@@ -252,6 +254,7 @@
       <Name>YuLinTu.Library.Entity</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
