@@ -16,6 +16,7 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls
@@ -939,6 +940,10 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.ExportAllDelayTable:
                         ExportAllDelayTableTask(saveFilePath, taskDes, taskName);
                         break;
+
+                    case eContractAccountType.VolumnExportContractInformationExcel:
+                        TaskGroupExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, taskDes, taskName, null, null, saveFilePath);
+                        break;
                 }
             });
         }
@@ -1067,6 +1072,60 @@ namespace YuLinTu.Library.Controls
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
             TaskContractDelayAccountOperation import = new TaskContractDelayAccountOperation();
+            import.Argument = meta;
+            import.Description = taskDes;
+            import.Name = taskName;
+
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
+        }
+
+        private void TaskGroupExportContractDelayAccountExcel(eContractAccountType type, string taskDes, string taskName,
+           DateTime? time, DateTime? pubTime, string filePath = "", List<VirtualPerson> listPerson = null, int TableType = 1)
+        {
+            DateTime? date = SetPublicyTableDate();
+            if (date == null)
+            {
+                return;
+            }
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
+            List<Zone> allZones = zoneStation.GetAllZones(currentZone);
+
+            TaskGroupAccountFiveTableArgument meta = new TaskGroupAccountFiveTableArgument();
+            meta.IsClear = false;
+            meta.FileName = filePath;
+            meta.ArgType = type;
+            meta.Database = DbContext;
+            meta.CurrentZone = currentZone;
+            meta.VirtualType = virtualType;
+            meta.UserName = "";
+            meta.Date = date;
+            meta.TableType = TableType;
+            meta.SelfAndSubsZones = SelfAndSubsZones;
+            meta.AllZones = allZones;
+            //if (TableType == 4)
+            //{
+            //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
+            //    meta.ContractLandOutputSurveyDefine = publicityConfirmDefine.ConvertTo<PublicityConfirmDefine>();// (PublicityConfirmDefine)publicityConfirmDefine;
+            //}
+            //else
+            //{
+            //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
+            //}
+            meta.IsBatch = isbatch;
+            meta.DictList = DictList;
+            meta.DelcTime = time;
+            meta.PubTime = pubTime;
+            TaskGroupContractDelayAccountOperation import = new TaskGroupContractDelayAccountOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -4339,7 +4398,12 @@ namespace YuLinTu.Library.Controls
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
-
+            //批量导出
+            if (currentZone.Level > eZoneLevel.Town)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.VolumnExportZoneError);
+                return;
+            }
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
                 //单个任务
@@ -4350,6 +4414,10 @@ namespace YuLinTu.Library.Controls
                 }
                 TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+            else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
+            {
+                ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
             }
         }
 

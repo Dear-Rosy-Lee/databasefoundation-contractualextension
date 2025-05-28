@@ -327,6 +327,7 @@
     <Compile Include="ContractAccount\ExportAllDelayTable\ExportAllDelayTableArgument.cs" />
     <Compile Include="ContractAccount\ExportAllDelayTable\ExportAllDelayTableOperation.cs" />
     <Compile Include="ContractAccount\ExportAllDelayTable\ExportCBMJQRBTable.cs" />
+    <Compile Include="ContractAccount\ExportContractDelayAccount\TaskGroupContractDelayAccountOperation.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\ExportLandVerifySingleExcelTable.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelArgument.cs" />
     <Compile Include="ContractAccount\ExportLandVerifySingeExcel\TaskExportLandVerifySingleExcelOperation.cs" />

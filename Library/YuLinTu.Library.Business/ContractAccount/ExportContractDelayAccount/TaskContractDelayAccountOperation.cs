@@ -437,7 +437,8 @@ namespace YuLinTu.Library.Business
                 #endregion 通过反射等机制定制化具体的业务处理类
 
                 double percent = 95 / (double)metadata.SelfAndSubsZones.Count;
-                string savePath1 = fileName + "农村土地承包经营权合同信息表.xls";
+                string excelName1 = GetMarkDesc(currentZone);
+                string savePath1 = fileName + @"\" + excelName + "农村土地承包经营权合同信息表" + ".xls";
                 export.SaveFilePath = savePath1;
                 export.CurrentZone = currentZone;
                 export.Familys = vps;
@@ -453,6 +454,7 @@ namespace YuLinTu.Library.Business
                 export.PostProgressEvent += export_PostProgressEvent;
                 export.PostErrorInfoEvent += export_PostErrorInfoEvent;
                 returnValue = export.BeginExcel(currentZone.FullCode.ToString(), tempPath);
+                export.SaveAs(savePath1);
                 if (metadata.IsShow)
                     export.PrintView(savePath1);
                 this.ReportProgress(100, "完成");
