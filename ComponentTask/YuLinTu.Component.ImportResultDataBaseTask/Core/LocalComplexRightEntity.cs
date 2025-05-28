@@ -362,9 +362,10 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             {
                 getcbd.IsFarmerLand = false;
             }
-
-            //getcbd.ActualArea = ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
-            getcbd.ActualArea = ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 2);
+            if (dk.SCMJM != null)
+                getcbd.ActualArea = dk.SCMJM.Value;
+            else
+                getcbd.ActualArea = ToolMath.RoundNumericFormat(dk.SCMJ * 0.0015, 3);
             getcbd.NeighborEast = dk.DKDZ;
             getcbd.NeighborSouth = dk.DKNZ;
             getcbd.NeighborWest = dk.DKXZ;

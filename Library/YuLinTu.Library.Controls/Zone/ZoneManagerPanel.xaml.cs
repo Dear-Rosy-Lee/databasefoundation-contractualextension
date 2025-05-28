@@ -223,7 +223,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
             IDbContext db = CreateDb();
-            ZoneEditPage editPage = new ZoneEditPage(true);
+            var editPage = new ZoneEditPage(true);
             editPage.Workpage = ThePage;
             editPage.Station = db.CreateZoneWorkStation();
             var count = selectItem.Children.Count;
@@ -288,9 +288,9 @@ namespace YuLinTu.Library.Controls
                 }
                 if (editPage.Result)
                 {
-                     UpDataToItem(selectItem, editPage.CurrentItem);
-                     UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
-                }                
+                    UpDataToItem(selectItem, editPage.CurrentItem);
+                    UpdataChildrenItem(selectItem.Children, editPage.CurrentItem.Children);
+                }
             });
         }
 

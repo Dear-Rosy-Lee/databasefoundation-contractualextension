@@ -37,7 +37,7 @@ namespace YuLinTu.Library.Business
             titleName = UnitName + titleName;
             if (SystemSet.TempTableHead && !string.IsNullOrEmpty(titleName))
             {
-                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? 
+                SetRange("A1", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ?
                     contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "1", 32.25, 18, true, titleName);
             }
 
@@ -48,15 +48,15 @@ namespace YuLinTu.Library.Business
             SetRange("A3", "A5", "承包方编号");
             InitalizeRangeValue("B3", "B5", "承包方名称");
             SetRange("B3", "B5", "承包方名称");
+            var endColum = PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2";
+
             if (TableType == 4)
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2",
-                    21.75, 11, false, 3, 2, $"日期：{timestr}");
+                SetRange("E2", endColum, 21.75, 11, false, 3, 2, $"日期：{timestr}");
             }
             else
             {
-                SetRange("E2", PublicityConfirmDefine.GetColumnValue((TableType != 3 && TableType != 5 && TableType != 4) ? contractLandOutputSurveyDefine.ColumnCount : contractLandOutputSurveyDefine.ColumnCount + 1) + "2", 
-                    21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
+                SetRange("E2", endColum, 21.75, 11, false, 3, 2, "日期:" + GetDate() + "               ");
             }
             SetRange("A2", "D2", "单位:  " + ExcelName);
             columnIndex = 2;

@@ -30,7 +30,6 @@
                 x:FieldModifier="public"
                 Header="承包方信息">
                 <Grid
-                    Height="345"
                     Margin="10"
                     Validation.ErrorTemplate="{x:Null}">
                     <!--<Grid.BindingGroup>

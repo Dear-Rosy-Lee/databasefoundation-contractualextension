@@ -126,6 +126,7 @@ namespace YuLinTu.Library.Business
 
                 var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
+                vps = vps.OrderBy(o => o.FamilyNumber).ToList();
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);

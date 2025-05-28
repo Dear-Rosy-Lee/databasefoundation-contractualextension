@@ -265,7 +265,7 @@ namespace YuLinTu.Library.Business
                 header.AddColumn("地域名称", 'C', 150, 0);
                 header.AddColumn("地域编码", 'C', 150, 0);
                 if (exportContractLandShapeDefine.ImageNumberIndex) header.AddColumn("图幅编号", 'C', 150, 0);
-                if (exportContractLandShapeDefine.TableAreaIndex) header.AddColumn("台账面积", 'F', 15, 6);
+                if (exportContractLandShapeDefine.TableAreaIndex) header.AddColumn("二轮面积", 'F', 15, 6);
                 if (exportContractLandShapeDefine.ActualAreaIndex) header.AddColumn("实测面积", 'F', 15, 6);
                 if (exportContractLandShapeDefine.EastIndex) header.AddColumn("四至东", 'C', 150, 0);
                 if (exportContractLandShapeDefine.SourthIndex) header.AddColumn("四至南", 'C', 150, 0);
@@ -301,6 +301,7 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckDateIndex) header.AddColumn("审核日期", 'C', 150, 0);
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) header.AddColumn("审核意见", 'C', 150, 0);
                 if (exportContractLandShapeDefine.CommentIndex) header.AddColumn("地块备注", 'C', 250, 0);
+                if (exportContractLandShapeDefine.QQDKBM) header.AddColumn("原地块编码", 'C', 250, 0);
             }
             return header;
         }
@@ -366,7 +367,7 @@ namespace YuLinTu.Library.Business
                 attributes.AddAttribute("地域名称", geoland.SenderName.IsNullOrEmpty() ? geoland.ZoneName : geoland.SenderName);
                 attributes.AddAttribute("地域编码", geoland.SenderCode.IsNullOrEmpty() ? geoland.ZoneCode : geoland.SenderCode);
                 if (exportContractLandShapeDefine.ImageNumberIndex) attributes.AddAttribute("图幅编号", geoland.LandExpand != null ? geoland.LandExpand.ImageNumber : "");
-                if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("台账面积", geoland.TableArea != null ? geoland.TableArea.Value.ToString("0.00") : "0");
+                if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("二轮面积", geoland.TableArea != null ? geoland.TableArea.Value.ToString("0.00") : "0");
                 if (exportContractLandShapeDefine.ActualAreaIndex) attributes.AddAttribute("实测面积", geoland.ActualArea.ToString("0.00"));
 
                 if (exportContractLandShapeDefine.EastIndex) attributes.AddAttribute("四至东", geoland.NeighborEast);
@@ -466,6 +467,7 @@ namespace YuLinTu.Library.Business
                 if (exportContractLandShapeDefine.LandCheckDateIndex) attributes.AddAttribute("审核日期", geoland.LandExpand != null ? geoland.LandExpand.CheckDate : null);
                 if (exportContractLandShapeDefine.LandCheckOpinionIndex) attributes.AddAttribute("审核意见", geoland.LandExpand != null ? geoland.LandExpand.CheckOpinion : "");
                 if (exportContractLandShapeDefine.CommentIndex) attributes.AddAttribute("地块备注", geoland.Comment);
+                if (exportContractLandShapeDefine.QQDKBM) attributes.AddAttribute("原地块编码", geoland.OldLandNumber);
                 if (vp != null)
                 {
                     attributes.AddAttribute("承包方户号", vp.FamilyNumber);

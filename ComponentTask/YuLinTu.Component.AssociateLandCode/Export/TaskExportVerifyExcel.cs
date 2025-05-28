@@ -173,11 +173,12 @@ namespace YuLinTu.Library.Business
 
                 GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
+                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
                 int personCount = vps == null ? 0 : vps.Count;
+
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
-
+                export.SFYQWQ = argument.Yqwq;
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
                 export.DbContext = argument.DbContext;

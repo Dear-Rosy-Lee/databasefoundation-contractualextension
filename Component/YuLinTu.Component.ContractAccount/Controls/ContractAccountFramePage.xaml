@@ -582,6 +582,7 @@
                             <metro:MetroButton
                                 x:Name="btnExportSingleAffirm"
                                 Padding="8,4"
+                                Visibility="Collapsed"
                                 HorizontalContentAlignment="Left"
                                 VerticalContentAlignment="Stretch"
                                 x:FieldModifier="public">

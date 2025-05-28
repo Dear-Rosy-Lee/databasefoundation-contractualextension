@@ -32,6 +32,11 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public int ExportWay { get; set; }
 
+        /// <summary>
+        /// 应确未确
+        /// </summary>
+        public bool Yqwq { get; set; }
+
         #endregion Properties
 
         #region Ctor

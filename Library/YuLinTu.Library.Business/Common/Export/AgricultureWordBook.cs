@@ -1049,7 +1049,7 @@ namespace YuLinTu.Library.Business
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.SenderName + (i == 0 ? "" : i.ToString()), Tissue.Name.GetSettingEmptyReplacement());//发包方名称
-                SetBookmarkValue(AgricultureBookMark.SenderLawyerCode + (i == 0 ? "" : i.ToString()), Tissue.SocialCode);//发包方名称
+                SetBookmarkValue("SocialCode" + (i == 0 ? "" : i.ToString()), Tissue.SocialCode);//社会信用代码
                 SetBookmarkValue(AgricultureBookMark.SenderNameExpress + (i == 0 ? "" : i.ToString()), senderNameExpress);//发包方名称扩展如(第一村民小组)
                 SetBookmarkValue(AgricultureBookMark.SenderLawyerName + (i == 0 ? "" : i.ToString()), Tissue.LawyerName);//发包方法人名称
                 SetBookmarkValue(AgricultureBookMark.SenderLawyerTelephone + (i == 0 ? "" : i.ToString()), Tissue.LawyerTelephone);//发包方法人联系方式

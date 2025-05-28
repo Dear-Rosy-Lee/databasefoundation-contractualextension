@@ -109,10 +109,13 @@ namespace YuLinTu.Library.Controls
             if (isAdd)
             {
                 btnSubmit.IsEnabled = true;
+                cb_recode.Visibility = Visibility.Visible;
             }
             else
             {
                 btnSubmit.IsEnabled = false;
+                cb_recode.Visibility = Visibility.Collapsed;
+                cb_recode.IsChecked = false;
             }
         }
 
@@ -153,6 +156,11 @@ namespace YuLinTu.Library.Controls
                 if (isAdd)
                 {
                     Result = business.Add(currentZone);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        if (cb_recode.IsChecked == true)
+                            currentZone.CreateUser = "CreateZoneAndSender";
+                    }));
                 }
                 else if (CurrentZone is ZoneDataItem)
                 {

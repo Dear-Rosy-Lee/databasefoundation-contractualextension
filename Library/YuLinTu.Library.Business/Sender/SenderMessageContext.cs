@@ -334,8 +334,11 @@ namespace YuLinTu.Library.Business
                 {
                     return;
                 }
-                SenderDataBusiness business = CreateBusiness(e.Datasource);
-                e.ReturnValue = business.AddSenderByZone(zone);
+                if (zone.CreateUser == "CreateZoneAndSender")
+                {
+                    SenderDataBusiness business = CreateBusiness(e.Datasource);
+                    e.ReturnValue = business.AddSenderByZone(zone);
+                }
             }
             catch (Exception ex)
             {

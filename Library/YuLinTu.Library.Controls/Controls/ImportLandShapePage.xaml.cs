@@ -435,6 +435,22 @@ namespace YuLinTu.Library.Controls
                         info.SetValue(ImportLandShapeInfoDefine, description.Description, null);
                     }
                 }
+                if (display.Name == "二轮合同面积")
+                {
+                    fvalue = indexKv.Any(t => t.Value == "二轮面积");
+                    if (fvalue)
+                    {
+                        info.SetValue(ImportLandShapeInfoDefine, "二轮面积", null);
+                    }
+                }
+                if (display.Name == "确权地块编码")
+                {
+                    fvalue = indexKv.Any(t => t.Value == "原地块编码");
+                    if (fvalue)
+                    {
+                        info.SetValue(ImportLandShapeInfoDefine, "原地块编码", null);
+                    }
+                }                
             }
         }
     }

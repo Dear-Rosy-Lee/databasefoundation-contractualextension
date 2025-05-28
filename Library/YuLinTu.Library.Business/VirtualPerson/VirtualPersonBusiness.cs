@@ -834,9 +834,18 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
+            
+            List<PersonUnit> personUnits = new List<PersonUnit>();
+            list.ForEach(t =>
+            {
+                var temp = new PersonUnit {Sfz= t.ICN ,YfzGx= RelationShipMapping.NameMapping(t.Relationship) };
+                personUnits.Add(temp);
+            });
+            PersonUnit newHZ = new PersonUnit { Sfz = selectPerson.ICN, YfzGx = RelationShipMapping.NameMapping(selectPerson.Relationship) };
+            FamailyRelationProcessor.CalMemberRelationship(personUnits, newHZ);
 
-            //更新地块信息
-            var vplandstation = dbContext.CreateContractLandWorkstation();
+             //更新地块信息
+             var vplandstation = dbContext.CreateContractLandWorkstation();
             //var vplands = vplandstation.GetCollection(vp.ID);
 
             //foreach (var item in vplands)
@@ -865,8 +874,14 @@ namespace YuLinTu.Library.Business
             vp.CardType = selectPerson.CardType;
             var upvp = vp.Clone() as VirtualPerson;
             //排序
+    
+            foreach(var gyr in vp.SharePersonList)
+            {
+                gyr.Relationship = personUnits.FirstOrDefault(t => t.Sfz.Equals(gyr.ICN)).YfzGx;
+                gyr.Relationship = RelationShipMapping.CodeMapping(gyr.Relationship);
+            }
             vp.SharePersonList = SortSharePerson(list, vp.Name);
-
+            // LocalComplexRightEntity. CodeMapping()
             //upvp.SharePersonList = SortSharePerson(list, vp.Name);
             try
             {
