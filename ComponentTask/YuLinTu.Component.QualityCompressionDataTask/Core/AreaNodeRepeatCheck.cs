@@ -92,7 +92,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
             HashSet<MyResult> result = new HashSet<MyResult>();
             foreach (var p in vec)
             {
-                if (_processShpIDs.Any(s => s == p.shpID))
+                if (!_processShpIDs.Any(s => s == p.shpID))
                 {
                     _processShpIDs.Add(p.shpID);
                     TopCheckUtil.ReportProgress(reportProgress, nProgressCount, ++nProgress, ref nOldProgress);
