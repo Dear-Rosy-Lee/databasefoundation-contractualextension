@@ -582,10 +582,10 @@
                             <metro:MetroButton
                                 x:Name="btnExportSingleAffirm"
                                 Padding="8,4"
-                                Visibility="Collapsed"
                                 HorizontalContentAlignment="Left"
                                 VerticalContentAlignment="Stretch"
-                                x:FieldModifier="public">
+                                x:FieldModifier="public"
+                                Visibility="Collapsed">
                                 <cmps:ImageTextItem
                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
                                     ImagePosition="Left"
@@ -1218,7 +1218,7 @@
                         Text="空间查看"
                         ToolTip="查看承包地块空间形状与位置" />
                 </metro:MetroButton>
-                <metro:MetroButton
+                <!--<metro:MetroButton
                     x:Name="mbtnExportAllDelayTable"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -1228,7 +1228,7 @@
                         ImagePosition="Top"
                         Text="导出统计表"
                         ToolTip="一键导出试点工作统计表" />
-                </metro:MetroButton>
+                </metro:MetroButton>-->
                 <metro:MetroButton
                     x:Name="mbtnDataQuality"
                     Padding="4,2,4,2"
@@ -1240,7 +1240,7 @@
                         Text="数据检查"
                         ToolTip="具备按标准规范对属性数据进行质量检查" />
                 </metro:MetroButton>
-                <metro:MetroButton
+                <!--<metro:MetroButton
                     x:Name="mbtnAdjustLand"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -1250,7 +1250,7 @@
                         ImagePosition="Top"
                         Text="调整地块"
                         ToolTip="调整地块" />
-                </metro:MetroButton>
+                </metro:MetroButton>-->
 
                 <metro:MetroButton
                     x:Name="mbtnUpdateData"
