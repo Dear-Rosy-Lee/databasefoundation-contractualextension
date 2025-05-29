@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Documents;
+using System.Linq;
+using System.Text;
 using DotSpatial.Projections;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using NetTopologySuite.Features;
-using YuLinTu.Component.Account.Models;
-using YuLinTu.Data.Shapefile;
-using YuLinTu.Data;
-using YuLinTu.Library.Log;
-using YuLinTu.Web.Core;
-using System.Linq;
 using NetTopologySuite.IO;
-using System.Text;
-using Org.BouncyCastle.Asn1.Cms;
+using YuLinTu.Data;
+using YuLinTu.Data.Shapefile;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -71,7 +65,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
             this.ReportProgress(1, "开始检查...");
             this.ReportInfomation("开始检查...");
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(100);
 
             //TODO 加密方式
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
@@ -87,8 +81,12 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 {
                     this.ReportError(msg);
                 };
+                dcp.ReportProcess += (p) =>
+                {
+                    this.ReportProgress(p, "拓扑检查中...");
+                };
                 var falg = dcp.Check();
-                this.ReportProgress(50);
+                this.ReportProgress(70);
                 if (!falg)
                 {
                     return;
@@ -99,12 +97,16 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     var srid = dcp.Srid;
                     var prjinfo = dcp.prjInfo;
                     var zipFilePath = $"{argument.ResultFilePath}\\质量检查导出";
+                    var p = 50.0 / vlgzonelist.Count;
+                    int pi = 0;
                     foreach (var v in vlgzonelist)
                     {
                         List<QCDK> dks = DataCheckProgress.InitiallShapeLandList(argument.CheckFilePath, srid, v);
                         if (dks.Count == 0)
                             continue;
                         ExprotAndCompress(dks, v, zipFilePath, prjinfo);
+                        pi++;
+                        this.ReportProgress(70 + (int)(pi * p), "数据打包中");
                     }
                 }
                 //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);

@@ -41,6 +41,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
         public Action<string> ReportErrorMethod { get; set; }
 
+        public Action<int> ReportProcess { get; set; }
+
         public List<string> VallageList { get; set; }
 
         public string prjString { get; set; }
@@ -90,6 +92,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     this.ReportError("矢量文件中不存在数据");
                     return false;
                 }
+                this.ReportProcess(10);
                 CheckTopology(landShapeList);
                 if (!string.IsNullOrEmpty(ErrorInfo) || haserror)
                 {
@@ -607,7 +610,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     MaxX = allcoords.Max(t => t.X)
                 });
             }
-
+            this.ReportProcess(15);
             replist = replist.OrderBy(l => l.MinX).ToList();
 
             for (int i = 0; i < replist.Count - 1; i++)
@@ -625,6 +628,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     }
                 }
             }
+            this.ReportProcess(20);
             CheckNodeRepeat(landlist);
         }
 
@@ -633,6 +637,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         private void CheckNodeRepeat(List<QCDK> landlist)
         {
+            double p = 50.0 / 100;
             AreaNodeRepeatCheck check = new AreaNodeRepeatCheck();
             check.ReportErrorMethod += (msg) => this.ReportError(msg);
             var geolist = new List<CheckGeometry>();
@@ -653,6 +658,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 this.ReportError($"地块({dkbm1})的点({x1},{y1})与地块({dkbm2})的点({x2},{y1})距离过近{len}米，请检查核实数据");
             }, (progress) =>
             {
+                this.ReportProcess(20 + (int)(progress * p));
             });
         }
 

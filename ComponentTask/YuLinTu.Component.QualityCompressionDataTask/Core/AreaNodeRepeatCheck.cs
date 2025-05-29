@@ -62,7 +62,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         vec.Add(new MyPoint() { x = coordinate.X, y = coordinate.Y, shpID = shpID });
                     }
                 }
-                vec.Sort((a, b) => { return a.x < b.x ? 1 : -1; });
+                vec = vec.OrderBy(t => t.x).ToList();
+                //vec.Sort((a, b) => { return a.x < b.x ? 1 : -1; });
                 //this.ReportError("开始检查相邻要素节点重复---开始检查");
                 var recollection = CheckRepeatPoint(vec, overlapTolerance, _tolerance, reportProgress);
                 //this.ReportError($"开始检查相邻要素节点重复---返回到报告中{recollection.Count}个");
