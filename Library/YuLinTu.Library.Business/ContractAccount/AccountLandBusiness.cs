@@ -4060,7 +4060,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 db.RollbackTransaction();
-                this.ReportError("初始化地块基本信息失败");
+                this.ReportError("初始化地块基本信息失败" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteError(this, "ContractLandInitialTool(提交初始化数据)", ex.Message + ex.StackTrace);
             }
         }
