@@ -60,9 +60,6 @@
     <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
     </Reference>
@@ -124,7 +121,7 @@
       <HintPath>..\..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
     </Reference>
     <Reference Include="Refit, Version=5.2.0.0, Culture=neutral, PublicKeyToken=2f9b1262776509f5, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Refit.5.2.4\lib\net461\Refit.dll</HintPath>
+      <HintPath>..\..\packages\Refit.5.2.1\lib\net461\Refit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -208,7 +205,6 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Refit.5.2.4\build\net461\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Refit.5.2.4\build\net461\refit.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
@@ -217,10 +213,10 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Refit.5.2.1\build\net461\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Refit.5.2.1\build\net461\refit.targets'))" />
   </Target>
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets" Condition="Exists('..\..\packages\YuLinTu.Security.6.8.8.1\build\YuLinTu.Security.targets')" />
-  <Import Project="..\..\packages\Refit.5.2.4\build\net461\refit.targets" Condition="Exists('..\..\packages\Refit.5.2.4\build\net461\refit.targets')" />
   <PropertyGroup>
     <PostBuildEvent>md "$(SolutionDir)Workspace\Components\$(TargetName)\Binary\"
 copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Workspace\Components\$(TargetName)\Binary\"
@@ -230,4 +226,5 @@ if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(Solution
   <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
   <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
   <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
+  <Import Project="..\..\packages\Refit.5.2.1\build\net461\refit.targets" Condition="Exists('..\..\packages\Refit.5.2.1\build\net461\refit.targets')" />
 </Project>
