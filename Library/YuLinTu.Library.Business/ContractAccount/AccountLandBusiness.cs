@@ -4505,12 +4505,15 @@ namespace YuLinTu.Library.Business
                 geoLandPercent = 99 / (double)shapeLandsOfStatus.Count;
                 foreach (var land in shapeLandsOfStatus)
                 {
+                    if (land.LandNumber == "4501811080020200519")
+                    {
+                    }
                     var landGeo = land.Shape as YuLinTu.Spatial.Geometry;
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
                     //var areaNew = ToolMath.RoundNumericFormat((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
                     // var areaDraw = ToolMath.RoundNumericFormat(landGeo.Area() * projectionUnit, 4);
-                    var landgeoarea = landGeo.Area();
-                    var areaDraw = ToolMath.SetNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric, metadata.ToAreaModule);
+                    var landgeoarea = ToolMath.RoundNumericFormat(landGeo.Area(), metadata.ToAreaNumeric);
+                    var areaDraw = ToolMath.RoundNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric);
                     if (metadata.ToActualArea)
                     {
                         //把图形面积赋值给实测面积

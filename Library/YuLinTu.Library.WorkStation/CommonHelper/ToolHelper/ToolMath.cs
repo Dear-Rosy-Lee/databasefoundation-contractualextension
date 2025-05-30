@@ -465,33 +465,33 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         public static double RoundNumericFormat(double value, int digits)
         {
-            double numeric = (double)Math.Round((decimal)value, digits);
-            //double number = value + 0.00000001;
-            //double numeric = Convert.ToUInt32(number * 100) / 100.0;
-            //switch (digits)
-            //{
-            //    case 2:
-            //        numeric = Convert.ToUInt32(number * 100) / 100.0;
-            //        break;
-            //    case 3:
-            //        numeric = Convert.ToUInt32(number * 1000) / 1000.0;
-            //        break;
-            //    case 4:
-            //        numeric = Convert.ToUInt32(number * 10000) / 10000.0;
-            //        break;
-            //    case 5:
-            //        numeric = Convert.ToUInt32(number * 100000) / 100000.0;
-            //        break;
-            //    case 6:
-            //        numeric = Convert.ToUInt32(number * 1000000) / 1000000.0;
-            //        break;
-            //    case 7:
-            //        numeric = Convert.ToUInt32(number * 10000000) / 10000000.0;
-            //        break;
-            //    case 8:
-            //        numeric = Convert.ToUInt32(number * 100000000) / 100000000.0;
-            //        break;
-            //}
+            //double numeric = (double)Math.Round((decimal)value, digits);
+            double number = value + 0.00000001;
+            double numeric = Convert.ToUInt32(number * 100) / 100.0;
+            switch (digits)
+            {
+                case 2:
+                    numeric = Convert.ToUInt32(number * 100) / 100.0;
+                    break;
+                case 3:
+                    numeric = Convert.ToUInt32(number * 1000) / 1000.0;
+                    break;
+                case 4:
+                    numeric = Convert.ToUInt32(number * 10000) / 10000.0;
+                    break;
+                case 5:
+                    numeric = Convert.ToUInt32(number * 100000) / 100000.0;
+                    break;
+                case 6:
+                    numeric = Convert.ToUInt32(number * 1000000) / 1000000.0;
+                    break;
+                case 7:
+                    numeric = Convert.ToUInt32(number * 10000000) / 10000000.0;
+                    break;
+                case 8:
+                    numeric = Convert.ToUInt32(number * 100000000) / 100000000.0;
+                    break;
+            }
             return numeric;
         }
 
