@@ -476,11 +476,11 @@ namespace YuLinTu.Library.Business
             var oglist = oldvpkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
             var ollist = oldLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
             var nllist = newLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
-            oglist.ForEach(t => stringBuilder.AppendLine($"原承包方编码：{t}重复挂接"));
-            nglist.ForEach(t => stringBuilder.AppendLine($"承包方编码：{t}存在重复"));
+            oglist.ForEach(t => stringBuilder.AppendLine($"原承包方编码：{t.Key}重复挂接"));
+            nglist.ForEach(t => stringBuilder.AppendLine($"承包方编码：{t.Key}存在重复"));
 
-            ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t}重复挂接"));
-            nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t}存在重复"));
+            ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t.Key}重复挂接"));
+            nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t.Key}存在重复"));
 
 
 

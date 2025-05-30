@@ -9,14 +9,12 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace YuLinTu.Library.Controls

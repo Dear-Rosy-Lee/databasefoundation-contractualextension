@@ -914,7 +914,7 @@ namespace YuLinTu.Library.Business
             }
             return isSuccess;
         }
-        
+
 
         /// <summary>
         /// 导入地块图斑数据shape等信息-最小以组为单位
@@ -3947,6 +3947,7 @@ namespace YuLinTu.Library.Business
                 }
                 var landsOfStatus = landStation.GetCollection(currentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
                 landsOfStatus.AddRange(landStation.Get(o => o.IsStockLand == true && o.ZoneCode == currentZone.FullCode).ToList());
+                landsOfStatus.RemoveAll(t => t == null);
                 if (landsOfStatus == null || landsOfStatus.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -4004,25 +4005,28 @@ namespace YuLinTu.Library.Business
                     List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => t.LandNumber.StartsWith(t.ZoneCode));
                     ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                     ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex, false);
-                    foreach (var item in landsOfStatusPartStay)
+                    if (argument.InitialLandNumber)
                     {
-                        var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
-                        if (gl != null)
+                        foreach (var item in landsOfStatusPartStay)
                         {
-                            item.OldLandNumber = gl.OldLandNumber;
-                            item.LandNumber = gl.LandNumber;
-                        }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(item.OldLandNumber))
+                            var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
+                            if (gl != null)
                             {
-                                item.OldLandNumber = item.LandNumber;
+                                item.OldLandNumber = gl.OldLandNumber;
+                                item.LandNumber = gl.LandNumber;
                             }
                             else
                             {
-                                if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                if (string.IsNullOrEmpty(item.OldLandNumber))
                                 {
-                                    item.OldLandNumber = item.SourceNumber;
+                                    item.OldLandNumber = item.LandNumber;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                    {
+                                        item.OldLandNumber = item.SourceNumber;
+                                    }
                                 }
                             }
                         }
@@ -4056,7 +4060,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 db.RollbackTransaction();
-                this.ReportError("初始化地块基本信息失败");
+                this.ReportError("初始化地块基本信息失败" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteError(this, "ContractLandInitialTool(提交初始化数据)", ex.Message + ex.StackTrace);
             }
         }
