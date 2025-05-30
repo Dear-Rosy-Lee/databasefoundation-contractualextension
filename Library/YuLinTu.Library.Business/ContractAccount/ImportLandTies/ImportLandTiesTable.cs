@@ -196,9 +196,6 @@ namespace YuLinTu.Library.Business
                         familyIndex++;
                         string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
                         toolProgress.DynamicProgress(info);
-                    
-                    
-                    
                     }
                 //if (familyCount == landInfo.LandFamilyCollection.Count)
                 //{
