@@ -294,6 +294,7 @@ namespace YuLinTu.Library.Business
             InitalizeRangeValue("N" + index, "N" + index, land.NeighborSouth != null ? land.NeighborSouth : "/");
             InitalizeRangeValue("O" + index, "O" + index, land.NeighborWest != null ? land.NeighborWest : "/");
             InitalizeRangeValue("P" + index, "P" + index, land.NeighborNorth != null ? land.NeighborNorth : "/");
+            InitalizeRangeValue("Q" + index, "Q" + index, land.Comment);
         }
 
         private void WritePersonInformation(Person person, int index, bool flag)

@@ -141,7 +141,6 @@ namespace YuLinTu.Library.Business
                 //ExoprtJTJDDTJBFile("集体机动地统计表", tempPathJTJDDTJB);
                 //ExoprtXWTJBFile("整户消亡统计表", tempPathXWTJB);
 
-                    
                 result = true;
                 string info = string.Format("{0}导出{1}一户一档完整资料", markDesc, index - 1);
                 this.ReportInfomation(info);
