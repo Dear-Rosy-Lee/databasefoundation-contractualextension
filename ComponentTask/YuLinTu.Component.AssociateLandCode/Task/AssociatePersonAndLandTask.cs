@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CSScriptLibrary;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
 using YuLinTu.Component.Common;

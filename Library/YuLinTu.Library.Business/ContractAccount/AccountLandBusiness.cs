@@ -4505,9 +4505,6 @@ namespace YuLinTu.Library.Business
                 geoLandPercent = 99 / (double)shapeLandsOfStatus.Count;
                 foreach (var land in shapeLandsOfStatus)
                 {
-                    if (land.LandNumber == "4501811080020200519")
-                    {
-                    }
                     var landGeo = land.Shape as YuLinTu.Spatial.Geometry;
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
                     //var areaNew = ToolMath.RoundNumericFormat((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
