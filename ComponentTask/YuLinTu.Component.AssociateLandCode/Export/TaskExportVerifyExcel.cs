@@ -226,6 +226,7 @@ namespace YuLinTu.Library.Business
             var delvps = query.Where(t => t.ZoneCode == zonecode).ToList();
             var dquery = dbContext.CreateQuery<ContractLand_Del>();
             var dellds = dquery.Where(t => t.DYBM == zonecode).ToList();
+            string err = "";
             foreach (var item in delvps)
             {
                 var vp = item.ConvertTo<VirtualPerson>();
@@ -241,7 +242,16 @@ namespace YuLinTu.Library.Business
                         if (dl != null)
                             landDelCollection.Remove(dl);
                     }
-                    dfvp.LandDelCollection.AddRange(landDelCollection);
+                    if (landDelCollection.Count > 0)
+                    {
+                        foreach (var land in landDelCollection)
+                        {
+                            if (land.QQMJ == 0)
+                                this.ReportError($"删除地块{land.DKBM}的合同面积必须大于0");
+                        }
+
+                        dfvp.LandDelCollection.AddRange(landDelCollection);
+                    }
                     continue;
                 }
                 if (jtmcs.Contains(item.Name))
@@ -253,12 +263,28 @@ namespace YuLinTu.Library.Business
                         continue;
                     }
                 }
+                if (accountFamilyCollection.Any(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == item.OldVirtualCode))
+                {
+                    err += $"{item.OldVirtualCode}、";
+                }
                 ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                 accountLandFamily.CurrentFamily = vp;
                 accountLandFamily.Persons = vp.SharePersonList;
                 accountLandFamily.LandDelCollection = landDelCollection;
+
+                foreach (var land in accountLandFamily.LandDelCollection)
+                {
+                    if (land.QQMJ == 0)
+                    {
+                        this.ReportError($"标记删除的地块{land.DKBM}的合同面积必须大于0, 已设置为实测面积{land.SCMJ}");
+                        land.QQMJ = land.SCMJ;
+                    }
+                }
+
                 accountFamilyCollection.Add(accountLandFamily);
             }
+            if (!string.IsNullOrEmpty(err))
+                this.ReportError($"数据中存在相同的承包方编码:" + err.TrimEnd('、'));
         }
 
         #endregion Method—ExportBusiness

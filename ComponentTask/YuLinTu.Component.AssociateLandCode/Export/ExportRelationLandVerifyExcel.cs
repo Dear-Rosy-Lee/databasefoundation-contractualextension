@@ -351,7 +351,8 @@ namespace YuLinTu.Library.Business
                 Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
-
+            if (land.AwareArea == 0)
+                throw new Exception($"延包地块{land.LandNumber}的合同面积必须大于0");
             InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, 2) : 0);
             InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "");
