@@ -109,7 +109,7 @@ namespace YuLinTu.Library.Business
                 var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
                 var delLands = argument.DbContext.CreateContractLandWorkstation().GetDelLandByZone(zone.FullCode);
-
+                string emptyland = "";
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);
@@ -120,6 +120,14 @@ namespace YuLinTu.Library.Business
                     accountLandFamily.LandCollection = landCollection;
                     accountLandFamily.LandDelCollection = landDelCollection;
                     accountFamilyCollection.Add(accountLandFamily);
+                    foreach (var item in landCollection)
+                    {
+                        if (string.IsNullOrEmpty(item.OldLandNumber))
+                        {
+                            //emptyland += $"{item.LandNumber}、";
+                            this.ReportWarn($"地块{item.LandNumber}的原地块编码为空，请确认地块是否为新增地块！");
+                        }
+                    }
                     var ralations = qglands.FindAll(o => o.VirtualPersonID == vp.ID);
                     if (ralations.Count > 0)
                     {
@@ -133,6 +141,10 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
+                //if (!string.IsNullOrEmpty(emptyland))
+                //{
+                //    this.ReportWarn($"地块{emptyland.TrimEnd('、')}的原地块编码为空，请确认地块是否为新增地块！");
+                //}
                 string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
                 string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
                 var zoneStation = argument.DbContext.CreateZoneWorkStation();
@@ -175,7 +187,7 @@ namespace YuLinTu.Library.Business
                 openFilePath = argument.FileName;
                 string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
                 int personCount = vps == null ? 0 : vps.Count;
-
+                var exportinfo = $"{excelName}导出{accountFamilyCollection.Count}户调查信息数据,其中注销承包方{accountFamilyCollection.Sum(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad ? 1 : 0)}户,地块数据{accountFamilyCollection.Sum(t => t.LandCollection.Count)}条，删除地块{accountFamilyCollection.Sum(t => t.LandDelCollection.Count)}条";
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
                 export.SFYQWQ = argument.Yqwq;
@@ -194,7 +206,7 @@ namespace YuLinTu.Library.Business
                 {
                     openFilePath = export.SaveFilePath;
                     export_PostProgressEvent(100, null);
-                    this.ReportInfomation(string.Format("{0}导出{1}户调查信息数据", excelName, personCount));
+                    this.ReportInfomation(exportinfo);
                 }
                 vps.Clear();
                 vps = null;
