@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using DotSpatial.Projections;
 using GeoAPI.Geometries;
 using NetTopologySuite.Geometries;
-using Newtonsoft.Json;
-using YuLinTu.Appwork;
-using YuLinTu.Component.Account.Models;
 using YuLinTu.Data;
 using YuLinTu.Library.Log;
 using YuLinTu.Spatial;
 using YuLinTu.tGISCNet;
-using YuLinTu.Windows;
 using File = System.IO.File;
 using SpatialReference = YuLinTu.Spatial.SpatialReference;
 
@@ -27,7 +22,10 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// 图形SRID
         /// </summary>
         private int srid;
-
+        public int Srid
+        {
+            get { return srid; }
+        }
         //private Dictionary<string, int> codeIndex;
 
         private string dkShapeFilePath;//用于判断是否读取了不同的地块shp
@@ -42,6 +40,18 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         public IDataSource Source { get; set; }
 
         public Action<string> ReportErrorMethod { get; set; }
+
+        public Action<int> ReportProcess { get; set; }
+
+        public List<string> VallageList { get; set; }
+
+        public string prjString { get; set; }
+        public ProjectionInfo prjInfo { get; set; }
+
+        public DataCheckProgress()
+        {
+            VallageList = new List<string>();
+        }
 
         /// <summary>
         /// 数据检查
@@ -68,7 +78,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     this.ReportError("请将当前坐标系转为投影坐标系后，再进行检查！");
                     return false;
                 }
-
+                prjString = sr.ToEsriString();
+                prjInfo = ProjectionInfo.FromEsriString(prjString);
                 List<LandEntity> ls = new List<LandEntity>();
                 var landShapeList = InitiallShapeLandList(DataArgument.CheckFilePath, srid, "");
                 if (landShapeList == null)
@@ -81,6 +92,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     this.ReportError("矢量文件中不存在数据");
                     return false;
                 }
+                this.ReportProcess(10);
                 CheckTopology(landShapeList);
                 if (!string.IsNullOrEmpty(ErrorInfo) || haserror)
                 {
@@ -89,6 +101,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     return false;
                 }
                 var landcode = "";
+                VallageList.Clear();
                 foreach (var item in landShapeList)
                 {
                     var land = new LandEntity
@@ -100,49 +113,54 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     land.qqdkbm = item.QQDKBM;
                     var zcode = item.DKBM.Substring(0, 6);
                     landcode += zcode == landcode ? "" : zcode;
+                    if (land.dkbm.Length > 12)
+                    {
+                        var vcode = land.dkbm.Substring(0, 12);
+                        if (!VallageList.Contains(vcode))
+                            VallageList.Add(vcode);
+                    }
+                    //ls.Add(land);
+                }
+                //if (landcode == "512022" || landcode == "513922")
+                //{
+                //    return true;
+                //}
+                //var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
+                ////var token = Parameters.Token.ToString();
+                //if (string.IsNullOrEmpty(token))
+                //{
+                //    ErrorInfo = "请先登录后,再进行检查";
+                //    this.ReportError(ErrorInfo);
+                //    return false;
+                //}
 
-                    ls.Add(land);
-                }
-                if (landcode == "512022" || landcode == "513922")
-                {
-                    return true;
-                }
-                var token = AppGlobalSettings.Current.TryGetValue(Parameters.TokeName, "");
-                //var token = Parameters.Token.ToString();
-                if (string.IsNullOrEmpty(token))
-                {
-                    ErrorInfo = "请先登录后,再进行检查";
-                    this.ReportError(ErrorInfo);
-                    return false;
-                }
-
-                ApiCaller apiCaller = new ApiCaller();
-                apiCaller.client = new HttpClient();
-                string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
-                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultAccountOnlineService, AppParameters.stringDefaultAccountOnlineServiceValue);//(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
-                string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
-                // 发送 GET 请求
-                //res = await apiCaller.GetDataAsync(postUrl);
-                // 发送 POST 请求
-                string jsonData = JsonConvert.SerializeObject(ls);
-                Log.WriteError(this, "", $"url {postGetTaskIdUrl} token {token} json {jsonData}");
-                var getTaskID = apiCaller.PostGetTaskIDAsync(token, postGetTaskIdUrl, jsonData);
-                string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
-                var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
-                ErrorInfo = apiCaller.ErrorInfo;
-                if (!getResult.IsNullOrEmpty())
-                {
-                    var folderPath = CreateLog();
-                    WriteLog(folderPath, getResult);
-                    ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
-                    this.ReportError(ErrorInfo);
-                    return false;
-                }
-                if (getResult == null)
-                {
-                    this.ReportError(ErrorInfo);
-                    return false;
-                }
+                //ApiCaller apiCaller = new ApiCaller();
+                //apiCaller.client = new HttpClient();
+                //string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
+                //string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
+                //string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
+                //// 发送 GET 请求
+                ////res = await apiCaller.GetDataAsync(postUrl);
+                //// 发送 POST 请求
+                //string jsonData = JsonConvert.SerializeObject(ls);
+                //Log.WriteError(this, "", $"url {postGetTaskIdUrl} token {token} json {jsonData}");
+                //var getTaskID = apiCaller.PostGetTaskIDAsync(token, postGetTaskIdUrl, jsonData);
+                //string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
+                //var getResult = apiCaller.PostGetResultAsync(token, postGetResult, getTaskID);
+                //ErrorInfo = apiCaller.ErrorInfo;
+                //if (!getResult.IsNullOrEmpty())
+                //{
+                //    var folderPath = CreateLog();
+                //    WriteLog(folderPath, getResult);
+                //    ErrorInfo = "图斑存在拓扑错误,详情请查看检查结果";
+                //    this.ReportError(ErrorInfo);
+                //    return false;
+                //}
+                //if (getResult == null)
+                //{
+                //    this.ReportError(ErrorInfo);
+                //    return false;
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -232,13 +250,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 var index = shp.FindField(info.Name);
                 switch (info.Name)
                 {
-                    case "CBFBM":
-                        if (index == -1)
-                        {
-                            err = "shp文件未包含CBFBM字段；";
+                    //case "CBFBM":
+                    //    if (index == -1)
+                    //    {
+                    //        err = "shp文件未包含CBFBM字段；";
 
-                        }
-                        break;
+                    //    }
+                    //    break;
                     case "DKBM":
                         if (index == -1)
                         {
@@ -246,13 +264,13 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
                         }
                         break;
-                    case "QQDKBM":
-                        if (index == -1)
-                        {
-                            err += "shp文件未包含QQDKBM字段；";
+                    //case "QQDKBM":
+                    //    if (index == -1)
+                    //    {
+                    //        err += "shp文件未包含QQDKBM字段；";
 
-                        }
-                        break;
+                    //    }
+                    //    break;
                     case "Shape":
                         //if (Index == -1)
                         //{
@@ -592,7 +610,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                     MaxX = allcoords.Max(t => t.X)
                 });
             }
-
+            this.ReportProcess(15);
             replist = replist.OrderBy(l => l.MinX).ToList();
 
             for (int i = 0; i < replist.Count - 1; i++)
@@ -609,8 +627,8 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                         //stringBuilder.AppendLine($"地块编码为{replist[i].DKBM}的矢量与地块编码为{replist[j].DKBM}的矢量存在重叠！");
                     }
                 }
-
             }
+            this.ReportProcess(20);
             CheckNodeRepeat(landlist);
         }
 
@@ -619,6 +637,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         private void CheckNodeRepeat(List<QCDK> landlist)
         {
+            double p = 50.0 / 100;
             AreaNodeRepeatCheck check = new AreaNodeRepeatCheck();
             check.ReportErrorMethod += (msg) => this.ReportError(msg);
             var geolist = new List<CheckGeometry>();
@@ -639,6 +658,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 this.ReportError($"地块({dkbm1})的点({x1},{y1})与地块({dkbm2})的点({x2},{y1})距离过近{len}米，请检查核实数据");
             }, (progress) =>
             {
+                this.ReportProcess(20 + (int)(progress * p));
             });
         }
 

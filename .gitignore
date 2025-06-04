@@ -26,3 +26,6 @@ packages/
 *.rar
 /WorkSpace
 /Moudle
+/Dependencies/YuLinTu/YuLinTu.Data.Framework.dll
+/Dependencies/YuLinTu/YuLinTu.Data.Framework.WCF.dll
+/Dependencies/YuLinTu/YuLinTu.Data.Dynamic.WCF.Security.dll

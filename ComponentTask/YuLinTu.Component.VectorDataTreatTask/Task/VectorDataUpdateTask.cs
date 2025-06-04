@@ -90,7 +90,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
                 catch (Exception ex)
                 {
                     Log.WriteException(this, "OnGo(数据处理失败!)", ex.Message + ex.StackTrace);
-                    this.ReportError(string.Format($"数据处理出错!{baseUrl} " + ex.Message));
+                    this.ReportError(string.Format($"数据处理出错!{ex.Message} {baseUrl}"));
                 }
             }
         }
@@ -217,32 +217,47 @@ namespace YuLinTu.Component.VectorDataTreatTask
             int findex = 0;
             foreach (var file in filelist)
             {
-                var landShapeList = VectorDataProgress.InitiallShapeLandList(file, srid, "");
-                if (landShapeList == null)
-                {
-                    return;
-                }
                 int index = 0;
                 int fupdatacount = 0;
-                datacount += landShapeList.Count;
-                List<LandEntity> ls = new List<LandEntity>();
-                foreach (var item in landShapeList)
+                int fcount = 0;
+                VectorDataProgress.InitiallShapeLandList(file, srid, false, (rowcount, landShapeList) =>
                 {
-                    var land = new LandEntity();
-                    land.dkbm = item.DKBM;
-                    land.qqdkbm = item.QQDKBM;
-                    if (argument.UseOldNumber)
+                    fcount = rowcount;
+                    if (landShapeList == null)
                     {
-                        land.dkbm = land.qqdkbm;
+                        return;
                     }
-                    if (string.IsNullOrEmpty(land.dkbm))
-                        continue;
-                    var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
-                    if (!dreproject.Equals(sreproject))
-                        ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
-                    land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
-                    ls.Add(land);
-                    if (ls.Count == 100)
+                    datacount += landShapeList.Count;
+                    List<LandEntity> ls = new List<LandEntity>();
+                    foreach (var item in landShapeList)
+                    {
+                        var land = new LandEntity();
+                        land.dkbm = item.DKBM;
+                        land.qqdkbm = item.QQDKBM;
+                        if (argument.UseOldNumber)
+                        {
+                            land.dkbm = land.qqdkbm;
+                        }
+                        if (string.IsNullOrEmpty(land.dkbm))
+                            continue;
+                        var ygeo = item.Shape as YuLinTu.Spatial.Geometry;
+                        if (!dreproject.Equals(sreproject))
+                            ygeo = VectorDataProgress.ReprojectShape(ygeo, dreproject, sreproject, 4490);
+                        land.ewkt = $"SRID=4490;{ygeo.GeometryText}";
+                        ls.Add(land);
+                        if (ls.Count == 100)
+                        {
+                            var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
+                            int upint = 0;
+                            int.TryParse(upcountstr, out upint);
+                            pindex += upint;
+                            fupdatacount += upint;
+                            ls.Clear();
+                        }
+                        index++;
+                        this.ReportProgress(1 + (int)(findex * p), $"({index}/{rowcount},{Path.GetFileName(file)}) 正在更新数据");
+                    }
+                    if (ls.Count > 0)
                     {
                         var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
                         int upint = 0;
@@ -251,20 +266,10 @@ namespace YuLinTu.Component.VectorDataTreatTask
                         fupdatacount += upint;
                         ls.Clear();
                     }
-                    index++;
-                    this.ReportProgress(1 + (int)(findex * p), $"({index}/{landShapeList.Count()},{Path.GetFileName(file)}) 正在更新数据");
-                }
-                if (ls.Count > 0)
-                {
-                    var upcountstr = DataProcessOnLine(url, murl, ls, key, szdy);
-                    int upint = 0;
-                    int.TryParse(upcountstr, out upint);
-                    pindex += upint;
-                    fupdatacount += upint;
-                    ls.Clear();
-                }
+
+                }, "");
                 findex++;
-                this.ReportInfomation($"文件{file}共{landShapeList.Count}条，成功挂接数据{fupdatacount}条");
+                this.ReportInfomation($"文件{file}共{fcount}条，成功挂接数据{fupdatacount}条");
             }
             this.ReportInfomation($"共{filelist.Count}个文件，共{datacount}条数据，成功更新{pindex}条");
             this.ReportProgress(100);

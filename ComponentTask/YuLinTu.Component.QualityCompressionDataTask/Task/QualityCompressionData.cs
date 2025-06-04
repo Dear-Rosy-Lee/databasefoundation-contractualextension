@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using DotSpatial.Projections;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
-using YuLinTu.Component.Account.Models;
-using YuLinTu.Library.Log;
-using YuLinTu.Web.Core;
+using NetTopologySuite.Features;
+using NetTopologySuite.IO;
+using YuLinTu.Data;
+using YuLinTu.Data.Shapefile;
 
 
 namespace YuLinTu.Component.QualityCompressionDataTask
@@ -60,37 +65,200 @@ namespace YuLinTu.Component.QualityCompressionDataTask
 
             this.ReportProgress(1, "开始检查...");
             this.ReportInfomation("开始检查...");
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(100);
 
             //TODO 加密方式
             //var password = TheApp.Current.GetSystemSection().TryGetValue(
             //    Parameters.stringZipPassword,
             //    Parameters.stringZipPasswordValue);
             var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length - 4);
-            var zipFilePath = $"{argument.ResultFilePath}\\{Path.GetFileName(sourceFolder)}.zip";
-            //进行质检
-            var dcp = new DataCheckProgress();
-            dcp.DataArgument = argument;
-            if (DataCheck())
+            try
             {
-                try
+                //进行质检
+                var dcp = new DataCheckProgress();
+                dcp.DataArgument = argument;
+                dcp.ReportErrorMethod += (msg) =>
                 {
-                    CompressFolder(sourceFolder, zipFilePath);
-                    var path = dcp.CreateLog();
-                    dcp.WriteLog(path, new KeyValueList<string, string>
+                    this.ReportError(msg);
+                };
+                dcp.ReportProcess += (p) =>
+                {
+                    this.ReportProgress(p, "拓扑检查中...");
+                };
+                var falg = dcp.Check();
+                this.ReportProgress(70);
+                if (!falg)
+                {
+                    return;
+                }
+                else
+                {
+                    var vlgzonelist = dcp.VallageList;
+                    var srid = dcp.Srid;
+                    var prjinfo = dcp.prjInfo;
+                    var zipFilePath = $"{argument.ResultFilePath}\\质量检查导出";
+                    var p = 50.0 / vlgzonelist.Count;
+                    int pi = 0;
+                    foreach (var v in vlgzonelist)
                     {
-                        new KeyValue<string, string>("", "已通过数据质检!\r")
-                    });
-                    this.ReportProgress(100);
-                    this.ReportInfomation("数据检查、加密成功。");
-                    //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
+                        List<QCDK> dks = DataCheckProgress.InitiallShapeLandList(argument.CheckFilePath, srid, v);
+                        if (dks.Count == 0)
+                            continue;
+                        ExprotAndCompress(dks, v, zipFilePath, prjinfo);
+                        pi++;
+                        this.ReportProgress(70 + (int)(pi * p), "数据打包中");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Library.Log.Log.WriteException(this, "OnGo(数据压缩失败!)", ex.Message + ex.StackTrace);
-                    this.ReportError(string.Format("数据压缩时出错!" + ex.Message));
-                }
+                //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
             }
+            catch (Exception ex)
+            {
+                Library.Log.Log.WriteException(this, "OnGo(数据检查失败!)", ex.Message + ex.StackTrace);
+                this.ReportError(string.Format("数据检查时出错!"));
+            }
+            //if (DataCheck())
+            //{
+            //    try
+            //    {
+            //        CompressFolder(sourceFolder, zipFilePath);
+            //        var path = dcp.CreateLog();
+            //        dcp.WriteLog(path, new KeyValueList<string, string>
+            //        {
+            //            new KeyValue<string, string>("", "已通过数据质检!\r")
+            //        });
+            //        this.ReportProgress(100);
+            //        this.ReportInfomation("数据检查、加密成功。");
+            //        //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Library.Log.Log.WriteException(this, "OnGo(数据压缩失败!)", ex.Message + ex.StackTrace);
+            //        this.ReportError(string.Format("数据压缩时出错!" + ex.Message));
+            //    }
+            //}
+        }
+
+        /// <summary>
+        /// 导出及压缩
+        /// </summary>
+        public void ExprotAndCompress(List<QCDK> dks, string zonecode, string zipFilePath, ProjectionInfo projectionInfo)
+        {
+            List<IFeature> list = new List<IFeature>();
+            foreach (var land in dks)
+            {
+                var attributes = CreateAttributesSimple(land);
+                Feature feature = new Feature((land.Shape as Spatial.Geometry).Instance, attributes);
+                list.Add(feature);
+            }
+            //输出Shape文件
+            var dir = Path.Combine(zipFilePath, zonecode);
+            Directory.CreateDirectory(dir);
+            string filename = Path.Combine(dir, $"DK{zonecode}.shp");
+            ExportToShape(filename, list, projectionInfo);
+            // 加密压缩文件
+            var zipPath = $"{zipFilePath}\\DK{zonecode}.zip";
+            CompressFolder(filename, zipPath, zonecode);
+            Directory.Delete(dir, true);
+        }
+
+        /// <summary>
+        /// 导出shape
+        /// </summary>  
+        public void ExportToShape(string filename, List<IFeature> list, ProjectionInfo prjinfo)
+        {
+            var builder = new ShapefileConnectionStringBuilder();
+            builder.DirectoryName = Path.GetDirectoryName(filename);
+            var elementName = Path.GetFileNameWithoutExtension(filename);
+            if (list == null || list.Count == 0)
+            {
+                return;
+            }
+            var ds = DataSource.Create<IDbContext>(ShapefileConnectionStringBuilder.ProviderType, builder.ConnectionString);
+            var provider = ds.DataSource as IProviderShapefile;
+            ClearExistFiles(provider, elementName);
+            var writer = provider.CreateShapefileDataWriter(elementName);
+            writer.Header = CreateHeader();
+            writer.Header.NumRecords = list.Count;
+            writer.Write(list);
+            prjinfo.SaveAs(Path.ChangeExtension(filename, "prj"));
+            this.ReportInfomation(string.Format("成功导出{0}条数据", list.Count));
+        }
+
+        /// <summary>
+        /// 删除已存在的文件
+        /// </summary>
+        private void ClearExistFiles(IProviderShapefile provider, string elementName)
+        {
+            string path = string.Empty;
+            try
+            {
+                var files = Directory.GetFiles(provider.DirectoryName, string.Format("{0}.*", elementName));
+                files.ToList().ForEach(c => File.Delete(path = c));
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ClearExistFiles", ex.Message + ex.StackTrace);
+                throw new Exception("删除文件" + path + "时发生错误！");
+            }
+        }
+
+        /// <summary>
+        /// 创建表头
+        /// </summary> 
+        /// <returns></returns>
+        private DbaseFileHeader CreateHeader()
+        {
+            DbaseFileHeader header = new DbaseFileHeader(Encoding.UTF8);//Encoding.GetEncoding(936));  
+            //header.AddColumn("DKBM", 'C', 19, 0);
+            //header.AddColumn("DKMC", 'C', 50, 0);
+            //header.AddColumn("QQDKBM", 'C', 19, 0);
+            //header.AddColumn("CBFBM", 'C', 18, 0);
+
+            header.AddColumn("DKBM", 'C', 19, 0);
+            header.AddColumn("CBFBM", 'C', 18, 0);
+            header.AddColumn("DKMC", 'C', 50, 0);
+            header.AddColumn("SYQXZ", 'C', 4, 0);
+            header.AddColumn("DKLB", 'C', 4, 0);
+            header.AddColumn("TDLYLX", 'C', 4, 0);
+            header.AddColumn("DLDJ", 'C', 4, 0);
+            header.AddColumn("TDYT", 'C', 4, 0);
+            header.AddColumn("SFJBNT", 'C', 4, 0);
+            header.AddColumn("SCMJ", 'F', 15, 2);
+            header.AddColumn("SCMJM", 'F', 15, 2);
+            header.AddColumn("DKDZ", 'C', 50, 0);
+            header.AddColumn("DKXZ", 'C', 50, 0);
+            header.AddColumn("DKNZ", 'C', 50, 0);
+            header.AddColumn("DKBZ", 'C', 50, 0);
+            header.AddColumn("DKBZXX", 'C', 100, 0);
+            header.AddColumn("ZJRXM", 'C', 100, 0);
+
+            return header;
+        }
+
+        ///<summary>
+        ///创建属性表
+        ///</summary> 
+        public AttributesTable CreateAttributesSimple(QCDK en)
+        {
+            AttributesTable attributes = new AttributesTable();
+            attributes.AddAttribute("DKBM", en.DKBM);
+            attributes.AddAttribute("CBFBM", en.DKBM);
+            attributes.AddAttribute("DKMC", en.DKBM);
+            attributes.AddAttribute("SYQXZ", en.DKBM);
+            attributes.AddAttribute("DKLB", en.DKBM);
+            attributes.AddAttribute("TDLYLX", en.DKBM);
+            attributes.AddAttribute("DLDJ", en.DKBM);
+            attributes.AddAttribute("TDYT", en.DKBM);
+            attributes.AddAttribute("SFJBNT", en.DKBM);
+            attributes.AddAttribute("SCMJ", en.DKBM);
+            attributes.AddAttribute("SCMJM", en.DKBM);
+            attributes.AddAttribute("DKDZ", en.DKBM);
+            attributes.AddAttribute("DKXZ", en.DKBM);
+            attributes.AddAttribute("DKNZ", en.DKBM);
+            attributes.AddAttribute("DKBZ", en.DKBM);
+            attributes.AddAttribute("DKBZXX", en.DKBM);
+            attributes.AddAttribute("ZJRXM", en.DKBM);
+            return attributes;
         }
 
         #endregion Method - Override
@@ -138,18 +306,19 @@ namespace YuLinTu.Component.QualityCompressionDataTask
         /// </summary>
         /// <param name="sourceFile">待压缩目录</param>
         /// <param name="zipStream">压缩文件</param>
-        private static void CompressFolder(string sourceFile, string zipFilePath)
+        private static void CompressFolder(string sourceFile, string zipFilePath, string zonecode)
         {
-            var loginRegion = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");
+            //var loginRegion = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");
             var fileInfo = new FileInfo(sourceFile);
-            string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fileInfo.Name}.*", SearchOption.AllDirectories);
+            var fname = Path.GetFileNameWithoutExtension(sourceFile);
+            string[] matchingFiles = Directory.GetFiles(fileInfo.DirectoryName, $"{fname}.*", SearchOption.AllDirectories);
 
             using (var fsOut = File.Create(zipFilePath))
             {
                 using (var zipStream = new ZipOutputStream(fsOut))
                 {
                     zipStream.SetLevel(5); // 压缩级别，0-9，9为最大压缩
-                    zipStream.Password = loginRegion + "Ylt@dzzw";
+                    zipStream.Password = zonecode + "Ylt@dzzw";
                     foreach (string matchingFile in matchingFiles)
                     {
                         var matchingFileInfo = new FileInfo(matchingFile);
