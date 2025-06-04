@@ -74,7 +74,7 @@ namespace YuLinTu.Component.VectorDataTreatTask
             System.Threading.Thread.Sleep(200);
 
             string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
-            string baseUrl = AppGlobalSettings.Current.TryGetValue("DefaultSystemService", AppParameters.stringDefaultSystemServiceValue);
+            string baseUrl = AppGlobalSettings.Current.TryGetValue("DefaultSystemService", AppParameters.stringDefaultAccountOnlineServiceValue); //AppParameters.stringDefaultSystemServiceValue);
             string postGetTaskIdUrl = $"/ruraland/api/topology/update/shape/{zonecode}/false/by/dkbm";
             var sourceFolder = argument.CheckFilePath.Substring(0, argument.CheckFilePath.Length - 4);
             //进行质检 

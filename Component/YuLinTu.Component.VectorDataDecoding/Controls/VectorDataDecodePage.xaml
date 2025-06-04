@@ -1,0 +1,383 @@
+﻿<ylt:Page x:Class="YuLinTu.Component.VectorDataDecoding.VectorDataDecodePage"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:ylt="http://schemas.yulintu.com/wpf/xaml/framework"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+          xmlns:local="clr-namespace:YuLinTu.Component.VectorDataDecoding"
+          d:DesignWidth="800"
+          d:DesignHeight="480"
+          mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CommandLoaded}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <ylt:ClassicLayout>
+        <ylt:ClassicLayout.Toolbar>
+
+            <DockPanel LastChildFill="False"
+                       TextElement.FontSize="12">
+                
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/32/添加文件32.png"
+                                           Text="创建任务" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/32/fileproperties.png"
+                                           Text="编辑任务" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/32/blue-document-text.png"
+                                           Text="任务信息" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                    
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/Shape32.png"
+                                           Text="上传矢量" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                    
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/32/maildelete.png"
+                                           Text="删除文件" />
+                    </ylt:MetroButton>
+                   
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
+                                           Text="开始脱密" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                          Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/质检.png"   
+                                           Text="质检打包" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                          Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
+                                           Text="下载材料" />
+                    </ylt:MetroButton>
+                </ylt:TabControlItemRibbonContainer>
+
+            </DockPanel>
+        </ylt:ClassicLayout.Toolbar>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource {x:Static ylt:ResourceKeys.BorderBrushKey}}"
+                    Background="{DynamicResource {x:Static ylt:ResourceKeys.BackgroundBrushKey}}">
+                <ylt:MetroTextBox Margin="5,3,3,3"
+                                  Width="200"
+                                  Height="30"
+                                  Watermask="请输入过滤关键字"
+                                  HorizontalAlignment="Right"
+                                  Text="{Binding FilterKey, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <ylt:InvokeCommandActionEx Command="{Binding CommandFilter}"
+                                                       CommandParameter="{Binding ElementName=treeGrid}"></ylt:InvokeCommandActionEx>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ylt:MetroTextBox>
+            </Border>
+            <ylt:MetroTreeGrid Grid.Row="1"
+                               Name="treeGrid"
+                               RootItemAutoExpand="True"
+                               Roots="{Binding Items}"
+                               SelectedNode="{Binding SelectedItem, Mode=TwoWay}"
+                               ylt:DataGridAttacher.ColumnHeaderFontWeight="Bold"
+                               ylt:DataGridAttacher.ColumnHeaderPadding="5"
+                               ylt:DataGridAttacher.CellPadding="5,1">
+                <ylt:MetroTreeGrid.Columns>
+                    <DataGridTemplateColumn Header="批次信息"
+                                            Width="250"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ylt:MetroTreeGridRowToggleButton></ylt:MetroTreeGridRowToggleButton>
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <ylt:ImageTextItem VerticalAlignment="Center"
+                                                                   Margin="3,0,0,0"
+                                                                   Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png"
+                                                                   Text="{Binding ShapeFileName}"></ylt:ImageTextItem>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                    <Image MaxHeight="20"
+                                                           Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png"></Image>
+                                                    <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding BatchCode}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="地域编码"
+                                            Width="120"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                   
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock  VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                                                      Text="{Binding ZoneCode}"></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center"
+                                                            Margin="3,3">
+                                                       <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding ZoneCode}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="上传时间"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                  
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"      HorizontalAlignment="Left"
+                                                                   Margin="3,0,0,0"
+                                                                                                             Text="{Binding UplaodTime}"></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                   <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"     HorizontalAlignment="Center"
+                                                               Text="{Binding UplaodTime}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="数据条数"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                               
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"     HorizontalAlignment="Left"
+                                                                   Margin="3,0,0,0"
+                                                   Text="{Binding DataCount}"></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal" 
+                                                            Margin="3,3">
+                                                                               <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"  HorizontalAlignment="Center"
+                                                               Text="{Binding DataCount}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="处理进度"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                   
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Center"
+                                                                   Margin="3,0,0,0"
+                                                                                            Text=" "></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                                   <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding DecodeProgress}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="是否脱密"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"
+                                                                   Margin="3,0,0,0"
+                                                                                              Text=" "></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                    <TextBlock Margin="5,0,0,0"  Name="ctiveStausTag"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding DecodeStaus}">
+                                                        <TextBlock.Style>
+                                                   <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=ctiveStausTag}" Value="否">
+                                                                        <Setter Property="Foreground" Value="Red"/>
+                                                                        <!--<Setter Property="Background" Value="Red"/>-->
+                                                                    </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=ctiveStausTag}" Value="是">
+                                                                        <Setter Property="Foreground"  Value="#16A34A"/>
+                                                            </DataTrigger>
+                                                    
+                                                            <DataTrigger Binding="{Binding Text, ElementName=ctiveStausTag}" Value="3">
+                                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                            </TextBlock.Style>
+                                                </TextBlock>
+                                                </StackPanel>
+                                                <!--<StackPanel Orientation="Horizontal">
+                                                    <Label Content="{Binding DecodeStaus}" FontSize="20" FontWeight="Bold"/>
+                                                    <Image Source="Resources\recommended.png" HorizontalAlignment="Right"/>
+                                                </StackPanel>-->
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="下载次数"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                   
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"
+                                                             HorizontalAlignment="Left"
+                                                                   Margin="3,0,0,0"
+                                                                                                      Text=""></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                                 <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding NumbersOfDownloads}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="证明材料"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                   
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                                                                              Text=" "></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                    <TextBlock VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                                               Text="{Binding SupportingMaterials}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                </ylt:MetroTreeGrid.Columns>
+            </ylt:MetroTreeGrid>
+        </Grid>
+    </ylt:ClassicLayout>
+</ylt:Page>

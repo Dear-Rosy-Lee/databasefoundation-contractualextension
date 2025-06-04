@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" />
+  <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
+  <Import Project="..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" />
+  <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props')" />
   <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props')" />
-  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" />
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
   <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
   <Import Project="..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
@@ -150,8 +153,20 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\Dependencies\YuLinTu\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="Aspose.Words">
+      <HintPath>..\Dependencies\YuLinTu\Aspose.Words.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy, Version=6.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.DynamicProxy.6.0.1\lib\netstandard2.0\Autofac.Extras.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
@@ -159,6 +174,9 @@
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
@@ -197,6 +215,15 @@
       <HintPath>..\Dependencies\DotSpatial\DotSpatial.Topology.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Enums.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enums.NET.4.0.1\lib\net45\Enums.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ExtendedNumerics.BigDecimal, Version=2025.1001.2.129, Culture=neutral, PublicKeyToken=65f1315a45ad8949, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExtendedNumerics.BigDecimal.2025.1001.2.129\lib\net472\ExtendedNumerics.BigDecimal.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=11.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.11.5.1\lib\netstandard2.0\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll</HintPath>
       <Private>True</Private>
@@ -212,9 +239,19 @@
       <HintPath>..\packages\YuLinTu.SDK.6.8.8.1\x86\IronPython.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Signed.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.dll</HintPath>
       <Private>True</Private>
@@ -232,6 +269,9 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.0\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -299,29 +339,37 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.Core, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OOXML.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OOXML, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OOXML.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.1.0.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="NSystem.Data.MoonPdf.Wpf, Version=2022.6.6.666, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSystem.Data.MoonPdf.Wpf.2022.6.6\lib\net45\NSystem.Data.MoonPdf.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PowerCollections, Version=1.0.5798.18368, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
+    </Reference>
     <Reference Include="Refit, Version=5.2.0.0, Culture=neutral, PublicKeyToken=2f9b1262776509f5, processorArchitecture=MSIL">
       <HintPath>..\packages\Refit.5.2.4\lib\net461\Refit.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.1\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.ImageSharp.2.1.10\lib\net472\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
@@ -344,13 +392,23 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Pkcs, Version=8.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Pkcs.8.0.1\lib\net462\System.Security.Cryptography.Pkcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activities" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=4.0.5.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.7.2\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -386,9 +444,53 @@
       <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="YuLinTu.tGISCNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.tGISCNet.dll</HintPath>
+    <Reference Include="YuLinTu.DF.Component.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Component.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.BlobStoring.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.BlobStoring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.BlobStoring.FileSystem">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.BlobStoring.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Business.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Business.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Business.LandCensus">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Business.LandCensus.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Control.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Control.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Entity.Contractual">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Entity.Contractual.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Entity.Core">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Entity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Model.Core">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Model.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Office.Core">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Office.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Repository.Core">
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Repository.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Result.Core">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Result.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Result.Entity.Contractual">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Result.Entity.Contractual.dll</HintPath>
+    </Reference>
+    <Reference Include="YuLinTu.DF.Library.Shapefile.Core">
+      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Shapefile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.ExtensionMethods, Version=2.1.1.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.ExtensionMethods.2.1.1\lib\net45\Z.ExtensionMethods.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1424,28 +1526,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Tracker\Binary\YuLinTu.Appwork.Tracker.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Components\YuLinTu.Appwork.Core\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Host\Binary\YuLinTu.Appwork.Host.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Host\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Tracker\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
@@ -1469,8 +1549,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArcGISExplorer.ico" />
-    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Binary\YuLinTu.Appwork.Apps.Extensions.dll" />
-    <Content Include="Components\YuLinTu.Appwork.Apps.Extensions\Config.xml" />
     <None Include="Config\DivisionCodeDictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1480,21 +1558,7 @@
     <None Include="Config\QrSetting.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Binary\YuLinTu.Appwork.ProcessHandler.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ProcessHandler\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Binary\YuLinTu.Appwork.Task.Installer.dll" />
-    <Content Include="Components\YuLinTu.Appwork.Task.Installer\Config.xml" />
     <None Include="Template\MeataTemplate.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.BusyStatus\Binary\YuLinTu.Appwork.BusyStatus.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.BusyStatus\Config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Token\EnterSafe\ET199\ConfigTool_et199.exe">
@@ -1512,198 +1576,18 @@
     <None Include="Token\EnterSafe\ET199\et199csp11_s.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Components\YuLinTu.Appwork.Plugins\Binary\YuLinTu.Appwork.Plugins.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Plugins\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Binary\YuLinTu.Appwork.Task.Viewer.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.Viewer\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task\Binary\YuLinTu.Appwork.Task.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.New\Binary\YuLinTu.Appwork.Task.New.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Task.New\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Binary\YuLinTu.Appwork.ConnectionStrings.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ConnectionStrings\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Options\Binary\YuLinTu.Appwork.Options.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Options\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.UndoRedo\Binary\YuLinTu.Appwork.UndoRedo.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.UndoRedo\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Binary\YuLinTu.Appwork.TaskWatcher.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.TaskWatcher\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Authenticate\Binary\YuLinTu.Appwork.Authenticate.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Authenticate\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="zh-Hans\Microsoft.Data.ConnectionUI.Dialog.resources.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Starting\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Starting\Binary\YuLinTu.Appwork.Starting.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\Languages\Default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Components\YuLinTu.Appwork.Language\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Language\Binary\YuLinTu.Appwork.Language.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WorkpageInstaller\Binary\YuLinTu.Appwork.WorkpageInstaller.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ThemeSync\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.ThemeSync\Binary\YuLinTu.Appwork.ThemeSync.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.AccountSync\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.AccountSync\Binary\YuLinTu.Appwork.AccountSync.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.SystemSettings\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.SystemSettings\Binary\YuLinTu.Appwork.SystemSettings.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.WindowStateHandler\Binary\YuLinTu.Appwork.WindowStateHandler.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Network\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Network\Binary\YuLinTu.Appwork.Network.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Account\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Account\Binary\YuLinTu.Appwork.Account.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.InformationBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.InformationBar\Binary\YuLinTu.Appwork.InformationBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Information\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.FileIO\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Information\Binary\YuLinTu.Appwork.Information.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.FileIO\Binary\YuLinTu.Appwork.FileIO.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Exit\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Exit\Binary\YuLinTu.Appwork.Exit.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.StartTabControl\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.StartTabControl\Binary\YuLinTu.Appwork.StartTabControl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.MdiTabControl\Binary\YuLinTu.Appwork.MdiTabControl.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.New\Binary\YuLinTu.Appwork.New.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.New\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.HelpBar\Binary\YuLinTu.Appwork.HelpBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.HelpBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.QuickBar\Binary\YuLinTu.Appwork.QuickBar.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.QuickBar\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Theme\Config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Components\YuLinTu.Appwork.Theme\Binary\YuLinTu.Appwork.Theme.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Apps.Web.Extensions\" />
     <Folder Include="Data\ArcGIS\" />
     <Folder Include="Data\tGIS\Samples\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ComponentTask\YuLinTu.Component.QualityCompressionDataTask\YuLinTu.Component.QualityCompressionDataTask.csproj">
-      <Project>{d55b87e9-2b5b-4abc-9a6a-92323069486c}</Project>
-      <Name>YuLinTu.Component.QualityCompressionDataTask</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ComponentTask\YuLinTu.Component.VectorDataTreatTask\YuLinTu.Component.VectorDataTreatTask.csproj">
-      <Project>{4ed2b604-435f-4486-ba2f-8f0e301c07f5}</Project>
-      <Name>YuLinTu.Component.VectorDataTreatTask</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -1780,8 +1664,6 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
     <Error Condition="!Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props'))" />
@@ -1789,6 +1671,14 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
     <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets'))" />
     <Error Condition="!Exists('..\packages\Refit.5.2.4\build\net461\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Refit.5.2.4\build\net461\refit.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.6.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.6.4\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -1806,11 +1696,14 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
   </PropertyGroup>
   <Import Project="..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
-  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets')" />
   <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" />
   <Import Project="..\packages\Refit.5.2.4\build\net461\refit.targets" Condition="Exists('..\packages\Refit.5.2.4\build\net461\refit.targets')" />
+  <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets')" />
+  <Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />
+  <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
+  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

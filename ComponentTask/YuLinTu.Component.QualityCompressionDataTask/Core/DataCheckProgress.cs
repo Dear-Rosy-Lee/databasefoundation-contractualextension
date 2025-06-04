@@ -119,7 +119,7 @@ namespace YuLinTu.Component.QualityCompressionDataTask
                 ApiCaller apiCaller = new ApiCaller();
                 apiCaller.client = new HttpClient();
                 string zonecode = AppGlobalSettings.Current.TryGetValue(Parameters.RegionName, "");// Parameters.Region.ToString();
-                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
+                string baseUrl = TheApp.Current.GetSystemSection().TryGetValue(AppParameters.stringDefaultAccountOnlineService, AppParameters.stringDefaultAccountOnlineServiceValue);//(AppParameters.stringDefaultSystemService, AppParameters.stringDefaultSystemServiceValue);
                 string postGetTaskIdUrl = $"{baseUrl}/ruraland/api/topology/check";
                 // 发送 GET 请求
                 //res = await apiCaller.GetDataAsync(postUrl);
