@@ -281,7 +281,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 foreach (var item in dellandents)
                 {
 #if DEBUG
-                    if (land.LandNumber == "5116022162030300289" && item.LandNumber == "5116022162030500197")
+                    if (land.LandNumber == "5113231162080101685" && item.LandNumber == "5113232052080100540")
                     {
                     }
 #endif
