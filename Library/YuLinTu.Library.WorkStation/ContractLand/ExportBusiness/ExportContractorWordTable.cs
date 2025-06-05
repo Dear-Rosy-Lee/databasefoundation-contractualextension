@@ -71,7 +71,7 @@ namespace YuLinTu.Library.WorkStation
             try
             {
                 base.OnSetParamValue(data);
-                WriteContractorInformtaion(family);               
+                WriteContractorInformtaion(family);
                 WriteSharePersonInformation(family);   //填写共有人  
                 WriteSecondConcordInformation(family);
                 WriteOtherInformation(family);
@@ -171,10 +171,10 @@ namespace YuLinTu.Library.WorkStation
             for (int i = 0; i < persons.Count; i++)
             {
                 Person person = persons[i];
-                SetTableCellValue(0, row, 0, InitalizeFamilyName(person.Name));
-                SetTableCellValue(0, row, 1, person.Relationship);
-                SetTableCellValue(0, row, 2, person.CardType == eCredentialsType.IdentifyCard ? person.ICN : "");
-                SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment);
+                SetTableCellValue(0, row, 0, InitalizeFamilyName(person.Name), 0, 2);
+                SetTableCellValue(0, row, 1, person.Relationship, 0, 2);
+                SetTableCellValue(0, row, 2, person.CardType == eCredentialsType.IdentifyCard ? person.ICN : "", 0, 2);
+                SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment, 0, 2);
                 row++;
                 if (person.Comment != null)
                 {

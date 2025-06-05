@@ -794,7 +794,7 @@ namespace YuLinTu.Library.Office
                 if (cell != null)
                 {
                     cell.RemoveAllChildren();
-                    Paragraph para = new Paragraph(doc);
+                    Paragraph para = new Paragraph(doc); 
                     var run = new Run(doc, string.IsNullOrEmpty(value) ? EmptyReplacement : value);
                     if (!string.IsNullOrEmpty(fontName))
                     {
