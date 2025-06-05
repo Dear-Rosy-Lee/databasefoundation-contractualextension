@@ -496,7 +496,7 @@
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Model.Core.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Office.Core">
-      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Office.Core.dll</HintPath>
+      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Office.Core.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Repository.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Repository.Core.dll</HintPath>
