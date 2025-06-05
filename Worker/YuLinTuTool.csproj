@@ -483,17 +483,11 @@
     <Reference Include="YuLinTu.DF.Library.Business.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Business.Core.dll</HintPath>
     </Reference>
-    <Reference Include="YuLinTu.DF.Library.Business.LandCensus">
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Business.LandCensus.dll</HintPath>
-    </Reference>
     <Reference Include="YuLinTu.DF.Library.Control.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Control.Core.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.DF.Library.Entity.Contractual">
-      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Entity.Contractual.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Entity.Core">
       <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Entity.Core.dll</HintPath>
@@ -509,9 +503,6 @@
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Result.Core">
       <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Result.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.DF.Library.Result.Entity.Contractual">
-      <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Result.Entity.Contractual.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Shapefile.Core">
       <HintPath>..\..\dotnet_desktop_dataIntegrationcheck\Dependencies\YuLinTu.DF.Library\YuLinTu.DF.Library.Shapefile.Core.dll</HintPath>
