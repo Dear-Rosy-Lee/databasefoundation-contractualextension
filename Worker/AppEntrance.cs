@@ -14,7 +14,6 @@ using YuLinTu.DF.Uow;
 using YuLinTu.DF.Validation;
 using YuLinTu.DF.Zones;
 using YuLinTu.Windows.Wpf;
-using YuLinTu.DF.LandCensus.Zones;
 using AutoMapper;
 using Autofac;
 using System.Reflection;
@@ -57,8 +56,6 @@ namespace YuLinTu.Product.YuLinTuTool
             // 注册工作单元拦截器
             builder.RegisterInstance(new UnitOfWorkInterceptor());
 
-            builder.RegisterType(typeof(ZoneExtendService))
-                .As(typeof(IZoneExtendService));
 
             var container = builder.Build();
             ContainerProvider.Load(container);
