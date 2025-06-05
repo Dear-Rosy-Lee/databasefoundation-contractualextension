@@ -562,13 +562,13 @@ namespace YuLinTu.Library.Business
                 int colBase = 0;
                 string sfcbd = (dklb == "承包地块") ? "是" : "否";
                 SetTableCellValue(0, row, colBase, name);
-                SetTableCellValue(0, row, colBase + 1, canumber); 
+                SetTableCellValue(0, row, colBase + 1, canumber);
                 SetTableCellValue(0, 0, row, colBase + 2, InitalizeLandNeightors(LandCollection[i]));//, "东：" + east + "\n" + "南：" + south + "\n" + "西：" + west + "\n" + "北：" + north);
-                //SetTableCellValue(0, row, colBase + 2, sz, "");// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
-                                                               //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
-                                                               //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
-                                                               //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
-                                                               //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
+                                                                                                     //SetTableCellValue(0, row, colBase + 2, sz, "");// string.Format("东:{0}\n南:{1}\n西:{2}\n北:{3}",
+                                                                                                     //landCollection[i].NeighborEast != null ? landCollection[i].NeighborEast : "",
+                                                                                                     //landCollection[i].NeighborSouth != null ? landCollection[i].NeighborSouth : "",
+                                                                                                     //landCollection[i].NeighborWest != null ? landCollection[i].NeighborWest : "",
+                                                                                                     //landCollection[i].NeighborNorth != null ? landCollection[i].NeighborNorth : ""));
 
                 if (!ExportPublicAwareArea)
                 {
@@ -662,10 +662,10 @@ namespace YuLinTu.Library.Business
                 string icn = personList[i].CardType != eCredentialsType.IdentifyCard ? "" : personList[i].ICN;
                 string comment = personList[i].Comment;
                 int colBase = 0;
-                SetTableCellValue(1, row, colBase, InitalizeFamilyName(name));
-                SetTableCellValue(1, row, colBase + 1, relationship);
-                SetTableCellValue(1, row, colBase + 2, icn);
-                SetTableCellValue(1, row, colBase + 3, SetReplacement(comment));
+                SetTableCellValue(1, row, colBase, InitalizeFamilyName(name), 0, 2);
+                SetTableCellValue(1, row, colBase + 1, relationship, 0, 2);
+                SetTableCellValue(1, row, colBase + 2, icn, 0, 2);
+                SetTableCellValue(1, row, colBase + 3, SetReplacement(comment), 0, 2);
                 row++;
             }
         }
