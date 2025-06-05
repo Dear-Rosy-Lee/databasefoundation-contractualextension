@@ -102,9 +102,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         public VectorDataDecodeViewModel(ITheWorkpage workpage) : base(workpage.Message)
         {
-            var ds = Db.GetInstance();
-            var qe = ds.CreateRepository<IZoneRepository>();
-           int test= qe.Count();
+       
 
             Workpage = workpage;
             //Items=new ObservableCollection<VectorDecodeBatchModel>();

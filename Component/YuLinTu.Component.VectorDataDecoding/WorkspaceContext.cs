@@ -24,28 +24,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         public WorkspaceContext(IWorkspace workspace)
             : base(workspace)
         {
-            var builder = new ContainerBuilder();
-            //var assemblyFiles = Directory.GetFiles(PathManager.LibPath, "YuLinTu.DF.Library.*.dll");
-            //var assemblies = new List<Assembly>();
-
-            //foreach (var file in assemblyFiles)
-            //{
-            //    var assembly = Assembly.LoadFile(file);
-            //    assemblies.Add(Assembly.LoadFrom(file));
-            //    builder.Register(assembly);
-            //}
-
-            //// 注册 IMapper
-            //builder.RegisterMappers(assemblies);
-
-            //// 注册工作单元拦截器
-            //builder.RegisterInstance(new UnitOfWorkInterceptor());
-
-
-
-            //var container = builder.Build();
-            //ContainerProvider.Load(container);
-            //Register<VectorDataDecodePage, WorkpageContext>();
+   
+            Register<VectorDataDecodePage, WorkpageContext>();
         }
 
         #endregion Ctor2
