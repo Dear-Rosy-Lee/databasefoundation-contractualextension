@@ -114,7 +114,7 @@ namespace YuLinTu.Library.Business
             get { return currentFamily; }
             set
             {
-                if(currentFamily != value)
+                if (currentFamily != value)
                 {
                     currentFamily = value;
                 }
@@ -308,7 +308,7 @@ namespace YuLinTu.Library.Business
                 //SetBookmarkValue("bmNameGroup" + (i == 0 ? "" : i.ToString()), groupNamne);
                 SetBookmarkValue("bmConcordNumber" + (i == 0 ? "" : i.ToString()), concord != null ? concord.ConcordNumber : "");
                 SetBookmarkValue("bmLandCount" + (i == 0 ? "" : i.ToString()), LandCollection != null && LandCollection.Count > 0 ? LandCollection.Count.ToString() : "");
-                SetBookmarkValue("bmLandArea" + (i == 0 ? "" : i.ToString()), landArea.ToString("F2"));
+                SetBookmarkValue("bmLandArea" + (i == 0 ? "" : i.ToString()), ToolMath.RoundNumericFormat(landArea, SystemSet.DecimalPlaces) + "");
                 //SetBookmarkValue("bmCountyName" + (i == 0 ? "" : i.ToString()), countyZone != null ? countyZone.Name : "");
                 //SetBookmarkValue("bmNameTown" + (i == 0 ? "" : i.ToString()), townZone != null ? townZone.Name : "");
                 SetBookmarkValue("bmContractMode" + (i == 0 ? "" : i.ToString()), EnumNameAttribute.GetDescription(ConstructMode));
@@ -527,13 +527,13 @@ namespace YuLinTu.Library.Business
             int personcount = 0;
             foreach (Person item in persons)
             {
-                if (SystemSet.StatisticsDeadPersonInfo == false && item.Comment.IsNullOrEmpty()== false && item.Comment.Contains("去世"))
+                if (SystemSet.StatisticsDeadPersonInfo == false && item.Comment.IsNullOrEmpty() == false && item.Comment.Contains("去世"))
                 {
                     continue;
                 }
-               
+
                 personcount++;
-            }          
+            }
             SetBookmarkValue("ContractorCount", personcount.ToString());
         }
 

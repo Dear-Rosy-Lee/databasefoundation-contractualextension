@@ -465,6 +465,8 @@ namespace YuLinTu.Library.WorkStation
         /// <returns></returns>
         public static double RoundNumericFormat(double value, int digits)
         {
+            if (value < 0)
+                return value;
             //double numeric = (double)Math.Round((decimal)value, digits);
             double number = value + 0.00000001;
             double numeric = Convert.ToUInt32(number * 100) / 100.0;

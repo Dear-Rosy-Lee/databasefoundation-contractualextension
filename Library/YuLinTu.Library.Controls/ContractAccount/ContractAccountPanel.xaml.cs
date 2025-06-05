@@ -562,10 +562,10 @@ namespace YuLinTu.Library.Controls
 
             AccountSummary.FamilyCount = familyCount;
             AccountSummary.LandCount = $"地块数：{landCount} (确股:{stockLandCount})";//landCount;
-            AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
-            AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
-            AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
-            AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(2);
+            AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(SystemSetDefine.DecimalPlaces);
         }
 
         private void DataCount(ContractLandPersonItem item)

@@ -17,7 +17,7 @@ namespace YuLinTu.Library.Business
         #region Fields
 
         private Zone currentZone;
-
+        private SystemSetDefine systemset;
         private int bsmindex;
 
         #endregion Fields
@@ -87,6 +87,7 @@ namespace YuLinTu.Library.Business
             : base(exportSet)
         {
             bsmindex = 100000;
+            systemset = SystemSetDefine.GetIntence();
         }
 
         #endregion Ctor
@@ -367,8 +368,8 @@ namespace YuLinTu.Library.Business
                 attributes.AddAttribute("地域名称", geoland.SenderName.IsNullOrEmpty() ? geoland.ZoneName : geoland.SenderName);
                 attributes.AddAttribute("地域编码", geoland.SenderCode.IsNullOrEmpty() ? geoland.ZoneCode : geoland.SenderCode);
                 if (exportContractLandShapeDefine.ImageNumberIndex) attributes.AddAttribute("图幅编号", geoland.LandExpand != null ? geoland.LandExpand.ImageNumber : "");
-                if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("二轮面积", geoland.TableArea != null ? geoland.TableArea.Value.ToString("0.00") : "0");
-                if (exportContractLandShapeDefine.ActualAreaIndex) attributes.AddAttribute("实测面积", geoland.ActualArea.ToString("0.00"));
+                if (exportContractLandShapeDefine.TableAreaIndex) attributes.AddAttribute("二轮面积", geoland.TableArea != null ? ToolMath.RoundNumericFormat(geoland.TableArea.Value, systemset.DecimalPlaces) : 0);
+                if (exportContractLandShapeDefine.ActualAreaIndex) attributes.AddAttribute("实测面积", ToolMath.RoundNumericFormat(geoland.ActualArea, systemset.DecimalPlaces));
 
                 if (exportContractLandShapeDefine.EastIndex) attributes.AddAttribute("四至东", geoland.NeighborEast);
                 if (exportContractLandShapeDefine.SourthIndex) attributes.AddAttribute("四至南", geoland.NeighborSouth);
@@ -424,8 +425,8 @@ namespace YuLinTu.Library.Business
                     var dictDKLB = DictList.Find(c => c.Code == geoland.LandCategory && c.GroupCode == DictionaryTypeInfo.DKLB);
                     attributes.AddAttribute("地块类别", dictDKLB == null ? "" : dictDKLB.Name);
                 }
-                if (exportContractLandShapeDefine.AwareAreaIndex) attributes.AddAttribute("确权面积", geoland.AwareArea.ToString("0.00"));
-                if (exportContractLandShapeDefine.MotorizeAreaIndex) attributes.AddAttribute("机动地面积", (geoland.MotorizeLandArea != null ? geoland.MotorizeLandArea.Value.ToString("0.00") : "0"));
+                if (exportContractLandShapeDefine.AwareAreaIndex) attributes.AddAttribute("确权面积", ToolMath.RoundNumericFormat(geoland.AwareArea, systemset.DecimalPlaces));
+                if (exportContractLandShapeDefine.MotorizeAreaIndex) attributes.AddAttribute("机动地面积", geoland.MotorizeLandArea != null ? ToolMath.RoundNumericFormat(geoland.MotorizeLandArea.Value, systemset.DecimalPlaces) : 0);
                 if (exportContractLandShapeDefine.ConstructModeIndex)
                 {
                     var dictCBFS = DictList.Find(c => c.Code == geoland.ConstructMode && c.GroupCode == DictionaryTypeInfo.CBJYQQDFS);
