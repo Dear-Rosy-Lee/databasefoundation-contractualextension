@@ -8,6 +8,7 @@ using System.Windows;
 using System.Net;
 using System.Text;
 using System.Xml;
+using System.Configuration;
 
 namespace YuLinTu.Product.YuLinTuTool
 {
@@ -103,16 +104,16 @@ namespace YuLinTu.Product.YuLinTuTool
         public static async void CheckUpdate(bool showMsg = true)
         {
             ShoweAvailable = showMsg;
-            var center = TheApp.Current.GetSystemSettingsProfileCenter();
-            var profile = center.GetProfile<ServiceSetDefine>();
-            var section = profile.GetSection<ServiceSetDefine>();
-            var serviceSet = (section.Settings as ServiceSetDefine);
-            string updateUrl = $"{serviceSet.BusinessSecurityAddress}/SpatialMatchUpdate.xml";
-            string uplogUrl = $"{serviceSet.BusinessSecurityAddress}/SpatialMatchchangelog.html";
+
+            var businessSecurityAddress=ConfigurationManager.AppSettings.TryGetValue<string>("DefaultBusinessSecurityAddress", "https://clientupdate.yulintu.cn/pf");
+        
+            string updateUrl = $"{businessSecurityAddress}/SpatialMatchUpdate.xml";
+            string uplogUrl = $"{businessSecurityAddress}/SpatialMatchchangelog.html";
             string username = "admin";
             string password = "yltadmin";
             using (HttpClient client = new HttpClient())
             {
+                
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
                 try
                 {
@@ -124,7 +125,8 @@ namespace YuLinTu.Product.YuLinTuTool
                         response = t.Result;
                         alldone.Set();
                     });
-                    alldone.WaitOne();
+                    //alldone.WaitOne();
+                    alldone.WaitOne(5000);
                     //await client.GetAsync(updateUrl);
                     if (response.IsSuccessStatusCode)
                     {
