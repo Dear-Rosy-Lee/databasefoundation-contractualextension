@@ -9,7 +9,7 @@
                              xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="初始化地块面积"
-                            MinHeight="150" MinWidth="500">
+                            MinHeight="200" MinWidth="550">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -25,16 +25,17 @@
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
         </Grid.Resources>
-        
+
         <Grid Margin="10,10,10,5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label x:Name="lbZoneName" Content="地域名称:" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{StaticResource LableStyle}"/>
@@ -77,13 +78,19 @@
                 <ComboBoxItem  >截取</ComboBoxItem>
             </cmps:MetroComboBox>
 
-            <Label x:Name="lbMeasureWay" Content="面积量算方式:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{StaticResource LableStyle}"/>            
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+            <Label x:Name="lbMeasureWay" Content="面积量算方式:" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Style="{StaticResource LableStyle}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
                 <CheckBox x:Name="cbToActualArea" Content="平面面积到实测面积" 
-                      VerticalAlignment="Center"  Click="cbToActualArea_Click" Margin="8,5,0,0"/>
+                      VerticalAlignment="Center"  Click="cbToActualArea_Click" Margin="0,5,0,0"/>
                 <CheckBox x:Name="cbToAwareArea" Content="平面面积到确权面积" 
                       VerticalAlignment="Center" Click="cbToAwareArea_Click" Margin="40,5,0,0"/>
-            </StackPanel>         
+            </StackPanel>
+
+            <Label  Content="地块数据:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{StaticResource LableStyle}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+                <CheckBox x:Name="cbOnlyContactLand" Content="只初始化承包地" VerticalAlignment="Center" IsChecked="True" Margin="0,5,0,0"/>
+                <CheckBox x:Name="cbOnlyEmpty" Content="只初始化空值" VerticalAlignment="Center" IsChecked="True"  Margin="65,5,0,0"/>
+            </StackPanel>
         </Grid>
         <Border BorderThickness="0,1,0,0" Grid.Row="1" BorderBrush="LightGray" Margin="10,0,10,0" SnapsToDevicePixels="True">
             <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Bottom" Margin="0,5,0,5" DockPanel.Dock="Bottom">

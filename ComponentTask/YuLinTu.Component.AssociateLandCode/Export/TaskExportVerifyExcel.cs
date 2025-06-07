@@ -122,7 +122,7 @@ namespace YuLinTu.Library.Business
                     accountFamilyCollection.Add(accountLandFamily);
                     foreach (var item in landCollection)
                     {
-                        if (string.IsNullOrEmpty(item.OldLandNumber))
+                        if (string.IsNullOrEmpty(item.OldLandNumber) && !argument.Yqwq)
                         {
                             //emptyland += $"{item.LandNumber}、";
                             this.ReportWarn($"地块{item.LandNumber}的原地块编码为空，请确认地块是否为新增地块！");
@@ -182,8 +182,8 @@ namespace YuLinTu.Library.Business
 
                 if (tissue != null)
                     zoneName = tissue.Name;
-
-                GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
+                if (!argument.Yqwq)
+                    GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
                 string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
                 int personCount = vps == null ? 0 : vps.Count;

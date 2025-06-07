@@ -20,6 +20,7 @@ namespace YuLinTu.Library.Business
         /// 是否应确未确
         /// </summary>
         public bool SFYQWQ { get; set; }
+        private string contractlandtype;
 
         #region Ctor
 
@@ -30,6 +31,7 @@ namespace YuLinTu.Library.Business
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
             base.TemplateName = "摸底调查核实表";
             checkVpEntities.Clear();
+            contractlandtype = ((int)eLandCategoryType.ContractLand) + "";
         }
 
         /// <summary>
@@ -160,6 +162,7 @@ namespace YuLinTu.Library.Business
                 WriteInformation(landFamily);
             }
             WriteTempLate();
+            SetLineType("A1", "D" + index, false, Worksheet2);
             SetLineType("A7", "AI" + index, false);
             Worksheet2.IsVisible = false;
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
@@ -351,7 +354,7 @@ namespace YuLinTu.Library.Business
                 Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
-            if (land.AwareArea == 0)
+            if (land.LandCategory == contractlandtype && land.AwareArea == 0)
                 throw new Exception($"延包地块{land.LandNumber}的合同面积必须大于0");
             InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, 2) : 0);
             InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));

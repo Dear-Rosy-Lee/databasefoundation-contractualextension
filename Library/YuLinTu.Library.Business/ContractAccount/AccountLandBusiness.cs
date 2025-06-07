@@ -4503,23 +4503,29 @@ namespace YuLinTu.Library.Business
                 db.BeginTransaction();
                 this.ReportProgress(1, null);
                 geoLandPercent = 99 / (double)shapeLandsOfStatus.Count;
+                var contractland = ((int)eLandCategoryType.ContractLand) + "";
                 foreach (var land in shapeLandsOfStatus)
                 {
+                    if (metadata.InstallContract && land.LandCategory != contractland)
+                        continue;
                     var landGeo = land.Shape as YuLinTu.Spatial.Geometry;
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
                     //var areaNew = ToolMath.RoundNumericFormat((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
                     // var areaDraw = ToolMath.RoundNumericFormat(landGeo.Area() * projectionUnit, 4);
                     var landgeoarea = ToolMath.RoundNumericFormat(landGeo.Area(), metadata.ToAreaNumeric);
                     var areaDraw = ToolMath.RoundNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric);
+
                     if (metadata.ToActualArea)
                     {
-                        //把图形面积赋值给实测面积
-                        land.ActualArea = areaDraw;
+                        if ((metadata.InstallEmpty && land.ActualArea == 0) || !metadata.InstallEmpty)
+                            //把图形面积赋值给实测面积
+                            land.ActualArea = areaDraw;
                     }
                     if (metadata.ToAwareArea)
                     {
-                        //把图形面积赋值给确权面积
-                        land.AwareArea = areaDraw;
+                        if ((metadata.InstallEmpty && land.AwareArea == 0) || !metadata.InstallEmpty)
+                            //把图形面积赋值给确权面积
+                            land.AwareArea = areaDraw;
                     }
                     var expad = land.LandExpand;
                     expad.MeasureArea = ToolMath.SetNumericFormat(landgeoarea, metadata.ToAreaNumeric, metadata.ToAreaModule);

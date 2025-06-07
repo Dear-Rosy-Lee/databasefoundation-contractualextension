@@ -79,14 +79,14 @@ namespace YuLinTu.Library.Business
             foreach (var zone in allZones)
             {
                 currentGeoLands = InitialLands.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
-                TaskInitialAreaArgument argument = new TaskInitialAreaArgument();
+                TaskInitialAreaArgument argument = groupArgument.ConvertTo<TaskInitialAreaArgument>();
                 argument.CurrentZone = zone;
                 argument.DbContext = dbContext;
                 argument.ListGeoLand = currentGeoLands;
-                argument.ToActualArea = groupArgument.ToActualArea;
-                argument.ToAwareArea = groupArgument.ToAwareArea;
-                argument.ToAreaNumeric = groupArgument.ToAreaNumeric;
-                argument.ToAreaModule = groupArgument.ToAreaModule;
+                //argument.ToActualArea = groupArgument.ToActualArea;
+                //argument.ToAwareArea = groupArgument.ToAwareArea;
+                //argument.ToAreaNumeric = groupArgument.ToAreaNumeric;
+                //argument.ToAreaModule = groupArgument.ToAreaModule;
                 TaskInitialAreaOperation operation = new TaskInitialAreaOperation();
                 operation.Argument = argument;
                 operation.Name = "初始化地块面积";

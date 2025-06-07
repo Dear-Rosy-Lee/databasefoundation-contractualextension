@@ -85,6 +85,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\..\databasefoundation-contractualextension-sc\Dependencies\YuLinTu\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -171,9 +174,6 @@
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.Diagrams">
-      <HintPath>..\..\packages\YuLinTu.tGIS.Client.6.8.8.1\x86\YuLinTu.Diagrams.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

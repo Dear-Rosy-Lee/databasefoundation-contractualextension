@@ -6612,7 +6612,7 @@ namespace YuLinTu.Library.Controls
             }
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
 
-            ContractLandInitializeArea initialAreaPage = new ContractLandInitializeArea(isBatch);
+            var initialAreaPage = new ContractLandInitializeArea(isBatch);
             initialAreaPage.Workpage = TheWorkPage;
             initialAreaPage.ToAreaNumeric = SystemSetDefine.DecimalPlaces;
             initialAreaPage.CurrentZone = CurrentZone;
@@ -7339,6 +7339,9 @@ namespace YuLinTu.Library.Controls
             argument.VirtualType = this.VirtualType;
             argument.ToAreaNumeric = initialArea.ToAreaNumeric;
             argument.ToAreaModule = initialArea.ToAreaModule;
+            argument.InstallContract = initialArea.InstallContract;
+            argument.InstallEmpty = initialArea.InstallEmpty;
+
             TaskInitialAreaOperation operation = new TaskInitialAreaOperation();
             operation.Argument = argument;
             operation.Description = ContractAccountInfo.InitialLandArea;   //任务描述
@@ -7364,7 +7367,7 @@ namespace YuLinTu.Library.Controls
         private void InitialAreaTaskGroup(object page, List<Zone> allZones)
         {
             var initialArea = page as ContractLandInitializeArea;
-            TaskGroupInitialAreaArgument groupArgument = new TaskGroupInitialAreaArgument();
+            var groupArgument = new TaskGroupInitialAreaArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.AllZones = allZones;
@@ -7373,7 +7376,10 @@ namespace YuLinTu.Library.Controls
             groupArgument.ToAwareArea = initialArea.ToAwareArea;
             groupArgument.ToAreaModule = initialArea.ToAreaModule;
             groupArgument.ToAreaNumeric = initialArea.ToAreaNumeric;
-            TaskGroupInitialAreaOperation groupOperation = new TaskGroupInitialAreaOperation();
+            groupArgument.InstallContract = initialArea.InstallContract;
+            groupArgument.InstallEmpty = initialArea.InstallEmpty;
+
+            var groupOperation = new TaskGroupInitialAreaOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;
             groupOperation.Description = ContractAccountInfo.InitialLandArea;   //任务描述
@@ -8124,7 +8130,7 @@ namespace YuLinTu.Library.Controls
                         {
                             Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
                         }
-                        AdjustLandTask(Lands,dialog.NewVPName);
+                        AdjustLandTask(Lands, dialog.NewVPName);
                     });
                 }
 
@@ -8136,7 +8142,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
         }
-        private void AdjustLandTask(List<ContractLand> Lands,string NewVPName)
+        private void AdjustLandTask(List<ContractLand> Lands, string NewVPName)
         {
             TaskAdjustLandArgument argument = new TaskAdjustLandArgument();
             argument.Database = DbContext;

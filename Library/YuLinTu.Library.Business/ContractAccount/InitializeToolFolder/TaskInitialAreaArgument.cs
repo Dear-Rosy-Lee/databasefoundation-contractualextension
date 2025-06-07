@@ -1,10 +1,7 @@
 ﻿/*
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
@@ -55,6 +52,8 @@ namespace YuLinTu.Library.Business
         /// 当前地域下的所有空间地块集合
         /// </summary>
         public List<ContractLand> ListGeoLand { get; set; }
+        public bool InstallEmpty { get; set; }
+        public bool InstallContract { get; set; }
 
         #endregion
 

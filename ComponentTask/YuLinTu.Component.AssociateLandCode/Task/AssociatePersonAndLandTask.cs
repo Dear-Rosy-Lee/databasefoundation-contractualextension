@@ -90,6 +90,7 @@ namespace YuLinTu.Component.AssociateLandCode
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
             DataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);
+            DataBaseHelper.TryUpdateDatabase(oldDbContext);
             var zoneStation = dbContext.CreateZoneWorkStation();
             var allZones = zoneStation.GetAll();
 
@@ -190,6 +191,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
                     if (nvps.Count == 0)
                         continue;
+                    nvps.ForEach(t => t.OldVirtualCode = "");
                     var newzons = relationZones.FindAll(t => t.NewZoneCode == sd.ZoneCode);
                     var zonecodelist = newzons.Select(t => t.OldZoneCode).ToList();
                     if (zonecodelist.Count == 0)
@@ -207,6 +209,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     var lstvps = ExecuteUpdateVp(sd, nvps, oldVps, relationZones, deloldvps);
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
+                    nlds.ForEach(l => l.OldLandNumber = "");
                     var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldlds);
                     var upldnums = new HashSet<string>();
                     foreach (var item in lstlds)

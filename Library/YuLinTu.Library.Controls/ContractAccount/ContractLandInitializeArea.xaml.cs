@@ -25,7 +25,7 @@ namespace YuLinTu.Library.Controls
         }
 
         #endregion
-       
+
         #region Fields
 
         private bool toActualArea;  //是否图斑面积到实测面积
@@ -101,6 +101,9 @@ namespace YuLinTu.Library.Controls
             }
         }
 
+        public bool InstallEmpty { get; set; }
+        public bool InstallContract { get; set; }
+
         #endregion
 
         #region Method
@@ -130,12 +133,14 @@ namespace YuLinTu.Library.Controls
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             if (txt_Point.Value == null)
-            {                
-                ShowBox("提示","小数位数不允许为空");
+            {
+                ShowBox("提示", "小数位数不允许为空");
                 return;
             }
             toAreaNumeric = (int)txt_Point.Value;
             toAreaModule = cbModule.SelectedIndex;
+            InstallEmpty = (bool)cbOnlyEmpty.IsChecked;
+            InstallContract = (bool)cbOnlyContactLand.IsChecked;
             Workpage.Page.CloseMessageBox(true);
         }
 

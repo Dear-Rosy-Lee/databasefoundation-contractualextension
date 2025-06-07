@@ -1,9 +1,8 @@
 ﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
-using Aspose.Cells;
-using Aspose.Cells.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Aspose.Cells;
 
 namespace YuLinTu.Library.Office
 {
@@ -1133,7 +1132,7 @@ namespace YuLinTu.Library.Office
         /// </summary>
         /// <param name="range">区域</param>
         /// <param name="isMerge">是否合并</param>
-        public void SetRangeLineStyle(string start, string end, int value, bool alignment = true)
+        public void SetRangeLineStyle(string start, string end, int value, bool alignment = true, Worksheet sheet = null)
         {
             int startColumnIndex = InitalizeLetter(start);
             int startRowIndex = InitalizeIndex(start);
@@ -1148,9 +1147,33 @@ namespace YuLinTu.Library.Office
             {
                 for (int j = startColumnIndex; j <= endColumnIndex; j++)
                 {
-                    SetCellLineStyle(i, j, value, alignment);
+                    if (sheet != null)
+                    {
+                        SetCellLineStyle(sheet, i, j, value, alignment);
+                    }
+                    else
+                    {
+                        SetCellLineStyle(i, j, value, alignment);
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// 设置单元格格式
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnIndex"></param>
+        public void SetCellLineStyle(Worksheet sheet, int rowIndex, int columnIndex, int value, bool alignment = true)
+        {
+            Cell cell = sheet.Cells[rowIndex, columnIndex];
+            if (cell == null)
+            {
+                return;
+            }
+            Style style = cell.GetStyle();
+            SetTableLineStyle(style, value, alignment);
+            cell.SetStyle(style, true);
         }
 
         /// <summary>
@@ -1161,6 +1184,23 @@ namespace YuLinTu.Library.Office
         public void SetCellLineStyle(int rowIndex, int columnIndex, int value, bool alignment = true)
         {
             Cell cell = workSheet.Cells[rowIndex, columnIndex];
+            if (cell == null)
+            {
+                return;
+            }
+            Style style = cell.GetStyle();
+            SetTableLineStyle(style, value, alignment);
+            cell.SetStyle(style, true);
+        }
+
+        /// <summary>
+        /// 设置单元格格式
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnIndex"></param>
+        public void SetCellLineStyle(int sheetindex, int rowIndex, int columnIndex, int value, bool alignment = true)
+        {
+            Cell cell = Worksheets[sheetindex].Cells[rowIndex, columnIndex];
             if (cell == null)
             {
                 return;
