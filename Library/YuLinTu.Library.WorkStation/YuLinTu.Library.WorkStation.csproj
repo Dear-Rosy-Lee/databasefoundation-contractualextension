@@ -85,8 +85,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells">
-      <HintPath>..\..\..\databasefoundation-contractualextension-sc\Dependencies\YuLinTu\Aspose.Cells.dll</HintPath>
+    <Reference Include="Aspose.Cells, Version=5.3.1.0, Culture=neutral, PublicKeyToken=9ec0ff091d04b091, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Aspose\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="CSScriptLibrary, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll</HintPath>
