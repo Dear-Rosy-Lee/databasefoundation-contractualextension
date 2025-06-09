@@ -86,6 +86,8 @@ namespace YuLinTu.Library.WorkStation
 
                 // 必须是Enabled的Region,并且Module、Template的名称和Type完全匹配
                 var region = _worksheet.Regions.Find(r => r.IsEnabled);
+                if (region == null)
+                    return null;
                 Template temp = region.Templates.Find(t => t.Type.Equals("Task") && t.Name.Equals(target.GetType().Name));
                 if (temp != null && temp.ClassName != null)
                 {
