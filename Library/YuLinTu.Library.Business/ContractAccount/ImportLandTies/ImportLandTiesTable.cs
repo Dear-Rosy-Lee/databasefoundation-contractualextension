@@ -31,6 +31,7 @@ namespace YuLinTu.Library.Business
         protected List<Dictionary> dictList = new List<Dictionary>();  //数据字典集合
         protected ContractBusinessSettingDefine ContractBusinessSettingDefine = ContractBusinessSettingDefine.GetIntence();
         protected InitalizeLandTiesTable landInfo;//初始化承包台账调查表信息
+        protected bool isSpecialForm;
 
         #endregion Fields
 
@@ -133,6 +134,7 @@ namespace YuLinTu.Library.Business
             landInfo.TableType = TableType;
             bool success = landInfo.ReadTableInformation();
             ErrorInformation = landInfo.ErrorInformation;
+            isSpecialForm = landInfo.isSpecialForm;
             return success;
         }
 
@@ -159,11 +161,13 @@ namespace YuLinTu.Library.Business
                 sender = landInfo.Tissue;// concordBusiness.GetSenderById(CurrentZone.ID);
                 DbContext.CreateSenderWorkStation().Update(landInfo.Tissue); //更新发包方信息
                 Log.Log.WriteError(this, "ImportLandEntity", ImportType.ToString());
-                var surveyFormList = landInfo.SurveyFormList;
-                if (surveyFormList.Count != 0)
+                if (isSpecialForm == true)
                 {
-                    surveyFormList.ForEach(x => { surveyStation.Add(x); });
-
+                    var surveyFormList = landInfo.SurveyFormList;
+                    if (surveyFormList.Count != 0)
+                    {
+                        surveyFormList.ForEach(x => { surveyStation.Add(x); });
+                    }
                 }
                     foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                     {

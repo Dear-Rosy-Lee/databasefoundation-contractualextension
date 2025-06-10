@@ -18,6 +18,7 @@ namespace YuLinTu.Library.Business
         private Zone currentZone;
         private IDbContext dbContext;
         private bool isOk;
+        public bool isSpecialForm;
         //private bool contractorClear = true;//是否清空承包方
 
         private SortedList<string, string> existPersons;
@@ -226,6 +227,7 @@ namespace YuLinTu.Library.Business
                 }
                 else
                 {
+                    isSpecialForm = false;
                     for (int index = calIndex; index < rangeCount; index++)
                     {
                         try
@@ -507,7 +509,10 @@ namespace YuLinTu.Library.Business
                     entity.OwnerId = landFamily.CurrentFamily.ID;
                     entity.ZoneCode = CurrentZone.FullCode;
                     entity.ZoneName = CurrentZone.FullName;
-                    entity.LandChange = GetString(allItem[currentIndex, 36]);
+                    if (isSpecialForm)
+                    {
+                        entity.LandChange = GetString(allItem[currentIndex, 36]);
+                    }
                     landFamily.LandCollection.Add(entity);
                 }
             }
