@@ -1,0 +1,755 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
+  <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" />
+  <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" />
+  <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" />
+  <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" />
+  <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BECFB342-848A-4819-A4C7-A2CFA9BDBA28}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YuLinTu.Library.Controls</RootNamespace>
+    <AssemblyName>YuLinTu.Library.Controls</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Common\Convert\BoolConvert.cs" />
+    <Compile Include="Common\Convert\UserConfigValueConvert.cs" />
+    <Compile Include="Common\Convert\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Concord\BatchModel.cs" />
+    <Compile Include="Concord\ConcordApplicationTableSetting.xaml.cs">
+      <DependentUpon>ConcordApplicationTableSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\ConcordInfoPage.xaml.cs">
+      <DependentUpon>ConcordInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\ContractConcordDateSetting.xaml.cs">
+      <DependentUpon>ContractConcordDateSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\ContractConcordInitializePage.xaml.cs">
+      <DependentUpon>ContractConcordInitializePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\InitializeConcordPersonPage.xaml.cs">
+      <DependentUpon>InitializeConcordPersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\AdjustLand\AdjustLandPage.xaml.cs">
+      <DependentUpon>AdjustLandPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitializeCoil.xaml.cs">
+      <DependentUpon>ContractLandInitializeCoil.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\DataChecker\DataCheckPage.xaml.cs">
+      <DependentUpon>DataCheckPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\MapCoordinateItem.cs" />
+    <Compile Include="ContractAccount\ContractAccountDateSetting.xaml.cs">
+      <DependentUpon>ContractAccountDateSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Convert\ContractAccountImgConvert.cs" />
+    <Compile Include="ContractAccount\ContractAccountPartial.cs" />
+    <Compile Include="ContractAccount\ContractAccountSummary.cs" />
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandCoilHelper.cs" />
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandDotHelper.cs" />
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandCoilItem.cs" />
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandDotItem.cs" />
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandCoilPage.xaml.cs">
+      <DependentUpon>ConstructionLandCoilPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandBoundaryInfo\ConstructionLandDotPage.xaml.cs">
+      <DependentUpon>ConstructionLandDotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitialImageNumber.xaml.cs">
+      <DependentUpon>ContractLandInitialImageNumber.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitialIsFarmer.xaml.cs">
+      <DependentUpon>ContractLandInitialIsFarmer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitializeArea.xaml.cs">
+      <DependentUpon>ContractLandInitializeArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitializeAreaNumericFormat.xaml.cs">
+      <DependentUpon>ContractLandInitializeAreaNumericFormat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitializeDotCoil.xaml.cs">
+      <DependentUpon>ContractLandInitializeDotCoil.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandInitializePage.xaml.cs">
+      <DependentUpon>ContractLandInitializePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandPage.xaml.cs">
+      <DependentUpon>ContractLandPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\CommonConfigPage.xaml.cs">
+      <DependentUpon>CommonConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\InfoPageBase.cs" />
+    <Compile Include="Common\NavigateZone.cs" />
+    <Compile Include="Configuration\OptionsConnectionStrings.xaml.cs">
+      <DependentUpon>OptionsConnectionStrings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\ZoneSelectInfo.cs" />
+    <Compile Include="Configuration\ZoneSelectorPanel.xaml.cs">
+      <DependentUpon>ZoneSelectorPanel.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandConvert.cs" />
+    <Compile Include="ContractAccount\ContractAccountPanel.xaml.cs">
+      <DependentUpon>ContractAccountPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractLandPersonItem.cs" />
+    <Compile Include="ContractAccount\ContractLandPersonItemHelper.cs" />
+    <Compile Include="ContractAccount\ExportContractLandShapePage.xaml.cs">
+      <DependentUpon>ExportContractLandShapePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ImportBoundaryAddressCoilPage.xaml.cs">
+      <DependentUpon>ImportBoundaryAddressCoilPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ImportBoundaryAddressDotPage.xaml.cs">
+      <DependentUpon>ImportBoundaryAddressDotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\MapFoundationManagerPage.xaml.cs">
+      <DependentUpon>MapFoundationManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\LandNumberDetail.xaml.cs">
+      <DependentUpon>LandNumberDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ContractAccountPersonLockPage.xaml.cs">
+      <DependentUpon>ContractAccountPersonLockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\SeekLandNeighborSetPage.xaml.cs">
+      <DependentUpon>SeekLandNeighborSetPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRegeditBook\ContractRegeditBookItem.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookItemHelper.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookPageSetting.xaml.cs">
+      <DependentUpon>ContractRegeditBookPageSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRegeditBook\ContractRegeditBookPersonLockPage.xaml.cs">
+      <DependentUpon>ContractRegeditBookPersonLockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRegeditBook\ContractRegeditBookSummary.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookValueConvert.cs" />
+    <Compile Include="ContractRegeditBook\RegeditBookInfoPage.xaml.cs">
+      <DependentUpon>RegeditBookInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractRegeditBook\RegeditBookInfoSettingPage.xaml.cs">
+      <DependentUpon>RegeditBookInfoSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnnouncementDateSetting.xaml.cs">
+      <DependentUpon>AnnouncementDateSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BatchUpdatePage.xaml.cs">
+      <DependentUpon>BatchUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfirmInfoPage.xaml.cs">
+      <DependentUpon>ConfirmInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DateSettingPage.xaml.cs">
+      <DependentUpon>DateSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DoubleDateSettingPage.xaml.cs">
+      <DependentUpon>DoubleDateSettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExportDataTypePage.xaml.cs">
+      <DependentUpon>ExportDataTypePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LandSelectedPage.xaml.cs">
+      <DependentUpon>LandSelectedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImportLandShapePage.xaml.cs">
+      <DependentUpon>ImportLandShapePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContractAccount\ConvertContractor.cs" />
+    <Compile Include="Controls\ConfirmPage.xaml.cs">
+      <DependentUpon>ConfirmPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataSummaryExport\DataSummaryExportPanel.xaml.cs">
+      <DependentUpon>DataSummaryExportPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataSummaryExport\DataSummarySelectPersonPage.xaml.cs">
+      <DependentUpon>DataSummarySelectPersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dictionary\DictionaryGroup.xaml.cs">
+      <DependentUpon>DictionaryGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dictionary\DictionaryListPage.xaml.cs">
+      <DependentUpon>DictionaryListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dictionary\DictManagerPanel.xaml.cs">
+      <DependentUpon>DictManagerPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Information\BoundaryInfo.cs" />
+    <Compile Include="Information\ContractConcordInfo.cs" />
+    <Compile Include="Information\ContractLandInfo.cs" />
+    <Compile Include="Information\ContractRegeditBookInfo.cs" />
+    <Compile Include="Information\DictionaryInfo.cs" />
+    <Compile Include="Information\ContractAccountInfo.cs" />
+    <Compile Include="Information\SecondAccountInfo.cs" />
+    <Compile Include="Information\VirtualPersonInfo.cs" />
+    <Compile Include="Information\SenderInfo.cs" />
+    <Compile Include="Information\ZoneInfo.cs" />
+    <Compile Include="Navigation\NavigaItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Navigation\ZoneNavigatorCommands.cs" />
+    <Compile Include="Navigation\ZoneNavigator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SecondAccount\SecondAccountImgConvert.cs" />
+    <Compile Include="SecondAccount\SecondAccountVirtualPersonInfo.xaml.cs">
+      <DependentUpon>SecondAccountVirtualPersonInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SecondAccount\SecondAccountSummary.cs" />
+    <Compile Include="SecondAccount\SecondVirtualPersonItem.cs" />
+    <Compile Include="SecondAccount\SecondVirtualPersonItemHelper.cs" />
+    <Compile Include="SecondAccount\SecondAccountLandInfo.xaml.cs">
+      <DependentUpon>SecondAccountLandInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SecondAccount\SecondAccountPanel.xaml.cs">
+      <DependentUpon>SecondAccountPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SecondAccount\SecondVirtualPersonPage.xaml.cs">
+      <DependentUpon>SecondVirtualPersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sender\SenderDataItem.cs" />
+    <Compile Include="Sender\SenderCombinPage.xaml.cs">
+      <DependentUpon>SenderCombinPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sender\SenderEditPage.xaml.cs">
+      <DependentUpon>SenderEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sender\SenderPageContent.xaml.cs">
+      <DependentUpon>SenderPageContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sender\SenderStatusConvert.cs" />
+    <Compile Include="Sender\SenderManagerPanel.xaml.cs">
+      <DependentUpon>SenderManagerPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExportDataPage.xaml.cs">
+      <DependentUpon>ExportDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\ConcordItem.cs" />
+    <Compile Include="Concord\ConcordItemHelper.cs" />
+    <Compile Include="Concord\ConcordPanel.xaml.cs">
+      <DependentUpon>ConcordPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Concord\ConcordSummary.cs" />
+    <Compile Include="Concord\ConcordValueConvert.cs" />
+    <Compile Include="VirtualPerson\AdjustSender\AdjustSenderPage.xaml.cs">
+      <DependentUpon>AdjustSenderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\FamilyNumberDetail.xaml.cs">
+      <DependentUpon>FamilyNumberDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImportDataPage.xaml.cs">
+      <DependentUpon>ImportDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\InitializeVirtualPersonRelationship.xaml.cs">
+      <DependentUpon>InitializeVirtualPersonRelationship.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonSplitPage.xaml.cs">
+      <DependentUpon>PersonSplitPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonSearchPage.xaml.cs">
+      <DependentUpon>PersonSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonCombingPage.xaml.cs">
+      <DependentUpon>PersonCombingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonInitallizePage.xaml.cs">
+      <DependentUpon>PersonInitallizePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonLockPage.xaml.cs">
+      <DependentUpon>PersonLockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\SecondPersonInfoPage.xaml.cs">
+      <DependentUpon>SecondPersonInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\SecondVirtualPersonPageContent.xaml.cs">
+      <DependentUpon>SecondVirtualPersonPageContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\VirtualPersonSummary.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonValueConvert.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonPageContent.xaml.cs">
+      <DependentUpon>VirtualPersonPageContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\VirtualPersonInfoPage.xaml.cs">
+      <DependentUpon>VirtualPersonInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\PersonInfoPage.xaml.cs">
+      <DependentUpon>PersonInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\VirtualPersonPanel.xaml.cs">
+      <DependentUpon>VirtualPersonPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualPerson\VirtualPersonItem.cs" />
+    <Compile Include="VirtualPerson\VirtualPersonItemHelper.cs" />
+    <Compile Include="ContractRegeditBook\ContractRegeditBookPanel.xaml.cs">
+      <DependentUpon>ContractRegeditBookPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\ContractLandUI.cs" />
+    <Compile Include="ZoneInvestigation\GenderToImageConverter.cs" />
+    <Compile Include="ZoneInvestigation\InvestigationLandPanel.xaml.cs">
+      <DependentUpon>InvestigationLandPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\InvestigationOwnershipPanel.xaml.cs">
+      <DependentUpon>InvestigationOwnershipPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\InvestigationPersonControlPanel.xaml.cs">
+      <DependentUpon>InvestigationPersonControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\InvestigationPersonPanel.xaml.cs">
+      <DependentUpon>InvestigationPersonPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\InvestigationSharePerson.xaml.cs">
+      <DependentUpon>InvestigationSharePerson.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\InvestigationVirtualPersonPage.xaml.cs">
+      <DependentUpon>InvestigationVirtualPersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneInvestigation\VirtualPesonSelectPanel.xaml.cs">
+      <DependentUpon>VirtualPesonSelectPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Zone\ZoneDataItemHelper.cs" />
+    <Compile Include="Zone\ZoneDataItem.cs" />
+    <Compile Include="Zone\ImportZoneShip.xaml.cs">
+      <DependentUpon>ImportZoneShip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Zone\ZoneLengthConvert.cs" />
+    <Compile Include="Zone\ZoneMessageBoxPage.xaml.cs">
+      <DependentUpon>ZoneMessageBoxPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Zone\ZoneEditPage.xaml.cs">
+      <DependentUpon>ZoneEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Zone\ZoneLevelConvert.cs" />
+    <Compile Include="Zone\ZoneManagerPanel.xaml.cs">
+      <DependentUpon>ZoneManagerPanel.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YuLinTu.Library.Aux\YuLinTu.Library.Aux.csproj">
+      <Project>{7b05a4ec-0279-47d1-886a-c2eecf030976}</Project>
+      <Name>YuLinTu.Library.Aux</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
+      <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
+      <Name>YuLinTu.Library.Business</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
+      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
+      <Name>YuLinTu.Library.Command</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
+      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
+      <Name>YuLinTu.Library.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
+      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
+      <Name>YuLinTu.Library.Log</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Office\YuLinTu.Library.Office.csproj">
+      <Project>{d52b9ce3-8d34-4a2a-9823-d9208f846d97}</Project>
+      <Name>YuLinTu.Library.Office</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
+      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
+      <Name>YuLinTu.Library.Repository</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
+      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
+      <Name>YuLinTu.Library.Resources</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
+      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
+      <Name>YuLinTu.Library.WorkStation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets" Condition="Exists('..\..\packages\YuLinTu.Data.OleDb.6.8.8.2\build\YuLinTu.Data.OleDb.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Oracle.6.8.8.2\build\YuLinTu.Data.Oracle.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLServer.6.8.8.2\build\YuLinTu.Data.SQLServer.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets" Condition="Exists('..\..\packages\YuLinTu.Script.CSScript.6.8.8.1\build\YuLinTu.Script.CSScript.targets')" />
+  <Import Project="..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets" Condition="Exists('..\..\packages\YuLinTu.ServiceModel.6.8.8.1\build\YuLinTu.ServiceModel.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets" Condition="Exists('..\..\packages\YuLinTu.Spatial.Raster.6.8.8.1\build\YuLinTu.Spatial.Raster.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
+  <Import Project="..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets" Condition="Exists('..\..\packages\YuLinTu.tGIS.Client.6.8.8.2\build\YuLinTu.tGIS.Client.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\CSScript.3.11.0.0\lib\net40\CSScriptLibrary.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.SDK.6.8.8.1\x86\DevComponents.DotNetBar2.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.SDK.6.8.8.1\x86\DevComponents.WpfDock.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\DotSpatial.Projections.1.7.0.1\lib\net40\DotSpatial.Projections.Forms.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Spatial.Raster.6.8.8.1\x86\gdalconst_csharp.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Spatial.Raster.6.8.8.1\x86\gdal_csharp.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\GeoAPI.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Ionic.Zip.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Microsoft.CSharp.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.Dialog.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Data.ConnectionUI.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Dynamic.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.ServiceLocation.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Configuration.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Interception.Configuration.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Microsoft.Practices.Unity.2.1.505.0\lib\net40\Microsoft.Practices.Unity.Interception.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\CSScript.3.11.0.0\lib\net40\Microsoft.Scripting.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.SQLServer.6.8.8.2\x86\Microsoft.SqlServer.Types.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Web.Administration.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\Microsoft.Windows.Shell.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.GeoTools.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\NetTopologySuite.IO.ShapeFile.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\x86\Npgsql.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Spatial.Raster.6.8.8.1\x86\ogr_csharp.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Oracle.6.8.8.2\x86\Oracle.DataAccess.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Spatial.Raster.6.8.8.1\x86\osr_csharp.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\NetTopologySuite.2.13.5.0\lib\net40\PowerCollections.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.SQLite.6.8.8.3\x86\System.Data.SQLite.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.ServiceModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.ServiceModel.Web.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\x86\System.Threading.Tasks.Extensions.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Ultilities.6.8.8.1\lib\net40\System.Windows.Interactivity.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.Linq.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Dependencies\Exchange\Utils.Controls.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Dependencies\Exchange\Utils.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\WindowsBase.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.DataGrid.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.6.8.8.3\x86\YuLinTu.Data.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Framework.6.8.8.1\x86\YuLinTu.Data.Dynamic.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Framework.6.8.8.1\x86\YuLinTu.Data.Framework.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.OleDb.6.8.8.2\x86\YuLinTu.Data.OleDb.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Oracle.6.8.8.2\x86\YuLinTu.Data.Oracle.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\x86\YuLinTu.Data.PostgreSQL.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Shapefile.6.8.8.1\x86\YuLinTu.Data.Shapefile.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Framework.6.8.8.1\x86\YuLinTu.Data.Shards.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.SQLite.6.8.8.3\x86\YuLinTu.Data.SQLite.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.SQLServer.6.8.8.2\x86\YuLinTu.Data.SQLServer.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.6.8.8.3\x86\YuLinTu.Diagnostics.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.tGIS.Client.6.8.8.2\x86\YuLinTu.Diagrams.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.tGIS.Client.6.8.8.2\x86\YuLinTu.Diagrams.Extensions.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.6.8.8.3\x86\YuLinTu.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.6.8.8.3\x86\YuLinTu.Interception.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.6.8.8.3\x86\YuLinTu.IO.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Aux\bin\Debug\YuLinTu.Library.Aux.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Business\bin\Debug\YuLinTu.Library.Business.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Command\bin\Debug\YuLinTu.Library.Command.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Entity\bin\Debug\YuLinTu.Library.Entity.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Log\bin\Debug\YuLinTu.Library.Log.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Office\bin\Debug\YuLinTu.Library.Office.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Repository\bin\Debug\YuLinTu.Library.Repository.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Resources\bin\Debug\YuLinTu.Library.Resources.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.WorkStation\bin\Debug\YuLinTu.Library.WorkStation.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.SDK.6.8.8.1\x86\YuLinTu.NetAux.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\bin\Debug\YuLinTu.Resources.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Script.CSScript.6.8.8.1\x86\YuLinTu.Script.CSScript.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Script.CSScript.6.8.8.1\x86\YuLinTu.Script.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.ServiceModel.6.8.8.1\x86\YuLinTu.ServiceModel.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\bin\Debug\YuLinTu.Spatial.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Spatial.Raster.6.8.8.1\x86\YuLinTu.Spatial.Raster.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\bin\Debug\YuLinTu.tGIS.Client.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\bin\Debug\YuLinTu.tGIS.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Shapefile.6.8.8.1\x86\YuLinTu.tGISCNet.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Framework.6.8.8.1\x86\YuLinTu.Unity.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Data.Framework.6.8.8.1\x86\YuLinTu.Unity.Interception.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Web.Core.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Web.Razor.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Windows.Core.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Windows.WinForm.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Windows.Wpf.dll" />
+    <ReferencePath Include="E:\WorkSpace\WinFoundationDelay\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\x86\YuLinTu.Windows.Wpf.Metro.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Collections.Concurrent.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Collections.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ComponentModel.Annotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ComponentModel.EventBasedAsync.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Diagnostics.Contracts.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Diagnostics.Debug.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Diagnostics.Tools.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Diagnostics.Tracing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Dynamic.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Globalization.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.IO.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Linq.Expressions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Linq.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Linq.Queryable.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Net.NetworkInformation.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Net.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Net.Requests.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ObjectModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.Emit.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.Emit.ILGeneration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.Emit.Lightweight.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Reflection.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Resources.ResourceManager.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.InteropServices.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.Serialization.Json.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.Serialization.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Runtime.Serialization.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Security.Principal.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ServiceModel.Duplex.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ServiceModel.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ServiceModel.NetTcp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ServiceModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.ServiceModel.Security.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Text.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Text.Encoding.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Text.RegularExpressions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Threading.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Threading.Tasks.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Threading.Tasks.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Xml.ReaderWriter.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Xml.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Xml.XmlSerializer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\ConcordApplicationTableSetting.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\ConcordInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\ContractConcordDateSetting.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\ContractConcordInitializePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\InitializeConcordPersonPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\AdjustLand\AdjustLandPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractAccountDateSetting.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandBoundaryInfo\ConstructionLandCoilPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandBoundaryInfo\ConstructionLandDotPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitialImageNumber.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitialIsFarmer.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitializeArea.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitializeAreaNumericFormat.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitializeCoil.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitializeDotCoil.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandInitializePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractLandPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Configuration\CommonConfigPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Configuration\OptionsConnectionStrings.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Configuration\ZoneSelectorPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractAccountPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\DataChecker\DataCheckPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ExportContractLandShapePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ImportBoundaryAddressCoilPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ImportBoundaryAddressDotPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\MapFoundationManagerPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\LandNumberDetail.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\ContractAccountPersonLockPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractAccount\SeekLandNeighborSetPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractRegeditBook\ContractRegeditBookPageSetting.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractRegeditBook\RegeditBookInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractRegeditBook\ContractRegeditBookPersonLockPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractRegeditBook\RegeditBookInfoSettingPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\AnnouncementDateSetting.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\BatchUpdatePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ConfirmInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\DateSettingPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\DoubleDateSettingPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ExportDataTypePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\LandSelectedPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ImportLandShapePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ConfirmPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\DataSummaryExport\DataSummaryExportPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\DataSummaryExport\DataSummarySelectPersonPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Dictionary\DictionaryGroup.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Dictionary\DictionaryListPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Dictionary\DictManagerPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\SecondAccount\SecondAccountLandInfo.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\SecondAccount\SecondAccountPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\SecondAccount\SecondAccountVirtualPersonInfo.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\SecondAccount\SecondVirtualPersonPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Sender\SenderCombinPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Sender\SenderEditPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Sender\SenderManagerPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Sender\SenderPageContent.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ExportDataPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Concord\ConcordPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\AdjustSender\AdjustSenderPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\FamilyNumberDetail.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Controls\ImportDataPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\InitializeVirtualPersonRelationship.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonSplitPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonSearchPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonCombingPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonInitallizePage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonLockPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\SecondPersonInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\SecondVirtualPersonPageContent.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\VirtualPersonPageContent.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\VirtualPersonInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\PersonInfoPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\VirtualPerson\VirtualPersonPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ContractRegeditBook\ContractRegeditBookPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationLandPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationOwnershipPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationPersonControlPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationPersonPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationSharePerson.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\InvestigationVirtualPersonPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\ZoneInvestigation\VirtualPesonSelectPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Zone\ImportZoneShip.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Zone\ZoneMessageBoxPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Zone\ZoneEditPage.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\Zone\ZoneManagerPanel.g.cs" />
+    <Compile Include="E:\WorkSpace\WinFoundationDelay\Library\YuLinTu.Library.Controls\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>

@@ -865,6 +865,7 @@ namespace YuLinTu.Library.WorkStation
             for (int i = 0; i < BookMarkCount; i++)
             {
                 SetBookmarkValue(AgricultureBookMarkWork.SenderName + (i == 0 ? "" : i.ToString()), Tissue.Name);//发包方名称
+                SetBookmarkValue("SocialCode" + (i == 0 ? "" : i.ToString()), Tissue.SocialCode);//社会信用代码
                 SetBookmarkValue(AgricultureBookMarkWork.SenderNameExpress + (i == 0 ? "" : i.ToString()), senderNameExpress);//发包方名称扩展如(第一村民小组)
                 SetBookmarkValue(AgricultureBookMarkWork.SenderLawyerName + (i == 0 ? "" : i.ToString()), Tissue.LawyerName);//发包方法人名称
                 SetBookmarkValue(AgricultureBookMarkWork.SenderLawyerTelephone + (i == 0 ? "" : i.ToString()), Tissue.LawyerTelephone);//发包方法人联系方式

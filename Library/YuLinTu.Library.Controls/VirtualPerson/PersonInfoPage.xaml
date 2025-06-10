@@ -10,7 +10,7 @@
     xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:ctr="clr-namespace:Utils.Controls;assembly=Utils.Controls"
     MinWidth="550"
-    MinHeight="150"
+    MinHeight="155"
     Header="共有人信息" Loaded="InfoPageBase_Loaded"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png">
     <am:InfoPageBase.Resources>
@@ -36,7 +36,7 @@
             HorizontalScrollBarVisibility="Hidden"
             PanningMode="VerticalOnly"
             VerticalScrollBarVisibility="Auto">
-            <Grid Margin="10" Validation.ErrorTemplate="{x:Null}">
+            <Grid Margin="15,10" Validation.ErrorTemplate="{x:Null}">
                 <!--<Grid.BindingGroup>
                     <BindingGroup></BindingGroup>
                 </Grid.BindingGroup>-->
@@ -288,7 +288,7 @@
         </ScrollViewer>
         <Border
             Grid.Row="1"
-            Margin="10,0,10,0"
+            Margin="10,2,10,2"
             BorderBrush="LightGray"
             BorderThickness="0,1,0,0"
             SnapsToDevicePixels="True">

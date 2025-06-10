@@ -1199,7 +1199,7 @@ namespace YuLinTu.Library.Business
         {
             try
             {
-                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Config\UpgradeDatabaseFileds.xml";
+                string fileName = AppDomain.CurrentDomain.BaseDirectory + @"Template\UpgradeDatabaseFileds.xml";
                 if (!File.Exists(fileName))
                 {
                     return new List<UpgradeDatabase>();

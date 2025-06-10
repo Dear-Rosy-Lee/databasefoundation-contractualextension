@@ -109,7 +109,7 @@ namespace YuLinTu.Library.Business
                 var stockLand = new AccountLandBusiness(dbContext).GetStockRightLand(zone);
                 var qglands = argument.DbContext.CreateVirtualPersonStation<LandVirtualPerson>().GetRelationByZone(zone.FullCode, eLevelOption.Self);//确股的地块
                 var delLands = argument.DbContext.CreateContractLandWorkstation().GetDelLandByZone(zone.FullCode);
-
+                string emptyland = "";
                 foreach (VirtualPerson vp in vps)
                 {
                     var landCollection = lands == null ? new List<ContractLand>() : lands.FindAll(c => c.OwnerId == vp.ID);
@@ -120,6 +120,14 @@ namespace YuLinTu.Library.Business
                     accountLandFamily.LandCollection = landCollection;
                     accountLandFamily.LandDelCollection = landDelCollection;
                     accountFamilyCollection.Add(accountLandFamily);
+                    foreach (var item in landCollection)
+                    {
+                        if (string.IsNullOrEmpty(item.OldLandNumber) && !argument.Yqwq)
+                        {
+                            //emptyland += $"{item.LandNumber}、";
+                            this.ReportWarn($"地块{item.LandNumber}的原地块编码为空，请确认地块是否为新增地块！");
+                        }
+                    }
                     var ralations = qglands.FindAll(o => o.VirtualPersonID == vp.ID);
                     if (ralations.Count > 0)
                     {
@@ -133,6 +141,10 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
+                //if (!string.IsNullOrEmpty(emptyland))
+                //{
+                //    this.ReportWarn($"地块{emptyland.TrimEnd('、')}的原地块编码为空，请确认地块是否为新增地块！");
+                //}
                 string excelName = GetMarkDesc(argument.CurrentZone, argument.DbContext);
                 string tempPath = TemplateHelper.ExcelTemplate("农村土地二轮承包到期后再延长三十年摸底核实表");
                 var zoneStation = argument.DbContext.CreateZoneWorkStation();
@@ -170,14 +182,15 @@ namespace YuLinTu.Library.Business
 
                 if (tissue != null)
                     zoneName = tissue.Name;
-
-                GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
+                if (!argument.Yqwq)
+                    GetDelDataToExport(accountFamilyCollection, argument.CurrentZone.FullCode);
                 openFilePath = argument.FileName;
+                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
                 int personCount = vps == null ? 0 : vps.Count;
+                var exportinfo = $"{excelName}导出{accountFamilyCollection.Count}户调查信息数据,其中注销承包方{accountFamilyCollection.Sum(t => t.CurrentFamily.Status == eVirtualPersonStatus.Bad ? 1 : 0)}户,地块数据{accountFamilyCollection.Sum(t => t.LandCollection.Count)}条，删除地块{accountFamilyCollection.Sum(t => t.LandDelCollection.Count)}条";
                 var export = new ExportRelationLandVerifyExcel();
                 IConcordWorkStation ConcordStation = argument.DbContext.CreateConcordStation();
-                string savePath = openFilePath + @"\" + excelName + "调查成果表" + ".xlsx";
-
+                export.SFYQWQ = argument.Yqwq;
                 export.SaveFilePath = savePath;
                 export.CurrentZone = argument.CurrentZone;
                 export.DbContext = argument.DbContext;
@@ -193,7 +206,7 @@ namespace YuLinTu.Library.Business
                 {
                     openFilePath = export.SaveFilePath;
                     export_PostProgressEvent(100, null);
-                    this.ReportInfomation(string.Format("{0}导出{1}户调查信息数据", excelName, personCount));
+                    this.ReportInfomation(exportinfo);
                 }
                 vps.Clear();
                 vps = null;
@@ -225,6 +238,7 @@ namespace YuLinTu.Library.Business
             var delvps = query.Where(t => t.ZoneCode == zonecode).ToList();
             var dquery = dbContext.CreateQuery<ContractLand_Del>();
             var dellds = dquery.Where(t => t.DYBM == zonecode).ToList();
+            string err = "";
             foreach (var item in delvps)
             {
                 var vp = item.ConvertTo<VirtualPerson>();
@@ -240,7 +254,16 @@ namespace YuLinTu.Library.Business
                         if (dl != null)
                             landDelCollection.Remove(dl);
                     }
-                    dfvp.LandDelCollection.AddRange(landDelCollection);
+                    if (landDelCollection.Count > 0)
+                    {
+                        foreach (var land in landDelCollection)
+                        {
+                            if (land.QQMJ == 0)
+                                this.ReportError($"删除地块{land.DKBM}的合同面积必须大于0");
+                        }
+
+                        dfvp.LandDelCollection.AddRange(landDelCollection);
+                    }
                     continue;
                 }
                 if (jtmcs.Contains(item.Name))
@@ -252,12 +275,28 @@ namespace YuLinTu.Library.Business
                         continue;
                     }
                 }
+                if (accountFamilyCollection.Any(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == item.OldVirtualCode))
+                {
+                    err += $"{item.OldVirtualCode}、";
+                }
                 ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
                 accountLandFamily.CurrentFamily = vp;
                 accountLandFamily.Persons = vp.SharePersonList;
                 accountLandFamily.LandDelCollection = landDelCollection;
+
+                foreach (var land in accountLandFamily.LandDelCollection)
+                {
+                    if (land.QQMJ == 0)
+                    {
+                        this.ReportError($"标记删除的地块{land.DKBM}的合同面积必须大于0, 已设置为实测面积{land.SCMJ}");
+                        land.QQMJ = land.SCMJ;
+                    }
+                }
+
                 accountFamilyCollection.Add(accountLandFamily);
             }
+            if (!string.IsNullOrEmpty(err))
+                this.ReportError($"数据中存在相同的承包方编码:" + err.TrimEnd('、'));
         }
 
         #endregion Method—ExportBusiness

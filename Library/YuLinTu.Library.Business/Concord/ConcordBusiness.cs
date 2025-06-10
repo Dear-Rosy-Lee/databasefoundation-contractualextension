@@ -1118,7 +1118,7 @@ namespace YuLinTu.Library.Business
             }
             List<ContractRequireTable> tabs = GetTissueRequireTable(tissue.Code);
             ContractRequireTable tab = tabs[tabs.Count - 1];
-            ConcordApplicationPrinterData data = new ConcordApplicationPrinterData(dbContext, tissue, currentZone, tab.Year, tab.Number);
+            var data = new ConcordApplicationPrinterData(dbContext, tissue, currentZone, tab.Year, tab.Number);
             var zoneStation = dbContext.CreateZoneWorkStation();
             Zone zoneTemp;
             if (tissue.ZoneCode.Length >= Zone.ZONE_PROVICE_LENGTH)
@@ -1156,6 +1156,7 @@ namespace YuLinTu.Library.Business
             data.LandCollection = GetLandsByZoneCode(currentZone.FullCode);
             data.ConcordCollection = GetContractsByTissueID(tissue.ID);
             data.DictList = this.dictList;
+            data.DicemallNumber = SystemSet.DecimalPlaces;
             data.InitializeInnerData();
             string templatePath = TemplateHelper.WordTemplate(TemplateFile.ContractCollectApplicationBook);
             ConcordApplicationPrinter concordApplication = new ConcordApplicationPrinter();

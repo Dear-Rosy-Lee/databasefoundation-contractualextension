@@ -41,7 +41,7 @@ namespace YuLinTu.Library.Business
                 conLandawareArea += l.AwareArea;
             });
             SetBookmarkValue("bmLandCount", lands.Count < 1 ? "  " : lands.Count.ToString());
-            SetBookmarkValue("bmLandArea", conLandawareArea.ToString("0.00"));
+            SetBookmarkValue("bmLandArea", ToolMath.RoundNumericFormat(conLandawareArea, SystemSet.DecimalPlaces) + "");
             int index = 1;
             foreach (ContractLand land in lands)
             {
@@ -66,7 +66,7 @@ namespace YuLinTu.Library.Business
                 SetBookmarkValue("WestName" + index.ToString(), land.NeighborWest);
                 SetBookmarkValue("NorthName" + index.ToString(), land.NeighborNorth);
 
-                SetBookmarkValue("bmLandArea" + index.ToString(), land.AwareArea.ToString("0.00"));
+                SetBookmarkValue("bmLandArea" + index.ToString(), ToolMath.RoundNumericFormat(land.AwareArea, SystemSet.DecimalPlaces) + "");
                 SetBookmarkValue("bmLandIsFarmerLand" + index.ToString(), land.IsFarmerLand == null ? "" : (land.IsFarmerLand.Value ? "是" : "否"));
                 SetBookmarkValue("bmLandComment" + index.ToString(), land.Comment.IsNullOrBlank() ? "" : land.Comment);
 

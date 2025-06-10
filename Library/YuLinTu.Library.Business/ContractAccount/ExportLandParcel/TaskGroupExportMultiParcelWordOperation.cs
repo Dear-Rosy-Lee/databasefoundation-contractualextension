@@ -10,6 +10,7 @@ using System.Windows;
 using YuLinTu.Data;
 using YuLinTu.Diagrams;
 using YuLinTu.Library.Entity;
+using static Xceed.Wpf.Toolkit.Calculator;
 
 namespace YuLinTu.Library.Business
 {
@@ -81,48 +82,63 @@ namespace YuLinTu.Library.Business
             var settingDefine = ContractBusinessParcelWordSettingDefine.GetIntence();
             double buffer = settingDefine.Neighborlandbufferdistence;
             //var currentVillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(currentGroupZone, dbContext, buffer);
+            List<ContractLand> currentVillageContractLands = new List<ContractLand>();
+            List<Zone> revzones = new List<Zone>(100);
             foreach (var zone in selfAndSubsZones)
             {
-                var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
-                string savePath = CreateDirectoryHelper.CreateDirectory(allZones, zone);
-                TaskExportMultiParcelWordArgument argument = new TaskExportMultiParcelWordArgument();
-                argument.SelectedPersons = listPersons == null ? new List<VirtualPerson>(100) : listPersons;
-                argument.CurrentZone = zone;
-                argument.DbContext = dbContext;
-                argument.FileName = fileName + @"\" + savePath;
-                TaskExportMultiParcelWordOperation operation = new TaskExportMultiParcelWordOperation();
-                operation.IsStockLand = IsStockLand;
-                operation.Argument = argument;
-                operation.Name = "批量导出地块示意图";
-                operation.Description = zone.FullName;
+                if (revzones.Contains(zone))
+                    continue;
+                if (zone.Level > eZoneLevel.Village)
+                    continue;
+                if (zone.Level == eZoneLevel.Village)
+                {
+                    currentVillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(zone, dbContext, settingDefine.Neighborlandbufferdistence);
 
-                //if (currentGroupZone != null && (zone.Level == eZoneLevel.Group || zone.Level == eZoneLevel.Village))
-                //{
-                //    bool isVillageChanged = false;  // 村地域是否发生改变
-                //    if (zone.Level == eZoneLevel.Group && !zone.UpLevelCode.Equals(currentGroupZone.UpLevelCode))
-                //        isVillageChanged = true;
-                //    else if (zone.Level == eZoneLevel.Village && !zone.FullCode.Equals(currentGroupZone.UpLevelCode))
-                //        isVillageChanged = true;
-
-                //    // 当村地域未发生改变时，用同一村的地块集合
-                //    if (!isVillageChanged)
-                //        operation.VillageContractLands = currentVillageContractLands;
-                //    else
-                //    {
-                //        // 当村地域发生改变时，使用新村的地块集合
-                //        if (zone.Level == eZoneLevel.Village)
-                //            currentGroupZone = selfAndSubsZones.FirstOrDefault(c => c.Level == eZoneLevel.Group && c.UpLevelCode.Equals(zone.FullCode));
-                //        else
-                //            currentGroupZone = zone;
-                //        currentVillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(currentGroupZone, dbContext, buffer);
-                //        operation.VillageContractLands = currentVillageContractLands;
-                //    }
-                //}
-                
-                operation.VillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(zone, dbContext, settingDefine.Neighborlandbufferdistence);
-                Add(operation);
+                    if (selfAndSubsZones.Any(t => t.UpLevelCode == zone.FullCode))
+                    {
+                        foreach (var item in selfAndSubsZones.FindAll(t => t.UpLevelCode == zone.FullCode))
+                        {
+                            var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == item.FullCode);
+                            string savePath = CreateDirectoryHelper.CreateDirectory(allZones, item);
+                            string fsavePath = fileName + @"\" + savePath;
+                            Add(Operation(dbContext, listPersons, item, fsavePath, currentVillageContractLands.FindAll(t => t.ZoneCode == item.FullCode)));
+                            revzones.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
+                        string savePath = CreateDirectoryHelper.CreateDirectory(allZones, zone);
+                        string fsavePath = fileName + @"\" + savePath;
+                        Add(Operation(dbContext, listPersons, zone, fsavePath, currentVillageContractLands.FindAll(t => t.ZoneCode == zone.FullCode)));
+                    }
+                }
+                else if (zone.Level == eZoneLevel.Group)
+                {
+                    currentVillageContractLands = ContractLandHeler.GetCurrentVillageContractLand(zone, dbContext, settingDefine.Neighborlandbufferdistence);
+                    var listPersons = selfAndSubsPersons.FindAll(c => !string.IsNullOrEmpty(c.ZoneCode) && c.ZoneCode == zone.FullCode);
+                    string savePath = CreateDirectoryHelper.CreateDirectory(allZones, zone);
+                    string fsavePath = fileName + @"\" + savePath;
+                    Add(Operation(dbContext, listPersons, zone, fsavePath, currentVillageContractLands));
+                }
             }
             base.OnGo();
+        }
+
+        private TaskExportMultiParcelWordOperation Operation(IDbContext dbContext, List<VirtualPerson> listPersons, Zone zone, string savePath, List<ContractLand> contractLands)
+        {
+            TaskExportMultiParcelWordArgument argument = new TaskExportMultiParcelWordArgument();
+            argument.SelectedPersons = listPersons == null ? new List<VirtualPerson>(100) : listPersons;
+            argument.CurrentZone = zone;
+            argument.DbContext = dbContext;
+            argument.FileName = savePath;
+            TaskExportMultiParcelWordOperation operation = new TaskExportMultiParcelWordOperation();
+            operation.IsStockLand = IsStockLand;
+            operation.Argument = argument;
+            operation.Name = "批量导出地块示意图";
+            operation.Description = zone.FullName;
+            operation.VillageContractLands = contractLands;
+            return operation;
         }
 
         #endregion

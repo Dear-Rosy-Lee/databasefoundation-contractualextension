@@ -183,17 +183,17 @@ namespace YuLinTu.Library.Business
             for (int i = 0; i < persons.Count; i++)
             {
                 Person person = persons[i];
-                SetTableCellValue(0, row, 0, InitalizeFamilyName(person.Name));
-                SetTableCellValue(0, row, 1, person.Relationship);
-                SetTableCellValue(0, row, 2, person.ICN);
+                SetTableCellValue(0, row, 0, InitalizeFamilyName(person.Name),0,2);
+                SetTableCellValue(0, row, 1, person.Relationship,0,2);
+                SetTableCellValue(0, row, 2, person.ICN, 0, 2);
                 if (text.IndexOf("成员备注") != 0)
                 {
-                    SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.CencueComment) ? "" : person.CencueComment);
-                    SetTableCellValue(0, row, 4, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment);
+                    SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.CencueComment) ? "" : person.CencueComment, 0, 2);
+                    SetTableCellValue(0, row, 4, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment, 0, 2);
                 }
                 else
                 {
-                    SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment);
+                    SetTableCellValue(0, row, 3, string.IsNullOrEmpty(person.Comment) ? "" : person.Comment, 0, 2);
                 }
                 row++;
                 if (person.Comment != null)

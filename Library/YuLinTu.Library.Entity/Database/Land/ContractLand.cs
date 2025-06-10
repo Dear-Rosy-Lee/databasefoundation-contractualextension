@@ -258,6 +258,8 @@ namespace YuLinTu.Library.Entity
 
         private string opinion;
 
+        private string landChange;
+
         #endregion Fields
 
         #region Properties
@@ -902,6 +904,20 @@ namespace YuLinTu.Library.Entity
         }
 
         /// <summary>
+        /// 地块变化情况
+        /// </summary>
+        [DataColumn("DKBHQK")]
+        public string LandChange
+        {
+            get { return landChange; }
+            set
+            {
+                landChange = value.TrimSafe();
+                NotifyPropertyChanged("LandChange");
+            }
+        }
+
+        /// <summary>
         /// 预留C
         /// </summary>
         [DataColumn("YLC")]
@@ -1077,6 +1093,10 @@ namespace YuLinTu.Library.Entity
         /// 地块扩展
         /// </summary>
         [DataColumn(Enabled = false)]
+
+
+
+
         public AgricultureLandExpand LandExpand
         {
             get

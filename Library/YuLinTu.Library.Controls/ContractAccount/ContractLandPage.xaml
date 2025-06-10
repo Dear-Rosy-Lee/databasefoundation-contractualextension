@@ -160,7 +160,7 @@
                                               SelectionChanged="cmbVirtualPersonName_SelectionChanged"
                                               PatternChanged="autoCities_PatternChanged" 
                                               Style="{StaticResource AutoCompleteComboBox}"
-                                              Delay="200" SelectedValue="2" Height="32"                                               
+                                              Delay="100" SelectedValue="2" Height="32"                                               
                                               MaxDropDownHeight="200" Width="250" />
 
                             <cmps:ImageTextItem

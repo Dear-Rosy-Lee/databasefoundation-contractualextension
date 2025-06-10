@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CSScriptLibrary;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
 using YuLinTu.Component.Common;
@@ -91,6 +90,7 @@ namespace YuLinTu.Component.AssociateLandCode
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
             DataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);
+            DataBaseHelper.TryUpdateDatabase(oldDbContext);
             var zoneStation = dbContext.CreateZoneWorkStation();
             var allZones = zoneStation.GetAll();
 
@@ -183,8 +183,6 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
-                    if (sd.Code != "51160310321001")
-                        continue;
                     var upvps = new List<VirtualPerson>();
                     var deloldvps = new List<VirtualPerson_Del>();
                     var uplands = new List<ContractLand>();
@@ -193,6 +191,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
                     if (nvps.Count == 0)
                         continue;
+                    nvps.ForEach(t => t.OldVirtualCode = "");
                     var newzons = relationZones.FindAll(t => t.NewZoneCode == sd.ZoneCode);
                     var zonecodelist = newzons.Select(t => t.OldZoneCode).ToList();
                     if (zonecodelist.Count == 0)
@@ -210,6 +209,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     var lstvps = ExecuteUpdateVp(sd, nvps, oldVps, relationZones, deloldvps);
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
+                    nlds.ForEach(l => l.OldLandNumber = "");
                     var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldlds);
                     var upldnums = new HashSet<string>();
                     foreach (var item in lstlds)
@@ -284,7 +284,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 foreach (var item in dellandents)
                 {
 #if DEBUG
-                    if (land.LandNumber == "5116022162030300289" && item.LandNumber == "5116022162030500197")
+                    if (land.LandNumber == "5113231162080101685" && item.LandNumber == "5113232052080100540")
                     {
                     }
 #endif

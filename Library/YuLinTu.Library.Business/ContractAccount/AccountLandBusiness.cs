@@ -915,6 +915,7 @@ namespace YuLinTu.Library.Business
             return isSuccess;
         }
 
+
         /// <summary>
         /// 导入地块图斑数据shape等信息-最小以组为单位
         /// </summary>
@@ -3946,6 +3947,7 @@ namespace YuLinTu.Library.Business
                 }
                 var landsOfStatus = landStation.GetCollection(currentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
                 landsOfStatus.AddRange(landStation.Get(o => o.IsStockLand == true && o.ZoneCode == currentZone.FullCode).ToList());
+                landsOfStatus.RemoveAll(t => t == null);
                 if (landsOfStatus == null || landsOfStatus.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -4003,25 +4005,28 @@ namespace YuLinTu.Library.Business
                     List<ContractLand> landsOfStatusPartStay = landsOfStatus.FindAll(t => t.LandNumber.StartsWith(t.ZoneCode));
                     ProcessLandInformationInstall(landStation, landsOfStatusPart, argument, zonePersonList, currentZone, sender, markDesc, landIndex);
                     ProcessLandInformationInstall(landStation, landsOfStatusPartStay, argument, zonePersonList, currentZone, sender, markDesc, landIndex, false);
-                    foreach (var item in landsOfStatusPartStay)
+                    if (argument.InitialLandNumber)
                     {
-                        var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
-                        if (gl != null)
+                        foreach (var item in landsOfStatusPartStay)
                         {
-                            item.OldLandNumber = gl.OldLandNumber;
-                            item.LandNumber = gl.LandNumber;
-                        }
-                        else
-                        {
-                            if (string.IsNullOrEmpty(item.OldLandNumber))
+                            var gl = landsOfStatusPart.Find(v => v.ID == item.ID);
+                            if (gl != null)
                             {
-                                item.OldLandNumber = item.LandNumber;
+                                item.OldLandNumber = gl.OldLandNumber;
+                                item.LandNumber = gl.LandNumber;
                             }
                             else
                             {
-                                if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                if (string.IsNullOrEmpty(item.OldLandNumber))
                                 {
-                                    item.OldLandNumber = item.SourceNumber;
+                                    item.OldLandNumber = item.LandNumber;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(item.SourceNumber) && item.OldLandNumber != item.SourceNumber)
+                                    {
+                                        item.OldLandNumber = item.SourceNumber;
+                                    }
                                 }
                             }
                         }
@@ -4055,7 +4060,7 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
                 db.RollbackTransaction();
-                this.ReportError("初始化地块基本信息失败");
+                this.ReportError("初始化地块基本信息失败" + ex.Message);
                 YuLinTu.Library.Log.Log.WriteError(this, "ContractLandInitialTool(提交初始化数据)", ex.Message + ex.StackTrace);
             }
         }
@@ -4498,23 +4503,29 @@ namespace YuLinTu.Library.Business
                 db.BeginTransaction();
                 this.ReportProgress(1, null);
                 geoLandPercent = 99 / (double)shapeLandsOfStatus.Count;
+                var contractland = ((int)eLandCategoryType.ContractLand) + "";
                 foreach (var land in shapeLandsOfStatus)
                 {
+                    if (metadata.InstallContract && land.LandCategory != contractland)
+                        continue;
                     var landGeo = land.Shape as YuLinTu.Spatial.Geometry;
                     //var areaDraw = ToolMath.CutNumericFormat((landGeo.Area()) * projectionUnit, 2);  //图形面积
                     //var areaNew = ToolMath.RoundNumericFormat((landGeo.Area()) * projectionUnit, 2);//四舍五入计算图形面积
                     // var areaDraw = ToolMath.RoundNumericFormat(landGeo.Area() * projectionUnit, 4);
-                    var landgeoarea = landGeo.Area();
-                    var areaDraw = ToolMath.SetNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric, metadata.ToAreaModule);
+                    var landgeoarea = ToolMath.RoundNumericFormat(landGeo.Area(), metadata.ToAreaNumeric);
+                    var areaDraw = ToolMath.RoundNumericFormat(landgeoarea * 0.0015, metadata.ToAreaNumeric);
+
                     if (metadata.ToActualArea)
                     {
-                        //把图形面积赋值给实测面积
-                        land.ActualArea = areaDraw;
+                        if ((metadata.InstallEmpty && land.ActualArea == 0) || !metadata.InstallEmpty)
+                            //把图形面积赋值给实测面积
+                            land.ActualArea = areaDraw;
                     }
                     if (metadata.ToAwareArea)
                     {
-                        //把图形面积赋值给确权面积
-                        land.AwareArea = areaDraw;
+                        if ((metadata.InstallEmpty && land.AwareArea == 0) || !metadata.InstallEmpty)
+                            //把图形面积赋值给确权面积
+                            land.AwareArea = areaDraw;
                     }
                     var expad = land.LandExpand;
                     expad.MeasureArea = ToolMath.SetNumericFormat(landgeoarea, metadata.ToAreaNumeric, metadata.ToAreaModule);

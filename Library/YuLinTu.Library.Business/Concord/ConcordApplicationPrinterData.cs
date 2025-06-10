@@ -218,6 +218,9 @@ namespace YuLinTu.Library.Business
         public ContractRequireTable RequireTable
         { get; set; }
 
+
+        public int DicemallNumber { get; set; }
+        
         #endregion
 
         #region Ctor
@@ -340,10 +343,10 @@ namespace YuLinTu.Library.Business
                     ContractTerm = term;
                 }
             }
-            areaContract = area.AreaFormat();
+            areaContract = area.AreaFormat(DicemallNumber);
             areaFarm = areaContract;
             areaOther = " ";
-            cntContractor = listConcords.FindAll(c=>c.ArableLandType==code).Count.ToString();
+            cntContractor = listConcords.FindAll(c => c.ArableLandType == code).Count.ToString();
             listConcords.Clear();
             landCollection = null;
             GC.Collect();

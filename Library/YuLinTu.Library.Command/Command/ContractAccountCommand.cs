@@ -40,9 +40,14 @@ namespace YuLinTu.Library.Command
         public const string ImportLandExcelName = "importLandExcel";
 
         /// <summary>
-        /// 导入(批量)承包关系表命令名称
+        /// 导入(批量)调查成果表命令名称
         /// </summary>
         public const string ImportLandTiesExcelName = "importLandTiesExcel";
+
+        /// <summary>
+        /// 导入(批量)摸底调查表命令名称
+        /// </summary>
+        public const string ImportSurveyFormExcelName = "importSurveyFormExcel";
 
         /// <summary>
         /// 导入(批量)承包关系表命令名称(乐至)
@@ -382,6 +387,11 @@ namespace YuLinTu.Library.Command
         public const string FindName = "find";
 
         /// <summary>
+        /// 一键导出试点工作统计表
+        /// </summary>
+        public const string ExportAllDelayTableName = "exportAllDelayTable";
+
+        /// <summary>
         /// 数据质检名称
         /// </summary>
         public const string DataQualityName = "dataQuality";
@@ -461,10 +471,15 @@ namespace YuLinTu.Library.Command
         public RoutedCommand ImportLandExcel = new RoutedCommand(ImportLandExcelName, typeof(Button));
 
         /// <summary>
-        /// 导入(批量)承包关系表命令
+        /// 导入(批量)调查成果表命令
         /// </summary>
         public RoutedCommand ImportLandTiesExcel = new RoutedCommand(ImportLandTiesExcelName, typeof(Button));
 
+        /// <summary>
+        /// 导入(批量)摸底调查表命令
+        /// </summary>
+        public RoutedCommand ImportSurveyFormExcel = new RoutedCommand(ImportSurveyFormExcelName, typeof(Button));
+        
         /// <summary>
         /// 导入(批量)承包关系表命令(乐至)
         /// </summary>
@@ -803,6 +818,11 @@ namespace YuLinTu.Library.Command
         public RoutedCommand Find = new RoutedCommand(FindName, typeof(Button));
 
         /// <summary>
+        /// 一键导出试点工作统计表
+        /// </summary>
+        public RoutedCommand ExportAllDelayTable = new RoutedCommand(ExportAllDelayTableName, typeof(Button));
+
+        /// <summary>
         /// 数据质检
         /// </summary>
         public RoutedCommand DataQuality = new RoutedCommand(DataQualityName, typeof(Button));
@@ -868,9 +888,14 @@ namespace YuLinTu.Library.Command
         public CommandBinding ImportLandExcelBind = new CommandBinding();
 
         /// <summary>
-        /// 导入(批量)承包关系表绑定
+        /// 导入(批量)调查成果表绑定
         /// </summary>
         public CommandBinding ImportLandTiesExcelBind = new CommandBinding();
+
+        /// <summary>
+        /// 导入(批量)摸底调查表绑定
+        /// </summary>
+        public CommandBinding ImportSurveyFormExcelBind = new CommandBinding();
 
         /// <summary>
         /// 导入(批量)承包关系表绑定(乐至)
@@ -1212,6 +1237,11 @@ namespace YuLinTu.Library.Command
         public CommandBinding FindBind = new CommandBinding();
 
         /// <summary>
+        /// 一键导出试点工作统计表绑定
+        /// </summary>
+        public CommandBinding ExportAllDelayTableBind = new CommandBinding();
+
+        /// <summary>
         /// 数据质检绑定
         /// </summary>
         public CommandBinding DataQualityBind = new CommandBinding();
@@ -1259,6 +1289,7 @@ namespace YuLinTu.Library.Command
             ContractLandDelBind.Command = ContractLandDel;
             ImportLandExcelBind.Command = ImportLandExcel;
             ImportLandTiesExcelBind.Command = ImportLandTiesExcel;
+            ImportSurveyFormExcelBind.Command = ImportSurveyFormExcel;
             ImportLandTiesExcelBindLZ.Command = ImportLandTiesExcelLZ;
             ImportBoundaryExcelBind.Command = ImportBoundaryExcel;
             ImportVectorBind.Command = ImportVector;
@@ -1327,6 +1358,7 @@ namespace YuLinTu.Library.Command
             LandLevelNullBind.Command = LandLevelNull;
             LandShapeNullBind.Command = LandShapeNull;
             FindBind.Command = Find;
+            ExportAllDelayTableBind.Command = ExportAllDelayTable;
             DataQualityBind.Command = DataQuality;
             AdjustLandBind.Command = AdjustLand;
             ClearBind.Command = Clear;

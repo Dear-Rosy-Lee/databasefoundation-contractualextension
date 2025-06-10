@@ -1653,7 +1653,7 @@ namespace YuLinTu.Library.Controls
             }
             if (ConcordSettingDefine.SingleRequireDate)
             {
-                ContractConcordDateSetting dateSetting = new ContractConcordDateSetting();
+                var dateSetting = new ContractConcordDateSetting();
                 dateSetting.WorkPage = ThePage;
                 ThePage.Page.ShowMessageBox(dateSetting, (b, r) =>
                 {

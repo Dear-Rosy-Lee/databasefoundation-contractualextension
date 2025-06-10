@@ -164,7 +164,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
         {
             var obj = new Library.Entity.MZDW();
             obj.BSM = (int)item.BSM;
-            obj.Area = (double)Math.Round((decimal)(item.MJ != null ? item.MJ.Value : 0), 2);
+            obj.Area = item.MJ != null ? item.MJ.Value : 0;
             obj.Comment = item.BZ;
             obj.DWMC = item.DWMC;
             obj.ID = Guid.NewGuid();

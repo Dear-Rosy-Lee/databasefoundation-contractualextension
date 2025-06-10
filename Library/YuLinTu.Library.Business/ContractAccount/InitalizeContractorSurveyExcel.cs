@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
 using YuLinTu.Library.Entity;
-using System.IO;
-using System.Windows.Forms;
-using System.Collections;
 using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
@@ -21,8 +15,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public virtual void BeginWrite(DateTime? time, DateTime? pubTime)
         {
-            WriteTitle(time, pubTime);//写标题信息
             WriteContent();//开始写内容 
+            WriteTitle(time, pubTime);//写标题信息
         }
 
         /// <summary>

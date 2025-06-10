@@ -228,7 +228,8 @@ namespace YuLinTu.Library.Business
                     SetRange("A" + index, "A" + index, height, 11, false, number.ToString());
                     SetRange("B" + index, "B" + index, height, 11, false, vp.Name.InitalizeFamilyName(SystemSet.KeepRepeatFlag));
                     SetRange("C" + index, "C" + index, height, 11, false, concord.ConcordNumber);
-                    SetRange("D" + index, "D" + index, height, 11, false, useActualAreaForAwareArea ? concord.CountActualArea.AreaFormat() : concord.CountAwareArea.AreaFormat());
+                    SetRange("D" + index, "D" + index, height, 11, false, useActualAreaForAwareArea ? 
+                        concord.CountActualArea.AreaFormat(SystemSet.DecimalPlaces) : concord.CountAwareArea.AreaFormat(SystemSet.DecimalPlaces));
                     if (endColumn == "G")
                         SetRange("E" + index, "E" + index, height, 11, false, vp.Number);
                     allArea += useActualAreaForAwareArea ? concord.CountActualArea : concord.CountAwareArea;

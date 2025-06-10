@@ -16,6 +16,12 @@ namespace YuLinTu.Library.Business
     {
         List<CheckVpEntity> checkVpEntities = new List<CheckVpEntity>();
 
+        /// <summary>
+        /// 是否应确未确
+        /// </summary>
+        public bool SFYQWQ { get; set; }
+        private string contractlandtype;
+
         #region Ctor
 
         public ExportRelationLandVerifyExcel()
@@ -25,6 +31,7 @@ namespace YuLinTu.Library.Business
             toolProgress.OnPostProgress += new ToolProgress.PostProgressDelegate(toolProgress_OnPostProgress);
             base.TemplateName = "摸底调查核实表";
             checkVpEntities.Clear();
+            contractlandtype = ((int)eLandCategoryType.ContractLand) + "";
         }
 
         /// <summary>
@@ -155,6 +162,7 @@ namespace YuLinTu.Library.Business
                 WriteInformation(landFamily);
             }
             WriteTempLate();
+            SetLineType("A1", "D" + index, false, Worksheet2);
             SetLineType("A7", "AI" + index, false);
             Worksheet2.IsVisible = false;
             this.Information = string.Format("{0}导出{1}条承包台账数据!", ZoneDesc, AccountLandFamily.Count);
@@ -281,7 +289,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("A" + 1, "A" + 1, "c1", Worksheet2);
             InitalizeSheet2RangeValue("A" + (index - 5), "A" + (index + height - 1 - 5), sfjt ? "" : virtualpersonCode, Worksheet2);
             InitalizeSheet2RangeValue("B" + 1, "B" + 1, "c2", Worksheet2);
-            InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("B" + (index - 5), "B" + (index + height - 1 - 5), sfjt ? "" : oldvpcode, Worksheet2);
             InitalizeRangeValue("E" + index, "E" + (index + height - 1), landFamily.CurrentFamily.Telephone);
             InitalizeRangeValue("F" + index, "F" + (index + height - 1), landFamily.CurrentFamily.Address);
             InitalizeRangeValue("G" + index, "G" + (index + height - 1), sfjt ? 0 : landFamily.Persons.Count);
@@ -315,7 +324,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 书写地块信息
         /// </summary>
-        public override void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract)
+        public override void WriteLandInformation(VirtualPerson vp, ContractLand land, int index, bool familycontract, int datanum = 2)
         {
             Dictionary syqxz = dictSYQXZ.Find(c => c.Name.Equals(land.OwnRightType) || c.Code.Equals(land.OwnRightType));
             Dictionary dklb = dictDKLB.Find(c => c.Name.Equals(land.LandCategory) || c.Code.Equals(land.LandCategory));
@@ -327,7 +336,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
             InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), land.LandNumber.IsNullOrEmpty() ? "" : land.LandNumber, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), land.OldLandNumber.IsNullOrEmpty() ? "" : land.OldLandNumber, Worksheet2);
             if (syqxz != null)
                 InitalizeRangeValue("R" + index, "R" + index, syqxz.Name);
             if (dklb != null)
@@ -344,7 +354,8 @@ namespace YuLinTu.Library.Business
                 Dictionary SF = dicSF.Find(c => c.Code.Equals(land.IsFarmerLand == true ? "1" : "2"));
                 InitalizeRangeValue("W" + index, "W" + index, SF.Name);
             }
-
+            if (land.LandCategory == contractlandtype && land.AwareArea == 0)
+                throw new Exception($"延包地块{land.LandNumber}的合同面积必须大于0");
             InitalizeRangeValue("Y" + index, "Y" + index, familycontract ? ToolMath.RoundNumericFormat(land.AwareArea, 2) : 0);
             InitalizeRangeValue("AA" + index, "AA" + index, ToolMath.RoundNumericFormat(land.ActualArea, 2));
             InitalizeRangeValue("AC" + index, "AC" + index, land.NeighborEast != null ? land.NeighborEast : "");
@@ -367,7 +378,8 @@ namespace YuLinTu.Library.Business
             InitalizeSheet2RangeValue("C" + 1, "C" + 1, "d1", Worksheet2);
             InitalizeSheet2RangeValue("C" + (index - 5), "C" + (index - 5), landDel.DKBM.IsNullOrEmpty() ? "" : landDel.DKBM, Worksheet2);
             InitalizeSheet2RangeValue("D" + 1, "D" + 1, "d2", Worksheet2);
-            InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? landDel.DKBM : landDel.QQDKBM, Worksheet2);
+            if (!SFYQWQ)
+                InitalizeSheet2RangeValue("D" + (index - 5), "D" + (index - 5), landDel.QQDKBM.IsNullOrEmpty() ? landDel.DKBM : landDel.QQDKBM, Worksheet2);
             InitalizeRangeValue("Y" + index, "Y" + index, (landDel.QQMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.QQMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AA" + index, "AA" + index, (landDel.SCMJ > 0.0) ? ToolMath.SetNumbericFormat(landDel.SCMJ.ToString(), 2) : SystemDefine.InitalizeAreaString());
             InitalizeRangeValue("AC" + index, "AC" + index, landDel.DKDZ != null ? landDel.DKDZ : "");
@@ -468,11 +480,11 @@ namespace YuLinTu.Library.Business
             var oglist = oldvpkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
             var ollist = oldLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
             var nllist = newLandkeys.GroupBy(g => g).Where(t => t.Key != "" && t.Count() > 1).ToList();
-            oglist.ForEach(t => stringBuilder.AppendLine($"原承包方编码：{t}重复挂接"));
-            nglist.ForEach(t => stringBuilder.AppendLine($"承包方编码：{t}存在重复"));
+            oglist.ForEach(t => stringBuilder.AppendLine($"原承包方编码：{t.Key}重复挂接"));
+            nglist.ForEach(t => stringBuilder.AppendLine($"承包方编码：{t.Key}存在重复"));
 
-            ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t}重复挂接"));
-            nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t}存在重复"));
+            ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t.Key}重复挂接"));
+            nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t.Key}存在重复"));
 
 
 

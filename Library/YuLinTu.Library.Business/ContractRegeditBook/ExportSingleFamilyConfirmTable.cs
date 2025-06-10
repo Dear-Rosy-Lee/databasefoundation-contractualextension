@@ -263,7 +263,7 @@ namespace YuLinTu.Library.Business
                 toolProgress.InitializationPercent(100, 90);
                 List<Person> listPerson = virtualPerson.SharePersonList;
                 if (SystemSet.PersonTable)
-                    listPerson=listPerson.FindAll(c=>c.IsSharedLand.Equals("是"));
+                    listPerson = listPerson.FindAll(c => c.IsSharedLand.Equals("是"));
                 List<Person> persons = SortSharePerson(listPerson, virtualPerson.Name);  //对共有人进行排序
                 List<ContractConcord> concords = ListConcord.FindAll(c => c.ContracterId != null && (c.ContracterId == virtualPerson.ID));
                 if (concords == null)
@@ -334,7 +334,7 @@ namespace YuLinTu.Library.Business
                 {
                     WriteLandInformation(currentIndex, landCollection, height, useActualArea, increment, "", "", CalLandCollectionArea(landCollection, useActualArea), landCollection.Count > 1 ? true : false);
                 }
-                SetRange("M" + (increment > 0 ? (26 + increment) : 26), "M" + (increment > 0 ? (26 + increment) : 26), totalArea.AreaFormat());
+                SetRange("M" + (increment > 0 ? (26 + increment) : 26), "M" + (increment > 0 ? (26 + increment) : 26), totalArea.AreaFormat(SystemSet.DecimalPlaces));
 
                 #endregion
 
@@ -364,11 +364,14 @@ namespace YuLinTu.Library.Business
             foreach (ContractLand land in lands)
             {
                 totalArea += useActualArea ? land.ActualArea : land.AwareArea;
-                string landNumber = land.LandNumber;  
+                var writearea = land.AwareArea > 0.0 ? ToolMath.RoundNumericFormat(land.AwareArea, SystemSet.DecimalPlaces) + "" : SystemSet.InitalizeAreaString();
+                if (useActualArea)
+                    writearea = land.ActualArea > 0.0 ? ToolMath.RoundNumericFormat(land.ActualArea, SystemSet.DecimalPlaces) + "" : SystemSet.InitalizeAreaString();
+
+                string landNumber = land.LandNumber;
                 SetRange("K" + currentIndex, "K" + currentIndex, landNumber);
                 SetRange("L" + currentIndex, "L" + currentIndex, land.Name);
-                SetRange("M" + currentIndex, "M" + currentIndex, useActualArea ? (land.ActualArea > 0.0 ? ToolMath.SetNumbericFormat(land.ActualArea.ToString(), 2) : SystemSet.InitalizeAreaString())
-                : (land.AwareArea > 0.0 ? ToolMath.SetNumbericFormat(land.AwareArea.ToString(), 2) : SystemSet.InitalizeAreaString()));
+                SetRange("M" + currentIndex, "M" + currentIndex, writearea);
                 SetRange("N" + currentIndex, "N" + currentIndex, land.NeighborEast);//四至东
                 SetRange("O" + currentIndex, "O" + currentIndex, land.NeighborSouth);//四至南
                 SetRange("P" + currentIndex, "P" + currentIndex, land.NeighborWest);//四至西
@@ -405,20 +408,20 @@ namespace YuLinTu.Library.Business
             if (CurrentZone != null && CurrentZone.FullCode.Length > 0)
             {
                 string zoneStr = "单位：" + TitleName;
-                SetRange("A" + index, "G" + index,  zoneStr);
+                SetRange("A" + index, "G" + index, zoneStr);
             }
             else
             {
-                SetRange("A" + index, "G" + index,  "单位:       乡、镇(社区服务中心）     村     组");
+                SetRange("A" + index, "G" + index, "单位:       乡、镇(社区服务中心）     村     组");
             }
-            SetRange("H" + index, "K" + index,  "日期： " + string.Format("{0: yyyy 年 MM 月 dd 日}", DateTime.Now));
+            SetRange("H" + index, "K" + index, "日期： " + string.Format("{0: yyyy 年 MM 月 dd 日}", DateTime.Now));
             int number = 0;
             if (!string.IsNullOrEmpty(virtualPerson.FamilyNumber))
             {
                 Int32.TryParse(virtualPerson.FamilyNumber, out number);
             }
             string format = AgricultureSetting.AgricultureLandEncodingRule == 0 ? "{0:D3}" : "{0:D4}";
-            SetRange("L" + index, "R" + index,  "户号： " + string.Format(format, number));
+            SetRange("L" + index, "R" + index, "户号： " + string.Format(format, number));
             index += 4;
         }
 

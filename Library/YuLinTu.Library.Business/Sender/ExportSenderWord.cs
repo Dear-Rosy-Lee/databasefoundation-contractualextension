@@ -82,6 +82,7 @@ namespace YuLinTu.Library.Business
                     {
                         SetBookmarkValue("SenderCheckDate" + (i == 0 ? "" : i.ToString()), checkDate.GetSettingEmptyReplacement());//发包方审核日期
                     }
+                    SetBookmarkValue("SocialCode" + (i == 0 ? "" : i.ToString()), tissue.SocialCode);//社会信用代码
                 }
                 string name = (tissue != null ? tissue.LawyerCredentType : eCredentialsType.IdentifyCard).ToString();
                 if (tissue.LawyerCredentType == eCredentialsType.AgentCard)

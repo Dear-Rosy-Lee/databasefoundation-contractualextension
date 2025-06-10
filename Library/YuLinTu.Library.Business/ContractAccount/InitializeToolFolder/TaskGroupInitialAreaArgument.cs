@@ -1,11 +1,7 @@
 ﻿/*
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利 
  */
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Business
@@ -13,47 +9,50 @@ namespace YuLinTu.Library.Business
     /// <summary>
     /// 批量初始化空间地块面积任务参数
     /// </summary>
-    public class TaskGroupInitialAreaArgument : TaskArgument
+    public class TaskGroupInitialAreaArgument : TaskInitialAreaArgument
     {
         #region Properties
 
-        /// <summary>
-        /// 数据库连接
-        /// </summary>
-        public IDbContext DbContext { get; set; }
-        /// <summary>
-        /// 小数位数
-        /// </summary>
-        public int ToAreaNumeric { get; set; }
+        ///// <summary>
+        ///// 数据库连接
+        ///// </summary>
+        //public IDbContext DbContext { get; set; }
+        ///// <summary>
+        ///// 小数位数
+        ///// </summary>
+        //public int ToAreaNumeric { get; set; }
 
-        /// <summary>
-        /// 面积截取模式
-        /// </summary>
-        public int ToAreaModule { get; set; }
-        /// <summary>
-        /// 当前地域
-        /// </summary>
-        public Zone CurrentZone { get; set; }
+        ///// <summary>
+        ///// 面积截取模式
+        ///// </summary>
+        //public int ToAreaModule { get; set; }
+        ///// <summary>
+        ///// 当前地域
+        ///// </summary>
+        //public Zone CurrentZone { get; set; }
 
         /// <summary>
         /// 全部子级地域(包括当前地域)
         /// </summary>
         public List<Zone> AllZones { get; set; }
 
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public eVirtualType VirtualType { get; set; }
+        ///// <summary>
+        ///// 类型
+        ///// </summary>
+        //public eVirtualType VirtualType { get; set; }
 
-        /// <summary>
-        /// 是否平面面积到实测面积
-        /// </summary>
-        public bool ToActualArea { get; set; }
+        ///// <summary>
+        ///// 是否平面面积到实测面积
+        ///// </summary>
+        //public bool ToActualArea { get; set; }
 
-        /// <summary>
-        /// 是否平面面积到确权面积
-        /// </summary>
-        public bool ToAwareArea { get; set; }
+        ///// <summary>
+        ///// 是否平面面积到确权面积
+        ///// </summary>
+        //public bool ToAwareArea { get; set; }
+
+        //public bool InstallEmpty { get; set; }
+        //public bool InstallContract { get; set; }
 
         #endregion
 
@@ -64,7 +63,7 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public TaskGroupInitialAreaArgument()
         {
-            VirtualType = eVirtualType.Land;
+            //VirtualType = eVirtualType.Land;
         }
 
         #endregion

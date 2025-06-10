@@ -103,7 +103,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var mdbcbdlistDic = areaDic.Where(dd => cbddkbmlist.Contains(dd.Key)).ToList();
 
             summary.ContractLandCount = mdbcbdlistDic.Count;//承包地块数
-            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare()), datanum);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
+            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare(datanum)), datanum);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
 
             //选出有空间信息的非承包地块
             var fcbdshapeList = fcbdList.FindAll(fc => fc.Shape != null);

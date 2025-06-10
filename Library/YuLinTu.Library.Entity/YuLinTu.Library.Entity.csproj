@@ -248,6 +248,7 @@
     <Compile Include="Database\StockRight\PersonStockLand.cs" />
     <Compile Include="Database\StockRight\StockConcord.cs" />
     <Compile Include="Database\StockRight\StockWarrant.cs" />
+    <Compile Include="Database\SurveyForm\SurveyForm.cs" />
     <Compile Include="Database\SurveyLandObject\ControlPoint.cs" />
     <Compile Include="Database\SurveyLandObject\DCZD.cs" />
     <Compile Include="Database\SurveyLandObject\DZDW.cs" />
@@ -473,6 +474,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

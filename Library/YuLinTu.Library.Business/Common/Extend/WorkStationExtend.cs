@@ -94,6 +94,26 @@ namespace YuLinTu.Library.Business
         }
 
         #endregion
+        #region 摸底调查表
+
+        /// <summary>
+        /// 创建摸底调查表WorkStation
+        /// </summary>
+        public static ISurveyFormWorkStation CreateSurveyFormStation(this IDbContext db)
+        {
+            if (db == null)
+            {
+                return null;
+            }
+            ContainerFactory factory = new ContainerFactory(db);
+            var repSurveyForm = factory.CreateRepository<ISurveyFormRepository>();
+
+            ISurveyFormWorkStation station = factory.CreateWorkstation<ISurveyFormWorkStation>(new ParameterOverride("rep", repSurveyForm));
+                  
+            return station;
+        }
+
+        #endregion
 
         #region 地域
 

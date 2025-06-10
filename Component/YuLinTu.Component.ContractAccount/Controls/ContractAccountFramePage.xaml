@@ -98,6 +98,7 @@
                                     Text="地块调查表"
                                     ToolTip="可以单个地块调查表导入或者批量导入地块调查表" />
                             </metro:MetroButton>
+
                             <metro:MetroButton
                                 x:Name="mbtnImportLandTiesExcel"
                                 Padding="8,4"
@@ -107,10 +108,9 @@
                                 <cmps:ImageTextItem
                                     Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/adpdiagramaddtable.png"
                                     ImagePosition="Left"
-                                    Text="摸底核实表"
-                                    ToolTip="可以单个摸底核实表导入或者批量导入摸底核实表" />
+                                    Text="调查成果表"
+                                    ToolTip="可以单个调查成果表导入或者批量导入调查成果表" />
                             </metro:MetroButton>
-
                             <metro:MetroButton
                                 x:Name="mbtnImportBoundaryExcel"
                                 Padding="8,4"
@@ -584,7 +584,8 @@
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"
                                 VerticalContentAlignment="Stretch"
-                                x:FieldModifier="public">
+                                x:FieldModifier="public"
+                                Visibility="Collapsed">
                                 <cmps:ImageTextItem
                                     Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
                                     ImagePosition="Left"
@@ -1217,7 +1218,17 @@
                         Text="空间查看"
                         ToolTip="查看承包地块空间形状与位置" />
                 </metro:MetroButton>
-
+                <!--<metro:MetroButton
+                    x:Name="mbtnExportAllDelayTable"
+                    Padding="4,2,4,2"
+                    VerticalContentAlignment="Stretch"
+                    x:FieldModifier="public">
+                    <cmps:ImageTextItem
+                        Image="pack://application:,,,/YuLinTu.Resources;component/images/32/createtable.png"
+                        ImagePosition="Top"
+                        Text="导出统计表"
+                        ToolTip="一键导出试点工作统计表" />
+                </metro:MetroButton>-->
                 <metro:MetroButton
                     x:Name="mbtnDataQuality"
                     Padding="4,2,4,2"
@@ -1229,7 +1240,7 @@
                         Text="数据检查"
                         ToolTip="具备按标准规范对属性数据进行质量检查" />
                 </metro:MetroButton>
-                <metro:MetroButton
+                <!--<metro:MetroButton
                     x:Name="mbtnAdjustLand"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -1239,7 +1250,7 @@
                         ImagePosition="Top"
                         Text="调整地块"
                         ToolTip="调整地块" />
-                </metro:MetroButton>
+                </metro:MetroButton>-->
 
                 <metro:MetroButton
                     x:Name="mbtnUpdateData"

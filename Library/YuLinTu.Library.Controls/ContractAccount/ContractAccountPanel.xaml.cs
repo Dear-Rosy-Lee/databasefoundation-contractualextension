@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -563,10 +562,10 @@ namespace YuLinTu.Library.Controls
 
             AccountSummary.FamilyCount = familyCount;
             AccountSummary.LandCount = $"地块数：{landCount} (确股:{stockLandCount})";//landCount;
-            AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(2);
-            AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(2);
-            AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(2);
-            AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(2);
+            AccountSummary.TableAreaCount = summaryTableArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ActualAreaCount = summaryActualArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ArwareAreaCount = summaryAwareArea.AreaFormat(SystemSetDefine.DecimalPlaces);
+            AccountSummary.ContractDelayAreaCount = summrayContractDelayArea.AreaFormat(SystemSetDefine.DecimalPlaces);
         }
 
         private void DataCount(ContractLandPersonItem item)
@@ -935,6 +934,14 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportBoundaryInfoExcel:   //批量导出界址信息表
                         TaskGroupExportBoundaryInfoExcel(eContractAccountType.ExportBoundaryInfoExcel, taskDes, taskName, saveFilePath);
                         break;
+
+                    case eContractAccountType.ExportAllDelayTable:
+                        ExportAllDelayTableTask(saveFilePath, taskDes, taskName);
+                        break;
+
+                    case eContractAccountType.VolumnExportContractInformationExcel:
+                        TaskGroupExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, taskDes, taskName, null, null, saveFilePath);
+                        break;
                 }
             });
         }
@@ -1063,6 +1070,60 @@ namespace YuLinTu.Library.Controls
             meta.IsBatch = isbatch;
             meta.DictList = DictList;
             TaskContractDelayAccountOperation import = new TaskContractDelayAccountOperation();
+            import.Argument = meta;
+            import.Description = taskDes;
+            import.Name = taskName;
+
+            import.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+            });
+            TheWorkPage.TaskCenter.Add(import);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            import.StartAsync();
+        }
+
+        private void TaskGroupExportContractDelayAccountExcel(eContractAccountType type, string taskDes, string taskName,
+           DateTime? time, DateTime? pubTime, string filePath = "", List<VirtualPerson> listPerson = null, int TableType = 1)
+        {
+            DateTime? date = SetPublicyTableDate();
+            if (date == null)
+            {
+                return;
+            }
+            List<Zone> SelfAndSubsZones = new List<Zone>();
+            var zoneStation = DbContext.CreateZoneWorkStation();
+            SelfAndSubsZones = zoneStation.GetChildren(currentZone.FullCode, eLevelOption.SelfAndSubs);  //当前地域下的
+            List<Zone> allZones = zoneStation.GetAllZones(currentZone);
+
+            TaskGroupAccountFiveTableArgument meta = new TaskGroupAccountFiveTableArgument();
+            meta.IsClear = false;
+            meta.FileName = filePath;
+            meta.ArgType = type;
+            meta.Database = DbContext;
+            meta.CurrentZone = currentZone;
+            meta.VirtualType = virtualType;
+            meta.UserName = "";
+            meta.Date = date;
+            meta.TableType = TableType;
+            meta.SelfAndSubsZones = SelfAndSubsZones;
+            meta.AllZones = allZones;
+            //if (TableType == 4)
+            //{
+            //    //如果是公示确认表，需要重新赋值底层设置实体，从公示表配置读
+            //    meta.ContractLandOutputSurveyDefine = publicityConfirmDefine.ConvertTo<PublicityConfirmDefine>();// (PublicityConfirmDefine)publicityConfirmDefine;
+            //}
+            //else
+            //{
+            //    meta.ContractLandOutputSurveyDefine = ContractAccountDefine;
+            //}
+            meta.IsBatch = isbatch;
+            meta.DictList = DictList;
+            meta.DelcTime = time;
+            meta.PubTime = pubTime;
+            TaskGroupContractDelayAccountOperation import = new TaskGroupContractDelayAccountOperation();
             import.Argument = meta;
             import.Description = taskDes;
             import.Name = taskName;
@@ -2496,7 +2557,7 @@ namespace YuLinTu.Library.Controls
         }
 
         /// <summary>
-        /// 导入承包关系表数据
+        /// 导入调查成果表数据
         /// </summary>
         public void ImportLandTiesExcel()
         {
@@ -2547,6 +2608,23 @@ namespace YuLinTu.Library.Controls
                 ShowBox("导入承包关系表", ContractAccountInfo.ImportErrorZone);
                 return;
             }
+        }
+
+        /// <summary>
+        /// 导入摸底调查表数据
+        /// </summary>
+        public void ImportSurveyFormExcel()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ImportZone, ContractAccountInfo.ImportZone);
+                return;
+            }
+            ImportSurveyFormTask();
+        }
+        private void ImportSurveyFormTask()
+        {
+
         }
 
         /// <summary>
@@ -3331,6 +3409,7 @@ namespace YuLinTu.Library.Controls
             catch (Exception ex)
             {
                 YuLinTu.Library.Log.Log.WriteException(this, "ExportVPWord(导出承包方Word调查表)", ex.Message + ex.StackTrace);
+                ShowBox("错误", ex.Message, eMessageGrade.Error, null, false, true);
                 return;
             }
         }
@@ -4317,7 +4396,12 @@ namespace YuLinTu.Library.Controls
             List<Zone> SelfAndSubsZones = new List<Zone>();
             var zoneStation = DbContext.CreateZoneWorkStation();
             int allChildrenZonesCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);  //当前地域下的
-
+            //批量导出
+            if (currentZone.Level > eZoneLevel.Town)
+            {
+                ShowBox(ContractAccountInfo.ExportData, ContractAccountInfo.VolumnExportZoneError);
+                return;
+            }
             if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && allChildrenZonesCount == 0))
             {
                 //单个任务
@@ -4328,6 +4412,10 @@ namespace YuLinTu.Library.Controls
                 }
                 TaskExportContractDelayAccountExcel(eContractAccountType.ExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, SystemSet.DefaultPath, null, TableType);
                 //ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.ExportContractAccountExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
+            }
+            else if ((CurrentZone.Level == eZoneLevel.Town || CurrentZone.Level == eZoneLevel.Village) && allChildrenZonesCount > 0)
+            {
+                ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportTable, eContractAccountType.VolumnExportContractInformationExcel, markDesc, ContractAccountInfo.ExportTable, TableType, null);
             }
         }
 
@@ -6524,7 +6612,7 @@ namespace YuLinTu.Library.Controls
             }
             bool isBatch = currentZone.Level > eZoneLevel.Group ? true : false;
 
-            ContractLandInitializeArea initialAreaPage = new ContractLandInitializeArea(isBatch);
+            var initialAreaPage = new ContractLandInitializeArea(isBatch);
             initialAreaPage.Workpage = TheWorkPage;
             initialAreaPage.ToAreaNumeric = SystemSetDefine.DecimalPlaces;
             initialAreaPage.CurrentZone = CurrentZone;
@@ -7251,6 +7339,9 @@ namespace YuLinTu.Library.Controls
             argument.VirtualType = this.VirtualType;
             argument.ToAreaNumeric = initialArea.ToAreaNumeric;
             argument.ToAreaModule = initialArea.ToAreaModule;
+            argument.InstallContract = initialArea.InstallContract;
+            argument.InstallEmpty = initialArea.InstallEmpty;
+
             TaskInitialAreaOperation operation = new TaskInitialAreaOperation();
             operation.Argument = argument;
             operation.Description = ContractAccountInfo.InitialLandArea;   //任务描述
@@ -7276,7 +7367,7 @@ namespace YuLinTu.Library.Controls
         private void InitialAreaTaskGroup(object page, List<Zone> allZones)
         {
             var initialArea = page as ContractLandInitializeArea;
-            TaskGroupInitialAreaArgument groupArgument = new TaskGroupInitialAreaArgument();
+            var groupArgument = new TaskGroupInitialAreaArgument();
             groupArgument.DbContext = DbContext;
             groupArgument.CurrentZone = CurrentZone;
             groupArgument.AllZones = allZones;
@@ -7285,7 +7376,10 @@ namespace YuLinTu.Library.Controls
             groupArgument.ToAwareArea = initialArea.ToAwareArea;
             groupArgument.ToAreaModule = initialArea.ToAreaModule;
             groupArgument.ToAreaNumeric = initialArea.ToAreaNumeric;
-            TaskGroupInitialAreaOperation groupOperation = new TaskGroupInitialAreaOperation();
+            groupArgument.InstallContract = initialArea.InstallContract;
+            groupArgument.InstallEmpty = initialArea.InstallEmpty;
+
+            var groupOperation = new TaskGroupInitialAreaOperation();
             groupOperation.Argument = groupArgument;
             groupOperation.Workpage = TheWorkPage;
             groupOperation.Description = ContractAccountInfo.InitialLandArea;   //任务描述
@@ -7868,6 +7962,74 @@ namespace YuLinTu.Library.Controls
 
         #endregion Methods -上传下载
 
+        #region Method - 一键导出工作统计表
+        public void ExportAllDelayTable()
+        {
+            if (CurrentZone == null)
+            {
+                ShowBox(ContractAccountInfo.ExportDataWord, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(CurrentZone.FullCode, eLevelOption.Subs);
+                if (CurrentZone.Level == eZoneLevel.Group || (CurrentZone.Level > eZoneLevel.Group && childrenCount == 0))
+                {
+
+                    ExportDataCommonOperate(CurrentZone.FullName, "一键导出试点工作统计表", eContractAccountType.ExportAllDelayTable,
+                        "一键导出试点工作统计表", "导出试点工作统计表");
+
+                }
+                else if ((CurrentZone.Level == eZoneLevel.Village || CurrentZone.Level == eZoneLevel.Town) && childrenCount > 0)
+                {
+                    //组任务
+                    ExportDataCommonOperate(CurrentZone.FullName, ContractAccountInfo.ExportDataWord, eContractAccountType.VolumnExportAllDelayTable,
+                        ContractAccountInfo.ExportDataWord, ContractAccountInfo.ExportSurveyTableData);
+                }
+                else
+                {
+                    //选择地域大于镇
+                    ShowBox(ContractAccountInfo.ExportDataWord, ContractAccountInfo.VolumnExportZoneError);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportVPWord(导出承包方Word调查表)", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+
+        public void ExportAllDelayTableTask(string saveFilePath, string taskDes, string taskName)
+        {
+            ExportAllDelayTableArgument argument = new ExportAllDelayTableArgument();
+            argument.DbContext = DbContext;
+            argument.CurrentZone = CurrentZone;
+            argument.SaveFilePath = saveFilePath;
+            argument.IsShow = true;
+            ExportAllDelayTableOperation operation = new ExportAllDelayTableOperation();
+            operation.Argument = argument;
+            operation.Description = taskDes;
+            operation.Name = taskName;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+
+        }
+        public void ExportAllDelayTableTaskGroup()
+        {
+
+        }
+        #endregion Method - 一键导出工作统计表
+
         #region Method-质检 
         public void DataQuality()
         {
@@ -7968,7 +8130,7 @@ namespace YuLinTu.Library.Controls
                         {
                             Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
                         }
-                        AdjustLandTask(Lands,dialog.NewVPName);
+                        AdjustLandTask(Lands, dialog.NewVPName);
                     });
                 }
 
@@ -7980,7 +8142,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
         }
-        private void AdjustLandTask(List<ContractLand> Lands,string NewVPName)
+        private void AdjustLandTask(List<ContractLand> Lands, string NewVPName)
         {
             TaskAdjustLandArgument argument = new TaskAdjustLandArgument();
             argument.Database = DbContext;

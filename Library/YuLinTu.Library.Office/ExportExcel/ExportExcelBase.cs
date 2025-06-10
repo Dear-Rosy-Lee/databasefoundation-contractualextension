@@ -1,8 +1,6 @@
 ﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Aspose.Cells;
 
 namespace YuLinTu.Library.Office
 {
@@ -307,9 +305,11 @@ namespace YuLinTu.Library.Office
         /// <summary>
         /// 设置边框
         /// </summary>
-        public void SetLineType(string start, string end, bool alignment = true)
+        public void SetLineType(string start, string end, bool alignment = true, Worksheet sheet = null)
         {
             SetRangeLineStyle(start, end, 0, alignment);
+            if (sheet !=null )
+                SetRangeLineStyle(start, end, 0, alignment, sheet);
         }
 
         /// <summary>

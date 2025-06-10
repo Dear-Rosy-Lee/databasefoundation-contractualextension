@@ -151,6 +151,11 @@ namespace YuLinTu.Library.Entity
         /// </summary>
         public const string TDQSLX = "C27";
 
+        /// <summary>
+        /// 变化情况
+        /// </summary>
+        public const string BHQK = "C28";
+
         #region 地块类别
 
         /// <summary>

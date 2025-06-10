@@ -1330,6 +1330,21 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             List<Library.Entity.BuildLandBoundaryAddressDot> landDots = null;
             List<Library.Entity.BuildLandBoundaryAddressCoil> landCoils = null;
 
+            if (listhandleCL.Count() > 0 && CreatUnit)
+            {
+                vp = new Library.Entity.LandVirtualPerson()
+                {
+                    ID = Guid.NewGuid(),
+                    Name = "集体",
+                    FamilyNumber = fnum.ToString(),
+                    IsStockFarmer = false,
+                    SharePersonList = new List<Library.Entity.Person>(),
+                    ZoneCode = zoneCode,
+                    VirtualType = Library.Entity.eVirtualPersonType.CollectivityTissue,
+                    FamilyExpand = new Library.Entity.VirtualPersonExpand() { ContractorType = Library.Entity.eContractorType.Unit }
+                };
+                localService.Queries.Add(localService.CreateQuery<Library.Entity.LandVirtualPerson>().Add(vp));
+            }
             foreach (var land in listhandleCL)
             {
                 land.ZoneCode = zoneCode;
@@ -1433,22 +1448,6 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
 
                 #endregion 处理生成界址信息
             }
-            if (listhandleCL.Count() > 0 && CreatUnit)
-            {
-                vp = new Library.Entity.LandVirtualPerson()
-                {
-                    ID = Guid.NewGuid(),
-                    Name = "集体",
-                    FamilyNumber = fnum.ToString(),
-                    IsStockFarmer = false,
-                    SharePersonList = new List<Library.Entity.Person>(),
-                    ZoneCode = zoneCode,
-                    VirtualType = Library.Entity.eVirtualPersonType.CollectivityTissue,
-                    FamilyExpand = new Library.Entity.VirtualPersonExpand() { ContractorType = Library.Entity.eContractorType.Unit }
-                };
-                localService.Queries.Add(localService.CreateQuery<Library.Entity.LandVirtualPerson>().Add(vp));
-            }
-
             localService.Queries.Add(localService.CreateQuery<Library.Entity.ContractLand>().AddRange(listCL.ToArray()));
             string jzdxInfo = "";
             if (GenerateCoilDot)

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Component.StockRightBase
 {
@@ -290,7 +291,7 @@ namespace YuLinTu.Component.StockRightBase
             SetBookmarkValue(AgricultureBookMark.BookWarrantNumber, number);//权证编号
 
         }
-         
+
         /// <summary>
         /// 注销
         /// </summary>
@@ -325,10 +326,10 @@ namespace YuLinTu.Component.StockRightBase
             lands.ForEach(l =>
             {
                 conLandActualArea += l.ActualArea;
-                conLandawareArea += DataHelper.GetQuantificationArea(Contractor,l,CurrentZone,DbContext);
+                conLandawareArea += DataHelper.GetQuantificationArea(Contractor, l, CurrentZone, DbContext);
             });
             SetBookmarkValue("bmLandCount", lands.Count < 1 ? "  " : lands.Count.ToString());
-            SetBookmarkValue("bmLandArea", conLandawareArea.ToString("0.00"));
+            SetBookmarkValue("bmLandArea", ToolMath.RoundNumericFormat(conLandawareArea, SystemSet.DecimalPlaces) + "");
             int index = 1;
             foreach (ContractLand land in lands)
             {
@@ -354,7 +355,7 @@ namespace YuLinTu.Component.StockRightBase
                 SetBookmarkValue("NorthName" + index.ToString(), land.NeighborNorth);
 
                 var quaArea = DataHelper.GetQuantificationArea(Contractor, land, CurrentZone, DbContext);
-                SetBookmarkValue("bmLandArea" + index.ToString(), quaArea!=0?quaArea.AreaFormat():"0.00");
+                SetBookmarkValue("bmLandArea" + index.ToString(), quaArea != 0 ? quaArea.AreaFormat() : "0.00");
                 SetBookmarkValue("bmLandIsFarmerLand" + index.ToString(), land.IsFarmerLand == null ? "" : (land.IsFarmerLand.Value ? "是" : "否"));
                 //SetBookmarkValue("bmLandComment" + index.ToString(), land.Comment.IsNullOrBlank() ? "" : land.Comment);
                 SetBookmarkValue("bmLandComment" + index.ToString(), "确股不确地");
@@ -504,7 +505,7 @@ namespace YuLinTu.Component.StockRightBase
 
             landCollection.Clear();
             GC.Collect();
-        } 
+        }
 
         /// <summary>
         /// 设置共有人信息

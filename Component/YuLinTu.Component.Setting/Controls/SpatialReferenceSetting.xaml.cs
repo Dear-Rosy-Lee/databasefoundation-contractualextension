@@ -512,7 +512,7 @@ namespace YuLinTu.Component.Setting
                     return;
                 }
                 //bool serialSuccess = true;
-                string path = AppDomain.CurrentDomain.BaseDirectory + "Config";
+                //string path = AppDomain.CurrentDomain.BaseDirectory + "Config";
 
                 //if (System.IO.Directory.Exists(path))
                 //    System.IO.Directory.Delete(path, true);
