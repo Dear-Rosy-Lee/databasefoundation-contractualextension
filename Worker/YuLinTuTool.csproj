@@ -4,7 +4,6 @@
   <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" />
   <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props')" />
-  <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props')" />
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.props')" />
@@ -153,12 +152,6 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells">
-      <HintPath>..\Dependencies\YuLinTu\Aspose.Cells.dll</HintPath>
-    </Reference>
-    <Reference Include="Aspose.Words">
-      <HintPath>..\Dependencies\YuLinTu\Aspose.Words.dll</HintPath>
-    </Reference>
     <Reference Include="Autofac, Version=6.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.6.5.0\lib\netstandard2.0\Autofac.dll</HintPath>
       <Private>True</Private>
@@ -173,6 +166,9 @@
     <Reference Include="AutoUpdater.NET, Version=1.8.5.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Autoupdater.NET.Official.1.8.5\lib\net45\AutoUpdater.NET.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
@@ -347,17 +343,23 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI.Core, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.Core.dll</HintPath>
+    <Reference Include="NPOI, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OOXML.dll</HintPath>
+    <Reference Include="NPOI.Extend, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.Extend.1.1.3\lib\netstandard2.0\NPOI.Extend.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OpenXml4Net.dll</HintPath>
+    <Reference Include="Npoi.Mapper, Version=3.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npoi.Mapper.3.5.1\lib\net45\Npoi.Mapper.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.7.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.7.3\lib\net472\NPOI.OpenXmlFormats.dll</HintPath>
+    <Reference Include="NPOI.OOXML, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.5.6\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="NSystem.Data.MoonPdf.Wpf, Version=2022.6.6.666, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NSystem.Data.MoonPdf.Wpf.2022.6.6\lib\net45\NSystem.Data.MoonPdf.Wpf.dll</HintPath>
@@ -494,9 +496,6 @@
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Model.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Model.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YuLinTu.DF.Library.Office.Core">
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Office.Core.dll</HintPath>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Repository.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.Repository.Core.dll</HintPath>
@@ -1066,8 +1065,6 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.props'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets'))" />
     <Error Condition="!Exists('..\packages\Refit.5.2.4\build\net461\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Refit.5.2.4\build\net461\refit.targets'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets'))" />
@@ -1096,7 +1093,6 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
   <Import Project="..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets" Condition="Exists('..\packages\YuLinTu.Data.Shapefile.6.8.8.1\build\YuLinTu.Data.Shapefile.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets" Condition="Exists('..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets" Condition="Exists('..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets')" />
-  <Import Project="..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets" Condition="Exists('..\packages\YuLinTu.Excel.6.8.8.1\build\YuLinTu.Excel.targets')" />
   <Import Project="..\packages\Refit.5.2.4\build\net461\refit.targets" Condition="Exists('..\packages\Refit.5.2.4\build\net461\refit.targets')" />
   <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets')" />
   <Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />
