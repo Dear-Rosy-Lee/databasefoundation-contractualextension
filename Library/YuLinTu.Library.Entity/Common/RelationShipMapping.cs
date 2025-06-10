@@ -61,14 +61,70 @@ namespace YuLinTu.Library.Entity
             string name = "其他";
             switch (nameCode)
             {
+                case "10":
+                    name = "配偶";
+                    break;
                 case "01":
                     name = "本人";
                     break;
-                case "34":
-                    name = "三女";
-                    break;
+
                 case "02":
                     name = "户主";
+                    break;
+                case "11":
+                    name = "夫";
+                    break;
+                case "12":
+                    name = "妻";
+                    break;
+
+                case "20":
+                    name = "子";
+                    break;
+                case "21":
+                    name = "独生子";
+                    break;
+                case "22":
+                    name = "长子";
+                    break;
+                case "23":
+                    name = "次子";
+                    break;
+                case "24":
+                    name = "三子";
+                    break;
+                case "25":
+                    name = "四子";
+                    break;
+                case "26":
+                    name = "五子";
+                    break;
+                case "29":
+                    name = "其他儿子";
+                    break;
+                case "27":
+                    name = "养子或继子";
+                    break;
+                case "28":
+                    name = "女婿";
+                    break;
+                case "30":
+                    name = "女";
+                    break;
+
+                case "31":
+                    name = "独生女";
+                    break;
+
+                case "32":
+                    name = "长女";
+                    break;
+
+                case "33":
+                    name = "次女";
+                    break;
+                case "34":
+                    name = "三女";
                     break;
                 case "35":
                     name = "四女";
@@ -76,104 +132,67 @@ namespace YuLinTu.Library.Entity
                 case "36":
                     name = "五女";
                     break;
-                case "10":
-                    name = "配偶";
-                    break;
+  
                 case "37":
                     name = "养女或继女";
                     break;
-                case "11":
-                    name = "夫";
-                    break;
+
+                
                 case "38":
                     name = "儿媳";
                     break;
-                case "12":
-                    name = "妻";
-                    break;
+         
                 case "39":
                     name = "其他女儿";
                     break;
-                case "20":
-                    name = "子";
-                    break;
+      
                 case "40":
                     name = "孙子、孙女或外孙子、外孙女";
-                    break;
-                case "21":
-                    name = "独生子";
                     break;
                 case "41":
                     name = "孙子";
                     break;
-                case "22":
-                    name = "长子";
-                    break;
+                
                 case "42":
                     name = "孙女";
                     break;
-                case "23":
-                    name = "次子";
-                    break;
+        
                 case "43":
                     name = "外孙子";
                     break;
-                case "24":
-                    name = "三子";
-                    break;
+  
                 case "44":
                     name = "外孙女";
                     break;
-                case "25":
-                    name = "四子";
-                    break;
+         
                 case "45":
                     name = "孙媳妇或外孙媳妇";
                     break;
-                case "26":
-                    name = "五子";
-                    break;
+     
                 case "46":
                     name = "孙女婿或外孙女婿";
                     break;
-                case "27":
-                    name = "养子或继子";
-                    break;
+          
                 case "47":
                     name = "曾孙子或外曾孙子";
                     break;
-                case "28":
-                    name = "女婿";
-                    break;
+         
                 case "48":
                     name = "曾孙女或外曾孙女";
                     break;
-                case "29":
-                    name = "其他儿子";
-                    break;
+       
                 case "49":
                     name = "其他孙子、孙女或外孙子、外孙女";
                     break;
-                case "30":
-                    name = "女";
-                    break;
+    
                 case "50":
                     name = "父母";
-                    break;
-                case "31":
-                    name = "独生女";
                     break;
                 case "51":
                     name = "父亲";
                     break;
-                case "32":
-                    name = "长女";
-                    break;
                 case "52":
                     name = "母亲";
-                    break;
-                case "33":
-                    name = "次女";
                     break;
                 case "53":
                     name = "公公";
@@ -181,69 +200,43 @@ namespace YuLinTu.Library.Entity
                 case "54":
                     name = "婆婆";
                     break;
-                case "76":
-                    name = "姐夫";
-                    break;
                 case "55":
                     name = "岳父";
-                    break;
-                case "77":
-                    name = "妹妹";
                     break;
                 case "56":
                     name = "岳母";
                     break;
-                case "78":
-                    name = "妹夫";
-                    break;
+
                 case "57":
                     name = "继父或养父";
                     break;
-                case "79":
-                    name = "其他兄弟姐妹";
-                    break;
+
                 case "58":
                     name = "继母或养母";
                     break;
                 case "59":
                     name = "其他父母关系";
                     break;
-                case "80":
-                    name = "其他";
-                    break;
-                case "81":
-                    name = "伯父";
-                    break;
                 case "60":
                     name = "祖父母或外祖父母";
                     break;
-                case "82":
-                    name = "伯母";
-                    break;
+
                 case "61":
                     name = "祖父";
                     break;
-                case "83":
-                    name = "叔父";
-                    break;
+
                 case "62":
                     name = "祖母";
                     break;
-                case "84":
-                    name = "婶母";
-                    break;
+
                 case "63":
                     name = "外祖父";
                     break;
-                case "85":
-                    name = "舅父";
-                    break;
+
                 case "64":
                     name = "外祖母";
                     break;
-                case "86":
-                    name = "舅母";
-                    break;
+
                 case "65":
                     name = "配偶的祖父母或外祖父母";
                     break;
@@ -253,63 +246,111 @@ namespace YuLinTu.Library.Entity
                 case "66":
                     name = "曾祖父";
                     break;
-                case "88":
-                    name = "姨母";
-                    break;
+
                 case "67":
                     name = "曾祖母";
-                    break;
-                case "89":
-                    name = "姑父";
                     break;
                 case "68":
                     name = "配偶的曾祖父母或外曾祖父母";
                     break;
-                case "90":
-                    name = "姑母";
-                    break;
                 case "69":
                     name = "其他祖父母或外祖父母关系";
                     break;
+                case "70":
+                    name = "兄弟姐妹";
+                    break;
+                case "7l":
+                    name = "兄";
+                    break;
+                case "71":
+                    name = "兄";
+                    break;
+                case "72":
+                    name = "嫂";
+                    break;
+                case "73":
+                    name = "弟";
+                    break;
+                case "74":
+                    name = "弟媳";
+                    break;
+                case "75":
+                    name = "姐姐";
+                    break;
+                case "76":
+                    name = "姐夫";
+                    break;
+                case "77":
+                    name = "妹妹";
+                    break;
+                case "78":
+                    name = "妹夫";
+                    break;
+                case "79":
+                    name = "其他兄弟姐妹";
+                    break;
+                case "80":
+                    name = "其他";
+                    break;
+                case "81":
+                    name = "伯父";
+                    break;
+                case "82":
+                    name = "伯母";
+                    break;
+                case "83":
+                    name = "叔父";
+                    break;
+                case "84":
+                    name = "婶母";
+                    break;
+                case "85":
+                    name = "舅父";
+                    break;
+                case "86":
+                    name = "舅母";
+                    break;
+                case "88":
+                    name = "姨母";
+                    break;
+
+                case "89":
+                    name = "姑父";
+                    break;
+           
+                case "90":
+                    name = "姑母";
+                    break;
+      
                 case "91":
                     name = "堂兄弟、堂姐妹";
                     break;
                 case "92":
                     name = "表兄弟、表姐妹";
                     break;
-                case "70":
-                    name = "兄弟姐妹";
-                    break;
+     
                 case "93":
                     name = "侄子";
                     break;
-                case "7l":
-                    name = "兄";
-                    break;
+             
                 case "94":
                     name = "侄女";
                     break;
-                case "72":
-                    name = "嫂";
-                    break;
+           
+        
                 case "95":
                     name = "外甥";
                     break;
-                case "73":
-                    name = "弟";
-                    break;
+             ;
+         
                 case "96":
                     name = "外甥女";
                     break;
-                case "74":
-                    name = "弟媳";
-                    break;
+           
                 case "97":
                     name = "其他亲属";
                     break;
-                case "75":
-                    name = "姐姐";
-                    break;
+  
                 case "99":
                     name = "非亲属";
                     break;
