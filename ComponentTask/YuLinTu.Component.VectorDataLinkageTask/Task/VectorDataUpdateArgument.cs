@@ -27,19 +27,19 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             }
         }
 
-        [DisplayLanguage("日志记录", IsLanguageName = false)]
-        [DescriptionLanguage("存放上传日志的目录", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
-        public string ResultFilePath
-        {
-            get { return resultFilePath; }
-            set
-            {
-                resultFilePath = value;
-                NotifyPropertyChanged("ResultFilePath");
-            }
-        }
+        //[DisplayLanguage("日志记录", IsLanguageName = false)]
+        //[DescriptionLanguage("存放上传日志的目录", IsLanguageName = false)]
+        //[PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowser),
+        //   UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        //public string ResultFilePath
+        //{
+        //    get { return resultFilePath; }
+        //    set
+        //    {
+        //        resultFilePath = value;
+        //        NotifyPropertyChanged("ResultFilePath");
+        //    }
+        //}
 
         #endregion Properties
 

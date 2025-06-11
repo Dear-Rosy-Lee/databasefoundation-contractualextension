@@ -24,7 +24,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         public VectorDataLinkageTask()
         {
-            Name = "上传地块图斑至接入";
+            Name = "上传地块图斑至接入系统";
             Description = "将矢量图斑按地块编码匹配更新接入系统中";
         }
 
