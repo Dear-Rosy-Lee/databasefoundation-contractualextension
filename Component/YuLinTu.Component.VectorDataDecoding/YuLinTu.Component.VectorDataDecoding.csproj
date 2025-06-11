@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" />
+  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props" Condition="Exists('..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.props')" />
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.props')" />
@@ -183,6 +183,7 @@
     </Reference>
     <Reference Include="YuLinTu.DF.Component.Core">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.DF.Component.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.Business.Core">
       <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.DF.Library.Business.Core.dll</HintPath>
@@ -268,8 +269,8 @@
     <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props'))" />
     <Error Condition="!Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props'))" />
-    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props'))" />
+    <Error Condition="!Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets'))" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>SET StartupProjectPath="Worker\..\Workspace\"
@@ -288,5 +289,5 @@ if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(Solution
   <Import Project="..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets" Condition="Exists('..\..\packages\YuLinTu.Components.Task.6.8.8.1\build\YuLinTu.Components.Task.targets')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.targets')" />
-  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" />
+  <Import Project="..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets" Condition="Exists('..\..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" />
 </Project>

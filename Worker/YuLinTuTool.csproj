@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" />
+  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" />
   <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" />
   <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.props')" />
@@ -471,10 +471,6 @@
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="YuLinTu.DF.Component.Core">
-      <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Component.Core.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="YuLinTu.DF.Library.BlobStoring.Core">
       <HintPath>..\Dependencies\YuLinTu\YuLinTu.DF.Library.BlobStoring.Core.dll</HintPath>
@@ -1006,6 +1002,8 @@ copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.dll" "$(SolutionDir)Workspace\Libr
 copy /Y "$(SolutionDir)Dependencies\YuLinTu\*.exe" "$(SolutionDir)Workspace\Libraries\libs\"
 
 copy /Y "$(SolutionDir)Workspace\*.dll" "$(SolutionDir)Workspace\Libraries\libs\"
+xcopy /Y "$(SolutionDir)Dependencies\YuLinTu\Components\*.*"  "$(SolutionDir)Workspace\Components\" /E
+
 
 del "$(TargetDir)*.dll" 
 del /f /s /q "$(TargetDir)*.pdb" 
@@ -1018,6 +1016,7 @@ del "$(TargetDir)*.dll.config"
 md "$(SolutionDir)Workspace\Libraries\x86\GDAL\"
 
 copy /Y "$(SolutionDir)Dependencies\Spatialite\*.dll" "$(SolutionDir)Workspace\"
+
 
 rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS"
 rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.tGIS.Topology"
@@ -1072,8 +1071,8 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props'))" />
     <Error Condition="!Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.props'))" />
-    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.props'))" />
+    <Error Condition="!Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets'))" />
   </Target>
   <Import Project="..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets" Condition="Exists('..\packages\YuLinTu.Windows.Wpf.Metro.6.8.8.1\build\YuLinTu.Windows.Wpf.Metro.targets')" />
   <Import Project="..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets" Condition="Exists('..\packages\YuLinTu.Data.Framework.6.8.8.1\build\YuLinTu.Data.Framework.targets')" />
@@ -1097,7 +1096,7 @@ rmdir /S /Q "$(SolutionDir)Workspace\Components\YuLinTu.Components.Diagrams"
   <Import Project="..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets" Condition="Exists('..\packages\YuLinTu.Components.Examples.6.8.8.1\build\YuLinTu.Components.Examples.targets')" />
   <Import Project="..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.6.4\build\Fody.targets')" />
   <Import Project="..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets" Condition="Exists('..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.targets')" />
-  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.1\build\YuLinTu.Components.Core.targets')" />
+  <Import Project="..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets" Condition="Exists('..\packages\YuLinTu.Components.Core.6.8.8.2\build\YuLinTu.Components.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
