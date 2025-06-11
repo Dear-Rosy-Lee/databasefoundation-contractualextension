@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using YuLinTu.Spatial;
 
-namespace YuLinTu.Component.VectorDataTreatTask
+namespace YuLinTu.Component.VectorDataLinkageTask
 {
     /// <summary>
     /// 相邻面要素节点重复
