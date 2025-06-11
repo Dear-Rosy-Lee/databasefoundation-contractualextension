@@ -45,7 +45,10 @@ namespace YuLinTu.Product.YuLinTuTool
                     System.Windows.MessageBox.Show($@"当前已是最新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())//网络不可用返回
+            {
+                return;
+            }
             string username = "admin";
             string password = "yltadmin";
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("zh-CN");
@@ -105,15 +108,19 @@ namespace YuLinTu.Product.YuLinTuTool
         {
             ShoweAvailable = showMsg;
 
-            var businessSecurityAddress=ConfigurationManager.AppSettings.TryGetValue<string>("DefaultBusinessSecurityAddress", "https://clientupdate.yulintu.cn/pf");
-        
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())//网络不可用返回
+            {
+                return;
+            }
+            var businessSecurityAddress = ConfigurationManager.AppSettings.TryGetValue<string>("DefaultBusinessSecurityAddress", "https://clientupdate.yulintu.cn/pf");
+
             string updateUrl = $"{businessSecurityAddress}/SpatialMatchUpdate.xml";
             string uplogUrl = $"{businessSecurityAddress}/SpatialMatchchangelog.html";
             string username = "admin";
             string password = "yltadmin";
             using (HttpClient client = new HttpClient())
             {
-                
+                client.Timeout = TimeSpan.FromSeconds(5000);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
                 try
                 {
@@ -128,13 +135,17 @@ namespace YuLinTu.Product.YuLinTuTool
                     //alldone.WaitOne();
                     alldone.WaitOne(5000);
                     //await client.GetAsync(updateUrl);
-                    if (response.IsSuccessStatusCode)
+                    if (response != null && response.IsSuccessStatusCode)
                     {
                         BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                         AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
                         //AutoUpdater.OpenDownloadPage = true;
                         AutoUpdater.Start(updateUrl);
                     }
+                }
+                catch (HttpRequestException e) // 处理所有与HTTP请求相关的异常，包括超时、网络问题等。
+                {
+                    Console.WriteLine($"主机不可达: {e.Message}"); // 输出错误信息。例如：服务器无响应、超时等。
                 }
                 catch (Exception ex)
                 {
