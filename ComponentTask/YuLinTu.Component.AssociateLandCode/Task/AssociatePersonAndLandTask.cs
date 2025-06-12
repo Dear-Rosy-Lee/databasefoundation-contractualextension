@@ -226,7 +226,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     uplands.AddRange(nlds);
                     //deloldlds.AddRange(deloldldtemp);
                     index++;
-                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未原关联承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldlds.Count}块");
+                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未关联原承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldlds.Count}块");
 
                     if (argument.SearchInShape)
                     {
@@ -284,7 +284,7 @@ namespace YuLinTu.Component.AssociateLandCode
                 foreach (var item in dellandents)
                 {
 #if DEBUG
-                    if (land.LandNumber == "5113231162080101685" && item.LandNumber == "5113232052080100540")
+                    if (land.LandNumber == "5116022162090300688" && item.LandNumber == "5116022162090700258")
                     {
                     }
 #endif

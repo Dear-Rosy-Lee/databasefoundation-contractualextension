@@ -733,6 +733,10 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             //bool isindexExists = false;
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Upload.sqlite");
             var dbPath = dataBasePath(path);
+            if (!File.Exists(dbPath))
+            {                
+                return;
+            }
             var dataSource = ProviderDbCSQLite.CreateDataSourceByFileName(dbPath);//, false);
             sqliteDb = DataSource.Create<IDbContext>(dataSource.ProviderName, dataSource.ConnectionString);
             FileInfo info = new FileInfo(dbPath);

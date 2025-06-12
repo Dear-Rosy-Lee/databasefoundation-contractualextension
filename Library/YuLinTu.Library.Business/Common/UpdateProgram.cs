@@ -44,6 +44,10 @@ namespace YuLinTu.Library.Business
                     System.Windows.MessageBox.Show($@"当前已是最新版本", @"可用更新", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())//网络不可用返回
+            {
+                return;
+            }
 
             string username = "admin";
             string password = "yltadmin";
@@ -122,6 +126,10 @@ namespace YuLinTu.Library.Business
 
         public static async void CheckUpdate(bool showMsg = true)
         {
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())//网络不可用返回
+            {
+                return;
+            }
             ShoweAvailable = showMsg;
             var center = TheApp.Current.GetSystemSettingsProfileCenter();
             var profile = center.GetProfile<ServiceSetDefine>();
@@ -135,8 +143,18 @@ namespace YuLinTu.Library.Business
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{username}:{password}")));
             try
             {
-                HttpResponseMessage response = await client.GetAsync(updateUrl);
-                if (response.IsSuccessStatusCode)
+                ManualResetEvent alldone = new ManualResetEvent(false);
+
+                HttpResponseMessage response = null;
+                client.GetAsync(updateUrl).ContinueWith(t =>
+                {
+                    response = t.Result;
+                    alldone.Set();
+                });
+                //alldone.WaitOne();
+                alldone.WaitOne(1000);
+                //await client.GetAsync(updateUrl);
+                if (response != null && response.IsSuccessStatusCode)
                 {
                     BasicAuthentication basicAuthentication = new BasicAuthentication(username, password);
                     AutoUpdater.BasicAuthXML = AutoUpdater.BasicAuthDownload = AutoUpdater.BasicAuthChangeLog = basicAuthentication;
@@ -144,7 +162,12 @@ namespace YuLinTu.Library.Business
                     AutoUpdater.Start(updateUrl);
                 }
             }
-            catch { 
+            catch (HttpRequestException e) // 处理所有与HTTP请求相关的异常，包括超时、网络问题等。
+            {
+                Console.WriteLine($"主机不可达: {e.Message}"); // 输出错误信息。例如：服务器无响应、超时等。
+            }
+            catch (Exception ex)
+            {
             }
         }
     }
