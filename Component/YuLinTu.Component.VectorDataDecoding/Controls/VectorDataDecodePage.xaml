@@ -16,11 +16,22 @@
     </i:Interaction.Triggers>
 
     <ylt:ClassicLayout>
+        
         <ylt:ClassicLayout.Toolbar>
 
             <DockPanel LastChildFill="False"
                        TextElement.FontSize="12">
-                
+
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/Refresh.png"
+                                           Text="刷新" />
+                    </ylt:MetroButton>
+                </ylt:TabControlItemRibbonContainer>
                 <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
@@ -49,7 +60,7 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                     
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandStartSingleTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/Shape32.png"
                                            Text="上传矢量" />
@@ -57,7 +68,7 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                     
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandDeletFileTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/maildelete.png"
                                            Text="删除文件" />
@@ -65,8 +76,8 @@
                    
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
-                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
-                                     Command="{Binding CommandRefresh}">
+                                     
+                                     Command="{Binding CommandUploadVectorDataToSeverTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                        Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
                                            Text="开始脱密" />

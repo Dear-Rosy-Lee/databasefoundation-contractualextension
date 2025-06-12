@@ -33,7 +33,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         public VectorDecodeBatchModel()
         {
-            Children = new System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode>();
+            //Children = new System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode>();
 
         }
 

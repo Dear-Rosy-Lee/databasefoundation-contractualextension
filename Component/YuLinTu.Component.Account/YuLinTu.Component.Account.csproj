@@ -187,6 +187,9 @@
     <Reference Include="YuLinTu.Appwork.Core">
       <HintPath>..\..\Worker\Components\YuLinTu.Appwork.Core\Binary\YuLinTu.Appwork.Core.dll</HintPath>
     </Reference>
+    <Reference Include="YuLinTu.DF.Library.Model.Core">
+      <HintPath>..\..\Dependencies\YuLinTu\YuLinTu.DF.Library.Model.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountConsts.cs" />

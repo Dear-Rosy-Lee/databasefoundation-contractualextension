@@ -17,8 +17,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         public new VectorDataDecodePage PageContent
         { get { return base.PageContent as VectorDataDecodePage; } }
 
-       // private ILandInfoRepository LandInfoRep { get => GetRepository<ILandInfoRepository>(); }
-
+        // private ILandInfoRepository LandInfoRep { get => GetRepository<ILandInfoRepository>(); }
+        public override bool IsConnectDB { get => base.IsConnectDB; set => base.IsConnectDB = false; }
         #endregion Properties
 
         #region Fields
@@ -30,6 +30,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public VectorDataDecodePageNavigation(IWorkpage workpage)
             : base(workpage)
         {
+            IsConnectDB = false;
         }
 
         #endregion Ctor
@@ -42,8 +43,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         {
             base.NavigateTo(sender, e);
 
-            var args = new RefreshEventArgs();
-            Workpage.Message.Send(this, args);
+            //var args = new RefreshEventArgs();
+            //Workpage.Message.Send(this, args);
         }
 
         protected override int ShowContentCountByZoneCode(string zoneCode)

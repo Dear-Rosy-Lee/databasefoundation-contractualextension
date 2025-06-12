@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Refit;
 using YuLinTu.Appwork;
 using YuLinTu.Component.Account.Models;
+using YuLinTu.DF.Common;
 using YuLinTu.Security;
 using YuLinTu.Windows;
 
@@ -181,7 +182,10 @@ namespace YuLinTu.Component.Account.Services
                 string region = jsonObject.region;
                 AppGlobalSettings.Current[Parameters.UserName] = name;
                 if (!region.IsNullOrEmpty())
+                {
                     AppGlobalSettings.Current[Parameters.RegionName] = region;
+                    CommonSettingDefine.Instance.CurrentZoneCode = "512022"; //region;//导航树的根地域、具有权限的地域
+                }
                 //Parameters.Region = region;
                 string token = jsonObject.token;
                 Guid session;
