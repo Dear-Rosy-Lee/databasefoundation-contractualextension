@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Windows.Interop;
 using DotSpatial.Projections;
 using Newtonsoft.Json;
 using YuLinTu.Appwork;
@@ -157,6 +158,13 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                     resut = false;
                     this.ReportError(msg);
 
+                }, (crow, carea) =>
+                {
+                    if (carea > 25000)
+                    {
+                        resut = false;
+                        this.ReportError("数据范围超过了25平方千米");
+                    }
                 });
                 return resut;
                 //CompressAndEncryptFolder(sourceFolderPath, zipFilePath, password);

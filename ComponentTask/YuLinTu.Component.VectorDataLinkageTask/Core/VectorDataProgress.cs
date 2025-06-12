@@ -69,7 +69,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                 var index = shp.FindField(info.Name);
                 switch (info.Name)
                 {
-                    
+
                     case "DKBM":
                         if (index == -1)
                         {
@@ -357,7 +357,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         }
 
 
-        static public void LandShapeCheck(string filePath, int srid, Action<string> ReportError)
+        static public void LandShapeCheck(string filePath, int srid, Action<string> ReportError, Action<int, double> Datacount)
         {
             var dkList = new List<QCDK>();
 
@@ -366,6 +366,9 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                 ReportError($"文件{filePath}不能为空");
             }
             //codeIndex.Clear();
+            int datacount = 0;
+            double carea = 0.0;
+            YuLinTu.Spatial.Geometry egeo = null;
             using (var shp = new ShapeFile())
             {
                 var err = shp.Open(filePath);
@@ -374,7 +377,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                     ReportError("读取地块Shape文件发生错误" + err);
                 }
                 var codeIndex = new Dictionary<string, int>();
-
+                datacount = shp.GetRecordCount();
                 ErrorInfo = CheckField(shp);
                 if (!string.IsNullOrEmpty(ErrorInfo))
                     throw new Exception(filePath + ErrorInfo);
@@ -382,9 +385,22 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                 foreach (var dk in ForEnumRecord<QCDK>(shp, filePath, codeIndex, srid, QCDK.CDKBM, ""))
                 {
                     dkList.Add(dk);
+                    if (egeo == null)
+                    {
+                        egeo = (dk.Shape as YuLinTu.Spatial.Geometry).Envelope();
+                    }
+                    else
+                    {
+                        egeo = egeo.Union(dk.Shape as YuLinTu.Spatial.Geometry).Envelope();
+                    }
                 }
             }
             CheckTopology(dkList, ReportError);
+            if (Datacount != null)
+            {
+                carea = egeo.Area();
+                Datacount(datacount, carea);
+            }
         }
 
 
