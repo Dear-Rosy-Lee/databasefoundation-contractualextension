@@ -21,7 +21,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
         internal const string appKeyVaule = "2tlb6nii0VYncW6Gq/AKDWSO8JU9Kj39e64syJUfy3tMVVUmaYqjYA==";
 
-        internal const string Sm4Key = "efd4a17e7c2a89ea5a9d9a283fe03ae1";
+        internal const string Sm4Key = "efd4a17e7c2a89ea";//5a9d9a283fe03ae1";
 
+        internal const string Methold_CreateVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/add";
+        internal const string Methold_QueryVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/paging";
+        internal const string Methold_unclassified = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/download/unclassified";
     }
 }

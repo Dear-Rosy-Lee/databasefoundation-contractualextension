@@ -22,6 +22,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public int DataCount { get; set; }
         public string DecodeProgress { get; set; }
         public string DecodeStaus { get; set; }
+        public string DataStaus { get; set; }
         public int NumbersOfDownloads { get; set; }
         public string SupportingMaterials { get; set; }
 
@@ -33,7 +34,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         public VectorDecodeBatchModel()
         {
-            //Children = new System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode>();
+            Children = new System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode>();
 
         }
 

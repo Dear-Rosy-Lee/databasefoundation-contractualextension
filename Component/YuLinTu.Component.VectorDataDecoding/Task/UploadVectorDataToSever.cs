@@ -33,8 +33,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public UploadVectorDataToSever()
         {
-            Name = "UploadVectorDataToSever";
-            Description = "This is UploadVectorDataToSever";
+            Name = "数据送审";
+            Description = "将矢量数据上传至服务器，开始脱密任务";
         }
 
         #endregion
@@ -66,10 +66,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             AppHeaders.Add(Constants.appidName, Constants.appidVaule);
             AppHeaders.Add(Constants.appKeyName, Constants.appKeyVaule);
             ApiCaller apiCaller = new ApiCaller();
-            apiCaller.client = new HttpClient();
+   
             string url = baseUrl + methold;
+            int progess = 0;
             while (true)
             {
+                apiCaller.client = new HttpClient();
                 if (dataIndex >= datacount)
                 {
                     break;
@@ -105,7 +107,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData);
                     //数据上传至服务器
                     entityList.Clear();
-
+                    progess += (dataIndex * 100 / datacount) ;
+                    this.ReportProgress(progess, "已送审数据条数："+dataIndex);
                 }
                 catch (Exception ex)
                 {

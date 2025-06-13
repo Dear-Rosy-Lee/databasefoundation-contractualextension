@@ -48,5 +48,6 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         /// 第一条测试数据
         /// </summary>
         public string remarks { get; set; }
+        public string business_identification_owner { get; set; }
     }
 }

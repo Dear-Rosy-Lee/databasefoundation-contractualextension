@@ -22,6 +22,7 @@ using YuLinTu.Windows.Wpf.Metro;
 using System.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.DF.Controls.Messages;
+using YuLinTu.Component.VectorDataDecoding.Core;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
@@ -66,7 +67,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             get { return _Items; }
             set { _Items = value; NotifyPropertyChanged(() => Items); }
         }
-        private ObservableCollection<VectorDecodeBatchModel> _Items = new ObservableCollection<VectorDecodeBatchModel>();
+        private ObservableCollection<VectorDecodeBatchModel> _Items=new ObservableCollection<VectorDecodeBatchModel>();
 
 
 
@@ -97,6 +98,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         /// 当前行政地域
         /// </summary>
         public IZone CurrentZone { get; set; } 
+
+        private IVectorService vectorService { get; set; }  
         #endregion
 
         #endregion
@@ -110,12 +113,14 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanRefresh(object args)
         {
+            if(CurrentZone==null)return false;
             return true;
         }
 
         [MessageHandler(ID = IdMsg.Refresh)]
         private void OnRefresh(object args)
         {
+          
             Items.Clear();
            
 
@@ -131,31 +136,25 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var temp = new VectorDecodeBatchModel
-                    {
-                        BatchCode = "5101001012025060401",
-                        ZoneCode = "510100101001",
-                        UplaodTime = DateTime.Now.ToLongDateString(),
-                        DataCount = 2030,
-                        DecodeProgress = "已上传",
-                        DecodeStaus = "否",
-                        NumbersOfDownloads = 0,
-
-                    };
-                    temp.Children = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(temp.BatchCode)).ToObservableCollection<VectorDecodeMode>();
-                    var list = new ObservableCollection<VectorDecodeBatchModel>();
-                    list.Add(temp);
-                    //var list = GetEmployee(page, NavigateObject);
-                    go.Instance.Argument.UserState = list;
+                   
+                    if(CurrentZone!=null) {
+                        var list = vectorService.QueryBatchTask(CurrentZone.FullCode);
+                        go.Instance.Argument.UserState = list;
+                    }
+                 
                 });
                 
 
             }, completed =>
             {
-                var list = completed.Result as ObservableCollection<VectorDecodeBatchModel>;
-                Items = list;
+                if (completed.Result != null)
+                {
+                    var list = completed.Result as ObservableCollection<VectorDecodeBatchModel>;
+                    Items = list;
 
-              //  EmployeeCount = list.Count;
+                }
+
+           
 
             }, error =>
             {
@@ -201,12 +200,50 @@ namespace YuLinTu.Component.VectorDataDecoding
        
 
             Workpage = workpage;
-         
+            vectorService = new VectorService();
         }
 
         #endregion
 
         #region Methods
+        #region common
+        private void ShowCreateTaskWindow(YuLinTu.Task task, TaskArgument arg)
+        {
+            task.Argument = arg;
+
+            var obj = task.Argument;
+
+            var editor = new YuLinTu.Component.VectorDataDecoding.PropertyEditorCom();
+            editor.pg.Properties["Workpage"] = Workpage;
+            editor.Header = task.Name;
+
+
+            editor.pg.Object = obj;
+            editor.pgTask.Object = task;
+            editor.pg.DataContext = obj;
+            this.Workpage.TaskCenter.Add(task);
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+
+                //OnRefresh(args);
+
+                Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
+
+
+
+            });
+            Workpage.Page.ShowMessageBox(editor, (v, r) =>
+            {
+                editor.pg.Object = null;
+                editor.pgTask.Object = null;
+                if (r == eCloseReason.Confirm)
+                {
+                    task.StartAsync();
+                    Workpage.Message.Send(this, new MsgEventArgs(EdCore.langRequestShowTaskViewer));
+                }
+            });
+        }
+        #endregion
 
         #region Methods - Public
 
@@ -264,38 +301,8 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
 
             task.Argument = arg;
-
-        var obj = task.Argument;
-
-            var editor = new YuLinTu.Component.VectorDataDecoding.PropertyEditorCom();
-            editor.pg.Properties["Workpage"] = Workpage;
-            editor.Header = task.Name;
-
-          
-            editor.pg.Object = obj;
-            editor.pgTask.Object = task;
-            editor.pg.DataContext = obj;
-            this.Workpage.TaskCenter.Add(task);
-            task.Completed += new TaskCompletedEventHandler((o, t) =>
-            {
-             
-                    //OnRefresh(args);
-
-                Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
-
-
-
-            });
-            Workpage.Page.ShowMessageBox(editor, (v, r) =>
-            {
-                editor.pg.Object = null;
-                editor.pgTask.Object = null;
-                if(r== eCloseReason.Confirm)
-                {
-                    task.StartAsync();
-                    Workpage.Message.Send(this, new MsgEventArgs(EdCore.langRequestShowTaskViewer));
-                }
-            });
+            ShowCreateTaskWindow(task, arg);
+       
           
       
         }
@@ -343,7 +350,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         #endregion
 
-        #region Commands - DeletFileTask
+        #region Commands - UploadVectorDataToSeverTask
 
         public DelegateCommand CommandUploadVectorDataToSeverTask { get { return _CommandUploadVectorDataToSeverTask ?? (_CommandUploadVectorDataToSeverTask = new DelegateCommand(args => OnUploadVectorDataToSeverTask(args), args => OnCanUploadVectorDataToSeverTask(args))); } }
         private DelegateCommand _CommandUploadVectorDataToSeverTask;
@@ -364,43 +371,80 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
             }
-           
 
-            task.Argument = arg;
-
-            var obj = task.Argument;
-
-            var editor = new YuLinTu.Component.VectorDataDecoding.PropertyEditorCom();
-            editor.pg.Properties["Workpage"] = Workpage;
-            editor.Header = task.Name;
-
-
-            editor.pg.Object = obj;
-            editor.pgTask.Object = task;
-            editor.pg.DataContext = obj;
-            this.Workpage.TaskCenter.Add(task);
-            task.Completed += new TaskCompletedEventHandler((o, t) =>
-            {
-
-                //OnRefresh(args);
-
-                Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
-
-
-
-            });
-            Workpage.Page.ShowMessageBox(editor, (v, r) =>
-            {
-                editor.pg.Object = null;
-                editor.pgTask.Object = null;
-                if (r == eCloseReason.Confirm)
-                {
-                    task.StartAsync();
-                    Workpage.Message.Send(this, new MsgEventArgs(EdCore.langRequestShowTaskViewer));
-                }
-            });
+            ShowCreateTaskWindow(task, arg);
 
         }
+
+
+        #region Methods - System
+
+
+
+        #endregion
+
+        #endregion
+
+        #region Commands - CreateVectorDecBatchTask
+
+        public DelegateCommand CommandCreateVectorDecBatchTask { get { return _CommandCreateVectorDecBatchTask ?? (_CommandCreateVectorDecBatchTask = new DelegateCommand(args => OnCreateVectorDecBatchTask(args), args => OnCanCreateVectorDecBatchTask(args))); } }
+        private DelegateCommand _CommandCreateVectorDecBatchTask;
+
+        private bool OnCanCreateVectorDecBatchTask(object args)
+        {
+           if(CurrentZone==null|| CurrentZone.Level> ZoneLevel.Town) return false;
+            return true;
+        }
+
+        private void OnCreateVectorDecBatchTask(object args)
+        {
+
+            var task = new CreateVectorDecBatchTask();
+            var arg = new CreateVectorDecBatchTaskArgument();
+
+         
+            arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;
+
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
+
+
+        #region Methods - System
+
+
+
+        #endregion
+
+        #endregion
+
+        #region Commands - DownloadDecodeVectorData
+
+        public DelegateCommand CommandDownloadVectorDataByZoneTask { get { return _CommandDownloadVectorDataByZoneTask ?? (_CommandDownloadVectorDataByZoneTask = new DelegateCommand(args => OnDownloadVectorDataByZoneTask(args), args => OnCanDownloadVectorDataByZoneTask(args))); } }
+        private DelegateCommand _CommandDownloadVectorDataByZoneTask;
+
+        private bool OnCanDownloadVectorDataByZoneTask(object args)
+        {
+            
+            return true;
+        }
+
+        private void OnDownloadVectorDataByZoneTask(object args)
+        {
+
+            var task = new DownloadVectorDataByZone();
+            var arg = new DownloadVectorDataByZoneArgument();
+
+
+            arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;
+         
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
+
+
         #region Methods - System
 
 

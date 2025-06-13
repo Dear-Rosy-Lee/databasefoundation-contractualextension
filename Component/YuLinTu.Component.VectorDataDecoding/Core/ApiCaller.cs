@@ -141,30 +141,28 @@ namespace YuLinTu.Component.VectorDataDecoding
                     {
                         JsonElement root = doc.RootElement;
                         JsonElement data = new JsonElement();
-                        var res = root.TryGetProperty("result", out data);
+                        var res = root.TryGetProperty("data", out data);
                         if (res)
                         {
-                            data = root.GetProperty("result");
-                            JsonElement jsuccess = root.GetProperty("success");
+                            data = data.GetProperty("data");
+                            JsonElement jsuccess = data.GetProperty("success");
                             if (jsuccess.ToString().ToLower().Equals("false"))
                             {
-                                string err = root.GetProperty("errormsg").ToString();
+                                string err = root.GetProperty("errors").ToString();
                                 throw new Exception(err);
                             }
                             else
                             {
-                                string points = data.GetProperty("points").ToString();
-                                return points;
+                                //string points = data.GetProperty("points").ToString();
+                                //return points;
                             }
                         }
 
-                        var updata = root.TryGetProperty("data", out data);
-                        if (updata)
-                        {
-
-                            JsonElement jsuccess = root.GetProperty("data");
-                            return jsuccess.ToString();
-                        }
+                        var msg = data.TryGetProperty("message", out data);
+                 
+                            //JsonElement jsuccess = root.GetProperty("data");
+                            return data.ToString();
+               
                     }
                 }
                 return "";
@@ -175,6 +173,102 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
         }
 
+        public  T PostResultAsync<T>(string url, Dictionary<string, string> Headers, string jsonData) where T : class, new()
+        {
+          
+            try
+            {
+                // 将JSON数据转换为HttpContent
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                foreach (var kvp in Headers)
+                {
+                    client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
+                }
+
+                // 发送 POST 请求
+                HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
+
+                response.EnsureSuccessStatusCode();
+
+                // 读取响应内容
+                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                    {
+                        JsonElement root = doc.RootElement;
+                        JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("data");
+
+                        // 提取并解析 results 字段的内容
+                        string resultsJson = data.ToString();
+                     
+                        var entity = JsonSerializer.Deserialize<T>(resultsJson);
+                        // 再次解析 results 字符串为 JSON 对象
+                        return entity;
+                      
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+             
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+
+        }
+        public List<T> PostResultListAsync<T>(string url, Dictionary<string, string> Headers, string jsonData) where T : class, new()
+        {
+
+            try
+            {
+                // 将JSON数据转换为HttpContent
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                foreach (var kvp in Headers)
+                {
+                    client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
+                }
+
+                // 发送 POST 请求
+                HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
+
+                response.EnsureSuccessStatusCode();
+
+                // 读取响应内容
+                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                    {
+                        JsonElement root = doc.RootElement;
+                        JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("data");
+
+                        // 提取并解析 results 字段的内容
+                        string resultsJson = data.ToString();
+
+                        var entity = JsonSerializer.Deserialize<List<T>>(resultsJson);
+                        // 再次解析 results 字符串为 JSON 对象
+                        return entity;
+
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+
+        }
 
         public KeyValueList<string, string> PostGetResultAsync(string token, string url, string taskID)
         {

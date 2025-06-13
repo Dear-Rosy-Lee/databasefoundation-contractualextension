@@ -244,12 +244,15 @@
     </Compile>
     <Compile Include="Core\ApiCaller.cs" />
     <Compile Include="Core\AreaNodeRepeatCheck.cs" />
-    <Compile Include="Core\Class1.cs" />
+    <Compile Include="Core\EncrypterSM.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\DecodingProfile.cs" />
     <Compile Include="Core\LandEntity.cs" />
     <Compile Include="Core\VectorDataProgress.cs" />
+    <Compile Include="Core\IVectorService.cs" />
+    <Compile Include="Core\VectorService.cs" />
     <Compile Include="Entrance.cs" />
+    <Compile Include="JsonEntity\BatchTaskJsonEn.cs" />
     <Compile Include="JsonEntity\LandJsonEn.cs" />
     <Compile Include="JsonEntity\ZoneJsonEn.cs" />
     <Compile Include="Model\VectorDecodeBatchModel.cs" />
@@ -265,6 +268,10 @@
     </Compile>
     <Compile Include="Task\DownloadDecodeVectorData.cs" />
     <Compile Include="Core\PropertyDescriptorBuilderFileBrowserShp.cs" />
+    <Compile Include="Task\DownloadVectorDataByZone.Argument.cs">
+      <DependentUpon>DownloadVectorDataByZone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\DownloadVectorDataByZone.cs" />
     <Compile Include="Task\UploadVectorDataTolocalDB.Argument.cs">
       <DependentUpon>UploadVectorDataTolocalDB.cs</DependentUpon>
     </Compile>

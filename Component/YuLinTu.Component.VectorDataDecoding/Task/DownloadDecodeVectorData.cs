@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using YuLinTu;
+using YuLinTu.Component.VectorDataDecoding.Core;
+using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
@@ -17,14 +20,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         #endregion
 
         #region Fields
-
+        private IVectorService vectorService { get; set; }
         #endregion
 
         #region Ctor
 
         public DownloadDecodeVectorData()
         {
-            Name = "DownloadDecodeVectorData";
+            Name = "下载数据";
             Description = "This is DownloadDecodeVectorData";
         }
 
@@ -38,7 +41,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         {
             this.ReportProgress(0, "任务开始执行");
             this.ReportInfomation("任务开始执行");
-
+            vectorService = new VectorService();
             var args = Argument as DownloadDecodeVectorDataArgument;
             if (args == null)
             {
@@ -47,8 +50,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
 
             // TODO : 任务的逻辑实现
-
-
+           
+       
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
         }

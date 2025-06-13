@@ -36,7 +36,7 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandCreateVectorDecBatchTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/添加文件32.png"
                                            Text="创建任务" />
@@ -99,7 +99,24 @@
                                            Text="下载材料" />
                     </ylt:MetroButton>
                 </ylt:TabControlItemRibbonContainer>
-
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandDownloadVectorDataByZoneTask}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
+                                           Text="下载原始数据" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandRefresh}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
+                                           Text="下载脱密数据" />
+                    </ylt:MetroButton>
+                </ylt:TabControlItemRibbonContainer>
             </DockPanel>
         </ylt:ClassicLayout.Toolbar>
         <Grid>
@@ -194,7 +211,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="上传时间"
+                    <DataGridTemplateColumn Header="上传/送审时间"
                                             Width="100"
                                             SortMemberPath="Name">
                         <DataGridTemplateColumn.CellTemplate>
