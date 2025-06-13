@@ -86,9 +86,18 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             data.CBDKXXJH.ForEach(t =>
             {
                 if (!areaDic.ContainsKey(t.DKBM))
-                    areaDic.Add(t.DKBM, t.HTMJ);
+                {
+                    double mjm = t.HTMJM == null ? 0 : t.HTMJM.Value;
+                    if (mjm == 0 && t.HTMJ > 0)
+                    {
+                        mjm = ToolMath.ConvertRound(t.HTMJ, datanum);
+                    }
+                    areaDic.Add(t.DKBM, mjm);
+                }
                 else
+                {
                     areaDic[t.DKBM] = areaDic[t.DKBM] + t.HTMJ;
+                }
             });
 
             summary.SenderCount = data.FBFJH.Count;
@@ -103,7 +112,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             var mdbcbdlistDic = areaDic.Where(dd => cbddkbmlist.Contains(dd.Key)).ToList();
 
             summary.ContractLandCount = mdbcbdlistDic.Count;//承包地块数
-            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value.ConvertHectare(datanum)), datanum);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
+            summary.ContractLandAreaCount = ToolMath.ConvertRound(mdbcbdlistDic.Sum(t => t.Value), datanum);// AreaQQSum(cbdList, areaDic);// cbdList.Sum(t => t.SCMJ).ConvertHectare();//承包地块总面积
 
             //选出有空间信息的非承包地块
             var fcbdshapeList = fcbdList.FindAll(fc => fc.Shape != null);
@@ -206,7 +215,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 item.DKBM = item.DKBM == null ? "" : item.DKBM;
                 if (areaDic.ContainsKey(item.DKBM))
-                    areaCount += ToolMath.ConvertRound(areaDic[item.DKBM] * 0.0015, datanum);
+                    areaCount += areaDic[item.DKBM];// ToolMath.ConvertRound(areaDic[item.DKBM] * 0.0015, datanum);
             }
             return ToolMath.ConvertRound(areaCount, datanum);
         }
@@ -340,7 +349,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     object value = info.GetValue(item, null);
                     if (info.PropertyType == typeof(double))
                     {
-                        double cellValue = ToolMath.ConvertRound((double)value,datanum);// / 10000);
+                        double cellValue = ToolMath.ConvertRound((double)value, datanum);// / 10000);
                         //var cl = row.Instance.CreateCell(colIndex);
                         //cl.SetCellType(NPOI.SS.UserModel.CellType.Numeric);
                         cell.Instance.SetCellValue(cellValue);

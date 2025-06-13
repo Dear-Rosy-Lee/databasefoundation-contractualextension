@@ -9,7 +9,7 @@
                             xmlns:am="clr-namespace:YuLinTu.Library.Controls"
                             Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
                             Header="初始化合同信息"
-                            MinHeight="170" MinWidth="560">
+                            MinHeight="170" MinWidth="600">
     <am:InfoPageBase.Resources>
         <am:ConcordCheckValueConvert x:Key="ConcordCheckValueConvert"/>
     </am:InfoPageBase.Resources>
@@ -163,10 +163,10 @@
                     <TabItem Header="调查信息" x:FieldModifier="public" x:Name="tbitemExpand">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="105"/>
-                                <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="195"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="190"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

@@ -3017,7 +3017,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             qz.FZJG = regeditBook.SendOrganization;
             qz.FZRQ = regeditBook.SendDate.Date;
             qz.QZSFLQ = regeditBook.RegeditBookGetted == null ? "1" : regeditBook.RegeditBookGetted;//国标为1，领取  2 未领取
-            qz.QZLQRQ = (regeditBook.PrintDate.Date >= regeditBook.SendDate.Date) ? regeditBook.PrintDate.Date : regeditBook.SendDate.Date;
+            qz.QZLQRQ = regeditBook.RegeditBookGettedDate.Date;// >= regeditBook.SendDate.Date) ? regeditBook.PrintDate.Date : regeditBook.SendDate.Date;
             qz.QZLQRXM = vp.Name;
             qz.QZLQRZJHM = vp.Number;
             qz.QZLQRZJLX = ((int)(vp.CardType)).ToString();

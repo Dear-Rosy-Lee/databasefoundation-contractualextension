@@ -202,6 +202,14 @@ namespace YuLinTu.Library.Controls
                 ShowBox("颁证日期不能为空！");
                 return;
             }
+            if (txtBookTakeTime.Value != null)
+            {
+                if (txtStartTime.Value != null && txtBookTakeTime.Value < txtStartTime.Value)
+                {
+                    ShowBox("领取日期必须晚于颁证日期！");
+                    return;
+                }
+            }
             if (txtWriteTime.Value != null && txtStartTime.Value != null && ((DateTime)txtWriteTime.Value).Date > ((DateTime)txtStartTime.Value).Date)
             {
                 ShowBox(ContractRegeditBookInfo.WarrantDateError);
@@ -346,43 +354,6 @@ namespace YuLinTu.Library.Controls
             TheBns.Current.Message.Send(this, arg);
             Zone county = arg.ReturnValue as Zone;
             return county;
-        }
-
-        /// <summary>
-        /// 检查数据
-        /// </summary>
-        private bool CheckSubmit()
-        {
-            bool error = false;
-            //Dispatcher.Invoke(new Action(() =>
-            //{
-            if (txtYearNumber.Value == null)
-            {
-                ShowBox("权证年号不能为空！");
-                error = true;
-            }
-            if (txtContractRegeditBookTime.Value == null)
-            {
-                ShowBox("登簿日期不能为空！");
-                error = true;
-            }
-            if (txtWriteTime.Value == null)
-            {
-                ShowBox("填证日期设置！");
-                error = true;
-            }
-            if (txtStartTime.Value == null)
-            {
-                ShowBox("颁证日期设置！");
-                error = true;
-            }
-            if (txtWriteTime.Value != null && txtStartTime.Value != null && ((DateTime)txtWriteTime.Value).Date > ((DateTime)txtStartTime.Value).Date)
-            {
-                ShowBox(ContractRegeditBookInfo.WarrantDateError);
-                error = true;
-            }
-            //}));
-            return error;
         }
 
         /// <summary>

@@ -831,7 +831,7 @@ namespace YuLinTu.Library.Controls
                         ExportPublishWordTaskGroup(saveFilePath, taskDes, taskName);
                         break;
 
-                    case eContractAccountType.ExportLandSurveyWord:
+                    case eContractAccountType.ExportLandSurveyWord://地块调查表（Word）
                         ExportLandWordTask(saveFilePath, taskDes, taskName, listPerson);
                         break;
 
