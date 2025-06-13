@@ -95,7 +95,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                 
                 dataIndex += result.Count;
-                progess += (endTag * 100 / count);
+                progess = (endTag * 100 / count);
                 this.ReportProgress(progess, "已下载数据条数：" + dataIndex);
             }
             if(landEntites.Count!=0)
