@@ -59,7 +59,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             //读取数据  分页读取
             var query = DbContext.CreateQuery<SpaceLandEntity>().Where(t => t.BatchCode.Equals(args.BatchCode));
             int datacount = query.Count();
-            int pageSize = 3;
+            int pageSize = 100;
             int pageIndex = 0;
             int dataIndex = 0;
             AppHeaders = new Dictionary<string, string>();//应该是登录以后通过appID获取key??
@@ -95,6 +95,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         jsonEn.business_identification = land.DKBM;
                         jsonEn.data_type = "1";
                         jsonEn.original_geometry_data = land.Shape.AsText();
+                        jsonEn.original_geometry_data = EncrypterSM.EncryptSM4(jsonEn.original_geometry_data,Constants.Sm4Key);
                         //数据加密
                         landJsonEntites.Add(jsonEn);
 
