@@ -282,7 +282,8 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanStartSingleTask(object args)
         {
-            if(SelectedItem==null) return false;
+            if(SelectedItem==null|| !(SelectedItem is VectorDecodeBatchModel)) return false;
+            if ((SelectedItem as VectorDecodeBatchModel)?.DecodeProgress == "已送审") return false;
             return true;
         }
 
@@ -324,6 +325,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanDeletFileTask(object args)
         {
             if (SelectedItem == null||!(SelectedItem is VectorDecodeMode)) return false;
+            var obj = SelectedItem as VectorDecodeMode;
+            if(Items.FirstOrDefault(t => t.BatchCode.Equals(obj.BatchCode)).DecodeProgress== "已送审")return false ;
             return true;
         }
 
@@ -372,6 +375,36 @@ namespace YuLinTu.Component.VectorDataDecoding
                 arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
             }
 
+            ShowCreateTaskWindow(task, arg);
+
+        }
+
+
+        #region Methods - System
+
+
+
+        #endregion
+
+        #endregion
+        #region Commands - UploadVectorDataAfterDecodeToSeverTask
+
+        public DelegateCommand CommandUploadVectorDataAfterDecodeToSeverTask { get { return _CommandUploadVectorDataAfterDecodeToSeverTask ?? (_CommandUploadVectorDataAfterDecodeToSeverTask = new DelegateCommand(args => OnUploadVectorDataAfterDecodeToSeverTask(args), args => OnCanUploadVectorDataAfterDecodeToSeverTask(args))); } }
+        private DelegateCommand _CommandUploadVectorDataAfterDecodeToSeverTask;
+
+        private bool OnCanUploadVectorDataAfterDecodeToSeverTask(object args)
+        {
+         
+            return true;
+        }
+
+        private void OnUploadVectorDataAfterDecodeToSeverTask(object args)
+        {
+
+            var task = new UploadVectorDataAfterDecode();
+            var arg = new UploadVectorDataAfterDecodeArgument();
+
+          
             ShowCreateTaskWindow(task, arg);
 
         }
@@ -444,6 +477,62 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         }
 
+
+        #region Methods - System
+
+
+
+        #endregion
+
+        #endregion
+
+        #region Commands - DownLoadVectorDataAfterDecode
+
+        public DelegateCommand CommandDownLoadVectorDataAfterDecodeByZone { get { return _DownLoadVectorDataAfterDecode ?? (_DownLoadVectorDataAfterDecode = new DelegateCommand(args => OnDownLoadVectorDataAfterDecodeByZone(args), args => OnCanDownLoadVectorDataAfterDecodeByZone(args))); } }
+        private DelegateCommand _DownLoadVectorDataAfterDecode;
+
+        private bool OnCanDownLoadVectorDataAfterDecodeByZone(object args)
+        {
+
+            return true;
+        }
+
+        private void OnDownLoadVectorDataAfterDecodeByZone(object args)
+        {
+
+            var task = new DownLoadVectorDataAfterDecodeByZone();
+            var arg = new DownLoadVectorDataAfterDecodeByZoneArgument();
+
+
+            arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;
+
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
+        public DelegateCommand CommandDownLoadVectorDataAfterDecodeByBatch { get { return _DownLoadVectorDataAfterDecodeByBatch ?? (_DownLoadVectorDataAfterDecodeByBatch = new DelegateCommand(args => OnDownLoadVectorDataAfterDecodeByBatch(args), args => OnCanDownLoadVectorDataAfterDecodeByBatch(args))); } }
+        private DelegateCommand _DownLoadVectorDataAfterDecodeByBatch;
+
+        private bool OnCanDownLoadVectorDataAfterDecodeByBatch(object args)
+        {
+            if (SelectedItem == null || !(SelectedItem is VectorDecodeMode)) return false;
+            return true;
+        }
+
+        private void OnDownLoadVectorDataAfterDecodeByBatch(object args)
+        {
+
+            var task = new DownloadDecodeVectorDataByBatchCode();
+            var arg = new DownloadDecodeVectorDataByBatchCodeArgument();
+
+            arg.BatchCode= (SelectedItem as VectorDecodeMode).BatchCode;
+
+
+
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
 
         #region Methods - System
 

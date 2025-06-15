@@ -26,5 +26,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_CreateVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/add";
         internal const string Methold_QueryVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/paging";
         internal const string Methold_unclassified = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/download/unclassified";
+        internal const string Methold_upload = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/upload";
+        internal const string Methold_upload_decryption = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/upload/decryption";
+        internal const int VectorDecodeSrid = 4490;
     }
 }

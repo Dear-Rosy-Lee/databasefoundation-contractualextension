@@ -82,14 +82,61 @@
                                        Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
                                            Text="开始脱密" />
                     </ylt:MetroButton>
-                    <ylt:MetroButton Padding="4,2,4,2"
+                    <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
                                      Command="{Binding CommandRefresh}">
                         <ylt:ImageTextItem ImagePosition="Top"
-                                          Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/质检.png"   
-                                           Text="质检打包" />
-                    </ylt:MetroButton>
+                                          Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载已脱密.png"   
+                                           Text="质检" />
+                    </ylt:MetroButton>-->
+                    <!--<ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandDownLoadVectorDataAfterDecode}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载已脱密.png"
+                                           Text="下载已脱密数据" />
+                    </ylt:MetroButton>-->
+
+                    <ylt:SuperButton  Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     ImagePosition="Top"
+                                      Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载已脱密.png"
+                                     Content="下载脱密数据">
+                        <ylt:SuperButton.DropDownMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByZone}">
+                                    <MenuItem.Icon>
+                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileDocumentInspect.png"></ylt:AutoGrayImage>
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical" >
+                                            <TextBlock FontWeight="Bold"
+                                                       Text="按地域下载"></TextBlock>
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="按所选地域下载已脱密矢量数据"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator></Separator>
+                                <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByBatch}">
+                                    <MenuItem.Icon>
+                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileBackupDatabase.png"></ylt:AutoGrayImage>
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold"
+                                                       Text="按批次下载"></TextBlock>
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="按所选批次下载已脱密矢量数据"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ylt:SuperButton.DropDownMenu>
+                    </ylt:SuperButton>
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
@@ -105,17 +152,18 @@
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
                                      Command="{Binding CommandDownloadVectorDataByZoneTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
-                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载原始数据.png"
                                            Text="下载原始数据" />
                     </ylt:MetroButton>
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandUploadVectorDataAfterDecodeToSeverTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
-                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
-                                           Text="下载脱密数据" />
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/上传数据.png"
+                                           Text="上传脱密数据" />
                     </ylt:MetroButton>
+                  
                 </ylt:TabControlItemRibbonContainer>
             </DockPanel>
         </ylt:ClassicLayout.Toolbar>

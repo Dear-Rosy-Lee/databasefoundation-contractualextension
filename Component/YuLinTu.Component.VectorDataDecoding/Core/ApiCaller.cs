@@ -116,10 +116,11 @@ namespace YuLinTu.Component.VectorDataDecoding
                 throw ex;
             }
         }
-        public string PostDataAsync(string url, Dictionary<string, string> Headers, string jsonData)
+        public string PostDataAsync(string url, Dictionary<string, string> Headers, string jsonData,out bool sucess)
         {
             try
             {
+                sucess = false;
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 foreach (var kvp in Headers)
@@ -153,8 +154,8 @@ namespace YuLinTu.Component.VectorDataDecoding
                             }
                             else
                             {
-                                //string points = data.GetProperty("points").ToString();
-                                //return points;
+                                sucess=true;
+                               
                             }
                         }
 

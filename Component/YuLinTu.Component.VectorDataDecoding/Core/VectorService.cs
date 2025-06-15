@@ -64,7 +64,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return result;
         }
 
-        public List<SpaceLandEntity>DownLoadRawData(string zoneCode,int pageIndex,int pageSize)
+        public List<SpaceLandEntity>DownLoadVectorDataPrimevalData(string zoneCode,int pageIndex,int pageSize)
         {
             apiCaller.client = new HttpClient();
             List<SpaceLandEntity> landJsonEntites = new List<SpaceLandEntity>();
@@ -75,6 +75,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 body.Add("page", pageIndex);
                 body.Add("pageSize", pageSize);
                 body.Add("dybm", zoneCode);
+            
                 var result = apiCaller.PostResultListAsync<LandJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
                 
                 if(result != null)
@@ -86,7 +87,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                         land.DKBM = item.business_identification;
                         land.CBFBM = item.business_identification_owner;
                         land.BatchCode = item.upload_batch_num;
-                        var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key)+"#4490";
+                        var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key)+"#4490";
                 
                         land.Shape= YuLinTu.Spatial.Geometry.FromString(shapeText);
                     landJsonEntites.Add(land);
@@ -96,6 +97,85 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             
         
         }
+
+        public List<SpaceLandEntity> DownLoadVectorDataAfterDecodelData(string zoneCode, int pageIndex, int pageSize, string batchCode)
+        {
+            apiCaller.client = new HttpClient();
+            List<SpaceLandEntity> landJsonEntites = new List<SpaceLandEntity>();
+            string url = Constants.baseUrl + Constants.Methold_unclassified;
+
+
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("page", pageIndex);
+            body.Add("pageSize", pageSize);
+            body.Add("dybm", zoneCode);
+            body.Add("business_identification", batchCode);
+            var result = apiCaller.PostResultListAsync<LandJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
+
+            if (result != null)
+            {
+
+                foreach (var item in result)
+                {
+                    var land = new SpaceLandEntity();
+                    land.DKBM = item.business_identification;
+                    land.CBFBM = item.business_identification_owner;
+                    land.BatchCode = item.upload_batch_num;
+                    var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key) + "#4490";//这个地方等佳佳接口写好了要改成脱密后数据
+
+                    land.Shape = YuLinTu.Spatial.Geometry.FromString(shapeText);
+                    landJsonEntites.Add(land);
+                }
+            }
+            return landJsonEntites;
+        }
+
+
+        public string UpLoadVectorDataPrimevalToSever(List<SpaceLandEntity> Data, out bool isSucess)
+        {
+            isSucess = false;
+            string url = baseUrl + Constants.Methold_upload;
+            List<LandJsonEn> landJsonEntites = new List<LandJsonEn>();
+            Data.ForEach(land =>
+            {
+                LandJsonEn jsonEn = new LandJsonEn();
+                jsonEn.dybm = land.DKBM.Substring(0, 14);
+                jsonEn.upload_batch_num = land.BatchCode;
+                jsonEn.business_identification = land.DKBM;
+                jsonEn.business_identification = land.DKBM;
+                jsonEn.data_type = "1";
+                jsonEn.original_geometry_data = land.Shape.AsText();
+                jsonEn.original_geometry_data = EncrypterSM.EncryptSM4(jsonEn.original_geometry_data, Constants.Sm4Key);
+                //数据加密
+                landJsonEntites.Add(jsonEn);
+
+            });
+
+            var jsonData = JsonSerializer.Serialize(landJsonEntites);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out isSucess);
+            return en;
+        }
+
+        public string UpLoadVectorDataAfterDecodeToSever(List<SpaceLandEntity> Data, out bool isSucess)
+        {
+            isSucess = false;
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_upload_decryption;
+            List<Dictionary<string, string>> uplaodList = new List<Dictionary<string, string>>();
+            foreach (var land in Data)
+            {
+                Dictionary<string, string> body = new Dictionary<string, string>();
+                body.Add("business_identification", land.DKBM);
+                var geoText = land.Shape.AsText();
+                geoText = EncrypterSM.EncryptSM4(geoText, Constants.Sm4Key);
+                body.Add("desensitized_geometry", geoText);
+            }
+            var jsonData = JsonSerializer.Serialize(uplaodList);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out isSucess);
+            return en;
+        }
+
+     
     }
 }
 

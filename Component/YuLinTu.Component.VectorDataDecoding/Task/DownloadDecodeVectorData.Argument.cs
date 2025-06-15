@@ -8,7 +8,7 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
-    public class DownloadDecodeVectorDataArgument : TaskArgument
+    public class DownloadDecodeVectorDataByBatchCodeArgument : TaskArgument
     {
       
 
@@ -64,7 +64,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         #region Ctor
 
-        public DownloadDecodeVectorDataArgument()
+        public DownloadDecodeVectorDataByBatchCodeArgument()
         {
         }
 
