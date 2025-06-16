@@ -20,9 +20,9 @@
         <ylt:ClassicLayout.Toolbar>
 
             <DockPanel LastChildFill="False"
-                       TextElement.FontSize="12">
+                       TextElement.FontSize="12" >
 
-                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0"  >
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
@@ -31,8 +31,8 @@
                                            Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/Refresh.png"
                                            Text="刷新" />
                     </ylt:MetroButton>
-                </ylt:TabControlItemRibbonContainer>
-                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                </ylt:TabControlItemRibbonContainer >
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource NotBoolToVisibilityConverter}}">
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
@@ -63,7 +63,7 @@
                                      Command="{Binding CommandStartSingleTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/Shape32.png"
-                                           Text="上传矢量" />
+                                           Text="上传矢量"  />
                     </ylt:MetroButton>
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
@@ -146,7 +146,7 @@
                                            Text="下载材料" />
                     </ylt:MetroButton>
                 </ylt:TabControlItemRibbonContainer>
-                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0">
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"

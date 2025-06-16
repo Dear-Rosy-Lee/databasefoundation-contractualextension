@@ -185,6 +185,7 @@ namespace YuLinTu.Component.Account.Services
                 {
                     AppGlobalSettings.Current[Parameters.RegionName] = region;
                     CommonSettingDefine.Instance.CurrentZoneCode = "512022"; //region;//导航树的根地域、具有权限的地域
+                   
                 }
                 //Parameters.Region = region;
                 string token = jsonObject.token;

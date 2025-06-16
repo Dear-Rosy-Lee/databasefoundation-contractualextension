@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
 {
+    [Serializable]
     internal class StaticsLandJsonEn
     {
+
         /// <summary>
-        /// 未脱密
+        /// 
         /// </summary>
-        public int wtm;
-       /// <summary>
-       /// 已脱密
-       /// </summary>
-        public int ytm;
-       
+        public int wtm { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ytm { get; set; }
+
     }
 }

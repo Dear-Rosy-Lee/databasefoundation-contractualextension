@@ -58,7 +58,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
 
             // TODO : 任务的逻辑实现
-            int count = 10000; int endTag = 0;
+            int count = vectorService.StaticsLandByZoneCode(args.zoneCode, args.BatchCode).ytm; ;
+            int endTag = 0;
             int pageSize = 200; int shpLandCountLimit = 5000; int shpIndex = 0;
             int pageIndex = 0; int dataIndex = 0;
             int progess = 0;
@@ -71,9 +72,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             while (true)
             {
                 pageIndex++;
-                endTag = pageIndex * pageSize;
+               // endTag = pageIndex * pageSize;
                 var result = vectorService.DownLoadVectorDataAfterDecodelData(string.Empty, pageIndex, pageSize, args.BatchCode);
                 if (endTag > count || result.Count == 0) break;
+                endTag = endTag + result.Count;
                 foreach (var item in result)
                 {
                     var attributes = CreateAttributesSimple(item);
@@ -104,7 +106,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 shpFullPath = Path.Combine(args.ResultFilePath, shpfileName);
                 ExportToShape(shpFullPath, landEntites, dreproject);
             }
-            string message = vectorService.UpdateDownLoadNum(args.zoneCode,args.BatchCode);
+            string message = vectorService.UpdateDownLoadNum(args.zoneCode,"1",args.BatchCode);
             this.ReportInfomation(message);
             if (args.AutoComprass)
             {

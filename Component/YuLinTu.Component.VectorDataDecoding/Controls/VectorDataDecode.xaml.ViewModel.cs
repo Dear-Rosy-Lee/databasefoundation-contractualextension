@@ -40,6 +40,13 @@ namespace YuLinTu.Component.VectorDataDecoding
         }
         private bool _IsRefreshing;
 
+        public bool UploaDeclassifyDataClient
+        {
+            get { return _UploaDeclassifyDataClient; }
+            set { _UploaDeclassifyDataClient = value; NotifyPropertyChanged(() => UploaDeclassifyDataClient); }
+        }
+        private bool _UploaDeclassifyDataClient;
+
         public object SelectedItem
         {
             get { return _SelectedItem; }
@@ -270,6 +277,18 @@ namespace YuLinTu.Component.VectorDataDecoding
             // 一般不使用该方法处理页面的加载过程，请使用 Message 文件中的
             // InstallWorkpageContent 初始化界面组件，
             // InstallAccountData 初始化用户数据。
+            UploaDeclassifyDataClient = false;
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding","Config.xml");
+            //var fileName = Path.Combine(dirName, TheApp.Current.GetComponentConfigFileName());
+            if (File.Exists(fileName))
+            {
+                var cmp = Serializer.DeserializeFromXmlFile<WinComponent>(fileName);
+               if(cmp.Name.Contains(Constants.clientName)) {
+                    UploaDeclassifyDataClient = true;
+                }
+                
+            }
+          
             OnRefresh(obj);
         }
 

@@ -60,8 +60,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             string url = Constants.baseUrl+ Constants.Methold_CreateVectorDecTask;
             Dictionary<string,string>body=new Dictionary<string,string>();
             body.Add("dybm", args.ZoneCode);
-            body.Add("client_id", "CLIENT_12345");
-            body.Add("remarks", "测试");
+            //body.Add("client_id", "CLIENT_12345");
+            //body.Add("remarks", "测试");
             //var jsonData = JsonSerializer.Serialize(parms);
             var en = apiCaller.PostResultAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             if(en!=null)

@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Core\ApiCaller.cs" />
     <Compile Include="Core\AreaNodeRepeatCheck.cs" />
+    <Compile Include="Core\ClientEum.cs" />
     <Compile Include="Core\EncrypterSM.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\DecodingProfile.cs" />

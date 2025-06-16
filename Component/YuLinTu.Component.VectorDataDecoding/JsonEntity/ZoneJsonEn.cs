@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
 {
+    [Serializable]
     internal class ZoneJsonEn
     {
    

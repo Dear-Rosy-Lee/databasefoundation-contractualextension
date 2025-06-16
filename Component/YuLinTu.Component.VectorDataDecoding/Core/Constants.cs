@@ -34,5 +34,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_UpdateApprovalStatus = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/submit/approval";
         internal const string Methold_UpdateDownNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/pull/num";
         internal const int VectorDecodeSrid = 4490;
+
+        internal const string clientName = "测绘局";
     }
 }

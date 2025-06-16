@@ -89,24 +89,24 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 try
                 {
                  
-                    List<LandJsonEn> landJsonEntites=new List<LandJsonEn>();
-                    entityList.ForEach(land =>
-                    {
-                        //land.BatchCode= args.BatchCode;
-                        LandJsonEn jsonEn = new LandJsonEn();
-                        jsonEn.dybm = land.DKBM.Substring(0, 14);
-                        jsonEn.upload_batch_num = land.BatchCode;
-                        jsonEn.business_identification = land.DKBM;
-                        jsonEn.data_type = "1";
-                        jsonEn.original_geometry_data = land.Shape.AsText();
-                        jsonEn.original_geometry_data = EncrypterSM.EncryptSM4(jsonEn.original_geometry_data,Constants.Sm4Key);
-                        //数据加密
-                        landJsonEntites.Add(jsonEn);
+                    //List<LandJsonEn> landJsonEntites=new List<LandJsonEn>();
+                    //entityList.ForEach(land =>
+                    //{
+                    //    //land.BatchCode= args.BatchCode;
+                    //    LandJsonEn jsonEn = new LandJsonEn();
+                    //    jsonEn.dybm = land.DKBM.Substring(0, 14);
+                    //    jsonEn.upload_batch_num = land.BatchCode;
+                    //    jsonEn.business_identification = land.DKBM;
+                    //    jsonEn.data_type = "1";
+                    //    jsonEn.original_geometry_data = land.Shape.AsText();
+                    //    jsonEn.original_geometry_data = EncrypterSM.EncryptSM4(jsonEn.original_geometry_data,Constants.Sm4Key);
+                    //    //数据加密
+                    //    landJsonEntites.Add(jsonEn);
 
-                    });
+                    //});
                     
-                    var jsonData = JsonSerializer.Serialize(landJsonEntites);
-                    var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData,out bool sucess);
+                    //var jsonData = JsonSerializer.Serialize(landJsonEntites);
+                    var en = vectorService.UpLoadVectorDataPrimevalToSever(entityList, out bool isSucess);// apiCaller.PostDataAsync(url, AppHeaders, jsonData,out bool sucess);
                     //数据上传至服务器
                     entityList.Clear();
                     progess += (dataIndex * 100 / datacount) ;

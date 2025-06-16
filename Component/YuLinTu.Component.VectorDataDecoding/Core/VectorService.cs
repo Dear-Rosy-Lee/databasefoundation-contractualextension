@@ -203,13 +203,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
      
 
-        public string UpdateDownLoadNum(string zoneCode, string batchCode = "")
+        public string UpdateDownLoadNum(string zoneCode,string type="1", string batchCode = "")
         {
             apiCaller.client = new HttpClient();
             string url = Constants.baseUrl + Constants.Methold_UpdateDownNum;
             Dictionary<string, string> parms = new Dictionary<string, string>();
 
             parms.Add("dybm", zoneCode);
+            parms.Add("type", type);
             parms.Add("upload_batch_num", batchCode);
 
             var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms);

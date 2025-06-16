@@ -78,9 +78,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             while (true)
             {
                 pageIndex++;
-                if (endTag > count) break;
+       
               
                  var result = vectorService.DownLoadVectorDataPrimevalData(args.ZoneCode, pageIndex, pageSize);
+                if (endTag > count|| result.Count==0) break;
                 endTag = endTag+ result.Count;
                 foreach (var item in result)
                 {
@@ -113,7 +114,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 ExportToShape(shpFullPath, landEntites, dreproject);
             }
 
-            string message = vectorService.UpdateDownLoadNum(args.ZoneCode);
+            string message = vectorService.UpdateDownLoadNum(args.ZoneCode, "1");
             this.ReportInfomation(message);
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");

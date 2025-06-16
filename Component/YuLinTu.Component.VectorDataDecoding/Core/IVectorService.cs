@@ -31,6 +31,6 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         /// <param name="zoneCode"></param>
         /// <param name="batchCode">批次号为空表示该地域所有批次下的数据下载次数+1</param>
         /// <returns></returns>
-        string UpdateDownLoadNum(string zoneCode, string batchCode = "");
+        string UpdateDownLoadNum(string zoneCode, string type = "1",string batchCode = "");
     }
 }
