@@ -149,6 +149,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         /// </summary>
         public string DKMC { get; set; }
 
+        public string XZDYDM { get; set; }
         /// <summary>
         /// 承包方编码
         /// </summary>

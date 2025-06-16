@@ -437,6 +437,41 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
 
         }
+        public string GetResultMessageStringAsync(string url, Dictionary<string, string> Headers, Dictionary<string, string> Pramas, bool ingoreNameCase = false)
+        {
+
+            foreach (var kvp in Headers)
+            {
+                client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
+            }
+            var queryString = string.Join("&", Pramas.Select(p => $"{Uri.EscapeDataString(p.Key)}={Uri.EscapeDataString(p.Value)}"));
+            url = $"{url}?{queryString}";
+            try
+            {
+                HttpResponseMessage response = client.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                // 读取响应内容
+                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                {
+                    JsonElement root = doc.RootElement;
+                    JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("message");
+
+                    // 提取并解析 results 字段的内容
+                    string resultsJson = data.ToString();
+
+                    // 再次解析 results 字符串为 JSON 对象
+                    return resultsJson;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
 
         public List<T> GetResultListAsync<T>(string url, Dictionary<string, string> Headers, Dictionary<string, string>Pramas,bool ingoreNameCase=false) where T : class, new()
         {

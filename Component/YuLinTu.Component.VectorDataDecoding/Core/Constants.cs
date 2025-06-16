@@ -21,13 +21,18 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
         internal const string appKeyVaule = "2tlb6nii0VYncW6Gq/AKDWSO8JU9Kj39e64syJUfy3tMVVUmaYqjYA==";
 
-        internal const string Sm4Key = "efd4a17e7c2a89ea";//5a9d9a283fe03ae1";
+        internal const string Sm4Key = "efd4a17e7c2a89ea5a9d9a283fe03ae1";//"efd4a17e7c2a89ea";//5a9d9a283fe03ae1";
+        //internal const int Sm4Key_16 = #efd4a17e7c2a89ea5a9d9a283fe03ae1;
 
         internal const string Methold_CreateVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/add";
         internal const string Methold_QueryVectorDecTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/paging";
         internal const string Methold_unclassified = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/download/unclassified";
+        internal const string Methold_decryption = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/download/decryption";
         internal const string Methold_upload = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/upload";
         internal const string Methold_upload_decryption = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/upload/decryption";
+        internal const string Methold_StaticsLand = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/unclassified/statistics/dybm";
+        internal const string Methold_UpdateApprovalStatus = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/submit/approval";
+        internal const string Methold_UpdateDownNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/pull/num";
         internal const int VectorDecodeSrid = 4490;
     }
 }

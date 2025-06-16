@@ -60,6 +60,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
         private bool autoComprass;
+
+        [Enabled(false)]
+        public string zoneCode;
         #endregion
 
         #region Ctor

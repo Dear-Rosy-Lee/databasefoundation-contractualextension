@@ -62,7 +62,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         }
         private int? landCount;
 
-        [DisplayLanguage("处理结果文件夹路径", IsLanguageName = false)]
+        [DisplayLanguage("待脱密数据存放文件夹", IsLanguageName = false)]
         [DescriptionLanguage("存放待脱密原始数据文件夹的路径", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
@@ -78,22 +78,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         }
         private string resultFilePath;
 
-        [DisplayLanguage("提示说明", IsLanguageName = false)]
-        [DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
-        [WatermaskLanguage("对数据进行初步检查并提示")]
-        public string Info
-        {
-            get { return _Info; }
-            set
-            {
-                _Info = value;
-                NotifyPropertyChanged("Info");
-            }
-        }
-
-        private string _Info;
+      
 
 
         #region Ctor

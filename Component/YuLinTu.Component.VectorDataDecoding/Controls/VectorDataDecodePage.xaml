@@ -41,7 +41,7 @@
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/添加文件32.png"
                                            Text="创建任务" />
                     </ylt:MetroButton>
-                    <ylt:MetroButton Padding="4,2,4,2"
+                    <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
                                      Command="{Binding CommandRefresh}">
@@ -56,7 +56,7 @@
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/blue-document-text.png"
                                            Text="任务信息" />
-                    </ylt:MetroButton>
+                    </ylt:MetroButton>-->
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                     
@@ -99,7 +99,7 @@
                                            Text="下载已脱密数据" />
                     </ylt:MetroButton>-->
 
-                    <ylt:SuperButton  Padding="4,2,4,2"
+                    <ylt:SuperButton Style="{StaticResource sbtn-rb-v}" 
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
                                      ImagePosition="Top"
@@ -271,14 +271,14 @@
                                             <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
                                                 <TextBlock VerticalAlignment="Center"      HorizontalAlignment="Left"
                                                                    Margin="3,0,0,0"
-                                                                                                             Text="{Binding UplaodTime}"></TextBlock>
+                                                                                                             Text="{Binding UplaodTime, StringFormat={}{0:yyyy年MM月dd日 hh:mm tt}}"></TextBlock>
                                             </DataTemplate>
                                             <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
                                                 <StackPanel Orientation="Horizontal"
                                                             Margin="3,3">
                                                    <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center"     HorizontalAlignment="Center"
-                                                               Text="{Binding UplaodTime}"></TextBlock>
+                                                               Text="{Binding UplaodTime, StringFormat={}{0:yyyy年MM月dd日 hh:mm tt}}"></TextBlock>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ContentControl.Resources>

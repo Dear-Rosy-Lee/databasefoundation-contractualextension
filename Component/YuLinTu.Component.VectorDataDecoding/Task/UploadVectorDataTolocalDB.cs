@@ -55,12 +55,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
-
+            if (args.ShapeFilePath.IsNullOrEmpty())
+            {
+                this.ReportError("请选择脱密数据存放路径！");
+                return;
+            }
+            if(args.CheckPass==false)
+            {
+                this.ReportError("数据未通过检查！");
+                return;
+            }
             // TODO : 任务的逻辑实现
             ReadeData(args);
 
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
+            DbContext.Dispose();
         }
 
         private void ReadeData(UploadVectorDataTolocalDBArgument argument)
@@ -84,13 +94,15 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
             List<SpaceLandEntity> entities = new List<SpaceLandEntity>();
             int step = 300;int tag = 0;
-           var filedata=  CommitFileInformationData(argument);
+            var filedata = CreateFileInformationData(argument); //CommitFileInformationData(argument);
+            var fileZocode=new List<string>();
             foreach (var entity in landShapeList)
             {
                 SpaceLandEntity en=new SpaceLandEntity();
                 en.CBFBM = entity.CBFBM;
                 en.DKBM = entity.DKBM;
                 en.DKMC=entity.DKMC;
+                en.XZDYDM = en.DKBM.Substring(0, 14);
                 en.BatchCode = argument.BatchCode;
                 en.FileID = filedata.FileID;
                 var ygeo = entity.Shape as YuLinTu.Spatial.Geometry;
@@ -99,11 +111,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 tag++;
                 if (tag==300)
                 {
-                    CommitData(entities);
+                    var zone = entities.Select(t => t.XZDYDM).Distinct().ToList();
+                    fileZocode.AddRange(zone);
+                    CommitData<SpaceLandEntity>(entities);
+                 
                 }
             }
-            CommitData(entities);
-        
+            if (entities.Count > 0)
+            {
+                var zone = entities.Select(t => t.XZDYDM).Distinct().ToList();
+                fileZocode.AddRange(zone);
+                CommitData<SpaceLandEntity>(entities);
+               
+            }
+            filedata.ZoneCode=string.Join(",", fileZocode.Distinct().ToList());
+            CommitData<VectorDecodeMode>(new List<VectorDecodeMode> { filedata });
+
         }
 
         private void CommitData(List<SpaceLandEntity> entities)
@@ -116,6 +139,20 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 qc.Add(t).Save();
             }
             DbContext.CommitTransaction();
+           
+            entities.Clear();
+        }
+        private void CommitData<T>(List<T> entities)
+        {
+            if (entities.Count == 0) return;
+            DbContext.BeginTransaction();
+            var qc = DbContext.CreateQuery<T>();
+            foreach (var t in entities)
+            {
+                qc.Add(t).Save();
+            }
+            DbContext.CommitTransaction();
+
             entities.Clear();
         }
         private VectorDecodeMode CommitFileInformationData(UploadVectorDataTolocalDBArgument arg)
@@ -134,6 +171,20 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             DbContext.CommitTransaction();
             return item;
         }
+        private VectorDecodeMode CreateFileInformationData(UploadVectorDataTolocalDBArgument arg)
+        {
+            var item = new VectorDecodeMode();
+            item.FileID = Guid.NewGuid();
+            item.ShapeFileName = Path.GetFileName(arg.ShapeFilePath);
+            item.DataCount = (arg.LandCount).Value;
+            item.UplaodTime = DateTime.Now;
+            item.FilePath = arg.ShapeFilePath;
+            item.BatchCode = arg.BatchCode;
+
+          
+            return item;
+        }
+
 
         /// <summary>
         /// 获取标签值

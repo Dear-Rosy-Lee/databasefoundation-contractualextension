@@ -23,6 +23,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         private string baseUrl = Constants.baseUrl;
         private Dictionary<string, string> AppHeaders;
         private string methold = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/upload";
+        internal IVectorService vectorService { get; set; }
         #endregion
 
         #region Fields
@@ -54,7 +55,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
-
+            vectorService=new VectorService();
             // TODO : 任务的逻辑实现
             //读取数据  分页读取
             var query = DbContext.CreateQuery<SpaceLandEntity>().Where(t => t.BatchCode.Equals(args.BatchCode));
@@ -110,6 +111,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     entityList.Clear();
                     progess += (dataIndex * 100 / datacount) ;
                     this.ReportProgress(progess, "已送审数据条数："+dataIndex);
+                  
+                    this.ReportInfomation("已送审数据条数：" + dataIndex);
+                  
                 }
                 catch (Exception ex)
                 {
@@ -121,6 +125,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
 
             }
+            string message = vectorService.UpdateUpdateApprovalStatus(args.BatchCode);
+            this.ReportInfomation(message);
             //加密
             apiCaller.client.Dispose();
             //上传到服务器

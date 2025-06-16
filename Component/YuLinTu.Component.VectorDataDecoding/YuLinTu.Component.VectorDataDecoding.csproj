@@ -258,6 +258,7 @@
     <Compile Include="Entrance.cs" />
     <Compile Include="JsonEntity\BatchTaskJsonEn.cs" />
     <Compile Include="JsonEntity\LandJsonEn.cs" />
+    <Compile Include="JsonEntity\StaticsLandJsonEn.cs" />
     <Compile Include="JsonEntity\ZoneJsonEn.cs" />
     <Compile Include="Model\VectorDecodeBatchModel.cs" />
     <Compile Include="Model\VectorDecodeMode.cs" />

@@ -51,6 +51,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
+            if (args.ResultFilePath.IsNullOrEmpty())
+            {
+                this.ReportError("请选择脱密数据存放路径！");
+                return;
+            }
 
             // TODO : 任务的逻辑实现
             int count = 10000; int endTag = 0;
@@ -99,7 +104,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 shpFullPath = Path.Combine(args.ResultFilePath, shpfileName);
                 ExportToShape(shpFullPath, landEntites, dreproject);
             }
-            if(args.AutoComprass)
+            string message = vectorService.UpdateDownLoadNum(args.zoneCode,args.BatchCode);
+            this.ReportInfomation(message);
+            if (args.AutoComprass)
             {
                  
             }

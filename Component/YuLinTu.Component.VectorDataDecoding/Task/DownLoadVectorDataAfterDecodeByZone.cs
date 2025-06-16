@@ -52,11 +52,17 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
+            if (args.ResultFilePath.IsNullOrEmpty())
+            {
+                this.ReportError("请选择脱密数据存放路径！");
+                return;
+            }
             base.OnGo();
             // TODO : 任务的逻辑实现
             //vectorService = new VectorService();
             // TODO : 任务的逻辑实现
-            int count = 10000; int endTag = 0;
+            int count = vectorService.StaticsLandByZoneCode(args.ZoneCode).ytm; 
+            int endTag = 0;
             int pageSize = 200; int shpLandCountLimit = 5000; int shpIndex = 0;
             int pageIndex = 0; int dataIndex = 0;
             int progess = 0;
@@ -69,9 +75,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             while (true)
             {
                 pageIndex++;
-                endTag = pageIndex * pageSize;
-                var result = vectorService.DownLoadVectorDataAfterDecodelData(args.ZoneCode, pageIndex, pageSize,string.Empty);
-                if (endTag > count || result.Count == 0) break;
+                if (endTag > count ) break;             
+                var result = vectorService.DownLoadVectorDataAfterDecodelData(args.ZoneCode, pageIndex, pageSize,string.Empty);             
+                endTag = endTag+ result.Count;
                 foreach (var item in result)
                 {
                     var attributes = CreateAttributesSimple(item);
@@ -101,7 +107,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 ExportToShape(shpFullPath, landEntites, dreproject);
                 
             }
-           
+            string message= vectorService.UpdateDownLoadNum(args.ZoneCode);
+            this.ReportInfomation(message);
             if (args.AutoComprass)
             {
 

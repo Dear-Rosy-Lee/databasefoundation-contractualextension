@@ -102,7 +102,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         {
             apiCaller.client = new HttpClient();
             List<SpaceLandEntity> landJsonEntites = new List<SpaceLandEntity>();
-            string url = Constants.baseUrl + Constants.Methold_unclassified;
+            string url = Constants.baseUrl + Constants.Methold_decryption;
 
 
             Dictionary<string, object> body = new Dictionary<string, object>();
@@ -121,7 +121,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                     land.DKBM = item.business_identification;
                     land.CBFBM = item.business_identification_owner;
                     land.BatchCode = item.upload_batch_num;
-                    var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key) + "#4490";//这个地方等佳佳接口写好了要改成脱密后数据
+                    var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key) + "#4490";//这个地方等佳佳接口写好了要改成脱密后数据
 
                     land.Shape = YuLinTu.Spatial.Geometry.FromString(shapeText);
                     landJsonEntites.Add(land);
@@ -175,7 +175,46 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return en;
         }
 
+        public StaticsLandJsonEn StaticsLandByZoneCode(string zoneCode, string batchCode = "")
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_StaticsLand;
+            Dictionary<string, string> body = new Dictionary<string, string>();
+            body.Add("dybm", zoneCode);
+            body.Add("upload_batch_num", batchCode); 
+            var jsonData = JsonSerializer.Serialize(body);
+            var en = apiCaller.PostResultAsync<StaticsLandJsonEn>(url, AppHeaders, jsonData);
+            return en;
+        }
+
+ 
+
+        public string UpdateUpdateApprovalStatus(string batchCode)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpdateApprovalStatus;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+
+            parms.Add("upload_batch_num", batchCode);
+          
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms);
+            return message;
+        }
+
      
+
+        public string UpdateDownLoadNum(string zoneCode, string batchCode = "")
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpdateDownNum;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+
+            parms.Add("dybm", zoneCode);
+            parms.Add("upload_batch_num", batchCode);
+
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms);
+            return message;
+        }
     }
 }
 

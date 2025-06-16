@@ -493,7 +493,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanDownLoadVectorDataAfterDecodeByZone(object args)
         {
-
+            if (CurrentZone != null && CurrentZone.Level > ZoneLevel.Town) return false;
             return true;
         }
 
@@ -526,7 +526,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             var arg = new DownloadDecodeVectorDataByBatchCodeArgument();
 
             arg.BatchCode= (SelectedItem as VectorDecodeMode).BatchCode;
-
+            arg.zoneCode = CurrentZone.FullCode;
 
 
 

@@ -25,25 +25,42 @@ public static class EncrypterSM
     /// <param name="mode">加密模式：ECB/CBC</param>
     /// <param name="padding">填充方式：PKCS7/None</param>
     /// <returns>Base64编码的密文</returns>
-    public static string EncryptSM4(string plainText, string keyText, byte[] iv = null)
+    public static string EncryptSM4(string plainText, string keyText,bool keyIsHexstring=true, byte[] iv = null)
     {
         if (string.IsNullOrEmpty(plainText))
             return null;
         if (iv == null) iv = IV;
         byte[] data = Encoding.UTF8.GetBytes(plainText);
-        byte[] key = Encoding.UTF8.GetBytes(keyText);
+        byte[] key;
+        if (keyIsHexstring)
+        {
+            key = HexStringStringToBytes(keyText);
+        }
+        else
+        {
+            key = Encoding.UTF8.GetBytes(keyText);
+        }
         byte[] encrypted = Encrypt(data, key, iv);
         return Convert.ToBase64String(encrypted);
     }
 
 
-    public static string DecryptSM4(string encryptedText, string keyText, byte[] iv = null)
+    public static string DecryptSM4(string encryptedText, string keyText,bool keyIsHexstring=true, byte[] iv = null)
     {
         if (string.IsNullOrEmpty(encryptedText))
             return null;
         if (iv == null) iv = IV;
+     
         byte[] data = Convert.FromBase64String(encryptedText); //Encoding.UTF8.GetBytes(encryptedText);
-        byte[] key = Encoding.UTF8.GetBytes(keyText);
+        byte[] key;
+        if (keyIsHexstring)
+        {
+            key = HexStringStringToBytes(keyText);
+        }
+        else
+        {
+            key = Encoding.UTF8.GetBytes(keyText);
+        }
         byte[] encrypted = Decrypt(data, key, iv);
         return Encoding.UTF8.GetString(encrypted);
     }
@@ -99,5 +116,17 @@ public static class EncrypterSM
         byte[] result = new byte[bytesProcessed];
         Array.Copy(output, result, bytesProcessed);
         return result;
+    }
+
+    public static byte[] HexStringStringToBytes(string hexString)
+    {
+      //  string hexString = "efd4a17e7c2a89ea5a9d9a283fe03ae1";
+        byte[] bytes = new byte[hexString.Length / 2];
+
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+        }
+        return bytes;
     }
 }
