@@ -184,7 +184,7 @@ namespace YuLinTu.Component.Account.Services
                 if (!region.IsNullOrEmpty())
                 {
                     AppGlobalSettings.Current[Parameters.RegionName] = region;
-                    CommonSettingDefine.Instance.CurrentZoneCode = "512022"; //region;//导航树的根地域、具有权限的地域
+                    //CommonSettingDefine.Instance.CurrentZoneCode = "51";//region;//导航树的根地域、具有权限的地域
                    
                 }
                 //Parameters.Region = region;

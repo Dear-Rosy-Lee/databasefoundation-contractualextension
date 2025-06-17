@@ -58,7 +58,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
 
             // TODO : 任务的逻辑实现
-            int count = vectorService.StaticsLandByZoneCode(args.zoneCode, args.BatchCode).ytm; ;
+            int count = vectorService.StaticsLandByZoneCode(args.zoneCode, args.BatchCode).ytm;
+            if (count == 0)
+            {
+                this.ReportWarn($"批次号：{args.BatchCode}下未查询到已脱密数据！");
+                return;
+            }
             int endTag = 0;
             int pageSize = 200; int shpLandCountLimit = 5000; int shpIndex = 0;
             int pageIndex = 0; int dataIndex = 0;

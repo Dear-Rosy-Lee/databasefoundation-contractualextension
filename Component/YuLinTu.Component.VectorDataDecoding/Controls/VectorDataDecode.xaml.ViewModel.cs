@@ -127,29 +127,32 @@ namespace YuLinTu.Component.VectorDataDecoding
         [MessageHandler(ID = IdMsg.Refresh)]
         private void OnRefresh(object args)
         {
-          
-            Items.Clear();
-           
 
+            var page = Workpage.Page.Content as Page;
+            Items.Clear();
             Workpage.Page.IsBusy = true;
             IsRefreshing = true;
-
-            //为了提示加载进度，获取到工作页的实例，这种写法有违背 MVVM 的嫌疑，
-            //但这里为了方便，提示进度的代码允许这样写，其余功能不允许这样写。
-            var page = Workpage.Page.Content as Page;
-            page.RaiseProgressBegin();
-
             tq.Do(go =>
             {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
+                
+
+
+                //Workpage.Page.IsBusy = true;
+                //IsRefreshing = true;
+
+                //为了提示加载进度，获取到工作页的实例，这种写法有违背 MVVM 的嫌疑，
+                //但这里为了方便，提示进度的代码允许这样写，其余功能不允许这样写。
+           
+                page.RaiseProgressBegin();
+                //System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                //{
                    
                     if(CurrentZone!=null) {
                         var list = vectorService.QueryBatchTask(CurrentZone.FullCode);
                         go.Instance.Argument.UserState = list;
                     }
                  
-                });
+                //});
                 
 
             }, completed =>
@@ -233,8 +236,8 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
 
                 //OnRefresh(args);
-
-                Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
+                OnRefresh(null);
+                //Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
 
 
 
@@ -534,7 +537,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanDownLoadVectorDataAfterDecodeByBatch(object args)
         {
-            if (SelectedItem == null || !(SelectedItem is VectorDecodeMode)) return false;
+            if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
             return true;
         }
 

@@ -14,7 +14,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string appidName = "t-open-api-app-id";
 
         internal const string appidVaule = "2d954f1f39d04ea5be07d7b67d6c1ad7";
-
+        internal const string moduleUniqueKey = "9A75153E-E8E3-4219-A3D3-3670CAB204E9";
 
         internal const string appKeyName = "t-open-api-app-key";
         //以下配置应登录账号后获取，目前先硬编码写死
@@ -36,5 +36,6 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const int VectorDecodeSrid = 4490;
 
         internal const string clientName = "测绘局";
+        internal static List<string> ZonesCodes = new List<string>();
     }
 }
