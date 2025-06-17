@@ -235,8 +235,11 @@ namespace YuLinTu.Component.VectorDataDecoding
             task.Completed += new TaskCompletedEventHandler((o, t) =>
             {
 
-                //OnRefresh(args);
-                OnRefresh(null);
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    //OnRefresh(args);
+                    OnRefresh(null);
+                });
                 //Workpage.Workspace.Message.Send(this, new RefreshEventArgs(IdMsg.Refresh));
 
 

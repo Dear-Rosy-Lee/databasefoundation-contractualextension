@@ -80,7 +80,7 @@
                                      Command="{Binding CommandUploadVectorDataToSeverTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                        Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
-                                           Text="开始脱密" />
+                                           Text="数据送审" />
                     </ylt:MetroButton>
                     <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"

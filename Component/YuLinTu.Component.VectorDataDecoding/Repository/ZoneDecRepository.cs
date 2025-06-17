@@ -110,9 +110,6 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
             }
             ApiCaller apiCaller = new ApiCaller();
             apiCaller.client = new HttpClient();         
-            //Dictionary<string, string> parms = new Dictionary<string, string>();
-            //parms.Add("code", zoneCode);
-            //var en = apiCaller.GetResultListAsync<ZoneJsonEn>(url, AppHeaders, parms);
            var jsondata= JsonSerializer.Serialize(Constants.ZonesCodes);
             var en = apiCaller.PostResultListAsync2<ZoneJsonEn>(url, AppHeaders, jsondata);
 

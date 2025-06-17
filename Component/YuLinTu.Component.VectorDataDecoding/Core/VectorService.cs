@@ -87,7 +87,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                         land.DKBM = item.business_identification;
                         land.CBFBM = item.business_identification_owner;
                         land.BatchCode = item.upload_batch_num;
-                        var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key)+"#4490";
+                        var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key)+"#4490";
                 
                         land.Shape= YuLinTu.Spatial.Geometry.FromString(shapeText);
                     landJsonEntites.Add(land);
@@ -134,6 +134,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         public string UpLoadVectorDataPrimevalToSever(List<SpaceLandEntity> Data, out bool isSucess)
         {
             isSucess = false;
+            apiCaller.client = new HttpClient();
             string url = baseUrl + Constants.Methold_upload;
             List<LandJsonEn> landJsonEntites = new List<LandJsonEn>();
             Data.ForEach(land =>
