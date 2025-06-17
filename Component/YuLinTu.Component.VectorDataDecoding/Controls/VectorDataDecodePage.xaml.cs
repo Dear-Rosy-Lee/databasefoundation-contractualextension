@@ -28,9 +28,9 @@ namespace YuLinTu.Component.VectorDataDecoding
         IsLanguageName = false,
         Name = "矢量数据脱密",
         Description = "空间数据脱密插件",
-        Category = "Page Category",
-        Icon = "pack://application:,,,/YuLinTu.Resources;component/Images/16/Document.png",
-        Image = "pack://application:,,,/YuLinTu.Resources;component/Images/78/Information78.png",
+        Category = "工具",
+        Icon = "pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/矢量数据脱密工具16.png",
+        Image = "pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/矢量数据脱密工具78.png",
         IsNeedAuthenticated = false)]
     [ViewModel(typeof(VectorDataDecodeViewModel))]
     public partial class VectorDataDecodePage : YuLinTu.Appwork.Page, INavigatableExtend

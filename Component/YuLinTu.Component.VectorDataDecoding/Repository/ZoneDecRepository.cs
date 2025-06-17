@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
@@ -19,6 +20,7 @@ using YuLinTu.DF.DependencyInjection;
 using YuLinTu.DF.Repositories;
 using YuLinTu.DF.Zones;
 using YuLinTu.Spatial;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace YuLinTu.Component.VectorDataDecoding.Repository
 {
@@ -98,16 +100,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
             string url = string.Empty;
              if(options== eLevelOption.SelfAndSubs)
             {
-                url = baseUrl + "stackcloud/api/open/api/xzdy/children/tree/include/self";
-            }else if(options == eLevelOption.Self)
+                url = baseUrl + Constants.Methold_children_filter + "?code=" + zoneCode;
+                // url = baseUrl + "stackcloud/api/open/api/xzdy/children/tree/include/self";
+            }
+            else if(options == eLevelOption.Self)
             {
-                url = baseUrl + "/stackcloud/api/open/api/xzdy/children";
+                // url = baseUrl + "/stackcloud/api/open/api/xzdy/children";
+                url = baseUrl + Constants.Methold_children_filter + "?code=" + zoneCode;
             }
             ApiCaller apiCaller = new ApiCaller();
             apiCaller.client = new HttpClient();         
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            parms.Add("code", zoneCode);
-            var en = apiCaller.GetResultListAsync<ZoneJsonEn>(url, AppHeaders, parms);
+            //Dictionary<string, string> parms = new Dictionary<string, string>();
+            //parms.Add("code", zoneCode);
+            //var en = apiCaller.GetResultListAsync<ZoneJsonEn>(url, AppHeaders, parms);
+           var jsondata= JsonSerializer.Serialize(Constants.ZonesCodes);
+            var en = apiCaller.PostResultListAsync2<ZoneJsonEn>(url, AppHeaders, jsondata);
+
             var zones = mapper.Map<List<ZoneJsonEn>, List<XZQH_XZDY>>(en).ToList();
             return zones;
         }

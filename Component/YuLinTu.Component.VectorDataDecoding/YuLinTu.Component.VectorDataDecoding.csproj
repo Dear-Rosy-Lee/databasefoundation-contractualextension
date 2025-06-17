@@ -315,6 +315,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml" />
+    <Resource Include="Resources\矢量数据脱密工具78.png" />
+    <Resource Include="Resources\矢量数据脱密工具16.png" />
     <Resource Include="Resources\上传数据.png" />
     <Resource Include="Resources\下载原始数据.png" />
     <Resource Include="Resources\下载已脱密.png" />
