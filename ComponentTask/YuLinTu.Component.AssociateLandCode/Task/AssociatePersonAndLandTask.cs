@@ -202,11 +202,29 @@ namespace YuLinTu.Component.AssociateLandCode
                     var oldLands = new List<ContractLand>();//原地块
                     foreach (var oldz in zonecodelist)
                     {
-                        oldVps.AddRange(vpOldStation.GetByZoneCode(oldz, eLevelOption.Self));//获取原承包方
-                        oldLands.AddRange(landOldStation.GetCollection(oldz, eLevelOption.Self));//获取原地块 
+                        var tvps = vpOldStation.GetByZoneCode(oldz, eLevelOption.Self);//获取原承包方
+                        var tlds = landOldStation.GetCollection(oldz, eLevelOption.Self);//获取原地块 
+                        if (oldz == sd.ZoneCode)
+                        {
+                            var tnp = nvps[0];
+                            var top = tvps.Find(t => t.FamilyNumber == tnp.FamilyNumber || t.ZoneCode == tnp.ZoneCode);
+                            if (top != null)
+                            {
+                                this.ReportError($"挂接原库中未找到户号为{tnp.FamilyNumber}、地域编码为{tnp.ZoneCode}的农户");
+                            }
+                            else
+                            {
+                                if (!CheckVirtualPersonIsSame(tnp, top))
+                                {
+                                    this.ReportError($"户号为{tnp.FamilyNumber}的承包方在新旧数据库中不是同一个，请确认新数据是否重新编码？请确保新编码未占用旧编码！");
+                                }
+                            }
+                        }
+                        oldVps.AddRange(tvps);
+                        oldLands.AddRange(tlds);//获取原地块 
                     }
                     //var ovps = vps.FindAll(t => zonecodelist.Contains(t.ZoneCode));//旧承包方
-                    var lstvps = ExecuteUpdateVp(sd, nvps, oldVps, relationZones, deloldvps);
+                    var lstvps = ExecuteUpdateVp(sd, nvps, oldVps,/* relationZones,*/ deloldvps);
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
                     nlds.ForEach(l => l.OldLandNumber = "");
@@ -543,6 +561,7 @@ namespace YuLinTu.Component.AssociateLandCode
             File.WriteAllText(folderPath, "检查结果记录:\n");
             return folderPath;
         }
+
         public void WriteLog(string path, string mes)
         {
             IEnumerable<string> stringCollection = new[] { mes };
@@ -553,7 +572,7 @@ namespace YuLinTu.Component.AssociateLandCode
         /// 进行承包方数据关联
         /// </summary>
         private List<VirtualPerson> ExecuteUpdateVp(CollectivityTissue sender, List<VirtualPerson> vps, List<VirtualPerson> oldVps,
-            List<RelationZone> relationZones, List<VirtualPerson_Del> deloldvps)
+            /*List<RelationZone> relationZones, */List<VirtualPerson_Del> deloldvps)
         {
             var listVps = new List<VirtualPerson>();
             var receslist = new HashSet<Guid>();
@@ -717,6 +736,10 @@ namespace YuLinTu.Component.AssociateLandCode
             }
         }
 
+        /// <summary>
+        /// 参数检查
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateArgs()
         {
             var args = Argument as AssociatePersonAndLandArgument;
@@ -747,9 +770,45 @@ namespace YuLinTu.Component.AssociateLandCode
             return true;
         }
 
+        /// <summary>
+        /// 检查两个承包方是否一致
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckVirtualPersonIsSame(VirtualPerson nvp, VirtualPerson ovp)
+        {
+            bool exist = false;
+            if (nvp == null || ovp == null)
+            {
+                return exist;
+            }
+            var npersons = nvp.SharePersonList;
+            var opersons = ovp.SharePersonList;
+
+            foreach (var np in npersons)
+            {
+                if (opersons.Any(f => f.Name == np.Name || f.ICN == np.ICN))
+                {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist)
+            {
+                foreach (var np in opersons)
+                {
+                    if (npersons.Any(f => f.Name == np.Name || f.ICN == np.ICN))
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+
+            }
+            return exist;
+        }
+
         #endregion Method - Private - Pro
 
         #endregion Methods
-
     }
 }
