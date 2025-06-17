@@ -118,6 +118,15 @@ namespace YuLinTu.Component.AssociateLandCode
 
             //TO获取关联的发包方表 
             var zrlist = GetRelationZoneFromFile(argument.RelationExcelFilePath);
+            var grouplist = zrlist.GroupBy(t => t.OldZoneCode).Where(w => w.Count() > 1).ToList();
+            if (grouplist.Count > 0)
+            {
+                foreach (var zr in grouplist)
+                {
+                    this.ReportError($"旧地域{zr.Key}中无法挂接到多个新地域,程序无法自动处理，请手动处理数据！");
+                }
+                return false;
+            }
 
             //TO清空删除数据的记录表
             var vpdquery = dbContext.CreateQuery<VirtualPerson_Del>();
