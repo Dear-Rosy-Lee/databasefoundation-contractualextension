@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Windows.Interop;
@@ -18,6 +19,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
       UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         [WatermaskLanguage("请选择脱密数据文件夹路径")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
         public string ResultFilePath
         {
             get { return resultFilePath; }
@@ -35,7 +37,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         private string resultFilePath;
         [DisplayLanguage("数据量", IsLanguageName = false)]
         [DescriptionLanguage("矢量文件个数及地块总数量", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
 
         public string DataCount
@@ -51,7 +53,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         [DisplayLanguage("数据信息", IsLanguageName = false)]
         [DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBoxCustom),
           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
         [WatermaskLanguage("对数据进行初步检查并提示")]
         public string CheckInfo

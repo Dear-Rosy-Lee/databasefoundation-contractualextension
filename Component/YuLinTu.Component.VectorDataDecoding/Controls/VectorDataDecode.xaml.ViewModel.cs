@@ -550,7 +550,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             var task = new DownloadDecodeVectorDataByBatchCode();
             var arg = new DownloadDecodeVectorDataByBatchCodeArgument();
 
-            arg.BatchCode= (SelectedItem as VectorDecodeMode).BatchCode;
+            arg.BatchCode= (SelectedItem as VectorDecodeBatchModel).BatchCode;
             arg.zoneCode = CurrentZone.FullCode;
 
 

@@ -47,6 +47,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
         [WatermaskLanguage("请选择.shp矢量文件路径")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
         public string ShapeFilePath
         {
             get { return shapeFilePath; }

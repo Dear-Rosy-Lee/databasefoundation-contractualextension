@@ -63,7 +63,7 @@
                                      Command="{Binding CommandStartSingleTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/Shape32.png"
-                                           Text="上传矢量"  />
+                                           Text="加载矢量"  />
                     </ylt:MetroButton>
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
@@ -271,14 +271,14 @@
                                             <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
                                                 <TextBlock VerticalAlignment="Center"      HorizontalAlignment="Left"
                                                                    Margin="3,0,0,0"
-                                                                                                             Text="{Binding UplaodTime, StringFormat={}{0:yyyy年MM月dd日 hh:mm tt}}"></TextBlock>
+                                                                                                             Text="{Binding UplaodTime, StringFormat={}{0:yyyy-MM-dd- hh:mm:ss}}"></TextBlock>
                                             </DataTemplate>
                                             <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
                                                 <StackPanel Orientation="Horizontal"
                                                             Margin="3,3">
                                                    <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center"     HorizontalAlignment="Center"
-                                                               Text="{Binding UplaodTime, StringFormat={}{0:yyyy年MM月dd日 hh:mm tt}}"></TextBlock>
+                                                               Text="{Binding UplaodTime, StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}"></TextBlock>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ContentControl.Resources>

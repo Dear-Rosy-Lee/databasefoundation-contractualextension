@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,7 +16,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         #region Properties
         [DisplayLanguage("处理批次编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次号", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
             UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
 
         public string BatchCode
@@ -34,6 +35,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
      UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         [WatermaskLanguage("请在线加密数据存放文件夹")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
         public string ResultFilePath
         {
             get { return resultFilePath; }

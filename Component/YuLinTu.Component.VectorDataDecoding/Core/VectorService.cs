@@ -170,6 +170,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 var geoText = land.Shape.AsText();
                 geoText = EncrypterSM.EncryptSM4(geoText, Constants.Sm4Key);
                 body.Add("desensitized_geometry", geoText);
+                uplaodList.Add(body);
             }
             var jsonData = JsonSerializer.Serialize(uplaodList);
             var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out isSucess);

@@ -109,7 +109,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     var en = vectorService.UpLoadVectorDataPrimevalToSever(entityList, out bool isSucess);// apiCaller.PostDataAsync(url, AppHeaders, jsonData,out bool sucess);
                     //数据上传至服务器
                     entityList.Clear();
-                    progess += (dataIndex * 100 / datacount) ;
+                    progess = (dataIndex * 100 / datacount) ;
                     this.ReportProgress(progess, "已送审数据条数："+dataIndex);
                   
                     this.ReportInfomation("已送审数据条数：" + dataIndex);

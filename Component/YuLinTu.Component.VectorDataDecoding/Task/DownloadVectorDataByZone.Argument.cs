@@ -13,8 +13,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         [DisplayLanguage("地域名称", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域名称", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
 
         public string ZoneName
         {
@@ -32,8 +32,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         [DisplayLanguage("地域编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域编码", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
 
         public string ZoneCode
         {
@@ -48,7 +48,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         [DisplayLanguage("未脱密地块数量", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据地块数量", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
          UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
       
         public int? LandCount

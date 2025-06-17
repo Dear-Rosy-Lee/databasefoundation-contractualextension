@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using YuLinTu.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding
@@ -109,5 +111,73 @@ namespace YuLinTu.Component.VectorDataDecoding
         }
 
         #endregion Methods
+    }
+
+    public class PropertyDescriptorBuilderReadOnlyTextBoxCustom : PropertyDescriptorBuilder
+    {
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke((Action)delegate
+            {
+                int maxLength = int.MaxValue;
+                PropertyInfo property = defaultValue.Object.GetType().GetProperty(defaultValue.Name);
+                DataColumnAttribute attribute = property.GetAttribute<DataColumnAttribute>();
+                if (attribute != null)
+                {
+                    maxLength = ((attribute.Size <= 0) ? int.MaxValue : (attribute.Size / 2));
+                }
+
+                Binding binding = new Binding("Value")
+                {
+                    Source = defaultValue
+                };
+                MetroTextBox metroTextBox = new MetroTextBox();
+                metroTextBox.MaxLength = maxLength;
+                metroTextBox.Watermask = defaultValue.Watermask;
+                metroTextBox.PaddingWatermask = new Thickness(5.0, 0.0, 0.0, 0.0);
+                metroTextBox.IsReadOnly = true;
+                metroTextBox.BorderThickness = new Thickness(1.0);
+                metroTextBox.SetBinding(TextBox.TextProperty, binding);
+                metroTextBox.SetBinding(FrameworkElement.ToolTipProperty, binding);
+                defaultValue.Designer = metroTextBox;
+            }, new object[0]);
+            return defaultValue;
+        }
+    }
+
+    public class PropertyDescriptorBuilderMultiLineReadOnlyTextBoxCustom : PropertyDescriptorBuilder
+    {
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke((Action)delegate
+            {
+                int maxLength = int.MaxValue;
+                PropertyInfo property = defaultValue.Object.GetType().GetProperty(defaultValue.Name);
+                DataColumnAttribute attribute = property.GetAttribute<DataColumnAttribute>();
+                if (attribute != null)
+                {
+                    maxLength = ((attribute.Size <= 0) ? int.MaxValue : (attribute.Size / 2));
+                }
+
+                Binding binding = new Binding("Value")
+                {
+                    Source = defaultValue
+                };
+                MetroTextBox metroTextBox = new MetroTextBox();
+                metroTextBox.AcceptsReturn = true;
+                metroTextBox.MinHeight = 100.0;
+                metroTextBox.MaxHeight = 300.0;
+                metroTextBox.MaxLength = maxLength;
+                metroTextBox.Watermask = defaultValue.Watermask;
+                metroTextBox.PaddingWatermask = new Thickness(5.0, 0.0, 0.0, 0.0);
+                metroTextBox.VerticalContentAlignment = VerticalAlignment.Stretch;
+                metroTextBox.IsReadOnly = true;
+                metroTextBox.BorderThickness = new Thickness(1.0);
+                metroTextBox.SetBinding(TextBox.TextProperty, binding);
+                metroTextBox.SetBinding(FrameworkElement.ToolTipProperty, binding);
+                defaultValue.Designer = metroTextBox;
+            }, new object[0]);
+            return defaultValue;
+        }
     }
 }
