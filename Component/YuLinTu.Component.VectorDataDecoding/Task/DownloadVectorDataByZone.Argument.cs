@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using YuLinTu;
@@ -67,6 +68,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
         [WatermaskLanguage("请选择待脱密数据存放文件夹")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
         public string ResultFilePath
         {
             get { return resultFilePath; }
