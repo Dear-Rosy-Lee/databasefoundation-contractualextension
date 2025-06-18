@@ -169,7 +169,7 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      
-                                     Command="{Binding CommandDownloadVectorDataByZoneTask}">
+                                     >
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/information.png"
                                            Text="使用说明" />
