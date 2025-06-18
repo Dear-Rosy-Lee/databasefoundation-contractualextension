@@ -110,7 +110,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
             else
             {
-                throw new Exception("未获授权");
+                //throw new Exception("未获授权");
             }
 
 

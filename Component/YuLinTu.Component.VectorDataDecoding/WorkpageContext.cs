@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using YuLinTu.Appwork;
+using YuLinTu.Component.VectorDataDecoding.Core;
+using YuLinTu.DF.Common;
 using YuLinTu.DF.Component.Mvvm;
-
+using YuLinTu.Security;
+using YuLinTu.Security.Online;
 using YuLinTu.Windows;
 
 namespace YuLinTu.Component.VectorDataDecoding
@@ -10,6 +16,7 @@ namespace YuLinTu.Component.VectorDataDecoding
     {
         public WorkpageContext(IWorkpage workpage) : base(workpage)
         {
+            
         }
 
         protected override void OnWorkspaceMessageReceived(object sender, MsgEventArgs e)
@@ -26,6 +33,6 @@ namespace YuLinTu.Component.VectorDataDecoding
         {
             return TheApp.Current.GetIsAuthenticated();
         }
-
+       
     }
 }

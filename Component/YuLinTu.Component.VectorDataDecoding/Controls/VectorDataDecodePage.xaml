@@ -17,10 +17,10 @@
 
     <ylt:ClassicLayout>
         
-        <ylt:ClassicLayout.Toolbar>
+        <ylt:ClassicLayout.Toolbar >
 
             <DockPanel LastChildFill="False"
-                       TextElement.FontSize="12" >
+                       TextElement.FontSize="12" IsEnabled="{Binding }" >
 
                 <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0"  >
                     <ylt:MetroButton Padding="4,2,4,2"

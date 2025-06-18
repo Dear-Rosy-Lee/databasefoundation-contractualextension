@@ -31,7 +31,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         Category = "工具",
         Icon = "pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/矢量数据脱密工具16.png",
         Image = "pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/矢量数据脱密工具78.png",
-        IsNeedAuthenticated = false)]
+        IsNeedAuthenticated = true)]
     [ViewModel(typeof(VectorDataDecodeViewModel))]
     public partial class VectorDataDecodePage : YuLinTu.Appwork.Page, INavigatableExtend
     {
