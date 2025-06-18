@@ -16,7 +16,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
     /// <summary>
     /// 地块矢量上传接入任务
     /// </summary>
-    [TaskDescriptor(IsLanguageName = false, Name = "上传接入地块图斑",
+    [TaskDescriptor(IsLanguageName = false, Name = "接入地块图斑上传",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/map--arrow.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/map.png")]
     public class VectorDataLinkageTask : Task

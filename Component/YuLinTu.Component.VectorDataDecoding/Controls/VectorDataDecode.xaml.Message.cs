@@ -47,7 +47,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             Workpage.Page.ShowMessageBox(new TabMessageBoxDialog
             {
                 Header = "责任说明",
-                Message = " 1.‌测绘资质和资格‌：使用该软件应该具备从事测绘活动必须相应的测绘资质和资格。了解测绘活动应当遵守的国家规定的的要求，执行国家规定的测绘技术规范和标准‌\r\n\r\n‌2.保密要求‌：使用改软件处理地理信息相关数据，必须严格遵守保密规定。任何单位和个人处理地理信息数据时，应当遵守法律法规和相关保密规定，不得危害国家安全，不得泄露国家秘密‌\r\n\r\n3.‌数据管理和使用‌：涉密测绘成果的使用和管理必须严格遵守相关规定。处理数据应不超过25平方千米‌,未经批准，成果不得对外提供。",
+                Message = " 1.‌测绘资质和资格‌：使用该软件应该具备从事测绘活动必须相应的测绘资质和资格。了解测绘活动应当遵守的国家规定的的要求，执行国家规定的测绘技术规范和标准。‌\r\n\r\n‌2.保密要求‌：使用该软件处理地理信息相关数据，必须严格遵守保密规定。任何单位和个人处理地理信息数据时，应当遵守法律法规和相关保密规定，不得危害国家安全，不得泄露国家秘密‌。\r\n\r\n3.‌数据管理和使用‌：涉密测绘成果的使用和管理必须严格遵守相关规定。本软件处理数据范围不超过25平方千米‌,且未经批准成果不得对外提供。",
                 MessageGrade = eMessageGrade.Warn,
                 CancelButtonVisibility = Visibility.Collapsed,
                 ConfirmButtonVisibility = Visibility.Visible,
