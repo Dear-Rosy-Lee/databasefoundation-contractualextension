@@ -386,6 +386,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanUploadVectorDataToSeverTask(object args)
         {
             if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
+            if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
             return true;
         }
 
@@ -558,6 +559,37 @@ namespace YuLinTu.Component.VectorDataDecoding
             ShowCreateTaskWindow(task, arg);
 
         }
+
+        #region Methods - System
+
+
+
+        #endregion
+
+        #endregion
+
+        #region Commands - OpenHelpChm
+
+        public DelegateCommand CommandOpenHelpChm { get { return _CommandOpenHelpChm ?? (_CommandOpenHelpChm = new DelegateCommand(args => OnCanOpenHelpChm(args), args => OnCanDownloadVectorDataByZoneTask(args))); } }
+        private DelegateCommand _CommandOpenHelpChm;
+
+        private bool OnCanOpenHelpChm(object args)
+        {
+
+            return true;
+        }
+
+        private void OnCommandOpenHelpChm(object args)
+        {
+
+            var helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Help.chm");
+            if (File.Exists(helpFilePath))
+            {
+                System.Diagnostics.Process.Start(helpFilePath);
+            }
+
+        }
+
 
         #region Methods - System
 

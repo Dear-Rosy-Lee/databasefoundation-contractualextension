@@ -104,7 +104,7 @@
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
                                      ImagePosition="Top"
                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载已脱密.png"
-                                     Content="下载脱密数据">
+                                     Content="下载矢量数据">
                         <ylt:SuperButton.DropDownMenu>
                             <ContextMenu>
                                 <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByZone}">
@@ -116,7 +116,7 @@
                                             <TextBlock FontWeight="Bold"
                                                        Text="按地域下载"></TextBlock>
                                             <TextBlock Margin="0,2,0,0"
-                                                       Text="按所选地域下载已脱密矢量数据"></TextBlock>
+                                                       Text="按所选地域下载矢量数据"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -130,7 +130,7 @@
                                             <TextBlock FontWeight="Bold"
                                                        Text="按批次下载"></TextBlock>
                                             <TextBlock Margin="0,2,0,0"
-                                                       Text="按所选批次下载已脱密矢量数据"></TextBlock>
+                                                       Text="按所选批次下载矢量数据"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -168,7 +168,7 @@
                 <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
-                                     
+                                     Command="{Binding CommandOpenHelpChm}"
                                      >
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/information.png"
