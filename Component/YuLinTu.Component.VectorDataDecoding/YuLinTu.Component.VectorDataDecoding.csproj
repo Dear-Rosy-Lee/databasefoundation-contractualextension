@@ -301,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="HelpDocment\空间匹配工具使用说明.pdf" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +363,8 @@
     <PostBuildEvent>SET StartupProjectPath="Worker\..\Workspace\"
 md "$(SolutionDir)%25StartupProjectPath%25Components\$(TargetName)\Binary\"
 copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)%25StartupProjectPath%25Components\$(TargetName)\Binary\"
-if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(SolutionDir)%25StartupProjectPath%25Components\$(TargetName)\"</PostBuildEvent>
+if exist "$(ProjectDir)Config.xml" copy /Y "$(ProjectDir)Config.xml" "$(SolutionDir)%25StartupProjectPath%25Components\$(TargetName)\"
+if exist "$(ProjectDir)\HelpDocment\空间匹配工具使用说明.pdf"  copy /Y "$(ProjectDir)\HelpDocment\空间匹配工具使用说明.pdf"   "$(SolutionDir)%25StartupProjectPath%25Components\$(TargetName)\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\..\packages\Fody.6.6.4\build\Fody.targets')" />
   <Import Project="..\..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets" Condition="Exists('..\..\packages\YuLinTu.Components.Ultilities.6.8.8.1\build\YuLinTu.Components.Ultilities.targets')" />

@@ -570,7 +570,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         #region Commands - OpenHelpChm
 
-        public DelegateCommand CommandOpenHelpChm { get { return _CommandOpenHelpChm ?? (_CommandOpenHelpChm = new DelegateCommand(args => OnCanOpenHelpChm(args), args => OnCanDownloadVectorDataByZoneTask(args))); } }
+        public DelegateCommand CommandOpenHelpChm { get { return _CommandOpenHelpChm ?? (_CommandOpenHelpChm = new DelegateCommand(args => OnCommandOpenHelpChm(args), args => OnCanOpenHelpChm(args))); } }
         private DelegateCommand _CommandOpenHelpChm;
 
         private bool OnCanOpenHelpChm(object args)
@@ -581,8 +581,9 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private void OnCommandOpenHelpChm(object args)
         {
+            string helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding", Constants.HelpFileName);
 
-            var helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Help.chm");
+            //var helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Help.chm");
             if (File.Exists(helpFilePath))
             {
                 System.Diagnostics.Process.Start(helpFilePath);
