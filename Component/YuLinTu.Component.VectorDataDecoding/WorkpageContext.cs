@@ -22,7 +22,10 @@ namespace YuLinTu.Component.VectorDataDecoding
             //        break;
             //}
         }
+        protected override bool NeedHandleMessage()
+        {
+            return TheApp.Current.GetIsAuthenticated();
+        }
 
-      
     }
 }
