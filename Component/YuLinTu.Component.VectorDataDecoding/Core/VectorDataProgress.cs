@@ -121,24 +121,24 @@ namespace YuLinTu.Component.VectorDataDecoding
                 var index = shp.FindField(info.Name);
                 switch (info.Name)
                 {
-                    case "CBFBM":
-                        if (index == -1)
-                        {
-                            err = "shp文件未包含CBFBM字段；";
-                        }
-                        break;
+                    //case "CBFBM":
+                    //    if (index == -1)
+                    //    {
+                    //        err = "shp文件未包含CBFBM字段；";
+                    //    }
+                    //    break;
                     case "DKBM":
                         if (index == -1)
                         {
                             err += "shp文件未包含DKBM字段；";
                         }
                         break;
-                    case "QQDKBM":
-                        if (index == -1)
-                        {
-                            err += "shp文件未包含QQDKBM字段；";
-                        }
-                        break;
+                    //case "QQDKBM":
+                    //    if (index == -1)
+                    //    {
+                    //        err += "shp文件未包含QQDKBM字段；";
+                    //    }
+                    //    break;
                     case "Shape":
                         //if (index == -1)
                         //{
