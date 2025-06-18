@@ -165,6 +165,18 @@
                     </ylt:MetroButton>
                   
                 </ylt:TabControlItemRibbonContainer>
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandDownloadVectorDataByZoneTask}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载原始数据.png"
+                                           Text="使用说明" />
+                    </ylt:MetroButton>
+                   
+
+                </ylt:TabControlItemRibbonContainer>
             </DockPanel>
         </ylt:ClassicLayout.Toolbar>
         <Grid>
