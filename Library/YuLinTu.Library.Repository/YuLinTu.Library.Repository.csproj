@@ -187,6 +187,8 @@
     <Compile Include="Repository\SurveyForm\ISurveyFormRepository.cs" />
     <Compile Include="Repository\SurveyForm\SurveyFormRepository.cs" />
     <Compile Include="Repository\TableVirtualPerson\ITableVirtualPersonRepository.cs" />
+    <Compile Include="Repository\VirtualPersonDelete\IVirtualPersonDeleteRepository.cs" />
+    <Compile Include="Repository\VirtualPersonDelete\VirtualPersonDeleteRepository.cs" />
     <Compile Include="Repository\VirtualPerson\IVirtualPersonRepository.cs" />
     <Compile Include="Repository\WoodVirtualPerson\IWoodVirtualPersonRepository.cs" />
     <Compile Include="Repository\XZDW\IXZDWRepository.cs" />

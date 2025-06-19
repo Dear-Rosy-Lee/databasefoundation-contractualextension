@@ -308,7 +308,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandLevelNull, command.LandLevelNull, command.LandLevelNullBind);
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
-            //SetCommandBinding(mbtnExportAllDelayTable, command.ExportAllDelayTable, command.ExportAllDelayTableBind);
+            SetCommandBinding(mbtnExportAllDelayTable, command.ExportAllDelayTable, command.ExportAllDelayTableBind);
             SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
             //SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);

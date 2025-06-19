@@ -8,9 +8,8 @@ using YuLinTu.Library.Entity;
 
 namespace YuLinTu.Library.Repository
 {
-    public interface IContractLandDeleteRepository : IRepository<ContractLand_Del>
+    public interface IVirtualPersonDeleteRepository : IRepository<VirtualPerson_Del>
     {
-
         /// <summary>
         /// 删除当前地域下所有数据
         /// </summary>
@@ -19,8 +18,11 @@ namespace YuLinTu.Library.Repository
         /// <returns>-1（参数错误）/0（失败）/1（成功）</returns>
         int DeleteByZoneCode(string zoneCode, eLevelOption levelOption);
 
-
-        List<ContractLand_Del> GetDelLandByZone(string zoneCode);
-
+        /// <summary>
+        /// 根据地域代码及其查找
+        /// </summary>
+        /// <param name="zoneCode">地域代码</param>
+        /// <param name="searchOption">查找类型</param>
+        List<VirtualPerson_Del> GetByZoneCode(string zoneCode, eSearchOption searchOption);
     }
 }

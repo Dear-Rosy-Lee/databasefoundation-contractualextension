@@ -169,6 +169,7 @@ namespace YuLinTu.Library.Business
                 
                 if(GetString(allItem[2, 35]) == "原地域名称" && GetString(allItem[2, 36]) == "地块变化情况")
                 {
+                    isSpecialForm = true;
                     SurveyFormList = new List<SurveyForm>();
                     for (int index = calIndex; index < rangeCount; index++)
                     {
@@ -196,13 +197,19 @@ namespace YuLinTu.Library.Business
                                 var expand = landFamily.CurrentFamily.FamilyExpand;
                                 expand.ChangeComment = change;
                                 landFamily.CurrentFamily.FamilyExpand = expand;
+                                landFamily.DelLandCollection = new List<ContractLand_Del>();
+                                landFamily.DelPersons = new List<Person>();
                                 AddLandFamily(landFamily);
                                 InitalizeFamilyInformation(landFamily, vps);
                                 surveyForm.OldZoneName = oldZoneName;
                                 var bhqk = listBHQK.FirstOrDefault(t => t.Name == change);
-                                surveyForm.ChangeSituation = (eBHQK)Enum.Parse(typeof(eBHQK), bhqk.Code);
+                                if (bhqk != null)
+                                {
+                                    surveyForm.ChangeSituation = (eBHQK)Enum.Parse(typeof(eBHQK), bhqk.Code);
+                                }
                                 GetSurveyFormInformation(landFamily, surveyForm);
                                 SurveyFormList.Add(surveyForm);
+                                
                                 concordIndex++;
                             }
 
@@ -211,6 +218,7 @@ namespace YuLinTu.Library.Business
                                 ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
                                 continue;
                             }
+                            
                             //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
                             AddPerson(landFamily);
                             surveyForm.SharePersonList = landFamily.CurrentFamily.SharePersonList;
@@ -252,6 +260,8 @@ namespace YuLinTu.Library.Business
                                 var expand = landFamily.CurrentFamily.FamilyExpand;
                                 expand.ChangeComment = change;
                                 landFamily.CurrentFamily.FamilyExpand = expand;
+                                landFamily.DelLandCollection = new List<ContractLand_Del>();
+                                landFamily.DelPersons = new List<Person>();
                                 AddLandFamily(landFamily);
                                 InitalizeFamilyInformation(landFamily, vps);
                                 concordIndex++;
@@ -511,12 +521,85 @@ namespace YuLinTu.Library.Business
                     entity.ZoneName = CurrentZone.FullName;
                     if (isSpecialForm)
                     {
+                        entity.OldZoneName = GetString(allItem[currentIndex, 35]);
                         entity.LandChange = GetString(allItem[currentIndex, 36]);
+                        landFamily.CurrentFamily.FamilyExpand.Description = entity.OldZoneName;
                     }
                     landFamily.LandCollection.Add(entity);
                 }
             }
-            
+            else
+            {
+                var landNumber = GetString(allItem[currentIndex, 16]);
+                if (landNumber != "")
+                {
+                    var entity = contractLands.Where(x => x.LandNumber == landNumber).FirstOrDefault();
+                    if (entity == null)
+                    {
+                        if (contractLands.Count > 0)
+                        {
+                            entity = contractLands[0].Clone() as ContractLand;
+                            entity.ID = Guid.NewGuid();
+                            entity.ConcordId = null;
+                            entity.Shape = null;
+                            entity.ActualArea = 0;
+                            entity.LandNumber = landNumber;
+                        }
+                        else
+                        {
+                            entity = new ContractLand() { LandNumber = landNumber };
+                        }
+                    }
+                    else
+                    {
+                        entity.ConcordId = null;
+                        entity.Shape = null;
+                        entity.ActualArea = 0;
+                        entity.LandNumber = landNumber;
+                    }
+                    entity.Name = GetString(allItem[currentIndex, 15]);
+                    entity.OwnRightType = GetString(allItem[currentIndex, 17]);
+                    entity.LandCategory = GetString(allItem[currentIndex, 18]);
+                    entity.LandCode = GetString(allItem[currentIndex, 19]);
+                    var dj = GetString(allItem[currentIndex, 20]);
+                    var yt = GetString(allItem[currentIndex, 21]);
+                    entity.LandLevel = listDLDJ.Find(c => c.Name == dj || c.Code == dj)?.Code;
+                    entity.Purpose = listTDYT.Find(c => c.Name == yt || c.Code == yt)?.Code;
+                    entity.LandCategory = listDKLB.Find(c => c.Name == entity.LandCategory || c.Code == entity.LandCategory)?.Code;
+                    entity.LandCode = listDKLYLX.Find(c => c.Name == entity.LandCode || c.Code == entity.LandCode)?.Code;
+                    entity.IsFarmerLand = (GetString(allItem[currentIndex, 22]) == "是") ? true : false;
+                    try
+                    {
+                        entity.TableArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 23])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 23]));
+                        entity.AwareArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 24])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 24]));
+                        entity.ActualArea = string.IsNullOrEmpty(GetString(allItem[currentIndex, 26])) ? 0 : Convert.ToDouble(GetString(allItem[currentIndex, 26]));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"处理地块面积时错误,{ex.Message}");
+                    }
+                    entity.NeighborEast = GetString(allItem[currentIndex, 28]);
+                    entity.NeighborSouth = GetString(allItem[currentIndex, 29]);
+                    entity.NeighborWest = GetString(allItem[currentIndex, 30]);
+                    entity.NeighborNorth = GetString(allItem[currentIndex, 31]);
+                    entity.Comment = GetString(allItem[currentIndex, 32]);
+
+                    entity.OwnerName = landFamily.CurrentFamily.Name;
+                    entity.OwnerId = landFamily.CurrentFamily.ID;
+                    entity.ZoneCode = CurrentZone.FullCode;
+                    entity.ZoneName = CurrentZone.FullName;
+                    if (isSpecialForm)
+                    {
+                        entity.OldZoneName = GetString(allItem[currentIndex, 35]);
+                        entity.LandChange = GetString(allItem[currentIndex, 36]);
+                        landFamily.CurrentFamily.FamilyExpand.Description = entity.OldZoneName;
+                    }
+                    var delLand = ContractLand_Del.ChangeDataEntity(CurrentZone.FullCode,entity);
+                    landFamily.DelLandCollection.Add(delLand);
+                }
+
+            }
         }
 
         private bool AddPerson(LandFamily landFamily)
@@ -606,10 +689,11 @@ namespace YuLinTu.Library.Business
                    ?? landFamily.CurrentFamily.SharePersonList.FirstOrDefault(t => t.Name == person.Name);
                 if (oldPerson != null)
                 {
-                    //不做处理
+                    landFamily.DelPersons.Add(person);
                 }
                 else
                 {
+                    landFamily.DelPersons.Add(person);
                     AddWarnMessage($"未找到删除承包方{landFamily.CurrentFamily.Name}的家庭成员{person.Name}");
                 }
             }

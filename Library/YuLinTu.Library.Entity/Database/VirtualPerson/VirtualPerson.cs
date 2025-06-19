@@ -533,6 +533,31 @@ namespace YuLinTu.Library.Entity
             return string.Concat(Name, Number, ZoneCode);
         }
 
+        public static VirtualPerson ChangeDataEntity(string zoneCode, VirtualPerson_Del delvp, string fnum = "")
+        {
+            var data = new VirtualPerson()
+            {
+                ID = delvp.ID,
+                Name = delvp.Name,
+                Number = delvp.Number,
+                SharePerson = delvp.SharePerson,
+                Address = delvp.Address,
+                ZoneCode = delvp.ZoneCode,
+                VirtualType = delvp.VirtualType,
+                CardType = delvp.CardType,
+                Telephone = delvp.Telephone,
+                PostalNumber = delvp.PostalNumber,
+                FamilyNumber = delvp.FamilyNumber,
+                PersonCount = delvp.PersonCount,
+                OtherInfomation = delvp.OtherInfomation,
+                Comment = delvp.Comment,
+                SharePersonList = delvp.SharePersonList,
+                OldVirtualCode = delvp.OldVirtualCode,
+                FamilyExpand = delvp.FamilyExpand
+            };
+            return data;
+        }
+
         #endregion
     }
 }

@@ -1218,7 +1218,7 @@
                         Text="空间查看"
                         ToolTip="查看承包地块空间形状与位置" />
                 </metro:MetroButton>
-                <!--<metro:MetroButton
+                <metro:MetroButton
                     x:Name="mbtnExportAllDelayTable"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -1228,7 +1228,7 @@
                         ImagePosition="Top"
                         Text="导出统计表"
                         ToolTip="一键导出试点工作统计表" />
-                </metro:MetroButton>-->
+                </metro:MetroButton>
                 <metro:MetroButton
                     x:Name="mbtnDataQuality"
                     Padding="4,2,4,2"

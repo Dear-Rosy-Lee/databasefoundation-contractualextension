@@ -384,6 +384,18 @@
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
+      <UpdateField>
+        <FieldName>YDYMC</FieldName>
+        <FieldType>TEXT</FieldType>
+        <IsNull>true</IsNull>
+        <IsAdd>true</IsAdd>
+      </UpdateField>
+      <UpdateField>
+        <FieldName>DKBHQK</FieldName>
+        <FieldType>TEXT</FieldType>
+        <IsNull>true</IsNull>
+        <IsAdd>true</IsAdd>
+      </UpdateField>
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>
@@ -444,6 +456,18 @@
 	<UpgradeDatabase>
 		<TableName>ZD_CBD</TableName>
 		<FieldList>
+      <UpdateField>
+        <FieldName>YDYMC</FieldName>
+        <FieldType>TEXT</FieldType>
+        <IsNull>true</IsNull>
+        <IsAdd>true</IsAdd>
+      </UpdateField>
+      <UpdateField>
+        <FieldName>DKBHQK</FieldName>
+        <FieldType>TEXT</FieldType>
+        <IsNull>true</IsNull>
+        <IsAdd>true</IsAdd>
+      </UpdateField>
 			<UpdateField>
 				<FieldName>GYMJ</FieldName>
 				<FieldType>TEXT</FieldType>

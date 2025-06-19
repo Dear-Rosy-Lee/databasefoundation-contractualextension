@@ -472,6 +472,8 @@ namespace YuLinTu.Library.WorkStation
         int AddDelLand(ContractLand_Del contractLand_Del);
 
         List<ContractLand_Del> GetDelLandByZone(string zoneCode);
+        
+        int DeleteDelLandByZoneCode(string zoneCode, eLevelOption levelOption);
 
         /// <summary>
         /// 根据承包方id集合获取承包地块集合

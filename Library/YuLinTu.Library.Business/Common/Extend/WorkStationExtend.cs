@@ -115,6 +115,27 @@ namespace YuLinTu.Library.Business
 
         #endregion
 
+        #region 承包方删除表
+
+        /// <summary>
+        /// 创建承包方删除表WorkStation
+        /// </summary>
+        public static IVirtualPersonDeleteWorkStation CreateVirtualPersonDeleteStation(this IDbContext db)
+        {
+            if (db == null)
+            {
+                return null;
+            }
+            ContainerFactory factory = new ContainerFactory(db);
+            var repVirtualPersonDelete = factory.CreateRepository<IVirtualPersonDeleteRepository>();
+
+            IVirtualPersonDeleteWorkStation station = factory.CreateWorkstation<IVirtualPersonDeleteWorkStation>(new ParameterOverride("rep", repVirtualPersonDelete));
+
+            return station;
+        }
+
+        #endregion
+
         #region 地域
 
         /// <summary>

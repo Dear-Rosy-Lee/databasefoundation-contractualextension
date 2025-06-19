@@ -146,6 +146,8 @@ namespace YuLinTu.Library.Business
                 var landStation = DbContext.CreateContractLandWorkstation();
                 var concordStation = DbContext.CreateConcordStation();
                 var surveyStation = DbContext.CreateSurveyFormStation();
+                var contractLandStation = DbContext.CreateContractLandWorkstation();
+                var vpDelStation = DbContext.CreateVirtualPersonDeleteStation();
                 remainVps = personStation.GetByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 remainLands = landStation.GetCollection(CurrentZone.FullCode, eLevelOption.Self);
                 DeleteAllLandDataByZone(ContractBusinessSettingDefine.ClearVirtualPersonData, ImportType);
@@ -168,39 +170,65 @@ namespace YuLinTu.Library.Business
                     {
                         surveyFormList.ForEach(x => { surveyStation.Add(x); });
                     }
-                }
-                    foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
+                    var DelLandList = new List<ContractLand_Del>();
+                    landInfo.LandFamilyCollection.ForEach(t => { DelLandList.AddRange(t.DelLandCollection); });
+                    if(DelLandList.Count != 0)
                     {
-                   
-                        landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
-                        foreach (var ld in landFamily.LandCollection)
+                        DelLandList.ForEach(x => { contractLandStation.AddDelLand(x); });
+                    }
+                    var DelVpList = new List<VirtualPerson_Del>();
+                    foreach(var item in landInfo.LandFamilyCollection)
+                    {
+                        if (item.DelPersons.Count != 0)
                         {
-                            var yld = remainLands.Find(t => t.LandNumber == ld.LandNumber);
-                            if (yld != null)
-                            {
-                                ld.Shape = yld.Shape;
-                                ld.OwnRightType = yld.OwnRightType;
-                                ld.LandExpand = yld.LandExpand;
-                            }
-                            else
-                            {
-                                Log.Log.WriteError(this, "ImportLandEntity", $"未在数据中找到{ld.LandNumber}的图形");
-                            }
+                            var vpDel = new VirtualPerson();
+                            vpDel = item.CurrentFamily;
+                            vpDel.SharePerson = string.Empty;
+                            vpDel.SharePersonList = item.DelPersons;
+                            var res = VirtualPerson_Del.ChangeDataEntity(CurrentZone.FullCode, vpDel);
+                            DelVpList.Add(res);
+                            item.CurrentFamily.SharePersonList = item.Persons;
                         }
-
-                        personStation.Add(landFamily.CurrentFamily);
-                        if (ImportType != eImportTypes.Over)//只更新承包方
+                        
+                    }
+                    
+                    if (DelVpList.Count != 0)
+                    {
+                        DelVpList.ForEach(x => { vpDelStation.Add(x); });
+                    }
+                }
+                foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
+                {
+                   
+                    landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
+                    foreach (var ld in landFamily.LandCollection)
+                    {
+                        var yld = remainLands.Find(t => t.LandNumber == ld.LandNumber);
+                        if (yld != null)
                         {
-                            ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
+                            ld.Shape = yld.Shape;
+                            ld.OwnRightType = yld.OwnRightType;
+                            ld.LandExpand = yld.LandExpand;
                         }
                         else
                         {
-                            landBusiness.Update(landFamily.CurrentFamily.ID, landFamily.CurrentFamily.Name);
+                            Log.Log.WriteError(this, "ImportLandEntity", $"未在数据中找到{ld.LandNumber}的图形");
                         }
-                        familyIndex++;
-                        string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
-                        toolProgress.DynamicProgress(info);
                     }
+
+                    personStation.Add(landFamily.CurrentFamily);
+                    if (ImportType != eImportTypes.Over)//只更新承包方
+                    {
+                        ImportLandFamily(landFamily, familyIndex);        //导入承包地、承包方
+                    }
+                    else
+                    {
+                        landBusiness.Update(landFamily.CurrentFamily.ID, landFamily.CurrentFamily.Name);
+                    }
+                    familyIndex++;
+                    string info = string.Format("导入承包方{0}", landFamily.CurrentFamily.Name);
+                    toolProgress.DynamicProgress(info);
+                }
                 //if (familyCount == landInfo.LandFamilyCollection.Count)
                 //{
                 this.ReportInfomation(string.Format("{0}表中共有{1}户承包方数据,成功导入{2}户承包方记录、{3}条共有人记录、{4}宗地块记录!", ExcelName, landInfo.LandFamilyCollection.Count, landInfo.LandFamilyCollection.Count, personCount, landCount));
@@ -498,6 +526,7 @@ namespace YuLinTu.Library.Business
             var dotStation = DbContext.CreateBoundaryAddressDotWorkStation();
             var coilStation = DbContext.CreateBoundaryAddressCoilWorkStation();
             var surveyStation = DbContext.CreateSurveyFormStation();
+            var vpDelStation = DbContext.CreateVirtualPersonDeleteStation();
             if (vpClear)
                 personStation.DeleteByZoneCode(CurrentZone.FullCode, eVirtualPersonStatus.Right, eLevelOption.Self);
 
@@ -507,6 +536,9 @@ namespace YuLinTu.Library.Business
                 dotStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
                 coilStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             }
+
+            landStation.DeleteDelLandByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
+            vpDelStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             concordStation.DeleteOtherByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             bookStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);
             surveyStation.DeleteByZoneCode(CurrentZone.FullCode, eLevelOption.Self);

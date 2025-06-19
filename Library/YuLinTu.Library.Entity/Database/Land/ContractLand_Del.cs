@@ -220,6 +220,18 @@ namespace YuLinTu.Library.Entity
             get; set;
         }
 
+        [DataColumn("YDYMC")]
+        public string YDYMC
+        {
+            get; set;
+        }
+
+        [DataColumn("DKBHQK")]
+        public string DKBHQK
+        {
+            get; set;
+        }
+
         #endregion Properties
 
         /// <summary>
@@ -248,7 +260,9 @@ namespace YuLinTu.Library.Entity
                 DLDJ = ld.LandLevel,
                 DKLB = ld.LandCategory,
                 CBFBM = fnum,
-                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + ""
+                SFJBNT = ld.IsFarmerLand == null ? "" : ld.IsFarmerLand + "",
+                YDYMC = ld.OldZoneName,
+                DKBHQK = ld.LandChange
             };
             return data;
         }
