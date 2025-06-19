@@ -15,7 +15,7 @@ namespace YuLinTu.Library.Entity
     [Serializable]
     public class VirtualPerson_Del : NotifyInfoCDObject  //(修改前)YltEntityIDName
     {
-        #region Filds
+        #region Fivps
 
         private Guid id;
         private string name;
@@ -31,8 +31,10 @@ namespace YuLinTu.Library.Entity
         private string personCount;
         private string otherInfomation; 
         private string comment;
-
         private List<Person> sharePersonList;
+        private string oldVirtualCode;
+        private VirtualPersonExpand expand;
+
         #endregion
 
         #region Properties
@@ -235,12 +237,12 @@ namespace YuLinTu.Library.Entity
         public string OldVirtualCode
         {
             get { return oldVirtualCode; }
-            set { oldVirtualCode = value; NotifyPropertyChanged("OldVirtualCode"); }
+            set { oldVirtualCode = value; NotifyPropertyChanged("OvpVirtualCode"); }
         }
-        private string oldVirtualCode;
+        
 
         #endregion
-        private VirtualPersonExpand expand;
+        
 
         /// <summary>
         /// 扩展实体
@@ -348,6 +350,34 @@ namespace YuLinTu.Library.Entity
         public override string ToString()
         {
             return string.Concat(Name, Number, ZoneCode);
+        }
+
+        /// <summary>
+        /// 转换对象
+        /// </summary> 
+        public static VirtualPerson_Del ChangeDataEntity(string zoneCode, VirtualPerson vp, string fnum = "")
+        {
+            var data = new VirtualPerson_Del()
+            {
+                ID = vp.ID,
+                Name = vp.Name,
+                Number = vp.Number,
+                SharePerson = vp.SharePerson,
+                Address = vp.Address,
+                ZoneCode = vp.ZoneCode,
+                VirtualType = vp.VirtualType,
+                CardType = vp.CardType,
+                Telephone = vp.Telephone,
+                PostalNumber = vp.PostalNumber,
+                FamilyNumber = vp.FamilyNumber,
+                PersonCount = vp.PersonCount,
+                OtherInfomation = vp.OtherInfomation,
+                Comment = vp.Comment,
+                SharePersonList = vp.SharePersonList,
+                OldVirtualCode = vp.OldVirtualCode,
+                FamilyExpand = vp.FamilyExpand
+            };
+            return data;
         }
 
         #endregion

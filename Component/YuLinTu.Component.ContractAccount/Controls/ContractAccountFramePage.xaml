@@ -1240,7 +1240,7 @@
                         Text="数据检查"
                         ToolTip="具备按标准规范对属性数据进行质量检查" />
                 </metro:MetroButton>
-                <!--<metro:MetroButton
+                <metro:MetroButton
                     x:Name="mbtnAdjustLand"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -1250,7 +1250,7 @@
                         ImagePosition="Top"
                         Text="调整地块"
                         ToolTip="调整地块" />
-                </metro:MetroButton>-->
+                </metro:MetroButton>
 
                 <metro:MetroButton
                     x:Name="mbtnUpdateData"

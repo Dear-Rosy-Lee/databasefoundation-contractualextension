@@ -260,6 +260,8 @@ namespace YuLinTu.Library.Entity
 
         private string landChange;
 
+        private string oldZoneName;
+
         #endregion Fields
 
         #region Properties
@@ -900,6 +902,20 @@ namespace YuLinTu.Library.Entity
             {
                 aliasNameB = value.TrimSafe();
                 NotifyPropertyChanged("AliasNameB");
+            }
+        }
+
+        /// <summary>
+        /// 原地域名称
+        /// </summary>
+        [DataColumn("YDYMC")]
+        public string OldZoneName
+        {
+            get { return oldZoneName; }
+            set
+            {
+                oldZoneName = value.TrimSafe();
+                NotifyPropertyChanged("OldZoneName");
             }
         }
 

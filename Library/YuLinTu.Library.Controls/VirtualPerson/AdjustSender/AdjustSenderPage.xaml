@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
     xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-    Width="1000"
+    Width="1400"
     Height="600"
     CloseButtonVisibility="Collapsed"
     Header="调整发包方"
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="750" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
         <!--  表头区域  -->
@@ -30,19 +30,21 @@
             <Grid Grid.Row="0" Margin="5,5,10,0">
                 <Grid.ColumnDefinitions>
                     <!--  勾选框  -->
+                    <ColumnDefinition Width="20" />
+                    <!--  全选  -->
                     <ColumnDefinition Width="70" />
                     <!--  户号  -->
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="100" />
                     <!--  名称  -->
-                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="150" />
                     <!--  证件号码  -->
-                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="225" />
                     <!--  成员数量  -->
-                    <ColumnDefinition Width="80" />
-                    <!--  地块数量  -->
                     <ColumnDefinition Width="125" />
+                    <!--  地块数量  -->
+                    <ColumnDefinition Width="175" />
                     <!--  发包方名称  -->
-                    <ColumnDefinition Width="145" />
+                    <ColumnDefinition Width="225" />
                 </Grid.ColumnDefinitions>
                 <CheckBox
                     Grid.Column="0"
@@ -51,39 +53,45 @@
                     Tag="{Binding}"
                     Unchecked="CheckBox_AllUnchecked" />
                 <TextBlock
-                    Grid.Column="0"
-                    Margin="20,0,0,0"
+                    Grid.Column="1"
+                    Margin="0,0,0,0"
                     FontWeight="Bold"
                     Text="全选" />
                 <!--  表头文本  -->
                 <TextBlock
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="户号" />
                 <TextBlock
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="名称" />
                 <TextBlock
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="证件号码" />
                 <TextBlock
-                    Grid.Column="4"
+                    Grid.Column="5"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="成员数量" />
                 <TextBlock
-                    Grid.Column="5"
+                    Grid.Column="6"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="地块数量" />
                 <TextBlock
-                    Grid.Column="6"
+                    Grid.Column="7"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="发包方名称" />
 
@@ -106,26 +114,28 @@
                         <!--  单个数据项的模板  -->
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="75" />
-                                <!--  复选框  -->
-                                <ColumnDefinition Width="65" />
+
+                                <!--  勾选框  -->
+                                <ColumnDefinition Width="97" />
                                 <!--  户号  -->
-                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="100" />
                                 <!--  名称  -->
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="150" />
                                 <!--  证件号码  -->
-                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="230" />
                                 <!--  成员数量  -->
-                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="113" />
                                 <!--  地块数量  -->
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="185" />
                                 <!--  发包方名称  -->
+                                <ColumnDefinition Width="225" />
+
                             </Grid.ColumnDefinitions>
 
                             <!--  底部边框线  -->
                             <Border
                                 Grid.ColumnSpan="7"
-                                Margin="0,5,0,0"
+                                Margin="0,5,-50,0"
                                 VerticalAlignment="Bottom"
                                 BorderBrush="LightGray"
                                 BorderThickness="0,0,0,1" />
@@ -143,26 +153,32 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Margin="0,5,0,8"
+                                HorizontalAlignment="Center"
                                 Text="{Binding HH}" />
                             <TextBlock
                                 Grid.Column="2"
-                                Margin="10,5,0,0"
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding MC}" />
                             <TextBlock
                                 Grid.Column="3"
-                                Margin="10,5,0,0"
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding ZJHM}" />
                             <TextBlock
                                 Grid.Column="4"
                                 Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding CYSL}" />
                             <TextBlock
                                 Grid.Column="5"
-                                Margin="10,5,0,0"
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding DKSL}" />
                             <TextBlock
                                 Grid.Column="6"
-                                Margin="40,5,0,0"
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding FBFMC}" />
                         </Grid>
                     </DataTemplate>

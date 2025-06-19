@@ -26,6 +26,7 @@ namespace YuLinTu.Library.Business
         private ContractConcord concord;
         private ContractRegeditBook regeditBook;
         private List<ContractLand> landCollection = new List<ContractLand>();//地块集合
+        private List<ContractLand_Del> delLandCollection = new List<ContractLand_Del>();//删除地块集合
 
         #endregion
 
@@ -152,6 +153,18 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public SecondTableLandCollection TableLandCollection { get; set; }
 
+        /// <summary>
+        /// 删除地块集合
+        /// </summary>
+        public List<ContractLand_Del> DelLandCollection
+        {
+            get { return delLandCollection; }
+            set { delLandCollection = value; }
+        }
+        /// <summary>
+        /// 删除人口集合
+        /// </summary>
+        public List<Person> DelPersons { get; set; }
         #endregion
 
         #region Ctor

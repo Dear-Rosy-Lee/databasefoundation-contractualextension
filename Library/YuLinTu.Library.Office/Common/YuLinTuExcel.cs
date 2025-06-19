@@ -596,7 +596,7 @@ namespace YuLinTu.Library.Office
             }
             if (!string.IsNullOrEmpty(EmptyReplacement))
             {
-                if (value == null || (value as string).Equals(""))
+                if (value == null || (value.ToString()).Equals(""))
                 {
                     cell.PutValue(EmptyReplacement);
                 }

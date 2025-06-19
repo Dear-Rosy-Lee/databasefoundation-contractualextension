@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YuLinTu.Data;
+using YuLinTu.Library.Business.ContractAccount.ExportAllDelayTable;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 using YuLinTu.Windows;
@@ -56,17 +57,35 @@ namespace YuLinTu.Library.Business
             zone = Arg.CurrentZone;
             try
             {
+                var tissueStation = dbContext.CreateCollectivityTissueWorkStation();
+                var tissue = tissueStation.GetByCode(zone.FullCode);
+                if (tissue == null)
+                {
+                    this.ReportProgress(100, null);
+                    this.ReportWarn(string.Format("{0}未获取发包方数据!", zone.FullName));
+                    return;
+                }
                 var surveyStation = dbContext.CreateSurveyFormStation();
+                var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                var vpDelStation = dbContext.CreateVirtualPersonDeleteStation();
                 var surveys = surveyStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
+                
                 if (surveys == null || surveys.Count == 0)
                 {
                     this.ReportProgress(100, null);
-                    this.ReportWarn(string.Format("{0}未获取承包方数据!", zone.FullName));
+                    this.ReportWarn(string.Format("{0}未获取地块数据!", zone.FullName));
                     return;
                 }
-                
+                var vps = vpStation.GetByZoneCode(zone.FullCode);
+                if (surveys == null || surveys.Count == 0)
+                {
+                    this.ReportProgress(100, null);
+                    this.ReportWarn(string.Format("{0}未获取承包方!", zone.FullName));
+                    return;
+                }
+                var vps_Del = vpDelStation.GetByZoneCode(zone.FullCode,eSearchOption.Precision);
                 //listLand.LandNumberFormat(SystemSetDefine);  //根据系统设置进行地块编码的截取
-                bool canOpen = ExportAllDelayTable(surveys);
+                bool canOpen = ExportAllDelayTable(surveys,vps,vps_Del,tissue);
                 if (canOpen)
                     CanOpenResult = true;
             }
@@ -82,7 +101,6 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public override void OpenResult()
         {
-            openFilePath = Arg.SaveFilePath;
             System.Diagnostics.Process.Start(openFilePath);
             base.OpenResult();
         }
@@ -94,7 +112,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 一键导出试点工作统计表
         /// </summary>
-        public bool ExportAllDelayTable(List<SurveyForm> surveyForms)
+        public bool ExportAllDelayTable(List<SurveyForm> surveyForms,List<VirtualPerson> vps,List<VirtualPerson_Del> vp_Dels, CollectivityTissue tissue)
         {
             bool result = false;
             try
@@ -104,6 +122,7 @@ namespace YuLinTu.Library.Business
                     this.ReportError("未选择导出数据的地域!");
                     return result;
                 }
+
                 this.ReportProgress(1, "开始");
                 string markDesc = GetMarkDesc(zone, dbContext);
                 string tempPathCBMJQRB = TemplateHelper.ExcelTemplate("承包共有人及承包面积确认统计表");  //模板文件
@@ -121,22 +140,22 @@ namespace YuLinTu.Library.Business
                 List<Dictionary> dictList = dictBusiness.GetAll();
                 double vpPercent = 99 / (double)surveyForms.Count;
                 openFilePath = Arg.SaveFilePath;
-
-                
                 List<Zone> allZones = zoneStation.GetAllZonesToProvince(zone);
-                
+
+                string savePath = CreateDirectoryHelper.CreateDirectory(allZones, zone);
                 if (openFilePath == null)
                 {
                     openFilePath = TheApp.GetApplicationPath();
                 }
-                
+                openFilePath = openFilePath + @"\" + savePath;
+
                 //openFilePath= openFilePath + @"\" + savePath+@"\"+argument.CurrentZone.Name;
 
                 ExoprtCBMJQRBFile("承包共有人及承包面积确认统计表", tempPathCBMJQRB, dictList, openFilePath, surveyForms);
-                //ExoprtRKBHTJBFile("承包共有人新增及减少统计表", tempPathRKBHTJB);
-                //ExoprtRKBHHZBFile("承包共有人增减情况汇总表", tempPathRKBHHZB);
+                ExoprtCBGYRXZJJSTJBFile("承包共有人新增及减少统计表", tempPathRKBHTJB,zone,openFilePath, tissue, vps,vp_Dels);
+                ExoprtRKBHHZBFile("承包共有人增减情况汇总表", tempPathRKBHHZB, zone, openFilePath, tissue, vp_Dels);
                 //ExoprtDKBHTJBFile("地块增减变化统计表", tempPathDKBHTJB);
-                //ExoprtDKBHHZBFile("地块增减情况汇总表", tempPathDKBHHZB);
+                //ExoprtDKBHHZBFile("地块增减情况汇总表", tempPathDKBHHZB, zone, openFilePath, tissue, vp_Dels);
                 //ExoprtMDQKHZBFile("调查摸底情况汇总表", tempPathMDQKHZB);
                 //ExoprtJTJDDTJBFile("集体机动地统计表", tempPathJTJDDTJB);
                 //ExoprtXWTJBFile("整户消亡统计表", tempPathXWTJB);
@@ -182,6 +201,7 @@ namespace YuLinTu.Library.Business
             string excelName = GetMarkDesc(zone, dbContext);
             string savePath = saveFilePath + @"\" + excelName + "承包共有人及承包面积确认统计表" + ".xls";
             export.dictXB = dictXB;
+            export.saveFilePath = savePath;
             export.SurveyForms = surveyForms;
             export.ZoneDesc = excelName;
             export.TownNme = excelName;
@@ -189,87 +209,81 @@ namespace YuLinTu.Library.Business
             export.SaveAs(savePath);
             if (result)
             {
-                openFilePath = export.saveFilePath;
                 export_PostProgressEvent(100, null);
                 this.ReportInfomation(string.Format("导出承包共有人及承包面积确认统计表", excelName));
             }
             
         }
-        //private void ExoprtRKBHTJBFile(string tempName, string tempPath)
-        //{
-        //    var export = new ExportOneDossierWordTable();
-        //    export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
-        //    #region 通过反射等机制定制化具体的业务处理类
-        //    var temp = WorksheetConfigHelper.GetInstance(export);
-        //    if (temp != null && temp.TemplatePath != null)
-        //    {
-        //        if (temp is ExportOneDossierWordTable)
-        //        {
-        //            export = (ExportOneDossierWordTable)temp;
-        //        }
-        //        tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
-        //    }
-        //    #endregion
-        //    var eplands = lands.FindAll(l => l.OwnerId == vp.ID);
-        //    export.CurrentZone = argument.CurrentZone;
-        //    export.ZoneList = allZones;
-        //    export.LandCollection = eplands;
-        //    export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
-        //    export.ExportPublicAwareArea = argument.ContractSettingDefine.ExportPublicTableUseAwareArea;
-        //    export.contractAccountPanel = argument.contractAccountPanel;
-        //    export.SystemSet.KeepRepeatFlag = SystemSetDefine.KeepRepeatFlag;
-        //    export.Contractor = vp;
-        //    export.MarkDesc = markDesc;
-        //    export.DictList = dictList;
-        //    export.Concord = concord;
-        //    export.Book = book;
-        //    export.ExportVPTableCountContainsDiedPerson = SystemSetDefine.ExportVPTableCountContainsDiedPerson;
-        //    export.IsShare = SystemSetDefine.PersonTable;
-        //    export.ConcordNumber = concordnumber;
-        //    export.Tissue = tissue == null ? new CollectivityTissue { Name = "" } : tissue;
-        //    export.WarrentNumber = bookNumber;
-        //    export.OpenTemplate(tempPath);
-        //    string familyNuber = Library.WorkStation.ToolString.ExceptSpaceString(vp.FamilyNumber);
-        //    string filePath = saveFilePath + @"\" + vp.Name + @"\" + familyNuber + "-" + vp.Name + "-" + tempName;
-        //    export.SaveAsDocx(vp, filePath);
-        //    //export.SplitDocumentByPage(filePath);
+        private void ExoprtCBGYRXZJJSTJBFile(string tempName, string tempPath,Zone zone, string saveFilePath, CollectivityTissue tissue,
+                                             List<VirtualPerson> vps,List<VirtualPerson_Del> vps_Del)
+        {
+            bool result = false;
+            var export = new ExoprtCBGYRXZJJSTJBTable();
+            export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(export);
+            if (temp != null && temp.TemplatePath != null)
+            {
+                if (temp is ExoprtCBGYRXZJJSTJBTable)
+                {
+                    export = (ExoprtCBGYRXZJJSTJBTable)temp;
+                }
+                tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+            }
+            #endregion
+            string excelName = GetMarkDesc(zone, dbContext);
+            string savePath = saveFilePath + @"\" + excelName + "承包共有人新增及减少统计表" + ".xls";
+            export.VirtualPeoples = vps;
+            export.VirtualPerson_Dels = vps_Del;
+            export.Zone = zone;
+            export.ZoneDesc = excelName;
+            export.CollectivityTissue = tissue;
+            export.TownNme = excelName;
+            result = export.BeginToZone(tempPath);
+            export.SaveAs(savePath);
+            if (result)
+            {
+                export_PostProgressEvent(100, null);
+                this.ReportInfomation(string.Format("承包共有人新增及减少统计表", excelName));
+            }
 
-        //}
-        //private void ExoprtRKBHHZBFile(string tempName, string tempPath)
-        //{
-        //    var export = new ExportPublicityWordTable();
-        //    export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
-        //    #region 通过反射等机制定制化具体的业务处理类
-        //    var temp = WorksheetConfigHelper.GetInstance(export);
-        //    temp.TemplatePath = tempPath;
-        //    if (temp != null && temp.TemplatePath != null)
-        //    {
-        //        if (temp is ExportPublicityWordTable)
-        //        {
-        //            export = (ExportPublicityWordTable)temp;
-        //        }
-        //        tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
-        //    }
-        //    #endregion
-        //    var eplands = lands.FindAll(l => l.OwnerId == vp.ID);
-        //    export.CurrentZone = argument.CurrentZone;
-        //    export.ZoneList = allZones;
-        //    export.LandCollection = eplands;
-        //    export.ExportPublicTableDeleteEmpty = argument.ContractSettingDefine.ExportPublicTableDeleteEmpty;
-        //    export.ExportPublicAwareArea = argument.ContractSettingDefine.ExportPublicTableUseAwareArea;
-        //    export.SystemSet.KeepRepeatFlag = SystemSetDefine.KeepRepeatFlag;
-        //    export.Contractor = vp;
-        //    export.DictList = dictList;
-        //    export.Concord = concord;
-        //    export.Book = book;
-        //    export.Tissue = tissue == null ? new CollectivityTissue { Name = "" } : tissue;
-        //    export.OpenTemplate(tempPath);
-        //    string familyNuber = Library.WorkStation.ToolString.ExceptSpaceString(vp.FamilyNumber);
-        //    string filePath = saveFilePath + @"\" + vp.Name + @"\" + familyNuber + "-" + vp.Name + "-" + tempName;
-        //    export.SaveAs(vp, filePath);
-        //    //export.SplitDocumentByPage(filePath);
+        }
+        private void ExoprtRKBHHZBFile(string tempName, string tempPath,Zone zone, string saveFilePath, CollectivityTissue tissue,
+         List<VirtualPerson_Del> vps_Del)
+        {
+            bool result = false;
+            var export = new ExoprtRKBHHZBTable();
+            export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(export);
+            if (temp != null && temp.TemplatePath != null)
+            {
+                if (temp is ExoprtRKBHHZBTable)
+                {
+                    export = (ExoprtRKBHHZBTable) temp;
+                }
+                tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+            }
+            #endregion
+            string excelName = GetMarkDesc(zone, dbContext);
+            string savePath = saveFilePath + @"\" + excelName + "承包共有人增减情况汇总表" + ".xls";
+            var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.GetByZoneCode(zone.FullCode);
+            export.VirtualPeoples = vps;
+            export.VirtualPerson_Dels = vps_Del;
+            export.Zone = zone;
+            export.ZoneDesc = excelName;
+            export.CollectivityTissue = tissue;
+            export.TownNme = excelName;
+            result = export.BeginToZone(tempPath);
+            export.SaveAs(savePath);
+            if (result)
+            {
+                export_PostProgressEvent(100, null);
+                this.ReportInfomation(string.Format("承包共有人增减情况汇总表", excelName));
+            }
 
-        //}
+        }
         //private void ExoprtDKBHTJBFile(string tempName, string tempPath)
         //{
         //    var export = new ExportContractorWordTable();

@@ -1115,6 +1115,11 @@ namespace YuLinTu.Library.WorkStation
         {
             return ContractLandDeleteRepository.GetDelLandByZone(zoneCode);
         }
+        public int DeleteDelLandByZoneCode(string zoneCode, eLevelOption levelOption)
+        {
+            ContractLandDeleteRepository.DeleteByZoneCode(zoneCode, levelOption);
+            return TrySaveChanges(DefaultRepository);
+        }
 
         /// <summary>
         /// 根据承包方id集合获取承包地块集合
