@@ -1618,7 +1618,8 @@ namespace YuLinTu.Library.Aux
                 var multi = v1x * v2x + v1y * v2y;
                 var v1mod = Math.Sqrt(v1x * v1x + v1y * v1y);
                 var v2mode = Math.Sqrt(v2x * v2x + v2y * v2y);
-
+                if (multi == 0 || v1mod == 0 || v2mode == 0)
+                    return 0;
                 var angle = Math.Acos((double)Math.Round((decimal)(multi / v1mod / v2mode), 6)) * 180 / Math.PI;
                 return angle;
             }
