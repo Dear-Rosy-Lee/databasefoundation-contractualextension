@@ -423,10 +423,10 @@ namespace YuLinTu.Library.Business
 
             SetBookmarkValue("SecondConcordNumber", concordNumber);//二轮合同编号
             SetBookmarkValue("LandCount", cLandList.Count > 0 ? cLandList.Count.ToString() : "");
-            SetBookmarkValue("ActualAreaCount", cArea.AreaFormat());
-            SetBookmarkValue("TableAreaCount", tArea.AreaFormat());
+            SetBookmarkValue("ActualAreaCount", cArea.AreaFormat(SystemSet.DecimalPlaces));
+            SetBookmarkValue("TableAreaCount", tArea.AreaFormat(SystemSet.DecimalPlaces));
             SetBookmarkValue("OtherLandCount", otherLandList.Count > 0 ? otherLandList.Count.ToString() : " ");
-            SetBookmarkValue("OtherAreaCount", otherArea > 0 ? ToolMath.SetNumbericFormat(otherArea.ToString(), 2) : "  ");
+            SetBookmarkValue("OtherAreaCount", otherArea > 0 ? ToolMath.RoundNumericFormat(otherArea, SystemSet.DecimalPlaces) + "" : "  ");
 
             List<Person> persons = new List<Person>();  //得到户对应的共有人
             persons = Contractor.SharePersonList;

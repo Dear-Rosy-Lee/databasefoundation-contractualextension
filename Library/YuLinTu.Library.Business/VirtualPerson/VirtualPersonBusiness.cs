@@ -842,10 +842,20 @@ namespace YuLinTu.Library.Business
                 personUnits.Add(temp);
             });
             PersonUnit newHZ = new PersonUnit { Sfz = selectPerson.ICN, YfzGx = RelationShipMapping.NameMapping(selectPerson.Relationship) };
-            FamailyRelationProcessor.CalMemberRelationship(personUnits, newHZ);
-
-             //更新地块信息
-             var vplandstation = dbContext.CreateContractLandWorkstation();
+            int tag=FamailyRelationProcessor.CalMemberRelationship(personUnits, newHZ);
+            if(tag==0)
+            {
+                //
+                personUnits.ForEach(t =>
+                {
+                    if (t.Sfz.Equals(newHZ.Sfz)) { t.YfzGx = "02"; } else
+                    {
+                        t.YfzGx = string.Empty;
+                    }
+                });
+            }
+            //更新地块信息
+            var vplandstation = dbContext.CreateContractLandWorkstation();
             //var vplands = vplandstation.GetCollection(vp.ID);
 
             //foreach (var item in vplands)
@@ -878,7 +888,11 @@ namespace YuLinTu.Library.Business
             foreach(var gyr in vp.SharePersonList)
             {
                 gyr.Relationship = personUnits.FirstOrDefault(t => t.Sfz.Equals(gyr.ICN)).YfzGx;
-                gyr.Relationship = RelationShipMapping.CodeMapping(gyr.Relationship);
+                if (gyr.Relationship.IsNotNullOrEmpty())
+                { 
+                    gyr.Relationship = RelationShipMapping.CodeMapping(gyr.Relationship);
+                }
+           
             }
             vp.SharePersonList = SortSharePerson(list, vp.Name);
             // LocalComplexRightEntity. CodeMapping()

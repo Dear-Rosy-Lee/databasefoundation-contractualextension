@@ -274,15 +274,17 @@ namespace YuLinTu.Library.Business
                 {
                     case 0:
                         areastr = item.TableArea.ToString();
+                        totleAwareArea += item.TableArea == null ? 0 : item.TableArea.Value;
                         break;
                     case 1:
                         areastr = item.ActualArea.ToString();
+                        totleAwareArea += item.ActualArea;
                         break;
                     default:
+                        totleAwareArea += item.AwareArea;
                         break;
                 }
                 SetTableCellValue(tableIndex, startRow, 6, areastr);
-                totleAwareArea += item.AwareArea;
                 if (item.LandLevel == "01")
                 {
                     SetTableCellValue(tableIndex, startRow, 7, Landlevel1);

@@ -5,11 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YuLinTu.Library.Office;
-using YuLinTu.Library.Entity;
 using YuLinTu;
-using YuLinTu.Data;
+using YuLinTu.Library.Entity;
 using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
@@ -456,10 +453,10 @@ namespace YuLinTu.Library.Business
 
                 SetBookmarkValue("LandNumber", i, landnumber.GetSettingEmptyReplacement());//地块编码
                 SetBookmarkValue("LandName", i, land.Name.GetSettingEmptyReplacement());//地块名称
-                SetBookmarkValue("TableArea", i, land.TableArea.AreaFormat(2, true));//实测面积
+                SetBookmarkValue("TableArea", i, land.TableArea.AreaFormat(SystemSet.DecimalPlaces, true));//实测面积
 
-                SetBookmarkValue("ActualArea", i, land.ActualArea.AreaFormat(2, true));//实测面积
-                SetBookmarkValue("AwareArea", i, land.AwareArea.AreaFormat(2, true));//实测面积
+                SetBookmarkValue("ActualArea", i, land.ActualArea.AreaFormat(SystemSet.DecimalPlaces, true));//实测面积
+                SetBookmarkValue("AwareArea", i, land.AwareArea.AreaFormat(SystemSet.DecimalPlaces, true));//实测面积
 
                 SetBookmarkValue("East", i, land.NeighborEast.GetSettingEmptyReplacement());//东至
                 SetBookmarkValue("South", i, land.NeighborSouth.GetSettingEmptyReplacement());//南至

@@ -61,6 +61,7 @@ namespace YuLinTu.Library.Business
             var zone = argument.CurrentZone;
             try
             {
+                this.ReportInfomation($"开始导出{zone.FullName}下的地块示意图");
                 var listPerson = argument.SelectedPersons;
                 var landStation = dbContext.CreateContractLandWorkstation();
                 var dictStation = dbContext.CreateDictWorkStation();
@@ -104,6 +105,7 @@ namespace YuLinTu.Library.Business
                 bool canOpen = ExportLandMultiParcelWord(argument, listPerson, listLand, listDict);
                 if (canOpen)
                     CanOpenResult = true;
+                this.ReportInfomation($"导出{zone.FullName}下的地块示意图完成,共导出{listPerson.Count}户的地块示意图");
             }
             catch (Exception ex)
             {

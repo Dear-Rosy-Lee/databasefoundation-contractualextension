@@ -436,7 +436,7 @@ namespace YuLinTu.Library.Business
                 StyleFlag styleFlag = new StyleFlag();
                 styleFlag.Locked = true;
                 // 保护工作表
-                sheet.Protect(ProtectionType.All, "ylt123456", ""); // 设置密码
+                sheet.Protect(ProtectionType.All, "Ylt@123456", ""); // 设置密码
                                                                     // 创建一个范围，例如A1:C10，然后解锁这个范围
                 Cells cells = sheet.Cells;
                 Range range = cells.CreateRange("AI3:AI" + (index - 1));

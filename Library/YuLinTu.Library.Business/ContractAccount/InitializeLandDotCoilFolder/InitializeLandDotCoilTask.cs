@@ -42,7 +42,7 @@ namespace YuLinTu.Library.Business
             InitialLandInitialTool(meta.Database);
             var dotStation = meta.Database.CreateDotWorkStation();
             var coilStation = meta.Database.CreateCoilWorkStation();
-            
+
             var zoneCode = meta.CurrentZone.FullCode == "86" ? "" : meta.CurrentZone.FullCode;
             var sw = System.Diagnostics.Stopwatch.StartNew();
 
@@ -231,8 +231,8 @@ namespace YuLinTu.Library.Business
                     dotNumberDic.Clear();
                     if (setArg.IsSetLineDescription && setArg.IsUnit)
                     {
-                        var qwhere = querydot.Where(t => t.ZoneCode==value)
-                            .Select(s => new {s.ID, s.DotNumber, s.UniteDotNumber});
+                        var qwhere = querydot.Where(t => t.ZoneCode == value)
+                            .Select(s => new { s.ID, s.DotNumber, s.UniteDotNumber });
                         qwhere.ForEach((i, p, en) =>
                         {
                             if (dotNumberDic.ContainsKey(en.ID))
@@ -249,10 +249,10 @@ namespace YuLinTu.Library.Business
                     Aspect a = new Aspect(0);
                     var coilwhere = querycoil.Where(t => t.ZoneCode == value).ToList();
                     //更改界址线相关属性
-                    coilwhere.ForEach(en=>
+                    coilwhere.ForEach(en =>
                     {
                         index++;
-                        this.ReportProgress((int) (100 * index / JZXCount), "修改界址属性信息");
+                        this.ReportProgress((int)(100 * index / JZXCount), "修改界址属性信息");
                         if (setArg.IsReplaceLinePerson)
                         {
                             SetAddressCoilPerson(en, setArg);
@@ -415,7 +415,7 @@ namespace YuLinTu.Library.Business
                 dotStation.Delete(t => t.ZoneCode.StartsWith(zoneCode));
                 coilStation.Delete(t => t.ZoneCode.StartsWith(zoneCode));
             }
-            
+
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace YuLinTu.Library.Business
                     dots = new List<BuildLandBoundaryAddressDot>();
                 if (coils == null)
                     coils = new List<BuildLandBoundaryAddressCoil>();
-                var pointList = ProcessDot(land, prms, maxuntiNumber, dots, coils);//初始化界址点
+                var pointList = ProcessDot(land, prms, maxuntiNumber, dots);//初始化界址点
                 _lineDescription = meta.InstallArg.LineDescription;
                 _jzxlbdic = meta.InstallArg.Jzxlbdics;
                 var lineList = ProcessLine(land, lands, prms, pointList, coils, zoneParentName, meta.InstallArg.IsSetAddressLinePosition, meta.InstallArg.IsUnit);//初始化界址线
@@ -514,8 +514,7 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 生成界址点
         /// </summary>
-        private List<BuildLandBoundaryAddressDot> ProcessDot(ContractLand land, InitLandDotCoilParam param, string maxuntiNumber,
-            List<BuildLandBoundaryAddressDot> dots, List<BuildLandBoundaryAddressCoil> coils)
+        private List<BuildLandBoundaryAddressDot> ProcessDot(ContractLand land, InitLandDotCoilParam param, string maxuntiNumber, List<BuildLandBoundaryAddressDot> dots)
         {
             var entityList = new List<BuildLandBoundaryAddressDot>();
             var lines = land.Shape.ToPolylines();//地块生成线
@@ -755,70 +754,6 @@ namespace YuLinTu.Library.Business
             if (dots == null || dots.Count == 0)
                 return entityList;
 
-            //var coordDictionary = new Dictionary<Coordinate, BuildLandBoundaryAddressDot>();
-            //foreach (var item in dots)
-            //{
-            //    var coordnate = item.Shape.ToCoordinates()[0];
-            //    if (!coordDictionary.ContainsKey(coordnate))
-            //        coordDictionary.Add(coordnate, item);
-            //}
-
-            //short sxh = 1;
-            //var lines = land.Shape.ToPolylines();//地块生成线  
-            //foreach (var l in lines)
-            //{
-            //    var preCoordnates = new List<Tuple<Coordinate, BuildLandBoundaryAddressDot>>();
-            //    var coordnates = new List<Tuple<Coordinate, BuildLandBoundaryAddressDot>>();
-            //    var lineCoordnates = l.ToCoordinates().ToList();
-            //    lineCoordnates.RemoveAt(lineCoordnates.Count - 1);
-            //    var hasKeyDot = false; //是否已经找到过关键界址点
-            //    foreach (var item in lineCoordnates)
-            //    {
-            //        var dd = coordDictionary.Where(t => testIsEqual(t.Key, item.X, item.Y)).FirstOrDefault();
-
-            //        if (!dd.Value.IsValid)
-            //        {
-            //            if (!hasKeyDot)
-            //            {
-            //                preCoordnates.Add(new Tuple<Coordinate, BuildLandBoundaryAddressDot>(item, dd.Value));
-            //                continue;
-            //            }
-            //            coordnates.Add(new Tuple<Coordinate, BuildLandBoundaryAddressDot>(item, dd.Value));
-            //        }
-            //        else
-            //        {
-            //            if (!hasKeyDot && preCoordnates.Count > 0)
-            //            {
-            //                preCoordnates.Add(new Tuple<Coordinate, BuildLandBoundaryAddressDot>(item, dd.Value));
-            //            }
-            //            hasKeyDot = true;
-            //            coordnates.Add(new Tuple<Coordinate, BuildLandBoundaryAddressDot>(item, dd.Value));
-            //            if (coordnates.Count > 1)
-            //            {
-            //                var dotList = new List<BuildLandBoundaryAddressDot>();
-            //                coordnates.ForEach(t => dotList.Add(t.Item2));
-            //                var line = CreateAddressCoil(dotList, land, sxh, param, lands, senderName);
-            //                coordnates.Clear();
-            //                coordnates.Add(new Tuple<Coordinate, BuildLandBoundaryAddressDot>(item, dd.Value));
-            //                sxh++;
-            //                entityList.Add(line);
-            //            }
-            //        }
-            //    }
-            //    if (preCoordnates.Count > 0)
-            //    {
-            //        foreach (var item in preCoordnates)
-            //        {
-            //            coordnates.Add(item);
-            //        }
-            //        var dotList = new List<BuildLandBoundaryAddressDot>();
-            //        coordnates.ForEach(t => dotList.Add(t.Item2));
-            //        var line = CreateAddressCoil(dotList, land, sxh, param, lands, senderName);
-            //        coordnates.Clear();
-            //        entityList.Add(line);
-            //    }
-            //}
-
             dots.Add(dots[0]);
             var createdots = new List<BuildLandBoundaryAddressDot>();
             short sxh = 1;
@@ -972,32 +907,7 @@ namespace YuLinTu.Library.Business
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// 创建界址线说明
-        /// </summary>
-        /// <returns></returns>
-        //private void GetLineDescription(BuildLandBoundaryAddressCoil line, bool isUnit, bool isUseLengthAndPosition, List<BuildLandBoundaryAddressDot> dots)
-        //{
-        //    Aspect a = new Aspect(0);
-        //    if (line.Shape != null && !isUseLengthAndPosition)
-        //    {
-        //        var coords = line.Shape.ToCoordinates();
-        //        var p0 = coords[0];
-        //        var p1 = coords[coords.Count() - 1];
-        //        a.Assign(p0.X, p0.Y, p1.X, p1.Y);
-        //        string qjzdh = line.StartNumber;
-        //        var zjzdh = line.EndNumber;
-        //        if (isUnit)
-        //        {
-        //            qjzdh = dots.Find(t => t.ID == line.StartPointID).UniteDotNumber;
-        //            zjzdh = dots.Find(t => t.ID == line.EndPointID).UniteDotNumber;
-        //        }
-        //        var jszsm = qjzdh + "沿" + a.toAzimuthString() + "方" + ToolMath.RoundNumericFormat(line.Shape.Length(), 2) + "米到" + zjzdh;
-        //        line.Description = jszsm;
-        //    }
-        //}
+        } 
 
         /// <summary>
         /// 创建界址线

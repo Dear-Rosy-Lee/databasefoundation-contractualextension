@@ -75,7 +75,6 @@ namespace YuLinTu.Library.Business
                 this.ReportError("获取子级地域数据失败!");
                 return;
             }
-
             //var currentGroupZone = selfAndSubsZones.FirstOrDefault(c => c.Level == eZoneLevel.Group);
             //if (currentGroupZone == null)
             //    currentGroupZone = selfAndSubsZones.FirstOrDefault(c => c.Level == eZoneLevel.Village);

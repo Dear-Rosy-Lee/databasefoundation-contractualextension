@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Linq;
 namespace YuLinTu.Library.Business
 {
     public static class FamailyRelationProcessor
@@ -128,6 +129,7 @@ namespace YuLinTu.Library.Business
             map[new RelationCode(0, 0, 1, 1, 1)] = 11;
             map[new RelationCode(0, 0, 1, 1, 0)] = 12;
             // 儿子
+            map[new RelationCode(-1, -1, 0, 0, 1)] = 20; //-1 标识无法确定同辈中排序
             map[new RelationCode(-1, 0, 0, 0, 1)] = 21;
             map[new RelationCode(-1, 1, 0, 0, 1)] = 22;
             map[new RelationCode(-1, 2, 0, 0, 1)] = 23;
@@ -138,6 +140,7 @@ namespace YuLinTu.Library.Business
             map[new RelationCode(-1, 0, 1, 1, 1)] = 28;
             map[new RelationCode(-1, 0, 0, 0, 1)] = 29;
             // 女儿
+            map[new RelationCode(-1, -1, 0, 0, 0)] = 30;
             map[new RelationCode(-1, 0, 0, 0, 0)] = 31;
             map[new RelationCode(-1, 1, 0, 0, 0)] = 32;
             map[new RelationCode(-1, 2, 0, 0, 0)] = 33;
@@ -148,6 +151,7 @@ namespace YuLinTu.Library.Business
             map[new RelationCode(-1, 0, 1, 1, 0)] = 38;
             map[new RelationCode(-1, 0, 0, 0, 0)] = 39;
             // 孙子辈
+            map[new RelationCode(-2, -1, 0, 0, 1)] = 40;
             map[new RelationCode(-2, 0, 0, 0, 1)] = 41;
             map[new RelationCode(-2, 0, 0, 0, 0)] = 42;
             map[new RelationCode(-2, 0, 1, 0, 0)] = 43;
@@ -159,9 +163,9 @@ namespace YuLinTu.Library.Business
             map[new RelationCode(-3, 0, 0, 0, 0)] = 48;
             // 父辈
             map[new RelationCode(1, 0, 0, 0, 1)] = 51;
-            map[new RelationCode(1, 0, 1, 0, 0)] = 52;
-            map[new RelationCode(1, 0, 1, 1, 1)] = 53;
-            map[new RelationCode(1, 0, 1, 1, 0)] = 54;
+            map[new RelationCode(1, 0, 0, 0, 0)] = 52;
+            map[new RelationCode(1, 0, 0, 1, 1)] = 53;
+            map[new RelationCode(1, 0, 0, 1, 0)] = 54;
             // 兄弟姐妹
             map[new RelationCode(0, 1, 0, 0, 1)] = 71;
             map[new RelationCode(0, -1, 0, 0, 1)] = 73;
@@ -208,9 +212,13 @@ namespace YuLinTu.Library.Business
         {
             for (int i = 0; i < members.Count; i++)
             {
+                if (members[i].YfzGx.IsNullOrEmpty()) continue;
                 int code = int.Parse(members[i].YfzGx);
-                if (members[i].YfzGx != null && integerToRelationMap.TryGetValue(code, out RelationCode cur))
+                if (members[i].YfzGx != null && integerToRelationMap.Keys.Contains(code))//(code, out  cur))
                 {
+                    
+                    var temp = integerToRelationMap[code];
+                    RelationCode cur = new RelationCode(temp.Seniority, temp.Peer, temp.Spouse, temp.FosterCare, temp.Gender);
                     if (code == 2)
                     {
                         cur.Gender = GetGenderFromIdCard(members[i].Sfz);
@@ -222,10 +230,11 @@ namespace YuLinTu.Library.Business
                     else
                     {
                         cur.Seniority = cur.Seniority - relationCode.Seniority;
-                        if (cur.Seniority == relationCode.Seniority)
-                        {
-                            cur.Peer = cur.Peer > relationCode.Peer ? 1 : 0;
-                        }
+                        //if (cur.Seniority == relationCode.Seniority)
+                        //{
+                        //    //cur.Peer = FamailyRelationProcessor.CompareAge(members[i].Sfz, PersonUnit.Sfz);
+                        //    cur.Peer = cur.Peer > relationCode.Peer ? 1 : 0;
+                        //}
                         if (members[i].YfzGx == "11" || members[i].YfzGx == "12")
                         {
                             cur.FosterCare = 0;
@@ -234,7 +243,18 @@ namespace YuLinTu.Library.Business
                         {
                             cur.Peer = 0;
                         }
-                        members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                        if (cur.Seniority == 0)// && cur.Peer != 0)
+                        {
+                            cur.Peer = FamailyRelationProcessor.CompareAge(members[i].Sfz, PersonUnit.Sfz);
+                        }
+                        if (relationCodeToIntegerMap.Keys.Contains(cur))
+                        {
+                            members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                        }
+                        else
+                        {
+                            members[i].YfzGx = string.Empty;
+                        }
                     }
                 }
             }
@@ -257,9 +277,13 @@ namespace YuLinTu.Library.Business
             List<PersonUnit> integerMembers = new List<PersonUnit>();
             for (int i = 0; i < members.Count; i++)
             {
+                if (members[i].YfzGx.IsNullOrEmpty()) continue;
                 int code = int.Parse(members[i].YfzGx);
-                if (members[i].YfzGx != null && integerToRelationMap.TryGetValue(code, out RelationCode cur))
+                if (members[i].YfzGx != null && integerToRelationMap.Keys.Contains(code)) //integerToRelationMap.TryGetValue(code, out RelationCode cur))
                 {
+                    var temp = integerToRelationMap[code];
+                    RelationCode cur = new RelationCode(temp.Seniority, temp.Peer, temp.Spouse, temp.FosterCare, temp.Gender);
+
                     if (code == 2)
                     {
                         cur.Gender = GetGenderFromIdCard(members[i].Sfz);
@@ -291,7 +315,15 @@ namespace YuLinTu.Library.Business
                         }
                         else
                         {
-                            members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                            if (relationCodeToIntegerMap.Keys.Contains(cur))
+                            {
+                                members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                            }
+                            else
+                            {
+                                members[i].YfzGx = string.Empty;
+                            }
+                            //members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
                         }
                     }
                 }
@@ -301,11 +333,23 @@ namespace YuLinTu.Library.Business
             foreach (PersonUnit each in integerMembers)
             {
                 int eachCode = int.Parse(each.YfzGx);
-                if (integerToRelationMap.TryGetValue(eachCode, out RelationCode cur))
+                if (integerToRelationMap.Keys.Contains(eachCode)) //(integerToRelationMap.TryGetValue(eachCode, out RelationCode cur))
                 {
+                    var temp = integerToRelationMap[eachCode];
+                    RelationCode cur = new RelationCode(temp.Seniority, temp.Peer, temp.Spouse, temp.FosterCare, temp.Gender);
                     cur.Peer = index;
                     index++;
-                    each.YfzGx = relationCodeToIntegerMap[cur].ToString();
+                    if (cur.Seniority != -1) cur.Seniority = -1;
+                    if (relationCodeToIntegerMap.Keys.Contains(cur))
+                    {
+                        each.YfzGx = relationCodeToIntegerMap[cur].ToString();
+                    }
+                    else
+                    {
+                        each.YfzGx = string.Empty;
+                    }
+                    //members[i].
+                   // each.YfzGx = relationCodeToIntegerMap[cur].ToString();
                 }
             }
         }
@@ -314,9 +358,12 @@ namespace YuLinTu.Library.Business
         {
             for (int i = 0; i < members.Count; i++)
             {
+                if (members[i].YfzGx.IsNullOrEmpty()) continue;
                 int code = int.Parse(members[i].YfzGx);
-                if (members[i].YfzGx != null && integerToRelationMap.TryGetValue(code, out RelationCode cur))
+                if (members[i].YfzGx != null && integerToRelationMap.Keys.Contains(code)) //integerToRelationMap.TryGetValue(code, out RelationCode cur))
                 {
+                    var temp = integerToRelationMap[code];
+                    RelationCode cur = new RelationCode(temp.Seniority, temp.Peer, temp.Spouse, temp.FosterCare, temp.Gender);
                     if (code == 2)
                     {
                         cur.Gender = GetGenderFromIdCard(members[i].Sfz);
@@ -343,7 +390,15 @@ namespace YuLinTu.Library.Business
                             cur.FosterCare = cur.FosterCare == 1 ? 0 : 1;
                             cur.Spouse = cur.FosterCare == 1 ? 0 : 1;
                         }
-                        members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                        if (relationCodeToIntegerMap.Keys.Contains(cur))
+                        {
+                            members[i].YfzGx = relationCodeToIntegerMap[cur].ToString();
+                        }
+                        else
+                        {
+                            members[i].YfzGx = string.Empty;
+                        }
+                
                     }
                 }
             }
@@ -365,20 +420,24 @@ namespace YuLinTu.Library.Business
         /// </remarks>
         public static int CalMemberRelationship(List<PersonUnit> members, PersonUnit PersonUnit)
         {
+           
             if (PersonUnit.YfzGx == "28" || PersonUnit.YfzGx == "38")
             {
-                return 0;
+                ReatltionHandelExtions(members, PersonUnit);
+                return 1;
             }
 
             Dictionary<RelationCode, int> relationCodeToIntegerMap = new Dictionary<RelationCode, int>();
             SetRelationCodeToIntegerMap(relationCodeToIntegerMap);
             Dictionary<int, RelationCode> integerToRelationMap = GetReverseMap(relationCodeToIntegerMap);
 
-            if (!int.TryParse(PersonUnit.YfzGx, out int PersonUnitCode) || !integerToRelationMap.TryGetValue(PersonUnitCode, out RelationCode relationCode))
+            if (!int.TryParse(PersonUnit.YfzGx, out int PersonUnitCode) || !integerToRelationMap.Keys.Contains(PersonUnitCode)) //!integerToRelationMap.TryGetValue(PersonUnitCode, out RelationCode relationCode))
             {
                 return 0;
             }
-
+            //!integerToRelationMap.Keys.Contains(PersonUnitCode)) //
+            var temp = integerToRelationMap[PersonUnitCode];
+            RelationCode relationCode = new RelationCode(temp.Seniority, temp.Peer, temp.Spouse, temp.FosterCare, temp.Gender);
             if (relationCode.Seniority >= 2 || relationCode.Seniority <= -2)
             {
                 return 0;
@@ -401,6 +460,66 @@ namespace YuLinTu.Library.Business
             }
 
             return 1;
+        }
+
+        /// <summary>
+        /// 算法补丁，目前处理了儿媳和女婿变更为户主的情况
+        /// </summary>
+        /// <param name="members"></param>
+        /// <param name="PersonUnit"></param>
+        private static void ReatltionHandelExtions(List<PersonUnit> members, PersonUnit PersonUnit)
+        {
+            if (PersonUnit.YfzGx == "28")
+            {
+                int dougterCount = members.Count(t => t.YfzGx.StartsWith("3"));
+                members.ForEach(t =>
+                {
+                    if (t.YfzGx == "28") { t.YfzGx = "02"; }
+                    else if (t.YfzGx == "02" || t.YfzGx == "01")
+                    {
+                        int gender = FamailyRelationProcessor.GetGenderFromIdCard(t.Sfz);
+
+                        t.YfzGx = gender == 0 ? "56" : "55";
+                    }
+                    else if (dougterCount == 1)
+                    {
+                        if (t.YfzGx.StartsWith("3")) { t.YfzGx = "12"; }
+                        else
+                        {
+                            t.YfzGx = t.YfzGx == "43" ? t.YfzGx = "20" : t.YfzGx == "44" ? "30" : "";
+                        }
+                    }
+                    else
+                    {
+                        t.YfzGx = string.Empty;
+                    }
+                });
+            }
+            else
+            {
+                int sonCount = members.Count(t => t.YfzGx.StartsWith("2"));
+                members.ForEach(t =>
+                {
+                    if (t.YfzGx == "38") { t.YfzGx = "02"; }
+                    else if (t.YfzGx == "02" || t.YfzGx == "01")
+                    {
+                        int gender = FamailyRelationProcessor.GetGenderFromIdCard(t.Sfz);
+                        t.YfzGx = gender == 0 ? "54" : "53";
+                    }
+                    else if (sonCount == 1)
+                    {
+                        if (t.YfzGx.StartsWith("2")) { t.YfzGx = "11"; }
+                        else
+                        {
+                            t.YfzGx = t.YfzGx == "41" ? t.YfzGx = "20" : t.YfzGx == "42" ? "30" : "";
+                        }
+                    }
+                    else
+                    {
+                        t.YfzGx = string.Empty;
+                    }
+                });
+            }
         }
     }
 
@@ -433,6 +552,10 @@ namespace YuLinTu.Library.Business
             Spouse = spouse;
             FosterCare = fosterCare;
             Gender = gender;
+        }
+        public RelationCode()
+        {
+            
         }
         ///
         public override bool Equals(object obj)
