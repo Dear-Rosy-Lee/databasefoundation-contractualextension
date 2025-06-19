@@ -308,9 +308,9 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnLandLevelNull, command.LandLevelNull, command.LandLevelNullBind);
             SetCommandBinding(btnLandShapeNull, command.LandShapeNull, command.LandShapeNullBind);
             SetCommandBinding(mbtnFind, command.Find, command.FindBind);
-            SetCommandBinding(mbtnExportAllDelayTable, command.ExportAllDelayTable, command.ExportAllDelayTableBind);
+            //SetCommandBinding(mbtnExportAllDelayTable, command.ExportAllDelayTable, command.ExportAllDelayTableBind);
             SetCommandBinding(mbtnDataQuality, command.DataQuality, command.DataQualityBind);
-            //SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
+            SetCommandBinding(mbtnAdjustLand, command.AdjustLand, command.AdjustLandBind);
             SetCommandBinding(mbtnClear, command.Clear, command.ClearBind);
             SetCommandBinding(mbtnRefresh, command.Refresh, command.RefreshBind);
             SetCommandBinding(mbtnDownLoad, command.DownLoad, command.DownLoadBind);
@@ -715,7 +715,7 @@ namespace YuLinTu.Component.ContractAccount
                 btnTemplate.IsEnabled = isEnable;
                 btnExportContractInformation.IsEnabled = isEnable;
                 mbtnDataQuality.IsEnabled = isEnable;
-                //mbtnAdjustLand.IsEnabled = isEnable;
+                mbtnAdjustLand.IsEnabled = isEnable;
             }));
         }
 

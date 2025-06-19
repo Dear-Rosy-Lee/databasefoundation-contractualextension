@@ -539,7 +539,7 @@
                         Text="设置为户主"
                         ToolTip="将共有人设置成户主" />
                 </metro:MetroButton>
-                <!--<metro:MetroButton
+                <metro:MetroButton
                     x:Name="mbtnAdjustSender"
                     Padding="4,2,4,2"
                     VerticalContentAlignment="Stretch"
@@ -549,7 +549,7 @@
                         ImagePosition="Top"
                         Text="调整发包方"
                         ToolTip="调整发包方" />
-                </metro:MetroButton>-->
+                </metro:MetroButton>
                 <tk:DropDownButton
                     Name="btnRelationDeal"
                     Padding="4,2"

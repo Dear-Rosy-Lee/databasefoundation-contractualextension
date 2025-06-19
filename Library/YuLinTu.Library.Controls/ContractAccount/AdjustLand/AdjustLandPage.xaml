@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:YuLinTu.Windows.Wpf.Metro;assembly=YuLinTu.Windows.Wpf.Metro"
     xmlns:wpftoolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-    Width="1000"
+    Width="1400"
     Height="600"
     CloseButtonVisibility="Collapsed"
     Header="调整地块"
@@ -30,19 +30,21 @@
             <Grid Grid.Row="0" Margin="5,5,10,0">
                 <Grid.ColumnDefinitions>
                     <!--  勾选框  -->
-                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="20" />
+                    <!--  全选  -->
+                    <ColumnDefinition Width="50" />
                     <!--  地块编码  -->
-                    <ColumnDefinition Width="116" />
+                    <ColumnDefinition Width="200" />
                     <!--  地块名称  -->
-                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="200" />
                     <!--  地块类别  -->
-                    <ColumnDefinition Width="95" />
+                    <ColumnDefinition Width="158" />
                     <!--  合同面积  -->
-                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="120" />
                     <!--  实测面积  -->
-                    <ColumnDefinition Width="125" />
+                    <ColumnDefinition Width="150" />
                     <!--  承包方名称  -->
-                    <ColumnDefinition Width="145" />
+                    <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
                 <CheckBox
                     Grid.Column="0"
@@ -51,39 +53,45 @@
                     Tag="{Binding}"
                     Unchecked="CheckBox_AllUnchecked" />
                 <TextBlock
-                    Grid.Column="0"
-                    Margin="20,0,0,0"
+                    Grid.Column="1"
+                    Margin="0,0,0,5"
                     FontWeight="Bold"
                     Text="全选" />
                 <!--  表头文本  -->
                 <TextBlock
-                    Grid.Column="1"
-                    Margin="0,0,0,0"
-                    FontWeight="Bold"
-                    Text="地块编码" />
-                <TextBlock
                     Grid.Column="2"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
-                    Text="地块名称" />
+                    Text="地块编码(缩略吗)" />
                 <TextBlock
                     Grid.Column="3"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
-                    Text="地块类别" />
+                    Text="地块名称" />
                 <TextBlock
                     Grid.Column="4"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
-                    Text="合同面积" />
+                    Text="地块类别" />
                 <TextBlock
                     Grid.Column="5"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
-                    Text="实测面积" />
+                    Text="合同面积" />
                 <TextBlock
                     Grid.Column="6"
                     Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="实测面积" />
+                <TextBlock
+                    Grid.Column="7"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
                     FontWeight="Bold"
                     Text="承包方名称" />
 
@@ -106,27 +114,27 @@
                         <!--  单个数据项的模板  -->
                         <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
-                                <!--  复选框  -->
+                                <!--  全选  -->
                                 <ColumnDefinition Width="80" />
                                 <!--  地块编码  -->
-                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="180" />
                                 <!--  地块名称  -->
-                                <ColumnDefinition Width="142" />
+                                <ColumnDefinition Width="222" />
                                 <!--  地块类别  -->
-                                <ColumnDefinition Width="117" />
+                                <ColumnDefinition Width="137" />
                                 <!--  合同面积  -->
-                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="145" />
                                 <!--  实测面积  -->
-                                <ColumnDefinition Width="93" />
+                                <ColumnDefinition Width="118" />
                                 <!--  承包方名称  -->
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="207" />
 
                             </Grid.ColumnDefinitions>
 
                             <!--  底部边框线  -->
                             <Border
                                 Grid.ColumnSpan="7"
-                                Margin="0,5,0,0"
+                                Margin="0,5,-100,0"
                                 VerticalAlignment="Bottom"
                                 BorderBrush="LightGray"
                                 BorderThickness="0,0,0,1" />
@@ -144,26 +152,32 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Margin="0,5,0,8"
+                                HorizontalAlignment="Center"
                                 Text="{Binding DKBM}" />
                             <TextBlock
                                 Grid.Column="2"
                                 Margin="10,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding DKMC}" />
                             <TextBlock
                                 Grid.Column="3"
                                 Margin="10,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding DKLB}" />
                             <TextBlock
                                 Grid.Column="4"
                                 Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding HTMJ}" />
                             <TextBlock
                                 Grid.Column="5"
                                 Margin="10,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding SCMJ}" />
                             <TextBlock
                                 Grid.Column="6"
                                 Margin="40,5,0,0"
+                                HorizontalAlignment="Center"
                                 Text="{Binding CBFMC}" />
                         </Grid>
                     </DataTemplate>

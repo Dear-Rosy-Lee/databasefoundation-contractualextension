@@ -135,7 +135,7 @@ namespace YuLinTu.Component.VirtualPerson
             SetCommandBinding(mbtnInitiallData, command.InitiallData, command.InitiallDataBind);
             SetCommandBinding(btnRelationCheck, command.RelationCheck, command.RelationCheckBind);
             SetCommandBinding(btnRelationReplace, command.RelationReplace, command.RelationReplaceBind);
-            //SetCommandBinding(mbtnAdjustSender, command.AdjustSender, command.AdjustSenderBind);
+            SetCommandBinding(mbtnAdjustSender, command.AdjustSender, command.AdjustSenderBind);
             SetCommandBinding(btnSharePersonRepair, command.SharePersonRepair, command.SharePersonRepairBind);
             SetCommandBinding(btnLandType, command.Contract, command.ContractBind);
             SetCommandBinding(btnWoodType, command.Wood, command.WoodBind);
@@ -370,7 +370,7 @@ namespace YuLinTu.Component.VirtualPerson
                 btndelegate.IsEnabled = isEnable;
                 btnIdea.IsEnabled = isEnable;
                 btnsurvey.IsEnabled = isEnable;
-                //mbtnAdjustSender.IsEnabled = isEnable;
+                mbtnAdjustSender.IsEnabled = isEnable;
                 mbtnImport.IsEnabled = isEnable;
                 mbtnClear.IsEnabled = isEnable;
                 mbtnSplitFamily.IsEnabled = isEnable;
