@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using YuLinTu.Component.Common;
+using YuLinTu.Data;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.AssociateLandCode
@@ -88,9 +88,14 @@ namespace YuLinTu.Component.AssociateLandCode
 
         #endregion Properties
 
-        public AssociatePersonAndLandArgument() 
+        public AssociatePersonAndLandArgument()
         {
-            resultFilePath= Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            resultFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var db = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
+            if (db != null && !string.IsNullOrEmpty(db.ConnectionString))
+            {
+                databaseFilePath = db.ConnectionString.Replace("data source =", "");
+            }
         }
     }
 }

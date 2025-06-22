@@ -52,5 +52,9 @@ namespace YuLinTu.Component.AssociateLandCode
         }
 
         #endregion Properties
+
+        public AssociateLandCodeArgument() 
+        {
+        }
     }
 }

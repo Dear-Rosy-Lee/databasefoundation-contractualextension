@@ -206,7 +206,7 @@ namespace YuLinTu.Component.AssociateLandCode
                     if (zonecodelist.Count == 0)
                         continue;
                     var zoneNamelist = newzons.Select(t => t.OldName).ToList();
-                    this.ReportInfomation($"挂接{sd.Name}下的数据：{zoneNamelist.JoinStrings("、")}");
+                    this.ReportInfomation($"挂接{sd.Name}下的数据：原地域 {zoneNamelist.JoinStrings("、")}");
                     var oldVps = new List<VirtualPerson>();//原承包方
                     var oldLands = new List<ContractLand>();//原地块
                     foreach (var oldz in zonecodelist)
@@ -310,6 +310,8 @@ namespace YuLinTu.Component.AssociateLandCode
                 var list = new List<KeyValue<double, ContractLand>>();
                 foreach (var item in dellandents)
                 {
+                    if (land.Shape == null)
+                        continue;
 #if DEBUG
                     if (land.LandNumber == "5116022162090300688" && item.LandNumber == "5116022162090700258")
                     {
@@ -321,7 +323,6 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         list.Add(new KeyValue<double, ContractLand>(p, item));
                     }
-
                 }
                 if (list.Count == 0)
                     continue;
