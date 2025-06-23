@@ -283,7 +283,7 @@
                                             <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
                                                 <TextBlock VerticalAlignment="Center"      HorizontalAlignment="Left"
                                                                    Margin="3,0,0,0"
-                                                                                                             Text="{Binding UplaodTime, StringFormat={}{0:yyyy-MM-dd- hh:mm:ss}}"></TextBlock>
+                                                                                                             Text="{Binding UplaodTime, StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}"></TextBlock>
                                             </DataTemplate>
                                             <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
                                                 <StackPanel Orientation="Horizontal"
