@@ -355,7 +355,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="是否脱密"
+                    <!--<DataGridTemplateColumn Header="是否脱密"
                                             Width="100"
                                             SortMemberPath="Name">
                         <DataGridTemplateColumn.CellTemplate>
@@ -380,7 +380,7 @@
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Text, ElementName=ctiveStausTag}" Value="否">
                                                                         <Setter Property="Foreground" Value="Red"/>
-                                                                        <!--<Setter Property="Background" Value="Red"/>-->
+                                                                        --><!--<Setter Property="Background" Value="Red"/>--><!--
                                                                     </DataTrigger>
                                                             <DataTrigger Binding="{Binding Text, ElementName=ctiveStausTag}" Value="是">
                                                                         <Setter Property="Foreground"  Value="#16A34A"/>
@@ -394,10 +394,66 @@
                                                             </TextBlock.Style>
                                                 </TextBlock>
                                                 </StackPanel>
-                                                <!--<StackPanel Orientation="Horizontal">
+                                                --><!--<StackPanel Orientation="Horizontal">
                                                     <Label Content="{Binding DecodeStaus}" FontSize="20" FontWeight="Bold"/>
                                                     <Image Source="Resources\recommended.png" HorizontalAlignment="Right"/>
-                                                </StackPanel>-->
+                                                </StackPanel>--><!--
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                    <DataGridTemplateColumn Header="数据状态"
+                                            Width="100"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <TextBlock VerticalAlignment="Center"
+                                                                   Margin="3,0,0,0"
+                                                                                              Text=" "></TextBlock>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                    <TextBlock Margin="5,0,0,0"  Name="DataStausTag"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding DataStaus}" Visibility="Collapsed"/>
+                                                    <TextBlock Margin="5,0,0,0" 
+                                                               VerticalAlignment="Center"
+                                                            >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="0">
+                                                                        <Setter Property="Foreground" Value="Orange"/>
+                                                                        <Setter Property="Text" Value="待处理"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="1">
+                                                                        <Setter Property="Foreground"  Value="Blue"/>
+                                                                        <Setter Property="Text" Value="处理中"/>
+                                                                    </DataTrigger>
+
+                                                                    <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                                        <Setter Property="Foreground"  Value="#16A34A"/>
+                                                                        <Setter Property="Text" Value="已完成"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="3">
+                                                                        <Setter Property="Foreground" Value="Red"/>
+                                                                        <Setter Property="Text" Value="失败！"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            
                                             </DataTemplate>
                                         </ContentControl.Resources>
                                     </ContentControl>
