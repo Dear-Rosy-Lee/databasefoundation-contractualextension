@@ -60,6 +60,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
 
         public bool AnyChildren(string zoneCode, eLevelOption options = eLevelOption.SelfAndSubs)
         {
+            if (zoneCode.Length >= 9) return false;
             string url = string.Empty;
             url = baseUrl + "/stackcloud/api/open/api/xzdy/code/child/count";
             ApiCaller apiCaller = new ApiCaller();
@@ -98,6 +99,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
         public List<XZQH_XZDY> GetChildrenByZoneCode(string zoneCode, eLevelOption options = eLevelOption.SelfAndSubs, bool friendly = true)
         {
             string url = string.Empty;
+            if (zoneCode.Length >= 9) return null;
              if(options== eLevelOption.SelfAndSubs)
             {
                 url = baseUrl + Constants.Methold_children_filter + "?code=" + zoneCode;

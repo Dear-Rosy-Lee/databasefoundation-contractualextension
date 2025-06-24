@@ -23,5 +23,5 @@ using System.Runtime.InteropServices;
 //      ÄÚ²¿°æ±¾ºÅ
 //      ÐÞ¶©ºÅ
 //
-[assembly: AssemblyVersion("1.0.15.0602")]
-[assembly: AssemblyFileVersion("1.0.15.0602")]
+[assembly: AssemblyVersion("2.0.15.0602")]
+[assembly: AssemblyFileVersion("2.0.15.0602")]
