@@ -65,7 +65,7 @@
                                Text="{Binding Converter={StaticResource LanguageConverter}, ConverterParameter=lang11055}"></TextBlock>
                 </StackPanel>
             </metro:MetroButton>
-            <metro:MetroButton DockPanel.Dock="Right"
+            <metro:MetroButton DockPanel.Dock="Right" Name="ConfirmButton"
                                Padding="10,0"
                                Height="30"
                               Style="{StaticResource Metro_Button_Paneled_Style}"

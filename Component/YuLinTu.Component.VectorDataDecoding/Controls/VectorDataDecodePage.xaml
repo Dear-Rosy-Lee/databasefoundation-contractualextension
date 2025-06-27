@@ -26,7 +26,8 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandRefresh}"
+                                     CommandParameter="{Binding ElementName=dg}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/Refresh.png"
                                            Text="刷新" />
@@ -63,17 +64,64 @@
                                      Command="{Binding CommandStartSingleTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/Shape32.png"
-                                           Text="加载矢量"  />
+                                           Text="上传矢量"  />
                     </ylt:MetroButton>
-                    <ylt:MetroButton Padding="4,2,4,2"
+                    <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                     
                                      Command="{Binding CommandDeletFileTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/maildelete.png"
-                                           Text="删除文件" />
-                    </ylt:MetroButton>
-                   
+                                           Text="删除任务" />
+                    </ylt:MetroButton>-->
+                    <ylt:SuperButton Padding="4,2,4,2"  Style="{StaticResource sbtn-rb-v}" 
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     ImagePosition="Top"
+                                        Image="pack://application:,,,/YuLinTu.Resources;component/images/32/maildelete.png"
+                                     Content="删除数据">
+                        <ylt:SuperButton.DropDownMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding CommandClearBatchData}">
+                                    <MenuItem.Icon>
+                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileDocumentInspect.png"></ylt:AutoGrayImage>
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical" >
+                                            <TextBlock FontWeight="Bold"
+                                                       Text="清空数据"></TextBlock>
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="清空所选任务批次下的所有数据（数据送审前可操作）"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator></Separator>
+                                <MenuItem Command="{Binding CommandDeletBatchTask}">
+                                    <MenuItem.Icon>
+                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileBackupDatabase.png"></ylt:AutoGrayImage>
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold"
+                                                       Text="删除任务"></TextBlock>
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="删除该批次任务（数据送审前可操作）"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ylt:SuperButton.DropDownMenu>
+                    </ylt:SuperButton>
+                    <!--<ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                    
+                                     Command="{Binding CommandDeletFileTask}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/32/maildelete.png"
+                                           Text="清空数据" />
+                    </ylt:MetroButton>-->
+
+
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      
@@ -81,6 +129,14 @@
                         <ylt:ImageTextItem ImagePosition="Top"
                                        Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
                                            Text="数据送审" />
+                    </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     
+                                     Command="{Binding CommandCancelVectorDataToSever}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
+                                           Text="取消送审" />
                     </ylt:MetroButton>
                     <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
@@ -203,7 +259,7 @@
                     </i:Interaction.Triggers>
                 </ylt:MetroTextBox>
             </Border>
-            <ylt:MetroTreeGrid Grid.Row="1"
+            <!--<ylt:MetroTreeGrid Grid.Row="1"
                                Name="treeGrid"
                                RootItemAutoExpand="True"
                                Roots="{Binding Items}"
@@ -212,7 +268,7 @@
                                ylt:DataGridAttacher.ColumnHeaderPadding="5"
                                ylt:DataGridAttacher.CellPadding="5,1">
                 <ylt:MetroTreeGrid.Columns>
-                    <DataGridTemplateColumn Header="批次信息"
+                    <DataGridTemplateColumn Header="批次编码"
                                             Width="250"
                                             SortMemberPath="Name">
                         <DataGridTemplateColumn.CellTemplate>
@@ -235,6 +291,35 @@
                                                     <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center"
                                                                Text="{Binding BatchCode}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ContentControl.Resources>
+                                    </ContentControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="批次名称"
+                                            Width="250"
+                                            SortMemberPath="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ylt:MetroTreeGridRowToggleButton></ylt:MetroTreeGridRowToggleButton>
+                                    <ContentControl Content="{Binding Object}">
+                                        <ContentControl.Resources>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeMode}">
+                                                <ylt:ImageTextItem VerticalAlignment="Center"
+                                                                   Margin="3,0,0,0"
+                                                                   Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png"
+                                                                   Text=""></ylt:ImageTextItem>
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding BatchName}"></TextBlock>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ContentControl.Resources>
@@ -355,7 +440,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <!--<DataGridTemplateColumn Header="是否脱密"
+                    --><!--<DataGridTemplateColumn Header="是否脱密"
                                             Width="100"
                                             SortMemberPath="Name">
                         <DataGridTemplateColumn.CellTemplate>
@@ -404,7 +489,7 @@
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>-->
+                    </DataGridTemplateColumn>--><!--
                     <DataGridTemplateColumn Header="数据状态"
                                             Width="100"
                                             SortMemberPath="Name">
@@ -521,7 +606,183 @@
 
 
                 </ylt:MetroTreeGrid.Columns>
-            </ylt:MetroTreeGrid>
+            </ylt:MetroTreeGrid>-->
+
+            <Grid Grid.Row="1">
+                <ylt:PagableDataGrid Name="dg"
+                                 DataSource="{Binding DataSource}"
+                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                 AutoGenerateColumns="False"
+                                 CanUserAddRows="False"
+                                 CanUserSortColumns="True"
+                                 HeadersVisibility="Column"
+                                 BorderThickness="0"
+                                 IsReadOnly="True"
+                                 IsDynamicColumns="False"
+                                 ylt:DataGridAttacher.ColumnHeaderFontWeight="Bold"
+                                 ylt:DataGridAttacher.ColumnHeaderPadding="5"
+                                 ylt:DataGridAttacher.CellPadding="5">
+                    <i:Interaction.Triggers>
+                        <ylt:AsyncEventTrigger EventName="InitializeColumn">
+                            <ylt:InvokeCommandActionEx Command="{Binding CommandInitializeColumn}"></ylt:InvokeCommandActionEx>
+                        </ylt:AsyncEventTrigger>
+                    </i:Interaction.Triggers>
+                    <ylt:MetroDataGrid.Columns>
+                        <DataGridTemplateColumn Header="批次编码"
+                                            Width="250" 
+                                            SortMemberPath="Name">
+                            <DataGridTemplateColumn.CellTemplate>
+                                
+                                              
+                                                <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                                    <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                                        <Image MaxHeight="20"
+                                                           Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png"></Image>
+                                                        <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding BatchCode}"></TextBlock>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                          
+                                       
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="批次名称"
+                                            Width="250"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
+                                    <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                        <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding BatchName}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="地域编码"
+                                            Width="120"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center"
+                                                            Margin="3,3">
+                                        <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding ZoneCode}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="送审时间"
+                                            Width="120"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"     HorizontalAlignment="Center"
+                                                               Text="{Binding UplaodTime, StringFormat={}{0:yyyy-MM-dd hh:mm:ss}}"></TextBlock>
+
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="数据条数"
+                                            Width="100"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal" 
+                                                            Margin="3,3">
+                                        <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"  HorizontalAlignment="Center"
+                                                               Text="{Binding DataCount}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="处理进度"
+                                            Width="100"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                        <TextBlock Margin="5,0,0,0"  Name="DataStausTag"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding DataStaus}" Visibility="Collapsed"/>
+                                        <TextBlock Margin="5,0,0,0" 
+                                                               VerticalAlignment="Center"
+                                                            >
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="0">
+                                                            <Setter Property="Foreground" Value="Orange"/>
+                                                            <Setter Property="Text" Value="未送审"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="1">
+                                                            <Setter Property="Foreground" Value="Orange"/>
+                                                            <Setter Property="Text" Value="已送审"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                            <Setter Property="Foreground"  Value="Blue"/>
+                                                            <Setter Property="Text" Value="待处理"/>
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                            <Setter Property="Foreground"  Value="#16A34A"/>
+                                                            <Setter Property="Text" Value="处理中"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                            <Setter Property="Foreground"  Value="#16A34A"/>
+                                                            <Setter Property="Text" Value="处理完成"/>
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="3">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                            <Setter Property="Text" Value="失败！"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                   
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="送审时间"
+                                            Width="120"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="OrderID"
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal"
+                                                            Margin="3,3">
+                                        <TextBlock Margin="5,0,0,0"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding NumbersOfDownloads}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </ylt:MetroDataGrid.Columns>
+                </ylt:PagableDataGrid>
+            </Grid>
         </Grid>
     </ylt:ClassicLayout>
 </ylt:Page>

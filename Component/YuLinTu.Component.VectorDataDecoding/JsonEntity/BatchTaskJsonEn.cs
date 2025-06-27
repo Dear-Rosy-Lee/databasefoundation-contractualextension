@@ -25,6 +25,8 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         /// 
         /// </summary>
         public string upload_batch_num { get; set; }
+
+        public string upload_batch_name { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -57,6 +59,8 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         /// 
         /// </summary>
         public string data_status { get; set; }
+
+        public string data_type { get; set; }
         /// <summary>
         /// 
         /// </summary>

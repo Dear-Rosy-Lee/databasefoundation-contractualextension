@@ -23,6 +23,9 @@ using System.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.DF.Controls.Messages;
 using YuLinTu.Component.VectorDataDecoding.Core;
+using System.Windows.Data;
+using YuLinTu.Component.VectorDataDecoding.Controls;
+using System.ServiceModel.Syndication;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
@@ -47,12 +50,18 @@ namespace YuLinTu.Component.VectorDataDecoding
         }
         private bool _UploaDeclassifyDataClient;
 
-        public object SelectedItem
+        public IDataPagerProvider DataSource
+        {
+            get { return _DataSource; }
+            set { _DataSource = value; NotifyPropertyChanged(() => DataSource); }
+        }
+        private IDataPagerProvider _DataSource;//= new DataPagerProviderEmployee();
+        public VectorDecodeBatchModel SelectedItem
         {
             get { return _SelectedItem; }
             set { _SelectedItem = value; NotifyPropertyChanged(() => SelectedItem); }
         }
-        private object _SelectedItem;
+        private VectorDecodeBatchModel _SelectedItem;
 
         public VectorDecodeMode SelectedItemChild
         {
@@ -127,60 +136,64 @@ namespace YuLinTu.Component.VectorDataDecoding
         [MessageHandler(ID = IdMsg.Refresh)]
         private void OnRefresh(object args)
         {
+            
+            var dg = args as PagableDataGrid;
+            if (dg == null) dg = (Workpage.Page.Content as VectorDataDecodePage).dg;
+            (DataSource as DataPagerProviderVectorDecode).CurrentZone = CurrentZone;
+            if (dg!=null&&CurrentZone!=null) dg.Refresh();
+            //var page = Workpage.Page.Content as Page;
+            //Items.Clear();
+            //Workpage.Page.IsBusy = true;
+            //IsRefreshing = true;
+            //tq.Do(go =>
+            //{
 
-            var page = Workpage.Page.Content as Page;
-            Items.Clear();
-            Workpage.Page.IsBusy = true;
-            IsRefreshing = true;
-            tq.Do(go =>
-            {
-                
 
 
-                //Workpage.Page.IsBusy = true;
-                //IsRefreshing = true;
+            //    //Workpage.Page.IsBusy = true;
+            //    //IsRefreshing = true;
 
-                //为了提示加载进度，获取到工作页的实例，这种写法有违背 MVVM 的嫌疑，
-                //但这里为了方便，提示进度的代码允许这样写，其余功能不允许这样写。
-           
-                page.RaiseProgressBegin();
-                //System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                //{
-                   
-                    if(CurrentZone!=null) {
-                        var list = vectorService.QueryBatchTask(CurrentZone.FullCode);
-                        go.Instance.Argument.UserState = list;
-                    }
-                 
-                //});
-                
+            //    //为了提示加载进度，获取到工作页的实例，这种写法有违背 MVVM 的嫌疑，
+            //    //但这里为了方便，提示进度的代码允许这样写，其余功能不允许这样写。
 
-            }, completed =>
-            {
-                if (completed.Result != null)
-                {
-                    var list = completed.Result as ObservableCollection<VectorDecodeBatchModel>;
-                    Items = list;
+            //    page.RaiseProgressBegin();
+            //    //System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            //    //{
 
-                }
+            //        if(CurrentZone!=null) {
+            //            var list = vectorService.QueryBatchTask(CurrentZone.FullCode);
+            //            go.Instance.Argument.UserState = list;
+            //        }
 
-           
+            //    //});
 
-            }, error =>
-            {
-                Workpage.Page.ShowDialog(new YuLinTu.Windows.Wpf.Metro.Components.MessageDialog()
-                {
-                    Header = "错误",
-                    Message = string.Format("加载失败，错误详细信息为 {0}", error.Exception),
-                    MessageGrade = eMessageGrade.Error
-                });
 
-            }, ended: ended =>
-            {
-                page.RaiseProgressEnd();
-                IsRefreshing = false;
-                Workpage.Page.IsBusy = false;
-            });
+            //}, completed =>
+            //{
+            //    if (completed.Result != null)
+            //    {
+            //        var list = completed.Result as ObservableCollection<VectorDecodeBatchModel>;
+            //        Items = list;
+
+            //    }
+
+
+
+            //}, error =>
+            //{
+            //    Workpage.Page.ShowDialog(new YuLinTu.Windows.Wpf.Metro.Components.MessageDialog()
+            //    {
+            //        Header = "错误",
+            //        Message = string.Format("加载失败，错误详细信息为 {0}", error.Exception),
+            //        MessageGrade = eMessageGrade.Error
+            //    });
+
+            //}, ended: ended =>
+            //{
+            //    page.RaiseProgressEnd();
+            //    IsRefreshing = false;
+            //    Workpage.Page.IsBusy = false;
+            //});
         }
 
 
@@ -195,12 +208,11 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         #endregion
 
-   
+
+      
 
 
-   
-     
-        
+
 
 
         #region Ctor
@@ -211,6 +223,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
             Workpage = workpage;
             vectorService = new VectorService();
+            _DataSource = new DataPagerProviderVectorDecode(CurrentZone, vectorService);
         }
 
         #endregion
@@ -231,6 +244,15 @@ namespace YuLinTu.Component.VectorDataDecoding
             editor.pg.Object = obj;
             editor.pgTask.Object = task;
             editor.pg.DataContext = obj;
+            System.Windows.Data.Binding binding = new System.Windows.Data.Binding("ConfirmEnabled")
+            {
+                Source = obj,
+                Mode = BindingMode.TwoWay,
+                //ValidatesOnExceptions = true,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+
+            editor.ConfirmButton.SetBinding(MetroButton.IsEnabledProperty, binding);
             this.Workpage.TaskCenter.Add(task);
             task.Completed += new TaskCompletedEventHandler((o, t) =>
             {
@@ -314,18 +336,21 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private void OnStartSingleTask(object args)
         {
-            
-            var task = new UploadVectorDataTolocalDB();
-           var arg = new UploadVectorDataTolocalDBArgument();
-           
-           if(SelectedItem is VectorDecodeBatchModel)
+
+            var task = new UploadVectorDataToBatch(); //UploadVectorDataTolocalDB();
+            var arg = new UploadVectorDataToBatchArgument();//UploadVectorDataTolocalDBArgument();
+
+
+           if (SelectedItem is VectorDecodeBatchModel)
             {
                 arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
-            }else if(SelectedItem is VectorDecodeMode)
-            {
-                arg.BatchCode = (SelectedItem as VectorDecodeMode).BatchCode;
+                arg.ZoneCode = (SelectedItem as VectorDecodeBatchModel).ZoneCode;
             }
-
+            //else if(SelectedItem is VectorDecodeMode)
+            //{
+            //    arg.BatchCode = (SelectedItem as VectorDecodeMode).BatchCode;
+            //}
+           
             task.Argument = arg;
             ShowCreateTaskWindow(task, arg);
        
@@ -349,26 +374,25 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanDeletFileTask(object args)
         {
-            if (SelectedItem == null||!(SelectedItem is VectorDecodeMode)) return false;
-            var obj = SelectedItem as VectorDecodeMode;
-            if(Items.FirstOrDefault(t => t.BatchCode.Equals(obj.BatchCode)).DecodeProgress== "已送审")return false ;
+            //if (SelectedItem == null||!(SelectedItem is VectorDecodeMode)) return false;
+            //var obj = SelectedItem as VectorDecodeMode;
+            //if(Items.FirstOrDefault(t => t.BatchCode.Equals(obj.BatchCode)).DecodeProgress== "已送审")return false ;
             return true;
         }
 
         private void OnDeletFileTask(object args)
         {
        
-            var item = SelectedItem as VectorDecodeMode;      
-            DbContext.BeginTransaction();
-            var landQ = DbContext.CreateQuery<SpaceLandEntity>();
-            var fileQ = DbContext.CreateQuery<VectorDecodeMode>();
-            landQ.Where(t => t.FileID.Equals(item.FileID)).Delete().Save();
-            fileQ.Where(t => t.FileID.Equals(item.FileID)).Delete().Save();
-            DbContext.CommitTransaction();
-            //System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-            //{
-                OnRefresh(args);
-            //}));
+            //var item = SelectedItem as VectorDecodeMode;      
+            //DbContext.BeginTransaction();
+            //var landQ = DbContext.CreateQuery<SpaceLandEntity>();
+            //var fileQ = DbContext.CreateQuery<VectorDecodeMode>();
+            //landQ.Where(t => t.FileID.Equals(item.FileID)).Delete().Save();
+            //fileQ.Where(t => t.FileID.Equals(item.FileID)).Delete().Save();
+            //DbContext.CommitTransaction();
+            
+            //    OnRefresh(args);
+           
         }
         #region Methods - System
 
@@ -377,6 +401,65 @@ namespace YuLinTu.Component.VectorDataDecoding
         #endregion
 
         #endregion
+        #region ClearData
+        public DelegateCommand CommandDeletBatchTask { get { return _CommandDeletBatchTask ?? (_CommandDeletBatchTask = new DelegateCommand(args => DeletBatchTask(args), args => OnCanDeletBatchTask(args))); } }
+        private DelegateCommand _CommandDeletBatchTask;
+
+        private bool OnCanDeletBatchTask(object args)
+        {
+            if (SelectedItem == null || SelectedItem.DataStaus!="0") return false;
+            
+            return true;
+        }
+
+        private void DeletBatchTask(object args)
+        {
+            Workpage.Page.ShowDialog(new YuLinTu.Windows.Wpf.Metro.Components.MessageDialog()
+            {
+                Header = "提示",
+                Message = string.Format($"确认删除该批次任务：{SelectedItem.BatchName}({SelectedItem.BatchCode})！"),
+                MessageGrade = eMessageGrade.Warn
+            }, (a, b) =>
+            {
+                if (b == eCloseReason.Confirm)
+                {
+                    vectorService.DeletBatchTask(SelectedItem.BatchCode);
+                    OnRefresh(args);
+                }
+            });
+            
+         
+        }
+
+        public DelegateCommand CommandClearBatchData{ get { return _CommandClearBatchData ?? (_CommandClearBatchData = new DelegateCommand(args => ClearBatchData(args), args => OnCanClearBatchData(args))); } }
+        private DelegateCommand _CommandClearBatchData;
+
+        private bool OnCanClearBatchData(object args)
+        {
+            if (SelectedItem == null || SelectedItem.DataStaus != "0") return false;
+            return true;
+        }
+
+        private void ClearBatchData(object args)
+        {
+            Workpage.Page.ShowDialog(new YuLinTu.Windows.Wpf.Metro.Components.MessageDialog()
+            {
+                Header = "提示",
+                Message = string.Format($"确认清空该批次任务的数据：{SelectedItem.BatchName}({SelectedItem.BatchCode})！"),
+                MessageGrade = eMessageGrade.Warn
+            }, (a, b) =>
+            {
+                if (b == eCloseReason.Confirm)
+                {
+                    vectorService.ClearBatchData(SelectedItem.BatchCode);
+                    OnRefresh(args);
+                }
+            });
+        
+           
+        }
+        #endregion
+
 
         #region Commands - UploadVectorDataToSeverTask
 
@@ -385,26 +468,88 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanUploadVectorDataToSeverTask(object args)
         {
-            if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
-            if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
+            //if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
+            //if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
+            if(SelectedItem==null|| SelectedItem.DataStaus!="0") return false;
             return true;
         }
 
         private void OnUploadVectorDataToSeverTask(object args)
         {
 
-            var task = new UploadVectorDataToSever();
-            var arg = new UploadVectorDataToSeverArgument();
-
-            if (SelectedItem is VectorDecodeBatchModel)
+            var dlg = new MessageDialog()
             {
-                arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
-            }
+                Header = "提示",
+                Message = string.Format($"将批次{SelectedItem.BatchName}({SelectedItem.BatchCode})中数据送审！送审后将不能在本批次进行数据的添加和删除操作！"),
 
-            ShowCreateTaskWindow(task, arg);
+                MessageGrade = eMessageGrade.Warn,
+
+            };
+            dlg.ConfirmStart += (ss, aa) =>
+            {
+                vectorService.ChangeBatchDataStatus(SelectedItem.BatchCode, out bool sucess);
+                OnRefresh(args);
+            };;
+            dlg.Confirm += (ss, aa) =>
+            {
+                
+            };
+            dlg.ConfirmCompleted += (s, a) =>
+            {
+               
+            };
+            Workpage.Page.ShowMessageBox(dlg);
+          
+           
+
 
         }
 
+ 
+
+        public DelegateCommand CommandCancelVectorDataToSever { get { return _CommandCancelVectorDataToSever ?? (_CommandCancelVectorDataToSever = new DelegateCommand(args => OnCommandCancelVectorDataToSever(args), args => OnCanCommandCancelVectorDataToSever(args))); } }
+        private DelegateCommand _CommandCancelVectorDataToSever;
+
+        private bool OnCanCommandCancelVectorDataToSever(object args)
+        {
+            //if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
+            //if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
+            if (SelectedItem == null || SelectedItem.DataStaus != "1") return false;
+            return true;
+        }
+
+        private void OnCommandCancelVectorDataToSever(object args)
+        {
+
+            var dlg = new MessageDialog()
+            {
+                Header = "提示",
+                Message = string.Format($"取消送审！批次{SelectedItem.BatchName}({SelectedItem.BatchCode})"),
+
+                MessageGrade = eMessageGrade.Warn,
+
+            };
+            dlg.ConfirmStart += (ss, aa) =>
+            {
+                vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
+                OnRefresh(args);
+            }; ;
+            dlg.Confirm += (ss, aa) =>
+            {
+
+            };
+            dlg.ConfirmCompleted += (s, a) =>
+            {
+
+            };
+            Workpage.Page.ShowMessageBox(dlg);
+
+
+
+
+        }
+
+     
 
         #region Methods - System
 
@@ -460,10 +605,8 @@ namespace YuLinTu.Component.VectorDataDecoding
 
             var task = new CreateVectorDecBatchTask();
             var arg = new CreateVectorDecBatchTaskArgument();
-
-         
-            arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;
-
+            arg.ZoneCode = CurrentZone.FullCode;
+            arg.ZoneName=CurrentZone.Name;
 
             ShowCreateTaskWindow(task, arg);
 
@@ -492,8 +635,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void OnDownloadVectorDataByZoneTask(object args)
         {
 
-            var task = new DownloadVectorDataByZone();
-            var arg = new DownloadVectorDataByZoneArgument();
+            var task = new DownLoadVectorDataBeforeDoded(); //new DownloadVectorDataByZone();
+            var arg = new DownLoadVectorDataBeforeDodedArgument();
 
 
             arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;

@@ -233,6 +233,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DataPagerProviderVectorDecode.cs" />
     <Compile Include="Controls\PropertyEditor.xaml.cs">
       <DependentUpon>PropertyEditor.xaml</DependentUpon>
     </Compile>
@@ -248,9 +249,12 @@
     <Compile Include="Core\ApiCaller.cs" />
     <Compile Include="Core\AreaNodeRepeatCheck.cs" />
     <Compile Include="Core\ClientEum.cs" />
+    <Compile Include="Core\DataTypeEum.cs" />
     <Compile Include="Core\EncrypterSM.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\DecodingProfile.cs" />
+    <Compile Include="Core\ExportToSuperShpfile.cs" />
+    <Compile Include="Core\FeatureObject.cs" />
     <Compile Include="Core\LandEntity.cs" />
     <Compile Include="Core\ShpFileDescription.cs" />
     <Compile Include="Core\VectorDataProgress.cs" />
@@ -259,11 +263,13 @@
     <Compile Include="Entrance.cs" />
     <Compile Include="JsonEntity\BatchTaskJsonEn.cs" />
     <Compile Include="JsonEntity\LandJsonEn.cs" />
+    <Compile Include="JsonEntity\LogEn.cs" />
     <Compile Include="JsonEntity\StaticsLandJsonEn.cs" />
     <Compile Include="JsonEntity\ZoneJsonEn.cs" />
     <Compile Include="Model\VectorDecodeBatchModel.cs" />
     <Compile Include="Model\VectorDecodeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ShapeFileRepostiory.cs" />
     <Compile Include="Repository\ZoneDecRepository.cs" />
     <Compile Include="Task\CreateVectorDecBatchTask.Argument.cs">
       <DependentUpon>CreateVectorDecBatchTask.cs</DependentUpon>
@@ -279,6 +285,10 @@
     </Compile>
     <Compile Include="Task\DownLoadVectorDataAfterDecodeByZone.cs" />
     <Compile Include="Task\DownLoadVectorDataBase.cs" />
+    <Compile Include="Task\DownLoadVectorDataBeforeDoded.Argument.cs">
+      <DependentUpon>DownLoadVectorDataBeforeDoded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\DownLoadVectorDataBeforeDoded.cs" />
     <Compile Include="Task\DownloadVectorDataByZone.Argument.cs">
       <DependentUpon>DownloadVectorDataByZone.cs</DependentUpon>
     </Compile>
@@ -287,6 +297,10 @@
       <DependentUpon>UploadVectorDataAfterDecode.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\UploadVectorDataAfterDecode.cs" />
+    <Compile Include="Task\UploadVectorDataToBatch.Argument.cs">
+      <DependentUpon>UploadVectorDataToBatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\UploadVectorDataToBatch.cs" />
     <Compile Include="Task\UploadVectorDataTolocalDB.Argument.cs">
       <DependentUpon>UploadVectorDataTolocalDB.cs</DependentUpon>
     </Compile>

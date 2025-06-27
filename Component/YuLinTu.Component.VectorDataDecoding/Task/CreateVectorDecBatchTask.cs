@@ -7,6 +7,7 @@ using System.Text.Json;
 using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
+using YuLinTu.Security;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
@@ -31,7 +32,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         public CreateVectorDecBatchTask()
         {
             Name = "创建矢量数据脱密任务";
-            Description = "选择乡镇或村级地域后创建矢量数据脱密任务";
+            Description = "选择乡镇地域后创建矢量数据处理任务";
         }
 
         #endregion
@@ -65,13 +66,16 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             string url = Constants.baseUrl+ Constants.Methold_CreateVectorDecTask;
             Dictionary<string,string>body=new Dictionary<string,string>();
             body.Add("dybm", args.ZoneCode);
-            //body.Add("client_id", "CLIENT_12345");
+            var clientID = new Authenticate().GetApplicationKey();
+
+            body.Add("client_id", clientID);
+            body.Add("upload_batch_name", args.BatchName);
             //body.Add("remarks", "测试");
             //var jsonData = JsonSerializer.Serialize(parms);
             var en = apiCaller.PostResultAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             if(en!=null)
             {
-                string info = "创建矢量脱密任务成功！任务批次编码为：" + en.upload_batch_num;
+                string info = "创建矢量数据处理任务成功！任务批次编码为：" + en.upload_batch_num;
                 this.ReportInfomation(info);
             }
 

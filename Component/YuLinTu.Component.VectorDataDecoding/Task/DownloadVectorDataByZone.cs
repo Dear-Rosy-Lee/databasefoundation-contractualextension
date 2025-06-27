@@ -24,7 +24,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
     public class DownloadVectorDataByZone : DownLoadVectorDataBase
     {
         #region Properties
-
+        private int shpLandCountLimit = 20000;
         #endregion
 
         #region Fields

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using System.Windows.Navigation;
 using static YuLinTu.tGISCNet.PointAreaRelationCheck;
 
@@ -118,6 +119,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         }
         public string PostDataAsync(string url, Dictionary<string, string> Headers, string jsonData,out bool sucess)
         {
+            var responseBody=string.Empty;
             try
             {
                 sucess = false;
@@ -130,12 +132,9 @@ namespace YuLinTu.Component.VectorDataDecoding
                
                 // 发送 POST 请求
                 HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
-
-                response.EnsureSuccessStatusCode();
-
                 // 读取响应内容
-                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();                  
                 if (response.IsSuccessStatusCode)
                 {
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
@@ -143,26 +142,11 @@ namespace YuLinTu.Component.VectorDataDecoding
                         JsonElement root = doc.RootElement;
                         JsonElement data = new JsonElement();
                         var res = root.TryGetProperty("data", out data);
-                        if (res)
-                        {
-                            data = data.GetProperty("data");
-                            JsonElement jsuccess = data.GetProperty("success");
-                            if (jsuccess.ToString().ToLower().Equals("false"))
-                            {
-                                string err = root.GetProperty("errors").ToString();
-                                throw new Exception(err);
-                            }
-                            else
-                            {
-                                sucess=true;
-                               
-                            }
-                        }
 
-                        var msg = data.TryGetProperty("message", out data);
-                 
-                            //JsonElement jsuccess = root.GetProperty("data");
-                            return data.ToString();
+                        //var msg = root.TryGetProperty("message", out data);
+
+                        sucess = true;
+                       return res.ToString();
                
                     }
                 }
@@ -170,10 +154,18 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
             catch (HttpRequestException ex)
             {
-                throw ex;
+                sucess = false;
+                var msg = responseBody.ToString();         
+                return msg;
             }
         }
 
+        //public class ResponseEntity
+        //{
+        //    public string data { get; set; }
+        //    public string Message { get; set; }
+        //    public string Errors { get; set; }
+        //}
         public  T PostResultAsync<T>(string url, Dictionary<string, string> Headers, string jsonData) where T : class, new()
         {
           
@@ -188,18 +180,16 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                 // 发送 POST 请求
                 HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
-
+                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 response.EnsureSuccessStatusCode();
 
                 // 读取响应内容
-                var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
                     {
                         JsonElement root = doc.RootElement;
-                        JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("data");
+                        JsonElement data = root.GetProperty("data");
 
                         // 提取并解析 results 字段的内容
                         string resultsJson = data.ToString();
@@ -237,17 +227,18 @@ namespace YuLinTu.Component.VectorDataDecoding
                 // 发送 POST 请求
                 HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
 
-                response.EnsureSuccessStatusCode();
+        
 
                 // 读取响应内容
                 var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();
+
                 if (response.IsSuccessStatusCode)
                 {
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
                     {
                         JsonElement root = doc.RootElement;
-                        JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("data");
+                        JsonElement data = root.GetProperty("data");
 
                         // 提取并解析 results 字段的内容
                         string resultsJson = data.ToString();
@@ -485,9 +476,10 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
 
         }
-        public string GetResultMessageStringAsync(string url, Dictionary<string, string> Headers, Dictionary<string, string> Pramas, bool ingoreNameCase = false)
+        public string GetResultMessageStringAsync(string url, Dictionary<string, string> Headers, Dictionary<string, string> Pramas, out bool sucess)
         {
-
+            sucess = false;
+            var responseBody = string.Empty;
             foreach (var kvp in Headers)
             {
                 client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -498,17 +490,16 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 HttpResponseMessage response = client.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
                 response.EnsureSuccessStatusCode();
-                string responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                // 读取响应内容
-                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                 responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+   
                 using (JsonDocument doc = JsonDocument.Parse(responseBody))
                 {
                     JsonElement root = doc.RootElement;
-                    JsonElement data = root.GetProperty("data").GetProperty("data").GetProperty("message");
+                    JsonElement data = root.GetProperty("data");
 
                     // 提取并解析 results 字段的内容
                     string resultsJson = data.ToString();
-
+                    sucess=true;
                     // 再次解析 results 字符串为 JSON 对象
                     return resultsJson;
                 }
@@ -516,7 +507,9 @@ namespace YuLinTu.Component.VectorDataDecoding
             }
             catch (Exception ex)
             {
-                throw ex;
+                sucess = false;
+                var msg = responseBody.ToString();
+                return msg;
             }
 
         }

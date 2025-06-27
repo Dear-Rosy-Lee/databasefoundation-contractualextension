@@ -90,18 +90,18 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
 
-        [DisplayLanguage("是否通过检查", IsLanguageName = false)]
+        [Enabled(false)]
    
-        public bool? CheckPass
+        public bool ConfirmEnabled
         {
             get { return checkPass; }
             set
             {
                 checkPass = value;
-                NotifyPropertyChanged("CheckPass");
+                NotifyPropertyChanged("ConfirmEnabled");
             }
         }
-        public bool? checkPass;
+        public bool checkPass;
 
 
 
@@ -116,7 +116,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             {
                 CheckInfo += t + "\n";
             });
-            CheckPass = check; LandCount = count;
+            ConfirmEnabled = check; LandCount = count;
         }
 
         #region Ctor

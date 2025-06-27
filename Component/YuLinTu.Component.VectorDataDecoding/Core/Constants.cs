@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -33,12 +34,31 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_StaticsLand = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/unclassified/statistics/dybm";
         internal const string Methold_UpdateApprovalStatus = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/submit/approval";
         internal const string Methold_UpdateDownNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/pull/num";
-        internal const string Methold_children_filter = "/stackcloud/api/open/api/xzdy/children/filter/codes";     
-
+        internal const string Methold_children_filter = "/stackcloud/api/open/api/xzdy/children/filter/codes";
+        internal const string Methold_Update_metadata = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/metadata_json";
+        internal const string Methold_Delete_BatchTask = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/delete";
+        internal const string Methold_Delete_ClearBatchData = "/stackcloud/api/open/api/dynamic/onlineDecryption/data/delete/by/upload_batch_num";
+        //internal const string Methold_Delete_ClearBatchData = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/submit/approval";
+        internal const string Methold_UpLoadBatchDataNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/data/num";
+        public const string CancleBatchDataSendStatus = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/cancel/submit/approval";
+        internal const string Methold_WriteLog = "/stackcloud/api/open/api/dynamic/onlineDecryption/log/add";
+        internal static string Methold_uploadBatchNums= "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/uploadBatchNums";
         internal const int VectorDecodeSrid = 4490;
 
         internal const string clientName = "测绘局";
         internal const string HelpFileName = "空间匹配工具使用说明.pdf";
         internal static List<string> ZonesCodes = new List<string>();
+   
+
+        internal static Dictionary<string, string> DataTypes { get {
+                var vaule = new Dictionary<string, string>();
+                vaule.Add("承包地", "DKBM");
+                return vaule;
+            } }
+
+
+
+        internal const int DefualtSrid = 4490;
+        internal const string DefualtPrj = "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]";
     }
 }

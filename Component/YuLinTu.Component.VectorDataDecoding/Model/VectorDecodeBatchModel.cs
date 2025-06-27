@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using YuLinTu;
+using YuLinTu.Data.Dynamic;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
@@ -15,7 +16,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
  
 
-  
+        public string BatchName { get; set; }
         public string BatchCode { get;set;   }
         public string ZoneCode { get; set; }
         public string UplaodTime { get; set; }
@@ -26,7 +27,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public int NumbersOfDownloads { get; set; }
         public string SupportingMaterials { get; set; }
 
-
+        public string PropertyMetadata { get; set; }
         public System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode> Children { get; set; }
         #endregion
 

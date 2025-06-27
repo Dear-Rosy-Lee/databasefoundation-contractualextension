@@ -163,4 +163,12 @@ namespace YuLinTu.Component.VectorDataDecoding
         /// </summary>
         public YuLinTu.Spatial.Geometry Shape { get; set; }
     }
+
+    internal class DecodeLandEntity
+    {
+        public string upload_batch_num { get; set; }
+        public string DKBM { get; set; }
+        public YuLinTu.Spatial.Geometry Shape { get; set; }
+    }
+
 }

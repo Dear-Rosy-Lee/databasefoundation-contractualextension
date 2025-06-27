@@ -5,14 +5,21 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 using YuLinTu.Data;
+using YuLinTu.Data.Dynamic;
 using YuLinTu.DF;
 using YuLinTu.DF.Data;
+using YuLinTu.DF.Enums;
+using YuLinTu.DF.Logging;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace YuLinTu.Component.VectorDataDecoding.Core
 {
@@ -31,7 +38,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             apiCaller = new ApiCaller();
            
         }
-        public ObservableCollection<VectorDecodeBatchModel> QueryBatchTask(string zoneCode,int page=1,int pageSize=2000)
+        public ObservableCollection<VectorDecodeBatchModel> QueryBatchTask(string zoneCode,int page=1,int pageSize=2000, string BatchType = "all")
         {
             apiCaller.client = new HttpClient();
             ObservableCollection< VectorDecodeBatchModel >result= new ObservableCollection<VectorDecodeBatchModel >();
@@ -40,19 +47,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             body.Add("page", page);
             body.Add("pageSize",pageSize);
             body.Add("dybm",zoneCode);
+            body.Add("type", BatchType);
             var en = apiCaller.PostResultListAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             en.ForEach(e =>
             {
                 var model =new VectorDecodeBatchModel();
+                model.BatchName = e.upload_batch_name;
                 model.BatchCode = e.upload_batch_num;
                 model.ZoneCode = e.dybm;
                 model.NumbersOfDownloads = e.download_num;
                 model.UplaodTime = e.updtime;
                 model.DataCount= e.data_count;
                 model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
-                model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
-                model.DataStaus = e.data_status;
-                var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
+                //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
+                model.DataStaus = e.process_status;
+                model.PropertyMetadata = e.metadata_json;
+                 var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
                 if(child != null&& child.Count > 0)
                 {
                     model.Children = child;
@@ -199,7 +209,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
             parms.Add("upload_batch_num", batchCode);
           
-            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms);
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out bool isSucess);
             return message;
         }
 
@@ -215,8 +225,194 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             parms.Add("type", type);
             parms.Add("upload_batch_num", batchCode);
 
-            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms);
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out bool isSucess);
+            message = GetReposneMessage(isSucess, message);
             return message;
+        }
+
+        public string ClearBatchData(string batchCode)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_Delete_ClearBatchData;
+            Dictionary<string, string> parms = new Dictionary<string, string>();                  
+            parms.Add("upload_batch_num", batchCode);
+
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out bool isSucess);
+            message = GetReposneMessage(isSucess, message);
+            return message;
+        }
+
+        public string DeletBatchTask(string batchCode)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_Delete_BatchTask;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+
+
+
+            parms.Add("upload_batch_num", batchCode);
+
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out bool isSucess);
+            message = GetReposneMessage(isSucess, message);
+            return message;
+        }
+
+        public string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list,  string batchCode, bool isCover,out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = baseUrl + Constants.Methold_upload;
+            //var jsonData = JsonSerializer.Serialize(list);
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("upload_batch_num", batchCode);
+
+            body.Add("dataOperation", isCover ? "2" : "1");
+            body.Add("data", list);
+            var bodyJson = JsonSerializer.Serialize(body);
+            string msg = apiCaller.PostDataAsync(url, AppHeaders, bodyJson, out sucess);
+            msg = GetReposneMessage(sucess, msg);
+            
+            return msg;
+        }
+
+        private static string GetReposneMessage(bool sucess, string msg,Func<string, string> SucessMsgHandel=null)
+        {
+            if (!sucess)
+            {
+           
+                msg = JsonSerializer.Deserialize<Dictionary<string, object>>(msg)["message"].ToString();
+            }
+            else
+            {
+                try
+                {
+                    msg = JsonSerializer.Deserialize<Dictionary<string, object>>(msg)["data"].ToString();
+                }
+                catch
+                {
+
+                }
+                msg= SucessMsgHandel==null? msg:SucessMsgHandel?.Invoke(msg);
+            }
+
+            return msg;
+        }
+
+        public string UpLoadVectorMeata(string batchCode, List<PropertyMetadata> properties)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_Update_metadata;
+            var metaJson = JsonSerializer.Serialize(properties);
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("upload_batch_num", batchCode);
+            body.Add("metadata_json", metaJson);            
+            
+            var jsonData = JsonSerializer.Serialize(body);
+            //var entity = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonData);
+            //var jj = entity["metadata_json"].ToString();
+            //var ff = JsonSerializer.Deserialize<List<PropertyMetadata>>(jj);
+            var msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out bool isSucess);
+           
+            msg = GetReposneMessage(isSucess, msg);
+            return msg;
+        }
+        public string ChangeBatchDataStatus(string batchCode, out bool sucess1)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpdateApprovalStatus;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+            parms.Add("upload_batch_num", batchCode);
+
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out  sucess1);
+            message = GetReposneMessage(sucess1, message);
+            return message;
+        }
+
+        public string UpLoadBatchDataNum(string batchCode)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpLoadBatchDataNum;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+            parms.Add("upload_batch_num", batchCode);
+
+        
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out bool isSucess);
+            message = GetReposneMessage(isSucess, message, (tag) =>{
+                if (tag == "1")
+                {
+                   return  "更新数据量成功！";
+                }
+                else
+                {
+                    return "更新数据量失败！";
+                }
+            });
+            return message;
+        }
+
+        public string CancleBatchDataSendStatus(string batchCode, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.CancleBatchDataSendStatus;
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+            parms.Add("upload_batch_num", batchCode);
+
+            var message = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms, out sucess);
+            message = GetReposneMessage(sucess, message);
+            return message;
+        }
+
+        public void WriteLog(LogEn log)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_WriteLog;
+            var jsonData = JsonSerializer.Serialize(log);
+            string msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out bool sucess);
+            msg = GetReposneMessage(sucess, msg);
+
+        }
+
+        public void UpdateBatchsStaus(List<string> batchCodes)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_uploadBatchNums;
+            Dictionary<string, List<string>> body = new Dictionary<string, List<string>>();
+            body.Add("uploadBatchNums", batchCodes);
+         
+            var jsonData = JsonSerializer.Serialize(body);
+            string msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out bool sucess);
+            msg = GetReposneMessage(sucess, msg);
+        }
+
+        public List<FeatureObject> DownVectorDataByBatchCode(string batchCode, int pageIndex, int pageSize  )
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_unclassified;
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("page", pageIndex);
+            body.Add("pageSize", pageSize);
+            body.Add("upload_batch_num", batchCode);
+            var jsonData = JsonSerializer.Serialize(body);
+            var result = apiCaller.PostResultListAsync<LandJsonEn2>(url, AppHeaders, jsonData);
+            List<FeatureObject> re=new List<FeatureObject>();
+            if (result != null)
+            {
+
+                foreach (var item in result)
+                {
+                    var fo = new FeatureObject(); 
+                    var data= JsonSerializer.Deserialize<Dictionary<string, object>>(item.metadata_json);               
+                    data.Add("upload_batch_num", batchCode);
+                    fo.Object = data; // item.metadata_json;
+                    var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key) + "#4490";
+                    fo.Geometry = YuLinTu.Spatial.Geometry.FromString(shapeText);
+                  
+                    fo.GeometryPropertyName = "Shape";
+                    re.Add(fo);
+           
+                }
+            }
+            return re;
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GeoAPI.CoordinateSystems;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -20,6 +21,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DescriptionLanguage("待处理矢量数据所在地域名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
          UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        
 
         public string ZoneName
         {
@@ -46,31 +48,48 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             set
             {
                 zoneCode = value;
-                //if(zoneCode.Length<9)
-                //{
-                //    Info ="无法创建矢量数据脱密任务！请选择乡镇或村级地域后创建任务。";
-                //}
+            
                 NotifyPropertyChanged("ZoneCode");
             }
         }
-        //[DisplayLanguage("提示说明", IsLanguageName = false)]
-        //[DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
-        //[PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBox),
-        // UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
-        //[WatermaskLanguage("对数据进行初步检查并提示")]
-        //public string Info
-        //{
-        //    get { return _Info; }
-        //    set
-        //    {
-        //        _Info = value;
-        //        NotifyPropertyChanged("Info");
-        //    }
-        //}
 
-        //private string _Info;
+        [DisplayLanguage("批次名称", IsLanguageName = false)]
+        [DescriptionLanguage("待处理批次名称", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        [Required]
+        [WatermaskLanguage("请命名批次名称，如XXX村承包地")]
+        public string BatchName
+        {
+            get { return _BatchName; }
+            set
+            {
+                _BatchName = value;
+                if (_BatchName.IsNotNullOrEmpty() && _BatchName.Length > 3)
+                {
+                    ConfirmEnabled = true;
+                }
+                else
+                {
+                    ConfirmEnabled = false;
+                }
+                    NotifyPropertyChanged("BatchName");
+            }
+        }
+        private string _BatchName;
 
-       
+        [Enabled(false)]
+        public bool ConfirmEnabled
+        {
+            get { return checkPass; }
+            set
+            {
+                checkPass = value;
+                NotifyPropertyChanged("ConfirmEnabled");
+            }
+        }
+        public bool checkPass = false;
+
         #endregion
 
         #region Ctor

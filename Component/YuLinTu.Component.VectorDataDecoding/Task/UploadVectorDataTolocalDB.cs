@@ -60,7 +60,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("请选择脱密数据存放路径！");
                 return;
             }
-            if(args.CheckPass==false)
+            if(args.ConfirmEnabled == false)
             {
                 this.ReportError("数据未通过检查！");
                 return;
@@ -90,8 +90,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return ;
             }
             string prj4490 = "GEOGCS[\"GCS_China_Geodetic_Coordinate_System_2000\",DATUM[\"D_China_2000\",SPHEROID[\"CGCS2000\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]";
-            ProjectionInfo sreproject = ProjectionInfo.FromEsriString(prj4490);
-            ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
+            ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prj4490);
+            ProjectionInfo sreproject = ProjectionInfo.FromEsriString(prjstr);
             List<SpaceLandEntity> entities = new List<SpaceLandEntity>();
             int step = 300;int tag = 0;
             var filedata = CreateFileInformationData(argument); //CommitFileInformationData(argument);
