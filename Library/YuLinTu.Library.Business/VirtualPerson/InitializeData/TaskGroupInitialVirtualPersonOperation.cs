@@ -80,6 +80,7 @@ namespace YuLinTu.Library.Business
             {
                 currentVps = listAllPersons.FindAll(c => c.ZoneCode.Equals(zone.FullCode));
                 var argument = groupArgument.ConvertTo<TaskInitialVirtualPersonArgument>();
+                argument.CurrentZone = zone;
                 /*
                 new TaskInitialVirtualPersonArgument();
                 argument.Database = dbContext;
@@ -113,12 +114,12 @@ namespace YuLinTu.Library.Business
                 argument.CNation = groupArgument.CNation;
                 argument.VirtualType = groupArgument.VirtualType;
 
-                argument.FarmerFamilyNumberIndex = farmerFamilyNumberIndex;
-                argument.PersonalFamilyNumberIndex = personalFamilyNumberIndex;
-                argument.UnitFamilyNumberIndex = unitFamilyNumberIndex;
                 argument.VillageInlitialSet = groupArgument.VillageInlitialSet;
                 */
 
+                argument.FarmerFamilyNumberIndex = farmerFamilyNumberIndex;
+                argument.PersonalFamilyNumberIndex = personalFamilyNumberIndex;
+                argument.UnitFamilyNumberIndex = unitFamilyNumberIndex;
                 argument.ListPerson = VirtualPersonFilter(groupArgument, currentVps);
 
                 var operation = new TaskInitialVirtualPersonOperation();

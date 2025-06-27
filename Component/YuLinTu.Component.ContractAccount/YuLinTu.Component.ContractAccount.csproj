@@ -259,6 +259,7 @@
       <DependentUpon>UploadSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entrance.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>
   <ItemGroup>
