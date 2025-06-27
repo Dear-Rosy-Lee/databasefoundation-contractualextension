@@ -69,12 +69,10 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                 }
                 // 发送 POST 请求
                 HttpResponseMessage response = client.PostAsync(url, content).GetAwaiter().GetResult();
-
-                response.EnsureSuccessStatusCode();
+                //response.EnsureSuccessStatusCode();
 
                 // 读取响应内容
                 var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
@@ -107,12 +105,29 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                         }
                     }
                 }
-                return "";
+                else
+                {
+                    using (JsonDocument doc = JsonDocument.Parse(responseBody))
+                    {
+                        JsonElement root = doc.RootElement;
+                        JsonElement data = new JsonElement();
+                        var res = root.TryGetProperty("message", out data);
+                        if (res)
+                        {
+                            throw new Exception(data.ToString());
+                        }
+                        else
+                        {
+                            throw new Exception(responseBody.ToString());
+                        }
+                    }
+                }
             }
             catch (HttpRequestException ex)
             {
                 throw ex;
             }
+            return "";
         }
 
 
