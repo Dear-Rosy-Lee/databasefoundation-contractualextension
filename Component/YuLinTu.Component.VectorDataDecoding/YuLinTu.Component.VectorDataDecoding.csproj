@@ -297,6 +297,10 @@
       <DependentUpon>UploadVectorDataAfterDecode.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\UploadVectorDataAfterDecode.cs" />
+    <Compile Include="Task\UploadVectorDataAfterDecodeByBatch.Argument.cs">
+      <DependentUpon>UploadVectorDataAfterDecodeByBatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\UploadVectorDataAfterDecodeByBatch.cs" />
     <Compile Include="Task\UploadVectorDataToBatch.Argument.cs">
       <DependentUpon>UploadVectorDataToBatch.cs</DependentUpon>
     </Compile>

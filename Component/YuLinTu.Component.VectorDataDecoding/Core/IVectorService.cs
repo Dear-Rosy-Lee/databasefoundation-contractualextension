@@ -15,6 +15,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         List<SpaceLandEntity> DownLoadVectorDataPrimevalData(string zoneCode, int pageIndex, int pageSize);
         List<SpaceLandEntity> DownLoadVectorDataAfterDecodelData(string zoneCode, int pageIndex, int pageSize, string batchCode);
         string UpLoadVectorDataAfterDecodeToSever(List<SpaceLandEntity> Data, out bool isSucess);
+        string UpLoadVectorDataAfterDecodeToSever(string BatchCode,List<DecodeLandEntity> Data, out bool isSucess);
         string UpLoadVectorDataPrimevalToSever(List<SpaceLandEntity> Data, out bool isSucess);
 
         StaticsLandJsonEn StaticsLandByZoneCode(string zoneCode,string batchCode="");
