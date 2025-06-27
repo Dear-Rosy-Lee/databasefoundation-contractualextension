@@ -15,7 +15,6 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         public string dkbm { get; set; }
 
         public string ewkt { get; set; }
-
     }
 
     [Serializable]

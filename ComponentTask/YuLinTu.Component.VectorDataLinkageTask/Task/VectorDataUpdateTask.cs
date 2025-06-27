@@ -89,8 +89,8 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                 }
                 catch (Exception ex)
                 {
-                    Log.WriteException(this, "OnGo(数据上传到接入系统失败!)", ex.Message + ex.StackTrace);
-                    this.ReportError(string.Format($"数据处理出错!{ex.Message} {baseUrl}"));
+                    Log.WriteException(this, $"OnGo(数据上传到接入系统失败!){baseUrl}", ex.Message + ex.StackTrace);
+                    this.ReportError(string.Format($"{ex.Message} "));
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
                 }, (crow, carea) =>
                 {
-                    if (carea > 25000)
+                    if (carea > 25000000)
                     {
                         resut = false;
                         this.ReportError("数据范围超过了25平方千米");
@@ -211,7 +211,16 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             {
                 return;
             }
-            ProjectionInfo dreproject = ProjectionInfo.FromEsriString(prjstr);
+            var inp = VectorDataProgress.GetByFile(Path.ChangeExtension(argument.CheckFilePath, ".prj"));
+            if (inp != null)
+            {
+                srid = inp.WKID;
+            }
+            if (srid == 0)
+            {
+                throw new Exception("未能正确获取矢量数据的坐标信息，请检查prj文件是否有EPSG值");
+            }
+
             this.ReportProgress(5, "开始处理数据");
             var datacount = 0;
             int dindex = 0;
@@ -244,7 +253,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                         updataCollection.dks.Add(land);
                         dindex++;
                     }
-                    DataProcessOnLine(url, murl, updataCollection, "f648d4b639a44588969bd29b36ed13f8", "wF7vffVgbbp7wwV/vn+oStIPuxfm1PV+p1ARO6MzgsLPE1XZEt9CIw==");
+                    DataProcessOnLine(url, murl, updataCollection, "3ca04787775f4ca682980cd58dd551d9", "3baSPLk4o0DB3AgGr4QqvGSdqr2G/SmVjTHXE196wQkGz2uxIeH9hA==");
                     this.ReportProgress(5 + (int)(p * dindex), "数据上传中...");
                     this.ReportInfomation($"地域{zoneCode}共上传到接入系统{updataCollection.dks.Count}条数据");
                 }
