@@ -72,10 +72,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             // TODO : 任务的逻辑实现
             vectorService = new VectorService();
             var files = args.ShpFilesInfo;
-            int sucessCount = 0; int fileIndex = 0; int progess = 0;
+            int sucessCount = 0; int fileIndex = 0; int progess = 0;int pageSize = 200;
+            int progessTag = files.Count<100?100 / files.Count:1;
             HashSet<string> BatchCodes = new HashSet<string>();
+          
             foreach (var item in files)
             {
+                List<string> batchCodesStaus = new List<string>();
+                progess = fileIndex * 100 / files.Count;
                 fileIndex++;
                 if (item.Description.IsNotNullOrEmpty()) continue;
                 var dbSource = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
@@ -87,28 +91,42 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                                                                                     //更新批次的元数据
            
                 var shapeColumn = properties.Find(t => t.ColumnType == eDataType.Geometry);
+               
                 ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list) =>
                 {
-                    list.Select(t => t.upload_batch_num).Distinct().ForEach(t =>
+                    var nums = list.Select(t => t.upload_batch_num).Distinct().ToList();
+                    nums.ForEach(t =>
                     {
-                        BatchCodes.Add(t);
+                        if (!BatchCodes.Contains(t))
+                        {
+                            BatchCodes.Add(t);
+                            batchCodesStaus.Add(t);
+                         }
                     });
-                   
-                    // var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.IsCover, out bool sucess);
-                    //if (!sucess)
-                    //{
-                    //    this.ReportError(msg);
-                    //}
-                    //else
-                    //{
-                    //    //成功的提示信息
-                    //}
+                   var  statusMsg=  vectorService.UpLoadProcessStatusByBatchCodes(batchCodesStaus, out bool statusSucess);
+                    if (!statusSucess)
+                    {
+                        this.ReportWarn(statusMsg);
+                    }
+                    batchCodesStaus.Clear();
+                    var msg = vectorService.UpLoadVectorDataAfterDecodeToSever(list, out bool sucess);
+                    if (!sucess)
+                    {
+                        this.ReportError(msg);
+                    }
+                    else
+                    {
+                        //成功的提示信息
+                    }
                 },
           (i, count, obj) =>
           {
+              progess += i * progessTag / count;
+        
               var key = obj.FastGetValue<string>(keyName);
+              this.ReportProgress(progess,$"处理批次号{key}");
               var shape = obj.FastGetValue<Spatial.Geometry>(shapeColumn.ColumnName);
-              var upload_batch_num = obj.FastGetValue<string>("upload_batch_num");
+              var upload_batch_num = obj.FastGetValue<string>("batchCode");//batchCode
               if (key is null || shape is null)
                   return null;
               DecodeLandEntity jsonEn = new DecodeLandEntity();           
@@ -116,56 +134,24 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
               jsonEn.DKBM = key;
               jsonEn.Shape = shape;                      
               return jsonEn;
-          });
-                List<SpaceLandEntity> upLoadData = new List<SpaceLandEntity>();
-                using (var shp = new ShapeFile())
-                {
-                    var err = shp.Open(item.FullPath);
-                    if (!string.IsNullOrEmpty(err))
-                    {
-                        throw new Exception("读取地块Shape文件发生错误" + err);
-                    }
-                    var codeIndex = new Dictionary<string, int>();
+          },pageSize);
 
-                    var shpEnum = VectorDataProgress.ForEnumRecord<SpaceLandEntity>(shp, item.FullPath, codeIndex, 4490, "DKBM");
-                    this.ReportInfomation($"开始上传脱密数据：{item.FullPath}");
-                    bool isSucess;
-                    foreach (var entity in shpEnum)
-                    {
-                        upLoadData.Add(entity);
-                        if (upLoadData.Count == UploadDataLimit)
-                        {
-                            //上传数据
-                            progess += ((100 * upLoadData.Count / files.Count)) / item.DataCount;
-                            vectorService.UpLoadVectorDataAfterDecodeToSever(upLoadData, out isSucess);
-                            if (isSucess)
-                            {
-                                sucessCount += upLoadData.Count;
-                                this.ReportInfomation($"成功上传条数{upLoadData.Count},地块编码范围：{upLoadData[0].DKBM}~{upLoadData[upLoadData.Count - 1].DKBM}");
-
-                            }
-                            this.ReportProgress(progess, "上传中");
-                            upLoadData.Clear();
-                        }
-                    }
-                    if (upLoadData.Count != 0)
-                    {
-                        vectorService.UpLoadVectorDataAfterDecodeToSever(upLoadData, out isSucess);
-                        if (isSucess)
-                        {
-                            progess += ((100 * upLoadData.Count / files.Count)) / item.DataCount;
-                            sucessCount += upLoadData.Count;
-                            this.ReportProgress(progess, "上传中");
-                            this.ReportInfomation($"成功上传条数{upLoadData.Count},地块编码范围：{upLoadData[0].DKBM}~{upLoadData[upLoadData.Count - 1].DKBM}");
-                        }
-                    }
-
-
-                    this.ReportInfomation($"地块总数量：{item.DataCount}，成功上传数量：{sucessCount}");
-                }
+            
             }
 
+            //更新批次信息
+            BatchCodes.ForEach(batchCode => {
+                
+                var statusMsg = vectorService.UpdateBatchStatusByBatchCode(batchCode, out bool statusSucess);
+                if(!statusSucess) {
+                    this.ReportWarn(statusMsg);
+                }
+                else
+                {
+                    this.ReportWarn($"批次号为{batchCode}的数据处理完成！");
+                }
 
+            });
 
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");

@@ -612,6 +612,7 @@
                 <ylt:PagableDataGrid Name="dg"
                                  DataSource="{Binding DataSource}"
                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                               
                                  AutoGenerateColumns="False"
                                  CanUserAddRows="False"
                                  CanUserSortColumns="True"
@@ -741,16 +742,16 @@
                                                             <Setter Property="Text" Value="待处理"/>
                                                         </DataTrigger>
 
-                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="3">
                                                             <Setter Property="Foreground"  Value="#16A34A"/>
                                                             <Setter Property="Text" Value="处理中"/>
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="4">
                                                             <Setter Property="Foreground"  Value="#16A34A"/>
                                                             <Setter Property="Text" Value="处理完成"/>
                                                         </DataTrigger>
 
-                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="3">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="5">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Setter Property="Text" Value="失败！"/>
                                                         </DataTrigger>
@@ -779,7 +780,22 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header=" "
+                                            Width="100"
+                                            SortDirection="Ascending"
+                                          
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal" 
+                                                            Margin="3,3">
 
+                                        <Button Style="{StaticResource btn}"  Command="{Binding DataContext.CommandOpenLog,Source={x:Reference dg}}" 
+                                       Margin="5,5,0,5" Foreground="Green">详情</Button>
+                                    </StackPanel> <!--Command="{Binding CommandOpenLog}"-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </ylt:MetroDataGrid.Columns>
                 </ylt:PagableDataGrid>
             </Grid>

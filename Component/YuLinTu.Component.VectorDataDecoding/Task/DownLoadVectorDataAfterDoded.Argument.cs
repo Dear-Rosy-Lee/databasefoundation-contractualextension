@@ -1,20 +1,15 @@
-﻿using GeoAPI.CoordinateSystems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using YuLinTu;
-using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
-    public class DownLoadVectorDataAfterDecodeByZoneArgument : TaskArgument
+    public class DownLoadVectorDataAfterDodedArgument : TaskArgument
     {
-        #region Properties
-
-
         private string zoneName;
 
         [DisplayLanguage("地域名称", IsLanguageName = false)]
@@ -47,16 +42,16 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             set
             {
                 zoneCode = value;
-             
+
                 NotifyPropertyChanged("ZoneCode");
             }
         }
 
-        [DisplayLanguage("数据存放路径", IsLanguageName = false)]
-        [DescriptionLanguage("存放数据文件夹的路径", IsLanguageName = false)]
+        [DisplayLanguage("文件夹路径", IsLanguageName = false)]
+        [DescriptionLanguage("选择存放已处理完成原始数据文件夹的路径", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
- UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
-        [WatermaskLanguage("请选择数据存放路径")]
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        [WatermaskLanguage("选择存放已处理完成原始数据文件夹的路径")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
         public string ResultFilePath
         {
@@ -64,16 +59,17 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             set
             {
                 resultFilePath = value;
-
+                if (!resultFilePath.IsNullOrEmpty())
+                {
+                    ConfirmEnabled = true;
+                }
                 NotifyPropertyChanged("ResultFilePath");
-
             }
         }
-        private string resultFilePath;
         [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
         [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
-      UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
+       UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
         public bool AutoComprass
         {
             get { return autoComprass; }
@@ -84,11 +80,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
         private bool autoComprass;
-        #endregion
+        private string resultFilePath;
+        [Enabled(false)]
+        public bool ConfirmEnabled
+        {
+            get { return checkPass; }
+            set
+            {
+                checkPass = value;
+                NotifyPropertyChanged("ConfirmEnabled");
+            }
+        }
+        public bool checkPass = false;
 
         #region Ctor
 
-        public DownLoadVectorDataAfterDecodeByZoneArgument()
+        public DownLoadVectorDataAfterDodedArgument()
         {
         }
 

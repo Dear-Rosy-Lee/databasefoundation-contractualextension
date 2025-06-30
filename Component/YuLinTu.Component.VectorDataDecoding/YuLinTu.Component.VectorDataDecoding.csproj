@@ -234,6 +234,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\DataPagerProviderVectorDecode.cs" />
+    <Compile Include="Controls\LogDialog.xaml.cs">
+      <DependentUpon>LogDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LogDialog.xaml.ViewModel.cs">
+      <DependentUpon>LogDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PropertyEditor.xaml.cs">
       <DependentUpon>PropertyEditor.xaml</DependentUpon>
     </Compile>
@@ -284,6 +290,14 @@
       <DependentUpon>DownLoadVectorDataAfterDecodeByZone.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\DownLoadVectorDataAfterDecodeByZone.cs" />
+    <Compile Include="Task\DownLoadVectorDataAfterDoded.Argument.cs">
+      <DependentUpon>DownLoadVectorDataAfterDoded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\DownLoadVectorDataAfterDoded.cs" />
+    <Compile Include="Task\DownLoadVectorDataAfterDodedByBatchCode.Argument.cs">
+      <DependentUpon>DownLoadVectorDataAfterDodedByBatchCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\DownLoadVectorDataAfterDodedByBatchCode.cs" />
     <Compile Include="Task\DownLoadVectorDataBase.cs" />
     <Compile Include="Task\DownLoadVectorDataBeforeDoded.Argument.cs">
       <DependentUpon>DownLoadVectorDataBeforeDoded.cs</DependentUpon>
@@ -323,6 +337,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\LogDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PropertyEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

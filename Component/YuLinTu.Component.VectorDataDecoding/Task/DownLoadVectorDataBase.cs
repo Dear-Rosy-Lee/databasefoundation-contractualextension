@@ -232,7 +232,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 //    dic[oField] = col;
                 //    oLayer.CreateField(oField, 1);
             }
-
+            PropertyMetadata batchCodeFiled = new PropertyMetadata();
+            batchCodeFiled.ColumnName = "batchCode";
+            batchCodeFiled.ColumnType= eDataType.String;
+            batchCodeFiled.AliasName = "批次号";
+            file.AddField(batchCodeFiled.ColumnName, GetType(batchCodeFiled), GetLength(batchCodeFiled), GetPrecision(batchCodeFiled));
+            dic[index++] = batchCodeFiled;
             return dic;
         }
 

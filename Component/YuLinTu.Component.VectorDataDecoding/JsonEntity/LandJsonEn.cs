@@ -34,8 +34,10 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         /// 张三
         /// </summary>
         public string creator { get; set; }
+      
+        public object metadata_json { get; set; }
 
-        public Dictionary<string, object> metadata { get; set; }
+        //public Dictionary<string, object> metadata { get; set; }
 
         /// <summary>
         /// 

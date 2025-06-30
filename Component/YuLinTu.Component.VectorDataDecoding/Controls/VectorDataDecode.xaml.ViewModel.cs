@@ -66,7 +66,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public VectorDecodeMode SelectedItemChild
         {
             get { return _SelectedItemChild; }
-            set { _SelectedItemChild = value; NotifyPropertyChanged(() => _SelectedItemChild); }
+            set { _SelectedItemChild = value; NotifyPropertyChanged(() => SelectedItemChild); }
         }
         private VectorDecodeMode _SelectedItemChild;
 
@@ -572,10 +572,11 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void OnUploadVectorDataAfterDecodeToSeverTask(object args)
         {
 
-            var task = new UploadVectorDataAfterDecode();
-            var arg = new UploadVectorDataAfterDecodeArgument();
+            var task = new UploadVectorDataAfterDecodeByBatch();// UploadVectorDataAfterDecode();
+            var arg = new UploadVectorDataAfterDecodeByBatchArgument();//UploadVectorDataAfterDecodeArgument();
 
-          
+
+
             ShowCreateTaskWindow(task, arg);
 
         }
@@ -669,8 +670,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void OnDownLoadVectorDataAfterDecodeByZone(object args)
         {
 
-            var task = new DownLoadVectorDataAfterDecodeByZone();
-            var arg = new DownLoadVectorDataAfterDecodeByZoneArgument();
+            var task = new DownLoadVectorDataAfterDoded();//DownLoadVectorDataAfterDecodeByZone();
+            var arg = new DownLoadVectorDataAfterDodedArgument();//DownLoadVectorDataAfterDecodeByZoneArgument();
 
 
             arg.ZoneCode = CurrentZone.FullCode; arg.ZoneName = CurrentZone.FullName;
@@ -691,11 +692,12 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void OnDownLoadVectorDataAfterDecodeByBatch(object args)
         {
 
-            var task = new DownloadDecodeVectorDataByBatchCode();
-            var arg = new DownloadDecodeVectorDataByBatchCodeArgument();
+            var task = new DownLoadVectorDataAfterDodedByBatchCode();//DownloadDecodeVectorDataByBatchCode();
+            var arg = new DownLoadVectorDataAfterDodedByBatchCodeArgument();//DownloadDecodeVectorDataByBatchCodeArgument();
 
             arg.BatchCode= (SelectedItem as VectorDecodeBatchModel).BatchCode;
-            arg.zoneCode = CurrentZone.FullCode;
+            arg.BatchName= (SelectedItem as VectorDecodeBatchModel).BatchName; 
+            arg.ZoneCode = CurrentZone.FullCode;
 
 
 
@@ -710,7 +712,30 @@ namespace YuLinTu.Component.VectorDataDecoding
         #endregion
 
         #endregion
+        #region Logs
+        public DelegateCommand CommandOpenLog { get { return _CommandOpenLog ?? (_CommandOpenLog = new DelegateCommand(args => OnCommandOpenLog(args), args => OnCanCommandOpenLog(args))); } }
+        private DelegateCommand _CommandOpenLog;
 
+        private bool OnCanCommandOpenLog(object args)
+        {
+            if(SelectedItem==null)return false;
+            return true;
+        }
+
+        private void OnCommandOpenLog(object args)
+        {
+            var vm = new LogDialogViewModel(Workpage.Page);
+            vm.Items = vectorService.QueryLogsByBatchCode(SelectedItem.BatchCode);
+            Workpage.Page.ShowDialog(vm.CreateView(), (s, a) =>
+            {
+                if (!(s.HasValue && s.Value))
+                    return;
+
+               
+            });
+
+        }
+        #endregion
         #region Commands - OpenHelpChm
 
         public DelegateCommand CommandOpenHelpChm { get { return _CommandOpenHelpChm ?? (_CommandOpenHelpChm = new DelegateCommand(args => OnCommandOpenHelpChm(args), args => OnCanOpenHelpChm(args))); } }

@@ -15,14 +15,14 @@ using YuLinTu.tGISCNet;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
-    [TaskDescriptor(TypeArgument = typeof(DownLoadVectorDataBeforeDodedArgument),
-        Name = "下载脱密前矢量数据", Gallery = @"Gallery1\Gallery2",
+    [TaskDescriptor(TypeArgument = typeof(DownLoadVectorDataAfterDodedArgument),
+        Name = "下载处理后矢量数据", Gallery = @"Gallery1\Gallery2",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
-    public class DownLoadVectorDataBeforeDoded : DownLoadVectorDataBase
+    public class DownLoadVectorDataAfterDoded : DownLoadVectorDataBase
     {
         #region Properties
-      //  internal IVectorService VectorService { get; set; }
+
         #endregion
 
         #region Fields
@@ -31,10 +31,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         #region Ctor
 
-        public DownLoadVectorDataBeforeDoded()
+        public DownLoadVectorDataAfterDoded()
         {
-            Name = "下载脱密前矢量数据";
-            Description = "下载该地域下脱密前矢量数据";
+            Name = "下载处理后矢量数据";
+            Description = "下载处理完成矢量数据";
         }
 
         #endregion
@@ -45,19 +45,19 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         protected override void OnGo()
         {
-            base.OnGo();
             this.ReportProgress(0, "任务开始执行");
             this.ReportInfomation("任务开始执行");
-           
-            var args = Argument as DownLoadVectorDataBeforeDodedArgument;
+
+            var args = Argument as DownLoadVectorDataAfterDodedArgument;
             if (args == null)
             {
                 this.ReportError("参数不能为空");
                 return;
             }
-           
+            base.OnGo();
+            // TODO : 任务的逻辑实现
             int pageIndex = 1; int pageSize = 200;
-          
+            var clientID = new Authenticate().GetApplicationKey();
             DestinationFileName = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}_{args.ZoneName}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
             GeometryType = eGeometryType.Polygon;
             spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
@@ -85,7 +85,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     if (!result.IsNullOrBlank())
                         throw new YltException(result);
 
-                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, "1").ToList();
+                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, "5").ToList();//查询已处理完成的批次号,接口需要修改
                     if (batchs.Count == 0) return;
                     if (propertyMetadata == null || propertyMetadata.Count() == 0)
                     {
@@ -94,31 +94,30 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     var cols = propertyMetadata;
 
                     var dic = CreateFields(file, cols);
-           
+
                     var converter = new DotNetTypeConverter();
                     var row = 0;
                     var writer = new WKBWriter();
                     while (true)
                     {
-                        batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize,"1").ToList();
+                        if (pageIndex >= 1) {
+                            batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, "5").ToList();//查询已处理完成的批次号,接口需要修改
+                        };
                         if (batchs.Count == 0) break;
-                       
+
                         var batchCodes = batchs.Select(t => t.BatchCode).ToList();
-                       var statusMsg= vectorService.UpdateBatchsStaus(batchCodes ,out bool updateSataus);
-                        if(!updateSataus)
-                        {
-                            this.ReportWarn(statusMsg);
-                        }
+                        
                         foreach (var batchCode in batchCodes)
                         {
                             int dataCount = 0;
                             int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
                             while (true)
                             {
-                                List<FeatureObject> data = vectorService.DownVectorDataByBatchCode(batchCode, pageIndexOneBatchData, pageSizeOneBatchData);
-                                if (data.Count == 0) { 
-                                    
-                                    break; 
+                                List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(batchCode, pageIndexOneBatchData, pageSizeOneBatchData);
+                                if (data.Count == 0)
+                                {
+
+                                    break;
                                 }
 
                                 data.ForEach(obj =>
@@ -132,15 +131,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                                 pageIndexOneBatchData++;
                             }
 
-                            WriteLog(args, batchCode, dataCount);
-                            var codes = batchs.Select(t => t.BatchCode).ToList();
-                            string msg = vectorService.UpdateBatchStaus(codes, ((int)BatchsStausCode.three).ToString(), out bool statusSucess);
-                            if (!statusSucess)
-                            {
-
-
-                                this.ReportWarn(msg);
-                            }
+                            WriteLog(args.ZoneCode, clientID, batchCode, dataCount);
+                            //更新下载次数
+                            
                         }
                         pageIndex++;
 
@@ -149,9 +142,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
 
                     writer = null;
-                     var info = spatialReference.ToEsriString();
+                    var info = spatialReference.ToEsriString();
                     if (!info.IsNullOrBlank())
-                    { 
+                    {
                         File.WriteAllText(Path.ChangeExtension(DestinationFileName, "prj"), info);
                     }
 
@@ -161,7 +154,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                 }
 
-
+                if (args.AutoComprass)
+                {
+                    //文件处理为压缩包
+                }
 
             }
             catch (ArgumentException ex)
@@ -174,20 +170,21 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                 this.ReportError(ex.Message);
             }
-           
+
 
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
         }
 
         #endregion
-        private void WriteLog(DownLoadVectorDataBeforeDodedArgument args,string batchCode,  int dataCount)
+        private void WriteLog(string ZoneCode,string clientID, string batchCode, int dataCount)
         {
             LogEn log = new LogEn();
-            log.scope = args.ZoneCode;
-            log.owner = batchCode;
-            log.sub_type = "下载未处理数据";
-            log.description = $"测绘局端下载于{DateTime.Now.ToString("g")}成功下载批次号为{batchCode}的待处理数据{dataCount}条！";
+            log.scope = ZoneCode;
+            log.owner = batchCode; 
+            log.user_id = clientID;
+            log.sub_type= "下载处理后数据";
+            log.description = $"客户端{clientID}于{DateTime.Now.ToString("g")}成功下载批次号为{batchCode}已处理完成的数据{dataCount}条！";
             vectorService.WriteLog(log);
         }
         #endregion

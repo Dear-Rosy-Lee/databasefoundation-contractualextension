@@ -12,4 +12,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         UploaDeclassifyDataClient=1
 
     }
+
+    internal enum BatchsStausCode
+    {
+         once=0,
+         two=1,
+         three=2
+
+    }
 }

@@ -15,7 +15,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         List<SpaceLandEntity> DownLoadVectorDataPrimevalData(string zoneCode, int pageIndex, int pageSize);
         List<SpaceLandEntity> DownLoadVectorDataAfterDecodelData(string zoneCode, int pageIndex, int pageSize, string batchCode);
         string UpLoadVectorDataAfterDecodeToSever(List<SpaceLandEntity> Data, out bool isSucess);
-        string UpLoadVectorDataAfterDecodeToSever(string BatchCode,List<DecodeLandEntity> Data, out bool isSucess);
+        string UpLoadVectorDataAfterDecodeToSever(List<DecodeLandEntity> Data, out bool isSucess);
         string UpLoadVectorDataPrimevalToSever(List<SpaceLandEntity> Data, out bool isSucess);
 
         StaticsLandJsonEn StaticsLandByZoneCode(string zoneCode,string batchCode="");
@@ -51,8 +51,13 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         string CancleBatchDataSendStatus(string batchCode, out bool sucess);
 
         void WriteLog(LogEn log);
-  
-        void UpdateBatchsStaus(List<string> batchCodes);
+
+        string UpdateBatchsStaus(List<string> batchCodes, out bool statusSucess);
         List<FeatureObject> DownVectorDataByBatchCode(string batchCodes,int pageIndex, int pageSize);
+        string UpLoadProcessStatusByBatchCodes(List<string> batchCodesStaus, out bool statusSucess);
+        string UpdateBatchStatusByBatchCode(string batchCode, out bool statusSucess);
+        string UpdateBatchStaus(List<string> codes, string type, out bool statusSucess);
+        List<FeatureObject> DownVectorDataAfterDecodeByBatchCode(string batchCode, int pageIndexOneBatchData, int pageSizeOneBatchData);
+        ObservableCollection<LogEn> QueryLogsByBatchCode(string batchCode);
     }
 }

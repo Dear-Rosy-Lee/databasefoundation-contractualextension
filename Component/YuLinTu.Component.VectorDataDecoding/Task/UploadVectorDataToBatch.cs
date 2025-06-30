@@ -108,7 +108,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 }
 
 
-                jsonEn.metadata = metadataS; //Serializer.SerializeToJsonString(metadataS);
+                jsonEn.metadata_json = Serializer.SerializeToJsonString(metadataS);//metadataS; //
                 return jsonEn;
             });
             string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
@@ -126,6 +126,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             LogEn log = new LogEn();
             log.scope = args.ZoneCode;
             log.owner = args.BatchCode;
+            log.sub_type = "上传矢量数据";
             log.user_id = clientID;
             log.description = $"客户端{clientID}成功上传文件{shpName}中{dataCount}条数据，文件全路径为：{args.ShapeFilePath}";
             vectorService.WriteLog(log);

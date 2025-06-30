@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using YuLinTu.Data;
 
 namespace YuLinTu.Component.VectorDataDecoding
@@ -166,9 +167,10 @@ namespace YuLinTu.Component.VectorDataDecoding
 
     internal class DecodeLandEntity
     {
+        [JsonIgnore]
         public string upload_batch_num { get; set; }
         public string DKBM { get; set; }
         public YuLinTu.Spatial.Geometry Shape { get; set; }
     }
-
+    
 }
