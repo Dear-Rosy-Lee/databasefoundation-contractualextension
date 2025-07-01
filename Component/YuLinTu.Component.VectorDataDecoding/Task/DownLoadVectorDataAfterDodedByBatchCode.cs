@@ -87,7 +87,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     if (!result.IsNullOrBlank())
                         throw new YltException(result);
 
-                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, "5").ToList();//查询已处理完成的批次号,接口需要修改
+                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();//查询已处理完成的批次号,接口需要修改
                     if (batchs.Count == 0) return;
                     batchs = batchs.Where(t=>t.BatchCode.Equals(args.BatchCode)).ToList();
                     if (propertyMetadata == null || propertyMetadata.Count() == 0)
@@ -178,7 +178,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             log.scope = ZoneCode;
             log.owner = batchCode;
             log.user_id = clientID;
-            log.description = $"客户端{clientID}于{DateTime.Now.ToString("g")}成功下载批次号为{batchCode}已处理完成的数据{dataCount}条！";
+            log.description = $"下载批次号为{batchCode}已处理完成的数据{dataCount}条！";
             vectorService.WriteLog(log);
         }
         #endregion

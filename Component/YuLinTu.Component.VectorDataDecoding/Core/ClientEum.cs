@@ -15,9 +15,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
     internal enum BatchsStausCode
     {
-         once=0,
-         two=1,
-         three=2
-
+         未送审=0,
+         已送审=1,
+         待处理=2,
+         处理中 = 3,
+         处理完成 = 4,
+         处理失败 = 5,
     }
 }

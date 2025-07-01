@@ -128,7 +128,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             log.owner = args.BatchCode;
             log.sub_type = "上传矢量数据";
             log.user_id = clientID;
-            log.description = $"客户端{clientID}成功上传文件{shpName}中{dataCount}条数据，文件全路径为：{args.ShapeFilePath}";
+            log.description = $"上传文件{shpName}中{dataCount}条数据，文件全路径为：{args.ShapeFilePath}";
             vectorService.WriteLog(log);
         }
 

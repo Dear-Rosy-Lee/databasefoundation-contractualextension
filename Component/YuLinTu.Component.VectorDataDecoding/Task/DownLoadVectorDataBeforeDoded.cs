@@ -134,7 +134,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                             WriteLog(args, batchCode, dataCount);
                             var codes = batchs.Select(t => t.BatchCode).ToList();
-                            string msg = vectorService.UpdateBatchStaus(codes, ((int)BatchsStausCode.three).ToString(), out bool statusSucess);
+                            string msg = vectorService.UpdateBatchStaus(codes, ((int)BatchsStausCode.待处理).ToString(), out bool statusSucess);
                             if (!statusSucess)
                             {
 
