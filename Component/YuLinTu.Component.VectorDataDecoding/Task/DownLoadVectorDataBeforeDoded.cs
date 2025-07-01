@@ -85,7 +85,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     if (!result.IsNullOrBlank())
                         throw new YltException(result);
 
-                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, "1").ToList();
+                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.已送审).ToString()).ToList();
                     if (batchs.Count == 0) return;
                     if (propertyMetadata == null || propertyMetadata.Count() == 0)
                     {
@@ -100,7 +100,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     var writer = new WKBWriter();
                     while (true)
                     {
-                        batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize,"1").ToList();
+                        batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.已送审).ToString()).ToList();
                         if (batchs.Count == 0) break;
                        
                         var batchCodes = batchs.Select(t => t.BatchCode).ToList();

@@ -132,7 +132,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                     land.DKBM = item.business_identification;
                     land.CBFBM = item.business_identification_owner;
                     land.BatchCode = item.upload_batch_num;
-                    var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key) + "#4490";//这个地方等佳佳接口写好了要改成脱密后数据
+                    var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key) + "#4490";
 
                     land.Shape = YuLinTu.Spatial.Geometry.FromString(shapeText);
                     landJsonEntites.Add(land);
