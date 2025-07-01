@@ -78,15 +78,21 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
 
                 YuLinTu.IO.PathHelper.CreateDirectory(DestinationFileName);
-
+                var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();
+                if (batchs.Count == 0) 
+                {
+                    this.ReportWarn($"{args.ZoneCode}{args.ZoneName}下未找到已处理完成的批次！");
+                   
+                    return; 
+                }
+                
                 using (ShapeFile file = new ShapeFile())
                 {
                     var result = file.Create(DestinationFileName, GetWkbGeometryType(GeometryType));
                     if (!result.IsNullOrBlank())
                         throw new YltException(result);
 
-                    var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();//查询已处理完成的批次号,接口需要修改
-                    if (batchs.Count == 0) return;
+                    
                     if (propertyMetadata == null || propertyMetadata.Count() == 0)
                     {
                         propertyMetadata = JsonSerializer.Deserialize<PropertyMetadata[]>(batchs[0].PropertyMetadata);// batchs[0].mes

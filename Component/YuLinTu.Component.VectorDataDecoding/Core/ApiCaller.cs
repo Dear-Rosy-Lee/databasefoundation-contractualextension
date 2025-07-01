@@ -62,6 +62,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Clear();
                 if (!string.IsNullOrEmpty(token))
                 {
                     client.DefaultRequestHeaders.Add("token", token);
@@ -125,6 +126,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                 sucess = false;
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Clear();
                 foreach (var kvp in Headers)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -173,6 +175,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Clear();
                 foreach (var kvp in Headers)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -219,6 +222,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Clear();
                 foreach (var kvp in Headers)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -268,6 +272,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             {
                 // 将JSON数据转换为HttpContent
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Clear();
                 foreach (var kvp in Headers)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -370,7 +375,8 @@ namespace YuLinTu.Component.VectorDataDecoding
         public T GetResultAsync<T>(string url, Dictionary<string,string> Headers) where T:class,new()
         {
             var en = new T();
-            foreach(var kvp in Headers)
+            client.DefaultRequestHeaders.Clear();
+            foreach (var kvp in Headers)
             {
                 client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
             }
@@ -404,6 +410,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public T GetResultAsync<T>(string url, Dictionary<string, string> Headers, Dictionary<string, string> Pramas, bool ingoreNameCase = false) where T : class, new()
         {
             var en = new T();
+            client.DefaultRequestHeaders.Clear();
             foreach (var kvp in Headers)
             {
                 client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -480,6 +487,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         {
             sucess = false;
             var responseBody = string.Empty;
+            client.DefaultRequestHeaders.Clear();
             foreach (var kvp in Headers)
             {
                 client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
@@ -489,9 +497,9 @@ namespace YuLinTu.Component.VectorDataDecoding
             try
             {
                 HttpResponseMessage response = client.GetAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
-                response.EnsureSuccessStatusCode();
+  
                  responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-   
+                response.EnsureSuccessStatusCode();
                 using (JsonDocument doc = JsonDocument.Parse(responseBody))
                 {
                     JsonElement root = doc.RootElement;

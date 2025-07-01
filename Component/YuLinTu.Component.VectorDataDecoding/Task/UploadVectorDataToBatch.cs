@@ -101,7 +101,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             int dataCount = 0;
             ShapeFileRepostiory.PagingTrans<LandJsonEn>(dqSource, schemaName, shpName, keyName, where, (list, count) =>
             {
-               var progess = (fileCount * (fileIndex-1) )/ 100+ fileCount* dataCount/count/100;
+               var progess = (100 * (fileIndex-1) )/ fileCount+  dataCount*100/(fileCount* count);
                 this.ReportProgress(progess);
                 dataCount += list.Count;
                 var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.IsCover, out bool sucess);

@@ -330,7 +330,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanStartSingleTask(object args)
         {
             if(SelectedItem==null|| !(SelectedItem is VectorDecodeBatchModel)) return false;
-            if ((SelectedItem as VectorDecodeBatchModel)?.DecodeProgress == "已送审") return false;
+            if ((SelectedItem as VectorDecodeBatchModel)?.DataStaus != "0") return false;
             return true;
         }
 
@@ -665,6 +665,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanDownLoadVectorDataAfterDecodeByZone(object args)
         {
             if (CurrentZone != null && CurrentZone.Level > ZoneLevel.Town) return false;
+     
             return true;
         }
 
@@ -687,6 +688,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanDownLoadVectorDataAfterDecodeByBatch(object args)
         {
             if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
+            if(SelectedItem.DataStaus!="4") return false;
             return true;
         }
 

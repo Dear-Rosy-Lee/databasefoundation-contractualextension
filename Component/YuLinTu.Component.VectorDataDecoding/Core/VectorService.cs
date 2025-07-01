@@ -465,18 +465,26 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             Dictionary<string,object> body =new Dictionary<string, object>();
             string msg = string.Empty;
             bool Sucess = false;
-            var decodeData = Data.Select(t => new { desensitized_geometry = EncrypterSM.EncryptSM4(t.Shape.AsText(), Constants.Sm4Key), business_identification = t.DKBM }).ToList(); ;
             foreach (var code in batchCodes)
             {
                 var datas = Data.Where(t => t.upload_batch_num.Equals(code)).ToList();
+                var decodeData = datas.Select(t => new { desensitized_geometry = EncrypterSM.EncryptSM4(t.Shape.AsText(), Constants.Sm4Key), business_identification = t.DKBM }).ToList(); 
+
                 body.Add("upload_batch_num", code);
                 body.Add("data", decodeData);
                 var jsonData = JsonSerializer.Serialize(body);
+                if(AppHeaders.Count>2)
+                {
 
-                msg += apiCaller.PostDataAsync(url, AppHeaders, jsonData, out Sucess) + "/n";
-                if (!Sucess) break;
+                }
+                msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out Sucess) ;
+                if (!Sucess) {
+                    msg = GetReposneMessage(Sucess, msg);
+                    break; 
+                }
+                body.Clear();
             }          
-            isSucess= Sucess;
+            isSucess= Sucess;      
             return msg;
         }
 
@@ -491,8 +499,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
     
            
             var jsonData = JsonSerializer.Serialize(body);
-            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out statusSucess);
-            return en;
+            var msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out statusSucess);
+            msg = GetReposneMessage(statusSucess, msg);
+            return msg;
         }
 
         public string UpdateBatchStatusByBatchCode(string batchCode, out bool statusSucess)
