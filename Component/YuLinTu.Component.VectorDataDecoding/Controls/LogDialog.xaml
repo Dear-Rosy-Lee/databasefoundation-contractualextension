@@ -76,9 +76,9 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="操作时间"
-                                            Width="60"
+                                            Width="80"
                                             SortMemberPath="Freight"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Right">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock VerticalAlignment="Center"
@@ -90,7 +90,7 @@
                     <DataGridTemplateColumn Header="操作类型"
                                             Width="60"
                                             
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock  VerticalAlignment="Center"
@@ -101,8 +101,8 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="所在地域"
                                             Width="60"
-                                            SortMemberPath="ShipCountry"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                                           
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock  VerticalAlignment="Center"

@@ -531,6 +531,35 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
            
             return result.ToObservableCollection<LogEn>();
         }
+
+        public string UpLoadProveFile(ProveFileEn en, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpLoadProveFile;
+          
+            var jsonData = JsonSerializer.Serialize(en);
+            string msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            msg = GetReposneMessage(sucess, msg);
+            return msg;
+        }
+        public List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200)
+        {
+            apiCaller.client = new HttpClient();
+            List<ProveFileEn> landJsonEntites = new List<ProveFileEn>();
+            string url = Constants.baseUrl + Constants.Methold_DownLoadProveFile;
+
+
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("page", pageIndex);
+            body.Add("pageSize", pageSize);
+            body.Add("dybm", zoneCode);
+
+            var result = apiCaller.PostResultListAsync<ProveFileEn>(url, AppHeaders, JsonSerializer.Serialize(body));
+
+           
+            return result;
+        }
+            
     }
 }
 

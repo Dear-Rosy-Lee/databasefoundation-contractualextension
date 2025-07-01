@@ -42,11 +42,13 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_UpLoadBatchDataNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/data/num";
         public const string CancleBatchDataSendStatus = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/cancel/submit/approval";
         internal const string Methold_WriteLog = "/stackcloud/api/open/api/dynamic/onlineDecryption/log/add";
-        internal static string Methold_uploadBatchNums= "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/uploadBatchNums";
-        internal static string Methold_QueryStatusByBatchNums = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/process_status/by/upload_batch_num";
-        internal static string Methold_UpdateStatusSucessByBatchNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/process_status/success";
-        internal static string Methold_UpdateStatusByBatchNums = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/by/upload_batch_num";
+        internal const string Methold_uploadBatchNums= "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/uploadBatchNums";
+        internal const string Methold_QueryStatusByBatchNums = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/process_status/by/upload_batch_num";
+        internal const string Methold_UpdateStatusSucessByBatchNum = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/process_status/success";
+        internal const string Methold_UpdateStatusByBatchNums = "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/by/upload_batch_num";
         internal const string Methold_QueryLogsByBatchCode = "/stackcloud/api/open/api/dynamic/onlineDecryption/log/paging";
+        internal const string Methold_UpLoadProveFile = "/stackcloud/api/open/api/dynamic/onlineDecryption/file/upload";
+        internal const string Methold_DownLoadProveFile = "/stackcloud/api/open/api/dynamic/onlineDecryption/file/download";
         internal const int VectorDecodeSrid = 4490;
 
         internal const string clientName = "测绘局";

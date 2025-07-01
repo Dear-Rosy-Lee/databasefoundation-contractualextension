@@ -270,6 +270,7 @@
     <Compile Include="JsonEntity\BatchTaskJsonEn.cs" />
     <Compile Include="JsonEntity\LandJsonEn.cs" />
     <Compile Include="JsonEntity\LogEn.cs" />
+    <Compile Include="JsonEntity\ProveFileEn.cs" />
     <Compile Include="JsonEntity\StaticsLandJsonEn.cs" />
     <Compile Include="JsonEntity\ZoneJsonEn.cs" />
     <Compile Include="Model\VectorDecodeBatchModel.cs" />
@@ -286,6 +287,10 @@
     </Compile>
     <Compile Include="Task\DownloadDecodeVectorDataByBatchCode.cs" />
     <Compile Include="Core\PropertyDescriptorBuilderFileBrowserShp.cs" />
+    <Compile Include="Task\DownLoadProveFiles.Argument.cs">
+      <DependentUpon>DownLoadProveFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\DownLoadProveFiles.cs" />
     <Compile Include="Task\DownLoadVectorDataAfterDecode.Argument.cs">
       <DependentUpon>DownLoadVectorDataAfterDecodeByZone.cs</DependentUpon>
     </Compile>
@@ -307,6 +312,10 @@
       <DependentUpon>DownloadVectorDataByZone.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\DownloadVectorDataByZone.cs" />
+    <Compile Include="Task\UploadProveFiles.Argument.cs">
+      <DependentUpon>UploadProveFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Task\UploadProveFiles.cs" />
     <Compile Include="Task\UploadVectorDataAfterDecode.Argument.cs">
       <DependentUpon>UploadVectorDataAfterDecode.cs</DependentUpon>
     </Compile>
@@ -352,6 +361,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml" />
+    <Resource Include="Resources\上传材料.png" />
+    <Resource Include="Resources\取消送审.png" />
     <Resource Include="Resources\矢量数据脱密工具78.png" />
     <Resource Include="Resources\矢量数据脱密工具16.png" />
     <Resource Include="Resources\上传数据.png" />

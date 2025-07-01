@@ -736,6 +736,56 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         }
         #endregion
+
+        #region proveFles
+        public DelegateCommand CommandUpLoadProveFiles { get { return _CommandUpLoadProveFiles ?? (_CommandUpLoadProveFiles = new DelegateCommand(args => OnCommandUpLoadProveFiles(args), args => OnCanCommandUpLoadProveFiles(args))); } }
+        private DelegateCommand _CommandUpLoadProveFiles;
+
+        private bool OnCanCommandUpLoadProveFiles(object args)
+        {
+            if (CurrentZone == null) return false;
+            return true;
+        }
+
+        private void OnCommandUpLoadProveFiles(object args)
+        {
+            var task = new UploadProveFiles();
+            var arg = new UploadProveFilesArgument();
+
+            arg.ZoneCode = CurrentZone.FullCode;
+            arg.ZoneName = CurrentZone.Name;
+             
+
+
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
+        public DelegateCommand CommandDownLoadProveFiles { get { return _CommandDownLoadProveFiles ?? (_CommandDownLoadProveFiles = new DelegateCommand(args => OnCommandDownLoadProveFiles(args), args => OnCanCommandDownLoadProveFiles(args))); } }
+        private DelegateCommand _CommandDownLoadProveFiles;
+
+        private bool OnCanCommandDownLoadProveFiles(object args)
+        {
+            if (CurrentZone == null) return false;
+            return true;
+        }
+
+        private void OnCommandDownLoadProveFiles(object args)
+        {
+            var task = new DownLoadProveFiles();
+            var arg = new DownLoadProveFilesArgument();
+
+            arg.ZoneCode = CurrentZone.FullCode;
+            arg.ZoneName = CurrentZone.Name;
+
+
+
+
+            ShowCreateTaskWindow(task, arg);
+
+
+        }
+        #endregion
         #region Commands - OpenHelpChm
 
         public DelegateCommand CommandOpenHelpChm { get { return _CommandOpenHelpChm ?? (_CommandOpenHelpChm = new DelegateCommand(args => OnCommandOpenHelpChm(args), args => OnCanOpenHelpChm(args))); } }

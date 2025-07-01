@@ -59,5 +59,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         string UpdateBatchStaus(List<string> codes, string type, out bool statusSucess);
         List<FeatureObject> DownVectorDataAfterDecodeByBatchCode(string batchCode, int pageIndexOneBatchData, int pageSizeOneBatchData);
         ObservableCollection<LogEn> QueryLogsByBatchCode(string batchCode);
+        string UpLoadProveFile(ProveFileEn en, out bool sucess);
+        List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200);
     }
 }
