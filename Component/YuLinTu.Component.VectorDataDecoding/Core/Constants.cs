@@ -54,13 +54,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string clientName = "测绘局";
         internal const string HelpFileName = "空间匹配工具使用说明.pdf";
         internal static List<string> ZonesCodes = new List<string>();
-   
+        internal static Dictionary<string,string> tempZonesDic = new Dictionary<string, string>();
 
-        internal static Dictionary<string, string> DataTypes { get {
-                var vaule = new Dictionary<string, string>();
-                vaule.Add("承包地", "DKBM");
-                return vaule;
-            } }
+
 
 
 

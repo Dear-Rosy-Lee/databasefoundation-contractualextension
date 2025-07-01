@@ -61,5 +61,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         ObservableCollection<LogEn> QueryLogsByBatchCode(string batchCode);
         string UpLoadProveFile(ProveFileEn en, out bool sucess);
         List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200);
+
+        List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode);
     }
 }

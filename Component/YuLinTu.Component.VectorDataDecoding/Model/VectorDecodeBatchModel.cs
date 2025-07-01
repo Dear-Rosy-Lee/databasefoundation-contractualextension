@@ -20,7 +20,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public string BatchCode { get;set;   }
         public string ZoneCode { get; set; }
         public string UplaodTime { get; set; }
-        public int DataCount { get; set; }
+        public int? DataCount { get; set; }
         public string DecodeProgress { get; set; }
         public string DecodeStaus { get; set; }
         public string DataStaus { get; set; }

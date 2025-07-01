@@ -343,8 +343,9 @@ namespace YuLinTu.Component.VectorDataDecoding
 
            if (SelectedItem is VectorDecodeBatchModel)
             {
-                arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
-                arg.ZoneCode = (SelectedItem as VectorDecodeBatchModel).ZoneCode;
+                arg.BatchCode = (SelectedItem).BatchCode;
+                arg.ZoneCode = (SelectedItem).ZoneCode;
+                arg.BatchName = SelectedItem.BatchName;
             }
             //else if(SelectedItem is VectorDecodeMode)
             //{
@@ -695,8 +696,8 @@ namespace YuLinTu.Component.VectorDataDecoding
             var task = new DownLoadVectorDataAfterDodedByBatchCode();//DownloadDecodeVectorDataByBatchCode();
             var arg = new DownLoadVectorDataAfterDodedByBatchCodeArgument();//DownloadDecodeVectorDataByBatchCodeArgument();
 
-            arg.BatchCode= (SelectedItem as VectorDecodeBatchModel).BatchCode;
-            arg.BatchName= (SelectedItem as VectorDecodeBatchModel).BatchName; 
+            arg.BatchCode= (SelectedItem).BatchCode;
+            arg.BatchName= (SelectedItem).BatchName; 
             arg.ZoneCode = CurrentZone.FullCode;
 
 

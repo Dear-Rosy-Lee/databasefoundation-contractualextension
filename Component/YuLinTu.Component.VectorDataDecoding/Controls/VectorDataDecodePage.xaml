@@ -660,7 +660,7 @@
                                             Width="250"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
                                     <StackPanel Orientation="Horizontal"
@@ -689,7 +689,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="送审时间"
-                                            Width="120"
+                                            Width="160"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">

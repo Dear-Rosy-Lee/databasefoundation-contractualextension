@@ -1,4 +1,5 @@
-﻿using NetTopologySuite.Geometries;
+﻿using AutoMapper;
+using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using YuLinTu.DF;
 using YuLinTu.DF.Data;
 using YuLinTu.DF.Enums;
 using YuLinTu.DF.Logging;
+using YuLinTu.DF.Zones;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace YuLinTu.Component.VectorDataDecoding.Core
@@ -58,7 +60,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.ZoneCode = e.dybm;
                 model.NumbersOfDownloads = e.download_num;
                 model.UplaodTime = e.updtime;
-                model.DataCount= e.data_count;
+                model.DataCount =e.data_num;// e.data_count;//
                 model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
                 model.DataStaus = e.process_status;
@@ -559,7 +561,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
            
             return result;
         }
+
+        public List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode)
+        {
+            string url = string.Empty;
+            if (zoneCode.Length >= 9) return null;
             
+         
+           url = baseUrl + Constants.Methold_children_filter + "?code=" + zoneCode;
+     
+            ApiCaller apiCaller = new ApiCaller();
+            apiCaller.client = new HttpClient();
+            var jsondata = JsonSerializer.Serialize(Constants.ZonesCodes);
+            var zones = apiCaller.PostResultListAsync2<ZoneJsonEn>(url, AppHeaders, jsondata);            
+            return zones;
+        }
+
     }
 }
 

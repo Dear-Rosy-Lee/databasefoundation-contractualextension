@@ -92,8 +92,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
            
                 var shapeColumn = properties.Find(t => t.ColumnType == eDataType.Geometry);
                
-                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list) =>
+                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list, count) =>
                 {
+                  
                     var nums = list.Select(t => t.upload_batch_num).Distinct().ToList();
                     nums.ForEach(t =>
                     {
@@ -121,7 +122,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 },
           (i, count, obj) =>
           {
-              progess += i * progessTag / count;
+            
         
               var key = obj.FastGetValue<string>(keyName);
               this.ReportProgress(progess,$"处理批次号{key}");
