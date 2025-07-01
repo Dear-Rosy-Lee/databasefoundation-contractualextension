@@ -638,7 +638,7 @@
                     <ylt:MetroDataGrid.Columns>
                         <DataGridTemplateColumn Header="批次编码"
                                             Width="250" 
-                                            SortMemberPath="Name">
+                                            SortMemberPath="Name"  ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 
                                               
@@ -660,7 +660,7 @@
                                             Width="250"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
                                     <StackPanel Orientation="Horizontal"
@@ -676,7 +676,7 @@
                                             Width="120"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center"
@@ -692,7 +692,7 @@
                                             Width="120"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBlock Margin="5,0,0,0"
@@ -706,7 +706,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal" 
@@ -722,7 +722,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"
@@ -771,11 +771,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="送审时间"
+                        <DataGridTemplateColumn Header="下载次数"
                                             Width="120"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"
@@ -791,7 +791,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                           
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left" >
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal" 
