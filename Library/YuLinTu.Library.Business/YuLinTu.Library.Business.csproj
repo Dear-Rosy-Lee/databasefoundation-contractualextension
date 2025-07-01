@@ -646,6 +646,16 @@
     <Compile Include="Enum\EnumStore.cs" />
     <Compile Include="Model\DataColumn.cs" />
     <Compile Include="Model\DataColumnExtensions.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SecondTableLand\ExportBoundarySettleExcel.cs" />
     <Compile Include="SecondTableLand\ExportSingleFamilyExcel.cs" />
     <Compile Include="SecondTableLand\ImportSecondSurveryTable.cs" />
@@ -668,6 +678,7 @@
     <Compile Include="Setting\AgriculturePrintSetting.cs" />
     <Compile Include="Task\TaskGroupExportArgument.cs" />
     <Compile Include="Task\DataProcess.cs" />
+    <Compile Include="Tool\ToolDataBaseHelper.cs" />
     <Compile Include="Tool\ToolChinese.cs" />
     <Compile Include="Tool\ToolCoding.cs" />
     <Compile Include="Tool\ToolFile.cs" />
@@ -829,6 +840,19 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DictionarySQL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

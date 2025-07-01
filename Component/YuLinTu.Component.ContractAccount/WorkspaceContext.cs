@@ -2,15 +2,9 @@
  * (C) 2025  鱼鳞图公司版权所有,保留所有权利
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using YuLinTu.Appwork;
 using YuLinTu.Windows;
-using YuLinTu.Appwork.Task;
 using YuLinTu.Windows.Wpf.Metro.Components;
-using YuLinTu.Windows.Wpf;
 
 namespace YuLinTu.Component.ContractAccount
 {

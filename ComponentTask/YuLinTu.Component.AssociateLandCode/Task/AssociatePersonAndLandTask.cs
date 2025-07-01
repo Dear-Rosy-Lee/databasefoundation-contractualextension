@@ -88,9 +88,9 @@ namespace YuLinTu.Component.AssociateLandCode
             index = 1;
             cindex = 1;
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
-            DataBaseHelper.TryUpdateDatabase(dbContext);
+            ToolDataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);
-            DataBaseHelper.TryUpdateDatabase(oldDbContext);
+            ToolDataBaseHelper.TryUpdateDatabase(oldDbContext);
             var zoneStation = dbContext.CreateZoneWorkStation();
             var allZones = zoneStation.GetAll();
 

@@ -63,12 +63,12 @@ namespace YuLinTu.Component.Common
             if (rval == null || !rval.Value)
                 return;
             var sr = dlg.GetSelectedSpatialReference();
-            var ds = DataBaseHelper.TryCreateDatabase(fileName, sr);
-            DataBaseHelper.TryUpdateDatabase(ds);
-            DataBaseHelper.TrySetDefaultDatabasePathFirst(fileName, ds == null);
+            var ds = ToolDataBaseHelper.TryCreateDatabase(fileName, sr);
+            ToolDataBaseHelper.TryUpdateDatabase(ds);
+            ToolDataBaseHelper.TrySetDefaultDatabasePathFirst(fileName, ds == null);
             try
             {
-                DataBaseHelper.SetDefaultDatabaseName(fileName, true);
+                ToolDataBaseHelper.SetDefaultDatabaseName(fileName, true);
             }
             catch { }
         }
@@ -86,7 +86,7 @@ namespace YuLinTu.Component.Common
                 center = TheApp.Current.GetSystemSettingsProfileCenter();
                 SystemSetDefine systemset = SystemSetDefine.GetIntence();
                 var db = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
-                DataBaseHelper.TryAddTables(db);
+                ToolDataBaseHelper.TryAddTables(db);
 
                 System.Data.SQLite.SQLiteConnectionStringBuilder b =
                     new System.Data.SQLite.SQLiteConnectionStringBuilder(db.DataSource.ConnectionString);

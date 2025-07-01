@@ -131,7 +131,7 @@ namespace YuLinTu.Library.Business
             argument.CurrentZone = zone;
             argument.DbContext = dbContext;
             argument.FileName = savePath;
-            TaskExportMultiParcelWordOperation operation = new TaskExportMultiParcelWordOperation();
+            var operation = new TaskExportMultiParcelWordOperation();
             operation.IsStockLand = IsStockLand;
             operation.Argument = argument;
             operation.Name = "批量导出地块示意图";

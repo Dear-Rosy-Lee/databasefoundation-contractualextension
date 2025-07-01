@@ -179,7 +179,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             {
                 SpatialReference sr = GetSridFromDK();
                 CreateaDataBase(ginfo.UnitName + ginfo.ZoneCode, sr);
-                DataBaseHelper.SetDefaulZone(ginfo.ZoneCode, ginfo.UnitName);
+                ToolDataBaseHelper.SetDefaulZone(ginfo.ZoneCode, ginfo.UnitName);
                 srid = sr.WKID;
             }
             else
@@ -535,11 +535,11 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             }
             if ((!File.Exists(databasepath) || !filecanread) && sr != null)
             {
-                var ds = DataBaseHelper.TryCreateDatabase(databasepath, sr);
+                var ds = ToolDataBaseHelper.TryCreateDatabase(databasepath, sr);
                 if (ds != null)
                 {
-                    DataBaseHelper.TryUpdateDatabase(ds);
-                    DataBaseHelper.SetDefaultDatabaseName(databasepath, true);
+                    ToolDataBaseHelper.TryUpdateDatabase(ds);
+                    ToolDataBaseHelper.SetDefaultDatabaseName(databasepath, true);
                     LocalService = ds;
                 }
             }
