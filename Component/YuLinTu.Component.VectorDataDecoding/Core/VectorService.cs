@@ -412,8 +412,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 foreach (var item in result)
                 {
                     var fo = new FeatureObject(); 
-                    var data= JsonSerializer.Deserialize<Dictionary<string, object>>(item.metadata_json);               
-                    data.Add("batchCode", batchCode);
+                    var data= JsonSerializer.Deserialize<Dictionary<string, object>>(item.metadata_json);
+                    if (!data.Keys.Contains("batchCode"))
+                    { data.Add("batchCode", batchCode); }
                     fo.Object = data; // item.metadata_json;
                     var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key) + "#4490";
                     fo.Geometry = YuLinTu.Spatial.Geometry.FromString(shapeText);

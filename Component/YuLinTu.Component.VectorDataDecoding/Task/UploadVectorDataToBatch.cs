@@ -58,7 +58,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return;
             }
             vectorService = new VectorService();
-            var clientID = new Authenticate().GetApplicationKey();
+            var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
             // TODO : 任务的逻辑实现
             //var ShapeFilePath = args.ShapeFilePath;
             var ShapeFilePath = string.Empty;int index = 0;

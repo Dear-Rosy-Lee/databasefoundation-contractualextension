@@ -57,7 +57,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             base.OnGo();
             // TODO : 任务的逻辑实现
             int pageIndex = 1; int pageSize = 200;
-            var clientID = new Authenticate().GetApplicationKey();
+            var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
             DestinationFileName = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}_{args.ZoneName}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
             GeometryType = eGeometryType.Polygon;
             spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
@@ -139,7 +139,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                             WriteLog(args.ZoneCode, clientID, batchCode, dataCount);
                             //更新下载次数
-                            
+                            vectorService.UpdateDownLoadNum(batchCode);
                         }
                         pageIndex++;
 

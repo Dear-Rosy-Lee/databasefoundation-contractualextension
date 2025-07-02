@@ -55,7 +55,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
-            var clientID = new Authenticate().GetApplicationKey();
+            var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
             // TODO : 任务的逻辑实现
             int pageIndex = 1; int pageSize = 200;
 

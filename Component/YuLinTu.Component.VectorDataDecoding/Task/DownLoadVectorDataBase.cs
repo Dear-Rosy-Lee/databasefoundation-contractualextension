@@ -165,7 +165,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             {
                 var col = item.Key;
                 if (!dataDic.Keys.Contains(item.Value.ColumnName)) continue;
-                var val = dataDic[item.Value.ColumnName].ToString();// obj.Object.GetPropertyValue(item.Value.ColumnName);
+                var val = dataDic[item.Value.ColumnName]?.ToString();// obj.Object.GetPropertyValue(item.Value.ColumnName);
                 if (val == null)
                     continue;
 

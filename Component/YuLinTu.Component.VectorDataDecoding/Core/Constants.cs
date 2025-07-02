@@ -53,6 +53,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
         internal const string clientName = "测绘局";
         internal const string HelpFileName = "空间匹配工具使用说明.pdf";
+        internal static string client_id { get; set; }
         internal static List<string> ZonesCodes = new List<string>();
         internal static Dictionary<string,string> tempZonesDic = new Dictionary<string, string>();
 
