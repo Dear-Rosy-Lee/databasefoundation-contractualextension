@@ -99,18 +99,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="所在地域"
-                                            Width="80"
-                                           
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock  VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"
-                                            Text="{Binding scope}"></TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    
                     <DataGridTemplateColumn Header="描述"
                                             Width="*"
                                            >

@@ -127,7 +127,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             var ext = Path.GetExtension(fileInfo.file_name);
             var dateTimeTAG = DateTime.Parse(fileInfo.upload_time);
             var timeTag= dateTimeTAG.ToString("yyyy-MM-dd-HHmmss");
-            fileInfo.file_name = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}{args.ZoneName}_{timeTag}{defaultExt})");
+            fileInfo.file_name = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}{args.ZoneName}_{timeTag}{ext})");
             File.WriteAllBytes(fileInfo.file_name, fileBytes);
             message = $"成功下载文件：{fileInfo.file_name}";
             sucess = true;

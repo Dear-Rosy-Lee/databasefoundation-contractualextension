@@ -260,7 +260,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return message;
         }
 
-        public string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list,  string batchCode, bool isCover,out bool sucess)
+        public string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list,  string batchCode, UploadDataModel model, out bool sucess)
         {
             apiCaller.client = new HttpClient();
             string url = baseUrl + Constants.Methold_upload;
@@ -268,7 +268,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             Dictionary<string, object> body = new Dictionary<string, object>();
             body.Add("upload_batch_num", batchCode);
 
-            body.Add("dataOperation", isCover ? "2" : "1");
+            body.Add("dataOperation", model.GetStringValue());
             body.Add("data", list);
             var options = new JsonSerializerOptions
             {

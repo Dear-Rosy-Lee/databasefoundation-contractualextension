@@ -26,6 +26,10 @@ using YuLinTu.Component.VectorDataDecoding.Core;
 using System.Windows.Data;
 using YuLinTu.Component.VectorDataDecoding.Controls;
 using System.ServiceModel.Syndication;
+using System.Text.RegularExpressions;
+using YuLinTu.Component.VectorDataDecoding.JsonEntity;
+using System.Diagnostics;
+using YuLinTu.DF.Files;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
@@ -308,7 +312,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             UploaDeclassifyDataClient = false;
             string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding","Config.xml");
             //var fileName = Path.Combine(dirName, TheApp.Current.GetComponentConfigFileName());
-            if (File.Exists(fileName))
+            if (System.IO.File.Exists(fileName))
             {
                 var cmp = Serializer.DeserializeFromXmlFile<WinComponent>(fileName);
                if(cmp.Name.Contains(Constants.clientName)) {
@@ -746,23 +750,76 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanCommandUpLoadProveFiles(object args)
         {
-            if (CurrentZone == null) return false;
+            if (CurrentZone == null|| CurrentZone.Level!= ZoneLevel.Town) return false;
             return true;
         }
 
         private void OnCommandUpLoadProveFiles(object args)
         {
+
+
+
             var task = new UploadProveFiles();
             var arg = new UploadProveFilesArgument();
 
             arg.ZoneCode = CurrentZone.FullCode;
             arg.ZoneName = CurrentZone.Name;
-             
+
 
 
 
             ShowCreateTaskWindow(task, arg);
 
+
+        }
+        /// <summary>
+        /// 生成一个临时文件
+        /// </summary>
+        /// <param name="fileInfo"></param>
+        /// <param name=""></param>
+        /// <param name="sucess"></param>
+        /// <returns></returns>
+        private string ConvertToFile(ProveFileEn fileInfo)
+        {
+            
+            string message = string.Empty;
+            if (string.IsNullOrWhiteSpace(fileInfo.base_str))
+            {
+                message = "错误：Base64字符串为空";
+                return message;
+            }
+            if (fileInfo.base_str.Length % 4 != 0 || !Regex.IsMatch(fileInfo.base_str, @"^[a-zA-Z0-9\+/]*={0,3}$"))
+            {
+                message = "错误：无效的Base64格式:" + fileInfo.base_str;
+                return message;
+            }
+            string mimeType = null;
+            if (fileInfo.base_str.StartsWith("data:"))
+            {
+                int commaIndex = fileInfo.base_str.IndexOf(',');
+                if (commaIndex != -1)
+                {
+                    mimeType = fileInfo.base_str.Substring(5, commaIndex - 5);
+                    fileInfo.base_str = fileInfo.base_str.Substring(commaIndex + 1);
+                }
+            }
+            // 转换为字节数组
+            byte[] fileBytes = Convert.FromBase64String(fileInfo.base_str);
+          
+            var ext = Path.GetExtension(fileInfo.file_name);
+            string tempFilePath = Path.GetTempFileName();
+            string specificPath = Path.ChangeExtension(tempFilePath, ext);
+            System.IO.File.Move(tempFilePath, specificPath);
+
+            System.IO.File.WriteAllBytes(specificPath, fileBytes);
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = specificPath,
+                UseShellExecute = true // 使用系统关联程序打开
+            };
+            Process.Start(startInfo);
+
+            return message;
         }
         public DelegateCommand CommandDownLoadProveFiles { get { return _CommandDownLoadProveFiles ?? (_CommandDownLoadProveFiles = new DelegateCommand(args => OnCommandDownLoadProveFiles(args), args => OnCanCommandDownLoadProveFiles(args))); } }
         private DelegateCommand _CommandDownLoadProveFiles;
@@ -775,17 +832,37 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private void OnCommandDownLoadProveFiles(object args)
         {
-            var task = new DownLoadProveFiles();
-            var arg = new DownLoadProveFilesArgument();
+            #region 批量下载
+            //var task = new DownLoadProveFiles();
+            //var arg = new DownLoadProveFilesArgument();
 
-            arg.ZoneCode = CurrentZone.FullCode;
-            arg.ZoneName = CurrentZone.Name;
+            //arg.ZoneCode = CurrentZone.FullCode;
+            //arg.ZoneName = CurrentZone.Name;
 
 
 
 
-            ShowCreateTaskWindow(task, arg);
+            //ShowCreateTaskWindow(task, arg); 
+            #endregion
+            #region 查看模式
+            var fileInfos = vectorService.DownLoadProveFile(CurrentZone.FullCode, 1, 1);
+            if (fileInfos.Count == 0)
+            {
 
+                new MessageDialog()
+                {
+                    Header = "提示",
+                    Message = "未查询到该乡镇下的证明文件！",
+                    MessageGrade = eMessageGrade.Warn,
+
+                    ConfirmButtonVisibility = System.Windows.Visibility.Collapsed,
+                    CancelButtonText = "关闭",
+
+                }.ShowDialog(Workpage.Page);
+                return;
+            }
+            ConvertToFile(fileInfos[0]);
+            #endregion
 
         }
         #endregion
@@ -805,7 +882,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             string helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding", Constants.HelpFileName);
 
             //var helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Help.chm");
-            if (File.Exists(helpFilePath))
+            if (System.IO.File.Exists(helpFilePath))
             {
                 System.Diagnostics.Process.Start(helpFilePath);
             }

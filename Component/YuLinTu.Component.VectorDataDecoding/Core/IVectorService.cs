@@ -44,7 +44,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         /// </summary>
         /// <param name="batchCode"></param>
         string DeletBatchTask(string batchCode);
-        string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode,  bool isCover, out bool sucess1);
+        //string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode,  bool isCover, out bool sucess1);
+        string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode, UploadDataModel model, out bool sucess1);
         string UpLoadVectorMeata(string batchCode, List<PropertyMetadata> properties);
         string ChangeBatchDataStatus(string batchCode,out bool sucess1);
         string UpLoadBatchDataNum(string batchCode);

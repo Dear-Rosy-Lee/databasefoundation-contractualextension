@@ -210,7 +210,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             return index + 1;
         }
 
-        public Dictionary<int, PropertyMetadata> CreateFields(ShapeFile file, PropertyMetadata[] cols)
+        public Dictionary<int, PropertyMetadata> CreateFields(ShapeFile file, PropertyMetadata[] cols,bool addBatchCodeFiled=false)
         {
             var dic = new Dictionary<int, PropertyMetadata>();
             int index = 0;
@@ -234,12 +234,15 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 //    dic[oField] = col;
                 //    oLayer.CreateField(oField, 1);
             }
-            PropertyMetadata batchCodeFiled = new PropertyMetadata();
-            batchCodeFiled.ColumnName = "batchCode";
-            batchCodeFiled.ColumnType= eDataType.String;
-            batchCodeFiled.AliasName = "批次号";
-            file.AddField(batchCodeFiled.ColumnName, GetType(batchCodeFiled), GetLength(batchCodeFiled), GetPrecision(batchCodeFiled));
-            dic[index++] = batchCodeFiled;
+            if (addBatchCodeFiled)
+            {
+                PropertyMetadata batchCodeFiled = new PropertyMetadata();
+                batchCodeFiled.ColumnName = "batchCode";
+                batchCodeFiled.ColumnType = eDataType.String;
+                batchCodeFiled.AliasName = "批次号";
+                file.AddField(batchCodeFiled.ColumnName, GetType(batchCodeFiled), GetLength(batchCodeFiled), GetPrecision(batchCodeFiled));
+                dic[index++] = batchCodeFiled;
+            }
             return dic;
         }
 

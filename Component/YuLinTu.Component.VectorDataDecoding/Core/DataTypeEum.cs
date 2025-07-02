@@ -24,7 +24,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         [StringValue("ZJDDM")]
         宅基地 = 02,
 
-       [Description("行政地域")]
+        [Description("行政地域")]
         [StringValue("XZDYDM")]
         行政地域 = 03
     }

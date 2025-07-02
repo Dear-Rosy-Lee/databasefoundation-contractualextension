@@ -90,6 +90,24 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         }
         public bool checkPass = false;
 
+
+        [DisplayLanguage("说明", IsLanguageName = false)]
+        [DescriptionLanguage("说明", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
+UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]       
+        [WatermaskLanguage("填写对本批次的描述说明信息")]
+        public string Descrpition
+        {
+            get { return _Descrpition; }
+            set
+            {
+                _Descrpition = value;
+                
+                NotifyPropertyChanged("Descrpition");
+            }
+        }
+        private string _Descrpition;
+
         #endregion
 
         #region Ctor

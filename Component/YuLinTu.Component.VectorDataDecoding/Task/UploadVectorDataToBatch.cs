@@ -62,21 +62,28 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             // TODO : 任务的逻辑实现
             //var ShapeFilePath = args.ShapeFilePath;
             var ShapeFilePath = string.Empty;int index = 0;
+            //先根据批次号查询状态，未送审才能继续上传  需增加接口
             foreach (var item in args.ShpFilesInfo)
             {
                 index++;
                 string msg=  UploadVectorData(args, item.FullPath, clientID, index,out bool sucess);
                 if(!sucess)
                 {
-                    this.ReportWarn(msg);
+                    this.ReportError(msg);
+                    if (args.UploadModel == UploadDataModel.追加上传)
+                    {
+                        vectorService.UpLoadBatchDataNum(args.BatchCode);
+                        return;
+                    }
                 }
                 else
                 {
                     this.ReportInfomation(msg);
                 }
             }
-          
 
+            string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
+            this.ReportInfomation(info);
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
         }
@@ -104,10 +111,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                var progess = (100 * (fileIndex-1) )/ fileCount+  dataCount*100/(fileCount* count);
                 this.ReportProgress(progess);
                 dataCount += list.Count;
-                var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.IsCover, out bool sucess);
+                var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.UploadModel, out bool sucess);
                 if (!sucess)
                 {
                     this.ReportError(msg);
+
+                    
                 }
                 else
                 {
@@ -142,8 +151,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return jsonEn;
             });
             scuess = true;
-            string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
-            this.ReportInfomation(info);
+            
             message = $"上传文件{shpName}中{dataCount}条数据";
             WriteLog(args, clientID, shpName, ShapeFilePath, dataCount);
             return message;

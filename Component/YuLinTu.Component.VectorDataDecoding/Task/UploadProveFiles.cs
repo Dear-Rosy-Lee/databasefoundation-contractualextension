@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using YuLinTu;
 using YuLinTu.Appwork;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
+using YuLinTu.DF.Files;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
     [TaskDescriptor(TypeArgument = typeof(UploadProveFilesArgument),
-        Name = "UploadProveFiles", Gallery = @"Gallery1\Gallery2",
+        Name = "上传证明材料", Gallery = @"Gallery1\Gallery2",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class UploadProveFiles : YuLinTu.Task
@@ -28,8 +30,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public UploadProveFiles()
         {
-            Name = "UploadProveFiles";
-            Description = "This is UploadProveFiles";
+            Name = "上传证明材料";
+            Description = "按乡镇上传证明材料";
         }
 
         #endregion
@@ -64,9 +66,21 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     en.base_str=Convert.ToBase64String(ms.ToArray());
                 }
             }
+            if (string.IsNullOrWhiteSpace(en.base_str))
+            {
+                this.ReportError("文件内容为空，请核查！");
+                return;
+            }
+            if (en.base_str.Length % 4 != 0 || !Regex.IsMatch(en.base_str, @"^[a-zA-Z0-9\+/]*={0,3}$"))
+            {
+               var  message = "文件错误，请核查！" ;
+                this.ReportError(message);
+                return;
+            }
             string msg=  vectorService.UpLoadProveFile(en,out bool sucess);
             if(!sucess) {
                 this.ReportError(msg);
+                return;
             }
             else
             {
