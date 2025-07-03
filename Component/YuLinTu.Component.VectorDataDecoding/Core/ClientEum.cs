@@ -8,7 +8,7 @@ using YuLinTu.DF.Attributes;
 
 namespace YuLinTu.Component.VectorDataDecoding.Core
 {
-    internal enum ClientEum
+    public enum ClientEum
     {
         UploadRowDataClient = 0,
         UploaDeclassifyDataClient=1

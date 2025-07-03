@@ -587,6 +587,56 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return zones;
         }
 
+        public int GetBatchsCountByZoneCode(string zoneCode, ClientEum clientType)
+        {
+            apiCaller.client = new HttpClient();
+            List<ProveFileEn> landJsonEntites = new List<ProveFileEn>();
+            string url = Constants.baseUrl + Constants.Methold_BatchCount;
+
+            string type=string.Empty;
+            switch (clientType)
+            {
+                case ClientEum.UploadRowDataClient:
+                    type = "";
+                    break;
+                case ClientEum.UploaDeclassifyDataClient:
+                    type = "1";
+                    break;
+                default:
+                    break;
+            }
+            Dictionary<string, string> body = new Dictionary<string, string>();         
+            body.Add("type", type);
+            body.Add("dybm", zoneCode);
+
+            var result = apiCaller.PostDataAsync(url,  AppHeaders, JsonSerializer.Serialize(body), out bool sucess);
+            int count = 0;
+            if (sucess)
+                try { count = int.Parse(result); }
+                catch (Exception ex) { 
+
+                }
+
+            return count;
+        }
+
+        public BatchsStausCode GetBatchStatusByCode(string batchCode)
+        {
+             var   url = Constants.baseUrl + Constants.Methold_BatchStaus;
+            ApiCaller apiCaller = new ApiCaller();
+            apiCaller.client = new HttpClient();
+            Dictionary<string, string> parms = new Dictionary<string, string>();     
+            parms.Add("upload_batch_num", batchCode);
+            BatchsStausCode result= BatchsStausCode.未送审;
+            var en = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms,out bool sucess);
+            if (sucess)
+            {
+                int.TryParse(en, out int type);
+                result=(BatchsStausCode)type;
+            }
+
+            return result;
+        }
     }
 }
 

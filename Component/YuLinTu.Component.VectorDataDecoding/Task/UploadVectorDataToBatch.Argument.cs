@@ -29,7 +29,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次名称", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
 
         public string BatchName
         {
@@ -46,7 +46,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次号", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
 
         public string BatchCode
         {
@@ -63,7 +63,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("地域编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域编码", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
 
         public string ZoneCode
         {
@@ -82,7 +82,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DescriptionLanguage("待处理数据类型", IsLanguageName = false)]
         [PropertyDescriptor(
            Builder = typeof(PropertyDescriptorBuilderComboBoxEnum),//typeof(PropertyDescriptorBuilderEnum),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/odata.png")]
         public DataTypeEum DataType
         {
             get => _DataType;
@@ -186,7 +186,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayName("加载模式")]
         [DescriptionLanguage("选择追加或覆盖模式", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderComboBoxEnum),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/clipboard.png")]
         public UploadDataModel UploadModel
         {
             get { return _UploadModel; }

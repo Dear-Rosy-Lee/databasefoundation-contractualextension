@@ -24,7 +24,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         public new VectorDataDecodePage PageContent
         { get { return base.PageContent as VectorDataDecodePage; } }
 
-        // private ILandInfoRepository LandInfoRep { get => GetRepository<ILandInfoRepository>(); }
+        private IVectorService vectorService { get;set; }
         public override bool IsConnectDB { get => base.IsConnectDB; set => base.IsConnectDB = false; }
         #endregion Properties
 
@@ -40,6 +40,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             IsConnectDB = false;
             Constants.ZonesCodes = GetSecurityZoneCode();
             CommonSettingDefine.Instance.CurrentZoneCode = GetRootCode(Constants.ZonesCodes); //region;//导航树的根地域、具有权限的地域                               
+            vectorService=new VectorService();
         }
 
         private string GetRootCode(List<string> zones)
@@ -135,7 +136,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         protected override int ShowContentCountByZoneCode(string zoneCode)
         {
-            return 100;//LandInfoRep.CountByZoneCode(zoneCode);
+            return vectorService.GetBatchsCountByZoneCode(zoneCode,Constants.ClientType);
         }
 
         #endregion Methods - Override

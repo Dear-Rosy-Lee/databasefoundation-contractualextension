@@ -732,13 +732,16 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void OnCommandOpenLog(object args)
         {
             var vm = new LogDialogViewModel(Workpage.Page);
-            vm.Items = vectorService.QueryLogsByBatchCode(SelectedItem.BatchCode);
+
+     
+            vm.BatchCode= SelectedItem.BatchCode;
+            //vm.Items = vectorService.QueryLogsByBatchCode(SelectedItem.BatchCode);
             Workpage.Page.ShowDialog(vm.CreateView(), (s, a) =>
             {
                 if (!(s.HasValue && s.Value))
                     return;
+                
 
-               
             });
 
         }

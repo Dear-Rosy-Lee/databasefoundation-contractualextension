@@ -64,5 +64,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200);
 
         List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode);
+        int GetBatchsCountByZoneCode(string zoneCode, ClientEum clientType);
+        BatchsStausCode GetBatchStatusByCode(string batchCode);
     }
 }

@@ -127,7 +127,7 @@
                                      
                                      Command="{Binding CommandUploadVectorDataToSeverTask}">
                         <ylt:ImageTextItem ImagePosition="Top"
-                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
+                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/数据送审.png"
                                            Text="数据送审" />
                     </ylt:MetroButton>
                     <ylt:MetroButton Padding="4,2,4,2"
@@ -298,7 +298,7 @@
                     <ylt:MetroDataGrid.Columns>
                         <DataGridTemplateColumn Header="批次编码"
                                             Width="250" 
-                                            SortMemberPath="Name"  ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            SortMemberPath="BatchCode"  ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 
                                               
@@ -306,7 +306,7 @@
                                                     <StackPanel Orientation="Horizontal"
                                                         >
                                                         <Image MaxHeight="15"
-                                                           Source="pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png"></Image>
+                                                           Source="pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png"></Image>
                                                         <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center"
                                                                Text="{Binding BatchCode}"></TextBlock>
@@ -319,7 +319,7 @@
                         <DataGridTemplateColumn Header="批次名称"
                                             Width="250"
                                             SortDirection="Ascending"
-                                            SortMemberPath="OrderID"
+                                            SortMemberPath="BatchName"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type local:VectorDecodeBatchModel}">
@@ -334,7 +334,7 @@
                         <DataGridTemplateColumn Header="地域编码"
                                             Width="120"
                                             SortDirection="Ascending"
-                                            SortMemberPath="OrderID"
+                                            SortMemberPath="ZoneCode"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
@@ -349,7 +349,7 @@
                         <DataGridTemplateColumn Header="送审时间"
                                             Width="160"
                                             SortDirection="Ascending"
-                                            SortMemberPath="OrderID"
+                                            SortMemberPath="UplaodTime"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
@@ -363,7 +363,7 @@
                         <DataGridTemplateColumn Header="数据条数"
                                             Width="100"
                                             SortDirection="Ascending"
-                                            SortMemberPath="OrderID"
+                                            SortMemberPath="DataCount"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
@@ -378,7 +378,7 @@
                         <DataGridTemplateColumn Header="处理进度"
                                             Width="100"
                                             SortDirection="Ascending"
-                                            SortMemberPath="OrderID"
+                                            SortMemberPath="DataStaus"
                                             ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
@@ -394,20 +394,20 @@
                                                 <Style TargetType="TextBlock">
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="0">
-                                                            <Setter Property="Foreground" Value="Orange"/>
+                                                            <Setter Property="Foreground" Value="#2b579a"/>
                                                             <Setter Property="Text" Value="未送审"/>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="1">
-                                                            <Setter Property="Foreground" Value="Orange"/>
+                                                            <Setter Property="Foreground" Value="#2b579a"/>
                                                             <Setter Property="Text" Value="已送审"/>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="2">
-                                                            <Setter Property="Foreground"  Value="Blue"/>
+                                                            <Setter Property="Foreground"  Value="#2b579a"/>
                                                             <Setter Property="Text" Value="待处理"/>
                                                         </DataTrigger>
 
                                                         <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="3">
-                                                            <Setter Property="Foreground"  Value="#16A34A"/>
+                                                            <Setter Property="Foreground"  Value="#2b579a"/>
                                                             <Setter Property="Text" Value="处理中"/>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding Text, ElementName=DataStausTag}" Value="4">
@@ -453,7 +453,7 @@
 
                                     <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                               Text="{Binding NumbersOfDownloads}"></TextBlock>
+                                                               Text="{Binding BatchDescrption}"></TextBlock>
 
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -467,8 +467,8 @@
                                 <DataTemplate >
 
 
-                                    <Button  Style="{StaticResource btn}" Height="25" Padding="0" Margin="0" FontSize="12" HorizontalAlignment="Left"  Command="{Binding DataContext.CommandOpenLog,Source={x:Reference dg}}" 
-                                        Foreground="Green">操作日志</Button>
+                                    <Button  Style="{StaticResource btn}" Height="25" Padding="0" Margin="0" FontSize="13" HorizontalAlignment="Left"  Command="{Binding DataContext.CommandOpenLog,Source={x:Reference dg}}" 
+                                        Foreground="#2b579a">操作日志</Button>
                                   
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

@@ -22,8 +22,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
         }
 
         public int Count()
-        {
-            return 2;//需修改为调用接口获取
+        {if(CurrentZone==null)return 0;
+            return VectorService.GetBatchsCountByZoneCode(CurrentZone.FullCode, ClientEum.UploadRowDataClient);
         }
 
         public PropertyMetadata[] GetAttributeProperties()

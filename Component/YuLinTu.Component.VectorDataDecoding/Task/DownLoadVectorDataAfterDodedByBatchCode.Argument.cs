@@ -14,7 +14,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次编码", IsLanguageName = false)]
         [DescriptionLanguage("批次编码", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
 
         public string BatchCode
         {
@@ -30,7 +30,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次名称", IsLanguageName = false)]
         [DescriptionLanguage("批次名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-       UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+       UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
       
       
         public string BatchName

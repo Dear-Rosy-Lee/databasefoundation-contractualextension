@@ -20,7 +20,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("地域名称", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
         
 
         public string ZoneName
@@ -40,7 +40,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("地域编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域编码", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
 
         public string ZoneCode
         {
@@ -56,7 +56,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次名称", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
-        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
         [Required]
         [WatermaskLanguage("请命名批次名称，如XXX村承包地")]
         public string BatchName
@@ -94,7 +94,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("说明", IsLanguageName = false)]
         [DescriptionLanguage("说明", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
-UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]       
+UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/information-white.png")]       
         [WatermaskLanguage("填写对本批次的描述说明信息")]
         public string Descrpition
         {

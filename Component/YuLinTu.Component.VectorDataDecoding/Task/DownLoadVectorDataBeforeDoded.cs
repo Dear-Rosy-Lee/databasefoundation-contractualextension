@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
@@ -64,7 +65,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
             HashSet<string> batchCodesHash = new HashSet<string>();
 
-            int pageSizeB = 2; int pageIndexB = 1;
+            int pageSizeB = 200; int pageIndexB = 1;
             while (true)
             {
                 var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndexB, pageSizeB, ((int)BatchsStausCode.已送审).ToString()).ToList();
@@ -77,6 +78,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 });
                 pageIndexB++;
             }
+            if (batchCodesHash.Count == 0)
+            {
+                this.ReportWarn($"{args.ZoneCode}{args.ZoneName}未查询到处于已送审和处理中状态的批次，无可下载数据！");
+                return;
+            }
+            this.ReportProgress(20);
             BatchTotalCount = batchCodesHash.Count;
 
             if (args.ZoneCode.Length<=6)
@@ -425,7 +432,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         foreach (var batchCode in BatchCodes)
                         {
                         BatchHandelCount++;
-                        this.ReportProgress(BatchHandelCount*100/ BatchTotalCount);
+                        this.ReportProgress(20+BatchHandelCount*80/ BatchTotalCount);
                         int dataCount = 0;
                             int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
                             while (true)
@@ -496,15 +503,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
         #endregion
-        private void WriteLog(DownLoadVectorDataBeforeDodedArgument args,string batchCode,  int dataCount)
-        {
-            LogEn log = new LogEn();
-            log.scope = args.ZoneCode;
-            log.owner = batchCode;
-            log.sub_type = "下载未处理数据";
-            log.description = $"测绘局端下载于{DateTime.Now.ToString("g")}成功下载批次号为{batchCode}的待处理数据{dataCount}条！";
-            vectorService.WriteLog(log);
-        }
+       
         private void WriteLog(string ZoneCode, string batchCode, int dataCount)
         {
             LogEn log = new LogEn();
