@@ -350,7 +350,7 @@ namespace YuLinTu.Component.SeparateDataBaseTask
             try
             {
                 dbContextTarget.BeginTransaction();
-                string cmds = YuLinTu.Component.Common.Properties.Resources.DictionarySQL;
+                string cmds = YuLinTu.Library.Business.Properties.Resources.DictionarySQL;
 
                 var sqls = cmds.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
