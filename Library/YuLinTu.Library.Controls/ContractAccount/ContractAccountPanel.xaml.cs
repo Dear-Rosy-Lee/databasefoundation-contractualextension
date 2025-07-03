@@ -346,19 +346,22 @@ namespace YuLinTu.Library.Controls
             }
             catch
             {
-                TheWorkPage.Page.ShowMessageBox(new TabMessageBoxDialog()
+                if (!string.IsNullOrEmpty(zoneCode))
                 {
-                    Header = "提示",
-                    Message = "获取数据时发生错误,可以尝试升级数据库解决问题。\n\n" +
-                    "点击 确定 开始升级数据库。\n" + "点击 取消 不升级",
-                    MessageGrade = eMessageGrade.Error,
-                    CancelButtonText = "取消",
-                }, (b, ec) =>
-                {
-                    if (!(bool)b)
-                        return;
-                    ToolDataBaseHelper.TryUpdateDatabase(DataBaseSource.GetDataBaseSource());
-                });
+                    TheWorkPage.Page.ShowMessageBox(new TabMessageBoxDialog()
+                    {
+                        Header = "提示",
+                        Message = "获取数据时发生错误,可以尝试升级数据库解决问题。\n\n" +
+                        "点击 确定 开始升级数据库。\n" + "点击 取消 不升级",
+                        MessageGrade = eMessageGrade.Error,
+                        CancelButtonText = "取消",
+                    }, (b, ec) =>
+                    {
+                        if (!(bool)b)
+                            return;
+                        ToolDataBaseHelper.TryUpdateDatabase(DataBaseSource.GetDataBaseSource());
+                    });
+                }
                 return;
             }
 
