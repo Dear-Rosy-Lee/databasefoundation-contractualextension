@@ -19,7 +19,7 @@ namespace YuLinTu.Component.Common.Properties {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -47,8 +47,8 @@ namespace YuLinTu.Component.Common.Properties {
         }
         
         /// <summary>
-        ///   使用此强类型资源类，为所有资源查找
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         public static global::System.Globalization.CultureInfo Culture {
@@ -57,16 +57,6 @@ namespace YuLinTu.Component.Common.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 INSERT INTO [JCSJ_SJZD] ([ID], [FZM], [FZMC], [LXBM], [MC], [BM], [BZXX], [CJZ], [CJSJ], [XGZ], [XGSJ]) VALUES (&apos;8ad3987b-3970-4663-a594-dc45f3c6092b&apos;, &apos;C1&apos;, &apos;控制点类型及等级&apos;, &apos;110100&apos;, &apos;平面控制点&apos;, &apos;平面控制点&apos;, &apos;&apos;, &apos;Admin&apos;, &apos;2015-05-05T00:00:00&apos;, &apos;&apos;, &apos;0001-01-01T00:00:00&apos;);
-        ///INSERT INTO [JCSJ_SJZD] ([ID], [FZM], [FZMC], [LXBM], [MC], [BM], [BZXX], [CJZ], [CJSJ], [XGZ], [XGSJ]) VALUES (&apos;68905c7d-708a-4d24-b630-cf2a9f3f5db0&apos;, &apos;C1&apos;, &apos;控制点类型及等级&apos;, &apos;110101&apos;, &apos;大地原点&apos;, &apos;大地原点&apos;, &apos;大地原点&apos;, &apos;Admin&apos;, &apos;2015-05-05T00:00:00&apos;, &apos;&apos;, &apos;0001-01- [字符串的其余部分被截断]&quot;; 的本地化字符串。
-        /// </summary>
-        public static string DictionarySQL {
-            get {
-                return ResourceManager.GetString("DictionarySQL", resourceCulture);
             }
         }
     }
