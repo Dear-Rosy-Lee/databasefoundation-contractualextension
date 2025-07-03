@@ -1596,6 +1596,35 @@ namespace YuLinTu.Library.Entity
             return sourceString.Trim().Replace(" ", "").Replace("\0", "");
         }
 
+        public static ContractLand ChangeDataDelEntity(string zoneCode, ContractLand_Del ld, string fnum = "")
+        {
+            var data = new ContractLand()
+            {
+                Comment = ld.BZXX,
+                LandNumber = ld.DKBM,
+                NeighborNorth = ld.DKBZ,
+                NeighborWest = ld.DKXZ,
+                NeighborSouth = ld.DKNZ,
+                NeighborEast = ld.DKDZ,
+                Name = ld.DKMC,
+                ZoneCode = zoneCode,
+                ID = ld.ID,
+                OldLandNumber = ld.QQDKBM,
+                AwareArea = ld.QQMJ,
+                ActualArea = ld.SCMJ,
+                OwnerId = ld.CBFID,
+                Purpose = ld.TDYT,
+                LandCode = ld.TDLYLX,
+                OwnRightType = ld.SYQXZ,
+                LandLevel = ld.DLDJ,
+                LandCategory = ld.DKLB,
+                IsFarmerLand = ld.SFJBNT == "是" ? true : false,
+                OldZoneName = ld.YDYMC,
+                LandChange = ld.DKBHQK
+            };
+            return data;
+        }
+
         #endregion Methods
     }
 

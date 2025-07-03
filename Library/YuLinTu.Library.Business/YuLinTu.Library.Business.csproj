@@ -324,6 +324,7 @@
     <Compile Include="ContractAccount\AttributeDataChecker\DataCheckProgress.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerArgument.cs" />
     <Compile Include="ContractAccount\AttributeDataChecker\TaskAttributeDataCheckerOperation.cs" />
+    <Compile Include="ContractAccount\ExportAllDelayTable\ExoprtDKBHTJBTable.cs" />
     <Compile Include="ContractAccount\ExportAllDelayTable\ExportDKBHHZBTable.cs" />
     <Compile Include="ContractAccount\ExportAllDelayTable\ExoprtCBGYRXZJJSTJBTable.cs" />
     <Compile Include="ContractAccount\ExportAllDelayTable\ExoprtRKBHHZBTable.cs" />

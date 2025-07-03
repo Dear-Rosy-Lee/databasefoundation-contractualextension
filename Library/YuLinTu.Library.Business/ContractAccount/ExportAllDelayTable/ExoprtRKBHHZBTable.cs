@@ -208,7 +208,7 @@ namespace YuLinTu.Library.Business.ContractAccount.ExportAllDelayTable
             if (person.Opinion == "误登到他户")
             {
                 wddth++;
-                keyValuePairs[person.FamilyID] = 10;
+                keyValuePairs[person.FamilyID] ++;
             }
             if (person.Opinion == "漏登" && person.Comment == "其他备注")
             {

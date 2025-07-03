@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using YuLinTu.Business.ContractLand.Exchange2;
 using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
@@ -42,6 +43,7 @@ namespace YuLinTu.Library.Business
         public object[,] allItem;
         public int rangeCount;//行数
         public int columnCount;//列数
+        
         #endregion Fields
 
         #region Propertys
@@ -595,6 +597,7 @@ namespace YuLinTu.Library.Business
                         entity.LandChange = GetString(allItem[currentIndex, 36]);
                         landFamily.CurrentFamily.FamilyExpand.Description = entity.OldZoneName;
                     }
+                    
                     var delLand = ContractLand_Del.ChangeDataEntity(CurrentZone.FullCode,entity);
                     landFamily.DelLandCollection.Add(delLand);
                 }

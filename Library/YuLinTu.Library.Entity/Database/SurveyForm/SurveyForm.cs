@@ -42,6 +42,7 @@ namespace YuLinTu.Library.Entity
         private List<ContractLand> contractLandList;
         private string contractLand;
         private string oldZoneName;
+        private double exchangeLandArea;
         #endregion Field
 
         /// <summary>
@@ -309,6 +310,15 @@ namespace YuLinTu.Library.Entity
         {
             get { return oldZoneName; }
             set { oldZoneName = value.TrimSafe(); NotifyPropertyChanged("OldZoneName"); }
+        }
+
+        /// <summary>
+        /// 互换面积变化
+        /// </summary>
+        public double ExchangeLandArea
+        {
+            get { return exchangeLandArea; }
+            set { exchangeLandArea = value; NotifyPropertyChanged("ExchangeLandArea"); }
         }
     }
 }

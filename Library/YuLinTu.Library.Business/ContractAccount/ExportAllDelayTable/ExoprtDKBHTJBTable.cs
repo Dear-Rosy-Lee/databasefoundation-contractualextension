@@ -12,10 +12,12 @@ using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
-    public class ExportDKBHHZBTable : ExportExcelBase
+    public class ExoprtDKBHTJBTable : ExportExcelBase
     {
         #region Fields
-        protected double index;
+        protected int index;
+        protected int bindex;
+
         private double qqld;
         private double cddth;
         private double hhzj;
@@ -31,6 +33,8 @@ namespace YuLinTu.Library.Business
         private double landArea;
         private Dictionary<string, double> cdkeyValuePairs;
         private Dictionary<Guid?, double> hhkeyValuePairs;
+        private List<string> oldLandNumbers;
+        private List<string> newLandNumbers;
         private List<ContractLand> contractLands;
         #endregion Fields
 
@@ -44,7 +48,7 @@ namespace YuLinTu.Library.Business
 
         public List<SurveyForm> SurveyForms { get; set; }
 
-        public List<ContractLand_Del> ContractLand_Dels { get; set; } 
+        public List<ContractLand_Del> ContractLand_Dels { get; set; }
 
         public string saveFilePath { get; set; }
 
@@ -56,7 +60,7 @@ namespace YuLinTu.Library.Business
 
         #region Ctor
 
-        public ExportDKBHHZBTable()
+        public ExoprtDKBHTJBTable()
         {
 
         }
@@ -97,19 +101,6 @@ namespace YuLinTu.Library.Business
         }
         public virtual bool BeginWrite()
         {
-            double totalqqld = 0;
-            double totalcddth = 0;
-            double totalhhzj = 0;
-            double totalxzcb = 0;
-            double totalgjzy = 0;
-            double totaljtgysyzy = 0;
-            double totalwddwh = 0;
-            double totalhhjs = 0;
-            double totalqt = 0;
-            int totalSecondLandCount = 0;
-            double totalSecondLandArea = 0;
-            int totalLandCount = 0;
-            double totalLandArea = 0;
             int aindex = 1;
             cdkeyValuePairs = new Dictionary<string, double>();
             hhkeyValuePairs = new Dictionary<Guid?, double>();
@@ -120,52 +111,21 @@ namespace YuLinTu.Library.Business
                 hhkeyValuePairs[item.ID] = 0;
                 contractLands.AddRange(item.ContractLandList);
             }
-            
+
 
 
             WriteTempLate();
 
-            
+
             foreach (var surveyForm in SurveyForms)
             {
                 GetExchangeLandArea(SurveyForms, contractLands);
                 WriteInformation(surveyForm, aindex);
-                totalqqld += qqld;
-                totalcddth += cddth;
-                totalhhzj += hhzj;
-                totalxzcb += xzcb;
-                totalgjzy += gjzy;
-                totaljtgysyzy += jtgysyzy;
-                totalwddwh += wddwh;
-                totalhhjs += hhjs;
-                totalqt += qt;
-                totalSecondLandCount += secondLandCount;
-                totalSecondLandArea += secondLandArea;
-                totalLandCount += landCount;
-                totalLandArea += landArea;
+                
                 aindex++;
             }
-            InitalizeRangeValue("A" + index, "A" + index, "合计");
-            InitalizeRangeValue("B" + index, "B" + index, "/");
-            InitalizeRangeValue("C" + index, "C" + index, "/");
-            InitalizeRangeValue("D" + index, "D" + index, totalSecondLandCount);
-            InitalizeRangeValue("E" + index, "E" + index, totalSecondLandArea);
-            InitalizeRangeValue("F" + index, "F" + index, 0);
-            InitalizeRangeValue("G" + index, "G" + index, totalqqld + totalcddth + totalhhzj + totalxzcb);
-            InitalizeRangeValue("H" + index, "H" + index, totalqqld);
-            InitalizeRangeValue("I" + index, "I" + index, totalcddth);
-            InitalizeRangeValue("J" + index, "J" + index, totalhhzj);
-            InitalizeRangeValue("K" + index, "K" + index, totalxzcb);
-            InitalizeRangeValue("L" + index, "L" + index, totalgjzy + totaljtgysyzy + totalwddwh + totalhhjs + totalqt);
-            InitalizeRangeValue("M" + index, "M" + index, totalgjzy);
-            InitalizeRangeValue("N" + index, "N" + index, totaljtgysyzy);
-            InitalizeRangeValue("O" + index, "O" + index, totalwddwh);
-            InitalizeRangeValue("P" + index, "P" + index, totalhhjs);
-            InitalizeRangeValue("Q" + index, "Q" + index, totalqt);
-            InitalizeRangeValue("R" + index, "R" + index, totalLandCount);
-            InitalizeRangeValue("S" + index, "S" + index, totalLandArea);
-            InitalizeRangeValue("T" + index, "T" + index, "/");
-            SetLineType("A4", "T" + index, false);
+            
+            SetLineType("A6", "I" + (index-1), false);
             return true;
         }
         public virtual void WriteInformation(SurveyForm surveyForm, int aindex)
@@ -179,7 +139,7 @@ namespace YuLinTu.Library.Business
             hhjs = 0;
             qt = 0;
             landCount = surveyForm.ContractLandList.Count;
-            landArea = 0; 
+            landArea = 0;
             surveyForm.ContractLandList.ForEach(t => { landArea += t.AwareArea; });
             var contractLands = surveyForm.ContractLandList;
             if (ContractLand_Dels != null)
@@ -189,71 +149,70 @@ namespace YuLinTu.Library.Business
                     contractLands.Add(ContractLand.ChangeDataDelEntity(Zone.FullCode, item));
                 }
             }
+
+            bindex = 0;
+
             
-            
+
             foreach (var land in contractLands)
             {
-                CountLandInformation(land);
+                WriteLandInformation(land);
+                
             }
+            //if (surveyForm.ExchangeLandArea > 0)
+            //{
+            //    InitalizeRangeValue("C" + index, "C" + index, land.Name);
+            //    InitalizeRangeValue("D" + index, "D" + index, landArea);
+            //    InitalizeRangeValue("E" + index, "E" + index, "互换新增");
+            //    bindex++;
+            //}
+            //if (surveyForm.ExchangeLandArea < 0)
+            //{
+            //    hhjs = surveyForm.ExchangeLandArea;
+            //    bindex++;
+            //}
 
-            if (surveyForm.ExchangeLandArea > 0)
+            if (bindex != 0)
             {
-                hhzj = surveyForm.ExchangeLandArea;
+                InitalizeRangeValue("A" + (index - bindex), "A" + (index - 1), aindex);
+                InitalizeRangeValue("B" + (index - bindex), "B" + (index - 1), surveyForm.OwnerName);
+                InitalizeRangeValue("I" + (index - bindex), "I" + (index - 1), surveyForm.OldZoneName);
             }
-            else
-            {
-                hhjs = surveyForm.ExchangeLandArea;
-            }
-            InitalizeRangeValue("A" + index, "A" + index, aindex);
-            InitalizeRangeValue("B" + index, "B" + index, surveyForm.FamilyNumber);
-            InitalizeRangeValue("C" + index, "C" + index, surveyForm.OwnerName);
-            InitalizeRangeValue("D" + index, "D" + index, GetSecondLandCout());
-            InitalizeRangeValue("E" + index, "E" + index, GetSecondLandArea());
-            InitalizeRangeValue("F" + index, "F" + index, 0);
-            InitalizeRangeValue("G" + index, "G" + index, qqld + cddth + hhzj + xzcb);
-            InitalizeRangeValue("H" + index, "H" + index, qqld);
-            InitalizeRangeValue("I" + index, "I" + index, cddth);
-            InitalizeRangeValue("J" + index, "J" + index, hhzj);
-            InitalizeRangeValue("K" + index, "K" + index, xzcb);
-            InitalizeRangeValue("L" + index, "L" + index, gjzy + jtgysyzy + wddwh + hhjs + qt);
-            InitalizeRangeValue("M" + index, "M" + index, gjzy);
-            InitalizeRangeValue("N" + index, "N" + index, jtgysyzy);
-            InitalizeRangeValue("O" + index, "O" + index, cdkeyValuePairs[surveyForm.FamilyNumber]);
-            InitalizeRangeValue("P" + index, "P" + index, hhjs);
-            InitalizeRangeValue("Q" + index, "Q" + index, qt);
-            InitalizeRangeValue("R" + index, "R" + index, landCount);
-            InitalizeRangeValue("S" + index, "S" + index, landArea);
-            InitalizeRangeValue("T" + index, "T" + index, "/");
-            index++;
+            
         }
 
 
 
-        public virtual void CountLandInformation(ContractLand land)
+        public virtual void WriteLandInformation(ContractLand land)
         {
-            if (land.Comment == "漏登")
-            {
-                qqld += land.AwareArea;
+            double landArea = 0;
+            if(land.Comment == "漏登" || land.Comment == "错登"|| land.Comment == "新增")
+            { 
+                landArea = land.AwareArea;
+                InitalizeRangeValue("C" + index, "C" + index, land.Name);
+                InitalizeRangeValue("D" + index, "D" + index, landArea);
+                InitalizeRangeValue("E" + index, "E" + index, land.Comment);
+                index++;
+                bindex++;
             }
-            if (land.Comment == "错登")
+            
+            if (land.LandChange == "国家征用" || land.LandChange == "集体公益事业占用")
             {
-                cddth += land.AwareArea;
-            }
-            if (land.Comment == "新增")
-            {
-                xzcb += land.AwareArea;
-            }
-            if (land.LandChange == "国家征用")
-            {
-                gjzy += land.AwareArea;
-            }
-            if (land.LandChange == "集体公益事业占用")
-            {
-                jtgysyzy += land.AwareArea;
+                landArea = land.AwareArea;
+                InitalizeRangeValue("F" + index, "F" + index, land.Name);
+                InitalizeRangeValue("G" + index, "G" + index, landArea);
+                InitalizeRangeValue("H" + index, "H" + index, land.LandChange);
+                bindex++;
+                index++;
             }
             if (land.Comment == "其他")
             {
-                qt += double.Parse(land.LandChange);
+                landArea = double.Parse(land.LandChange);
+                InitalizeRangeValue("F" + index, "F" + index, land.Name);
+                InitalizeRangeValue("G" + index, "G" + index, landArea);
+                InitalizeRangeValue("H" + index, "H" + index, land.Comment+"减少");
+                bindex++;
+                index++;
             }
             
         }
@@ -263,23 +222,23 @@ namespace YuLinTu.Library.Business
         /// </summary>
         public virtual void WriteTempLate()
         {
-            string title = GetRangeToValue("A1", "T1").ToString();
+            string title = GetRangeToValue("A1", "I1").ToString();
             title = $"{ZoneDesc}{title}";
-            InitalizeRangeValue("A" + 1, "T" + 1, title);
+            InitalizeRangeValue("A" + 1, "I" + 1, title);
 
-            string unit = GetRangeToValue("A2", "E2").ToString();
+            string unit = GetRangeToValue("A2", "D2").ToString();
             unit = $"{unit}{TownNme}";
-            InitalizeRangeValue("A" + 2, "E" + 2, unit);
+            InitalizeRangeValue("A" + 2, "D" + 2, unit);
 
-            string senderName = GetRangeToValue("F2", "I2").ToString();
+            string senderName = GetRangeToValue("E2", "E2").ToString();
             senderName = $"{senderName}{Tissue.LawyerName}";
-            InitalizeRangeValue("F" + 2, "I" + 2, senderName);
-            
-            string date = GetRangeToValue("O2", "T2").ToString();
+            InitalizeRangeValue("E" + 2, "E" + 2, senderName);
+
+            string date = GetRangeToValue("H2", "I2").ToString();
             date = $"{date}{DateTime.Now:yyyy年MM月dd日}";
-            InitalizeRangeValue("O" + 2, "T" + 2, date);
+            InitalizeRangeValue("H" + 2, "I" + 2, date);
         }
-        private void GetExchangeLandArea(List<SurveyForm> surveyForms,List<ContractLand> contractLands)
+        private void GetExchangeLandArea(List<SurveyForm> surveyForms, List<ContractLand> contractLands)
         {
 
             foreach (var survey in surveyForms)
@@ -303,7 +262,7 @@ namespace YuLinTu.Library.Business
                 GetExchangeLand(survey, surveyForms, oldLandNumbers, newLandNumbers, contractLands);
             }
         }
-        
+
         private void GetExchangeLand(SurveyForm surveyForm, List<SurveyForm> surveyForms, List<string> oldLandNumbers, List<string> newLandNumbers, List<ContractLand> contractLands)
         {
             var oldFamily = new SurveyForm();
@@ -362,7 +321,7 @@ namespace YuLinTu.Library.Business
         private bool SetValue()
         {
             //RePostProgress(5);
-            index = 7;
+            index = 6;
             return true;
         }
         #endregion Method
