@@ -1,4 +1,5 @@
-﻿using NetTopologySuite.Geometries;
+﻿using AutoMapper;
+using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using YuLinTu.DF;
 using YuLinTu.DF.Data;
 using YuLinTu.DF.Enums;
 using YuLinTu.DF.Logging;
+using YuLinTu.DF.Zones;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace YuLinTu.Component.VectorDataDecoding.Core
@@ -58,7 +60,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.ZoneCode = e.dybm;
                 model.NumbersOfDownloads = e.download_num;
                 model.UplaodTime = e.updtime;
-                model.DataCount= e.data_count;
+                model.DataCount =e.data_num;// e.data_count;//
                 model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
                 model.DataStaus = e.process_status;
@@ -132,7 +134,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                     land.DKBM = item.business_identification;
                     land.CBFBM = item.business_identification_owner;
                     land.BatchCode = item.upload_batch_num;
-                    var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key) + "#4490";//这个地方等佳佳接口写好了要改成脱密后数据
+                    var shapeText = EncrypterSM.DecryptSM4(item.desensitized_geometry, Constants.Sm4Key) + "#4490";
 
                     land.Shape = YuLinTu.Spatial.Geometry.FromString(shapeText);
                     landJsonEntites.Add(land);
@@ -410,8 +412,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 foreach (var item in result)
                 {
                     var fo = new FeatureObject(); 
-                    var data= JsonSerializer.Deserialize<Dictionary<string, object>>(item.metadata_json);               
-                    data.Add("batchCode", batchCode);
+                    var data= JsonSerializer.Deserialize<Dictionary<string, object>>(item.metadata_json);
+                    if (!data.Keys.Contains("batchCode"))
+                    { data.Add("batchCode", batchCode); }
                     fo.Object = data; // item.metadata_json;
                     var shapeText = EncrypterSM.DecryptSM4(item.original_geometry_data, Constants.Sm4Key) + "#4490";
                     fo.Geometry = YuLinTu.Spatial.Geometry.FromString(shapeText);
@@ -463,18 +466,26 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             Dictionary<string,object> body =new Dictionary<string, object>();
             string msg = string.Empty;
             bool Sucess = false;
-            var decodeData = Data.Select(t => new { desensitized_geometry = EncrypterSM.EncryptSM4(t.Shape.AsText(), Constants.Sm4Key), business_identification = t.DKBM }).ToList(); ;
             foreach (var code in batchCodes)
             {
                 var datas = Data.Where(t => t.upload_batch_num.Equals(code)).ToList();
+                var decodeData = datas.Select(t => new { desensitized_geometry = EncrypterSM.EncryptSM4(t.Shape.AsText(), Constants.Sm4Key), business_identification = t.DKBM }).ToList(); 
+
                 body.Add("upload_batch_num", code);
                 body.Add("data", decodeData);
                 var jsonData = JsonSerializer.Serialize(body);
+                if(AppHeaders.Count>2)
+                {
 
-                msg += apiCaller.PostDataAsync(url, AppHeaders, jsonData, out Sucess) + "/n";
-                if (!Sucess) break;
+                }
+                msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out Sucess) ;
+                if (!Sucess) {
+                    msg = GetReposneMessage(Sucess, msg);
+                    break; 
+                }
+                body.Clear();
             }          
-            isSucess= Sucess;
+            isSucess= Sucess;      
             return msg;
         }
 
@@ -489,8 +500,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
     
            
             var jsonData = JsonSerializer.Serialize(body);
-            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out statusSucess);
-            return en;
+            var msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out statusSucess);
+            msg = GetReposneMessage(statusSucess, msg);
+            return msg;
         }
 
         public string UpdateBatchStatusByBatchCode(string batchCode, out bool statusSucess)
@@ -531,6 +543,50 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
            
             return result.ToObservableCollection<LogEn>();
         }
+
+        public string UpLoadProveFile(ProveFileEn en, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpLoadProveFile;
+          
+            var jsonData = JsonSerializer.Serialize(en);
+            string msg = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            msg = GetReposneMessage(sucess, msg);
+            return msg;
+        }
+        public List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200)
+        {
+            apiCaller.client = new HttpClient();
+            List<ProveFileEn> landJsonEntites = new List<ProveFileEn>();
+            string url = Constants.baseUrl + Constants.Methold_DownLoadProveFile;
+
+
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("page", pageIndex);
+            body.Add("pageSize", pageSize);
+            body.Add("dybm", zoneCode);
+
+            var result = apiCaller.PostResultListAsync<ProveFileEn>(url, AppHeaders, JsonSerializer.Serialize(body));
+
+           
+            return result;
+        }
+
+        public List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode)
+        {
+            string url = string.Empty;
+            if (zoneCode.Length >= 9) return null;
+            
+         
+           url = baseUrl + Constants.Methold_children_filter + "?code=" + zoneCode;
+     
+            ApiCaller apiCaller = new ApiCaller();
+            apiCaller.client = new HttpClient();
+            var jsondata = JsonSerializer.Serialize(Constants.ZonesCodes);
+            var zones = apiCaller.PostResultListAsync2<ZoneJsonEn>(url, AppHeaders, jsondata);            
+            return zones;
+        }
+
     }
 }
 

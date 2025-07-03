@@ -66,12 +66,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             string url = Constants.baseUrl+ Constants.Methold_CreateVectorDecTask;
             Dictionary<string,string>body=new Dictionary<string,string>();
             body.Add("dybm", args.ZoneCode);
-            var clientID = new Authenticate().GetApplicationKey();
+            //var clientID = new Authenticate().GetApplicationKey();
 
-            body.Add("client_id", clientID);
+            body.Add("client_id", Constants.client_id);
             body.Add("upload_batch_name", args.BatchName);
             //body.Add("remarks", "测试");
-            //var jsonData = JsonSerializer.Serialize(parms);
+            //var jsonData = JsonSerializer.Serialize(body);
             var en = apiCaller.PostResultAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             if(en!=null)
             {

@@ -39,6 +39,36 @@ namespace YuLinTu.Component.VectorDataDecoding
         #endregion
     }
 
+    internal class PropertyDescriptorBuilderProveFileBrowserShp : PropertyDescriptorBuilder
+    {
+        #region Methods
+
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke(new Action(() =>
+            {
+                var b = new Binding("Value");
+                b.Source = defaultValue;
+                b.Mode = BindingMode.TwoWay;
+                b.ValidatesOnExceptions = true;
+                b.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+                var designer = new FileBrowserTextBox();
+                designer.Filter = "文档文件(*.pdf; *.doc; *.docx) | *.pdf; *.doc; *.docx | 图片文件(*.jpg; *.png)| *.jpg; *.png";
+                designer.Multiselect = false;
+                designer.Watermask = defaultValue.Watermask;
+                designer.SetBinding(TextBox.TextProperty, b);
+                designer.SetBinding(TextBox.ToolTipProperty, b);
+
+                defaultValue.Designer = designer;
+                defaultValue.BindingExpression = designer.GetBindingExpression(TextBox.TextProperty);
+            }));
+
+            return defaultValue;
+        }
+
+        #endregion
+    }
+
     internal class PropertyDescriptorBuilderFolderBrowserExtsion : PropertyDescriptorBuilder
     {
 

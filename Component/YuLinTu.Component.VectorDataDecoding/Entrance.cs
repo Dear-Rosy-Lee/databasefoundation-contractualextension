@@ -12,6 +12,8 @@ using YuLinTu.DF.Zones;
 using YuLinTu.Component.VectorDataDecoding.Repository;
 using YuLinTu.Data;
 using YuLinTu.DF.Data;
+using YuLinTu.Component.VectorDataDecoding.Core;
+using YuLinTu.Security;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
@@ -56,6 +58,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             //var builder2 = new ContainerBuilder();
             //builder2.RegisterType<ZoneDecRepository>().As<IZoneRepository>();
             //ContainerProvider.Load("Navigator", builder2.Build());
+            Constants.client_id =  new Authenticate().GetApplicationKey();
 
         }
 

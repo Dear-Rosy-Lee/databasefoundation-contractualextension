@@ -82,6 +82,7 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         /// </summary>
         public string updtime { get; set; }
 
-        public int data_count { get; set; }
+        //public int data_count { get; set; }
+        public int? data_num { get; set; }
     }
 }

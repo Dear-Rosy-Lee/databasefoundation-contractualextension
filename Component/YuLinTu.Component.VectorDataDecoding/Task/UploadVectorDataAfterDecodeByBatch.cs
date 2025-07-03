@@ -75,11 +75,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             int sucessCount = 0; int fileIndex = 0; int progess = 0;int pageSize = 200;
             int progessTag = files.Count<100?100 / files.Count:1;
             HashSet<string> BatchCodes = new HashSet<string>();
-          
+            int fileCount = files.Count;
+            List<string> warnBatchCodes=new List<string>();
             foreach (var item in files)
             {
                 List<string> batchCodesStaus = new List<string>();
-                progess = fileIndex * 100 / files.Count;
+               // progess = fileIndex * 100 / files.Count;
                 fileIndex++;
                 if (item.Description.IsNotNullOrEmpty()) continue;
                 var dbSource = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
@@ -91,9 +92,17 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                                                                                     //更新批次的元数据
            
                 var shapeColumn = properties.Find(t => t.ColumnType == eDataType.Geometry);
-               
-                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list) =>
+                int dataCount = 0;
+                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list, count) =>
                 {
+                    dataCount += list.Count;
+                    progess = (100 * (fileIndex - 1)) / fileCount + dataCount * 100 / (fileCount * count);
+                    if (progess >= 54)
+                    {
+                        int jj = 0;jj++;
+                    }
+                    
+                    this.ReportProgress(progess);
                     var nums = list.Select(t => t.upload_batch_num).Distinct().ToList();
                     nums.ForEach(t =>
                     {
@@ -103,25 +112,38 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                             batchCodesStaus.Add(t);
                          }
                     });
-                   var  statusMsg=  vectorService.UpLoadProcessStatusByBatchCodes(batchCodesStaus, out bool statusSucess);
-                    if (!statusSucess)
+                    if (batchCodesStaus.Count > 0)
                     {
-                        this.ReportWarn(statusMsg);
+                        var statusMsg = vectorService.UpLoadProcessStatusByBatchCodes(batchCodesStaus, out bool statusSucess);
+                        if (!statusSucess)
+                        {
+                            warnBatchCodes.AddRange(batchCodesStaus.ToArray());
+                            this.ReportWarn(statusMsg);
+                        }
+                      
+                       // batchCodesStaus.Clear();
                     }
-                    batchCodesStaus.Clear();
                     var msg = vectorService.UpLoadVectorDataAfterDecodeToSever(list, out bool sucess);
                     if (!sucess)
                     {
-                        this.ReportError(msg);
+                        //this.ReportError(msg);
+                        //if (warnBatchCodes.Any(t => nums.Contains(t))){
+
+                        //}
+                        if(nums.Any(t=> !warnBatchCodes.Contains(t)))
+                        {
+                            this.ReportError(msg);
+                        }
                     }
                     else
                     {
                         //成功的提示信息
                     }
+                    batchCodesStaus.Clear();
                 },
           (i, count, obj) =>
           {
-              progess += i * progessTag / count;
+            
         
               var key = obj.FastGetValue<string>(keyName);
               this.ReportProgress(progess,$"处理批次号{key}");

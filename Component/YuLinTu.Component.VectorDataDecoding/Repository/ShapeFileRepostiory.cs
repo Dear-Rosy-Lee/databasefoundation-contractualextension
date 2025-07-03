@@ -27,7 +27,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
            string tableName,
            string keyName,
            ConditionSection where,
-           Action<List<TTarget>> save,
+           Action<List<TTarget>,int> save,
            Func<int, int, object, TTarget> convert,
            int pageSize = BATCH_COUNT)
         {
@@ -65,7 +65,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
 
                 if (list.Count > 0)
                 {
-                    save?.Invoke(list);
+                    save?.Invoke(list, count);
                     list.Clear();
                 }
             }

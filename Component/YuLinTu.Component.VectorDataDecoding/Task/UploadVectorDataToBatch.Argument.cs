@@ -15,7 +15,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         #region Fields
 
         private string shapeFilePath;
-        private string resultFilePath;
+
         private string userName;
    
         private int? landCount;
@@ -92,6 +92,82 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         }
         public DataTypeEum _DataType= DataTypeEum.承包地;
 
+       
+
+        #region 选择单个文件
+        //[DisplayLanguage("矢量数据路径", IsLanguageName = false)]
+        //[DescriptionLanguage("待处理矢量数据文件的路径", IsLanguageName = false)]
+        //[PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
+        //    UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        //[WatermaskLanguage("请选择.shp矢量文件路径")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
+        //public string ShapeFilePath
+        //{
+        //    get { return shapeFilePath; }
+        //    set
+        //    {
+        //        shapeFilePath = value;
+        //        NotifyPropertyChanged("ShapeFilePath");
+        //        CheckShpFile(shapeFilePath);
+        //    }
+        //}
+
+
+        //[DisplayLanguage("地块数量", IsLanguageName = false)]
+        //[DescriptionLanguage("待处理矢量数据地块数量", IsLanguageName = false)]
+        //[PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
+        //    UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+
+        //public int? LandCount
+        //{
+        //    get { return landCount; }
+        //    set
+        //    {
+        //        landCount = value;
+        //        NotifyPropertyChanged("LandCount");
+        //    }
+        //} 
+        #endregion
+        #region 选择文件夹
+        [DisplayLanguage("数据路径", IsLanguageName = false)]
+        [DescriptionLanguage("存放待处理数据文件夹的路径", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFolderBrowserExtsion),
+        UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+        [WatermaskLanguage("请选择待处理矢量数据文件夹路径")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
+        public string ResultFilePath
+        {
+            get { return resultFilePath; }
+            set
+            {
+                resultFilePath = value;
+             
+                NotifyPropertyChanged("ResultFilePath");
+                CheckShpFile(resultFilePath);
+            }
+        }
+        private string resultFilePath;
+        //public event EventHandler<string> LogPathChanged;
+
+
+
+        [DisplayLanguage("数据量", IsLanguageName = false)]
+        [DescriptionLanguage("矢量文件个数及图斑总数量", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+
+        public string DataCount
+        {
+            get { return _DataCount; }
+            set
+            {
+                _DataCount = value;
+                NotifyPropertyChanged("DataCount");
+            }
+        }
+        private string _DataCount;
+        #endregion
+
         [DisplayName("是否覆盖")]
         [DescriptionLanguage("选择是否覆盖上传", IsLanguageName = false)]
         public bool IsCover
@@ -104,40 +180,6 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
         public bool _IsCover = true;
-
-        [DisplayLanguage("矢量数据路径", IsLanguageName = false)]
-        [DescriptionLanguage("待处理矢量数据文件的路径", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderFileBrowserShp),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
-        [WatermaskLanguage("请选择.shp矢量文件路径")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "必填")]
-        public string ShapeFilePath
-        {
-            get { return shapeFilePath; }
-            set
-            {
-                shapeFilePath = value;
-                NotifyPropertyChanged("ShapeFilePath");
-                CheckShpFile(shapeFilePath);
-            }
-        }
-
-
-        [DisplayLanguage("地块数量", IsLanguageName = false)]
-        [DescriptionLanguage("待处理矢量数据地块数量", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
-
-        public int? LandCount
-        {
-            get { return landCount; }
-            set
-            {
-                landCount = value;
-                NotifyPropertyChanged("LandCount");
-            }
-        }
-
         [DisplayLanguage("初检信息", IsLanguageName = false)]
         [DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBox),
@@ -169,7 +211,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         public bool checkPass=false;
 
         #endregion Properties
-
+        [Enabled(false)]
+        public List<ShpFileDescription> ShpFilesInfo;
         #region Ctor
 
         public UploadVectorDataToBatchArgument()
@@ -178,17 +221,39 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         #endregion
 
-        private void CheckShpFile(string shapeFilePath)
+        #region 单个文件上传检查
+        //private void CheckShpFile(string shapeFilePath)
+        //{
+        //    bool check = false; int? count = null;
+        //    var error = VectorDataProgress.CheckShpFile(shapeFilePath, out check, out count);
+        //    if (error.Count == 0) error.Add("未发现矢量数据错误，检查通过！");
+        //    error.ForEach(t =>
+        //    {
+        //        CheckInfo += t + "\n";
+        //    });
+        //    ConfirmEnabled = check;
+        //    LandCount = count;  //单个文件上传
+        //} 
+        #endregion
+        private async System.Threading.Tasks.Task CheckShpFile(string resultFilePathP)
         {
-            bool check = false; int? count = null;
-            var error = VectorDataProgress.CheckShpFile(shapeFilePath, out check, out count);
-            if (error.Count == 0) error.Add("未发现矢量数据错误，检查通过！");
-            error.ForEach(t =>
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                CheckInfo += t + "\n";
+                var shps = ShpFolderDescription.GetFilesByExtensionLegacy(resultFilePathP);
+
+                int fileCount = 0; int dataCount = 0;
+                ShpFilesInfo = new List<ShpFileDescription>();
+                foreach (var shp in shps)
+                {
+                    var shpInfo = ShpFolderDescription.GetShpFileDescription(shp);
+                    fileCount++; dataCount += shpInfo.DataCount;
+                    DataCount = string.Format("共{0}个矢量文件个数,{1}个地块", fileCount, dataCount);
+                    CheckInfo = CheckInfo + shp.ReplaceFirst(ResultFilePath, ".") + "  地块数量：" + shpInfo.DataCount + "  " + shpInfo.Description + "\n";
+                    ShpFilesInfo.Add(shpInfo);
+                }
+                ConfirmEnabled = true;
             });
-            ConfirmEnabled = check;
-            LandCount = count;
+
         }
     }
 }

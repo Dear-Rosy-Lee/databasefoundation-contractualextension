@@ -135,7 +135,7 @@
                                      
                                      Command="{Binding CommandCancelVectorDataToSever}">
                         <ylt:ImageTextItem ImagePosition="Top"
-                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/脱密处理.png"
+                                       Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/取消送审.png"
                                            Text="取消送审" />
                     </ylt:MetroButton>
                     <!--<ylt:MetroButton Padding="4,2,4,2"
@@ -196,10 +196,10 @@
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
-                                     Command="{Binding CommandRefresh}">
+                                     Command="{Binding CommandDownLoadProveFiles}">
                         <ylt:ImageTextItem ImagePosition="Top"
                                           Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/下载材料.png"
-                                           Text="下载材料" />
+                                           Text="下载证明材料" />
                     </ylt:MetroButton>
                 </ylt:TabControlItemRibbonContainer>
                 <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
@@ -219,7 +219,14 @@
                                            Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/上传数据.png"
                                            Text="上传脱密数据" />
                     </ylt:MetroButton>
-                  
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandUpLoadProveFiles}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                          Image="pack://application:,,,/YuLinTu.Component.VectorDataDecoding;component/Resources/上传材料.png"
+                                           Text="上传证明材料" />
+                    </ylt:MetroButton>
                 </ylt:TabControlItemRibbonContainer>
                 <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
                     <ylt:MetroButton Padding="4,2,4,2"
@@ -631,7 +638,7 @@
                     <ylt:MetroDataGrid.Columns>
                         <DataGridTemplateColumn Header="批次编码"
                                             Width="250" 
-                                            SortMemberPath="Name">
+                                            SortMemberPath="Name"  ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 
                                               
@@ -669,7 +676,7 @@
                                             Width="120"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center"
@@ -682,10 +689,10 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="送审时间"
-                                            Width="120"
+                                            Width="160"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBlock Margin="5,0,0,0"
@@ -699,7 +706,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal" 
@@ -715,7 +722,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"
@@ -764,11 +771,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="送审时间"
+                        <DataGridTemplateColumn Header="下载次数"
                                             Width="120"
                                             SortDirection="Ascending"
                                             SortMemberPath="OrderID"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal"
@@ -784,7 +791,7 @@
                                             Width="100"
                                             SortDirection="Ascending"
                                           
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left" >
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal" 
@@ -792,7 +799,7 @@
 
                                         <Button Style="{StaticResource btn}"  Command="{Binding DataContext.CommandOpenLog,Source={x:Reference dg}}" 
                                        Margin="5,5,0,5" Foreground="Green">详情</Button>
-                                    </StackPanel> <!--Command="{Binding CommandOpenLog}"-->
+                                    </StackPanel> 
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

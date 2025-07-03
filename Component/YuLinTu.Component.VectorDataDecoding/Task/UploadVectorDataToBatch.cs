@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,23 +58,51 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return;
             }
             vectorService = new VectorService();
-            var clientID = new Authenticate().GetApplicationKey();
+            var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
             // TODO : 任务的逻辑实现
-            var dbSource = ProviderShapefile.CreateDataSourceByFileName(args.ShapeFilePath, false);
+            //var ShapeFilePath = args.ShapeFilePath;
+            var ShapeFilePath = string.Empty;int index = 0;
+            foreach (var item in args.ShpFilesInfo)
+            {
+                index++;
+                string msg=  UploadVectorData(args, item.FullPath, clientID, index,out bool sucess);
+                if(!sucess)
+                {
+                    this.ReportWarn(msg);
+                }
+                else
+                {
+                    this.ReportInfomation(msg);
+                }
+            }
+          
+
+            this.ReportProgress(100, "完成");
+            this.ReportInfomation("完成");
+        }
+
+        private string UploadVectorData(UploadVectorDataToBatchArgument args,string ShapeFilePath, string clientID,int fileIndex,out bool scuess)
+        {
+            scuess = false;
+            string message = string.Empty;
+            int fileCount = args.ShpFilesInfo.Count;
+             var dbSource = ProviderShapefile.CreateDataSourceByFileName(ShapeFilePath, false);
             var dqSource = new DynamicQuery(dbSource);
             var schemaName = string.Empty;
-            var shpName = Path.GetFileNameWithoutExtension(args.ShapeFilePath);
+            var shpName = Path.GetFileNameWithoutExtension(ShapeFilePath);
             var keyName = args.DataType.GetStringValue();
             var properties = dqSource.GetElementProperties(schemaName, shpName);//结构信息
                                                                                 //更新批次的元数据
             vectorService.UpLoadVectorMeata(args.BatchCode, properties);
             var shapeColumn = properties.Find(t => t.ColumnType == eDataType.Geometry);
-            var sreproject = GetPrjInfo(args.ShapeFilePath, out int SreSrid);
+            var sreproject = GetPrjInfo(ShapeFilePath, out int SreSrid);
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(Constants.DefualtPrj); //$"{keyName}.StartsWith({args.ZoneCode})"
             var where = QuerySection.Column(keyName).StartsWith(QuerySection.Parameter(args.ZoneCode));
             int dataCount = 0;
-            ShapeFileRepostiory.PagingTrans<LandJsonEn>(dqSource, schemaName, shpName, keyName, where, (list) =>
+            ShapeFileRepostiory.PagingTrans<LandJsonEn>(dqSource, schemaName, shpName, keyName, where, (list, count) =>
             {
+               var progess = (100 * (fileIndex-1) )/ fileCount+  dataCount*100/(fileCount* count);
+                this.ReportProgress(progess);
                 dataCount += list.Count;
                 var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.IsCover, out bool sucess);
                 if (!sucess)
@@ -87,6 +116,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             },
             (i, count, obj) =>
             {
+                this.ReportProgress(fileCount);
                 var key = obj.FastGetValue<string>(keyName);
                 var shape = obj.FastGetValue<Spatial.Geometry>(shapeColumn.ColumnName);
                 if (key is null || shape is null)
@@ -111,24 +141,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 jsonEn.metadata_json = Serializer.SerializeToJsonString(metadataS);//metadataS; //
                 return jsonEn;
             });
+            scuess = true;
             string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
             this.ReportInfomation(info);
-          
-            WriteLog(args, clientID, shpName, dataCount);
-
-      
-            this.ReportProgress(100, "完成");
-            this.ReportInfomation("完成");
+            message = $"上传文件{shpName}中{dataCount}条数据";
+            WriteLog(args, clientID, shpName, ShapeFilePath, dataCount);
+            return message;
         }
 
-        private  void WriteLog(UploadVectorDataToBatchArgument args, string clientID, string shpName, int dataCount)
+        private  void WriteLog(UploadVectorDataToBatchArgument args, string clientID, string shpName, string ShapeFilePath, int dataCount)
         {
             LogEn log = new LogEn();
             log.scope = args.ZoneCode;
             log.owner = args.BatchCode;
             log.sub_type = "上传矢量数据";
             log.user_id = clientID;
-            log.description = $"客户端{clientID}成功上传文件{shpName}中{dataCount}条数据，文件全路径为：{args.ShapeFilePath}";
+            log.description = $"上传文件{shpName}中{dataCount}条数据，文件全路径为：{ShapeFilePath}";
             vectorService.WriteLog(log);
         }
 

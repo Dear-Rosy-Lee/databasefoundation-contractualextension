@@ -330,7 +330,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanStartSingleTask(object args)
         {
             if(SelectedItem==null|| !(SelectedItem is VectorDecodeBatchModel)) return false;
-            if ((SelectedItem as VectorDecodeBatchModel)?.DecodeProgress == "已送审") return false;
+            if ((SelectedItem as VectorDecodeBatchModel)?.DataStaus != "0") return false;
             return true;
         }
 
@@ -343,8 +343,9 @@ namespace YuLinTu.Component.VectorDataDecoding
 
            if (SelectedItem is VectorDecodeBatchModel)
             {
-                arg.BatchCode = (SelectedItem as VectorDecodeBatchModel).BatchCode;
-                arg.ZoneCode = (SelectedItem as VectorDecodeBatchModel).ZoneCode;
+                arg.BatchCode = (SelectedItem).BatchCode;
+                arg.ZoneCode = (SelectedItem).ZoneCode;
+                arg.BatchName = SelectedItem.BatchName;
             }
             //else if(SelectedItem is VectorDecodeMode)
             //{
@@ -664,6 +665,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanDownLoadVectorDataAfterDecodeByZone(object args)
         {
             if (CurrentZone != null && CurrentZone.Level > ZoneLevel.Town) return false;
+     
             return true;
         }
 
@@ -686,6 +688,7 @@ namespace YuLinTu.Component.VectorDataDecoding
         private bool OnCanDownLoadVectorDataAfterDecodeByBatch(object args)
         {
             if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
+            if(SelectedItem.DataStaus!="4") return false;
             return true;
         }
 
@@ -695,8 +698,8 @@ namespace YuLinTu.Component.VectorDataDecoding
             var task = new DownLoadVectorDataAfterDodedByBatchCode();//DownloadDecodeVectorDataByBatchCode();
             var arg = new DownLoadVectorDataAfterDodedByBatchCodeArgument();//DownloadDecodeVectorDataByBatchCodeArgument();
 
-            arg.BatchCode= (SelectedItem as VectorDecodeBatchModel).BatchCode;
-            arg.BatchName= (SelectedItem as VectorDecodeBatchModel).BatchName; 
+            arg.BatchCode= (SelectedItem).BatchCode;
+            arg.BatchName= (SelectedItem).BatchName; 
             arg.ZoneCode = CurrentZone.FullCode;
 
 
@@ -733,6 +736,56 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                
             });
+
+        }
+        #endregion
+
+        #region proveFles
+        public DelegateCommand CommandUpLoadProveFiles { get { return _CommandUpLoadProveFiles ?? (_CommandUpLoadProveFiles = new DelegateCommand(args => OnCommandUpLoadProveFiles(args), args => OnCanCommandUpLoadProveFiles(args))); } }
+        private DelegateCommand _CommandUpLoadProveFiles;
+
+        private bool OnCanCommandUpLoadProveFiles(object args)
+        {
+            if (CurrentZone == null) return false;
+            return true;
+        }
+
+        private void OnCommandUpLoadProveFiles(object args)
+        {
+            var task = new UploadProveFiles();
+            var arg = new UploadProveFilesArgument();
+
+            arg.ZoneCode = CurrentZone.FullCode;
+            arg.ZoneName = CurrentZone.Name;
+             
+
+
+
+            ShowCreateTaskWindow(task, arg);
+
+        }
+        public DelegateCommand CommandDownLoadProveFiles { get { return _CommandDownLoadProveFiles ?? (_CommandDownLoadProveFiles = new DelegateCommand(args => OnCommandDownLoadProveFiles(args), args => OnCanCommandDownLoadProveFiles(args))); } }
+        private DelegateCommand _CommandDownLoadProveFiles;
+
+        private bool OnCanCommandDownLoadProveFiles(object args)
+        {
+            if (CurrentZone == null) return false;
+            return true;
+        }
+
+        private void OnCommandDownLoadProveFiles(object args)
+        {
+            var task = new DownLoadProveFiles();
+            var arg = new DownLoadProveFilesArgument();
+
+            arg.ZoneCode = CurrentZone.FullCode;
+            arg.ZoneName = CurrentZone.Name;
+
+
+
+
+            ShowCreateTaskWindow(task, arg);
+
 
         }
         #endregion

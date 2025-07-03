@@ -160,10 +160,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         public int CreateFeature(int index, ShapeFile file, FeatureObject obj,
          Dictionary<int, PropertyMetadata> dic, DotNetTypeConverter converter)
         {
+            var dataDic = (obj.Object as Dictionary<string, object>);
             foreach (var item in dic)
             {
                 var col = item.Key;
-                var val = (obj.Object as Dictionary<string, object>)[item.Value.ColumnName].ToString();// obj.Object.GetPropertyValue(item.Value.ColumnName);
+                if (!dataDic.Keys.Contains(item.Value.ColumnName)) continue;
+                var val = dataDic[item.Value.ColumnName]?.ToString();// obj.Object.GetPropertyValue(item.Value.ColumnName);
                 if (val == null)
                     continue;
 
