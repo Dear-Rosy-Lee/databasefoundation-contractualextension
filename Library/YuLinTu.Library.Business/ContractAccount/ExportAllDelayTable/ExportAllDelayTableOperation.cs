@@ -68,8 +68,10 @@ namespace YuLinTu.Library.Business
                 var surveyStation = dbContext.CreateSurveyFormStation();
                 var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var vpDelStation = dbContext.CreateVirtualPersonDeleteStation();
+                var LandDelStation = dbContext.CreateVirtualPersonDeleteStation();
                 var surveys = surveyStation.GetByZoneCode(zone.FullCode, eSearchOption.Precision);
-                
+                var contracLandStation = dbContext.CreateContractLandWorkstation();
+                var delLands = contracLandStation.GetDelLandByZone(zone.FullCode);
                 if (surveys == null || surveys.Count == 0)
                 {
                     this.ReportProgress(100, null);
@@ -85,7 +87,7 @@ namespace YuLinTu.Library.Business
                 }
                 var vps_Del = vpDelStation.GetByZoneCode(zone.FullCode,eSearchOption.Precision);
                 //listLand.LandNumberFormat(SystemSetDefine);  //根据系统设置进行地块编码的截取
-                bool canOpen = ExportAllDelayTable(surveys,vps,vps_Del,tissue);
+                bool canOpen = ExportAllDelayTable(surveys,vps,vps_Del,tissue, delLands);
                 if (canOpen)
                     CanOpenResult = true;
             }
@@ -112,7 +114,8 @@ namespace YuLinTu.Library.Business
         /// <summary>
         /// 一键导出试点工作统计表
         /// </summary>
-        public bool ExportAllDelayTable(List<SurveyForm> surveyForms,List<VirtualPerson> vps,List<VirtualPerson_Del> vp_Dels, CollectivityTissue tissue)
+        public bool ExportAllDelayTable(List<SurveyForm> surveyForms,List<VirtualPerson> vps,List<VirtualPerson_Del> vp_Dels, CollectivityTissue tissue,
+                                        List<ContractLand_Del> contractLand_Dels)
         {
             bool result = false;
             try
@@ -154,8 +157,8 @@ namespace YuLinTu.Library.Business
                 ExoprtCBMJQRBFile("承包共有人及承包面积确认统计表", tempPathCBMJQRB, dictList, openFilePath, surveyForms);
                 ExoprtCBGYRXZJJSTJBFile("承包共有人新增及减少统计表", tempPathRKBHTJB,zone,openFilePath, tissue, vps,vp_Dels);
                 ExoprtRKBHHZBFile("承包共有人增减情况汇总表", tempPathRKBHHZB, zone, openFilePath, tissue, vp_Dels);
-                //ExoprtDKBHTJBFile("地块增减变化统计表", tempPathDKBHTJB);
-                //ExoprtDKBHHZBFile("地块增减情况汇总表", tempPathDKBHHZB, zone, openFilePath, tissue, vp_Dels);
+                ExoprtDKBHTJBFile("地块增减变化统计表", tempPathDKBHTJB, zone, openFilePath, tissue, surveyForms, contractLand_Dels);
+                ExoprtDKBHHZBFile("地块增减情况汇总表", tempPathDKBHHZB, zone, openFilePath, tissue, surveyForms, contractLand_Dels);
                 //ExoprtMDQKHZBFile("调查摸底情况汇总表", tempPathMDQKHZB);
                 //ExoprtJTJDDTJBFile("集体机动地统计表", tempPathJTJDDTJB);
                 //ExoprtXWTJBFile("整户消亡统计表", tempPathXWTJB);
@@ -284,72 +287,80 @@ namespace YuLinTu.Library.Business
             }
 
         }
-        //private void ExoprtDKBHTJBFile(string tempName, string tempPath)
-        //{
-        //    var export = new ExportContractorWordTable();
-        //    export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
-        //    #region 通过反射等机制定制化具体的业务处理类
-        //    var temp = WorksheetConfigHelper.GetInstance(export);
-        //    temp.TemplatePath = tempPath;
-        //    if (temp != null && temp.TemplatePath != null)
-        //    {
-        //        if (temp is ExportContractorWordTable)
-        //        {
-        //            export = (ExportContractorWordTable)temp;
-        //        }
-        //        tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
-        //    }
-        //    #endregion
-        //    var eplands = lands.FindAll(l => l.OwnerId == vp.ID);
-        //    export.CurrentZone = argument.CurrentZone;
-        //    export.ZoneList = allZones;
-        //    export.LandCollection = eplands;
-        //    export.SystemSet.KeepRepeatFlag = SystemSetDefine.KeepRepeatFlag;
-        //    export.Contractor = vp;
-        //    export.DictList = dictList;
-        //    export.Concord = concord;
-        //    export.Book = book;
-        //    export.Tissue = tissue == null ? new CollectivityTissue { Name = "" } : tissue;
-        //    export.OpenTemplate(tempPath);
-        //    string familyNuber = Library.WorkStation.ToolString.ExceptSpaceString(vp.FamilyNumber);
-        //    string filePath = saveFilePath + @"\" + vp.Name + @"\" + familyNuber + "-" + vp.Name + "-" + tempName;
-        //    export.SaveAs(vp, filePath);
-        //    //export.SplitDocumentByPage(filePath);
+        private void ExoprtDKBHTJBFile(string tempName, string tempPath, Zone zone, string saveFilePath, CollectivityTissue tissue,
+         List<SurveyForm> surveyForms, List<ContractLand_Del> contractLand_Dels)
+        {
+            bool result = false;
+            var export = new ExoprtDKBHTJBTable();
+            export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(export);
+            if (temp != null && temp.TemplatePath != null)
+            {
+                if (temp is ExoprtDKBHTJBTable)
+                {
+                    export = (ExoprtDKBHTJBTable)temp;
+                }
+                tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+            }
+            #endregion
+            string excelName = GetMarkDesc(zone, dbContext);
+            string savePath = saveFilePath + @"\" + excelName + "地块增减变化统计表" + ".xls";
+            var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.GetByZoneCode(zone.FullCode);
+            export.Tissue = tissue;
+            export.ContractLand_Dels = contractLand_Dels;
+            export.SurveyForms = surveyForms;
+            export.Zone = zone;
+            export.ZoneDesc = excelName;
+            export.TownNme = excelName;
+            result = export.BeginToZone(tempPath);
+            export.SaveAs(savePath);
+            if (result)
+            {
+                export_PostProgressEvent(100, null);
+                this.ReportInfomation(string.Format("地块增减变化统计表", excelName));
+            }
 
-        //}
-        //private void ExoprtDKBHHZBFile(string tempName, string tempPath)
-        //{
-        //    var export = new ExportYBSQSTable();
-        //    export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
-        //    #region 通过反射等机制定制化具体的业务处理类
-        //    var temp = WorksheetConfigHelper.GetInstance(export);
-        //    temp.TemplatePath = tempPath;
-        //    if (temp != null && temp.TemplatePath != null)
-        //    {
-        //        if (temp is ExportYBSQSTable)
-        //        {
-        //            export = (ExportYBSQSTable)temp;
-        //        }
-        //        tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
-        //    }
-        //    #endregion
-        //    var eplands = lands.FindAll(l => l.OwnerId == vp.ID);
-        //    export.CurrentZone = argument.CurrentZone;
-        //    export.ZoneList = allZones;
-        //    export.LandCollection = eplands;
-        //    export.SystemSet.KeepRepeatFlag = SystemSetDefine.KeepRepeatFlag;
-        //    export.Contractor = vp;
-        //    export.DictList = dictList;
-        //    export.Concord = concord;
-        //    export.Book = book;
-        //    export.Tissue = tissue == null ? new CollectivityTissue { Name = "" } : tissue;
-        //    export.OpenTemplate(tempPath);
-        //    string familyNuber = Library.WorkStation.ToolString.ExceptSpaceString(vp.FamilyNumber);
-        //    string filePath = saveFilePath + @"\" + vp.Name + @"\" + familyNuber + "-" + vp.Name + "-" + tempName;
-        //    export.SaveAs(vp, filePath);
-        //    //export.SplitDocumentByPage(filePath);
 
-        //}
+        }
+        private void ExoprtDKBHHZBFile(string tempName, string tempPath, Zone zone, string saveFilePath, CollectivityTissue tissue,
+         List<SurveyForm> surveyForms,List<ContractLand_Del> contractLand_Dels)
+        {
+            bool result = false;
+            var export = new ExportDKBHHZBTable();
+            export.EmptyReplacement = WorkStationExtend.GetSystemSetReplacement();
+            #region 通过反射等机制定制化具体的业务处理类
+            var temp = WorksheetConfigHelper.GetInstance(export);
+            if (temp != null && temp.TemplatePath != null)
+            {
+                if (temp is ExportDKBHHZBTable)
+                {
+                    export = (ExportDKBHHZBTable)temp;
+                }
+                tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+            }
+            #endregion
+            string excelName = GetMarkDesc(zone, dbContext);
+            string savePath = saveFilePath + @"\" + excelName + "地块增减情况汇总表" + ".xls";
+            var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+            var vps = vpStation.GetByZoneCode(zone.FullCode);
+            export.Tissue = tissue;
+            export.ContractLand_Dels = contractLand_Dels;
+            export.SurveyForms = surveyForms;
+            export.Zone = zone;
+            export.ZoneDesc = excelName;
+            export.TownNme = excelName;
+            result = export.BeginToZone(tempPath);
+            export.SaveAs(savePath);
+            if (result)
+            {
+                export_PostProgressEvent(100, null);
+                this.ReportInfomation(string.Format("地块增减情况汇总表", excelName));
+            }
+
+
+        }
         //private void ExoprtMDQKHZBFile(string tempName, string tempPath)
         //{
         //    var export = new ExportYBSQSTable();
