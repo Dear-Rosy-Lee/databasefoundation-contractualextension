@@ -16,12 +16,12 @@ using YuLinTu.Library.Entity;
 using YuLinTu.Spatial;
 using YuLinTu.Windows;
 
-namespace YuLinTu.Component.Common
+namespace YuLinTu.Library.Business
 {
     /// <summary>
     /// 应用程序上下文
     /// </summary>
-    public class DataBaseHelper
+    public class ToolDataBaseHelper
     {
         #region Methods
 
@@ -111,7 +111,7 @@ namespace YuLinTu.Component.Common
                 {
                     TryAddTables(db);
                     return db;
-                } 
+                }
 
                 var action = TheApp.Current["ApplicationStartupProgressReporter"] as Action<double, string, object>;
                 if (action != null)
@@ -199,7 +199,6 @@ namespace YuLinTu.Component.Common
                     db.BeginTransaction();
 
                     string cmds = Properties.Resources.DictionarySQL;
-
                     var sqls = cmds.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var sql in sqls)

@@ -834,21 +834,22 @@ namespace YuLinTu.Library.Business
             {
                 return false;
             }
-            
+
             List<PersonUnit> personUnits = new List<PersonUnit>();
             list.ForEach(t =>
             {
-                var temp = new PersonUnit {Sfz= t.ICN ,YfzGx= RelationShipMapping.NameMapping(t.Relationship) };
+                var temp = new PersonUnit { Sfz = t.ICN, YfzGx = RelationShipMapping.NameMapping(t.Relationship) };
                 personUnits.Add(temp);
             });
             PersonUnit newHZ = new PersonUnit { Sfz = selectPerson.ICN, YfzGx = RelationShipMapping.NameMapping(selectPerson.Relationship) };
-            int tag=FamailyRelationProcessor.CalMemberRelationship(personUnits, newHZ);
-            if(tag==0)
+            int tag = FamailyRelationProcessor.CalMemberRelationship(personUnits, newHZ);
+            if (tag == 0)
             {
                 //
                 personUnits.ForEach(t =>
                 {
-                    if (t.Sfz.Equals(newHZ.Sfz)) { t.YfzGx = "02"; } else
+                    if (t.Sfz.Equals(newHZ.Sfz)) { t.YfzGx = "02"; }
+                    else
                     {
                         t.YfzGx = string.Empty;
                     }
@@ -884,15 +885,15 @@ namespace YuLinTu.Library.Business
             vp.CardType = selectPerson.CardType;
             var upvp = vp.Clone() as VirtualPerson;
             //排序
-    
-            foreach(var gyr in vp.SharePersonList)
+
+            foreach (var gyr in vp.SharePersonList)
             {
                 gyr.Relationship = personUnits.FirstOrDefault(t => t.Sfz.Equals(gyr.ICN)).YfzGx;
                 if (gyr.Relationship.IsNotNullOrEmpty())
-                { 
+                {
                     gyr.Relationship = RelationShipMapping.CodeMapping(gyr.Relationship);
                 }
-           
+
             }
             vp.SharePersonList = SortSharePerson(list, vp.Name);
             // LocalComplexRightEntity. CodeMapping()
@@ -1689,9 +1690,13 @@ namespace YuLinTu.Library.Business
                 uplist = InstallPersonValue(vps, argument, isNULL, index, familyIndex);
             }
             //bool isSuccess = Update(vpi);
+            var concords = dbContext.CreateConcordStation().GetByZoneCode(argument.CurrentZone.FullCode);
+            var warrents = dbContext.CreateRegeditBookStation().GetByZoneCode(argument.CurrentZone.FullCode, eSearchOption.Precision);
             foreach (var vpi in uplist)
             {
-                int upCount = landStation.UpdateDataForInitialVirtualPerson(vpi);
+                var concord = concords.Find(t => t.ContracterId == vpi.ID);
+                var book = concord == null ? null : warrents.Find(t => t.ID == concord.ID);
+                int upCount = landStation.UpdateDataForInitialPersonConcord(vpi, concord, book);// landStation.UpdateDataForInitialVirtualPerson(vpi);
                 this.ReportProgress((int)(currentPercent + vpPercent * formatnumber), string.Format("{0}", markDesc + vpi.Name));
                 if (upCount > 0)
                 {
@@ -1707,7 +1712,7 @@ namespace YuLinTu.Library.Business
         {
             foreach (VirtualPerson vpi in vps)
             {
-                string Number = argument.CurrentZone.FullCode.PadRight(14, '0') + vpi.FamilyNumber.PadLeft(4, '0');
+                string Number = vpi.ZoneCode.PadRight(14, '0') + vpi.FamilyNumber.PadLeft(4, '0');
                 if (vpi.FamilyExpand.ConstructMode == eConstructMode.Family)
                     Number += "J";
                 else

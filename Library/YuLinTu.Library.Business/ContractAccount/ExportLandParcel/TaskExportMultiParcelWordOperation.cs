@@ -431,18 +431,17 @@ namespace YuLinTu.Library.Business
             {
                 return "";
             }
-            string imagePath = filePath + "\\" + family.ZoneCode.PadRight(14, '0') + "\\" + $"{family.Name}{family.Number}";
-            if (!Directory.Exists(imagePath))
+            if (!Directory.Exists(filePath))
             {
-                Directory.CreateDirectory(imagePath);
+                Directory.CreateDirectory(filePath);
             }
-
-            string imageName = imagePath + "\\" + "DKSYT" + family.ZoneCode.PadRight(14, '0');
-            int number = 0;
-            Int32.TryParse(family.FamilyNumber, out number);
-            imageName += string.Format("{0:D4}", number);
-            imageName += "J";
-            return imageName;
+            string imagePath = filePath + "\\地块示意图\\" + $"DKSYT{family.ZoneCode.PadRight(14, '0')}{family.FamilyNumber.PadLeft(4, '0')}J";
+            //string imageName = imagePath + "\\" + "DKSYT" + family.ZoneCode.PadRight(14, '0');
+            //int number = 0;
+            //Int32.TryParse(family.FamilyNumber, out number);
+            //imageName += string.Format("{0:D4}", number);
+            //imageName += "J";
+            return imagePath;
         }
 
         #endregion

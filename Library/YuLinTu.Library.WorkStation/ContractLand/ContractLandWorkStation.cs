@@ -1105,6 +1105,29 @@ namespace YuLinTu.Library.WorkStation
             return TrySaveChanges(DefaultRepository);
         }
 
+        public int UpdateDataForInitialPersonConcord(VirtualPerson virtualPerson, ContractConcord contractConcord, ContractRegeditBook bookFamily)
+        {
+            if (virtualPerson == null)
+            {
+                return 0;
+                throw new YltException("获取承包方数据失败!");
+            }
+            if (contractConcord != null)
+            {
+                contractConcord.ConcordNumber = virtualPerson.ZoneCode.PadRight(14, '0') + virtualPerson.FamilyNumber.PadLeft(4, '0') + "J";
+                contractConcord.ContractCredentialNumber = contractConcord.ConcordNumber;
+                ConcordRepository.Update(contractConcord);
+            }
+            if (bookFamily != null && contractConcord != null)
+            {
+                bookFamily.Number = contractConcord.ConcordNumber;
+                bookFamily.RegeditNumber = contractConcord.ConcordNumber;
+                BookRepository.Update(bookFamily);
+            }
+            VirtualPersonRepository.Update(virtualPerson);
+            return TrySaveChanges(DefaultRepository);
+        }
+
         public int AddDelLand(ContractLand_Del contractLand_Del)
         {
             ContractLandDeleteRepository.Add(contractLand_Del);

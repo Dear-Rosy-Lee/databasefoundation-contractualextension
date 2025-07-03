@@ -214,6 +214,8 @@ namespace YuLinTu.Library.Business
         {
             VirtualType = eVirtualType.Land;
             FarmerFamilyNumberIndex = new int[] { 1 };
+            PersonalFamilyNumberIndex = new int[] { 8001 };
+            UnitFamilyNumberIndex = new int[] { 9001 };
         }
 
         #endregion 

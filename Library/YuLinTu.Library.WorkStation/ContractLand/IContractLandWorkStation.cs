@@ -468,11 +468,12 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         /// <param name="virtualPerson">更新承包方对象</param>
         int UpdateDataForInitialVirtualPerson(VirtualPerson virtualPerson);
+        int UpdateDataForInitialPersonConcord(VirtualPerson virtualPerson, ContractConcord contractConcord, ContractRegeditBook bookFamily);
 
         int AddDelLand(ContractLand_Del contractLand_Del);
 
         List<ContractLand_Del> GetDelLandByZone(string zoneCode);
-        
+
         int DeleteDelLandByZoneCode(string zoneCode, eLevelOption levelOption);
 
         /// <summary>

@@ -55,7 +55,6 @@ namespace YuLinTu.Component.VirtualPerson
         protected override void OnNavigateTo(object sender, NavigateToMsgEventArgs e)
         {
             base.OnNavigateTo(sender, e);
-
             if (e.Object == null)
             {
                 PersonFramePage senderPage = PageContent as PersonFramePage;

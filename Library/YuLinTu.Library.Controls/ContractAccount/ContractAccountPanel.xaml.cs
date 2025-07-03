@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -333,6 +334,34 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void InitialControl(string zoneCode)
         {
+            try
+            {
+                if (currentZone.Level > eZoneLevel.Town)
+                {
+                    IDbContext dbContext = DataBaseSource.GetDataBaseSource();
+                    dbContext.CreateQuery<LandVirtualPerson>().FirstOrDefault();
+                    dbContext.CreateQuery<ContractLand>().FirstOrDefault();
+                    dbContext.CreateQuery<BelongRelation>().FirstOrDefault();
+                }
+            }
+            catch
+            {
+                TheWorkPage.Page.ShowMessageBox(new TabMessageBoxDialog()
+                {
+                    Header = "提示",
+                    Message = "获取数据时发生错误,可以尝试升级数据库解决问题。\n\n" +
+                    "点击 确定 开始升级数据库。\n" + "点击 取消 不升级",
+                    MessageGrade = eMessageGrade.Error,
+                    CancelButtonText = "取消",
+                }, (b, ec) =>
+                {
+                    if (!(bool)b)
+                        return;
+                    ToolDataBaseHelper.TryUpdateDatabase(DataBaseSource.GetDataBaseSource());
+                });
+                return;
+            }
+
             if (AccountSummary != null)
             {
                 AccountSummary.EmptyData();
@@ -354,7 +383,7 @@ namespace YuLinTu.Library.Controls
                 terminated =>
                 {
                     MenueEnableMethod();
-                    ShowBox("提示", "请检查数据库是否为最新的数据库，否则请升级数据库!");
+                    ShowBox("提示", "获取数据时发生错误,可以尝试升级数据库解决问题。");
                 },
                 progressChanged =>
                 {
@@ -5883,11 +5912,11 @@ namespace YuLinTu.Library.Controls
         /// </summary>
         private void ExportMultiParcelTaskGroup(string fileName, string taskName, string taskDesc, bool? isStockLand)
         {
-            TaskGroupExportMultiParcelWordArgument groupArgument = new TaskGroupExportMultiParcelWordArgument();
+            var groupArgument = new TaskGroupExportMultiParcelWordArgument();
             groupArgument.CurrentZone = currentZone;
             groupArgument.DbContext = DbContext;
             groupArgument.FileName = fileName;
-            TaskGroupExportMultiParcelWordOperation groupOperation = new TaskGroupExportMultiParcelWordOperation();
+            var groupOperation = new TaskGroupExportMultiParcelWordOperation();
             groupOperation.Argument = groupArgument;
             if (isStockLand != null)
                 groupOperation.Name = (bool)isStockLand ? "导出确股地块示意图" : taskName;

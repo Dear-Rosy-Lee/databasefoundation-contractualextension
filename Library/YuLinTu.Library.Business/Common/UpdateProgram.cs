@@ -8,6 +8,9 @@ using System.Windows;
 using System.Net;
 using System.Text;
 using System.Xml;
+using System.Net.Sockets;
+using System.Globalization;
+using System.IO;
 
 namespace YuLinTu.Library.Business
 {
@@ -169,6 +172,33 @@ namespace YuLinTu.Library.Business
             catch (Exception ex)
             {
             }
+        }
+
+        public static DateTime? GetInternetDate()
+        {
+            try
+            {
+                var client = new TcpClient("time.nist.gov", 13);
+                using (var streamReader = new StreamReader(client.GetStream()))
+                {
+                    var response = streamReader.ReadToEnd();
+                    var utcDateTimeString = response.Substring(7, 17);
+                    var localDateTime = DateTime.ParseExact(utcDateTimeString, "yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+                    return localDateTime;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        static uint SwapEndianness(ulong x)
+        {
+            return (uint)(((x & 0x000000ff) << 24) +
+            ((x & 0x0000ff00) << 8) +
+            ((x & 0x00ff0000) >> 8) +
+            ((x & 0xff000000) >> 24));
         }
     }
 }

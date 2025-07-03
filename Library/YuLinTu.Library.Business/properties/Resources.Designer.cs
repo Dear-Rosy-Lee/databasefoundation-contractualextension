@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace YuLinTu.Component.Common.Properties {
+namespace YuLinTu.Library.Business.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace YuLinTu.Component.Common.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("YuLinTu.Component.Common.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("YuLinTu.Library.Business.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,16 @@ namespace YuLinTu.Component.Common.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 INSERT INTO [JCSJ_SJZD] ([ID], [FZM], [FZMC], [LXBM], [MC], [BM], [BZXX], [CJZ], [CJSJ], [XGZ], [XGSJ]) VALUES (&apos;8ad3987b-3970-4663-a594-dc45f3c6092b&apos;, &apos;C1&apos;, &apos;控制点类型及等级&apos;, &apos;110100&apos;, &apos;平面控制点&apos;, &apos;平面控制点&apos;, &apos;&apos;, &apos;Admin&apos;, &apos;2015-05-05T00:00:00&apos;, &apos;&apos;, &apos;0001-01-01T00:00:00&apos;);
+        ///INSERT INTO [JCSJ_SJZD] ([ID], [FZM], [FZMC], [LXBM], [MC], [BM], [BZXX], [CJZ], [CJSJ], [XGZ], [XGSJ]) VALUES (&apos;68905c7d-708a-4d24-b630-cf2a9f3f5db0&apos;, &apos;C1&apos;, &apos;控制点类型及等级&apos;, &apos;110101&apos;, &apos;大地原点&apos;, &apos;大地原点&apos;, &apos;大地原点&apos;, &apos;Admin&apos;, &apos;2015-05-05T00:00:00&apos;, &apos;&apos;, &apos;0001-01- [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string DictionarySQL {
+            get {
+                return ResourceManager.GetString("DictionarySQL", resourceCulture);
             }
         }
     }
