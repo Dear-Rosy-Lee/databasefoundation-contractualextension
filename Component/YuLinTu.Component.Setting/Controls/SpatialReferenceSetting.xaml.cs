@@ -419,7 +419,7 @@ namespace YuLinTu.Component.Setting
             try
             {
                 ds.BeginTransaction();
-                string cmds = YuLinTu.Component.Common.Properties.Resources.DictionarySQL;
+                string cmds = YuLinTu.Library.Business.Properties.Resources.DictionarySQL;
 
                 var sqls = cmds.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -546,7 +546,7 @@ namespace YuLinTu.Component.Setting
                     try
                     {
                         var table = schma.GetElementPropertyNames(null, item.TableName);
-                         //table = schma.GetElementProperties(null, item.TableName);
+                        //table = schma.GetElementProperties(null, item.TableName);
                         item.FieldList.RemoveAll(r => table.Any(t => t == r.FieldName));
                     }
                     catch (Exception ex)
