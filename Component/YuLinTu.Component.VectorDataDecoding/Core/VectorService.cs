@@ -65,6 +65,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
                 model.DataStaus = e.process_status;
                 model.PropertyMetadata = e.metadata_json;
+                model.BatchDescrption = e.remarks;
                  var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
                 if(child != null&& child.Count > 0)
                 {
@@ -636,6 +637,19 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             }
 
             return result;
+        }
+
+        public string UpdateDownLoadNumByBatchCodes(List<string> batchCodes, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpdateDownLoadNumByBatchCodes;
+            Dictionary<string, List<string>> body = new Dictionary<string, List<string>>();
+            body.Add("uploadBatchNums", batchCodes);
+          
+            var jsonData = JsonSerializer.Serialize(body);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            en = GetReposneMessage(sucess, en);
+            return en;
         }
     }
 }

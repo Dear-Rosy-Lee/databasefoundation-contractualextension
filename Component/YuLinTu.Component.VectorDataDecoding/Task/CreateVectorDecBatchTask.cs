@@ -70,7 +70,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
             body.Add("client_id", Constants.client_id);
             body.Add("upload_batch_name", args.BatchName);
-            //body.Add("remarks", "测试");
+            body.Add("remarks", args.Descrpition);
             //var jsonData = JsonSerializer.Serialize(body);
             var en = apiCaller.PostResultAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             if(en!=null)

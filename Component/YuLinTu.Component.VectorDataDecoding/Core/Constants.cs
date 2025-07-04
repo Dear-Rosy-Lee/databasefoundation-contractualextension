@@ -51,6 +51,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_DownLoadProveFile = Methold_Prefix + "file/download"; //"/stackcloud/api/open/api/dynamic/onlineDecryption/file/download";
         internal const string Methold_BatchCount = Methold_Prefix + "task/count";
         internal const string Methold_BatchStaus = Methold_Prefix + "task/process_status/by/upload_batch_num";
+        internal const string Methold_UpdateDownLoadNumByBatchCodes = Methold_Prefix + "task/update/download_num";
+
         //行政地域
         internal const string Methold_children_filter = "/stackcloud/api/open/api/xzdy/children/filter/codes";
         internal const int VectorDecodeSrid = 4490;

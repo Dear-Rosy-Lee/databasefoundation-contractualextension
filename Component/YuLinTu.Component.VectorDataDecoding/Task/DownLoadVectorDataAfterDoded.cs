@@ -9,6 +9,7 @@ using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 using YuLinTu.Data.Dynamic;
+using YuLinTu.DF.Enums;
 using YuLinTu.Security;
 using YuLinTu.Spatial;
 using YuLinTu.tGISCNet;
@@ -16,7 +17,7 @@ using YuLinTu.tGISCNet;
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
     [TaskDescriptor(TypeArgument = typeof(DownLoadVectorDataAfterDodedArgument),
-        Name = "下载处理后矢量数据", Gallery = @"Gallery1\Gallery2",
+        Name = "下载处理完成矢量数据", Gallery = @"Gallery1\Gallery2",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class DownLoadVectorDataAfterDoded : DownLoadVectorDataBase
@@ -33,7 +34,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public DownLoadVectorDataAfterDoded()
         {
-            Name = "下载处理后矢量数据";
+            Name = "下载处理完成矢量数据";
             Description = "下载处理完成矢量数据";
         }
 
@@ -139,10 +140,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                             WriteLog(args.ZoneCode, clientID, batchCode, dataCount);
                             //更新下载次数
-                            vectorService.UpdateDownLoadNum(batchCode);
+                            //vectorService.UpdateDownLoadNum(batchCode);
                         }
                         pageIndex++;
-
+                        string msg=  vectorService.UpdateDownLoadNumByBatchCodes(batchCodes,out bool sucess);
+                        if(!sucess)
+                        {
+                            this.ReportError(msg);
+                        }
 
                     };
 

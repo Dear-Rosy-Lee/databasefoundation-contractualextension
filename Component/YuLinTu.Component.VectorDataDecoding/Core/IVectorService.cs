@@ -66,5 +66,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode);
         int GetBatchsCountByZoneCode(string zoneCode, ClientEum clientType);
         BatchsStausCode GetBatchStatusByCode(string batchCode);
+        /// <summary>
+        /// 更新已完成处理数据批次的下载次数
+        /// </summary>
+        /// <param name="batchCodes">批次号列表</param>
+        /// <param name="sucess"></param>
+        /// <returns></returns>
+        string UpdateDownLoadNumByBatchCodes(List<string> batchCodes, out bool sucess);
     }
 }

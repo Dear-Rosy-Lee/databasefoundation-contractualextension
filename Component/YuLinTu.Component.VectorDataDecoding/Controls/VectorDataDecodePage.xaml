@@ -350,7 +350,7 @@
                                             Width="160"
                                             SortDirection="Ascending"
                                             SortMemberPath="UplaodTime"
-                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center">
+                                            ylt:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Left">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBlock Margin="5,0,0,0"
