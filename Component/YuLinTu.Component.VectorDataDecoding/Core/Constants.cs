@@ -43,7 +43,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         public const string CancleBatchDataSendStatus = Methold_Prefix + "task/cancel/submit/approval";//""/stackcloud/api/open/api/dynamic/onlineDecryption/task/cancel/submit/approval";
         internal const string Methold_WriteLog = Methold_Prefix + "log/add";//""/stackcloud/api/open/api/dynamic/onlineDecryption/log/add";
         internal const string Methold_uploadBatchNums= Methold_Prefix + "task/update/uploadBatchNums";//""/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/uploadBatchNums";
-        internal const string Methold_QueryStatusByBatchNums = Methold_Prefix + "task/process_status/by/upload_batch_num";//"/stackcloud/api/open/api/dynamic/onlineDecryption/task/process_status/by/upload_batch_num";
+        internal const string Methold_QueryStatusByBatchNums = Methold_Prefix + "task/statusmsg/by/upload_batch_num";//"/stackcloud/api/open/api/dynamic/onlineDecryption/task/process_status/by/upload_batch_num";
         internal const string Methold_UpdateStatusSucessByBatchNum = Methold_Prefix+ "task/update/process_status/success";// "/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/process_status/success";
         internal const string Methold_UpdateStatusByBatchNums = Methold_Prefix+ "task/update/by/upload_batch_num";//"/stackcloud/api/open/api/dynamic/onlineDecryption/task/update/by/upload_batch_num";
         internal const string Methold_QueryLogsByBatchCode = Methold_Prefix+ "log/paging";// "/stackcloud/api/open/api/dynamic/onlineDecryption/log/paging";
