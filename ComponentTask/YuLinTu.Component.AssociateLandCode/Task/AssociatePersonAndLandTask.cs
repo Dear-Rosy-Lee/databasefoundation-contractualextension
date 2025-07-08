@@ -219,7 +219,7 @@ namespace YuLinTu.Component.AssociateLandCode
                             var top = tvps.Find(t => t.FamilyNumber == tnp.FamilyNumber || t.ZoneCode == tnp.ZoneCode);
                             if (top != null)
                             {
-                                this.ReportError($"挂接原库中未找到户号为{tnp.FamilyNumber}、地域编码为{tnp.ZoneCode}的农户");
+                                this.ReportError($"挂接原库中地域({tnp.ZoneCode})下未找到户号为{tnp.FamilyNumber},名为{tnp.Name}的农户,请确认该发包方数据是否已经变更");
                             }
                             else
                             {
@@ -232,7 +232,7 @@ namespace YuLinTu.Component.AssociateLandCode
                         oldVps.AddRange(tvps);
                         oldLands.AddRange(tlds);//获取原地块 
                     }
-                    //var ovps = vps.FindAll(t => zonecodelist.Contains(t.ZoneCode));//旧承包方
+                    //var ovps = vps.FindAll(tland => zonecodelist.Contains(tland.ZoneCode));//旧承包方
                     var lstvps = ExecuteUpdateVp(sd, nvps, oldVps,/* relationZones,*/ deloldvps);
                     upvps.AddRange(lstvps);
                     var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
@@ -471,48 +471,61 @@ namespace YuLinTu.Component.AssociateLandCode
             }
             listOldLands.RemoveAll(r => rlandidset.Contains(r.ID));
 
-            foreach (var t in lands)
+            foreach (var tland in lands)
             {
 #if DEBUG
-                if (t.LandNumber == "5116022162030300089" || t.LandNumber == "5116022162030300118" || t.LandNumber == "5116022162030300286")
+                if (tland.LandNumber == "5113031042030301819" || tland.LandNumber == "5113031042030301818" || tland.LandNumber == "5116022162030300286")
                 {
                 }
 #endif
-                if (!string.IsNullOrEmpty(t.OldLandNumber))
+                if (!string.IsNullOrEmpty(tland.OldLandNumber))
                     continue;
-                var slan = listOldLands.FirstOrDefault(w => w.LandNumber == t.LandNumber);
+                var slan = listOldLands.FirstOrDefault(w => w.LandNumber == tland.LandNumber);
                 if (slan != null)
                 {
                     if (!rlandidset.Contains(slan.ID))
                     {
-                        t.OldLandNumber = slan.LandNumber;
+                        tland.OldLandNumber = slan.LandNumber;
                         rlandidset.Add(slan.ID);
-                        listLands.Add(t);
+                        listLands.Add(tland);
                         continue;
                     }
                 }
-                var rlands = listOldLands.Where(c => c.ActualArea == t.ActualArea).ToList();
+                var rlands = listOldLands.Where(c => c.ActualArea == tland.ActualArea).ToList();
                 if (rlands.Count == 0)
                 {
-                    t.OldLandNumber = "";
+                    tland.OldLandNumber = "";
                 }
                 else
                 {
                     bool hasrelate = false;
-                    ContractLand rld = null;// rlands.Find(c => c.Name == t.Name);
+                    ContractLand rld = null;// rlands.Find(c => c.Name == tland.Name);
                     if (argument.SearchInShape)
                     {
-                        rld = rlands.Find(c => c.Name == t.Name && checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)t.Shape.Instance,
-                          (NetTopologySuite.Geometries.Geometry)c.Shape.Instance) >= 0.8);
+                        double similar = 0;
+                        foreach (var c in rlands)
+                        {
+                            var tsimilar = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)tland.Shape.Instance, (NetTopologySuite.Geometries.Geometry)c.Shape.Instance);
+                            if (c.Name == tland.Name && tsimilar >= 0.8)
+                            {
+                                if (tsimilar > similar)
+                                {
+                                    similar = tsimilar;
+                                    rld = c;
+                                }
+                            }
+                        }
+                        //rld = rlands.Find(c => c.Name == tland.Name && checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)tland.Shape.Instance,
+                        //  (NetTopologySuite.Geometries.Geometry)c.Shape.Instance) >= 0.8);
                     }
                     else
                     {
-                        rld = rlands.Find(c => c.Name == t.Name);
+                        rld = rlands.Find(c => c.Name == tland.Name);
                     }
                     if (rld != null)
                     {
                         hasrelate = true;
-                        t.OldLandNumber = rld.LandNumber;
+                        tland.OldLandNumber = rld.LandNumber;
                         rlandidset.Add(rld.ID);
                     }
                     else
@@ -523,11 +536,11 @@ namespace YuLinTu.Component.AssociateLandCode
                             {
                                 if (argument.SearchInShape)
                                 {
-                                    var chkp = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)t.Shape.Instance, (NetTopologySuite.Geometries.Geometry)c.Shape.Instance);
+                                    var chkp = checker.CheckSimilarity((NetTopologySuite.Geometries.Geometry)tland.Shape.Instance, (NetTopologySuite.Geometries.Geometry)c.Shape.Instance);
                                     if (chkp > 0.9)
                                     {
                                         hasrelate = true;
-                                        t.OldLandNumber = c.LandNumber;
+                                        tland.OldLandNumber = c.LandNumber;
                                         rlandidset.Add(c.ID);
                                         break;
                                     }
@@ -535,7 +548,7 @@ namespace YuLinTu.Component.AssociateLandCode
                                 else
                                 {
                                     hasrelate = true;
-                                    t.OldLandNumber = c.LandNumber;
+                                    tland.OldLandNumber = c.LandNumber;
                                     rlandidset.Add(c.ID);
                                     break;
                                 }
@@ -544,10 +557,10 @@ namespace YuLinTu.Component.AssociateLandCode
                     }
                     if (!hasrelate)
                     {
-                        t.OldLandNumber = "";
+                        tland.OldLandNumber = "";
                     }
                 }
-                listLands.Add(t);
+                listLands.Add(tland);
             }
             var delandstemp = listOldLands.Where(r => !rlandidset.Contains(r.ID)).ToList();
             foreach (var ld in delandstemp)

@@ -275,7 +275,7 @@ namespace YuLinTu.Library.Business
                         continue;
                     }
                 }
-                if (accountFamilyCollection.Any(t => (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == item.OldVirtualCode))
+                if (accountFamilyCollection.Any(t => t.CurrentFamily.Status == eVirtualPersonStatus.Right && (t.CurrentFamily.ZoneCode.PadRight(14, '0') + t.CurrentFamily.FamilyNumber.PadLeft(4, '0')) == item.OldVirtualCode))
                 {
                     err += $"{item.OldVirtualCode}、";
                 }

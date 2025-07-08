@@ -94,7 +94,7 @@ namespace YuLinTu.Component.AssociateLandCode
             var db = DataSource.Create<IDbContext>(TheBns.Current.GetDataSourceName());
             if (db != null && !string.IsNullOrEmpty(db.ConnectionString))
             {
-                databaseFilePath = db.ConnectionString.Replace("data source =", "");
+                databaseFilePath = db.ConnectionString.Replace("data source =", "").Replace("data source=", "");
             }
         }
     }
