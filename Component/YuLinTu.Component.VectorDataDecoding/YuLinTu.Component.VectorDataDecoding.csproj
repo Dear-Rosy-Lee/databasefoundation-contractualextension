@@ -336,6 +336,7 @@
       <DependentUpon>UploadVectorDataToSever.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\UploadVectorDataToSever.cs" />
+    <Compile Include="ZoneNavigationSecurityContextbase.cs" />
     <Compile Include="VectorDataDecodePageNavigation.cs" />
     <Compile Include="WorkpageContext.cs" />
     <Compile Include="WorkspaceContext.cs" />
