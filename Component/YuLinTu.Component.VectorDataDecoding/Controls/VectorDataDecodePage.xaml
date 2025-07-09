@@ -269,7 +269,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="TextChanged">
                             <ylt:InvokeCommandActionEx Command="{Binding CommandFilter}"
-                                                       CommandParameter="{Binding ElementName=treeGrid}"></ylt:InvokeCommandActionEx>
+                                                       CommandParameter="{Binding ElementName=dg}"></ylt:InvokeCommandActionEx>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ylt:MetroTextBox>

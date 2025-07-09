@@ -12,6 +12,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
     internal interface IVectorService
     {
         ObservableCollection<VectorDecodeBatchModel> QueryBatchTask(string zoneCode, int page = 1, int pageSize = 200,string BatchType="all");
+        ObservableCollection<VectorDecodeBatchModel> QueryBatchTaskPage(string zoneCode, int page = 1, int pageSize = 200, string FilterKey="");
         List<SpaceLandEntity> DownLoadVectorDataPrimevalData(string zoneCode, int pageIndex, int pageSize);
         List<SpaceLandEntity> DownLoadVectorDataAfterDecodelData(string zoneCode, int pageIndex, int pageSize, string batchCode);
         string UpLoadVectorDataAfterDecodeToSever(List<SpaceLandEntity> Data, out bool isSucess);

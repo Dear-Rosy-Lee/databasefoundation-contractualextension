@@ -201,8 +201,49 @@ namespace YuLinTu.Component.VectorDataDecoding
         }
 
 
+        #region Commands - Filter
+
+        public DelegateCommand CommandFilter { get { return _CommandFilter ?? (_CommandFilter = new DelegateCommand(args => OnFilter(args), args => OnCanFilter(args))); } }
+        private DelegateCommand _CommandFilter;
+
+        private bool OnCanFilter(object args)
+        {
+            return true;
+        }
+
+        private void OnFilter(object args)
+        {
+            // 使用延迟通知机制，在1秒后通知开始过滤，
+            // 若1秒内多次触发，则以最后一次的为准，
+            // 以此避免频繁输入过滤条件引起的界面卡顿。
+            if (reporter == null)
+                return;
+
+         reporter.Start(args);
+        }
+
+        private void FilterTreeGrid(DetentionElapsedEventArgs c)
+        {
+            var cp = c.Value as CommandParameterEx;
+            var key = (cp.Sender as MetroTextBox).Text;
+            var dg = cp.Parameter as PagableDataGrid;
+            (this.DataSource as DataPagerProviderVectorDecode).FilterKey = FilterKey;
+            (DataSource as DataPagerProviderVectorDecode).CurrentZone = CurrentZone;
+            if (dg != null && CurrentZone != null) dg.Refresh();
+        }
 
         #endregion
+
+
+
+        #region Fields
+
+        //private TaskQueue tq = new TaskQueueDispatcher();
+        private DetentionReporter reporter = null;
+
+        #endregion
+
+#endregion
 
 
         #region Commands - Loaded
@@ -228,6 +269,9 @@ namespace YuLinTu.Component.VectorDataDecoding
             Workpage = workpage;
             vectorService = new VectorService();
             _DataSource = new DataPagerProviderVectorDecode(CurrentZone, vectorService);
+            reporter = DetentionReporterDispatcher.Create(
+                System.Windows.Application.Current.Dispatcher,
+                c => FilterTreeGrid(c), 1000, 1000);
         }
 
         #endregion
