@@ -390,13 +390,22 @@
                                     Style="{StaticResource checkBox}">
                                     是否显示邻宗地图形
                                 </CheckBox>
-                                <CheckBox
+                                <RadioButton GroupName="Showlandneighbor" Margin="160,0,0,0"
                                     Grid.Row="0"
-                                    Grid.Column="1"
-                                    IsChecked="{Binding ShowlandneighborLabel, Mode=TwoWay}"
-                                    Style="{StaticResource checkBox}">
-                                    邻宗图无地块相邻显示调查四至
-                                </CheckBox>
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    IsChecked="{Binding ShowlandneighborLabel, Mode=TwoWay}">
+                                    无邻宗显示调查四至
+                                </RadioButton>
+                                <RadioButton GroupName="Showlandneighbor" Margin="320,0,0,0"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    IsChecked="{Binding ShowAlllandneighborLabel, Mode=TwoWay}">
+                                    邻宗标注使用调查四至
+                                </RadioButton>
+
+
                                 <DockPanel
                                     Grid.Row="1"
                                     Grid.Column="0"
@@ -445,13 +454,7 @@
                                         Style="{StaticResource doubleupdown}"
                                         Value="{Binding Neighbordxmzdwbufferdistence, Mode=TwoWay}" />
                                 </DockPanel>
-                                <CheckBox
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    IsChecked="{Binding ShowAlllandneighborLabel, Mode=TwoWay}"
-                                    Style="{StaticResource checkBox}">
-                                    邻宗图标注直接使用调查四至
-                                </CheckBox>
+
                             </Grid>
                         </cmps:OptionsContainer>
                         <cmps:OptionsContainer Text="邻宗地块标注设置">

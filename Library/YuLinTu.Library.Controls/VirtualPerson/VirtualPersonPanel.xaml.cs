@@ -935,6 +935,11 @@ namespace YuLinTu.Library.Controls
         {
             try
             {
+                VirtualPerson tvp = currentItem.Tag as VirtualPerson;
+                if (tvp == null)
+                    return;
+                if (int.Parse(tvp.FamilyNumber) > 8000 && tvp.Name.Contains("集体"))
+                    return;
                 DbContext.BeginTransaction();
                 var vpdquery = DbContext.CreateQuery<VirtualPerson_Del>();
                 var cldquery = DbContext.CreateQuery<ContractLand_Del>();
@@ -1581,15 +1586,15 @@ namespace YuLinTu.Library.Controls
                         if (s == null || !s.Value)
                             return;
                         var vps = new List<VirtualPerson>();
-                        foreach ( var item in dialog.SelectSenderData.Select(tuple => tuple.Item1).ToList())
+                        foreach (var item in dialog.SelectSenderData.Select(tuple => tuple.Item1).ToList())
                         {
                             vps.Add(persons.Where(q => q.ID == item.Id).FirstOrDefault());
                         }
                         AdjustSenderTask(vps, dialog.NewSenderName);
                     });
                 }
-            
-                
+
+
             }
             catch (Exception ex)
             {
@@ -1597,8 +1602,8 @@ namespace YuLinTu.Library.Controls
                 return;
             }
         }
-       
-        public void AdjustSenderTask(List<VirtualPerson> vps,string NewSenderName)
+
+        public void AdjustSenderTask(List<VirtualPerson> vps, string NewSenderName)
         {
             TaskAdjustSenderArgument argument = new TaskAdjustSenderArgument();
             argument.Database = DbContext;

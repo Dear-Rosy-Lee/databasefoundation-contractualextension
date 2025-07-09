@@ -205,8 +205,20 @@ namespace YuLinTu.Library.Business
                 {
                     return false;
                 }
+                base.InitialEntity(data);
+                //base.WriteZoneInformation();
+                base.WriteContractorInformaion();
+                //base.WriteLandInformation();
+                base.WriteSenderInformation();
+                base.WriteConcordInformation();
+                //base.WriteBookInformation();
+                base.WriteDateTimeInformation();
+                //WriteParcelInformation();
+                base.WriteOtherInformation();
 
-                base.OnSetParamValue(data);
+
+
+                //base.OnSetParamValue(data);
                 // 2017/06/28根据安徽金寨，导出确权确股地块示意图时，重新计算承包地块总面积
                 if (!IsStockLand.HasValue)
                     RecalculateActualArea();
@@ -800,16 +812,16 @@ namespace YuLinTu.Library.Business
                     string fileName = SavePathOfImage + @"\" + Contractor.ZoneCode + "-" + Contractor.Name + ".jpg";
                     image.SaveToJpgFile(fileName);
                 }));
-                listAllFeature.Clear();
-                listAllFeature = null;
-                listOwenrFeature.Clear();
-                listOwenrFeature = null;
-                listdzdwFeature.Clear();
-                listdzdwFeature = null;
-                listxzdwFeature.Clear();
-                listxzdwFeature = null;
-                listmzdwFeature.Clear();
-                listmzdwFeature = null;
+                //listAllFeature.Clear();
+                //listAllFeature = null;
+                //listOwenrFeature.Clear();
+                //listOwenrFeature = null;
+                //listdzdwFeature.Clear();
+                //listdzdwFeature = null;
+                //listxzdwFeature.Clear();
+                //listxzdwFeature = null;
+                //listmzdwFeature.Clear();
+                //listmzdwFeature = null;
             }
             catch (Exception ex)
             {
@@ -825,17 +837,6 @@ namespace YuLinTu.Library.Business
             exportLandParcelMainOperation.Scale = SettingDefine.NeighborLandScale;
             mapW = 190 * exportLandParcelMainOperation.Scale;
             mapH = 220 * exportLandParcelMainOperation.Scale;
-
-            //if (SettingDefine.IsFixedLandGeoWordExtend)
-            //{
-            //    mapW = 190;
-            //    mapH = 220;
-            //}
-            //else
-            //{
-            //    mapW = SettingDefine.LandGeoWordWidth;
-            //    mapH = SettingDefine.LandGeoWordHeight;
-            //}
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 ViewOfNeighorParcels.Paper.Model.Width = mapW;

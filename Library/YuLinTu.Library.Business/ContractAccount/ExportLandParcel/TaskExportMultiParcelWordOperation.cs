@@ -61,7 +61,6 @@ namespace YuLinTu.Library.Business
             var zone = argument.CurrentZone;
             try
             {
-                this.ReportInfomation($"开始导出{zone.FullName}下的地块示意图");
                 var listPerson = argument.SelectedPersons;
                 var landStation = dbContext.CreateContractLandWorkstation();
                 var dictStation = dbContext.CreateDictWorkStation();
@@ -102,6 +101,7 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
+                this.ReportInfomation($"开始导出{zone.FullName}下的地块示意图,共{listPerson.Count}户");
                 bool canOpen = ExportLandMultiParcelWord(argument, listPerson, listLand, listDict);
                 if (canOpen)
                     CanOpenResult = true;
@@ -316,7 +316,7 @@ namespace YuLinTu.Library.Business
                     this.ReportProgress((int)(1 + vpPercent * indexOfVp), string.Format("{0}", markDesc + person.Name));
                     indexOfVp++;
 
-                    if (indexOfVp % 10 == 0)
+                    if (indexOfVp % 20 == 0)
                     {
                         GC.Collect();
                         GC.WaitForFullGCComplete();

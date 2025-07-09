@@ -138,7 +138,11 @@ namespace YuLinTu.Library.Business
                     LandNumber = c.LandNumber,
                     OwnerName = c.OwnerName,
                     AwareArea = c.AwareArea,
-                    ActualArea = c.ActualArea
+                    ActualArea = c.ActualArea,
+                    NeighborEast = c.NeighborEast,
+                    NeighborNorth = c.NeighborNorth,
+                    NeighborWest = c.NeighborWest,
+                    NeighborSouth = c.NeighborSouth
                 }).ToList();
             return VillageLands;
         }
