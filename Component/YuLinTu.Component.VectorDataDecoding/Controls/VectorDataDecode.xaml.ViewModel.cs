@@ -225,9 +225,12 @@ namespace YuLinTu.Component.VectorDataDecoding
         private void FilterTreeGrid(DetentionElapsedEventArgs c)
         {
             var cp = c.Value as CommandParameterEx;
-            var key = (cp.Sender as MetroTextBox).Text;
+            var filtkey = (cp.Sender as MetroTextBox).Text?.Trim();
             var dg = cp.Parameter as PagableDataGrid;
-            (this.DataSource as DataPagerProviderVectorDecode).FilterKey = FilterKey;
+            //var ds= dg.DataSource as DataPagerProviderVectorDecode;
+            //ds.FilterKey = key;
+            //dg.DataSource = ds;
+            (dg.DataSource as DataPagerProviderVectorDecode).FilterKey = filtkey;
             (DataSource as DataPagerProviderVectorDecode).CurrentZone = CurrentZone;
             if (dg != null && CurrentZone != null) dg.Refresh();
         }
