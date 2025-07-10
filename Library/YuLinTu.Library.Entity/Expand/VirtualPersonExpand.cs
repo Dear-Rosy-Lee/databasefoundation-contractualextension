@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using YuLinTu.Data;
-using YuLinTu;
 using System.Xml.Linq;
+using YuLinTu.Data;
 
 namespace YuLinTu.Library.Entity
 {
@@ -67,7 +63,9 @@ namespace YuLinTu.Library.Entity
         private double secondConcordTotalArea;
         private int secondConcordTotalLandCount;
         //扩展字段
-        private string extendName;
+        private string extendName; 
+        private string aliasNameA; // 预留A
+        private string aliasNameB; // 预留B
         #endregion
 
         #region Properties
@@ -513,6 +511,49 @@ namespace YuLinTu.Library.Entity
             set { secondConcordTotalLandCount = value; NotifyPropertyChanged("SecondConcordTotalLandCount"); }
         }
 
+        #region 重庆字段
+
+        private string warrantNumberCQ2010;
+
+        /// <summary>
+        /// 2010年确权颁证证书号码
+        /// </summary>       
+        public string WarrantNumberCQ2010
+        {
+            get { return warrantNumberCQ2010; }
+            set
+            {
+                warrantNumberCQ2010 = value;
+                NotifyPropertyChanged("WarrantNumberCQ2010");
+            }
+        }
+
+        private double qQZMJM2010;
+
+        /// <summary>
+        /// 2010年确权颁证总面积
+        /// </summary>       
+        public double QQZMJM2010
+        {
+            get { return qQZMJM2010; }
+            set
+            {
+                qQZMJM2010 = value;
+                NotifyPropertyChanged("QQZMJM2010");
+            }
+        }
+
+        private bool _isElShare;
+        /// <summary>
+        /// 是否执行二轮面积分摊
+        /// </summary>
+        public bool IsElShare
+        {
+            get { return _isElShare; }
+            set { _isElShare = value; NotifyPropertyChanged(nameof(IsElShare)); }
+        }
+        #endregion
+
         /// <summary>
         /// 扩展字段
         /// </summary>
@@ -531,6 +572,36 @@ namespace YuLinTu.Library.Entity
             set { changeComment = value; NotifyPropertyChanged("ChangeComment"); }
         }
         private string changeComment;
+
+        /// <summary>
+        /// 预留A
+        /// </summary>
+        [DataColumn("YLA")]
+        public string AliasNameA
+        {
+            get { return aliasNameA; }
+            set
+            {
+                aliasNameA = value.TrimSafe();
+                NotifyPropertyChanged("AliasNameA");
+            }
+        }
+
+        /// <summary>
+        /// 预留B
+        /// </summary>
+        [DataColumn("YLB")]
+        public string AliasNameB
+        {
+            get { return aliasNameB; }
+            set
+            {
+                aliasNameB = value.TrimSafe();
+                NotifyPropertyChanged("AliasNameB");
+            }
+        }
+
+
 
         #endregion
 

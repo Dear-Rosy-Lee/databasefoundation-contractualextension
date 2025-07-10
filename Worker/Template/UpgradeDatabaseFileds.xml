@@ -967,6 +967,30 @@
 				<IsNull>true</IsNull>
 				<IsAdd>true</IsAdd>
 			</UpdateField>
+
+			<UpdateField>
+				<FieldName>XFBFMC</FieldName>
+				<FieldType>TEXT</FieldType>
+				<FieldLength>100</FieldLength>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+
+			<UpdateField>
+				<FieldName>XFBFBM</FieldName>
+				<FieldType>TEXT</FieldType>
+				<FieldLength>100</FieldLength>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
+
+			<UpdateField>
+				<FieldName>YLA</FieldName>
+				<FieldType>TEXT</FieldType>
+				<FieldLength>100</FieldLength>
+				<IsNull>true</IsNull>
+				<IsAdd>true</IsAdd>
+			</UpdateField>
 		</FieldList>
 	</UpgradeDatabase>
 	<UpgradeDatabase>

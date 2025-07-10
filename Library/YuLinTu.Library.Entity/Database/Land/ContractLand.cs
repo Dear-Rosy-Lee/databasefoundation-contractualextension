@@ -320,8 +320,15 @@ namespace YuLinTu.Library.Entity
         [DataColumn("LHHMJD")]
         public string QuantificatAreaByLand
         {
-            get { return quantificatAreaByLand; }
-            set { quantificatAreaByLand = value; NotifyPropertyChanged("QuantificatAreaByLand"); }
+            get
+            {
+                return quantificatAreaByLand;
+            }
+            set
+            {
+                quantificatAreaByLand = value;
+                NotifyPropertyChanged("QuantificatAreaByLand");
+            }
         }
 
         /// <summary>

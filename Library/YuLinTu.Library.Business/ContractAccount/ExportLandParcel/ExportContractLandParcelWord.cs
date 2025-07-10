@@ -208,7 +208,7 @@ namespace YuLinTu.Library.Business
                 base.InitialEntity(data);
                 //base.WriteZoneInformation();
                 base.WriteContractorInformaion();
-                //base.WriteLandInformation();
+                base.WriteLandCalInformation();
                 base.WriteSenderInformation();
                 base.WriteConcordInformation();
                 //base.WriteBookInformation();

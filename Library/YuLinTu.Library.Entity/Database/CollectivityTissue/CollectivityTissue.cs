@@ -1,9 +1,5 @@
 ﻿// (C) 2025 鱼鳞图公司版权所有，保留所有权利
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YuLinTu;
 using YuLinTu.Data;
 
 namespace YuLinTu.Library.Entity
@@ -15,32 +11,6 @@ namespace YuLinTu.Library.Entity
     [DataTable("JCSJ_FBF")]
     public class CollectivityTissue : NotifyCDObject  //(修改前)YltEntityIDName
     {
-        #region Ctor
-
-        /// <summary>
-        /// 静态构造方法
-        /// </summary>
-        static CollectivityTissue()
-        {
-            LanguageAttribute.AddLanguage(Properties.Resources.langChs_eTissueType);
-            LanguageAttribute.AddLanguage(Properties.Resources.langChs_eStatus);
-        }
-
-        /// <summary>
-        /// 构造方法
-        /// </summary>
-        public CollectivityTissue()
-        {
-            id = Guid.NewGuid();
-            CreationTime = DateTime.Now;
-            ModifiedTime = DateTime.Now;
-            Type = eTissueType.UnKnown;
-            Status = eStatus.UnKnown;
-            LawyerCredentType = eCredentialsType.IdentifyCard;
-        }
-
-        #endregion Ctor
-
         #region Field
 
         private string zoneCode = string.Empty;
@@ -70,7 +40,37 @@ namespace YuLinTu.Library.Entity
         private eLandPropertyType ownRightType = eLandPropertyType.Collectived;    // 所有权性质，湖南工单特有
         private eGender gender = eGender.Unknow;   // 性别，湖南工单特有
 
+        private string newName;
+        private string newCode;
+        private string aliasNameA; // 预留A
+
         #endregion Field
+
+        #region Ctor
+
+        /// <summary>
+        /// 静态构造方法
+        /// </summary>
+        static CollectivityTissue()
+        {
+            LanguageAttribute.AddLanguage(Properties.Resources.langChs_eTissueType);
+            LanguageAttribute.AddLanguage(Properties.Resources.langChs_eStatus);
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        public CollectivityTissue()
+        {
+            id = Guid.NewGuid();
+            CreationTime = DateTime.Now;
+            ModifiedTime = DateTime.Now;
+            Type = eTissueType.UnKnown;
+            Status = eStatus.UnKnown;
+            LawyerCredentType = eCredentialsType.IdentifyCard;
+        }
+
+        #endregion Ctor
 
         #region Properties
 
@@ -423,6 +423,48 @@ namespace YuLinTu.Library.Entity
                 }
             }
         }
+
+        /// <summary>
+        ///新发包方名称
+        /// </summary>
+        [DataColumn("XFBFMC")]
+        public string NewName
+        {
+            get { return newName; }
+            set
+            {
+                newName = value.TrimSafe(); NotifyPropertyChanged("NewName");
+            }
+        }
+
+        /// <summary>
+        ///新发包方编码
+        /// </summary>
+        [DataColumn("XFBFBM")]
+        public string NewCode
+        {
+            get { return newCode; }
+            set
+            {
+                newCode = value.TrimSafe(); NotifyPropertyChanged("NewCode");
+            }
+        }
+
+        /// <summary>
+        /// 预留A
+        /// </summary>
+        [DataColumn("YLA")]
+        public string AliasNameA
+        {
+            get { return aliasNameA; }
+            set
+            {
+                aliasNameA = value.TrimSafe();
+                NotifyPropertyChanged("AliasNameA");
+            }
+        }
+
+
         #endregion Properties
 
         #region Methods

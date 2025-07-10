@@ -1,14 +1,10 @@
-﻿using Microsoft.Scripting.Utils;
-using NPOI.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Scripting.Utils;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
-using YuLinTu.Library.WorkStation;
 
 namespace YuLinTu.Library.Business
 {
@@ -18,29 +14,30 @@ namespace YuLinTu.Library.Business
         protected int index;
         protected int bindex;
 
-        private double qqld;
-        private double cddth;
-        private double hhzj;
-        private double xzcb;
-        private double gjzy;
-        private double jtgysyzy;
-        private double wddwh;
-        private double hhjs;
-        private double qt;
-        private int secondLandCount;
-        private double secondLandArea;
-        private int landCount;
-        private double landArea;
+        //private double qqld;
+        //private double cddth;
+        //private double hhzj;
+        //private double xzcb;
+        //private double gjzy;
+        //private double jtgysyzy;
+        //private double wddwh;
+        //private double hhjs;
+        //private double qt;
+        //private int landCount;
+        //private double landArea; 
+        //private List<string> oldLandNumbers;
+        //private List<string> newLandNumbers;
+        //private int secondLandCount;
+        //private double secondLandArea;     
         private Dictionary<string, double> cdkeyValuePairs;
         private Dictionary<Guid?, double> hhkeyValuePairs;
-        private List<string> oldLandNumbers;
-        private List<string> newLandNumbers;
+       
         private List<ContractLand> contractLands;
         #endregion Fields
 
         #region Properties
 
-        public string TemplatePath { get; set; }
+        //public string TemplatePath { get; set; }
 
         public string ZoneDesc { get; set; }
 
@@ -130,17 +127,17 @@ namespace YuLinTu.Library.Business
         }
         public virtual void WriteInformation(SurveyForm surveyForm, int aindex)
         {
-            qqld = 0;
-            cddth = 0;
-            hhzj = 0;
-            xzcb = 0;
-            gjzy = 0;
-            jtgysyzy = 0;
-            hhjs = 0;
-            qt = 0;
-            landCount = surveyForm.ContractLandList.Count;
-            landArea = 0;
-            surveyForm.ContractLandList.ForEach(t => { landArea += t.AwareArea; });
+            //qqld = 0;
+            //cddth = 0;
+            //hhzj = 0;
+            //xzcb = 0;
+            //gjzy = 0;
+            //jtgysyzy = 0;
+            //hhjs = 0;
+            //qt = 0;
+            //landCount = surveyForm.ContractLandList.Count;
+            //landArea = 0;
+            //surveyForm.ContractLandList.ForEach(t => { landArea += t.AwareArea; });
             var contractLands = surveyForm.ContractLandList;
             if (ContractLand_Dels != null)
             {
@@ -299,15 +296,15 @@ namespace YuLinTu.Library.Business
 
         }
 
-        private int GetSecondLandCout()
-        {
-            return secondLandCount;
-        }
+        //private int GetSecondLandCout()
+        //{
+        //    return secondLandCount;
+        //}
 
-        private double GetSecondLandArea()
-        {
-            return secondLandArea;
-        }
+        //private double GetSecondLandArea()
+        //{
+        //    return secondLandArea;
+        //}
         /// <summary>
         /// 打开文件
         /// </summary>

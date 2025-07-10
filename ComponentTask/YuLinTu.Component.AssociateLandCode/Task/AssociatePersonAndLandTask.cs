@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Scripting.Utils;
-using YuLinTu.Component.Common;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
@@ -26,8 +25,10 @@ namespace YuLinTu.Component.AssociateLandCode
         }
 
         #region Fields
-
-        private Zone currentZone; //当前地域
+        //private double averagePercent;  //平均百分比
+        //private double currentPercent;  //当前百分比        
+        //private int cindex;
+        //private Zone currentZone; //当前地域
         private AssociatePersonAndLandArgument argument;
         private List<string> jtmcs = new List<string>();
         /// <summary>
@@ -39,11 +40,9 @@ namespace YuLinTu.Component.AssociateLandCode
         /// 本地数据源
         /// </summary>
         private IDbContext oldDbContext;  //
-        private double averagePercent;  //平均百分比
-        private double currentPercent;  //当前百分比
+
         private string resfile;
         private int index;
-        private int cindex;
 
         #endregion Fields
 
@@ -86,7 +85,7 @@ namespace YuLinTu.Component.AssociateLandCode
         private bool Beginning()
         {
             index = 1;
-            cindex = 1;
+            //cindex = 1;
             dbContext = DataBaseSource.GetDataBaseSourceByPath(argument.DatabaseFilePath);
             ToolDataBaseHelper.TryUpdateDatabase(dbContext);
             oldDbContext = DataBaseSource.GetDataBaseSourceByPath(argument.OldDatabaseFilePath);

@@ -15,7 +15,6 @@ using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using Quality.Business.Entity;
 using Quality.Business.TaskBasic;
-using YuLinTu.Component.Common;
 using YuLinTu.Data;
 using YuLinTu.Data.SQLite;
 using YuLinTu.Library.Business;
@@ -857,7 +856,7 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
             //int qzNumner = 0;
             foreach (var entity in entityList)
             {
-                ds.djbNumber += (entity.DJB == null ? 0 : entity.CBJYQZ.Count);
+                ds.djbNumber += (entity.DJB == null ? 0 : entity.DJB.Count);
                 ds.qzNumner += (entity.CBJYQZ == null ? 0 : entity.CBJYQZ.Count);
                 ds.htNumber += (entity.HT == null ? 0 : entity.HT.Count);
                 ds.cbfNumber += (entity.CBF == null ? 0 : 1);

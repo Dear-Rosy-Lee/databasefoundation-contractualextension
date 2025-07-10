@@ -22,22 +22,23 @@ namespace YuLinTu.Component.StockRightBase.Control
     public partial class StockLandPage : InfoPageBase
     {
         #region Fields
+      
+        //private List<VirtualPerson> virtualPersonList;
+        //private VirtualPersonBusiness personBusiness;
+        //private AccountLandBusiness landBusiness;
+        //private List<Dictionary> list;
+        //private TaskQueue queueGet;//获取数据
+        //private bool isLock;
+        //private Graphic pointgraphic;
+        //private string newLandNumber;//新地块编码
+        private IDbContext dbContext;//数据库
+        private Bussiness.BussinessData _bussiness;
         public const string POSITIONOUT = "3";
         public const string POSITIONCEN = "2";
         public const string POSITIONIN = "1";
         private BelongRelationUI SelectLand;
-        private List<VirtualPerson> virtualPersonList;
         private bool isAdd;
         private VirtualPerson currentPerson;
-        private VirtualPersonBusiness personBusiness;
-        private AccountLandBusiness landBusiness;
-        private List<Dictionary> list;
-        private TaskQueue queueGet;//获取数据
-        //private string newLandNumber;//新地块编码
-        private IDbContext dbContext;//数据库
-        private bool isLock;
-        private Graphic pointgraphic;
-        private Bussiness.BussinessData _bussiness;
 
         #endregion
 
@@ -90,8 +91,8 @@ namespace YuLinTu.Component.StockRightBase.Control
             InitializeComponent();
             SelectLand = new BelongRelationUI();
             dbContext = DataBaseSource.GetDataBaseSource();
-            queueGet = new TaskQueueDispatcher(Dispatcher);
-            list = new List<Dictionary>();
+            //queueGet = new TaskQueueDispatcher(Dispatcher);
+            //list = new List<Dictionary>();
             DotDataItems = new ObservableCollection<ConstructionLandDotItem>();
             if (isAdd)
             {
@@ -100,7 +101,7 @@ namespace YuLinTu.Component.StockRightBase.Control
                 //spInitialDotCoil.Visibility = Visibility.Collapsed;
             }
             this.DataContext = this;
-            pointgraphic = new Graphic();
+            //pointgraphic = new Graphic();
             //IsStockRight = false;
         }
 
