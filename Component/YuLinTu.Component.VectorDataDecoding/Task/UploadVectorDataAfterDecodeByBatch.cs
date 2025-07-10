@@ -70,6 +70,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return;
             }
             // TODO : 任务的逻辑实现
+            bool pass= ValidateArgument(args);
+            if(!pass)
+            {
+                return;
+            }
             vectorService = new VectorService();
             var files = args.ShpFilesInfo;
             int sucessCount = 0; int fileIndex = 0; int progess = 0;int pageSize = 200;
@@ -145,7 +150,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
               var key = obj.FastGetValue<string>(keyName);
               this.ReportProgress(progess,$"处理批次号{key}");
               var shape = obj.FastGetValue<Spatial.Geometry>(shapeColumn.ColumnName);
-              var upload_batch_num = obj.FastGetValue<string>("batchCode");//batchCode
+              var upload_batch_num = obj.FastGetValue<string>(Constants.BatchCodeShpFileldName);//batchCode
               if (key is null || shape is null)
                   return null;
               DecodeLandEntity jsonEn = new DecodeLandEntity();           
@@ -167,7 +172,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 }
                 else
                 {
-                    this.ReportWarn($"批次号为{batchCode}的数据处理完成！");
+                    this.ReportInfomation($"批次号为{batchCode}的数据处理完成！");
                 }
 
             });
@@ -176,6 +181,42 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             this.ReportInfomation("完成");
         }
 
+        private bool ValidateArgument(UploadVectorDataAfterDecodeByBatchArgument args)
+        {
+            //验证是否有非本地域下的地块数据
+            //验证面积是否超限
+            bool result = true;
+            double shpArea = 0.00;
+            //var ds = ProviderShapefile.CreateDataSource(args.ResultFilePath, false);
+            //var dq = new DynamicQuery(ds);
+            var mustFiled = args.DataType.GetStringValue();
+            this.ReportInfomation("开始检测矢量文件结构！");
+            foreach (var item in args.ShpFilesInfo)
+            {
+                var ds = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
+                var dq = new DynamicQuery(ds);
+                var tableName = Path.GetFileNameWithoutExtension(item.FileName);
+                var cloums = dq.GetElementProperties(null, tableName).Select(t => t.ColumnName).ToArray();
+                if (!cloums.Contains(mustFiled))
+                {
+                    this.ReportError($"矢量数据中未包含必需的字段 {mustFiled} ,文件路径：{item.FullPath}");
+                    result = false;
+                    continue;
+                }
+                if (!cloums.Contains(Constants.BatchCodeShpFileldName))
+                {
+                    this.ReportError($"矢量数据中未包含必需的字段  {Constants.BatchCodeShpFileldName} ,文件路径：{item.FullPath}");
+                    result = false;
+                    continue;
+                }
+            }
+            this.ReportInfomation("开始检测矢量文件结构和数据检查通过！");
+            this.ReportProgress(10);
+
+            this.ReportProgress(20);
+
+            return result;
+        }
         #endregion
 
         #endregion

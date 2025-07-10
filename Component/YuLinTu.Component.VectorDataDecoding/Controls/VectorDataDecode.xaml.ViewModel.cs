@@ -564,8 +564,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanCommandCancelVectorDataToSever(object args)
         {
-            //if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
-            //if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
+
             if (SelectedItem == null || SelectedItem.DataStaus != "1") return false;
             return true;
         }
@@ -583,12 +582,38 @@ namespace YuLinTu.Component.VectorDataDecoding
             };
             dlg.ConfirmStart += (ss, aa) =>
             {
-                vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
-                OnRefresh(args);
+               //var staus= vectorService.GetBatchStatusByCode(SelectedItem.BatchCode);
+               // if(staus== BatchsStausCode.已送审)
+               // {
+               //     vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
+               //     OnRefresh(args);
+               // }
+               // else
+               // {
+
+               // }
+        
             }; ;
             dlg.Confirm += (ss, aa) =>
             {
-
+                var staus = vectorService.GetBatchStatusByCode(SelectedItem.BatchCode);
+                if (staus == BatchsStausCode.已送审)
+                {
+                    vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
+                    OnRefresh(args);
+                }
+                else
+                {
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var dg = (ss as MessageDialog);
+                        dg.Message = $"当前批次状态为 '{staus.GetStringValue()}' ,无法取消！";
+                        dg.MessageGrade = eMessageGrade.Error;
+                    });
+                                      
+                    aa.Parameter = false;
+                }
+                
             };
             dlg.ConfirmCompleted += (s, a) =>
             {
