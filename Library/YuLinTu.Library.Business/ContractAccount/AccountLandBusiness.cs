@@ -5389,11 +5389,11 @@ namespace YuLinTu.Library.Business
         /// <returns></returns>
         public List<ContractLand> GetStockRightLand(Zone currentZone)
         {
-            var landStocks = GetLandCollection(currentZone.FullCode).Where(o => o.IsStockLand).ToList();//鑾峰彇纭偂鍦板潡
+            var landStocks = GetLandCollection(currentZone.FullCode).Where(o => o.IsStockLand).ToList();
             if (landStocks == null || landStocks.Count == 0)
                 return new List<ContractLand>();
-            var landStockAreaAll = landStocks.Sum(o => o.ActualArea).ToString("N2");
-            landStocks.ForEach(o => o.Comment = "共有宗地总面积" + landStockAreaAll);
+            //var landStockAreaAll = landStocks.Sum(o => o.ActualArea).ToString("N2");
+            //landStocks.ForEach(o => o.Comment = "共有宗地总面积" + landStockAreaAll);
             return landStocks;
         }
 

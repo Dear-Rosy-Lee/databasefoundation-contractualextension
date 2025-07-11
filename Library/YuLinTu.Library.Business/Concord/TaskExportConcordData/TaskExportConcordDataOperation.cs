@@ -295,7 +295,7 @@ namespace YuLinTu.Library.Business
                 if (landStocks != null && landStocks.Count != 0)
                 {
                     landStockAreaAll = landStocks.Sum(o => o.ActualArea).ToString("N2");
-                    landStocks.ForEach(o => o.Comment = "共有宗地总面积" + landStockAreaAll);
+                    //landStocks.ForEach(o => o.Comment = "共有宗地总面积" + landStockAreaAll);
                 }
                 foreach (var concord in listConcord)
                 {
