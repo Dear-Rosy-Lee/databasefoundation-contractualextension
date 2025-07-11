@@ -142,13 +142,13 @@ namespace YuLinTu.Component.VectorDataDecoding
                     using (JsonDocument doc = JsonDocument.Parse(responseBody))
                     {
                         JsonElement root = doc.RootElement;
-                        JsonElement data = new JsonElement();
-                        var res = root.TryGetProperty("data", out data);
+                        JsonElement data = root.GetProperty("data");  //new JsonElement();
+                        //var res = root.GetProperty("data"); //root.TryGetProperty("data", out data);
 
                         //var msg = root.TryGetProperty("message", out data);
 
                         sucess = true;
-                       return res.ToString();
+                       return data.ToString();
                
                     }
                 }

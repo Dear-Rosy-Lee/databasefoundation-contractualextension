@@ -27,9 +27,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
            string tableName,
            string keyName,
            ConditionSection where,
-           Action<List<TTarget>,int> save,
-           Func<int, int, object, TTarget> convert,
-           int pageSize = BATCH_COUNT)
+           Action<List<TTarget>,int, bool > save,
+           Func<int, int, object,bool, TTarget> convert,
+           int pageSize = BATCH_COUNT,bool breakTag=false)
         {
             var index = 0;
             //ConditionSection where = whereExpression.IsNullOrEmpty()
@@ -52,8 +52,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
                 foreach (var item in result)
                 {
                     index++;
-
-                    var en = convert(index, count, item);
+                    if(breakTag)
+                    {
+                        break ;
+                    }
+                    var en = convert(index, count, item, breakTag);
 
                     if (en == null)
                     {
@@ -65,8 +68,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Repository
 
                 if (list.Count > 0)
                 {
-                    save?.Invoke(list, count);
+                    save?.Invoke(list, count, breakTag);
                     list.Clear();
+                }
+                if (breakTag)
+                {
+                    break;
                 }
             }
         }

@@ -53,7 +53,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                 b.ValidatesOnExceptions = true;
                 b.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
                 var designer = new FileBrowserTextBox();
-                designer.Filter = "文档文件(*.pdf; *.doc; *.docx) | *.pdf; *.doc; *.docx | 图片文件(*.jpg; *.png)| *.jpg; *.png";
+                designer.Filter = "文档文件(*.pdf;*.docx) | *.pdf;*.DOCX;| 图片文件(*.jpg; *.png)| *.jpg;*.png";
                 designer.Multiselect = false;
                 designer.Watermask = defaultValue.Watermask;
                 designer.SetBinding(TextBox.TextProperty, b);
@@ -309,4 +309,74 @@ namespace YuLinTu.Component.VectorDataDecoding
             return defaultValue;
         }
     }
+
+    public class PropertyDescriptorBuilderComboBoxEnum : PropertyDescriptorBuilder
+    {
+        public ObservableKeyValueList<object, string> Items { get; private set; }
+
+        public PropertyDescriptorBuilderComboBoxEnum()
+        {
+        }
+
+        public override PropertyDescriptor Build(PropertyDescriptor defaultValue)
+        {
+            defaultValue.Designer.Dispatcher.Invoke(() =>
+            {
+                var type = defaultValue.Object.GetType();
+                var pi = type.GetProperty(defaultValue.Name);
+                var enumType = pi.PropertyType;
+                //var filterMethod = pi.GetAttribute<EnumFilterAttribute>()?.FilterMethod;
+
+                Items = new ObservableKeyValueList<object, string>();
+                var fields = enumType.GetFields();
+                foreach (var field in fields)
+                {
+                    if (!field.FieldType.IsEnum)
+                        continue;
+
+                    var enumValue = field.GetValue(null);
+
+                    //if (filterMethod != null && !((bool)type.GetMethod(filterMethod)
+                    //    .Invoke(defaultValue.Object, new object[] { enumValue })))
+                    //    continue;
+
+                    Items[enumValue] =EnumNameAttribute.GetDescription(enumValue);
+                }
+
+                var cb = new MetroComboBox
+                {
+                    Padding = new Thickness(6, 4, 6, 5),
+                    BorderThickness = new Thickness(1),
+                    SelectedValuePath = "Key",
+                    DisplayMemberPath = "Value",
+                    ItemsSource = Items,
+                    SelectedIndex = -1
+                };
+                cb.Style = (Style)cb.FindResource("Metro_ComboBox_Style");
+
+                var b1 = new Binding("Value")
+                {
+                    Source = defaultValue,
+                    ValidatesOnExceptions = true,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                var pda = pi.GetAttribute<PropertyDescriptorAttribute>();
+                if (pda != null && pda.Converter != null)
+                {
+                    b1.Converter = Activator.CreateInstance(pda.Converter) as IValueConverter;
+                    b1.ConverterParameter = new PropertyGridConverterParameterPair(defaultValue.PropertyGrid, pda.ConverterParameter);
+                }
+
+                cb.SetBinding(MetroComboBox.SelectedValueProperty, b1);
+
+                defaultValue.Designer = cb;
+                defaultValue.BindingExpression = cb.GetBindingExpression(ClearableComboBox.SelectedValueProperty);
+            });
+
+            return defaultValue;
+        }
+    }
+
+ 
 }

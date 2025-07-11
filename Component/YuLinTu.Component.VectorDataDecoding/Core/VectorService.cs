@@ -65,6 +65,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
                 model.DataStaus = e.process_status;
                 model.PropertyMetadata = e.metadata_json;
+                model.BatchDescrption = e.remarks;
                  var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
                 if(child != null&& child.Count > 0)
                 {
@@ -77,6 +78,42 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return result;
         }
 
+        public ObservableCollection<VectorDecodeBatchModel> QueryBatchTaskPage(string zoneCode, int page = 1, int pageSize = 2000, string FilterKey = "")
+        {
+            apiCaller.client = new HttpClient();
+            ObservableCollection<VectorDecodeBatchModel> result = new ObservableCollection<VectorDecodeBatchModel>();
+            string url = Constants.baseUrl + Constants.Methold_QueryVectorDecTask;
+            Dictionary<string, object> body = new Dictionary<string, object>();
+            body.Add("page", page);
+            body.Add("pageSize", pageSize);
+            body.Add("dybm", zoneCode);
+            body.Add("filterKey", FilterKey);
+            var en = apiCaller.PostResultListAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
+            en.ForEach(e =>
+            {
+                var model = new VectorDecodeBatchModel();
+                model.BatchName = e.upload_batch_name;
+                model.BatchCode = e.upload_batch_num;
+                model.ZoneCode = e.dybm;
+                model.NumbersOfDownloads = e.download_num;
+                model.UplaodTime = e.updtime;
+                model.DataCount = e.data_num;// e.data_count;//
+                model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
+                //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
+                model.DataStaus = e.process_status;
+                model.PropertyMetadata = e.metadata_json;
+                model.BatchDescrption = e.remarks;
+                var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
+                if (child != null && child.Count > 0)
+                {
+                    model.Children = child;
+                }
+
+                result.Add(model);
+            });
+            apiCaller.client.Dispose();
+            return result;
+        }
         public List<SpaceLandEntity>DownLoadVectorDataPrimevalData(string zoneCode,int pageIndex,int pageSize)
         {
             apiCaller.client = new HttpClient();
@@ -260,7 +297,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return message;
         }
 
-        public string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list,  string batchCode, bool isCover,out bool sucess)
+        public string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list,  string batchCode, UploadDataModel model, out bool sucess)
         {
             apiCaller.client = new HttpClient();
             string url = baseUrl + Constants.Methold_upload;
@@ -268,7 +305,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             Dictionary<string, object> body = new Dictionary<string, object>();
             body.Add("upload_batch_num", batchCode);
 
-            body.Add("dataOperation", isCover ? "2" : "1");
+            body.Add("dataOperation", model.GetStringValue());
             body.Add("data", list);
             var options = new JsonSerializerOptions
             {
@@ -587,6 +624,69 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             return zones;
         }
 
+        public int GetBatchsCountByZoneCode(string zoneCode, ClientEum clientType)
+        {
+            apiCaller.client = new HttpClient();
+            List<ProveFileEn> landJsonEntites = new List<ProveFileEn>();
+            string url = Constants.baseUrl + Constants.Methold_BatchCount;
+
+            string type=string.Empty;
+            switch (clientType)
+            {
+                case ClientEum.UploadRowDataClient:
+                    type = "";
+                    break;
+                case ClientEum.UploaDeclassifyDataClient:
+                    type = "1";
+                    break;
+                default:
+                    break;
+            }
+            Dictionary<string, string> body = new Dictionary<string, string>();         
+            body.Add("type", type);
+            body.Add("dybm", zoneCode);
+
+            var result = apiCaller.PostDataAsync(url,  AppHeaders, JsonSerializer.Serialize(body), out bool sucess);
+            int count = 0;
+            if (sucess)
+                try { count = int.Parse(result); }
+                catch (Exception ex) { 
+
+                }
+
+            return count;
+        }
+
+        public BatchsStausCode GetBatchStatusByCode(string batchCode)
+        {
+             var   url = Constants.baseUrl + Constants.Methold_BatchStaus;
+            ApiCaller apiCaller = new ApiCaller();
+            apiCaller.client = new HttpClient();
+            Dictionary<string, string> parms = new Dictionary<string, string>();     
+            parms.Add("upload_batch_num", batchCode);
+            BatchsStausCode result= BatchsStausCode.未送审;
+            var en = apiCaller.GetResultMessageStringAsync(url, AppHeaders, parms,out bool sucess);
+            if (sucess)
+            {
+                int.TryParse(en, out int type);
+                result=(BatchsStausCode)type;
+            }
+
+            return result;
+        }
+
+        public string UpdateDownLoadNumByBatchCodes(List<string> batchCodes, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+            string url = Constants.baseUrl + Constants.Methold_UpdateDownLoadNumByBatchCodes;
+            Dictionary<string, List<string>> body = new Dictionary<string, List<string>>();
+            body.Add("uploadBatchNums", batchCodes);
+          
+            var jsonData = JsonSerializer.Serialize(body);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            en = GetReposneMessage(sucess, en);
+            return en;
+        }
     }
 }
 

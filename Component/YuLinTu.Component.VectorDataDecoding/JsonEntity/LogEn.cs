@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
@@ -21,7 +22,9 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
         public string description { get; set; }
         public string owner { get; set; }
 
-        
+        [JsonIgnore]
+        public eMessageGrade Grade { get; set; } = eMessageGrade.Infomation;
+
     }
 }
 

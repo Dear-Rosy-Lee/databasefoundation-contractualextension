@@ -93,14 +93,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
            
                 var shapeColumn = properties.Find(t => t.ColumnType == eDataType.Geometry);
                 int dataCount = 0;
-                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list, count) =>
+                ShapeFileRepostiory.PagingTrans<DecodeLandEntity>(dqSource, schemaName, shpName, keyName, null, (list, count, breakTag) =>
                 {
                     dataCount += list.Count;
                     progess = (100 * (fileIndex - 1)) / fileCount + dataCount * 100 / (fileCount * count);
-                    if (progess >= 54)
-                    {
-                        int jj = 0;jj++;
-                    }
+                  
                     
                     this.ReportProgress(progess);
                     var nums = list.Select(t => t.upload_batch_num).Distinct().ToList();
@@ -141,7 +138,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     }
                     batchCodesStaus.Clear();
                 },
-          (i, count, obj) =>
+          (i, count, obj, breakTag) =>
           {
             
         

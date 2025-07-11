@@ -42,6 +42,7 @@ namespace YuLinTu.Component.VectorDataDecoding
             var cmp = Serializer.DeserializeFromXmlFile<WinComponent>(fileName);
             if (cmp.Name.Contains(Constants.clientName))
             {
+                Constants.ClientType = ClientEum.UploaDeclassifyDataClient;
                 return;
             }
             Workpage.Page.ShowMessageBox(new TabMessageBoxDialog

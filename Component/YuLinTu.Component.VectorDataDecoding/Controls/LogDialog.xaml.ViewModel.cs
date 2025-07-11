@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using YuLinTu;
 using YuLinTu.Appwork;
+using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 using YuLinTu.Data;
 using YuLinTu.Windows;
@@ -37,6 +39,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
         }
         private LogEn _SelectedItem;
 
+        public string BatchCode { get; set; }
+
 
 
         #endregion
@@ -44,6 +48,13 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
         #region Properties - System
 
         public IDialogOwner DialogOwner { get; private set; }
+
+        public bool IsBusy
+        {
+            get { return IsBusy; }
+            set { _IsBusy = value; NotifyPropertyChanged(() => IsBusy); }
+        }
+        private bool _IsBusy=true;
 
         #endregion
 
@@ -54,6 +65,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
         #region Commands - Loaded
 
         public DelegateCommand CommandLoaded { get { return _CommandLoaded ?? (_CommandLoaded = new DelegateCommand(obj => OnLoaded(obj))); } }
+
+
+
         private DelegateCommand _CommandLoaded;
 
         #endregion
@@ -64,7 +78,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
 
         public LogDialogViewModel(IDialogOwner owner)
         {
+           
+
             DialogOwner = owner;
+          
         }
 
         #endregion
@@ -80,6 +97,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
 
         public void OnInitializeCompleted()
         {
+            Items =new VectorService().QueryLogsByBatchCode(BatchCode);
+        
         }
 
         public void OnInitializeTerminated(Exception ex)
@@ -88,6 +107,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
 
         public void OnInitializeStarted()
         {
+           
         }
 
         public void OnInitializeEnded()

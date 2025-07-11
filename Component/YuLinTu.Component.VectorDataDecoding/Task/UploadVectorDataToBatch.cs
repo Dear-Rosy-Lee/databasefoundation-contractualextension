@@ -1,6 +1,7 @@
 ﻿using DotSpatial.Projections;
 using GeoAPI.Geometries;
 using Microsoft.Scripting.Actions;
+using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Asn1.X509.Qualified;
 using System;
 using System.Collections;
@@ -10,6 +11,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Documents;
+using System.Windows.Interop;
 using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
@@ -20,6 +23,7 @@ using YuLinTu.Data.Shapefile;
 using YuLinTu.DF;
 using YuLinTu.DF.Tasks;
 using YuLinTu.Security;
+using YuLinTu.Spatial;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
@@ -57,31 +61,124 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError("参数不能为空");
                 return;
             }
+            bool result= ValidateArgument(args);
+            if (!result)
+            {
+                return;
+            }
             vectorService = new VectorService();
             var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
             // TODO : 任务的逻辑实现
             //var ShapeFilePath = args.ShapeFilePath;
             var ShapeFilePath = string.Empty;int index = 0;
+            //先根据批次号查询状态，未送审才能继续上传  需增加接口
+            BatchsStausCode batchsStaus = vectorService.GetBatchStatusByCode(args.BatchCode);
+            if (batchsStaus != BatchsStausCode.未送审)
+            {
+                this.ReportError($"批次：{args.BatchCode}{args.BatchName} 当前不是 【未送审】 状态！");
+                return;
+            }
             foreach (var item in args.ShpFilesInfo)
             {
                 index++;
                 string msg=  UploadVectorData(args, item.FullPath, clientID, index,out bool sucess);
                 if(!sucess)
                 {
-                    this.ReportWarn(msg);
+                    this.ReportError(msg);
+                    if (args.UploadModel == UploadDataModel.追加上传)
+                    {
+                        vectorService.UpLoadBatchDataNum(args.BatchCode);
+                        return;
+                    }
                 }
                 else
                 {
                     this.ReportInfomation(msg);
                 }
             }
-          
 
+            string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
+            this.ReportInfomation(info);
             this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
         }
 
-        private string UploadVectorData(UploadVectorDataToBatchArgument args,string ShapeFilePath, string clientID,int fileIndex,out bool scuess)
+        private bool ValidateArgument(UploadVectorDataToBatchArgument args)
+        {
+            //验证是否有非本地域下的地块数据
+            //验证面积是否超限
+            bool result =true;
+            double shpArea = 0.00;
+            //var ds = ProviderShapefile.CreateDataSource(args.ResultFilePath, false);
+            //var dq = new DynamicQuery(ds);
+            var mustFiled = args.DataType.GetStringValue();
+            this.ReportInfomation("开始检测矢量文件结构和数据范围！");
+            foreach (var item in args.ShpFilesInfo)
+            {
+                var ds = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
+                var dq = new DynamicQuery(ds);
+                var tableName = Path.GetFileNameWithoutExtension(item.FileName);
+                var cloums = dq.GetElementProperties(null, tableName).Select(t=>t.ColumnName).ToArray();
+                if(!cloums.Contains(mustFiled))
+                {
+                    this.ReportError($"矢量数据中为包含必需的字段 {mustFiled} ,文件路径：{item.FullPath}");
+                    result = false;
+                    continue;
+                }
+                var dataOut = dq.Any(null, tableName, QuerySection.Column(mustFiled).SubString(QuerySection.Parameter(0), QuerySection.Parameter(args.ZoneCode.Length)).NotEqual(QuerySection.Parameter(args.ZoneCode)));
+                if (dataOut)
+                {
+                    result = false;
+                    this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
+                }
+            }
+            this.ReportInfomation("开始检测矢量文件结构和数据检查通过！");
+            this.ReportProgress(10);
+            foreach (var item in args.ShpFilesInfo)
+            {
+                 bool breakTag=false;
+                var ds = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
+                var dq = new DynamicQuery(ds);
+                var tableName = Path.GetFileNameWithoutExtension(item.FileName);
+                dq.ForEach(null, tableName, (i, cnt, obj) =>
+                {                    
+                              
+                    YuLinTu.Spatial.Geometry geo = obj.GetPropertyValue<YuLinTu.Spatial.Geometry>("Shape");
+                    //geo.Project(4490);//注意坐标系文件有问题时此处计算面积会出问题，后期需要处理
+                    var shpAreaTpem= geo.Area();
+                    if (shpAreaTpem < 0)
+                    {
+
+                    }
+                    else
+                    {
+                        shpArea = shpArea+shpAreaTpem;
+                        Console.WriteLine(shpArea.ToString());
+                    }
+         
+                    if (shpArea>Constants.SpitialDataAreaLimint)
+                    {
+                        this.ReportError($"检测到图斑总面积超过25平方千米！请分批加载数据！");
+                        breakTag = true;
+                        return false;
+                    }
+
+                    return true;
+                } ,QuerySection.Property("Shape", "Shape"));
+
+                if (breakTag)   
+                {
+                    result = false;
+                    break;
+                }
+               
+            }
+            this.ReportProgress(20);
+
+            return result;
+        }
+
+        private string UploadVectorData(UploadVectorDataToBatchArgument args,string ShapeFilePath, string clientID,int fileIndex,out bool scuess, bool isBreak=false)
         {
             scuess = false;
             string message = string.Empty;
@@ -99,24 +196,31 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             ProjectionInfo dreproject = ProjectionInfo.FromEsriString(Constants.DefualtPrj); //$"{keyName}.StartsWith({args.ZoneCode})"
             var where = QuerySection.Column(keyName).StartsWith(QuerySection.Parameter(args.ZoneCode));
             int dataCount = 0;
-            ShapeFileRepostiory.PagingTrans<LandJsonEn>(dqSource, schemaName, shpName, keyName, where, (list, count) =>
+            ShapeFileRepostiory.PagingTrans<LandJsonEn>(dqSource, schemaName, shpName, keyName, where, (list, count, breakTag) =>
             {
-               var progess = (100 * (fileIndex-1) )/ fileCount+  dataCount*100/(fileCount* count);
+               var progess =20+ (80 * (fileIndex-1) )/ fileCount+  dataCount*80/(fileCount* count);
                 this.ReportProgress(progess);
                 dataCount += list.Count;
-                var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.IsCover, out bool sucess);
+                var msg = vectorService.UpLoadVectorDataPrimevalToSever(list, args.BatchCode, args.UploadModel, out bool sucess);
                 if (!sucess)
                 {
                     this.ReportError(msg);
+                    if(args.UploadModel == UploadDataModel.追加上传)
+                    {
+
+                        breakTag=true;
+                        isBreak= true;
+                    }
+                    
                 }
                 else
                 {
                     //成功的提示信息
                 }
             },
-            (i, count, obj) =>
+            (i, count, obj, breakTag) =>
             {
-                this.ReportProgress(fileCount);
+                
                 var key = obj.FastGetValue<string>(keyName);
                 var shape = obj.FastGetValue<Spatial.Geometry>(shapeColumn.ColumnName);
                 if (key is null || shape is null)
@@ -141,9 +245,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 jsonEn.metadata_json = Serializer.SerializeToJsonString(metadataS);//metadataS; //
                 return jsonEn;
             });
+
+            if(isBreak)
+            {
+                scuess = false;
+                return "追加模式下发现重复数据中断！";
+            }
             scuess = true;
-            string info = vectorService.UpLoadBatchDataNum(args.BatchCode);
-            this.ReportInfomation(info);
+            
             message = $"上传文件{shpName}中{dataCount}条数据";
             WriteLog(args, clientID, shpName, ShapeFilePath, dataCount);
             return message;

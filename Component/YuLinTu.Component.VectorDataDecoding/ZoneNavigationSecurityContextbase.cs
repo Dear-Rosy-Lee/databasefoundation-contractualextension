@@ -16,13 +16,13 @@ using System.Linq;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
-    [Workpage(typeof(VectorDataDecodePage))]
-    public class VectorDataDecodePageNavigation : ZoneNavigationContextbase
+  
+    public class ZoneNavigationSecurityContextbase<T> : ZoneNavigationContextbase where T: PageFrame
     {
         #region Properties
 
-        public new VectorDataDecodePage PageContent
-        { get { return base.PageContent as VectorDataDecodePage; } }
+        public new T PageContent
+        { get { return base.PageContent as T; } }
 
         private IVectorService vectorService { get;set; }
         public override bool IsConnectDB { get => base.IsConnectDB; set => base.IsConnectDB = false; }
@@ -34,7 +34,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         #region Ctor
 
-        public VectorDataDecodePageNavigation(IWorkpage workpage)
+        public ZoneNavigationSecurityContextbase(IWorkpage workpage)
             : base(workpage)
         {
             IsConnectDB = false;

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
+using YuLinTu.DF;
+using YuLinTu.Web;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
@@ -27,7 +29,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次名称", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次名称", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
 
         public string BatchName
         {
@@ -44,7 +46,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("批次编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理批次号", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBox),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
 
         public string BatchCode
         {
@@ -61,7 +63,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayLanguage("地域编码", IsLanguageName = false)]
         [DescriptionLanguage("待处理矢量数据所在地域编码", IsLanguageName = false)]
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderReadOnlyTextBoxCustom),
-         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/globe.png")]
 
         public string ZoneCode
         {
@@ -79,8 +81,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [DisplayName("数据类型")]
         [DescriptionLanguage("待处理数据类型", IsLanguageName = false)]
         [PropertyDescriptor(
-           Builder = typeof(PropertyDescriptorBuilderEnum),
-           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/folder-horizontal-open.png")]
+           Builder = typeof(PropertyDescriptorBuilderComboBoxEnum),//typeof(PropertyDescriptorBuilderEnum),
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/odata.png")]
         public DataTypeEum DataType
         {
             get => _DataType;
@@ -168,36 +170,51 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         private string _DataCount;
         #endregion
 
-        [DisplayName("是否覆盖")]
-        [DescriptionLanguage("选择是否覆盖上传", IsLanguageName = false)]
-        public bool IsCover
+        //[DisplayName("是否覆盖")]
+        //[DescriptionLanguage("选择是否覆盖上传", IsLanguageName = false)]
+        //public bool IsCover
+        //{
+        //    get { return _IsCover; }
+        //    set
+        //    {
+        //        _IsCover = value;
+        //        NotifyPropertyChanged("IsCover");
+        //    }
+        //}
+        //public bool _IsCover = true;
+
+        [DisplayName("加载模式")]
+        [DescriptionLanguage("选择追加或覆盖模式", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderComboBoxEnum),
+           UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/clipboard.png")]
+        public UploadDataModel UploadModel
         {
-            get { return _IsCover; }
+            get { return _UploadModel; }
             set
             {
-                _IsCover = value;
-                NotifyPropertyChanged("IsCover");
+                _UploadModel = value;
+                NotifyPropertyChanged("UploadModel");
             }
         }
-        public bool _IsCover = true;
-        [DisplayLanguage("初检信息", IsLanguageName = false)]
-        [DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBox),
-            UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
-        [WatermaskLanguage("对数据进行初步检查并提示")]
-        public string CheckInfo
-        {
-            get { return checkInfo; }
-            set
-            {
-                checkInfo = value;
-                NotifyPropertyChanged("CheckInfo");
-            }
-        }
+        public UploadDataModel _UploadModel= UploadDataModel.追加上传;
+        //[DisplayLanguage("初检信息", IsLanguageName = false)]
+        //[DescriptionLanguage("对数据进行初步检查并提示", IsLanguageName = false)]
+        //[PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderMultiLineReadOnlyTextBox),
+        //    UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/office/2013/16/shapeconverttofreeform.png")]
+        //[WatermaskLanguage("对数据进行初步检查并提示")]
+        //public string CheckInfo
+        //{
+        //    get { return checkInfo; }
+        //    set
+        //    {
+        //        checkInfo = value;
+        //        NotifyPropertyChanged("CheckInfo");
+        //    }
+        //}
 
 
 
-     
+
         [Enabled(false)]
         public bool ConfirmEnabled
         {
@@ -218,7 +235,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         public UploadVectorDataToBatchArgument()
         {
         }
-
+        [Enabled(false)]
+        public int ShpFileCount { get; set; }
         #endregion
 
         #region 单个文件上传检查
@@ -235,20 +253,24 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         //    LandCount = count;  //单个文件上传
         //} 
         #endregion
+
+
+
         private async System.Threading.Tasks.Task CheckShpFile(string resultFilePathP)
         {
             await System.Threading.Tasks.Task.Run(() =>
             {
                 var shps = ShpFolderDescription.GetFilesByExtensionLegacy(resultFilePathP);
 
-                int fileCount = 0; int dataCount = 0;
+                 ShpFileCount = 0; int dataCount = 0;
+                //fileCount = shps.Count();
                 ShpFilesInfo = new List<ShpFileDescription>();
                 foreach (var shp in shps)
                 {
                     var shpInfo = ShpFolderDescription.GetShpFileDescription(shp);
-                    fileCount++; dataCount += shpInfo.DataCount;
-                    DataCount = string.Format("共{0}个矢量文件个数,{1}个地块", fileCount, dataCount);
-                    CheckInfo = CheckInfo + shp.ReplaceFirst(ResultFilePath, ".") + "  地块数量：" + shpInfo.DataCount + "  " + shpInfo.Description + "\n";
+                    ShpFileCount++; dataCount += shpInfo.DataCount;
+                    DataCount = string.Format("共{0}个矢量文件个数,{1}个图斑", ShpFileCount, dataCount);
+                    //CheckInfo = CheckInfo + shp.ReplaceFirst(ResultFilePath, ".") + "  地块数量：" + shpInfo.DataCount + "  " + shpInfo.Description + "\n";
                     ShpFilesInfo.Add(shpInfo);
                 }
                 ConfirmEnabled = true;

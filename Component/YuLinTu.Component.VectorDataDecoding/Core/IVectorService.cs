@@ -12,6 +12,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
     internal interface IVectorService
     {
         ObservableCollection<VectorDecodeBatchModel> QueryBatchTask(string zoneCode, int page = 1, int pageSize = 200,string BatchType="all");
+        ObservableCollection<VectorDecodeBatchModel> QueryBatchTaskPage(string zoneCode, int page = 1, int pageSize = 200, string FilterKey="");
         List<SpaceLandEntity> DownLoadVectorDataPrimevalData(string zoneCode, int pageIndex, int pageSize);
         List<SpaceLandEntity> DownLoadVectorDataAfterDecodelData(string zoneCode, int pageIndex, int pageSize, string batchCode);
         string UpLoadVectorDataAfterDecodeToSever(List<SpaceLandEntity> Data, out bool isSucess);
@@ -44,7 +45,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         /// </summary>
         /// <param name="batchCode"></param>
         string DeletBatchTask(string batchCode);
-        string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode,  bool isCover, out bool sucess1);
+        //string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode,  bool isCover, out bool sucess1);
+        string UpLoadVectorDataPrimevalToSever(List<LandJsonEn> list, string batchCode, UploadDataModel model, out bool sucess1);
         string UpLoadVectorMeata(string batchCode, List<PropertyMetadata> properties);
         string ChangeBatchDataStatus(string batchCode,out bool sucess1);
         string UpLoadBatchDataNum(string batchCode);
@@ -63,5 +65,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         List<ProveFileEn> DownLoadProveFile(string zoneCode, int pageIndex = 1, int pageSize = 200);
 
         List<ZoneJsonEn> GetChildrenByZoneCode(string zoneCode);
+        int GetBatchsCountByZoneCode(string zoneCode, ClientEum clientType);
+        BatchsStausCode GetBatchStatusByCode(string batchCode);
+        /// <summary>
+        /// 更新已完成处理数据批次的下载次数
+        /// </summary>
+        /// <param name="batchCodes">批次号列表</param>
+        /// <param name="sucess"></param>
+        /// <returns></returns>
+        string UpdateDownLoadNumByBatchCodes(List<string> batchCodes, out bool sucess);
     }
 }

@@ -133,7 +133,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                             //更新下载次数
 
                         }
-                        pageIndex++;
+                    string msg = vectorService.UpdateDownLoadNumByBatchCodes(batchCodes, out bool sucess);
+                    if (!sucess)
+                    {
+                        this.ReportError(msg);
+                    }
+                    pageIndex++;
 
 
 

@@ -24,9 +24,9 @@ namespace YuLinTu.Component.VectorDataDecoding
         public string DecodeProgress { get; set; }
         public string DecodeStaus { get; set; }
         public string DataStaus { get; set; }
-        public int NumbersOfDownloads { get; set; }
+        public int? NumbersOfDownloads { get; set; }
         public string SupportingMaterials { get; set; }
-
+        public string BatchDescrption { get; set; }
         public string PropertyMetadata { get; set; }
         public System.Collections.ObjectModel.ObservableCollection<VectorDecodeMode> Children { get; set; }
         #endregion

@@ -20,10 +20,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
             VectorService = vectorService;
            // vectorService= new VectorService();
         }
+        public string FilterKey {  get;set;}
+      
 
         public int Count()
-        {
-            return 2;//需修改为调用接口获取
+        {if(CurrentZone==null)return 0;
+            return VectorService.GetBatchsCountByZoneCode(CurrentZone.FullCode, ClientEum.UploadRowDataClient);
         }
 
         public PropertyMetadata[] GetAttributeProperties()
@@ -45,7 +47,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Controls
 
         public List<object> Paging(int pageIndex, int pageSize, string orderPropertyName, eOrder order)
         {if(CurrentZone==null)return null;
-          return VectorService.QueryBatchTask(CurrentZone.FullCode, pageIndex, pageSize).Cast<object>().ToList();   
+          return VectorService.QueryBatchTaskPage(CurrentZone.FullCode, pageIndex, pageSize, FilterKey).Cast<object>().ToList();   
         }
     }
 }

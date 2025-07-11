@@ -12,7 +12,7 @@ using YuLinTu.Security;
 namespace YuLinTu.Component.VectorDataDecoding.Task
 {
     [TaskDescriptor(TypeArgument = typeof(CreateVectorDecBatchTaskArgument),
-        Name = "创建矢量数据脱密任务", Gallery = @"Gallery1\Gallery2",
+        Name = "创建图斑匹配批次", Gallery = @"Gallery1\Gallery2",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/store.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/store.png")]
     public class CreateVectorDecBatchTask : YuLinTu.Task
@@ -31,8 +31,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public CreateVectorDecBatchTask()
         {
-            Name = "创建矢量数据脱密任务";
-            Description = "选择乡镇地域后创建矢量数据处理任务";
+            Name = "创建创建图斑匹配批次";
+            Description = "选择乡镇地域后创建创建图斑匹配批次";
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
             body.Add("client_id", Constants.client_id);
             body.Add("upload_batch_name", args.BatchName);
-            //body.Add("remarks", "测试");
+            body.Add("remarks", args.Descrpition);
             //var jsonData = JsonSerializer.Serialize(body);
             var en = apiCaller.PostResultAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             if(en!=null)
