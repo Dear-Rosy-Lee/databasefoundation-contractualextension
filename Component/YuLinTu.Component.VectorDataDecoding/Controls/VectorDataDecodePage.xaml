@@ -190,20 +190,6 @@
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
-                             
-                                <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByBatch}">
-                                    <MenuItem.Icon>
-                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileBackupDatabase.png"></ylt:AutoGrayImage>
-                                    </MenuItem.Icon>
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock FontWeight="Bold"
-                                                       Text="按批次下载"></TextBlock>
-                                            <TextBlock Margin="0,2,0,0"
-                                                       Text="按所选批次下载矢量数据"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
                             </ContextMenu>
                         </ylt:SuperButton.DropDownMenu>
                     </ylt:SuperButton>

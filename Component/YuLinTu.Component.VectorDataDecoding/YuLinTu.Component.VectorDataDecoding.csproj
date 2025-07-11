@@ -291,10 +291,6 @@
       <DependentUpon>DownLoadProveFiles.cs</DependentUpon>
     </Compile>
     <Compile Include="Task\DownLoadProveFiles.cs" />
-    <Compile Include="Task\DownLoadVectorDataAfterDecode.Argument.cs">
-      <DependentUpon>DownLoadVectorDataAfterDecodeByZone.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Task\DownLoadVectorDataAfterDecodeByZone.cs" />
     <Compile Include="Task\DownLoadVectorDataAfterDoded.Argument.cs">
       <DependentUpon>DownLoadVectorDataAfterDoded.cs</DependentUpon>
     </Compile>

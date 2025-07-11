@@ -44,6 +44,153 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         #region Methods - Override
 
+        #region 按地域代码生成一个矢量文件
+
+        //protected override void OnGo()
+        //{
+        //    this.ReportProgress(0, "任务开始执行");
+        //    this.ReportInfomation("任务开始执行");
+
+        //    var args = Argument as DownLoadVectorDataAfterDodedArgument;
+        //    if (args == null)
+        //    {
+        //        this.ReportError("参数不能为空");
+        //        return;
+        //    }
+        //    base.OnGo();
+        //    // TODO : 任务的逻辑实现
+        //    int pageIndex = 1; int pageSize = 200;
+        //    var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
+        //    DestinationFileName = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}_{args.ZoneName}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
+        //    GeometryType = eGeometryType.Polygon;
+        //    spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
+
+        //    try
+        //    {
+
+        //        int cnt = 0;
+        //        if (System.IO.File.Exists(DestinationFileName))
+        //        {
+
+        //            var files = Directory.GetFiles(
+        //                Path.GetDirectoryName(DestinationFileName),
+        //                string.Format("{0}.*", Path.GetFileNameWithoutExtension(DestinationFileName)));
+
+        //            files.ToList().ForEach(c => File.Delete(c));
+        //        }
+
+
+        //        YuLinTu.IO.PathHelper.CreateDirectory(DestinationFileName);
+        //        var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();
+        //        if (batchs.Count == 0)
+        //        {
+        //            this.ReportWarn($"{args.ZoneCode}{args.ZoneName}下未找到已处理完成的批次！");
+
+        //            return;
+        //        }
+
+        //        using (ShapeFile file = new ShapeFile())
+        //        {
+        //            var result = file.Create(DestinationFileName, GetWkbGeometryType(GeometryType));
+        //            if (!result.IsNullOrBlank())
+        //                throw new YltException(result);
+
+
+        //            if (propertyMetadata == null || propertyMetadata.Count() == 0)
+        //            {
+        //                propertyMetadata = JsonSerializer.Deserialize<PropertyMetadata[]>(batchs[0].PropertyMetadata);// batchs[0].mes
+        //            }
+        //            var cols = propertyMetadata;
+
+        //            var dic = CreateFields(file, cols);
+
+        //            var converter = new DotNetTypeConverter();
+        //            var row = 0;
+        //            var writer = new WKBWriter();
+        //            while (true)
+        //            {
+        //                if (pageIndex >= 1)
+        //                {
+        //                    batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();//查询已处理完成的批次号,接口需要修改
+        //                };
+        //                if (batchs.Count == 0) break;
+
+        //                var batchCodes = batchs.Select(t => t.BatchCode).ToList();
+
+        //                foreach (var batchCode in batchCodes)
+        //                {
+        //                    int dataCount = 0;
+        //                    int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
+        //                    while (true)
+        //                    {
+        //                        List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(batchCode, pageIndexOneBatchData, pageSizeOneBatchData);
+        //                        if (data.Count == 0)
+        //                        {
+
+        //                            break;
+        //                        }
+
+        //                        data.ForEach(obj =>
+        //                        {
+        //                            if (obj.Geometry == null)
+        //                                return;
+        //                            row = CreateFeature(row, file, obj, dic, converter);
+        //                            dataCount++;
+        //                            file.WriteWKB(row - 1, writer.Write(obj.Geometry.Instance));
+        //                        });
+        //                        pageIndexOneBatchData++;
+        //                    }
+
+        //                    WriteLog(args.ZoneCode, clientID, batchCode, dataCount);
+        //                    //更新下载次数
+        //                    //vectorService.UpdateDownLoadNum(batchCode);
+        //                }
+        //                pageIndex++;
+        //                string msg = vectorService.UpdateDownLoadNumByBatchCodes(batchCodes, out bool sucess);
+        //                if (!sucess)
+        //                {
+        //                    this.ReportError(msg);
+        //                }
+
+        //            };
+
+
+        //            writer = null;
+        //            var info = spatialReference.ToEsriString();
+        //            if (!info.IsNullOrBlank())
+        //            {
+        //                File.WriteAllText(Path.ChangeExtension(DestinationFileName, "prj"), info);
+        //            }
+
+        //            //写下载日志
+        //            //更新批次任务为处理中
+
+
+        //        }
+
+        //        if (args.AutoComprass)
+        //        {
+        //            //文件处理为压缩包
+        //        }
+
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        this.ReportError(ex.Message);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        this.ReportError(ex.Message);
+        //    }
+
+
+        //    this.ReportProgress(100, "完成");
+        //    this.ReportInfomation("完成");
+        //} 
+        #endregion
+        #region 在一个地域下按一个批次生成一个矢量文件
         protected override void OnGo()
         {
             this.ReportProgress(0, "任务开始执行");
@@ -56,12 +203,52 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 return;
             }
             base.OnGo();
-            // TODO : 任务的逻辑实现
-            int pageIndex = 1; int pageSize = 200;
-            var clientID = Constants.client_id; //new Authenticate().GetApplicationKey();
-            DestinationFileName = Path.Combine(args.ResultFilePath, $"{args.ZoneCode}_{args.ZoneName}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
+
+            spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
+            Dictionary<string, string> batchCodesDic = new Dictionary<string, string>();
+            int pageSizeB = 200; int pageIndexB = 1;
+            while (true)
+            {
+                var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndexB, pageSizeB, ((int)BatchsStausCode.处理完成).ToString()).ToList();
+                if (batchs.Count == 0) break;
+                if (propertyMetadata == null || propertyMetadata.Count() == 0)
+                {
+                    propertyMetadata = JsonSerializer.Deserialize<PropertyMetadata[]>(batchs[0].PropertyMetadata);// batchs[0].mes
+                }
+                batchs.ForEach(t =>
+                {
+                    batchCodesDic.Add(t.BatchCode, t.BatchName);
+                });
+                pageIndexB++;
+            }
+            this.ReportProgress(20);
             GeometryType = eGeometryType.Polygon;
             spatialReference = new SpatialReference(Constants.DefualtSrid, Constants.DefualtPrj);
+            int index = 0;
+            foreach ( var batch in batchCodesDic)
+            {
+                index++;
+
+              var shpFileName = Path.Combine(args.ResultFilePath, $"{batch.Key}_{batch.Value}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
+              string msg=  DownLoadFileByBatchCode(shpFileName, args.ZoneCode, args.ZoneName, batch.Key,out bool sucess);
+                if(!sucess)
+                {
+                    this.ReportError(msg);
+                }
+                else
+                {
+                    this.ReportInfomation(msg);
+                }
+                this.ReportProgress(20+index *80 / batchCodesDic.Count);
+            }
+        }
+        #endregion
+        #endregion
+
+        private string DownLoadFileByBatchCode(string DestinationFileName, string ZoneCode, string zoneName, string BatchCode, out bool sucesss)
+        {
+            sucesss = false;
+            string message = string.Empty;
 
             try
             {
@@ -79,14 +266,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
 
                 YuLinTu.IO.PathHelper.CreateDirectory(DestinationFileName);
-                var batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();
-                if (batchs.Count == 0) 
-                {
-                    this.ReportWarn($"{args.ZoneCode}{args.ZoneName}下未找到已处理完成的批次！");
-                   
-                    return; 
-                }
-                
+
+               
                 using (ShapeFile file = new ShapeFile())
                 {
                     var result = file.Create(DestinationFileName, GetWkbGeometryType(GeometryType));
@@ -94,63 +275,39 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         throw new YltException(result);
 
                     
-                    if (propertyMetadata == null || propertyMetadata.Count() == 0)
-                    {
-                        propertyMetadata = JsonSerializer.Deserialize<PropertyMetadata[]>(batchs[0].PropertyMetadata);// batchs[0].mes
-                    }
                     var cols = propertyMetadata;
 
-                    var dic = CreateFields(file, cols);
+                    var dic = CreateFields(file, cols, true);
 
                     var converter = new DotNetTypeConverter();
                     var row = 0;
                     var writer = new WKBWriter();
-                    while (true)
-                    {
-                        if (pageIndex >= 1) {
-                            batchs = vectorService.QueryBatchTask(args.ZoneCode, pageIndex, pageSize, ((int)BatchsStausCode.处理完成).ToString()).ToList();//查询已处理完成的批次号,接口需要修改
-                        };
-                        if (batchs.Count == 0) break;
 
-                        var batchCodes = batchs.Select(t => t.BatchCode).ToList();
-                        
-                        foreach (var batchCode in batchCodes)
+
+                   
+                   
+                    
+                        int dataCount = 0;
+                        int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
+                        while (true)
                         {
-                            int dataCount = 0;
-                            int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
-                            while (true)
+                            List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(BatchCode, pageIndexOneBatchData, pageSizeOneBatchData);
+                            if (data.Count == 0)
                             {
-                                List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(batchCode, pageIndexOneBatchData, pageSizeOneBatchData);
-                                if (data.Count == 0)
-                                {
 
-                                    break;
-                                }
-
-                                data.ForEach(obj =>
-                                {
-                                    if (obj.Geometry == null)
-                                        return;
-                                    row = CreateFeature(row, file, obj, dic, converter);
-                                    dataCount++;
-                                    file.WriteWKB(row - 1, writer.Write(obj.Geometry.Instance));
-                                });
-                                pageIndexOneBatchData++;
+                                break;
                             }
 
-                            WriteLog(args.ZoneCode, clientID, batchCode, dataCount);
-                            //更新下载次数
-                            //vectorService.UpdateDownLoadNum(batchCode);
+                            data.ForEach(obj =>
+                            {
+                                if (obj.Geometry == null)
+                                    return;
+                                row = CreateFeature(row, file, obj, dic, converter);
+                                dataCount++;
+                                file.WriteWKB(row - 1, writer.Write(obj.Geometry.Instance));
+                            });
+                            pageIndexOneBatchData++;
                         }
-                        pageIndex++;
-                        string msg=  vectorService.UpdateDownLoadNumByBatchCodes(batchCodes,out bool sucess);
-                        if(!sucess)
-                        {
-                            this.ReportError(msg);
-                        }
-
-                    };
-
 
                     writer = null;
                     var info = spatialReference.ToEsriString();
@@ -162,32 +319,27 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     //写下载日志
                     //更新批次任务为处理中
 
-
+                    WriteLog(ZoneCode, Constants.client_id, BatchCode, dataCount);
                 }
 
-                if (args.AutoComprass)
-                {
-                    //文件处理为压缩包
-                }
+                sucesss = true;
+                message = $"成功导出{ZoneCode}{zoneName}下批次号为{BatchCode}的矢量数据：{DestinationFileName}";
+                return message;
 
             }
             catch (ArgumentException ex)
             {
                 this.ReportError(ex.Message);
-
+                return message;
             }
             catch (Exception ex)
             {
 
                 this.ReportError(ex.Message);
+                return message;
             }
-
-
-            this.ReportProgress(100, "完成");
-            this.ReportInfomation("完成");
         }
 
-        #endregion
         private void WriteLog(string ZoneCode,string clientID, string batchCode, int dataCount)
         {
             LogEn log = new LogEn();

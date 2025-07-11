@@ -84,9 +84,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
             else
             {
-                this.ReportProgress(100, "完成");
+                this.ReportInfomation($"上传{args.ZoneName}({args.ZoneCode}) 证明文件成功！");
             }
-           
+            this.ReportProgress(100, "完成");
             this.ReportInfomation("完成");
         }
 
