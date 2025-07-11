@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Scripting.Utils;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using System;
@@ -88,6 +89,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             body.Add("pageSize", pageSize);
             body.Add("dybm", zoneCode);
             body.Add("filterKey", FilterKey);
+            body.Add("ClientEum", Constants.ClientType.GetStringValue());
+          
             var en = apiCaller.PostResultListAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             en.ForEach(e =>
             {
@@ -103,15 +106,15 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.DataStaus = e.process_status;
                 model.PropertyMetadata = e.metadata_json;
                 model.BatchDescrption = e.remarks;
-                var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
-                if (child != null && child.Count > 0)
-                {
-                    model.Children = child;
-                }
+                //var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
+                //if (child != null && child.Count > 0)
+                //{
+                //    model.Children = child;
+                //}
 
                 result.Add(model);
             });
-            apiCaller.client.Dispose();
+            apiCaller.client.Dispose();           
             return result;
         }
         public List<SpaceLandEntity>DownLoadVectorDataPrimevalData(string zoneCode,int pageIndex,int pageSize)

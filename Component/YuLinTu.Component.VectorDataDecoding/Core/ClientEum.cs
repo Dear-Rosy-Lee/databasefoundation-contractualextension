@@ -10,8 +10,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 {
     public enum ClientEum
     {
+        [StringValue("0")]
         UploadRowDataClient = 0,
-        UploaDeclassifyDataClient=1
+        [StringValue("1")]
+        UploaDeclassifyDataClient =1
 
     }
 

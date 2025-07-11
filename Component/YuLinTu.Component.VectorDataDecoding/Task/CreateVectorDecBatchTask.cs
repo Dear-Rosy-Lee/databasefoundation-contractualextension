@@ -31,7 +31,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public CreateVectorDecBatchTask()
         {
-            Name = "创建创建图斑匹配批次";
+            Name = "创建图斑匹配批次";
             Description = "选择乡镇地域后创建创建图斑匹配批次";
         }
 
