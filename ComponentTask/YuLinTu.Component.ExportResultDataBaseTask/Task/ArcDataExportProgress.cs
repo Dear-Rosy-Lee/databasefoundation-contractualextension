@@ -795,7 +795,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 var info = dataProgress.ExportDataFile(collection, "", 1);
                 //var info = dataProgress.ExportDataFile(entityCollection, county.Name, county.FullCode, 0, county.FullCode + county.Name,
                 //    summery, CBDKXXAwareAreaExportSet, sqllandList);
-                this.ReportAlert(eMessageGrade.Infomation, null, $"导出{zone.FullName}下数据:{info}");
+                this.ReportAlert(eMessageGrade.Infomation, null, $"成功导出{zone.FullName}({zone.FullCode})下数据:{info}");
             }
             catch (Exception ex)
             {
@@ -1091,6 +1091,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                         var land = allLandCollection.Find(t => t.LandNumber == item);
                         if (land != null)
                         {
+
+                            if (land.LandCategory == ((int)(eLandCategoryType.ContractLand)).ToString())
+                            {
+                                this.ReportError($"地块编码为:{land.LandNumber}的地块的地块类别不能是 承包地!");
+                            }
                             var dkex = InitalizeSpaceLandData(land);
                             var sldk = dkex.ConvertTo<SqliteDK>();
                             sldk.Shape = dkex.Shape as YuLinTu.Spatial.Geometry;
@@ -1122,6 +1127,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             bool canExport = true;//是否可以导出
             foreach (VirtualPerson vp in familyCollection)
             {
+                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
                 if (vp.Name.Contains("集体") || vp.Name.Contains("机动地"))
                 {
                     continue;
@@ -1137,7 +1143,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     if (!ContractorProgress(vp))
                         canExport = false;
                 }
-                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
+
                 foreach (var land in lands)
                 {
                     if (CanChecker)
