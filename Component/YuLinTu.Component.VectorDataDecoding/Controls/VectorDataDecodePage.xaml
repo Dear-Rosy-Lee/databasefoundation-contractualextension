@@ -42,6 +42,14 @@
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/添加文件32.png"
                                            Text="创建批次" />
                     </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandEditVectorDecBatchTask}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/edititem.png"
+                                           Text="编辑批次" />
+                    </ylt:MetroButton>
                     <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
@@ -283,6 +291,7 @@
                                  AutoGenerateColumns="False"
                                  CanUserAddRows="False"
                                  CanUserSortColumns="True"
+                               
                                  HeadersVisibility="Column"
                                  BorderThickness="0"
                                  IsReadOnly="True"
@@ -326,7 +335,7 @@
                                     
                                         <TextBlock 
                                                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                               Text="{Binding BatchName}"></TextBlock>
+                                                               Text="{Binding BatchName}" ToolTip="{Binding BatchName}"></TextBlock>
                                    
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -453,7 +462,7 @@
 
                                     <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                               Text="{Binding BatchDescrption}"></TextBlock>
+                                                               Text="{Binding BatchDescrption}" ToolTip="{Binding BatchDescrption}"></TextBlock>
 
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

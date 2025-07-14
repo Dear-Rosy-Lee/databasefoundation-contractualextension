@@ -690,6 +690,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             en = GetReposneMessage(sucess, en);
             return en;
         }
+
+        public string UpdateBatchInfoByBatchCode(string batchCode, string BatchName, string Descrpition, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+        
+            string url = Constants.baseUrl + Constants.Methold_UpdateBatchInfoByBatchCode;
+            Dictionary<string, string> body = new Dictionary<string, string>();
+            body.Add("upload_batch_num", batchCode);
+            body.Add("upload_batch_name", BatchName);
+            body.Add("remarks", Descrpition);
+
+            var jsonData = JsonSerializer.Serialize(body);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            en = GetReposneMessage(sucess, en);
+            return en;
+        }
     }
 }
 
