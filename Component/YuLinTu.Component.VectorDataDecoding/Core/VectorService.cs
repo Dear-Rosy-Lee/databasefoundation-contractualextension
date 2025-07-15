@@ -634,21 +634,21 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             string url = Constants.baseUrl + Constants.Methold_BatchCount;
 
             string type=string.Empty;
-            switch (clientType)
-            {
-                case ClientEum.UploadRowDataClient:
-                    type = "";
-                    break;
-                case ClientEum.UploaDeclassifyDataClient:
-                    type = "1";
-                    break;
-                default:
-                    break;
-            }
+            //switch (clientType)
+            //{
+            //    case ClientEum.UploadRowDataClient:
+            //        type = "";
+            //        break;
+            //    case ClientEum.UploaDeclassifyDataClient:
+            //        type = "1";
+            //        break;
+            //    default:
+            //        break;
+            //}
             Dictionary<string, string> body = new Dictionary<string, string>();         
             body.Add("type", type);
             body.Add("dybm", zoneCode);
-
+            body.Add("ClientEum", Constants.ClientType.GetStringValue());
             var result = apiCaller.PostDataAsync(url,  AppHeaders, JsonSerializer.Serialize(body), out bool sucess);
             int count = 0;
             if (sucess)
