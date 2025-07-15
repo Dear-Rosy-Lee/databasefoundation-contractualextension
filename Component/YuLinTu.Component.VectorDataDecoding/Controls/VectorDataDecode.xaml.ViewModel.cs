@@ -226,13 +226,14 @@ namespace YuLinTu.Component.VectorDataDecoding
         {
             var cp = c.Value as CommandParameterEx;
             var filtkey = (cp.Sender as MetroTextBox).Text?.Trim();
-            var dg = cp.Parameter as PagableDataGrid;
+         //   var dg = cp.Parameter as PagableDataGrid;
             //var ds= dg.DataSource as DataPagerProviderVectorDecode;
             //ds.FilterKey = key;
             //dg.DataSource = ds;
-            (dg.DataSource as DataPagerProviderVectorDecode).FilterKey = filtkey;
+            (DataSource as DataPagerProviderVectorDecode).FilterKey = filtkey;
             (DataSource as DataPagerProviderVectorDecode).CurrentZone = CurrentZone;
-            if (dg != null && CurrentZone != null) dg.Refresh();
+            OnRefresh(null);
+            //if (dg != null && CurrentZone != null) dg.Refresh();
         }
 
         #endregion
