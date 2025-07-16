@@ -355,7 +355,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="送审时间"
+                        <DataGridTemplateColumn Header="创建时间"
                                             Width="160"
                                             SortDirection="Ascending"
                                             SortMemberPath="UplaodTime"

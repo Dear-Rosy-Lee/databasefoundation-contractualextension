@@ -10,7 +10,10 @@ namespace YuLinTu.Component.VectorDataDecoding.JsonEntity
     public class LogEn
     {
         public string user_name { get; set; }
-        public DateTime create_time { get; set; }
+        [JsonIgnore]
+        public DateTime CreateTime { get; set; }
+
+        public string create_time { get; set; }
         public string scope { get; set; }
 
         public string user_id { get; set; }

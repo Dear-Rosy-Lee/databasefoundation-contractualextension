@@ -60,7 +60,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.BatchCode = e.upload_batch_num;
                 model.ZoneCode = e.dybm;
                 model.NumbersOfDownloads = e.download_num;
-                model.UplaodTime = e.updtime;
+                model.UplaodTime = e.cretime;//e.updtime;
                 model.DataCount =e.data_num;// e.data_count;//
                 model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
@@ -99,7 +99,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.BatchCode = e.upload_batch_num;
                 model.ZoneCode = e.dybm;
                 model.NumbersOfDownloads = e.download_num;
-                model.UplaodTime = e.updtime;
+                model.UplaodTime = e.cretime;//e.updtime;
                 model.DataCount = e.data_num;// e.data_count;//
                 model.DecodeStaus = e.is_desensitized == "1" ? "是" : "否";
                 //model.DecodeProgress = e.process_status == "1" ? "已送审" : "未送审";
@@ -580,7 +580,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             body.Add("owner", batchCode);
             var jsonData = JsonSerializer.Serialize(body);
             var result = apiCaller.PostResultListAsync<LogEn>(url, AppHeaders, jsonData);
-           
+            result.ForEach(t =>
+            {
+                t.CreateTime =DateTime.Parse(t.create_time);
+            });
             return result.ToObservableCollection<LogEn>();
         }
 
