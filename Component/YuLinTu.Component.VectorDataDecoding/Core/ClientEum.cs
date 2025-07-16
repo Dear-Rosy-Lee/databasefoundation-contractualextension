@@ -10,19 +10,27 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 {
     public enum ClientEum
     {
+        [StringValue("0")]
         UploadRowDataClient = 0,
-        UploaDeclassifyDataClient=1
+        [StringValue("1")]
+        UploaDeclassifyDataClient =1
 
     }
 
     internal enum BatchsStausCode
     {
-         未送审=0,
-         已送审=1,
-         待处理=2,
-         处理中 = 3,
-         处理完成 = 4,
-         处理失败 = 5,
+        [StringValue("未送审")]
+        未送审 =0,
+        [StringValue("已送审")]
+        已送审 =1,
+        [StringValue("待处理")]
+        待处理 =2,
+        [StringValue("处理中")]
+        处理中 = 3,
+        [StringValue("处理完成")]
+        处理完成 = 4,
+        [StringValue("处理失败")]
+        处理失败 = 5,
     }
 
     public enum UploadDataModel

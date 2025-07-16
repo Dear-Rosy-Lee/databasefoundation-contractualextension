@@ -237,7 +237,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             if (addBatchCodeFiled)
             {
                 PropertyMetadata batchCodeFiled = new PropertyMetadata();
-                batchCodeFiled.ColumnName = "batchCode";
+                batchCodeFiled.ColumnName =Constants.BatchCodeShpFileldName;
                 batchCodeFiled.ColumnType = eDataType.String;
                 batchCodeFiled.AliasName = "批次号";
                 file.AddField(batchCodeFiled.ColumnName, GetType(batchCodeFiled), GetLength(batchCodeFiled), GetPrecision(batchCodeFiled));

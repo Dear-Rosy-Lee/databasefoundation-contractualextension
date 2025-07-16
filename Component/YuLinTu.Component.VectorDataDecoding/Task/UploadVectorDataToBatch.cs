@@ -121,18 +121,19 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 var cloums = dq.GetElementProperties(null, tableName).Select(t=>t.ColumnName).ToArray();
                 if(!cloums.Contains(mustFiled))
                 {
-                    this.ReportError($"矢量数据中为包含必需的字段 {mustFiled} ,文件路径：{item.FullPath}");
+                    this.ReportError($"矢量数据中未包含必需的字段 {mustFiled} ,文件路径：{item.FullPath}");
                     result = false;
                     continue;
                 }
-                var dataOut = dq.Any(null, tableName, QuerySection.Column(mustFiled).SubString(QuerySection.Parameter(0), QuerySection.Parameter(args.ZoneCode.Length)).NotEqual(QuerySection.Parameter(args.ZoneCode)));
-                if (dataOut)
-                {
-                    result = false;
-                    this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
-                }
+                //dq.w
+                //var dataOut = dq.Any(null, tableName,  QuerySection.Column(mustFiled).StartsWith(QuerySection.Parameter(args.ZoneCode)));
+                //if (dataOut)
+                //{
+                //    result = false;
+                //    this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
+                //}
             }
-            this.ReportInfomation("开始检测矢量文件结构和数据检查通过！");
+            this.ReportInfomation("矢量文件结构检查通过！");
             this.ReportProgress(10);
             foreach (var item in args.ShpFilesInfo)
             {
@@ -144,6 +145,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 {                    
                               
                     YuLinTu.Spatial.Geometry geo = obj.GetPropertyValue<YuLinTu.Spatial.Geometry>("Shape");
+                    var mustFiledVaule= obj.GetPropertyValue<string>(mustFiled);
+                    if(mustFiledVaule?.Length< args.ZoneCode.Length||!mustFiledVaule.StartsWith(args.ZoneCode))
+                    {
+                        this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
+                        breakTag = true;
+                        return false;
+                    }
+
                     //geo.Project(4490);//注意坐标系文件有问题时此处计算面积会出问题，后期需要处理
                     var shpAreaTpem= geo.Area();
                     if (shpAreaTpem < 0)
@@ -164,7 +173,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     }
 
                     return true;
-                } ,QuerySection.Property("Shape", "Shape"));
+                } ,QuerySection.Property("Shape", "Shape"), QuerySection.Property(mustFiled, mustFiled));
 
                 if (breakTag)   
                 {

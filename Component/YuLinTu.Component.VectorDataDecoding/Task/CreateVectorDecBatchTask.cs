@@ -31,7 +31,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
         public CreateVectorDecBatchTask()
         {
-            Name = "创建创建图斑匹配批次";
+            Name = "创建图斑匹配批次";
             Description = "选择乡镇地域后创建创建图斑匹配批次";
         }
 
@@ -54,7 +54,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
             if (args.ZoneCode.Length < 9)
             {
-                this.ReportError("无法创建矢量数据脱密任务！请选择乡镇或村级地域后创建任务。");
+                this.ReportError("无法创建矢量数据脱密任务！请选择乡镇级地域后创建任务。");
                 return;
             }
             AppHeaders = new Dictionary<string, string>();//应该是登录以后通过appID获取key??

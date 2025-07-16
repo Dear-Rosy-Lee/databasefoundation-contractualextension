@@ -42,6 +42,14 @@
                                            Image="pack://application:,,,/YuLinTu.Resources;component/images/32/添加文件32.png"
                                            Text="创建批次" />
                     </ylt:MetroButton>
+                    <ylt:MetroButton Padding="4,2,4,2"
+                                     VerticalContentAlignment="Stretch"
+                                     IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
+                                     Command="{Binding CommandEditVectorDecBatchTask}">
+                        <ylt:ImageTextItem ImagePosition="Top"
+                                           Image="pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/edititem.png"
+                                           Text="编辑批次" />
+                    </ylt:MetroButton>
                     <!--<ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      IsEnabled="{Binding IsRefreshing, Converter={StaticResource NotBoolConverter}}"
@@ -163,20 +171,6 @@
                                      Content="下载矢量数据">
                         <ylt:SuperButton.DropDownMenu>
                             <ContextMenu>
-                                <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByZone}">
-                                    <MenuItem.Icon>
-                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileDocumentInspect.png"></ylt:AutoGrayImage>
-                                    </MenuItem.Icon>
-                                    <MenuItem.Header>
-                                        <StackPanel Orientation="Vertical" >
-                                            <TextBlock FontWeight="Bold"
-                                                       Text="按地域下载"></TextBlock>
-                                            <TextBlock Margin="0,2,0,0"
-                                                       Text="按所选地域下载矢量数据"></TextBlock>
-                                        </StackPanel>
-                                    </MenuItem.Header>
-                                </MenuItem>
-                                <Separator></Separator>
                                 <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByBatch}">
                                     <MenuItem.Icon>
                                         <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileBackupDatabase.png"></ylt:AutoGrayImage>
@@ -187,6 +181,20 @@
                                                        Text="按批次下载"></TextBlock>
                                             <TextBlock Margin="0,2,0,0"
                                                        Text="按所选批次下载矢量数据"></TextBlock>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <Separator></Separator>
+                                <MenuItem Command="{Binding CommandDownLoadVectorDataAfterDecodeByZone}">
+                                    <MenuItem.Icon>
+                                        <ylt:AutoGrayImage Source="pack://application:,,,/YuLinTu.Resources;component/Images/32/FileDocumentInspect.png"></ylt:AutoGrayImage>
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical" >
+                                            <TextBlock FontWeight="Bold"
+                                                       Text="按地域下载"></TextBlock>
+                                            <TextBlock Margin="0,2,0,0"
+                                                       Text="按所选地域下载矢量数据"></TextBlock>
                                         </StackPanel>
                                     </MenuItem.Header>
                                 </MenuItem>
@@ -283,6 +291,7 @@
                                  AutoGenerateColumns="False"
                                  CanUserAddRows="False"
                                  CanUserSortColumns="True"
+                               
                                  HeadersVisibility="Column"
                                  BorderThickness="0"
                                  IsReadOnly="True"
@@ -326,7 +335,7 @@
                                     
                                         <TextBlock 
                                                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                               Text="{Binding BatchName}"></TextBlock>
+                                                               Text="{Binding BatchName}" ToolTip="{Binding BatchName}"></TextBlock>
                                    
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -453,7 +462,7 @@
 
                                     <TextBlock Margin="5,0,0,0"
                                                                VerticalAlignment="Center" HorizontalAlignment="Left"
-                                                               Text="{Binding BatchDescrption}"></TextBlock>
+                                                               Text="{Binding BatchDescrption}" ToolTip="{Binding BatchDescrption}"></TextBlock>
 
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

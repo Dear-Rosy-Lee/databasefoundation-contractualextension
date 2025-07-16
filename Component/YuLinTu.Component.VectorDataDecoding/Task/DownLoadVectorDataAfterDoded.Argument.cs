@@ -66,20 +66,20 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 NotifyPropertyChanged("ResultFilePath");
             }
         }
-        [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
-        [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
-        [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
-       UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
-        public bool AutoComprass
-        {
-            get { return autoComprass; }
-            set
-            {
-                autoComprass = value;
-                NotifyPropertyChanged("AutoComprass");
-            }
-        }
-        private bool autoComprass;
+       // [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
+       // [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
+       // [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
+       //UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
+       // public bool AutoComprass
+       // {
+       //     get { return autoComprass; }
+       //     set
+       //     {
+       //         autoComprass = value;
+       //         NotifyPropertyChanged("AutoComprass");
+       //     }
+       // }
+       // private bool autoComprass;
         private string resultFilePath;
         [Enabled(false)]
         public bool ConfirmEnabled

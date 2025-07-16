@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Scripting.Utils;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using System;
@@ -88,6 +89,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             body.Add("pageSize", pageSize);
             body.Add("dybm", zoneCode);
             body.Add("filterKey", FilterKey);
+            body.Add("ClientEum", Constants.ClientType.GetStringValue());
+          
             var en = apiCaller.PostResultListAsync<BatchTaskJsonEn>(url, AppHeaders, JsonSerializer.Serialize(body));
             en.ForEach(e =>
             {
@@ -103,15 +106,15 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
                 model.DataStaus = e.process_status;
                 model.PropertyMetadata = e.metadata_json;
                 model.BatchDescrption = e.remarks;
-                var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
-                if (child != null && child.Count > 0)
-                {
-                    model.Children = child;
-                }
+                //var child = DbContext.CreateQuery<VectorDecodeMode>().Where(t => t.BatchCode.Equals(model.BatchCode)).ToObservableCollection<VectorDecodeMode>();
+                //if (child != null && child.Count > 0)
+                //{
+                //    model.Children = child;
+                //}
 
                 result.Add(model);
             });
-            apiCaller.client.Dispose();
+            apiCaller.client.Dispose();           
             return result;
         }
         public List<SpaceLandEntity>DownLoadVectorDataPrimevalData(string zoneCode,int pageIndex,int pageSize)
@@ -631,21 +634,21 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             string url = Constants.baseUrl + Constants.Methold_BatchCount;
 
             string type=string.Empty;
-            switch (clientType)
-            {
-                case ClientEum.UploadRowDataClient:
-                    type = "";
-                    break;
-                case ClientEum.UploaDeclassifyDataClient:
-                    type = "1";
-                    break;
-                default:
-                    break;
-            }
+            //switch (clientType)
+            //{
+            //    case ClientEum.UploadRowDataClient:
+            //        type = "";
+            //        break;
+            //    case ClientEum.UploaDeclassifyDataClient:
+            //        type = "1";
+            //        break;
+            //    default:
+            //        break;
+            //}
             Dictionary<string, string> body = new Dictionary<string, string>();         
             body.Add("type", type);
             body.Add("dybm", zoneCode);
-
+            body.Add("ClientEum", Constants.ClientType.GetStringValue());
             var result = apiCaller.PostDataAsync(url,  AppHeaders, JsonSerializer.Serialize(body), out bool sucess);
             int count = 0;
             if (sucess)
@@ -682,6 +685,22 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             Dictionary<string, List<string>> body = new Dictionary<string, List<string>>();
             body.Add("uploadBatchNums", batchCodes);
           
+            var jsonData = JsonSerializer.Serialize(body);
+            var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
+            en = GetReposneMessage(sucess, en);
+            return en;
+        }
+
+        public string UpdateBatchInfoByBatchCode(string batchCode, string BatchName, string Descrpition, out bool sucess)
+        {
+            apiCaller.client = new HttpClient();
+        
+            string url = Constants.baseUrl + Constants.Methold_UpdateBatchInfoByBatchCode;
+            Dictionary<string, string> body = new Dictionary<string, string>();
+            body.Add("upload_batch_num", batchCode);
+            body.Add("upload_batch_name", BatchName);
+            body.Add("remarks", Descrpition);
+
             var jsonData = JsonSerializer.Serialize(body);
             var en = apiCaller.PostDataAsync(url, AppHeaders, jsonData, out sucess);
             en = GetReposneMessage(sucess, en);

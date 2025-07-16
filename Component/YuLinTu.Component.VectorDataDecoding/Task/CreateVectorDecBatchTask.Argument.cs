@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using YuLinTu;
 using YuLinTu.DF.Enums;
 using YuLinTu.Windows.Wpf.Metro.Components;
@@ -58,6 +59,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
         [Required]
+        [RegularExpression("^(?=.{4,25}$)[^!#()+={};；,，。$&%@ \\\\/:*?\"<>|\\x00-\\x1F]+$", ErrorMessage = "名称应在4-25个字符，并且不能包含特殊字符！")]
         [WatermaskLanguage("请命名批次名称，如XXX村承包地")]
         public string BatchName
         {

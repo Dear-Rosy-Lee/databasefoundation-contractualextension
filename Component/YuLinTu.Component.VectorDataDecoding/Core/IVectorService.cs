@@ -74,5 +74,6 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         /// <param name="sucess"></param>
         /// <returns></returns>
         string UpdateDownLoadNumByBatchCodes(List<string> batchCodes, out bool sucess);
+        string UpdateBatchInfoByBatchCode(string batchCode, string BatchName, string Descrpition, out bool sucess);
     }
 }

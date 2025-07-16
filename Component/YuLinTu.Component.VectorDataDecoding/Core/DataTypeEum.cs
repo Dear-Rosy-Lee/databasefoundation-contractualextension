@@ -20,13 +20,13 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         承包地 = 01,
 
       
-        [Description("宅基地")]
-        [StringValue("ZJDDM")]
-        宅基地 = 02,
+        //[Description("宅基地")]
+        //[StringValue("ZJDDM")]
+        //宅基地 = 02,
 
-        [Description("行政地域")]
-        [StringValue("XZDYDM")]
-        行政地域 = 03
+        //[Description("行政地域")]
+        //[StringValue("XZDYDM")]
+        //行政地域 = 03
     }
 
     //[Description("是否")]

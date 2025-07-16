@@ -226,13 +226,14 @@ namespace YuLinTu.Component.VectorDataDecoding
         {
             var cp = c.Value as CommandParameterEx;
             var filtkey = (cp.Sender as MetroTextBox).Text?.Trim();
-            var dg = cp.Parameter as PagableDataGrid;
+         //   var dg = cp.Parameter as PagableDataGrid;
             //var ds= dg.DataSource as DataPagerProviderVectorDecode;
             //ds.FilterKey = key;
             //dg.DataSource = ds;
-            (dg.DataSource as DataPagerProviderVectorDecode).FilterKey = filtkey;
+            (DataSource as DataPagerProviderVectorDecode).FilterKey = filtkey;
             (DataSource as DataPagerProviderVectorDecode).CurrentZone = CurrentZone;
-            if (dg != null && CurrentZone != null) dg.Refresh();
+            OnRefresh(null);
+            //if (dg != null && CurrentZone != null) dg.Refresh();
         }
 
         #endregion
@@ -564,8 +565,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanCommandCancelVectorDataToSever(object args)
         {
-            //if (SelectedItem == null || !(SelectedItem is VectorDecodeBatchModel)) return false;
-            //if((SelectedItem as VectorDecodeBatchModel).DecodeProgress == "已送审") return false;
+
             if (SelectedItem == null || SelectedItem.DataStaus != "1") return false;
             return true;
         }
@@ -583,12 +583,39 @@ namespace YuLinTu.Component.VectorDataDecoding
             };
             dlg.ConfirmStart += (ss, aa) =>
             {
-                vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
-                OnRefresh(args);
+               //var staus= vectorService.GetBatchStatusByCode(SelectedItem.BatchCode);
+               // if(staus== BatchsStausCode.已送审)
+               // {
+               //     vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
+               //     OnRefresh(args);
+               // }
+               // else
+               // {
+
+               // }
+        
             }; ;
             dlg.Confirm += (ss, aa) =>
             {
-
+                var staus = vectorService.GetBatchStatusByCode(SelectedItem.BatchCode);
+                if (staus == BatchsStausCode.已送审)
+                {
+                    vectorService.CancleBatchDataSendStatus(SelectedItem.BatchCode, out bool sucess);
+                    OnRefresh(args);
+                }
+                else
+                {
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var dg = (ss as MessageDialog);
+                        dg.Message = $"当前批次状态为 '{staus.GetStringValue()}' ,无法取消！";
+                        dg.MessageGrade = eMessageGrade.Error;
+                      
+                    });
+                                      
+                    aa.Parameter = false;
+                }
+                
             };
             dlg.ConfirmCompleted += (s, a) =>
             {
@@ -665,7 +692,84 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         }
 
+        public DelegateCommand CommandEditVectorDecBatchTask { get { return _CommandEditVectorDecBatchTask ?? (_CommandEditVectorDecBatchTask = new DelegateCommand(args => OnEditVectorDecBatchTask(args), args => OnCanEditVectorDecBatchTask(args))); } }
+        private DelegateCommand _CommandEditVectorDecBatchTask;
 
+        private bool OnCanEditVectorDecBatchTask(object args)
+        {
+            if (SelectedItem == null || SelectedItem.DataStaus != "0") return false;
+            return true;
+        }
+
+        private void OnEditVectorDecBatchTask(object args)
+        {
+
+            var task =new  CreateVectorDecBatchTask(); //new EditVectorDecBatchTask();
+            task.Name = "编辑批次信息";
+            task.Description = "批次未送审状态可以编辑名称和描述信息";
+      
+            var arg = new CreateVectorDecBatchTaskArgument();
+            arg.ZoneCode = SelectedItem.ZoneCode;
+            arg.ZoneName = CurrentZone.FullName;
+            arg.BatchName = SelectedItem.BatchName;
+            arg.Descrpition = SelectedItem.BatchDescrption;
+            task.Argument = arg;
+      var editor = new YuLinTu.Component.VectorDataDecoding.PropertyEditorCom();
+            editor.pg.Properties["Workpage"] = Workpage;
+            editor.Header = task.Name;
+
+            var obj = arg;
+            editor.pg.Object = obj;
+            editor.pgTask.Object = task;
+            editor.pg.DataContext = obj;
+            System.Windows.Data.Binding binding = new System.Windows.Data.Binding("ConfirmEnabled")
+            {
+                Source = obj,
+                Mode = BindingMode.TwoWay,
+                //ValidatesOnExceptions = true,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+
+            editor.ConfirmButton.SetBinding(MetroButton.IsEnabledProperty, binding);
+         
+            task.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                   
+                    OnRefresh(null);
+                });
+               
+
+            });
+            Workpage.Page.ShowMessageBox(editor, (v, r) =>
+            {
+                editor.pg.Object = null;
+                editor.pgTask.Object = null;
+                if (r == eCloseReason.Confirm)
+                {
+                    var staus = vectorService.GetBatchStatusByCode(SelectedItem.BatchCode);
+                    if (staus == BatchsStausCode.未送审)
+                    {
+                        string msg = vectorService.UpdateBatchInfoByBatchCode(SelectedItem.BatchCode, arg.BatchName, arg.Descrpition, out bool sucess);
+                        OnRefresh(args);
+                    }
+                    else
+                    {
+
+                        var dg = new MessageDialog();
+                        dg.Message = $"当前批次状态为 '{staus.GetStringValue()}' ,无法修改批次信息！";
+                        dg.MessageGrade = eMessageGrade.Error;
+                        Workpage.Page.ShowMessageBox(dg);
+                        v = false;
+                    }
+                }
+                
+            });
+            //ShowCreateTaskWindow(task, arg);
+
+        }
         #region Methods - System
 
 
@@ -876,7 +980,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private bool OnCanCommandDownLoadProveFiles(object args)
         {
-            if (CurrentZone == null) return false;
+            if (CurrentZone == null || CurrentZone.Level != ZoneLevel.Town) return false;
             return true;
         }
 
