@@ -2,7 +2,7 @@
 <WinComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<Order>1102</Order>
-	<Name>矢量文件脱密</Name>
+	<Name>矢量文件脱密(测绘局)</Name>
 	<Catalog>系统插件</Catalog>
 	<ImageUri>pack://application:,,,/YuLinTu.Resources;component/images/office/2013/32/invitemyothercomputers.png</ImageUri>
 	<Version>8.2.1.0001</Version>
