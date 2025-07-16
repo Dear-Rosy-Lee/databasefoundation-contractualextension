@@ -53,7 +53,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                 b.ValidatesOnExceptions = true;
                 b.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
                 var designer = new FileBrowserTextBox();
-                designer.Filter = "文档文件(*.pdf;*.docx) | *.pdf;*.DOCX;| 图片文件(*.jpg; *.png)| *.jpg;*.png";
+                designer.Filter = "文档文件(*.pdf;) | *.pdf;| 图片文件(*.jpg; *.png)| *.jpg;*.png";
                 designer.Multiselect = false;
                 designer.Watermask = defaultValue.Watermask;
                 designer.SetBinding(TextBox.TextProperty, b);
