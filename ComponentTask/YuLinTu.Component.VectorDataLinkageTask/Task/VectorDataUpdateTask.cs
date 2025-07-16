@@ -152,6 +152,11 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                     this.ReportError("未正确获取到矢量文件的srid,请修正数据后重试！");
                     return false;
                 }
+                if (srid == 4490 || srid == 4326)
+                {
+                    this.ReportError("上传的矢量文件需要投影坐标数据,请修正数据后重试！");
+                    return false;
+                }
                 bool resut = true;
                 VectorDataProgress.LandShapeCheck(argument.CheckFilePath, srid, (msg) =>
                 {
@@ -255,7 +260,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                     }
                     DataProcessOnLine(url, murl, updataCollection, "3ca04787775f4ca682980cd58dd551d9", "3baSPLk4o0DB3AgGr4QqvGSdqr2G/SmVjTHXE196wQkGz2uxIeH9hA==");
                     this.ReportProgress(5 + (int)(p * dindex), "数据上传中...");
-                    this.ReportInfomation($"地域{zoneCode}共上传到接入系统{updataCollection.dks.Count}条数据");
+                    this.ReportInfomation($"地域{zoneCode}共上传到接入系统 {updataCollection.dks.Count} 条数据");
                 }
             }
             this.ReportInfomation($"文件{argument.CheckFilePath}共上传到接入系统{datacount}条数据");
