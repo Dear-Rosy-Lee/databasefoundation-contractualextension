@@ -193,6 +193,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             this.ReportInfomation("开始检测矢量文件结构！");
             foreach (var item in args.ShpFilesInfo)
             {
+                if (!item.IsCanAccess)
+                {
+                    this.ReportError($"{item.Description}");
+                    result = false;
+                    continue;
+                }
                 var ds = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
                 var dq = new DynamicQuery(ds);
                 var tableName = Path.GetFileNameWithoutExtension(item.FileName);
@@ -210,7 +216,11 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     continue;
                 }
             }
-            this.ReportInfomation("开始检测矢量文件结构和数据检查通过！");
+            if (!result)
+            {
+                return false;
+            }
+            this.ReportInfomation("矢量文件结构检查通过！");
             this.ReportProgress(10);
 
             this.ReportProgress(20);

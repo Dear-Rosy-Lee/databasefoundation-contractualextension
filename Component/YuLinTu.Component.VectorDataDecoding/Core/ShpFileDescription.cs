@@ -23,8 +23,14 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
             en.FileName = Path.GetFileName(FilePath);
             en.FullPath = FilePath;
             var info = CheckShpFile(en.FullPath, out bool sucess, out int? landCount);
-            en.DataCount = landCount.Value;
-            
+            if (sucess)
+            {
+                en.DataCount = landCount.Value;
+            }
+            else
+            {
+                en.IsCanAccess = false;
+            }
             en.Description = (info!=null&&info.Count>0) ?string.Join(";", info):"";
             return en;
         }
@@ -80,8 +86,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         public string DataType { get; set; }
         public bool IsDecoded { get; set; }
         public string Description { get; set; }
-       
 
+        public bool IsCanAccess { get; set; } = true;
       
     }
 }

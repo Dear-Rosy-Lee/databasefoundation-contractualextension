@@ -115,6 +115,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             this.ReportInfomation("开始检测矢量文件结构和数据范围！");
             foreach (var item in args.ShpFilesInfo)
             {
+                if(!item.IsCanAccess)
+                {
+                    this.ReportError($"{item.Description}");
+                    result = false;
+                    continue;
+                }
                 var ds = ProviderShapefile.CreateDataSourceByFileName(item.FullPath, false);
                 var dq = new DynamicQuery(ds);
                 var tableName = Path.GetFileNameWithoutExtension(item.FileName);
@@ -133,6 +139,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 //    result = false;
                 //    this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
                 //}
+            }
+            if (!result)
+            {
+                return false;
             }
             this.ReportInfomation("矢量文件结构检查通过！");
             this.ReportProgress(10);
