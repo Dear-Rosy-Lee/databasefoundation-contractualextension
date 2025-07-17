@@ -125,6 +125,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     result = false;
                     continue;
                 }
+
                 //dq.w
                 //var dataOut = dq.Any(null, tableName,  QuerySection.Column(mustFiled).StartsWith(QuerySection.Parameter(args.ZoneCode)));
                 //if (dataOut)
@@ -146,6 +147,12 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                               
                     YuLinTu.Spatial.Geometry geo = obj.GetPropertyValue<YuLinTu.Spatial.Geometry>("Shape");
                     var mustFiledVaule= obj.GetPropertyValue<string>(mustFiled);
+                    if(mustFiledVaule==null|| mustFiledVaule.Length != 19)
+                    {
+                        this.ReportError($"存在{mustFiled}为空或长度不是19位的数据 ,文件路径：{item.FullPath}");
+                        breakTag = true;
+                        return false;
+                    }
                     if(mustFiledVaule?.Length< args.ZoneCode.Length||!mustFiledVaule.StartsWith(args.ZoneCode))
                     {
                         this.ReportError($"矢量数据中为包含地域{args.ZoneCode}之外的数据 ,文件路径：{item.FullPath}");
