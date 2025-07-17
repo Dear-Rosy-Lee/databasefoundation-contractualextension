@@ -14,13 +14,13 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal static string baseUrl = ConfigurationManager.AppSettings.TryGetValue<string>("DefaultBusinessAPIAdress", "https://api.yizhangtu.com");
         internal const string appidName = "t-open-api-app-id";
 
-        internal const string appidVaule = "56f8f0f619244eacae1c3495ba803e91";
+        internal const string appidVaule = "71a3786694a74e5b90960afea9b341d2";
         internal const string moduleUniqueKey = "9A75153E-E8E3-4219-A3D3-3670CAB204E9";
 
         internal const string appKeyName = "t-open-api-app-key";
         //以下配置应登录账号后获取，目前先硬编码写死
 
-        internal const string appKeyVaule = "gPxd7u8UhffDeVEh3YxENuie5TEkfanFznnvjlKljXI/9ZUj9/fuTA==";
+        internal const string appKeyVaule = "U5+zr5Yk51PN0QbDSuLCoalA78Exjko9+z/NkhH20xF6mVG2YUpRCw==";
 
         internal const string Sm4Key = "efd4a17e7c2a89ea5a9d9a283fe03ae1";//"efd4a17e7c2a89ea";//5a9d9a283fe03ae1";
         //internal const int Sm4Key_16 = #efd4a17e7c2a89ea5a9d9a283fe03ae1;
