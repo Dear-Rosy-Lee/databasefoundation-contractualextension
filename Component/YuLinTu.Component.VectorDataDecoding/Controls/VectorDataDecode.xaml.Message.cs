@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using YuLinTu;
 using YuLinTu.Appwork;
+using YuLinTu.Component.VectorDataDecoding.Controls;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Data;
 using YuLinTu.Windows;
@@ -45,14 +46,8 @@ namespace YuLinTu.Component.VectorDataDecoding
                 Constants.ClientType = ClientEum.UploaDeclassifyDataClient;
                 return;
             }
-            Workpage.Page.ShowMessageBox(new TabMessageBoxDialog
-            {
-                Header = "责任说明",
-                Message = " 1.‌测绘资质和资格‌：使用该软件应该具备从事测绘活动必须相应的测绘资质和资格。了解测绘活动应当遵守的国家规定的的要求，执行国家规定的测绘技术规范和标准。‌\r\n\r\n‌2.保密要求‌：使用该软件处理地理信息相关数据，必须严格遵守保密规定。任何单位和个人处理地理信息数据时，应当遵守法律法规和相关保密规定，不得危害国家安全，不得泄露国家秘密‌。\r\n\r\n3.‌数据管理和使用‌：涉密测绘成果的使用和管理必须严格遵守相关规定。本软件处理数据范围不超过25平方千米‌,且未经批准成果不得对外提供。",
-                MessageGrade = eMessageGrade.Warn,
-                CancelButtonVisibility = Visibility.Collapsed,
-                ConfirmButtonVisibility = Visibility.Visible,
-            }, (wb, we) =>
+            var rsbd = new ResponsibleDialog();
+            Workpage.Page.ShowDialog(rsbd, (wb, we) =>
             {
 
             });
