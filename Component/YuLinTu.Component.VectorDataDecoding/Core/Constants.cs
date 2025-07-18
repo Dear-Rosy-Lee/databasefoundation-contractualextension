@@ -60,7 +60,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
         internal const string clientName = "测绘局";
         internal static ClientEum ClientType = ClientEum.UploadRowDataClient;
-        internal const string HelpFileName = "空间匹配工具使用说明.pdf";
+        internal const string HelpFileName = "空间数据匹配工具使用说明.pdf";
+        internal const string UploadRowDataClientHelpFileName = "空间数据匹配工具使用说明-测绘局.pdf";
         internal static string client_id { get; set; }
         internal static List<string> ZonesCodes = new List<string>();
         internal const double SpitialDataAreaLimint = 25000000;

@@ -244,7 +244,7 @@
                                            Text="查看证明材料" />
                     </ylt:MetroButton>
                 </ylt:TabControlItemRibbonContainer>
-                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}">
+                <ylt:TabControlItemRibbonContainer BorderThickness="0,0,1,0" ><!--Visibility="{Binding UploaDeclassifyDataClient,Converter={StaticResource BoolToVisibilityConverter}}"-->
                     <ylt:MetroButton Padding="4,2,4,2"
                                      VerticalContentAlignment="Stretch"
                                      Command="{Binding CommandOpenHelpChm}"

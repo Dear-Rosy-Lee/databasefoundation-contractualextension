@@ -80,7 +80,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
             if (batchCodesHash.Count == 0)
             {
-                this.ReportWarn($"{args.ZoneCode}{args.ZoneName}未查询到处于已送审和处理中状态的批次，无可下载数据！");
+                this.ReportWarn($"{args.ZoneCode}{args.ZoneName}未查询到处于已送审状态的批次，无可下载数据！");
                 return;
             }
             this.ReportProgress(20);
@@ -89,17 +89,20 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             if (args.ZoneCode.Length<=6)
             {         
                var zoneCodes = batchCodesHash.Select(t => t.Substring(0,6)).Distinct().ToList();
+                var index = 0;
                 zoneCodes.ForEach(code =>
                 {
                     var batchCodes = batchCodesHash.Where(t => t.StartsWith(code)).ToList();
-                    DownLoadFileByBatchsCode(args, code, "", batchCodes);
+                    index++;
+                    DownLoadFileByBatchsCode(args, code, "", batchCodes,false);
+                    this.ReportProgress(20 + index * 80 / zoneCodes.Count);
                 });
               
             }
             else if(args.ZoneCode.Length>6)
             {
                 // DownLoadFileByZoneCode(args, args.ZoneCode, args.ZoneName, pageSize);
-                DownLoadFileByBatchsCode(args, args.ZoneCode, args.ZoneName, batchCodesHash.ToList<string>());
+                DownLoadFileByBatchsCode(args, args.ZoneCode, args.ZoneName, batchCodesHash.ToList<string>(),true);
             }
 
           
@@ -239,10 +242,10 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportInfomation(msg);
             }
         }
-        private void DownLoadFileByBatchsCode(DownLoadVectorDataBeforeDodedArgument args, string ZoneCode, string ZoneName, List<string> BatchCodes)
+        private void DownLoadFileByBatchsCode(DownLoadVectorDataBeforeDodedArgument args, string ZoneCode, string ZoneName, List<string> BatchCodes, bool progess = false)
         {
             var shpfilePath = Path.Combine(args.ResultFilePath, $"{ZoneCode}{ZoneName}_{DateTime.Now.ToString("yyyyMMddhhmm")}.shp");
-            var msg = DownLoadFileByBatchCodes(shpfilePath, ZoneCode, ZoneName, BatchCodes, out bool scuess);
+            var msg = DownLoadFileByBatchCodes(shpfilePath, ZoneCode, ZoneName, BatchCodes, out bool scuess, progess);
             if (!scuess)
             {
                 this.ReportWarn(msg);
@@ -380,7 +383,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
         }
 
-        private string DownLoadFileByBatchCodes(string DestinationFileName, string ZoneCode, string zoneName,List<string> BatchCodes, out bool sucesss)
+        private string DownLoadFileByBatchCodes(string DestinationFileName, string ZoneCode, string zoneName,List<string> BatchCodes, out bool sucesss,bool progess)
         {
             sucesss = false;
             string message = string.Empty;
@@ -432,7 +435,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         foreach (var batchCode in BatchCodes)
                         {
                         BatchHandelCount++;
-                        this.ReportProgress(20+BatchHandelCount*80/ BatchTotalCount);
+                        if(progess) this.ReportProgress(20+BatchHandelCount*80/ BatchTotalCount);
                         int dataCount = 0;
                             int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
                             while (true)
