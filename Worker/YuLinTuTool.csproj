@@ -961,9 +961,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArcGISExplorer.ico" />
-    <Content Include="libmupdf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Config\DivisionCodeDictionary.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
