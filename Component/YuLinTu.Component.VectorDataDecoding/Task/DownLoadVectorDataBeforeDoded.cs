@@ -86,7 +86,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             this.ReportProgress(20);
             BatchTotalCount = batchCodesHash.Count;
 
-            if (args.ZoneCode.Length<=6)
+            if (args.ZoneCode.Length<6)
             {         
                var zoneCodes = batchCodesHash.Select(t => t.Substring(0,6)).Distinct().ToList();
                 var index = 0;
@@ -99,7 +99,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 });
               
             }
-            else if(args.ZoneCode.Length>6)
+            else if(args.ZoneCode.Length>=6)
             {
                 // DownLoadFileByZoneCode(args, args.ZoneCode, args.ZoneName, pageSize);
                 DownLoadFileByBatchsCode(args, args.ZoneCode, args.ZoneName, batchCodesHash.ToList<string>(),true);
@@ -435,7 +435,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         foreach (var batchCode in BatchCodes)
                         {
                         BatchHandelCount++;
-                        if(progess) this.ReportProgress(20+BatchHandelCount*80/ BatchTotalCount);
+                
                         int dataCount = 0;
                             int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
                             while (true)
@@ -460,9 +460,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                             WriteLog(ZoneCode, batchCode, dataCount);
                         //var codes = BatchCodes.Select(t => t.BatchCode).ToList();
-                        
+                        if (progess) this.ReportProgress(20 + BatchHandelCount * 80 / BatchTotalCount);
 
-                        }
+                    }
                         string msg = vectorService.UpdateBatchStaus(BatchCodes, ((int)BatchsStausCode.待处理).ToString(), out bool statusSucess);
                         if (!statusSucess)
                         {

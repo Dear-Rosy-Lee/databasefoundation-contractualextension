@@ -348,8 +348,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="HelpDocment\空间数据匹配工具使用说明-测绘局.pdf" />
     <None Include="HelpDocment\空间数据匹配工具使用说明.pdf" />
+    <None Include="HelpDocment\空间数据匹配工具使用说明-测绘局.pdf" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
