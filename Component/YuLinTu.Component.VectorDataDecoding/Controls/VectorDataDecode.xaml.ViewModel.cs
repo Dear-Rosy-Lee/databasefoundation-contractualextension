@@ -1033,8 +1033,11 @@ namespace YuLinTu.Component.VectorDataDecoding
 
         private void OnCommandOpenHelpChm(object args)
         {
-            string helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding", Constants.HelpFileName);
-
+            string helpFilePath =  Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding", Constants.HelpFileName);
+            if(Constants.ClientType== ClientEum.UploaDeclassifyDataClient)
+            {
+                helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Components", "YuLinTu.Component.VectorDataDecoding", Constants.UploadRowDataClientHelpFileName);
+            }
             //var helpFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Template\Help.chm");
             if (System.IO.File.Exists(helpFilePath))
             {
