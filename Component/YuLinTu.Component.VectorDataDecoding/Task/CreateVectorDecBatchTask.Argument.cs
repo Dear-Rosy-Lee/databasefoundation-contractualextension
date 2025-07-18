@@ -59,8 +59,9 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderTextBoxCustom),
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/objectsendbackward.png")]
         [Required]
-        [RegularExpression("^(?=.{4,25}$)[^!#()+={};；,，。$&%@ \\\\/:*?\"<>|\\x00-\\x1F]+$", ErrorMessage = "名称应在4-25个字符，并且不能包含特殊字符！")]
+        [RegularExpression("^(?=.{4,25}$)[^!#()+={};；,，。$&%@ \\\\/:*?\"<>|\\x00-\\x1F]+$", ErrorMessage = "名称应在4-25个字符，并且不能包含特殊字符！")]/*^(?=.{4,25}$)[^!#()+={};；,，。$&%@ \\\\/:*?\"<>|\\x00-\\x1F]+$*/
         [WatermaskLanguage("请命名批次名称，如XXX村承包地")]
+       
         public string BatchName
         {
             get { return _BatchName; }

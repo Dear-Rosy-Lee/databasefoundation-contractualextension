@@ -21,7 +21,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                 b.Source = defaultValue;
                 b.Mode = BindingMode.TwoWay;
                 b.ValidatesOnExceptions = true;
-                b.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+                b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 var designer = new FileBrowserTextBox();
                 designer.Filter = "文件类型(*.shp)|*.shp";
                 designer.Multiselect = false;
@@ -51,7 +51,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                 b.Source = defaultValue;
                 b.Mode = BindingMode.TwoWay;
                 b.ValidatesOnExceptions = true;
-                b.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+                b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 var designer = new FileBrowserTextBox();
                 designer.Filter = "文档文件(*.pdf;) | *.pdf;| 图片文件(*.jpg; *.png)| *.jpg;*.png";
                 designer.Multiselect = false;
@@ -81,7 +81,7 @@ namespace YuLinTu.Component.VectorDataDecoding
                     Source = defaultValue,
                     Mode = BindingMode.TwoWay,
                     ValidatesOnExceptions = true,
-                    UpdateSourceTrigger = UpdateSourceTrigger.LostFocus
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 };
 
                 FolderBrowserTextBox folderBrowserTextBox = new FolderBrowserTextBox();
@@ -130,6 +130,7 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                 var b1 = new Binding("Value");
                 b1.Source = defaultValue;
+                b1.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 cb.SetBinding(ComboBox.SelectedValueProperty, b1);
                 checkBox.SetBinding(CheckBox.IsCheckedProperty, b1);
 
@@ -159,7 +160,10 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                 Binding binding = new Binding("Value")
                 {
-                    Source = defaultValue
+                    Source = defaultValue,
+                    ValidatesOnDataErrors = true,
+                    Mode= BindingMode.TwoWay,
+                    UpdateSourceTrigger= UpdateSourceTrigger.PropertyChanged
                 };
                 MetroTextBox metroTextBox = new MetroTextBox();
                 metroTextBox.MaxLength = maxLength;
@@ -190,7 +194,8 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                 Binding binding = new Binding("Value")
                 {
-                    Source = defaultValue
+                    Source = defaultValue,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 };
                 MetroTextBox metroTextBox = new MetroTextBox();
                 metroTextBox.MaxLength = maxLength;
@@ -222,7 +227,8 @@ namespace YuLinTu.Component.VectorDataDecoding
 
                 Binding binding = new Binding("Value")
                 {
-                    Source = defaultValue
+                    Source = defaultValue,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 };
                 MetroTextBox metroTextBox = new MetroTextBox();
                 metroTextBox.AcceptsReturn = true;
