@@ -9,6 +9,8 @@ using System.Net;
 using System.Text;
 using System.Xml;
 using System.Configuration;
+using System.Diagnostics;
+using System.Linq;
 
 namespace YuLinTu.Product.YuLinTuTool
 {
@@ -94,7 +96,23 @@ namespace YuLinTu.Product.YuLinTuTool
                     if (AutoUpdater.DownloadUpdate(args))
                     {
                         Thread.Sleep(5000);
-                        System.Windows.Application.Current.Shutdown();
+
+                        try
+                        {
+                            string exeName = "ContractLandEncryptTool";
+                            var ExitPro = Process.GetProcessesByName(exeName);
+                            if (ExitPro.Count() > 0)
+                            {
+                                foreach (var process in ExitPro)
+                                {
+                                    process.Kill();
+                                }
+                            }
+                            //System.Windows.Application.Current.Shutdown();
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
                 catch (Exception ex)
