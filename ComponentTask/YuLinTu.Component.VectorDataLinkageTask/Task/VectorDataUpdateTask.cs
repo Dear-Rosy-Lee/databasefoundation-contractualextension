@@ -303,10 +303,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             string jsonData = JsonConvert.SerializeObject(data);
             try
             {
-                //var getTaskID = apiCaller.(token, $"{baseUrl}{murl}", jsonData);
-                //string postGetResult = $"{baseUrl}/ruraland/api/tasks/schedule/job";
                 var getResult = apiCaller.PostDataAsync($"{baseUrl}{murl}", jsonData, appid, appkey);
-                //var getresult = apiCaller.PostDataAsync(url, jsonData, token);
                 return getResult;// ConstructCoordsFromString(getResult);
             }
             catch (Exception ex)

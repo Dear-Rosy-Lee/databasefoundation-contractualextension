@@ -1,14 +1,5 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using YuLinTu.Appwork;
-using YuLinTu.DF.DependencyInjection;
-using YuLinTu.DF.Uow;
-using YuLinTu.DF;
+﻿using YuLinTu.Appwork;
 using YuLinTu.Windows;
-using YuLinTu.DF.Mappers;
 
 namespace YuLinTu.Component.VectorDataDecoding
 {
