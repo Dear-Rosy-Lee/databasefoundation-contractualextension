@@ -371,9 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.xml" />
-    <Content Include="libmupdf.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\数据送审.png" />
     <Resource Include="Resources\取消送审.png" />
     <Resource Include="Resources\上传材料.png" />
