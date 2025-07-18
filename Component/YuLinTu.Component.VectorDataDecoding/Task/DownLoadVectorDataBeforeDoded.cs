@@ -80,7 +80,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             }
             if (batchCodesHash.Count == 0)
             {
-                this.ReportWarn($"{args.ZoneCode}{args.ZoneName}未查询到处于已送审和处理中状态的批次，无可下载数据！");
+                this.ReportWarn($"{args.ZoneCode}{args.ZoneName}未查询到处于已送审状态的批次，无可下载数据！");
                 return;
             }
             this.ReportProgress(20);
