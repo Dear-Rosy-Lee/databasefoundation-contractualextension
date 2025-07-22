@@ -5,7 +5,7 @@
 #define MyAppVersion "1.0.0703.1"
 #define MyAppPublisher "鱼鳞图"
 #define MyAppURL "http://www.yulintu.com/"
-#define MyAppExeName "YuLinTu.DF.Desktop.LandCensus.exe"
+#define MyAppExeName "SpatitalDataEncryptTool.exe"
 
 [Setup]
 ; 注: AppId的值为单独标识该应用程序。
@@ -66,12 +66,12 @@ Result:= true;
 IsAppRunning:= IsModuleLoaded('escertd_et199.exe');
 if IsAppRunning then
     KillTask('escertd_et199.exe');
-IsAppRunning:= IsModuleLoaded('YuLinTu.DF.Desktop.LandCensus.exe');
+IsAppRunning:= IsModuleLoaded('SpatitalDataEncryptTool.exe');
 while IsAppRunning do
 begin
 if MsgBox('空间数据质检加密工具正在运行,关闭程序继续安装?', mbConfirmation, MB_OKCANCEL) = IDOK then 
  begin
-  KillTask('YuLinTu.DF.Desktop.LandCensus.exe');
+  KillTask('SpatitalDataEncryptTool.exe');
   IsAppRunning:= false;
  end
 else
@@ -98,12 +98,12 @@ Result:= true;
 IsAppRunning:= RunTaskU('escertd_et199.exe',false);
 if IsAppRunning then
     KillTaskU('escertd_et199.exe');
-IsAppRunning:= RunTaskU('YuLinTu.DF.Desktop.LandCensus.exe',false);
+IsAppRunning:= RunTaskU('SpatitalDataEncryptTool.exe',false);
 while IsAppRunning do
 begin
 if MsgBox('空间数据质检加密工具正在运行,关闭工具继续卸载?', mbConfirmation, MB_OKCANCEL) = IDOK then 
  begin
-  KillTaskU('YuLinTu.DF.Desktop.LandCensus.exe');
+  KillTaskU('SpatitalDataEncryptTool.exe');
   IsAppRunning:= false;
  end
 else
