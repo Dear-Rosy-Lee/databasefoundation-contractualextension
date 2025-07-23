@@ -22,7 +22,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName=D:\Program Files\{#MyAppName}
 DefaultGroupName={#MyAppName}
 OutputDir=D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\安装包
-OutputBaseFilename=空间数据匹配工具-{#MyAppVersion}
+OutputBaseFilename=空间数据匹配工具-测绘局端-{#MyAppVersion}
 Compression=lzma                                                                       
 SolidCompression=yes
 WizardImageBackColor=clBlue
@@ -40,7 +40,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\Workspace\SpitalDataMatchTool.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\Workspace\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\docs\Config\Config.xml"; DestDir: "{app}\Components\YuLinTu.Component.VectorDataDecoding"; Flags: ignoreversion
+Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\docs\Config\测绘局\Config.xml"; DestDir: "{app}\Components\YuLinTu.Component.VectorDataDecoding"; Flags: ignoreversion
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
 
 [Icons]
