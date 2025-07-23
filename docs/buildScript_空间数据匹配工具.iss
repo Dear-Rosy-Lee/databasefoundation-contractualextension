@@ -21,8 +21,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName=D:\Program Files\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputDir=D:\Program Files (x86)\Jenkins\jobs\图斑匹配工具\WorkSpace\安装包
-OutputBaseFilename=图斑匹配工具-{#MyAppVersion}
+OutputDir=D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\安装包
+OutputBaseFilename=空间数据匹配工具-{#MyAppVersion}
 Compression=lzma                                                                       
 SolidCompression=yes
 WizardImageBackColor=clBlue
@@ -38,8 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkablealone;
 
 [Files]
-Source: "D:\Program Files (x86)\Jenkins\jobs\图斑匹配工具\WorkSpace\Workspace\SpitalDataMatchTool.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Program Files (x86)\Jenkins\jobs\图斑匹配工具\WorkSpace\Workspace\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\Workspace\SpitalDataMatchTool.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据匹配工具\WorkSpace\Workspace\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
 
 [Icons]
