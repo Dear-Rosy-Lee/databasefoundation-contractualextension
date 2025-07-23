@@ -18,11 +18,11 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         [MessageHandler(ID = EdTask.LangInstallTaskTemplates)]
         private void OnInstallTaskTemplates(object sender, InstallTaskTemplatesEventArgs e)
         {
-            e.Templates.Add(new TaskDescriptor
-            {
-                TypeTask = typeof(VectorDataLinkageTask),
-                TypeArgument = typeof(VectorDataLinkageArgument)
-            });
+            //e.Templates.Add(new TaskDescriptor
+            //{
+            //    TypeTask = typeof(VectorDataLinkageTask),
+            //    TypeArgument = typeof(VectorDataLinkageArgument)
+            //});
         }
 
         protected override bool NeedHandleMessage()
