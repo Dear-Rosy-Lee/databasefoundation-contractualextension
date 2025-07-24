@@ -8152,7 +8152,7 @@ namespace YuLinTu.Library.Controls
                     List<VirtualPerson> persons = new List<VirtualPerson>();
                     persons = vpStation.GetByZoneCode(currentZone.FullCode);
                     List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
-                    lands = lands.Where(t => t.LandCategory != "10").ToList();
+                    lands = lands.Where(t => t.OwnerId == null).ToList();
                     var dialog = new AdjustLandPage(persons, lands, DictList);
                     TheWorkPage.Page.ShowMessageBox(dialog, (s, t) =>
                     {
