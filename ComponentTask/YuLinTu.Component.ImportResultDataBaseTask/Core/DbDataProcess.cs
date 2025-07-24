@@ -372,6 +372,17 @@ namespace YuLinTu.Component.ImportResultDataBaseTask
                 {
                     ReportWarnInfo("发包方编码为" + searchCode + "地块信息为空,请检查签订对应地域地块编码等信息是否正确");
                 }
+                var cbfbmlist = dataCollection.DKXXJH.Select(t => t.CBFBM).Distinct().ToList();
+                if (cbfbmlist.Count != cbfList.Count)
+                {
+                    foreach (var bm in cbfbmlist)
+                    {
+                        if (cbfList.Any(t => t.CBFBM == bm))
+                            continue;
+                        var cdks = dataCollection.DKXXJH.Count(t => t.CBFBM == bm);
+                        this.ReportWarnInfo($"地块信息表中地域编码为（{searchCode}）的数据中存在承包方编码{bm}但无承包方的情况，影响{cdks}个地块的入库！");
+                    }
+                }
                 foreach (var cbf in cbfList)
                 {
                     if (string.IsNullOrEmpty(cbf.CBFBM) || cbf.CBFBM.Length != QuantityValue.CBFBMLength)

@@ -795,7 +795,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 var info = dataProgress.ExportDataFile(collection, "", 1);
                 //var info = dataProgress.ExportDataFile(entityCollection, county.Name, county.FullCode, 0, county.FullCode + county.Name,
                 //    summery, CBDKXXAwareAreaExportSet, sqllandList);
-                this.ReportAlert(eMessageGrade.Infomation, null, $"导出{zone.FullName}下数据:{info}");
+                this.ReportAlert(eMessageGrade.Infomation, null, $"成功导出{zone.FullName}({zone.FullCode})下数据:{info}");
             }
             catch (Exception ex)
             {
@@ -821,11 +821,11 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                 List<VirtualPerson> familyCollection = VirtualPersonStation.GetByZoneCode(zoneCode, eLevelOption.SelfAndSubs);
                 if (familyCollection.Any(x => x.Name == "集体"))
                 {
-                    familyCollection.RemoveAt(familyCollection.Count - 1);
+                    familyCollection.RemoveAll(x => x.Name == "集体");// familyCollection.Count - 1);
                 }
                 dataBaseCollection.FamilyCollection = familyCollection;
                 dataBaseCollection.TissueCollection = senderStation.GetTissues(zoneCode, eLevelOption.SelfAndSubs);
-                //List<ContractLand> AllLandCollection = contractLandWorkStation.GetCollection(zoneCode, eLevelOption.Self);
+                //List<ContractLand> allLandCollection = contractLandWorkStation.GetCollection(zoneCode, eLevelOption.Self);
             }
             else
             {
@@ -1025,7 +1025,8 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             List<ContractConcord> concordCollection = datas.ConcordCollection.FindAll(t => t.ZoneCode == zone.FullCode);
             List<ContractRegeditBook> bookCollection = datas.BookCollection.FindAll(t => t.ZoneCode == zone.FullCode);
             List<VirtualPerson> familyCollection = datas.FamilyCollection.FindAll(t => t.ZoneCode == zone.FullCode);
-            List<ContractLand> AllLandCollection = datas.LandCollection.FindAll(t => t.SenderCode == zone.FullCode);
+            //List<ContractLand> allLandCollection = datas.LandCollection.FindAll(t => t.SenderCode == zone.FullCode);
+            var allLandCollection = datas.LandCollection.FindAll(t => t.ZoneCode == zone.FullCode);
             CollectivityTissue tissue = datas.TissueCollection.Find(t => t.Code == zone.FullCode.PadRight(14, '0'));
             if (concordCollection == null || concordCollection.Count == 0)
             {
@@ -1043,9 +1044,9 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     familyCollection.RemoveAt(familyCollection.Count - 1);
                 }
             }
-            if (AllLandCollection == null || AllLandCollection.Count == 0)
+            if (allLandCollection == null || allLandCollection.Count == 0)
             {
-                AllLandCollection = contractLandWorkStation.GetCollection(zone.FullCode, eLevelOption.Self);
+                allLandCollection = contractLandWorkStation.GetCollection(zone.FullCode, eLevelOption.Self);
             }
             if (tissue == null)
             {
@@ -1064,7 +1065,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     this.ReportError($"未找到{zone.FullName}下的编码为{zone.FullCode.PadRight(14, '0')}的发包方！");
                 return null;
             }
-            List<ContractLand> landCollection = FilterLandType(familyCollection, AllLandCollection);//根据设置筛选地块
+            List<ContractLand> landCollection = FilterLandType(familyCollection, allLandCollection);//根据设置筛选地块
             List<ContractLand> landSpaceCollection = landCollection.FindAll(l => l.Shape != null);
 
             bool showPersent = familyCollection.Count >= 100 ? false : true;
@@ -1078,7 +1079,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             {
                 entityCollection = CreateExchangeEntity(familyCollection, concordCollection,
                     landCollection, tissue, zone, bookCollection, ref hasDx, realationList, qghts);
-                var extendColl = ExtentLandCode(AllLandCollection, entityCollection);
+                var extendColl = ExtentLandCode(allLandCollection, entityCollection);
                 foreach (var item in extendColl)
                 {
                     if (!IsReportNoConcordLands)
@@ -1087,9 +1088,14 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     }
                     else
                     {
-                        var land = AllLandCollection.Find(t => t.LandNumber == item);
+                        var land = allLandCollection.Find(t => t.LandNumber == item);
                         if (land != null)
                         {
+
+                            if (land.LandCategory == ((int)(eLandCategoryType.ContractLand)).ToString())
+                            {
+                                this.ReportError($"地块编码为:{land.LandNumber}的地块的地块类别不能是 承包地!");
+                            }
                             var dkex = InitalizeSpaceLandData(land);
                             var sldk = dkex.ConvertTo<SqliteDK>();
                             sldk.Shape = dkex.Shape as YuLinTu.Spatial.Geometry;
@@ -1121,6 +1127,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             bool canExport = true;//是否可以导出
             foreach (VirtualPerson vp in familyCollection)
             {
+                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
                 if (vp.Name.Contains("集体") || vp.Name.Contains("机动地"))
                 {
                     continue;
@@ -1136,7 +1143,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
                     if (!ContractorProgress(vp))
                         canExport = false;
                 }
-                string description = string.Format("{0}下承包方:{1}", zoneName, vp.Name);
+
                 foreach (var land in lands)
                 {
                     if (CanChecker)
@@ -1319,6 +1326,7 @@ namespace YuLinTu.Component.ExportResultDataBaseTask
             //ParallelThread.ForEach(familyCollection, (i, vp) =>
             foreach (var vp in familyCollection)
             {
+
                 //处理空户
                 var vplands = landCollection.FindAll(ld => ld.OwnerId == vp.ID);
                 var brqglands = qglands.FindAll(t => t.VirtualPersonID == vp.ID);//确股的

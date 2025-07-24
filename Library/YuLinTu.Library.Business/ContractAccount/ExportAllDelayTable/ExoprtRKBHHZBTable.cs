@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
 
@@ -27,7 +25,7 @@ namespace YuLinTu.Library.Business.ContractAccount.ExportAllDelayTable
 
         #region Properties
 
-        public string TemplatePath { get; set; }
+        //public string TemplatePath { get; set; }
 
         public string ZoneDesc { get; set; }
 

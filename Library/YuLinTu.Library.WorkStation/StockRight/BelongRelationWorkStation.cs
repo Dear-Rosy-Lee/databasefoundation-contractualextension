@@ -148,7 +148,7 @@ namespace YuLinTu.Library.WorkStation
                 var land = LandRepository.Get(o.LandID);
                 if (land != null)
                 {
-                    land.Comment ="共有宗地总面积:"+ LandRepository.Get(l => l.ZoneCode == zoneCode && l.IsStockLand).Sum(landEx=> landEx.ActualArea);
+                    //land.Comment ="共有宗地总面积:"+ LandRepository.Get(l => l.ZoneCode == zoneCode && l.IsStockLand).Sum(landEx=> landEx.ActualArea);
                     lands.Add(land);
                 }
             });

@@ -920,10 +920,7 @@ namespace YuLinTu.Library.Controls
                 db.RollbackTransaction();
                 return false;
             }
-
         }
-
-
 
         /// <summary>
         /// 初始化界址线
