@@ -8149,11 +8149,7 @@ namespace YuLinTu.Library.Controls
                 {
                     var dictStation = DbContext.CreateDictWorkStation();
                     var DictList = dictStation.Get();
-                    List<VirtualPerson> persons = new List<VirtualPerson>();
-                    persons = vpStation.GetByZoneCode(currentZone.FullCode);
-                    List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
-                    lands = lands.Where(t => t.LandCategory != "10").ToList();
-                    var dialog = new AdjustLandPage(persons, lands, DictList);
+                    var dialog = new AdjustLandPage(DbContext, currentZone.FullCode, DictList);
                     TheWorkPage.Page.ShowMessageBox(dialog, (s, t) =>
                     {
                         if (s == null || !s.Value)
@@ -8161,7 +8157,7 @@ namespace YuLinTu.Library.Controls
                         var Lands = new List<ContractLand>();
                         foreach (var item in dialog.SelectLandData.Select(tuple => tuple.Item1).ToList())
                         {
-                            Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
+                            //Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
                         }
                         AdjustLandTask(Lands, dialog.NewVPName);
                     });

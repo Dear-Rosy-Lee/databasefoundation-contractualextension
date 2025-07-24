@@ -1,11 +1,11 @@
-﻿using DotSpatial.Projections.Transforms;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
+using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
 using YuLinTu.Windows.Wpf.Metro.Components;
@@ -21,6 +21,10 @@ namespace YuLinTu.Library.Controls
     public partial class AdjustLandPage : TabMessageBox
     {
         protected List<Dictionary> DictList;
+        private TaskQueueDispatcher queueQuery;
+        private IDbContext dbContext;
+        private string zoneCode;
+
         public List<AdjustLand> LandData { get; set; }
 
         public List<Tuple<AdjustLand, TextBlock>> SelectLandData { get; set; }
@@ -33,15 +37,59 @@ namespace YuLinTu.Library.Controls
 
         public string OldVPName { get; set; }
 
-        public AdjustLandPage(List<VirtualPerson> virtualPersons, List<ContractLand> contractLands, List<Dictionary> dic)
+        public AdjustLandPage(IDbContext dbContext, string zoneCode, List<Dictionary> dic)
         {
             InitializeComponent();
             DictList = dic;
-            Lands = contractLands;
-            VirtualPersons = virtualPersons;
-            GetLandData(contractLands);  // 加载数据
+            this.dbContext = dbContext;
+            this.zoneCode = zoneCode;
+            //Lands = contractLands;
+            //VirtualPersons = virtualPersons;
+            queueQuery = new TaskQueueDispatcher(Dispatcher);
+            queueQuery.Cancel();
+            queueQuery.DoWithInterruptCurrent(
+                go =>
+                {
+                    var landStation = dbContext.CreateContractLandWorkstation();
+                    var lands = landStation.GetCollection(zoneCode);
+                    go.Instance.ReportProgress(50, lands);
+
+                    var vpStation = dbContext.CreateVirtualPersonStation<LandVirtualPerson>();
+                    var virtualPeoples = vpStation.GetByZoneCode(zoneCode);
+                    go.Instance.ReportProgress(100, virtualPeoples);
+                },
+                completed =>
+                {
+                    //GetLandData(contractLands);  // 加载数据
+                },
+                terminated =>
+                {
+                    //ShowBox("提示", "获取数据时发生错误,可以尝试升级数据库解决问题。");
+                },
+                progressChanged =>
+                {
+                    if (progressChanged.Percent == 50)
+                    {
+                        Lands = progressChanged.UserState as List<ContractLand>;
+                    }
+                    else if (progressChanged.Percent == 100)
+                    {
+                        VirtualPersons = progressChanged.UserState as List<VirtualPerson>;
+                    }
+                },
+                start =>
+                {
+                    //TheWorkPage.Page.IsBusy = true;
+                }, ended =>
+                {
+                    //TheWorkPage.Page.IsBusy = false;
+                }, null, null, null);
+
             GenerateDataItems();
         }
+
+
+
 
 
         private void GenerateDataItems()
@@ -63,7 +111,7 @@ namespace YuLinTu.Library.Controls
             {
                 foreach (var item in dataList)
                 {
-                    item.IsSelected = isChecked; 
+                    item.IsSelected = isChecked;
                 }
                 return;
             }
@@ -89,7 +137,7 @@ namespace YuLinTu.Library.Controls
             var dataItem = (AdjustLand)checkBox.Tag;
             SenderComboBox.Visibility = Visibility.Visible;
             SenderComboBox.ItemsSource = VirtualPersons.Select(t => $"{t.Name} （{t.FamilyNumber}）");
-            SenderComboBox.SelectedItem = $"{dataItem.CBFMC} （{VirtualPersons.Where(t=>t.ID == dataItem.CBFId).FirstOrDefault().FamilyNumber}）";
+            SenderComboBox.SelectedItem = $"{dataItem.CBFMC} （{VirtualPersons.Where(t => t.ID == dataItem.CBFId).FirstOrDefault().FamilyNumber}）";
             OldVPName = dataItem.CBFMC;
             AddData(checkBox.Parent as Grid, checkBox);
         }
@@ -121,10 +169,10 @@ namespace YuLinTu.Library.Controls
                 // 显示操作按钮
                 btnConfirm.Visibility = Visibility.Visible;
                 btnCancel.Visibility = Visibility.Visible;
-                
+
                 // 更新选中值
                 NewVPName = comboBox.SelectedItem?.ToString();
-                
+
             }
         }
 

@@ -191,79 +191,87 @@ namespace YuLinTu.Component.AssociateLandCode
                 var sds = senders.FindAll(t => t.ZoneCode.StartsWith(village.FullCode)).OrderBy(o => o.ZoneCode).ToList();
                 foreach (var sd in sds)
                 {
-                    var upvps = new List<VirtualPerson>();
-                    var deloldvps = new List<VirtualPerson_Del>();
-                    var uplands = new List<ContractLand>();
-                    var deloldlds = new List<ContractLand_Del>();
-                    this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据", index, zoneListCount, sd.Name));
-                    var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
-                    if (nvps.Count == 0)
-                        continue;
-                    nvps.ForEach(t => t.OldVirtualCode = "");
-                    var newzons = relationZones.FindAll(t => t.NewZoneCode == sd.ZoneCode);
-                    var zonecodelist = newzons.Select(t => t.OldZoneCode).ToList();
-                    if (zonecodelist.Count == 0)
-                        continue;
-                    var zoneNamelist = newzons.Select(t => t.OldName).ToList();
-                    this.ReportInfomation($"挂接{sd.Name}下的数据：原地域 {zoneNamelist.JoinStrings("、")}");
-                    var oldVps = new List<VirtualPerson>();//原承包方
-                    var oldLands = new List<ContractLand>();//原地块
-                    foreach (var oldz in zonecodelist)
-                    {
-                        var tvps = vpOldStation.GetByZoneCode(oldz, eLevelOption.Self);//获取原承包方
-                        var tlds = landOldStation.GetCollection(oldz, eLevelOption.Self);//获取原地块 
-                        if (oldz == sd.ZoneCode)
-                        {
-                            var tnp = nvps[0];
-                            var top = tvps.Find(t => t.FamilyNumber == tnp.FamilyNumber || t.ZoneCode == tnp.ZoneCode);
-                            if (top != null)
-                            {
-                                this.ReportError($"挂接原库中地域({tnp.ZoneCode})下未找到户号为{tnp.FamilyNumber},名为{tnp.Name}的农户,请确认该发包方数据是否已经变更");
-                            }
-                            else
-                            {
-                                if (!CheckVirtualPersonIsSame(tnp, top))
-                                {
-                                    this.ReportError($"户号为{tnp.FamilyNumber}的承包方在新旧数据库中不是同一个，请确认新数据是否重新编码？请确保新编码未占用旧编码！");
-                                }
-                            }
-                        }
-                        oldVps.AddRange(tvps);
-                        oldLands.AddRange(tlds);//获取原地块 
-                    }
-                    //var ovps = vps.FindAll(tland => zonecodelist.Contains(tland.ZoneCode));//旧承包方
-                    var lstvps = ExecuteUpdateVp(sd, nvps, oldVps,/* relationZones,*/ deloldvps);
-                    upvps.AddRange(lstvps);
-                    var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
-                    nlds.ForEach(l => l.OldLandNumber = "");
-                    var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldlds);
-                    var upldnums = new HashSet<string>();
-                    foreach (var item in lstlds)
-                    {
-                        if (!upldnums.Contains(item.LandNumber))
-                            upldnums.Add(item.LandNumber);
-                    }
-                    foreach (var item in nlds)
-                    {
-                        if (upldnums.Contains(item.LandNumber))
-                            continue;
-                        item.OldLandNumber = "";
-                    }
-                    uplands.AddRange(nlds);
-                    //deloldlds.AddRange(deloldldtemp);
-                    index++;
-                    this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未关联原承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldlds.Count}块");
-
-                    if (argument.SearchInShape)
-                    {
-                        SearchSameInShape(uplands.FindAll(t => t.OldLandNumber == ""),
-                            oldLands, deloldlds);
-                    }
-                    vpStation.UpdatePersonList(vps);
-                    landStation.UpdateOldLandCode(uplands, true);
-
                     try
                     {
+                        var upvps = new List<VirtualPerson>();
+                        var deloldvps = new List<VirtualPerson_Del>();
+                        var uplands = new List<ContractLand>();
+                        var deloldlds = new List<ContractLand_Del>();
+                        this.ReportProgress(3 + (int)(index * vpPercent), string.Format("({0}/{1})挂接{2}下的数据", index, zoneListCount, sd.Name));
+                        var nvps = vps.FindAll(t => t.ZoneCode == sd.ZoneCode);//新承包方
+                        if (nvps.Count == 0)
+                            continue;
+                        nvps.ForEach(t => t.OldVirtualCode = "");
+
+                        var jtsl = nvps.Count(t => jtmcs.Contains(t.Name));
+                        if (jtsl > 1)
+                        {
+                            this.ReportError($"地域{sd.Name}({sd.ZoneCode})下村组多个集体，请处理后再进行挂接");
+                            break;
+                        }
+
+                        var newzons = relationZones.FindAll(t => t.NewZoneCode == sd.ZoneCode);
+                        var zonecodelist = newzons.Select(t => t.OldZoneCode).ToList();
+                        if (zonecodelist.Count == 0)
+                            continue;
+                        var zoneNamelist = newzons.Select(t => t.OldName).ToList();
+                        this.ReportInfomation($"挂接{sd.Name}下的数据：原地域 {zoneNamelist.JoinStrings("、")}");
+                        var oldVps = new List<VirtualPerson>();//原承包方
+                        var oldLands = new List<ContractLand>();//原地块
+                        foreach (var oldz in zonecodelist)
+                        {
+                            var tvps = vpOldStation.GetByZoneCode(oldz, eLevelOption.Self);//获取原承包方
+                            var tlds = landOldStation.GetCollection(oldz, eLevelOption.Self);//获取原地块 
+                            if (oldz == sd.ZoneCode)
+                            {
+                                var tnp = nvps[0];
+                                var top = tvps.Find(t => t.FamilyNumber == tnp.FamilyNumber || t.ZoneCode == tnp.ZoneCode);
+                                if (top != null)
+                                {
+                                    this.ReportError($"挂接原库中地域({tnp.ZoneCode})下未找到户号为{tnp.FamilyNumber},名为{tnp.Name}的农户,请确认该发包方数据是否已经变更");
+                                }
+                                else
+                                {
+                                    if (!CheckVirtualPersonIsSame(tnp, top))
+                                    {
+                                        this.ReportError($"户号为{tnp.FamilyNumber}的承包方在新旧数据库中不是同一个，请确认新数据是否重新编码？请确保新编码未占用旧编码！");
+                                    }
+                                }
+                            }
+                            oldVps.AddRange(tvps);
+                            oldLands.AddRange(tlds);//获取原地块 
+                        }
+                        //var ovps = vps.FindAll(tland => zonecodelist.Contains(tland.ZoneCode));//旧承包方
+                        var lstvps = ExecuteUpdateVp(sd, nvps, oldVps,/* relationZones,*/ deloldvps);
+                        upvps.AddRange(lstvps);
+                        var nlds = geoLands.FindAll(t => t.ZoneCode == sd.ZoneCode);//新地块
+                        nlds.ForEach(l => l.OldLandNumber = "");
+                        var lstlds = AssociteLand(sd, nvps, lstvps, deloldvps, oldVps, nlds, oldLands, relationZones, deloldlds);
+                        var upldnums = new HashSet<string>();
+                        foreach (var item in lstlds)
+                        {
+                            if (!upldnums.Contains(item.LandNumber))
+                                upldnums.Add(item.LandNumber);
+                        }
+                        foreach (var item in nlds)
+                        {
+                            if (upldnums.Contains(item.LandNumber))
+                                continue;
+                            item.OldLandNumber = "";
+                        }
+                        uplands.AddRange(nlds);
+                        //deloldlds.AddRange(deloldldtemp);
+                        index++;
+                        this.ReportInfomation($"挂接{sd.Name}下的数据完成，承包方:{lstvps.Count}个，未关联原承包方{deloldvps.Count}个, 地块:{lstlds.Count}块,未关联地块{deloldlds.Count}块");
+
+                        if (argument.SearchInShape)
+                        {
+                            SearchSameInShape(uplands.FindAll(t => t.OldLandNumber == ""), oldLands, deloldlds);
+                        }
+                        vpStation.UpdatePersonList(vps);
+                        landStation.UpdateOldLandCode(uplands, true);
+
+
                         dbContext.BeginTransaction();
                         //TO 删除承包方入库
                         foreach (var dvp in deloldvps)
@@ -282,7 +290,8 @@ namespace YuLinTu.Component.AssociateLandCode
                     {
                         Log.WriteException(this, "", ex.ToString());
                         dbContext.RollbackTransaction();
-                        throw new Exception("关联数据出错" + ex.Message);
+                        dbContext.CloseConnection();
+                        throw new Exception($"关联{sd.Name}下的数据出错" + ex.Message);
                     }
                 }
             }
@@ -419,6 +428,10 @@ namespace YuLinTu.Component.AssociateLandCode
                 if (ovp != null)
                 {
                     oldfamilynumber = ovp.ZoneCode.PadRight(14, '0') + ovp.FamilyNumber.PadLeft(4, '0');
+                }
+                var dld = dellands.Find(t => t.ID == ld.ID);
+                if (dld != null)
+                {
                 }
                 dellands.Add(ContractLand_Del.ChangeDataEntity(sender.ZoneCode, ld, oldfamilynumber));
             }

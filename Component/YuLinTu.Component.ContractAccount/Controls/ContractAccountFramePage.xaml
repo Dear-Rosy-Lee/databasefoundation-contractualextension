@@ -1248,8 +1248,8 @@
                     <cmps:ImageTextItem
                         Image="pack://application:,,,/YuLinTu.Resources;component/images/32/groupsharepointlists.png"
                         ImagePosition="Top"
-                        Text="调整地块"
-                        ToolTip="调整地块" />
+                        Text="无户地块"
+                        ToolTip="查询无户主的地块数据" />
                 </metro:MetroButton>
 
                 <metro:MetroButton
