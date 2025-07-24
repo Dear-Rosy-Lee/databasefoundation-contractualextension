@@ -8154,12 +8154,12 @@ namespace YuLinTu.Library.Controls
                     {
                         if (s == null || !s.Value)
                             return;
-                        var Lands = new List<ContractLand>();
-                        foreach (var item in dialog.SelectLandData.Select(tuple => tuple.Item1).ToList())
-                        {
-                            //Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
-                        }
-                        AdjustLandTask(Lands, dialog.NewVPName);
+                        //var Lands = new List<ContractLand>();
+                        //foreach (var item in dialog.SelectLandData.Select(tuple => tuple.Item1).ToList())
+                        //{
+                        //    Lands.Add(lands.Where(q => q.ID == item.Id).FirstOrDefault());
+                        //}
+                        AdjustLandTask(dialog.UpDateLands, dialog.NewVPName);
                     });
                 }
 
@@ -8179,12 +8179,13 @@ namespace YuLinTu.Library.Controls
             argument.Lands = Lands;
             argument.NewVPName = NewVPName;
 
-            TaskAdjustLandOperation task = new TaskAdjustLandOperation();
+            var task = new TaskAdjustLandOperation();
             task.Argument = argument;
-            task.Name = "调整地块";
-            task.Description = "批量调整地块";
+            task.Name = "调整地块所属承包方";
+            task.Description = "批量调整地块的所属承包方";
             task.Completed += new TaskCompletedEventHandler((o, t) =>
             {
+                Refresh();
             });
             TheWorkPage.TaskCenter.Add(task);
             if (ShowTaskViewer != null)

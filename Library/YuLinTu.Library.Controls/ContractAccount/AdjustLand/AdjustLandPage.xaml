@@ -11,7 +11,7 @@
     Width="1200"
     Height="600"
     CloseButtonVisibility="Collapsed"
-    Header="无户地块"
+    Header="无户地块处理"
     Icon="pack://application:,,,/YuLinTu.Resources;component/Images/16/property.png"
     mc:Ignorable="d">
     <Grid >
@@ -34,17 +34,17 @@
                     <!--  全选  -->
                     <ColumnDefinition Width="50" />
                     <!--  地块编码  -->
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="180" />
                     <!--  地块名称  -->
                     <ColumnDefinition Width="200" />
                     <!--  地块类别  -->
-                    <ColumnDefinition Width="158" />
-                    <!--  合同面积  -->
                     <ColumnDefinition Width="120" />
+                    <!--  合同面积  -->
+                    <ColumnDefinition Width="0" />
                     <!--  实测面积  -->
-                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="100" />
                     <!--  承包方名称  -->
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="250" />
                 </Grid.ColumnDefinitions>
                 <CheckBox
                     Grid.Column="0"
@@ -119,15 +119,15 @@
                                 <!--  地块编码  -->
                                 <ColumnDefinition Width="180" />
                                 <!--  地块名称  -->
-                                <ColumnDefinition Width="222" />
+                                <ColumnDefinition Width="180" />
                                 <!--  地块类别  -->
-                                <ColumnDefinition Width="137" />
+                                <ColumnDefinition Width="117" />
                                 <!--  合同面积  -->
-                                <ColumnDefinition Width="145" />
+                                <ColumnDefinition Width="0" />
                                 <!--  实测面积  -->
-                                <ColumnDefinition Width="118" />
+                                <ColumnDefinition Width="100" />
                                 <!--  承包方名称  -->
-                                <ColumnDefinition Width="207" />
+                                <ColumnDefinition Width="257" />
 
                             </Grid.ColumnDefinitions>
 
@@ -223,14 +223,17 @@
 
             <!--  ComboBox 容器（固定高度，避免影响布局）  -->
             <Border
-                Grid.Row="1"
-                Height="30"
-                Margin="0,5,0,10">
-                <ComboBox
+                Grid.Row="1" Height="70"
+                Margin="5,5,5,10">
+                <StackPanel>
+                    <Label Content="请选择所属承包方:" Margin="0,5"/>
+                    <cmps:MetroComboBox Height="30"
                     x:Name="SenderComboBox"
                     VerticalAlignment="Center"
                     SelectionChanged="SenderComboBox_SelectionChanged"
+                    DisplayMemberPath="Name"
                     Visibility="Collapsed" />
+                </StackPanel>
             </Border>
 
             <!--  操作按钮（固定在底部）  -->
