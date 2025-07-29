@@ -40,7 +40,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         internal const string Methold_Delete_ClearBatchData = Methold_Prefix + "data/delete/by/upload_batch_num";
       //internal const string Methold_Delete_ClearBatchData = 
         internal const string Methold_UpLoadBatchDataNum = Methold_Prefix + "task/update/data/num";
-        public const string CancleBatchDataSendStatus = Methold_Prefix + "task/cancel/submit/approval";
+        internal const string CancleBatchDataSendStatus = Methold_Prefix + "task/cancel/submit/approval";
         internal const string Methold_WriteLog = Methold_Prefix + "log/add";
         internal const string Methold_uploadBatchNums= Methold_Prefix + "task/update/uploadBatchNums";
         internal const string Methold_QueryStatusByBatchNums = Methold_Prefix + "task/statusmsg/by/upload_batch_num";
@@ -68,8 +68,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
 
         internal const string BatchCodeShpFileldName = "batchCode";
 
-
-
+        internal const string OpenVectorDataDecodingAllowRegion = "OpenVectorDataDecodingAllowRegion";
+        internal const string AllowRegionConfigFile = "AllowedRegion.xml";
 
 
         internal const int DefualtSrid = 4490;

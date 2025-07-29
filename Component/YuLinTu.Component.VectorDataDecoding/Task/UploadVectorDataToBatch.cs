@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,7 @@ using YuLinTu.DF;
 using YuLinTu.DF.Tasks;
 using YuLinTu.Security;
 using YuLinTu.Spatial;
+using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
@@ -110,6 +112,31 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             bool result =true;
             double shpArea = 0.00;
             //var ds = ProviderShapefile.CreateDataSource(args.ResultFilePath, false);
+           var isOpenVectorDataDecodingAllowRegion=  ConfigurationManager.AppSettings.TryGetValue<bool>(Constants.OpenVectorDataDecodingAllowRegion, false);
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", Constants.AllowRegionConfigFile);
+            //var AllowRegions = Serializer.DeserializeFromXmlFile<List<Region>>(fileName);
+            var AllowRegions = Serializer.DeserializeFromXmlFile<AllowedRegion>(fileName);
+            Dictionary<string, string> AllowRegionDic = new Dictionary<string, string>();
+           List<string> allowRegions=new List<string>();
+            if(isOpenVectorDataDecodingAllowRegion)
+            {
+                AllowRegions.Regions.ForEach(t =>
+                {
+                    try
+                    {
+                        t.Code = Encrypter.DecryptDES(t.Code);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.ReportError($"无法解析{t.Code}{t.Name}");
+                    }
+                });
+                allowRegions = AllowRegions.Regions.Where(t => t.Code.StartsWith(args.ZoneCode)).Select(testc => testc.Code).ToList();
+                var info = string.Join(",", allowRegions);
+                this.ReportInfomation($"地域{args.ZoneCode}下，已开通处理权限的地域有：{info}");
+
+            }
+
             //var dq = new DynamicQuery(ds);
             var mustFiled = args.DataType.GetStringValue();
             this.ReportInfomation("开始检测矢量文件结构和数据范围！");
@@ -131,7 +158,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                     result = false;
                     continue;
                 }
-
+              
                 //dq.w
                 //var dataOut = dq.Any(null, tableName,  QuerySection.Column(mustFiled).StartsWith(QuerySection.Parameter(args.ZoneCode)));
                 //if (dataOut)
@@ -170,18 +197,19 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         return false;
                     }
 
+               
+                    if (isOpenVectorDataDecodingAllowRegion)
+                    {
+                        if(!allowRegions.Any(t=> mustFiledVaule.StartsWith(t)))
+                        {
+                            this.ReportError($"矢量数据中存在未开通地域的数据，如{mustFiled}值为{mustFiledVaule} ,文件路径：{item.FullPath}");
+                            breakTag = true;
+                            return false;
+                        }
+                       
+                    }
                     //geo.Project(4490);//注意坐标系文件有问题时此处计算面积会出问题，后期需要处理
                     var shpAreaTpem= geo.Area();
-                    if (shpAreaTpem < 0)
-                    {
-
-                    }
-                    else
-                    {
-                        shpArea = shpArea+shpAreaTpem;
-                        Console.WriteLine(shpArea.ToString());
-                    }
-         
                     if (shpArea>Constants.SpitialDataAreaLimint)
                     {
                         this.ReportError($"检测到图斑总面积超过25平方千米！请分批加载数据！");

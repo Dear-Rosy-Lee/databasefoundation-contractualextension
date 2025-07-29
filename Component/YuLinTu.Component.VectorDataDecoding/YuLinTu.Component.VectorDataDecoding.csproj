@@ -261,6 +261,7 @@
     <Compile Include="Controls\VectorDataDecode.xaml.ViewModel.cs">
       <DependentUpon>VectorDataDecodePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Region.cs" />
     <Compile Include="Core\ApiCaller.cs" />
     <Compile Include="Core\AreaNodeRepeatCheck.cs" />
     <Compile Include="Core\ClientEum.cs" />
