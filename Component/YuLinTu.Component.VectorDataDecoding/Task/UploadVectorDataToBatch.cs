@@ -131,7 +131,8 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                         this.ReportError($"无法解析{t.Code}{t.Name}");
                     }
                 });
-                allowRegions = AllowRegions.Regions.Where(t => t.Code.StartsWith(args.ZoneCode)).Select(testc => testc.Code).ToList();
+       
+                allowRegions = AllowRegions.Regions.Where(t => t.Code.StartsWith(args.ZoneCode)|| args.ZoneCode.StartsWith(t.Code)).Select(testc => testc.Code).ToList();
                 var info = string.Join(",", allowRegions);
                 this.ReportInfomation($"地域{args.ZoneCode}下，已开通处理权限的地域有：{info}");
 
