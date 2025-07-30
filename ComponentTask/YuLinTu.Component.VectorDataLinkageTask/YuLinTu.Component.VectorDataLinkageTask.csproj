@@ -214,6 +214,24 @@
     <Compile Include="Core\LandEntity.cs" />
     <Compile Include="Core\ReferenceHelper.cs" />
     <Compile Include="Entrance.cs" />
+    <Compile Include="OptionsEditorAuthentication.xaml.cs">
+      <DependentUpon>OptionsEditorAuthentication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsEditorAuthentication.xaml.Message.cs">
+      <DependentUpon>OptionsEditorAuthentication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsEditorAuthentication.xaml.ViewModel.cs">
+      <DependentUpon>OptionsEditorAuthentication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsWorkpagePanel.xaml.cs">
+      <DependentUpon>OptionsWorkpagePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsWorkpagePanel.xaml.Message.cs">
+      <DependentUpon>OptionsWorkpagePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsWorkpagePanel.xaml.ViewModel.cs">
+      <DependentUpon>OptionsWorkpagePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskPageContext.cs" />
     <Compile Include="Task\ApiCaller.cs" />
@@ -231,7 +249,16 @@
       <Name>YuLinTu.Component.Account</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="OptionsEditorAuthentication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionsWorkpagePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>md "$(SolutionDir)Workspace\Components\$(TargetName)\Binary\"

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props" Condition="Exists('..\..\packages\YuLinTu.Data.PostgreSQL.6.8.8.3\build\YuLinTu.Data.PostgreSQL.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props" Condition="Exists('..\..\packages\YuLinTu.Data.SQLite.6.8.8.3\build\YuLinTu.Data.SQLite.props')" />
   <Import Project="..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props" Condition="Exists('..\..\packages\YuLinTu.Data.6.8.8.3\build\YuLinTu.Data.props')" />
@@ -22,7 +22,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YuLinTu.Component.Setting</RootNamespace>
     <AssemblyName>YuLinTu.Component.Setting</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -213,6 +213,12 @@
       <DependentUpon>SystemSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entrance.cs" />
+    <Compile Include="OptionsWorkpagePanel.xaml.cs">
+      <DependentUpon>OptionsWorkpagePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsWorkpagePanel.xaml.ViewModel.cs">
+      <DependentUpon>OptionsWorkpagePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -225,46 +231,6 @@
     <Compile Include="WorkspaceContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Business\YuLinTu.Library.Business.csproj">
-      <Project>{08ac55a7-5a0d-4a50-8ee7-93148a22250a}</Project>
-      <Name>YuLinTu.Library.Business</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Command\YuLinTu.Library.Command.csproj">
-      <Project>{9eb31295-3845-4f18-bd65-1a1af9d71abd}</Project>
-      <Name>YuLinTu.Library.Command</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Controls\YuLinTu.Library.Controls.csproj">
-      <Project>{becfb342-848a-4819-a4c7-a2cfa9bdba28}</Project>
-      <Name>YuLinTu.Library.Controls</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Entity\YuLinTu.Library.Entity.csproj">
-      <Project>{970c7d36-4259-4ccc-8ff8-835efe684395}</Project>
-      <Name>YuLinTu.Library.Entity</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Log\YuLinTu.Library.Log.csproj">
-      <Project>{884b68f2-6f43-439d-91ae-31baf151fe05}</Project>
-      <Name>YuLinTu.Library.Log</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Repository\YuLinTu.Library.Repository.csproj">
-      <Project>{12b9824e-f870-4446-bf10-cc5ae7fa601e}</Project>
-      <Name>YuLinTu.Library.Repository</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.Resources\YuLinTu.Library.Resources.csproj">
-      <Project>{819885a6-5d65-4d29-97c8-f4c9e0cc7ec6}</Project>
-      <Name>YuLinTu.Library.Resources</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\YuLinTu.Library.WorkStation\YuLinTu.Library.WorkStation.csproj">
-      <Project>{91a13749-f1e2-4df8-901b-9a68369af8ea}</Project>
-      <Name>YuLinTu.Library.WorkStation</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\YuLinTu.Component.Common\YuLinTu.Component.Common.csproj">
       <Project>{5d529712-2c25-409c-a865-f832cf5324cc}</Project>
       <Name>YuLinTu.Component.Common</Name>
@@ -304,6 +270,10 @@
     <Page Include="Controls\SystemSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OptionsWorkpagePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
