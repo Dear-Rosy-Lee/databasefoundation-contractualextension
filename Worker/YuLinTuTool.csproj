@@ -988,18 +988,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\ComponentTask\YuLinTu.Component.QualityCompressionDataTask\YuLinTu.Component.QualityCompressionDataTask.csproj">
-      <Project>{d55b87e9-2b5b-4abc-9a6a-92323069486c}</Project>
-      <Name>YuLinTu.Component.QualityCompressionDataTask</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\ComponentTask\YuLinTu.Component.VectorDataTreatTask\YuLinTu.Component.VectorDataTreatTask.csproj">
-      <Project>{4ed2b604-435f-4486-ba2f-8f0e301c07f5}</Project>
-      <Name>YuLinTu.Component.VectorDataTreatTask</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
