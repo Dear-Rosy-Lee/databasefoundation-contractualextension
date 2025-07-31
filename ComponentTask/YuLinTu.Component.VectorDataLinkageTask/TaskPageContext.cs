@@ -1,6 +1,8 @@
 ﻿using YuLinTu.Windows;
 using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
+using System;
+using System.Windows;
 
 namespace YuLinTu.Component.VectorDataLinkageTask
 {
@@ -18,11 +20,11 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         [MessageHandler(ID = EdTask.LangInstallTaskTemplates)]
         private void OnInstallTaskTemplates(object sender, InstallTaskTemplatesEventArgs e)
         {
-            //e.Templates.Add(new TaskDescriptor
-            //{
-            //    TypeTask = typeof(VectorDataLinkageTask),
-            //    TypeArgument = typeof(VectorDataLinkageArgument)
-            //});
+            e.Templates.Add(new TaskDescriptor
+            {
+                TypeTask = typeof(VectorDataLinkageTask),
+                TypeArgument = typeof(VectorDataLinkageArgument)
+            });
         }
 
         protected override bool NeedHandleMessage()
@@ -39,6 +41,8 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         {
         }
 
+   
+         
         #endregion Methods - Private
 
         #endregion Methods

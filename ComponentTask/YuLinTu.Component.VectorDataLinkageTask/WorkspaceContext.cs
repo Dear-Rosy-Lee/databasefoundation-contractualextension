@@ -1,4 +1,6 @@
-﻿using YuLinTu.Appwork;
+﻿using System;
+using System.Windows;
+using YuLinTu.Appwork;
 using YuLinTu.Appwork.Task;
 using YuLinTu.Windows;
 
@@ -7,7 +9,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
     /// <summary>
     /// 通用信息插件上下文
     /// </summary>
-    public class WorkspaceContext : TheWorkspaceContext
+    public class WorkspaceContext : TheWorkspaceContext, YuLinTu.Messages.Workspace.IMessageHandlerInstallOptionsEditor
     {
         #region Ctor
 
@@ -18,6 +20,18 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             : base(workspace)
         {
             Register<TaskPage, TaskPageContext>();
+        }
+
+        public void InstallOptionsEditor(object sender, InstallOptionsEditorEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                e.Editors.Add(new OptionsEditorMetadata()
+                {
+                    Name = "密匙",
+                    Editor = new OptionsEditorAuthentication(this.Workspace),
+                });
+            }));
         }
 
         #endregion Ctor

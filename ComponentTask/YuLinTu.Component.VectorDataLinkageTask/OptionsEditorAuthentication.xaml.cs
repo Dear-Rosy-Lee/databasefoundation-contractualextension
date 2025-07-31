@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using YuLinTu;
 using YuLinTu.Appwork;
+using YuLinTu.Component.VectorDataLinkageTask.Core;
 using YuLinTu.Data;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf;
@@ -31,7 +32,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         Image = "pack://application:,,,/YuLinTu.Resources;component/Images/78/Information78.png",
         IsNeedAuthenticated = false)]
     [ViewModel(typeof(OptionsEditorAuthenticationViewModel))]
-    public partial class OptionsEditorAuthentication : YuLinTu.Appwork.WorkpageOptionsEditor
+    public partial class OptionsEditorAuthentication :OptionsEditor
     {
         #region Properties
 
@@ -43,11 +44,14 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         #region Ctor
 
-        public OptionsEditorAuthentication()
+       
+
+       
+        public OptionsEditorAuthentication(IWorkspace Workspace)
+          : base(Workspace)
         {
             InitializeComponent();
         }
-
         #endregion
 
 
@@ -57,7 +61,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                var m = ViewModelObject.ResolveModel<OptionsEditorAuthentication>(Workpage);
+                var m = ViewModelObject.ResolveModel<OptionsEditorAuthentication>(Workspace);
                 m.Startup();
                 DataContext = m;
             }));
@@ -81,17 +85,27 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         protected override void OnLoad()
         {
+            var center = TheApp.Current.GetSystemSettingsProfileCenter();
+            var profile = center.GetProfile<VectorDataLinkWorkpageConfig>();
+            var section = profile.GetSection<VectorDataLinkWorkpageConfig>();
+
             Dispatcher.Invoke(new Action(() =>
             {
-                (DataContext as OptionsEditorAuthenticationViewModel).Load();
+                (DataContext as OptionsEditorAuthenticationViewModel).PageConfig =
+                    section.Settings.Clone() as VectorDataLinkWorkpageConfig;
             }));
         }
 
         protected override void OnSave()
         {
+            var center = TheApp.Current.GetSystemSettingsProfileCenter();
+            var profile = center.GetProfile<VectorDataLinkWorkpageConfig>();
+            var section = profile.GetSection<VectorDataLinkWorkpageConfig>();
+
             Dispatcher.Invoke(new Action(() =>
             {
-                (DataContext as OptionsEditorAuthenticationViewModel).Save();
+                section.Settings = (DataContext as OptionsEditorAuthenticationViewModel).PageConfig;
+                center.Save<VectorDataLinkWorkpageConfig>();
             }));
         }
 
@@ -103,5 +117,6 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         }
 
         #endregion
+   
     }
 }

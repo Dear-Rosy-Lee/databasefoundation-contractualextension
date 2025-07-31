@@ -1,4 +1,4 @@
-﻿<ylt:WorkpageOptionsEditor  x:Class="YuLinTu.Component.VectorDataLinkageTask.OptionsEditorAuthentication"
+﻿<ylt:OptionsEditor  x:Class="YuLinTu.Component.VectorDataLinkageTask.OptionsEditorAuthentication"
           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,9 +10,9 @@
           d:DesignHeight="480"
           mc:Ignorable="d"               
           Validation.ErrorTemplate="{x:Null}"            >
-    <ylt:WorkpageOptionsEditor.BindingGroup>
+    <ylt:OptionsEditor.BindingGroup>
         <BindingGroup></BindingGroup>
-    </ylt:WorkpageOptionsEditor.BindingGroup>
+    </ylt:OptionsEditor.BindingGroup>
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel>
@@ -20,22 +20,22 @@
                                Image="pack://application:,,,/YuLinTu.Resources;component/Images/32/人口32.png"
                                Margin="0,0,0,10">
             </ylt:ImageTextItem>
-            <ylt:OptionsContainer Text="必填项">
+            <ylt:OptionsContainer Text="接入地块图斑上传鉴权码">
                 <StackPanel Margin="0,0,15,0">
          
                     <ylt:PairItem IsRequired="True">
-                        <ylt:PairItem.Header>
+                        <!--<ylt:PairItem.Header>
                             <ylt:ImageTextItem Width="{Binding TitleWidth}"
                                                Image="pack://application:,,,/YuLinTu.Resources;component/Images/16/证书16.png"
                                                Text="鉴权码：">
                             </ylt:ImageTextItem>
-                        </ylt:PairItem.Header>
+                        </ylt:PairItem.Header>-->
                         <ylt:MetroTextBox AcceptsReturn="True"
-                                          Height="150">
+                                          Height="80" Watermask="鉴权码格式：AppID + # + AppKey">
                             <ylt:MetroTextBox.Text>
-                                <Binding Path="Person.Address"
+                                <Binding Path="PageConfig.AuthenticationCode"
                                          Mode="TwoWay"
-                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnDataErrors="True" 
                                          UpdateSourceTrigger="LostFocus">
                                 </Binding>
                             </ylt:MetroTextBox.Text>
@@ -46,4 +46,4 @@
          
         </StackPanel>
     </ScrollViewer>
-</ylt:WorkpageOptionsEditor>
+</ylt:OptionsEditor>

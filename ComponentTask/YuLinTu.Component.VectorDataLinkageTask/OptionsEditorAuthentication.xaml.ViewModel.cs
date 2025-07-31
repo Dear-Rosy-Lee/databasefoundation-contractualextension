@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using YuLinTu;
 using YuLinTu.Appwork;
+using YuLinTu.Component.VectorDataLinkageTask.Core;
 using YuLinTu.Data;
 using YuLinTu.Windows;
 using YuLinTu.Windows.Wpf;
@@ -32,14 +33,23 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             get { return _TitleWidth; }
             set { _TitleWidth = value; NotifyPropertyChanged(() => TitleWidth); }
         }
-        private double _TitleWidth = 150;
+        private double _TitleWidth = 50;
+
+
+        public VectorDataLinkWorkpageConfig PageConfig
+        {
+            get { return _PageConfig; }
+            set { _PageConfig = value; NotifyPropertyChanged(() => PageConfig); }
+        }
+        private VectorDataLinkWorkpageConfig _PageConfig = new VectorDataLinkWorkpageConfig();
+
 
         #endregion
 
         #region Properties - System
 
-        public ITheWorkpage Workpage { get; private set; }
-
+        //public ITheWorkpage Workpage { get; private set; }
+        public IWorkspace Workspace { get; private set; }
         #endregion
 
         #endregion
@@ -57,9 +67,11 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         #region Ctor
 
-        public OptionsEditorAuthenticationViewModel(ITheWorkpage workpage) : base(workpage.Message)
+       
+
+        public OptionsEditorAuthenticationViewModel(IWorkspace workspace)
         {
-            Workpage = workpage;
+            Workspace = workspace;
         }
 
         #endregion
@@ -95,11 +107,33 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         #endregion
 
+        #region Methods - Public
+
+        //internal void Load()
+        //{
+        //    var center = Workpage.Workspace.GetUserSettingsProfileCenter();
+        //    var profile = center.GetProfile<VectorDataLinkWorkpageConfig>();
+        //    var section = profile.GetSection<VectorDataLinkWorkpageConfig>();
+        //    PageConfig = section.Settings.Clone() as VectorDataLinkWorkpageConfig;
+        //}
+
+        //internal void Save()
+        //{
+        //    var center = Workpage.Workspace.GetUserSettingsProfileCenter();
+        //    var profile = center.GetProfile<VectorDataLinkWorkpageConfig>();
+        //    var section = profile.GetSection<VectorDataLinkWorkpageConfig>();
+        //    section.Settings = PageConfig;
+        //    center.Save<VectorDataLinkWorkpageConfig>();
+        //}
+
+        #endregion
+
+
         #region Methods - System
 
         public void Dispose()
         {
-            Workpage = null;
+            Workspace = null;
         }
 
         #endregion

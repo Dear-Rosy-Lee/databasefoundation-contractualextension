@@ -8,8 +8,10 @@ using DotSpatial.Projections;
 using Newtonsoft.Json;
 using YuLinTu.Appwork;
 using YuLinTu.Component.Account.Models;
+using YuLinTu.Component.VectorDataLinkageTask.Core;
 using YuLinTu.Library.Log;
 using YuLinTu.tGISCNet;
+using YuLinTu.Windows;
 
 namespace YuLinTu.Component.VectorDataLinkageTask
 {
@@ -43,6 +45,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         #region Properties
 
         private string ErrorInfo { get; set; }
+      
 
         #endregion Properties
 
@@ -106,7 +109,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
         private bool ValidateArgs()
         {
             var args = Argument as VectorDataLinkageArgument;
-
+           
             if (args == null)
             {
                 this.ReportError(string.Format("参数错误!"));
@@ -225,6 +228,29 @@ namespace YuLinTu.Component.VectorDataLinkageTask
             {
                 throw new Exception("未能正确获取矢量数据的坐标信息，请检查prj文件是否有EPSG值");
             }
+            var center = TheApp.Current.GetSystemSettingsProfileCenter();
+            //var center = this.Workpage.Workspace.GetUserSettingsProfileCenter();
+            var profile = center.GetProfile<VectorDataLinkWorkpageConfig>();
+            var section = profile.GetSection<VectorDataLinkWorkpageConfig>();
+            var PageConfig = section.Settings.Clone() as VectorDataLinkWorkpageConfig;
+            string appID=string.Empty;string  appKey=string.Empty;
+            if(!PageConfig.AuthenticationCode.IsNullOrEmpty()&& PageConfig.AuthenticationCode.Contains("#"))
+            {
+                var codes = PageConfig.AuthenticationCode.Split('#');
+                if (codes.Length == 2)
+                {
+                    appID = codes[0]?.Trim(); appKey = codes[1]?.Trim();
+                }
+                else
+                {
+                    throw new Exception("请在【设置-鉴权】中填写正确格式的鉴权码！");
+                }
+                
+            }
+            else
+            {
+                throw new Exception("请在【设置-鉴权】中填写正确格式的鉴权码！");
+            }
 
             this.ReportProgress(5, "开始处理数据");
             var datacount = 0;
@@ -258,7 +284,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
                         updataCollection.dks.Add(land);
                         dindex++;
                     }
-                    DataProcessOnLine(url, murl, updataCollection, "3ca04787775f4ca682980cd58dd551d9", "3baSPLk4o0DB3AgGr4QqvGSdqr2G/SmVjTHXE196wQkGz2uxIeH9hA==");
+                    DataProcessOnLine(url, murl, updataCollection, appID, appKey);// "3ca04787775f4ca682980cd58dd551d9", "3baSPLk4o0DB3AgGr4QqvGSdqr2G/SmVjTHXE196wQkGz2uxIeH9hA==");
                     this.ReportProgress(5 + (int)(p * dindex), "数据上传中...");
                     this.ReportInfomation($"地域{zoneCode}共上传到接入系统 {updataCollection.dks.Count} 条数据");
                 }
