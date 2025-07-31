@@ -1,11 +1,11 @@
 ; 脚本由 Inno Setup 脚本向导 生成！
 ; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
 
-#define MyAppName "空间数据质检加密工具"
+#define MyAppName "空间数据接入工具"
 #define MyAppVersion "1.0.0703.1"
 #define MyAppPublisher "鱼鳞图"
 #define MyAppURL "http://www.yulintu.com/"
-#define MyAppExeName "SpatitalDataEncryptTool.exe"
+#define MyAppExeName "SptialDataIntegrationTool.exe"
 
 [Setup]
 ; 注: AppId的值为单独标识该应用程序。
@@ -21,8 +21,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName=D:\Program Files\{#MyAppName}
 DefaultGroupName={#MyAppName}
-OutputDir=D:\Program Files (x86)\Jenkins\jobs\空间数据质检加密工具\WorkSpace\安装包
-OutputBaseFilename=空间数据质检加密工具-{#MyAppVersion}
+OutputDir=D:\Program Files (x86)\Jenkins\jobs\空间数据接入工具\WorkSpace\安装包
+OutputBaseFilename=空间数据接入工具-{#MyAppVersion}
 Compression=lzma                                                                       
 SolidCompression=yes
 WizardImageBackColor=clBlue
@@ -38,8 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkablealone;
 
 [Files]
-Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据质检加密工具\WorkSpace\Workspace\SpatitalDataEncryptTool.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据质检加密工具\WorkSpace\Workspace\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据接入工具\WorkSpace\Workspace\SptialDataIntegrationTool.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Program Files (x86)\Jenkins\jobs\空间数据接入工具\WorkSpace\Workspace\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
 
 [Icons]
@@ -66,12 +66,12 @@ Result:= true;
 IsAppRunning:= IsModuleLoaded('escertd_et199.exe');
 if IsAppRunning then
     KillTask('escertd_et199.exe');
-IsAppRunning:= IsModuleLoaded('SpatitalDataEncryptTool.exe');
+IsAppRunning:= IsModuleLoaded('SptialDataIntegrationTool.exe');
 while IsAppRunning do
 begin
-if MsgBox('空间数据质检加密工具正在运行,关闭程序继续安装?', mbConfirmation, MB_OKCANCEL) = IDOK then 
+if MsgBox('空间数据接入工具正在运行,关闭程序继续安装?', mbConfirmation, MB_OKCANCEL) = IDOK then 
  begin
-  KillTask('SpatitalDataEncryptTool.exe');
+  KillTask('SptialDataIntegrationTool.exe');
   IsAppRunning:= false;
  end
 else
@@ -98,12 +98,12 @@ Result:= true;
 IsAppRunning:= RunTaskU('escertd_et199.exe',false);
 if IsAppRunning then
     KillTaskU('escertd_et199.exe');
-IsAppRunning:= RunTaskU('SpatitalDataEncryptTool.exe',false);
+IsAppRunning:= RunTaskU('SptialDataIntegrationTool.exe',false);
 while IsAppRunning do
 begin
-if MsgBox('空间数据质检加密工具正在运行,关闭工具继续卸载?', mbConfirmation, MB_OKCANCEL) = IDOK then 
+if MsgBox('空间数据接入工具正在运行,关闭工具继续卸载?', mbConfirmation, MB_OKCANCEL) = IDOK then 
  begin
-  KillTaskU('SpatitalDataEncryptTool.exe');
+  KillTaskU('SptialDataIntegrationTool.exe');
   IsAppRunning:= false;
  end
 else
