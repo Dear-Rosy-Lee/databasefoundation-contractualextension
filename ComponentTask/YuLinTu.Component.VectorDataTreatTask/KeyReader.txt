@@ -1,0 +1,87 @@
+
+    public class KeyReader
+    {
+        public static byte[] StringToByteArray(string hex)
+        {
+            // 移除分隔符 "-"
+            hex = hex.Replace("-", "");
+
+            // 转换为 byte[]
+            return Enumerable.Range(0, hex.Length)
+                             .Where(x => x % 2 == 0)
+                             .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                             .ToArray();
+        }
+
+        public static AsymmetricCipherKeyPair LoadKeysFromPem()
+        {
+            using (TextReader privateKeyTextReader = new StreamReader("privateKey.pem"))
+            using (TextReader publicKeyTextReader = new StreamReader("publicKey.pem"))
+            {
+                PemReader privateKeyPemReader = new PemReader(privateKeyTextReader);
+                PemReader publicKeyPemReader = new PemReader(publicKeyTextReader);
+
+                ECPrivateKeyParameters privateKey = (ECPrivateKeyParameters)privateKeyPemReader.ReadObject();
+                ECPublicKeyParameters publicKey = (ECPublicKeyParameters)publicKeyPemReader.ReadObject();
+
+                return new AsymmetricCipherKeyPair(publicKey, privateKey);
+            }
+        }
+
+        public static void SaveKeysToPem(AsymmetricCipherKeyPair keyPair)
+        {
+            // 保存公钥
+            using (TextWriter publicKeyTextWriter = new StreamWriter("publicKey.pem"))
+            {
+                PemWriter pemWriter = new PemWriter(publicKeyTextWriter);
+                pemWriter.WriteObject(keyPair.Public);
+            }
+
+            // 保存私钥
+            using (TextWriter privateKeyTextWriter = new StreamWriter("privateKey.pem"))
+            {
+                PemWriter pemWriter = new PemWriter(privateKeyTextWriter);
+                pemWriter.WriteObject(keyPair.Private);
+            }
+        }
+        public static ECPublicKeyParameters ReadPublicKeyFromPem(string publicKeyPath)
+        {
+            using (TextReader reader = new StreamReader(publicKeyPath))
+            {
+                PemReader pemReader = new PemReader(reader);
+                return (ECPublicKeyParameters)pemReader.ReadObject();
+            }
+        }
+        public static ECPrivateKeyParameters ReadPrivateKeyFromPem(string privateKeyPath)
+        {
+            using (TextReader reader = new StreamReader(privateKeyPath))
+            {
+                PemReader pemReader = new PemReader(reader);
+                object obj = pemReader.ReadObject();
+
+                // 如果读取到的是密钥对
+                if (obj is AsymmetricCipherKeyPair keyPair)
+                {
+                    return (ECPrivateKeyParameters)keyPair.Private;
+                }
+
+                // 如果读取到的是单个私钥
+                if (obj is ECPrivateKeyParameters privateKey)
+                {
+                    return privateKey;
+                }
+
+                throw new InvalidCastException("The provided PEM file does not contain a valid EC private key.");
+            }
+        }
+
+        // 读取密钥对
+        public AsymmetricCipherKeyPair ReadKeyPairFromPem(string privateKeyPath)
+        {
+            using (TextReader reader = new StreamReader(privateKeyPath))
+            {
+                PemReader pemReader = new PemReader(reader);
+                return (AsymmetricCipherKeyPair)pemReader.ReadObject();
+            }
+        }
+    }

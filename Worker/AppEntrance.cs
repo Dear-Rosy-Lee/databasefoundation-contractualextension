@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Policy;
 using System.Windows.Forms;
 using Utils.Tool;
 using YuLinTu.Library.Business;
@@ -41,7 +42,13 @@ namespace YuLinTu.Product.YuLinTuTool
             //}
             try
             {
-                ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", DateTime.Now);
+                var dateTime = DateTime.Now;
+                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())//网络不可用返回
+                {
+                    //var tmp = UpdateProgram.GetInternetDate();
+                    //dateTime = tmp == null ? dateTime : tmp.Value;
+                }
+                ToolRegEdit.SetRegProduceTime("YuLinTuLandDelayTool", dateTime);
             }
             catch (Exception ex)
             {
