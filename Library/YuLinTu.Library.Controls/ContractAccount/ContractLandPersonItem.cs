@@ -474,6 +474,7 @@ namespace YuLinTu.Library.Controls
             Img = land.Shape != null ? 1 : 2;
             IsStockLand = land.IsStockLand;
             OldLandCode = land.OldLandNumber;
+            ObligateArea = land.ObligateArea;
             //Tag.Shape = null;
             //if (land.Shape != null)
             //{
