@@ -387,6 +387,25 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn
+                    Width="100"
+                    Visibility="Collapsed"
+                    x:Name="colum_ObligateArea"
+                    cmps:DataGridAttacher.ColumnHeaderHorizontalContentAlignment="Center"
+                    Header="预留面积"
+                    SortMemberPath="ObligateArea">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding Object.ObligateArea}" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </cmps:MetroTreeGrid.Columns>
 
             <cmps:MetroTreeGrid.ContextMenu>
