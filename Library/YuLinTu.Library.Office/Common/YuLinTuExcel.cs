@@ -533,6 +533,34 @@ namespace YuLinTu.Library.Office
 
         }
 
+        public void InitalizeRangeValuePublishExcelUse(string start, string end, object value, int setUnderLineStartIndex1, int setUnderLineLenth1, int setUnderLineStartIndex2, int setUnderLineLenth2)
+        {
+            int startRow = InitalizeIndex(start);
+            int startColumn = InitalizeLetter(start);
+            int endRow = InitalizeIndex(end);
+            int endColumn = InitalizeLetter(end);
+            if (startRow == endRow && startColumn == endColumn)
+            {
+                InitalizeCellValuePublishExcelUse(startRow, startColumn, value, setUnderLineStartIndex1, setUnderLineLenth1, setUnderLineStartIndex2, setUnderLineLenth2);
+                return;
+            }
+            int rowCount = Math.Abs(endRow - startRow);
+            int columnCount = Math.Abs(endColumn - startColumn);
+            Range range = SetRangeMerge(start, end, true);
+            if (range == null)
+            {
+                return;
+            }
+            range.Merge();
+            Cell cell = range[0, 0];
+            if (cell == null)
+            {
+                return;
+            }
+            cell.Value = value;
+            cell.Characters(setUnderLineStartIndex1, setUnderLineLenth1).Font.Underline = FontUnderlineType.Single;
+            cell.Characters(setUnderLineStartIndex2, setUnderLineLenth2).Font.Underline = FontUnderlineType.Single;
+        }
 
         /// <summary>
         /// 初始化范围值
@@ -617,35 +645,7 @@ namespace YuLinTu.Library.Office
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="value"></param>
-        public void InitalizeRangeValuePublishExcelUse(string start, string end, object value, int setUnderLineStartIndex1, int setUnderLineLenth1, int setUnderLineStartIndex2, int setUnderLineLenth2)
-        {
-            int startRow = InitalizeIndex(start);
-            int startColumn = InitalizeLetter(start);
-            int endRow = InitalizeIndex(end);
-            int endColumn = InitalizeLetter(end);
-            if (startRow == endRow && startColumn == endColumn)
-            {
-                InitalizeCellValuePublishExcelUse(startRow, startColumn, value, setUnderLineStartIndex1, setUnderLineLenth1, setUnderLineStartIndex2, setUnderLineLenth2);
-                return;
-            }
-            int rowCount = Math.Abs(endRow - startRow);
-            int columnCount = Math.Abs(endColumn - startColumn);
-            Range range = SetRangeMerge(start, end, true);
-            if (range == null)
-            {
-                return;
-            }
-            range.Merge();
-            Cell cell = range[0, 0];
-            if (cell == null)
-            {
-                return;
-            }
-            cell.Value = value;
-            cell.Characters(setUnderLineStartIndex1, setUnderLineLenth1).Font.Underline = FontUnderlineType.Single;
-            cell.Characters(setUnderLineStartIndex2, setUnderLineLenth2).Font.Underline = FontUnderlineType.Single;
-        }
-
+ 
         /// <summary>
         /// 给合并excel项加下划线
         /// </summary>

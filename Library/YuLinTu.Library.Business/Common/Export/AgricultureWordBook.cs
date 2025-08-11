@@ -1645,6 +1645,19 @@ namespace YuLinTu.Library.Business
             return GetZoneNameByLevel(temp.UpLevelCode, level, zoneStation);
         }
 
+        /// <summary>
+        /// 根据配置设置发包方名称
+        /// </summary>
+        /// <returns></returns>
+        protected string ReplaceSenderName()
+        {
+            string result = string.Empty;
+            if (Tissue != null) result = TissueHelper.ReplaceSenderName(SystemSet, Tissue);
+            else if (CurrentZone != null) result = TissueHelper.ReplaceSenderName(SystemSet, CurrentZone);
+
+            return result;
+        }
+
         #endregion Methods
     }
 }

@@ -42,6 +42,9 @@ namespace YuLinTu.Library.Business
         private bool viewOfAllLabelUnderLine;
         private bool viewOfAllLabelStrikeLine;//删除线
         private bool viewOfAllLabeltiltLine;//倾斜线
+
+        private bool isShowVPBufferBoundary;
+        private double viewOfAllMultiParcelBuffer;
         #endregion
 
         #region Properties
@@ -295,6 +298,24 @@ namespace YuLinTu.Library.Business
         {
             get { return viewOfAllLabeltiltLine; }
             set { viewOfAllLabeltiltLine = value; NotifyPropertyChanged("ViewOfAllLabeltiltLine"); }
+        }
+
+        /// <summary>
+        /// 显示本户地块缓冲区域
+        /// </summary>
+        public bool IsShowVPBufferBoundary
+        {
+            get { return isShowVPBufferBoundary; }
+            set { isShowVPBufferBoundary = value; NotifyPropertyChanged("IsShowVPBufferBoundary"); }
+        }
+
+        /// <summary>
+        /// 本户地块缓冲区范围
+        /// </summary>
+        public double ViewOfAllMultiParcelBuffer
+        {
+            get { return viewOfAllMultiParcelBuffer; }
+            set { viewOfAllMultiParcelBuffer = value; NotifyPropertyChanged("ViewOfAllMultiParcelBuffer"); }
         }
 
         #endregion

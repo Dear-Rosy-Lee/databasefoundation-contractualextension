@@ -85,7 +85,7 @@
                 </metro:MetroButton>
             </cmps:TabControlItemRibbonContainer>
             <cmps:Separator />
-            <cmps:TabControlItemRibbonContainer Text="证书数据处理"
+            <cmps:TabControlItemRibbonContainer x:FieldModifier="public" Text="证书数据处理" 
                                                 Name="BookDataContainer">
                 <metro:MetroButton x:Name="mbtnBookPrintSetting"
                                    Padding="4,2,4,2"

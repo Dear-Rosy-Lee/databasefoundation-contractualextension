@@ -1764,6 +1764,39 @@ namespace YuLinTu.Library.Office
         /// 插入图片
         /// </summary>
         /// <param name="imagePath"></param>
+        protected void InsertImageCellWithoutPading(object paramName, string imagePath, double width, double height, double rotation)
+        {
+            if (paramName == null || string.IsNullOrEmpty(imagePath))
+            {
+                return;
+            }
+            Bookmark bookmark = doc.Range.Bookmarks[paramName.ToString()];
+            if (bookmark == null)
+            {
+                return;
+            }
+            if (doc == null || builder == null)
+            {
+                return;
+            }
+            Shape shape = new Shape(doc, ShapeType.Image);
+            shape.ImageData.SetImage(imagePath);
+            shape.Width = width;
+            shape.Height = height;
+            shape.Rotation = rotation;
+            shape.HorizontalAlignment = HorizontalAlignment.Center;//水平对齐
+            shape.VerticalAlignment = VerticalAlignment.Center;//垂直对齐
+            builder.MoveToBookmark(paramName.ToString());
+            //builder.RowFormat.Height = height;
+            builder.InsertNode(shape);
+            shape = null;
+            bookmark = null;
+        }
+
+        /// <summary>
+        /// 插入图片
+        /// </summary>
+        /// <param name="imagePath"></param>
         protected void InsertImageCellWithoutPading(object paramName, string imagePath, double width, double height)
         {
             if (paramName == null || string.IsNullOrEmpty(imagePath))
