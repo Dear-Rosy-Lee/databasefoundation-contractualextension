@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using YuLinTu.Data;
 using YuLinTu.Library.Entity;
 using YuLinTu.Library.Office;
 using YuLinTu.Windows;
@@ -206,7 +204,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 初始化数据
         /// </summary>
-        private void InitialEntity(object data)
+        protected virtual void InitialEntity(object data)
         {
             if (data == null)
             {
@@ -260,7 +258,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写承包方信息
         /// </summary>
-        private void WriteContractorInformaion()
+        protected virtual void WriteContractorInformaion()
         {
             if (Contractor == null)
             {
@@ -320,7 +318,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 设置证件类型
         /// </summary>
-        private void WriteCredentialsInformation(int i)
+        protected virtual void WriteCredentialsInformation(int i)
         {
             if (Contractor == null)
             {
@@ -356,7 +354,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 设置承包类型
         /// </summary>
-        private void WriteConcordModeInformation(int i)
+        protected virtual void WriteConcordModeInformation(int i)
         {
             if (Concord == null && DictList != null)
             {
@@ -399,7 +397,7 @@ namespace YuLinTu.Library.WorkStation
         /// 设置共有人信息
         /// </summary>
         /// <param name="dt"></param>
-        private void WriteSharePersonInformation()
+        protected virtual void WriteSharePersonInformation()
         {
             if (Contractor == null)
             {
@@ -553,7 +551,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写承包地块信息
         /// </summary>
-        private void WriteLandInformation()
+        protected virtual void WriteLandInformation()
         {
             if (LandCollection == null || LandCollection.Count == 0)
             {
@@ -654,7 +652,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         /// <param name="neighbor"></param>
         /// <returns></returns>
-        private string InitalizeLandNeightor(ContractLand land)
+        protected virtual string InitalizeLandNeightor(ContractLand land)
         {
             string neighbor = string.Format("东：{0}\n南：{1}\n西：{2} \n北：{3}", land.NeighborEast, land.NeighborSouth, land.NeighborWest, land.NeighborNorth);
             if (!SystemSet.NergionbourSortSet)
@@ -667,7 +665,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 初始化角码
         /// </summary>
-        private void InitalizeSmallNumber(int order, string landNumber)
+        protected virtual void InitalizeSmallNumber(int order, string landNumber)
         {
             string landName = landNumber;
             int index = landNumber.IndexOf("-");
@@ -693,7 +691,7 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         /// <param name="lands"></param>
         /// <returns></returns>
-        private List<ContractLand> SortLandCollection(List<ContractLand> lands)
+        protected virtual List<ContractLand> SortLandCollection(List<ContractLand> lands)
         {
             if (lands == null || lands.Count == 0)
             {
@@ -735,7 +733,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 书写地块计算信息
         /// </summary>
-        private void WriteLandCalInformation()
+        protected virtual void WriteLandCalInformation()
         {
             List<ContractLand> lands = LandCollection.FindAll(ld => ld.LandCategory == ConstructType);
             List<ContractLand> otherLands = LandCollection.FindAll(ld => ld.LandCategory != ConstructType);
@@ -792,7 +790,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 写开垦地信息
         /// </summary>
-        private void WriteReclamationInformation()
+        protected virtual void WriteReclamationInformation()
         {
             List<ContractLand> landCollection = LandCollection.FindAll(ld => string.IsNullOrEmpty(ld.Comment) || !ld.Comment.Contains("开垦地"));
             List<ContractLand> landArray = LandCollection.FindAll(ld => (!string.IsNullOrEmpty(ld.Comment) && ld.Comment.IndexOf("开垦地") >= 0));
@@ -852,7 +850,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 书写发包方信息
         /// </summary>
-        private void WriteSenderInformation()
+        protected virtual void WriteSenderInformation()
         {
             if (Tissue == null)
             {
@@ -899,7 +897,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写合同信息
         /// </summary>
-        private void WriteConcordInformation()
+        protected virtual void WriteConcordInformation()
         {
             if (Concord == null || string.IsNullOrEmpty(Concord.ConcordNumber))
             {
@@ -940,7 +938,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写承包开始结束日期
         /// </summary>
-        private void WriteConcordStartAndEndTime()
+        protected virtual void WriteConcordStartAndEndTime()
         {
             if (Concord == null)
             {
@@ -987,7 +985,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 书写权证信息
         /// </summary>
-        private void WriteBookInformation()
+        protected virtual void WriteBookInformation()
         {
             if (Book == null || string.IsNullOrEmpty(Book.RegeditNumber))
             {
@@ -1011,7 +1009,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写颁证日期信息
         /// </summary>
-        private void WriteAwareDateInformation()
+        protected virtual void WriteAwareDateInformation()
         {
             string year = Book.PrintDate != null ? Book.PrintDate.Year.ToString() : "";
             string awareYear = !string.IsNullOrEmpty(year) ? ToolMath.GetChineseLowNimeric(year.ToString()) : year;
@@ -1054,7 +1052,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写填证日期信息
         /// </summary>
-        private void WriteSenderDateInformation()
+        protected virtual void WriteSenderDateInformation()
         {
             string year = Book.WriteDate != null ? Book.WriteDate.Year.ToString() : "";
             string awareYear = !string.IsNullOrEmpty(year) ? ToolMath.GetChineseLowNimeric(year.ToString()) : year;
@@ -1101,7 +1099,7 @@ namespace YuLinTu.Library.WorkStation
         /// 创建发包方扩展
         /// </summary>
         /// <returns></returns>
-        private string InitalizeSenderExpress()
+        protected virtual string InitalizeSenderExpress()
         {
             if (CurrentZone == null)
             {
@@ -1118,7 +1116,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写行政区域信息
         /// </summary>
-        private void WriteZoneInformation()
+        protected virtual void WriteZoneInformation()
         {
             if (CurrentZone == null)
             {
@@ -1192,7 +1190,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 填写日期扩展信息
         /// </summary>
-        private void WriteDateTimeInformation()
+        protected virtual void WriteDateTimeInformation()
         {
             for (int i = 0; i < BookMarkCount; i++)
             {
@@ -1281,7 +1279,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 书写其他信息
         /// </summary>
-        private void WriteOtherInformation()
+        protected virtual void WriteOtherInformation()
         {
             if (!string.IsNullOrEmpty(ParcelDrawPerson))
             {
@@ -1324,7 +1322,7 @@ namespace YuLinTu.Library.WorkStation
         /// <summary>
         /// 初始化地域名称
         /// </summary>
-        private string InitalizeZoneName(string zoneCode, int length)
+        protected virtual string InitalizeZoneName(string zoneCode, int length)
         {
             string zoneName = string.Empty;
             if (ZoneList == null || ZoneList.Count == 0 || zoneCode.Length < length)

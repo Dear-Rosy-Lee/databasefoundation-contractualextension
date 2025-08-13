@@ -387,17 +387,18 @@ namespace YuLinTu.Library.Controls
                     UpdateChildren(zoneItem, alterCode, alterName, itemCount);
                 }
             }
-            if (business.UpdateZoneCodeName(curZone))
-            {
-                ModuleMsgArgs arg = MessageExtend.ZoneMsg(business.DbContext, ZoneMessage.ZONE_UPDATE_COMPLETE,
-                    new MultiObjectArg() { ParameterA = item, ParameterB = sourceZone.ConvertTo<ZoneDataItem>() });
-                Workpage.Workspace.Message.Send(this, arg);
-                TheApp.Current.Message.Send(Workpage, arg);
-            }
-            else
-            {
-                Result = false;
-            }
+            business.UpdateZoneCodeName(curZone);
+            //if (business.UpdateZoneCodeName(curZone))
+            //{
+            //    ModuleMsgArgs arg = MessageExtend.ZoneMsg(business.DbContext, ZoneMessage.ZONE_UPDATE_COMPLETE,
+            //        new MultiObjectArg() { ParameterA = item, ParameterB = sourceZone.ConvertTo<ZoneDataItem>() });
+            //    Workpage.Workspace.Message.Send(this, arg);
+            //    TheApp.Current.Message.Send(Workpage, arg);
+            //}
+            //else
+            //{
+            //    Result = false;
+            //}
             SetLableInvoke(string.Format("({0}/{1})", index, itemCount));
         }
 

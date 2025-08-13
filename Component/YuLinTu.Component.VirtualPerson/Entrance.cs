@@ -47,8 +47,8 @@ namespace YuLinTu.Component.VirtualPerson
             {
                 return;
             }
-            ZoneDataItem zdiOld = multiObject.ParameterB as ZoneDataItem;
-            ZoneDataItem zdiNew = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiOld = multiObject.ParameterA as ZoneDataItem;
+            ZoneDataItem zdiNew = multiObject.ParameterB as ZoneDataItem;
             if (zdiOld == null || zdiNew == null)
             {
                 return;
