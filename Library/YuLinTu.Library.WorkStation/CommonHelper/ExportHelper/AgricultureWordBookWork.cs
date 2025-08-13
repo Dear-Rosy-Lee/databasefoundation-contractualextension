@@ -769,7 +769,7 @@ namespace YuLinTu.Library.WorkStation
             othLandawareArea = awareArea - conLandawareArea;
             othLandtableArea = tableArea - conLandtableArea;
             othLandmodoArea = modoArea - conLandmodoArea;
-            for (int j = 0; j < BookMarkCount; j++)
+            for (int j = 0; j < 2; j++)
             {
                 SetBookmarkValue(AgricultureBookMarkWork.AgricultureCount + (j == 0 ? "" : j.ToString()), LandCollection.Count < 1 ? "  " : LandCollection.Count.ToString());//地块总数
                 SetBookmarkValue(AgricultureBookMarkWork.AgricultureContractLandCount + (j == 0 ? "" : j.ToString()), (lands != null && lands.Count > 0) ? lands.Count.ToString() : "");//承包地块总数
@@ -794,8 +794,8 @@ namespace YuLinTu.Library.WorkStation
         /// </summary>
         private void WriteReclamationInformation()
         {
-            List<ContractLand> landCollection = LandCollection.Clone() as List<ContractLand>;
-            List<ContractLand> landArray = landCollection.FindAll(ld => (!string.IsNullOrEmpty(ld.Comment) && ld.Comment.IndexOf("开垦地") >= 0));
+            List<ContractLand> landCollection = LandCollection.FindAll(ld => string.IsNullOrEmpty(ld.Comment) || !ld.Comment.Contains("开垦地"));
+            List<ContractLand> landArray = LandCollection.FindAll(ld => (!string.IsNullOrEmpty(ld.Comment) && ld.Comment.IndexOf("开垦地") >= 0));
             double reclamationTableArea = 0.0;//开垦地台帐面积
             double reclamationActualArea = 0.0;//开垦地实测面积
             double reclamationAwareArea = 0.0;//开垦地确权面积
@@ -804,7 +804,7 @@ namespace YuLinTu.Library.WorkStation
                 reclamationTableArea += (land.TableArea != null && land.TableArea.HasValue) ? land.TableArea.Value : 0.0;
                 reclamationActualArea += land.ActualArea;
                 reclamationAwareArea += land.AwareArea;
-                landCollection.Remove(land);
+                //landCollection.Remove(land);
             }
             double retainTableArea = 0.0;
             double retainActualArea = 0.0;

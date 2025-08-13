@@ -945,17 +945,24 @@ namespace YuLinTu.Library.Business
             othLandawareArea = awareArea - conLandawareArea;
             othLandtableArea = tableArea - conLandtableArea;
             othLandmodoArea = modoArea - conLandmodoArea;
+
+            string dks = LandCollection.Count > 0 ? LandCollection.Count.ToString() : string.Empty;
+            string cbdks = lands.Count > 0 ? lands.Count.ToString() : string.Empty;
+            string qtcbdks = otherLands.Count > 0 ? otherLands.Count.ToString() : string.Empty;
+            string dkscmj = actualArea.AreaFormat(SystemSet.DecimalPlaces);
+            string dkqqmj = awareArea.AreaFormat(SystemSet.DecimalPlaces);
+            string cbdscmj = conLandActualArea.AreaFormat(SystemSet.DecimalPlaces);
             var sumarea = LandCollection.Sum(o => Convert.ToDouble(o.ShareArea)).AreaFormat();
-            for (int j = 0; j < BookMarkCount; j++)
+            for (int j = 0; j < 1; j++)
             {
-                SetBookmarkValue(AgricultureBookMark.AgricultureCount + (j == 0 ? "" : j.ToString()), LandCollection.Count > 0 ? LandCollection.Count.ToString() : string.Empty);//地块总数
-                SetBookmarkValue(AgricultureBookMark.AgricultureContractLandCount + (j == 0 ? "" : j.ToString()), lands.Count > 0 ? lands.Count.ToString() : string.Empty);//承包地块总数
-                SetBookmarkValue(AgricultureBookMark.AgricultureOtherCount + (j == 0 ? "" : j.ToString()), otherLands.Count > 0 ? otherLands.Count.ToString() : string.Empty);//非承包地块总数
-                SetBookmarkValue(AgricultureBookMark.AgricultureActualAreaCount + (j == 0 ? "" : j.ToString()), actualArea.AreaFormat(SystemSet.DecimalPlaces));//地块总实测面积
-                SetBookmarkValue(AgricultureBookMark.AgricultureAwareAreaCount + (j == 0 ? "" : j.ToString()), awareArea.AreaFormat(SystemSet.DecimalPlaces));//地块总确权面积
+                SetBookmarkValue(AgricultureBookMark.AgricultureCount + (j == 0 ? "" : j.ToString()), dks);//地块总数
+                SetBookmarkValue(AgricultureBookMark.AgricultureContractLandCount + (j == 0 ? "" : j.ToString()), cbdks);//承包地块总数
+                SetBookmarkValue(AgricultureBookMark.AgricultureOtherCount + (j == 0 ? "" : j.ToString()), qtcbdks);//非承包地块总数
+                SetBookmarkValue(AgricultureBookMark.AgricultureActualAreaCount + (j == 0 ? "" : j.ToString()), dkscmj);//地块总实测面积
+                SetBookmarkValue(AgricultureBookMark.AgricultureAwareAreaCount + (j == 0 ? "" : j.ToString()), dkqqmj);//地块总确权面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureTableAreaCount + (j == 0 ? "" : j.ToString()), tableArea.AreaFormat(SystemSet.DecimalPlaces));//地块总二轮台账面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureModoAreaCount + (j == 0 ? "" : j.ToString()), modoArea.AreaFormat(SystemSet.DecimalPlaces));//地块总机动地面积
-                SetBookmarkValue(AgricultureBookMark.AgricultureContractLandActualAreaCount + (j == 0 ? "" : j.ToString()), conLandActualArea.AreaFormat(SystemSet.DecimalPlaces));//承包地块总实测面积
+                SetBookmarkValue(AgricultureBookMark.AgricultureContractLandActualAreaCount + (j == 0 ? "" : j.ToString()), cbdscmj);//承包地块总实测面积
                 if (IsStockLand != null && (bool)IsStockLand)
                     SetBookmarkValue("ContractLandActualAreaCount", sumarea);
                 SetBookmarkValue(AgricultureBookMark.AgricultureContractLandAwareAreaCount + (j == 0 ? "" : j.ToString()), conLandawareArea.AreaFormat(SystemSet.DecimalPlaces));//承包地块总确权面积
@@ -973,8 +980,8 @@ namespace YuLinTu.Library.Business
         /// </summary>
         protected virtual void WriteReclamationInformation()
         {
-            List<ContractLand> landCollection = LandCollection.Clone() as List<ContractLand>;
-            List<ContractLand> landArray = landCollection.FindAll(ld => (!string.IsNullOrEmpty(ld.Comment) && ld.Comment.IndexOf("开垦地") >= 0));
+            List<ContractLand> landCollection = LandCollection.FindAll(ld => string.IsNullOrEmpty(ld.Comment) || !ld.Comment.Contains("开垦地"));
+            List<ContractLand> landArray = LandCollection.FindAll(ld => (!string.IsNullOrEmpty(ld.Comment) && ld.Comment.IndexOf("开垦地") >= 0));
             double reclamationTableArea = 0.0;//开垦地台帐面积
             double reclamationActualArea = 0.0;//开垦地实测面积
             double reclamationAwareArea = 0.0;//开垦地确权面积
@@ -983,7 +990,7 @@ namespace YuLinTu.Library.Business
                 reclamationTableArea += (land.TableArea != null && land.TableArea.HasValue) ? land.TableArea.Value : 0.0;
                 reclamationActualArea += land.ActualArea;
                 reclamationAwareArea += land.AwareArea;
-                landCollection.Remove(land);
+               // landCollection.Remove(land);
             }
             double retainTableArea = 0.0;
             double retainActualArea = 0.0;
@@ -994,7 +1001,7 @@ namespace YuLinTu.Library.Business
                 retainActualArea += land.ActualArea;
                 retainAwareArea += land.AwareArea;
             }
-            for (int i = 0; i < BookMarkCount; i++)
+            for (int i = 0; i < 1; i++)
             {
                 SetBookmarkValue(AgricultureBookMark.AgricultureReclationTableArea + (i == 0 ? "" : i.ToString()), reclamationTableArea.AreaFormat(SystemSet.DecimalPlaces));//台帐面积
                 SetBookmarkValue(AgricultureBookMark.AgricultureRetainTableArea + (i == 0 ? "" : i.ToString()), retainTableArea.AreaFormat(SystemSet.DecimalPlaces));//台帐面积
