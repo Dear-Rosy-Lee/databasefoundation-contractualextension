@@ -18,7 +18,7 @@ namespace YuLinTu.Component.VectorDataLinkageTask
     /// <summary>
     /// 地块矢量上传接入任务
     /// </summary>
-    [TaskDescriptor(IsLanguageName = false, Name = "接入地块图斑上传",
+    [TaskDescriptor(IsLanguageName = false, Name = "上传原始数据",
         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/Images/16/map--arrow.png",
         UriImage24 = "pack://application:,,,/YuLinTu.Resources;component/Images/24/map.png")]
     public class VectorDataLinkageTask : Task
@@ -27,8 +27,8 @@ namespace YuLinTu.Component.VectorDataLinkageTask
 
         public VectorDataLinkageTask()
         {
-            Name = "上传地块图斑至接入系统";
-            Description = "将矢量图斑按地块编码匹配更新接入系统中";
+            Name = "上传原始数据";
+            Description = "将原始矢量图斑按地块编码匹配更新接入系统中";
         }
 
         #endregion Ctor
