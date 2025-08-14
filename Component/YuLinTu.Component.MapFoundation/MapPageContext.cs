@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -4672,16 +4674,44 @@ namespace YuLinTu.Component.MapFoundation
             var map = MapControl;
             var graphics = map.SelectedItems.ToList();
             var layer = layers[0];
-            TaskThreadDispatcher.Create(MapControl.Dispatcher,
-            go =>
+            TaskThreadDispatcher.Create(MapControl.Dispatcher, go =>
             {
-                var args = new MessageSplitLandInstallEventArgs(layer, graphics, dbcontext, currentZone);
-                map.Message.Send(this, args);
-                if (args.IsCancel)
-                    return;
-                var editor = new SplitLandEdit(map, layer, graphics, dbcontext, currentZone);
                 map.Dispatcher.Invoke(new Action(() =>
                 {
+                    var dlg = new SplitLandEdit(map, layer, graphics, dbcontext, currentZone);
+                    dlg.Background = Brushes.Transparent;
+                    dlg.Confirm += (s, a) =>
+                    {
+                        var are = new AutoResetEvent(false);
+                        var db = DataBaseSourceWork.GetDataBaseSource();
+                        AccountLandBusiness landBus = new AccountLandBusiness(db);
+                        var landStation = db.CreateContractLandWorkstation();
+                        var flag = bool.Parse(s.GetPropertyValue("Flag").ToString());
+                        var items = s.GetPropertyValue("SplitItems") as List<SplitItem>;
+                        var entities = new List<ContractLand>();
+                        items.ForEach(x => { entities.Add(x.Land); });
+
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            var newLandNumber = items[i].Land.ZoneCode.PadRight(14, '0') + items[i].SurveyNumber.PadLeft(5, '0');
+                            var dbland = landStation.Get(items[i].Land.ID);// (l => l.ID == entities[i].ID)
+                            if (dbland != null)
+                            {
+                                dbland.LandNumber = newLandNumber;
+                                landStation.Update(dbland);
+                            }
+                        }
+                        map.Dispatcher.Invoke(new Action(() =>
+                        {
+                            var margs = new MapMessageEventArgs("RefreshMapContrl_UIdata");
+                            map.Message.Send(this, margs);
+                        }));
+                    };
+
+                    Workpage.Page.ShowDialog(dlg, (b, r) =>
+                    {
+                        dlg.Uninstall();
+                    });
                 }));
             }, null, null,
             started =>

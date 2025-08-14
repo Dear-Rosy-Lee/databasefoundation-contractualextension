@@ -9,6 +9,7 @@ using YuLinTu.Windows.Wpf.Metro.Components;
 using YuLinTu.Data;
 using YuLinTu.Library.Business;
 using YuLinTu.Library.Entity;
+using System;
 
 namespace YuLinTu.Component.MapFoundation
 {
@@ -87,6 +88,7 @@ namespace YuLinTu.Component.MapFoundation
             SplitItems = new List<SplitItem>();
 
             string oldNumber;
+            string zoneCode = "";
             var gettype = graphics[0].Object.Object.GetType().ToString();
             if (gettype == "YuLinTu.Library.Entity.ContractLand")
             {
@@ -96,6 +98,7 @@ namespace YuLinTu.Component.MapFoundation
             else
             {
                 oldNumber = graphics[0].Object.Object.GetPropertyValue("DKBM").ToString();
+                zoneCode = graphics[0].Object.Object.GetPropertyValue("ZLDM").ToString();
             }
             SelectOldLandNumber = oldNumber;
             oldNumber = oldNumber.Length > 5 ? oldNumber.Substring(oldNumber.Length - 5) : "";
@@ -123,13 +126,14 @@ namespace YuLinTu.Component.MapFoundation
                     if (item.Text.TrimSafe().IsNullOrBlank())
                         item.Text = GetDisplayText(c, dataSource);
                     var res = c.Object.Object.GetPropertyValue("DKBM").ToString();
-                    if (oldNumber.Length > 5)
-                        item.OldNumber = oldNumber.Substring(res.Length - 5);
+                    Guid lid = new Guid(c.Object.Object.GetPropertyValue("ID").ToString());
+                    item.OldNumber = oldNumber;
                     var landNumber = int.Parse(res.Substring(res.Length - 5)) + 1;
                     item.SurveyNumber = landNumber.ToString().PadLeft(5, '0');
                     item.NewNumber = item.SurveyNumber;
                     item.Flag = Visibility.Visible;
                     item.DKMJ = c.Object.Object.GetPropertyValue("BZMJ").ToString();
+                    item.Land = new ContractLand() { ID = lid, ZoneCode = zoneCode };
                     SplitItems.Add(item);
                 }
             });
@@ -158,20 +162,25 @@ namespace YuLinTu.Component.MapFoundation
                 item.NewNumber = item.SurveyNumber;
                 var newLandCode = CurrentZone.FullCode + item.NewNumber;
                 var land = landWorkStation.GetByLandNumber(newLandCode);
-                if (land != null && newLandCode != SelectOldLandNumber)
+                if (land != null)
                 {
-                    errorList.Add(newLandCode);
+                    if (newLandCode != SelectOldLandNumber || item.NewNumber == item.OldNumber)
+                    {
+                        errorList.Add(newLandCode);
+                    }
                 }
             }
             if (!errorList.IsNullOrEmpty())
             {
                 Owner.ShowDialog(new MessageDialog()
                 {
-                    Message = $"该地块编码：{string.Join(",", errorList)}已存在,请处理后再进行地块分割",
-                    Header = "错误提示"
+                    Message = $"地块编码：{string.Join(",", errorList)}已存在,请修改后再进行提交",
+                    Header = "错误提示",
+                    CanClose = false,
+                    ConfirmButtonVisibility = Visibility.Hidden
                 }, (b, r) =>
                 {
-                    this.Close();
+                    //this.Close();
                     return;
                 });
             }
@@ -182,19 +191,35 @@ namespace YuLinTu.Component.MapFoundation
                     this.Close();
                     return;
                 }
-
-
-                Owner.ShowDialog(new MessageDialog()
+                if (SplitItems.Count == 1 && SplitItems[0].NewNumber == null)
                 {
-                    Message = "是否确定地块编码编辑完成并保存？",
-                    Header = "地块编码"
-                }, (b, r) =>
+                    Owner.ShowDialog(new MessageDialog()
+                    {
+                        Message = "地块编码无变化，无需提交",
+                        Header = "信息提示",
+                        CanClose = false,
+                        ConfirmButtonVisibility = Visibility.Hidden
+                    }, (b, r) =>
+                    {
+                        return;
+                    });
+
+                }
+                else
                 {
-                    if (b.HasValue && b.Value)
-                        ConfirmAsync();
-                });
+                    Owner.ShowDialog(new MessageDialog()
+                    {
+                        Message = "是否确定地块编码编辑完成并保存？",
+                        Header = "地块编码"
+                    }, (b, r) =>
+                    {
+                        if (b.HasValue && b.Value)
+                        {
+                            ConfirmAsync();
+                        }
+                    });
+                }
             }
-
         }
 
         #endregion Methods - Override
@@ -222,12 +247,21 @@ namespace YuLinTu.Component.MapFoundation
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (SplitItems.Count > 1)
             {
                 foreach (var item in SplitItems)
                 {
                     item.IsChecked = false;
                     item.SurveyNumber = item.NewNumber;
                 }
+            }
+            else
+            {
+                SplitItems[0].IsChecked = false;
+                SplitItems[0].SurveyNumber = SplitItems[0].NewNumber == null ?
+                    SelectOldLandNumber.Substring(SelectOldLandNumber.Length - 5)
+                    : SplitItems[0].NewNumber;
+
             }
         }
 
