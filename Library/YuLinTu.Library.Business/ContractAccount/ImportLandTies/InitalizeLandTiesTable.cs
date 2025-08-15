@@ -43,7 +43,7 @@ namespace YuLinTu.Library.Business
         public object[,] allItem;
         public int rangeCount;//行数
         public int columnCount;//列数
-        
+
         #endregion Fields
 
         #region Propertys
@@ -93,7 +93,7 @@ namespace YuLinTu.Library.Business
 
         public CollectivityTissue Tissue { get; set; }
 
-        
+
 
         /// <summary>
         /// 错误信息
@@ -142,7 +142,7 @@ namespace YuLinTu.Library.Business
             }
             var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
             var vps = vpStation.GetByZoneCode(CurrentZone.FullCode);
-            List<string> dkbmList = new List<string>(); 
+            List<string> dkbmList = new List<string>();
             AccountLandBusiness landBusiness = new AccountLandBusiness(dbContext);
             var contractLands = landBusiness.GetLandCollection(CurrentZone.FullCode);
             dictList = new DictionaryBusiness(DbContext).GetAll();
@@ -168,8 +168,8 @@ namespace YuLinTu.Library.Business
                 existTablePersons = new SortedList<string, string>();
                 isOk = true;
                 InitalizeSender();
-                
-                if(GetString(allItem[2, 35]) == "原地域名称" && GetString(allItem[2, 36]) == "地块变化情况")
+
+                if (GetString(allItem[2, 35]) == "原地域名称" && GetString(allItem[2, 36]) == "地块变化情况")
                 {
                     isSpecialForm = true;
                     SurveyFormList = new List<SurveyForm>();
@@ -211,7 +211,7 @@ namespace YuLinTu.Library.Business
                                 }
                                 GetSurveyFormInformation(landFamily, surveyForm);
                                 SurveyFormList.Add(surveyForm);
-                                
+
                                 concordIndex++;
                             }
 
@@ -220,7 +220,7 @@ namespace YuLinTu.Library.Business
                                 ReportErrorInfo(this.ExcelName + string.Format("表中第{0}行承包方编号未填写内容!", index));
                                 continue;
                             }
-                            
+
                             //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
                             AddPerson(landFamily);
                             surveyForm.SharePersonList = landFamily.CurrentFamily.SharePersonList;
@@ -232,8 +232,6 @@ namespace YuLinTu.Library.Business
                             this.ReportErrorInfo($"导入数据时发生错误，请检查第{index + 1}行的数据：{ex.Message}");
                         }
                     }
-                    
-
                 }
                 else
                 {
@@ -276,6 +274,7 @@ namespace YuLinTu.Library.Business
                             }
                             //GetExcelInformation(landFamily, contractLands, vps);//获取Excel表中信息
                             AddPerson(landFamily);
+
                             InitalizeLandInformation(landFamily, contractLands);
                         }
                         catch (Exception ex)
@@ -284,7 +283,6 @@ namespace YuLinTu.Library.Business
                         }
                     }
                 }
-                    
             }
             catch (Exception ex)
             {
@@ -294,7 +292,7 @@ namespace YuLinTu.Library.Business
             }
             return isOk;
         }
-        
+
 
         private bool SetFamilyInfo(LandFamily landFamily)
         {
@@ -360,19 +358,19 @@ namespace YuLinTu.Library.Business
         }
         private void GetSurveyFormInformation(LandFamily landFamily, SurveyForm surveyForm)
         {
-                surveyForm.OwnerId = landFamily.CurrentFamily.ID;
-                surveyForm.OwnerName = landFamily.CurrentFamily.Name;
-                surveyForm.OwnerNumber = landFamily.CurrentFamily.Number;
-                surveyForm.OwnerAddress = landFamily.CurrentFamily.Address;
-                surveyForm.ZoneCode = landFamily.CurrentFamily.ZoneCode;
-                surveyForm.VirtualType = landFamily.CurrentFamily.VirtualType;
-                surveyForm.CardType = landFamily.CurrentFamily.CardType;
-                surveyForm.Telephone = landFamily.CurrentFamily.Telephone;
-                surveyForm.LawyerPosterNumber = GetString(allItem[2, 29]);
-                surveyForm.FamilyNumber = landFamily.CurrentFamily.FamilyNumber;
-                surveyForm.PersonCount = landFamily.CurrentFamily.PersonCount;
-                surveyForm.OtherInfomation = landFamily.CurrentFamily.OtherInfomation;
-                
+            surveyForm.OwnerId = landFamily.CurrentFamily.ID;
+            surveyForm.OwnerName = landFamily.CurrentFamily.Name;
+            surveyForm.OwnerNumber = landFamily.CurrentFamily.Number;
+            surveyForm.OwnerAddress = landFamily.CurrentFamily.Address;
+            surveyForm.ZoneCode = landFamily.CurrentFamily.ZoneCode;
+            surveyForm.VirtualType = landFamily.CurrentFamily.VirtualType;
+            surveyForm.CardType = landFamily.CurrentFamily.CardType;
+            surveyForm.Telephone = landFamily.CurrentFamily.Telephone;
+            surveyForm.LawyerPosterNumber = GetString(allItem[2, 29]);
+            surveyForm.FamilyNumber = landFamily.CurrentFamily.FamilyNumber;
+            surveyForm.PersonCount = landFamily.CurrentFamily.PersonCount;
+            surveyForm.OtherInfomation = landFamily.CurrentFamily.OtherInfomation;
+
         }
         private void GetExcelInformation(LandFamily landFamily, List<ContractLand> contractLands, List<VirtualPerson> vps)
         {
@@ -383,8 +381,11 @@ namespace YuLinTu.Library.Business
         private void InitalizeFamilyInformation(LandFamily landFamily, List<VirtualPerson> vps)
         {
             var vpNumber = GetString(allItem[currentIndex, 3]);
-
-            if (!string.IsNullOrEmpty(vpNumber))
+            if (string.IsNullOrEmpty(vpNumber) && landFamily.CurrentFamily.Name.Equals("集体"))
+            {
+                vpNumber = "9001";
+            }
+            if (!string.IsNullOrEmpty(vpNumber) && vpNumber.Length == 18)
             {
                 var vpCode = CurrentZone.FullCode.PadRight(14, '0');
                 vpNumber = vpNumber.Remove(0, vpCode.Length);
@@ -439,7 +440,7 @@ namespace YuLinTu.Library.Business
             }
 
             string surveystring = GetString(allItem[currentIndex, 14]);
-            
+
             if (!string.IsNullOrEmpty(surveystring))
             {
                 expand.SurveyChronicle = surveystring;
@@ -460,7 +461,7 @@ namespace YuLinTu.Library.Business
             List<Dictionary> listTDYT = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDYT);
             List<Dictionary> listDKLYLX = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.TDLYLX);
             List<Dictionary> listDKLB = dictList.FindAll(c => c.GroupCode == DictionaryTypeInfo.DKLB);
-            if(GetString(allItem[currentIndex, 32]) != "删除")
+            if (GetString(allItem[currentIndex, 32]) != "删除")
             {
                 var landNumber = GetString(allItem[currentIndex, 16]);
                 if (landNumber != "")
@@ -597,8 +598,8 @@ namespace YuLinTu.Library.Business
                         entity.LandChange = GetString(allItem[currentIndex, 36]);
                         landFamily.CurrentFamily.FamilyExpand.Description = entity.OldZoneName;
                     }
-                    
-                    var delLand = ContractLand_Del.ChangeDataEntity(CurrentZone.FullCode,entity);
+
+                    var delLand = ContractLand_Del.ChangeDataEntity(CurrentZone.FullCode, entity);
                     landFamily.DelLandCollection.Add(delLand);
                 }
 
@@ -638,7 +639,7 @@ namespace YuLinTu.Library.Business
             //备注
             person.Comment = GetString(allItem[currentIndex, 13]);
             person.Opinion = GetString(allItem[currentIndex, 14]);
-            
+
             //名称
             if (string.IsNullOrEmpty(name) && (!string.IsNullOrEmpty(value) || !string.IsNullOrEmpty(icn)))
             {
@@ -707,7 +708,7 @@ namespace YuLinTu.Library.Business
                     landFamily.Persons.Add(person);
                 }
             }
-            
+
             string addresstring = GetString(allItem[currentIndex, 5]);
             if (!string.IsNullOrEmpty(addresstring.Trim()))
             {
@@ -851,7 +852,7 @@ namespace YuLinTu.Library.Business
             if (!errorArray.Contains(message))
                 errorArray.Add(message + "\n");
         }
-        
+
         /// <summary>
         /// 添加警告信息
         /// </summary>

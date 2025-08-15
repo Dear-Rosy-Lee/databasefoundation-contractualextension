@@ -336,7 +336,7 @@ namespace YuLinTu.Library.Controls
         {
             try
             {
-                if (currentZone.Level > eZoneLevel.Town)
+                if (currentZone != null && currentZone.Level > eZoneLevel.Town)
                 {
                     IDbContext dbContext = DataBaseSource.GetDataBaseSource();
                     dbContext.CreateQuery<LandVirtualPerson>().FirstOrDefault();

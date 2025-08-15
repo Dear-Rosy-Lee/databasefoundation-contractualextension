@@ -174,12 +174,12 @@ namespace YuLinTu.Library.Business
                     }
                     var DelLandList = new List<ContractLand_Del>();
                     landInfo.LandFamilyCollection.ForEach(t => { DelLandList.AddRange(t.DelLandCollection); });
-                    if(DelLandList.Count != 0)
+                    if (DelLandList.Count != 0)
                     {
                         DelLandList.ForEach(x => { contractLandStation.AddDelLand(x); });
                     }
                     var DelVpList = new List<VirtualPerson_Del>();
-                    foreach(var item in landInfo.LandFamilyCollection)
+                    foreach (var item in landInfo.LandFamilyCollection)
                     {
                         if (item.DelPersons.Count != 0)
                         {
@@ -191,9 +191,9 @@ namespace YuLinTu.Library.Business
                             DelVpList.Add(res);
                             item.CurrentFamily.SharePersonList = item.Persons;
                         }
-                        
+
                     }
-                    
+
                     if (DelVpList.Count != 0)
                     {
                         DelVpList.ForEach(x => { vpDelStation.Add(x); });
@@ -201,7 +201,7 @@ namespace YuLinTu.Library.Business
                 }
                 foreach (LandFamily landFamily in landInfo.LandFamilyCollection)
                 {
-                   
+
                     landFamily.CurrentFamily.ZoneCode = CurrentZone.FullCode;
                     foreach (var ld in landFamily.LandCollection)
                     {
@@ -700,21 +700,21 @@ namespace YuLinTu.Library.Business
         private void GetExchangeLandArea(List<SurveyForm> surveyForms)
         {
             var contractLands = GetContractLands(surveyForms);
-            
+
             foreach (var survey in surveyForms)
             {
-                
+
                 var oldLandNumbers = new List<string>();
                 var newLandNumbers = new List<string>();
-                survey.ContractLandList.ForEach(land => 
+                survey.ContractLandList.ForEach(land =>
                 {
-                    if(land.Comment == "互换")
+                    if (land.Comment == "互换")
                     {
                         var lands = land.LandChange.Split('换');
                         oldLandNumbers.Add(lands[0]);
                         newLandNumbers.Add(lands[1]);
                     }
-                    
+
 
                 });
                 GetExchangeLand(survey, surveyForms, oldLandNumbers, newLandNumbers, contractLands);
@@ -731,7 +731,7 @@ namespace YuLinTu.Library.Business
             }
             return contractLands;
         }
-        private void GetExchangeLand(SurveyForm surveyForm, List<SurveyForm> surveyForms, List<string> oldLandNumbers, List<string> newLandNumbers,List<ContractLand> contractLands)
+        private void GetExchangeLand(SurveyForm surveyForm, List<SurveyForm> surveyForms, List<string> oldLandNumbers, List<string> newLandNumbers, List<ContractLand> contractLands)
         {
             var oldFamily = new SurveyForm();
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -751,7 +751,7 @@ namespace YuLinTu.Library.Business
             foreach (var item in result)
             {
 
-                
+
                 var oldLand = contractLands.FirstOrDefault(x => x.LandNumber.Contains(item.Key));
                 oldFamily = surveyForms.FirstOrDefault(x => x.ID.Equals(oldLand.OwnerId));
                 oldLandArea += oldLand.AwareArea;
@@ -764,7 +764,7 @@ namespace YuLinTu.Library.Business
 
             surveyForm.ExchangeLandArea += newLandArea - oldLandArea;
             oldFamily.ExchangeLandArea = oldLandArea - newLandArea;
-           
+
         }
 
         /// <summary>
