@@ -10,6 +10,8 @@ using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 using YuLinTu.Data.Dynamic;
+using YuLinTu.DF.Enums;
+using YuLinTu.DF;
 using YuLinTu.Security;
 using YuLinTu.Spatial;
 using YuLinTu.tGISCNet;
@@ -80,7 +82,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
 
                 YuLinTu.IO.PathHelper.CreateDirectory(DestinationFileName);
-
+                //预留了以后可能多选多个批次下载的代码
                 using (ShapeFile file = new ShapeFile())
                 {
                     var result = file.Create(DestinationFileName, GetWkbGeometryType(GeometryType));
@@ -156,7 +158,15 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
 
                 }
 
-
+                if (args.DownLoadModel != DownLoadModel.批次号)
+                {
+                    string extend = args.BatchCode.Substring(args.BatchCode.Length - 4, 4);
+                    var scuess = SplitVector(DestinationFileName, args.DownLoadModel, DataTypeEum.承包地.GetStringValue(), extend);
+                    if (scuess)
+                    {
+                        DeleteShpFile(DestinationFileName);
+                    }
+                }
 
             }
             catch (ArgumentException ex)
@@ -177,6 +187,48 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         }
 
         #endregion
+        private static void DeleteShpFile(string DestinationFileName)
+        {
+            if (System.IO.File.Exists(DestinationFileName))
+            {
+
+                var files = Directory.GetFiles(
+                    Path.GetDirectoryName(DestinationFileName),
+                    string.Format("{0}.*", Path.GetFileNameWithoutExtension(DestinationFileName)));
+
+                files.ToList().ForEach(c => File.Delete(c));
+            }
+        }
+
+        private bool SplitVector(string destinationFileName, DownLoadModel downLoadModel, string splitField, string extend)
+        {
+            bool scuess = true;
+            VectorSplitter vectorSplitter = new VectorSplitter();
+            var desDir = Path.GetDirectoryName(destinationFileName);
+            try { 
+            vectorSplitter.SplitVectorFile(destinationFileName, desDir, splitField, (splitFieldVaule =>
+            {
+                switch (downLoadModel)
+                {
+                    case DownLoadModel.村级地域:
+                        splitFieldVaule = splitFieldVaule?.Substring(0, 12);
+                        break;
+                    case DownLoadModel.组级地域:
+                        splitFieldVaule = splitFieldVaule?.Substring(0, 14);
+                        break;
+                    default:
+                        break;
+                }
+                return splitFieldVaule;
+            }), 50, extend);
+            }catch(Exception ex)
+            {
+                scuess = false;
+                this.ReportError(ex.Message);
+            }
+            return scuess;
+        }
+
         private void WriteLog(string ZoneCode, string clientID, string batchCode, int dataCount)
         {
             LogEn log = new LogEn();

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using YuLinTu;
+using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Windows.Wpf.Metro.Components;
 
 namespace YuLinTu.Component.VectorDataDecoding.Task
@@ -66,20 +68,35 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 NotifyPropertyChanged("ResultFilePath");
             }
         }
-       // [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
-       // [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
-       // [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
-       //UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
-       // public bool AutoComprass
-       // {
-       //     get { return autoComprass; }
-       //     set
-       //     {
-       //         autoComprass = value;
-       //         NotifyPropertyChanged("AutoComprass");
-       //     }
-       // }
-       // private bool autoComprass;
+
+        [DisplayName("下载模式")]
+        [DescriptionLanguage("选择下载数据模式", IsLanguageName = false)]
+        [PropertyDescriptor(Builder = typeof(PropertyDescriptorBuilderComboBoxEnum),
+         UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/clipboard.png")]
+        public DownLoadModel DownLoadModel
+        {
+            get { return _DownLoadModel; }
+            set
+            {
+                _DownLoadModel = value;
+                NotifyPropertyChanged("DownLoadModel");
+            }
+        }
+        public DownLoadModel _DownLoadModel = DownLoadModel.村级地域;
+        // [DisplayLanguage("自动压缩文件", IsLanguageName = false)]
+        // [DescriptionLanguage("处理完成自动压缩文件", IsLanguageName = false)]
+        // [PropertyDescriptor(Builder = typeof(PropertyBuilderCheckCardBoolean),
+        //UriImage16 = "pack://application:,,,/YuLinTu.Resources;component/images/16/folder-zipper.png")]
+        // public bool AutoComprass
+        // {
+        //     get { return autoComprass; }
+        //     set
+        //     {
+        //         autoComprass = value;
+        //         NotifyPropertyChanged("AutoComprass");
+        //     }
+        // }
+        // private bool autoComprass;
         private string resultFilePath;
         [Enabled(false)]
         public bool ConfirmEnabled

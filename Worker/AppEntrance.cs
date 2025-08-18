@@ -18,6 +18,7 @@ using AutoMapper;
 using Autofac;
 using System.Reflection;
 using System.Collections.Generic;
+using OSGeo.OGR;
 
 namespace YuLinTu.Product.YuLinTuTool
 {
@@ -26,6 +27,7 @@ namespace YuLinTu.Product.YuLinTuTool
         [STAThread]
         private static void Main(string[] args)
         {
+            Registerdll();
             // 设置环境变量
             string variableName = "Path";
             // 获取环境变量
@@ -80,6 +82,28 @@ namespace YuLinTu.Product.YuLinTuTool
 
             AppShellWpf shell = new AppShellWpf();
             shell.Run(args);
+        }
+
+        /// <summary>
+        /// 注册Ogr驱动
+        /// </summary>
+        public static bool Registerdll()
+        {
+            try
+            {
+              
+                Ogr.RegisterAll();
+                //OSGeo.GDAL.Gdal.AllRegister(); 支持栅格数据
+                // 为了支持中文路径，请添加下面这句代码
+                OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
+                // 为了使属性表字段支持中文，请添加下面这句
+                OSGeo.GDAL.Gdal.SetConfigOption("SHAPE_ENCODING", "CP936");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return true;
         }
     }
 }

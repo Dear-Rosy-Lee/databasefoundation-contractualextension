@@ -9,6 +9,7 @@ using YuLinTu;
 using YuLinTu.Component.VectorDataDecoding.Core;
 using YuLinTu.Component.VectorDataDecoding.JsonEntity;
 using YuLinTu.Data.Dynamic;
+using YuLinTu.DF;
 using YuLinTu.DF.Enums;
 using YuLinTu.Security;
 using YuLinTu.Spatial;
@@ -230,7 +231,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 index++;
 
               var shpFileName = Path.Combine(args.ResultFilePath, $"{batch.Key}_{batch.Value}_{DateTime.Now.ToString("yyyyMMdd")}.shp");
-              string msg=  DownLoadFileByBatchCode(shpFileName, args.ZoneCode, args.ZoneName, batch.Key,out bool sucess);
+              string msg=  DownLoadFileByBatchCode(shpFileName, args.ZoneCode, args.ZoneName, batch.Key, args.DownLoadModel,out bool sucess);
                 if(!sucess)
                 {
                     this.ReportError(msg);
@@ -245,7 +246,7 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
         #endregion
         #endregion
 
-        private string DownLoadFileByBatchCode(string DestinationFileName, string ZoneCode, string zoneName, string BatchCode, out bool sucesss)
+        private string DownLoadFileByBatchCode(string DestinationFileName, string ZoneCode, string zoneName, string BatchCode, DownLoadModel DownLoadModel, out bool sucesss)
         {
             sucesss = false;
             string message = string.Empty;
@@ -254,74 +255,68 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
             {
 
                 int cnt = 0;
-                if (System.IO.File.Exists(DestinationFileName))
-                {
-
-                    var files = Directory.GetFiles(
-                        Path.GetDirectoryName(DestinationFileName),
-                        string.Format("{0}.*", Path.GetFileNameWithoutExtension(DestinationFileName)));
-
-                    files.ToList().ForEach(c => File.Delete(c));
-                }
-
+                DeleteShpFile(DestinationFileName);
 
                 YuLinTu.IO.PathHelper.CreateDirectory(DestinationFileName);
 
-               
+                int dataCount = 0;
                 using (ShapeFile file = new ShapeFile())
                 {
                     var result = file.Create(DestinationFileName, GetWkbGeometryType(GeometryType));
                     if (!result.IsNullOrBlank())
                         throw new YltException(result);
 
-                    
+
                     var cols = propertyMetadata;
 
                     var dic = CreateFields(file, cols, true);
 
                     var converter = new DotNetTypeConverter();
                     var row = 0;
-                    var writer = new WKBWriter();
-
-
-                   
-                   
-                    
-                        int dataCount = 0;
-                        int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
-                        while (true)
+                    var writer = new WKBWriter();                  
+                    int pageIndexOneBatchData = 1; int pageSizeOneBatchData = 200;
+                    while (true)
+                    {
+                        List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(BatchCode, pageIndexOneBatchData, pageSizeOneBatchData);
+                        if (data.Count == 0)
                         {
-                            List<FeatureObject> data = vectorService.DownVectorDataAfterDecodeByBatchCode(BatchCode, pageIndexOneBatchData, pageSizeOneBatchData);
-                            if (data.Count == 0)
-                            {
 
-                                break;
-                            }
-
-                            data.ForEach(obj =>
-                            {
-                                if (obj.Geometry == null)
-                                    return;
-                                row = CreateFeature(row, file, obj, dic, converter);
-                                dataCount++;
-                                file.WriteWKB(row - 1, writer.Write(obj.Geometry.Instance));
-                            });
-                            pageIndexOneBatchData++;
+                            break;
                         }
 
+                        data.ForEach(obj =>
+                        {
+                            if (obj.Geometry == null)
+                                return;
+                            row = CreateFeature(row, file, obj, dic, converter);
+                            dataCount++;
+                            file.WriteWKB(row - 1, writer.Write(obj.Geometry.Instance));
+                        });
+                        pageIndexOneBatchData++;
+                    }
+                    
                     writer = null;
+                   
                     var info = spatialReference.ToEsriString();
                     if (!info.IsNullOrBlank())
                     {
                         File.WriteAllText(Path.ChangeExtension(DestinationFileName, "prj"), info);
                     }
-
-                    //写下载日志
-                    //更新批次任务为处理中
-
-                    WriteLog(ZoneCode, Constants.client_id, BatchCode, dataCount);
+                   
                 }
+                if (DownLoadModel != DownLoadModel.批次号)
+                {
+                    string extend = BatchCode.Substring(BatchCode.Length - 4, 4);
+                    var scuess = SplitVector(DestinationFileName, DownLoadModel, DataTypeEum.承包地.GetStringValue(), extend);
+                    if (scuess)
+                    {
+                        DeleteShpFile(DestinationFileName);
+                    }
+                }
+                //写下载日志
+                //更新批次任务为处理中
 
+                WriteLog(ZoneCode, Constants.client_id, BatchCode, dataCount);
                 sucesss = true;
                 message = $"成功导出{ZoneCode}{zoneName}下批次号为{BatchCode}的矢量数据：{DestinationFileName}";
                 return message;
@@ -338,6 +333,50 @@ namespace YuLinTu.Component.VectorDataDecoding.Task
                 this.ReportError(ex.Message);
                 return message;
             }
+        }
+
+        private static void DeleteShpFile(string DestinationFileName)
+        {
+            if (System.IO.File.Exists(DestinationFileName))
+            {
+
+                var files = Directory.GetFiles(
+                    Path.GetDirectoryName(DestinationFileName),
+                    string.Format("{0}.*", Path.GetFileNameWithoutExtension(DestinationFileName)));
+
+                files.ToList().ForEach(c => File.Delete(c));
+            }
+        }
+
+        private bool SplitVector(string destinationFileName, DownLoadModel downLoadModel, string splitField, string extend)
+        {
+            bool scuess = true;
+            VectorSplitter vectorSplitter = new VectorSplitter();
+            var desDir = Path.GetDirectoryName(destinationFileName);
+            try
+            {
+                vectorSplitter.SplitVectorFile(destinationFileName, desDir, splitField, (splitFieldVaule =>
+                {
+                    switch (downLoadModel)
+                    {
+                        case DownLoadModel.村级地域:
+                            splitFieldVaule = splitFieldVaule?.Substring(0, 12);
+                            break;
+                        case DownLoadModel.组级地域:
+                            splitFieldVaule = splitFieldVaule?.Substring(0, 14);
+                            break;
+                        default:
+                            break;
+                    }
+                    return splitFieldVaule;
+                }), 50, extend);
+            }
+            catch (Exception ex)
+            {
+                scuess = false;
+                this.ReportError(ex.Message);
+            }
+            return scuess;
         }
 
         private void WriteLog(string ZoneCode,string clientID, string batchCode, int dataCount)

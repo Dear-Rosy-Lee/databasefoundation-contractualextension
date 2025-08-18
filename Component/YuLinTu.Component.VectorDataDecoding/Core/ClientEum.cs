@@ -46,6 +46,20 @@ namespace YuLinTu.Component.VectorDataDecoding.Core
         覆盖上传 =2,
 
     }
-  
+
+    public enum DownLoadModel
+    {
+        [EnumName("按【村级地域编码+批次号后4位】导出矢量文件")]
+        [StringValue("1")]
+        村级地域 = 1,
+
+        [EnumName("按【组级地域编码+批次号后4位】导出矢量文件")]
+        [StringValue("2")]
+        组级地域 = 2,
+
+        [EnumName("按【批次号+所选地域编码】导出矢量文件")]
+        [StringValue("3")]
+        批次号 = 3,
+    }
 
 }
