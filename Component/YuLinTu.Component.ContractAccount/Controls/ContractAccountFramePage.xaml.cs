@@ -258,6 +258,7 @@ namespace YuLinTu.Component.ContractAccount
             SetCommandBinding(btnExportLandExcel, command.ExportLandExcel, command.ExportLandExcelBind);
             SetCommandBinding(btnExportBoundaryExcel, command.ExportBoundaryExcel, command.ExportBoundaryExcelBind);
             SetCommandBinding(btnExportPublishExcel, command.ExportPublishExcel, command.ExportPublishExcelBind);
+            SetCommandBinding(btnExportPublishNanningExcel, command.ExportPublishNanningExcel, command.ExportPublishNanningExcelBind);
             SetCommandBinding(btnExportVerifyExcel, command.ExportVerifyExcel, command.ExportVerifyExcelBind);
             SetCommandBinding(btnExportVerifyExcelPrint, command.ExportVerifyExcelPrint, command.ExportVerifyExcelPrintBind);
             SetCommandBinding(btnExportSenderWord, command.ExportSenderWord, command.ExportSenderWordBind);
@@ -467,6 +468,9 @@ namespace YuLinTu.Component.ContractAccount
 
                 case ContractAccountCommand.ExportPublishExcelName:
                     contractAccountPanel.ExportPublishExcel();
+                    break;
+                case ContractAccountCommand.ExportPublishExcelNanningName:
+                    contractAccountPanel.ExportPublishNanningExcel();
                     break;
 
                 case ContractAccountCommand.ExportVerifyExcelName:

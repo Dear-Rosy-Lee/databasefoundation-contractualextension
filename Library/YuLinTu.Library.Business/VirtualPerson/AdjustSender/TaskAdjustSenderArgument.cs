@@ -23,6 +23,7 @@ namespace YuLinTu.Library.Business
         public Zone CurrentZone { get; set; }
 
         public string NewSenderName { get; set; }
+        public string NewSenderCode { get; set; }
         /// <summary>
         /// 变更承包方
         /// </summary>

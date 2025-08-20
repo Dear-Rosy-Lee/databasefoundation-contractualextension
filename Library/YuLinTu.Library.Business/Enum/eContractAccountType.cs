@@ -81,6 +81,18 @@ namespace YuLinTu.Library.Business
         VolumnExportPublishTable = 7,
 
         /// <summary>
+        /// 公示调查表
+        /// </summary>
+        [Display(Name = "公示调查表(南宁)")]
+        ExportPublishTableNanning = 44,
+
+        /// <summary>
+        /// 批量导出公示调查表
+        /// </summary>
+        [Display(Name = "批量导出公示调查表(南宁)")]
+        VolumnExportPublishTableNanning = 45,
+
+        /// <summary>
         /// 导出承包方Word调查表
         /// </summary>
         [Display(Name = "导出承包方Word调查表")]

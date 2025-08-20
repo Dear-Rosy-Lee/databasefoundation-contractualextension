@@ -3487,6 +3487,80 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 导出公示调查表（Excel）-南宁
+        /// </summary>
+        public void ExportPublishExcelNanning(Zone zone, string filename, double averagePercent = 0.0, double currentPercent = 0.0)
+        {
+            try
+            {
+                if (zone == null)
+                {
+                    this.ReportError("未选择导出数据的地域!");
+                    return;
+                }
+                List<ContractAccountLandFamily> accountFamilyCollection = new List<ContractAccountLandFamily>();
+                //得到承包方的集合
+                List<VirtualPerson> vps = GetByZone(zone.FullCode);
+                string excelName = GetMarkDesc(zone);
+
+                foreach (VirtualPerson vp in vps)
+                {
+                    ContractAccountLandFamily accountLandFamily = new ContractAccountLandFamily();
+                    accountLandFamily.CurrentFamily = vp;
+                    accountLandFamily.Persons = vp.SharePersonList;
+                    //得到承包地
+                    accountLandFamily.LandCollection = GetPersonCollection(vp.ID);
+                    accountFamilyCollection.Add(accountLandFamily);
+                }
+                string tempPath = TemplateHelper.ExcelTemplate(TemplateFile.LandInfomationExcel);
+                string zoneName = GetUinitName(zone);
+                ExportLandInfomationExcelTableNanning export = new ExportLandInfomationExcelTableNanning();
+
+                #region 通过反射等机制定制化具体的业务处理类
+
+                var temp = WorksheetConfigHelper.GetInstance(export);
+                if (temp != null && temp.TemplatePath != null)
+                {
+                    if (temp is ExportLandInfomationExcelTableNanning)
+                    {
+                        export = (ExportLandInfomationExcelTableNanning)temp;
+                    }
+                    tempPath = Path.Combine(TheApp.GetApplicationPath(), temp.TemplatePath);
+                }
+
+                #endregion 通过反射等机制定制化具体的业务处理类
+
+                export.SaveFilePath = filename + @"\" + excelName + TemplateFile.LandInfomationExcel + ".xls";
+                export.CurrentZone = zone;
+                export.TemplateFile = tempPath;
+                export.AccountLandFamily = accountFamilyCollection;
+                //export.UnitName = GetUinitName(zone);             //得到单位名称
+                //export.TitleName = GetTitleName(zone);            //得到表标题
+                export.Tissue = GetTissue(zone.ID);               //发包方
+                export.Percent = averagePercent;
+                export.CurrentPercent = currentPercent;
+                export.ZoneDesc = excelName;
+                export.StartDate = this.PublishDateSetting.PublishStartDate;
+                export.EndDate = this.PublishDateSetting.PublishEndDate;
+                export.DrawPerson = this.PublishDateSetting.CreateTablePerson;
+                export.DrawDate = this.PublishDateSetting.CreateTableDate;
+                export.CheckPerson = this.PublishDateSetting.CheckTablePerson;
+                export.CheckDate = this.PublishDateSetting.CheckTableDate;
+                //配置信息
+                export.PostProgressEvent += export_PostProgressEvent;
+                export.PostErrorInfoEvent += export_PostErrorInfoEvent;
+                bool result = export.BeginToZone(tempPath);
+                export.SaveAs(export.SaveFilePath);
+                this.ReportInfomation(export.Information);
+            }
+            catch (Exception ex)
+            {
+                this.ReportError(ex.Message);
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportDataExcel(导出数据到Excel表)", ex.Message + ex.StackTrace);
+            }
+        }
+
+        /// <summary>
         /// 导出农村土地承包经营权数据汇总表
         /// </summary>
         public void ExportSummaryExcel(Zone zone, string fileName, double averagePercent = 0.0, double currentPercent = 0.0)

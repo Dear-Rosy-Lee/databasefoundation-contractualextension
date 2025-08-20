@@ -33,7 +33,11 @@ namespace YuLinTu.Library.Controls
 
         public string NewSenderName { get; set; }
 
+        public string NewSenderCode { get; set; }
+
         public string OldSenderName { get; set; }
+
+        public string OldSenderCode { get; set; }  // 新增
 
         public AdjustSenderPage(List<VirtualPerson> selectedPersons,List<CollectivityTissue> collectivityTissues,List<ContractLand> contractLands)
         {
@@ -89,8 +93,10 @@ namespace YuLinTu.Library.Controls
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             SenderComboBox.Visibility = Visibility.Visible;
-            SenderComboBox.ItemsSource = Senders.Select(t => t.Name);
-            SenderComboBox.SelectedItem = OldSenderName;
+            SenderComboBox.ItemsSource = Senders;
+            SenderComboBox.DisplayMemberPath = "Name";
+            var selectedSender = Senders.FirstOrDefault(s => s.Name == OldSenderName);
+            SenderComboBox.SelectedItem = selectedSender;
             var checkBox = (CheckBox)sender;
             var dataItem = (AdjustSender)checkBox.Tag;
             AddData(checkBox.Parent as Grid, checkBox);
@@ -115,21 +121,24 @@ namespace YuLinTu.Library.Controls
             var tuple = new Tuple<AdjustSender, TextBlock>(item, FindFBFMCTextBlock(parent));
             SelectSenderData.Remove(tuple);
         }
-        
+
         private void SenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox)
             {
-                // 显示操作按钮
                 btnConfirm.Visibility = Visibility.Visible;
                 btnCancel.Visibility = Visibility.Visible;
 
-                // 更新选中值
-                NewSenderName = comboBox.SelectedItem?.ToString();
-                
+                // 获取选中的对象
+                var selectedSender = comboBox.SelectedItem as CollectivityTissue;
+                if (selectedSender != null)
+                {
+                    NewSenderName = selectedSender.Name;
+                    NewSenderCode = selectedSender.Code;  // 新增：保存Code
+                }
             }
         }
-       
+
 
         // 更新关联的发包方名称
         private void UpdateFBFMC(string FBFMC)

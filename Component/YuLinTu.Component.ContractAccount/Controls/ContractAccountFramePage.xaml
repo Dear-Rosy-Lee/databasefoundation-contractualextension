@@ -398,6 +398,18 @@
                                     ToolTip="导出(批量)调查信息公示表Excel" />
                             </metro:MetroButton>
                             <metro:MetroButton
+                                x:Name="btnExportPublishNanningExcel"
+                                Padding="8,4"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Stretch"
+                                x:FieldModifier="public">
+                                                            <cmps:ImageTextItem
+                                    Image="pack://application:,,,/YuLinTu.Library.Resources;component/Resources/Excel.png"
+                                    ImagePosition="Left"
+                                    Text="延包调查信息公示表-南宁"
+                                    ToolTip="导出(批量)调查信息公示表Excel-南宁" />
+                            </metro:MetroButton>
+                            <metro:MetroButton
                                 x:Name="btnExportVerifyExcel"
                                 Padding="8,4"
                                 HorizontalContentAlignment="Left"

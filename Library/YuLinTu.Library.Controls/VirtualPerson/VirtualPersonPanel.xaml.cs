@@ -1578,7 +1578,9 @@ namespace YuLinTu.Library.Controls
                     List<VirtualPerson> persons = new List<VirtualPerson>();
                     persons = vpStation.GetByZoneCode(currentZone.FullCode);
                     List<ContractLand> lands = landStation.GetCollection(currentZone.FullCode);
+                    //拿到发包方的workstation
                     var senderStation = DbContext.CreateCollectivityTissueWorkStation();
+                    //拿到发包方
                     var senders = senderStation.Get();
                     var dialog = new AdjustSenderPage(persons, senders, lands);
                     ThePage.Page.ShowMessageBox(dialog, (s, t) =>
@@ -1590,7 +1592,7 @@ namespace YuLinTu.Library.Controls
                         {
                             vps.Add(persons.Where(q => q.ID == item.Id).FirstOrDefault());
                         }
-                        AdjustSenderTask(vps, dialog.NewSenderName);
+                        AdjustSenderTask(vps, dialog);
                     });
                 }
 
@@ -1603,13 +1605,14 @@ namespace YuLinTu.Library.Controls
             }
         }
 
-        public void AdjustSenderTask(List<VirtualPerson> vps, string NewSenderName)
+        public void AdjustSenderTask(List<VirtualPerson> vps, AdjustSenderPage dialog)
         {
             TaskAdjustSenderArgument argument = new TaskAdjustSenderArgument();
             argument.Database = DbContext;
             argument.CurrentZone = CurrentZone;
             argument.VirtualPeoples = vps;
-            argument.NewSenderName = NewSenderName;
+            argument.NewSenderName = dialog.NewSenderName;
+            argument.NewSenderCode = dialog.NewSenderCode;
 
             TaskAdjustSenderOperation task = new TaskAdjustSenderOperation();
             task.Argument = argument;

@@ -583,6 +583,10 @@ namespace YuLinTu.Library.Controls
         /// 导出调查信息公示表Excel数据
         /// </summary>
         public const string ExportLandSurveyInFoPubExcel = "导出调查信息公示表数据";
+        /// <summary>
+        /// 导出调查信息公示表Excel数据
+        /// </summary>
+        public const string ExportLandSurveyInFoPubNanningExcel = "导出调查信息公示表数据（南宁）";
 
         /// <summary>
         /// 导出摸底调查核实表Excel数据

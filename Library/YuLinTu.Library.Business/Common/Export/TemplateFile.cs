@@ -183,6 +183,11 @@ namespace YuLinTu.Library.Business
         public const string LandInfomationExcel = "农村土地承包经营权调查信息公示表";
 
         /// <summary>
+        /// 导出调查信息公示表Excel
+        /// </summary>
+        public const string LandInfomationExcelNanning = "农村土地承包经营权调查信息公示表南宁";
+
+        /// <summary>
         /// 村组公示公告Word
         /// </summary>
         public const string AnnouncementWord = "农村土地承包经营权村组公示公告";

@@ -876,6 +876,12 @@ namespace YuLinTu.Library.Controls
                     case eContractAccountType.VolumnExportPublishTable:    //批量导出调查信息公示Excel
                         ExportPublishExcelTaskGroup(saveFilePath, taskDes, taskName);
                         break;
+                    //case eContractAccountType.ExportPublishTableNanning:    //调查信息公示Excel
+                    //    ExportPublishExcelNanningTask(saveFilePath, taskDes, taskName);
+                    //    break;
+                    case eContractAccountType.VolumnExportPublishTableNanning:    //批量导出调查信息公示Excel
+                        ExportPublishExcelNanningTaskGroup(saveFilePath, taskDes, taskName);
+                        break;
 
                     case eContractAccountType.VolumnExportLandVerifyExcel:
                         ExportVerifyExcelTaskGroup(saveFilePath, taskDes, taskName);
@@ -4159,7 +4165,7 @@ namespace YuLinTu.Library.Controls
                 return;
             }
         }
-
+        
         /// <summary>
         /// 导出调查信息公示表Excel(单任务)
         /// </summary>
@@ -4215,6 +4221,127 @@ namespace YuLinTu.Library.Controls
             groupOperation.StartAsync();
         }
 
+        /// <summary>
+        /// 导出调查信息公示表Excel南宁
+        /// </summary>
+        public void ExportPublishNanningExcel()
+        {
+            if (CurrentZone == null)
+            {
+                //没有选择导出地域
+                ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel, ContractAccountInfo.ExportNoZone);
+                return;
+            }
+            try
+            {
+                var zoneStation = DbContext.CreateZoneWorkStation();
+                int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
+                if (currentZone.Level == eZoneLevel.Group || (currentZone.Level > eZoneLevel.Group && childrenCount == 0))
+                {
+                    //单个任务
+                    if (accountLandItems == null || accountLandItems.Count == 0)
+                    {
+                        ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel, ContractAccountInfo.CurrentZoneNoLand);
+                        return;
+                    }
+                    ContractAccountDateSetting dateSetting = new ContractAccountDateSetting();
+                    dateSetting.Workpage = TheWorkPage;
+                    TheWorkPage.Page.ShowMessageBox(dateSetting, (b, r) =>
+                    {
+                        if (!(bool)b)
+                        {
+                            return;
+                        }
+                        PublishDateSetting = dateSetting.DateTimeSetting;
+                        ExportPublishExcelNanningTask(SystemSet.DefaultPath, ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel, ContractAccountInfo.ExportSurveyTableData);
+                        //       ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportLandSurveyInFoPubExcel,
+                        //eContractAccountType.ExportPublishTable, ContractAccountInfo.ExportLandSurveyInFoPubExcel, ContractAccountInfo.ExportSurveyTableData);
+                    });
+                }
+                else if ((currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town) && childrenCount > 0)
+                {
+                    //组任务
+                    ContractAccountDateSetting dateSetting = new ContractAccountDateSetting();
+                    dateSetting.Workpage = TheWorkPage;
+                    TheWorkPage.Page.ShowMessageBox(dateSetting, (b, r) =>
+                    {
+                        if (!(bool)b)
+                        {
+                            return;
+                        }
+                        PublishDateSetting = dateSetting.DateTimeSetting;
+                        ExportDataCommonOperate(currentZone.FullName, ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel,
+                 eContractAccountType.VolumnExportPublishTableNanning, ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel, ContractAccountInfo.ExportSurveyTableData);
+                    });
+                }
+                else
+                {
+                    //选择地域大于镇
+                    ShowBox(ContractAccountInfo.ExportLandSurveyInFoPubNanningExcel, ContractAccountInfo.VolumnExportZoneError);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                YuLinTu.Library.Log.Log.WriteException(this, "ExportPublishExcel(导出调查信息公示表)", ex.Message + ex.StackTrace);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 导出调查信息公示表Excel(单任务)
+        /// </summary>
+        private void ExportPublishExcelNanningTask(string fileName, string taskDes, string taskName)
+        {
+            TaskExportSurveyPublishExcelNanningArgument argument = new TaskExportSurveyPublishExcelNanningArgument();
+            argument.DbContext = DbContext;
+            argument.CurrentZone = currentZone;
+            argument.FileName = fileName;
+            argument.VirtualType = VirtualType;
+            argument.PublishDateSetting = PublishDateSetting;
+            argument.IsShow = true;
+            TaskExportSurveyPublishExcelNanningOperation operation = new TaskExportSurveyPublishExcelNanningOperation();
+            operation.Argument = argument;
+            operation.Description = taskDes;
+            operation.Name = taskName;
+            operation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(operation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            operation.StartAsync();
+        }
+
+        /// <summary>
+        /// 批量导出调查信息公示表Excel(组任务)
+        /// </summary>
+        private void ExportPublishExcelNanningTaskGroup(string fileName, string taskDes, string taskName)
+        {
+            TaskExportSurveyPublishExcelNanningArgument groupArgument = new TaskExportSurveyPublishExcelNanningArgument();
+            groupArgument.DbContext = DbContext;
+            groupArgument.CurrentZone = currentZone;
+            groupArgument.FileName = fileName;
+            groupArgument.VirtualType = VirtualType;
+            groupArgument.PublishDateSetting = PublishDateSetting;
+            TaskExportSurveyPublishExcelNanningOperation groupOperation = new TaskExportSurveyPublishExcelNanningOperation();
+            groupOperation.Argument = groupArgument;
+            groupOperation.Description = taskDes;
+            groupOperation.Name = taskName;
+            groupOperation.Completed += new TaskCompletedEventHandler((o, t) =>
+            {
+                //TheBns.Current.Message.Send(this, MessageExtend.SenderMsg(dbContext, messageName, true));
+            });
+            TheWorkPage.TaskCenter.Add(groupOperation);
+            if (ShowTaskViewer != null)
+            {
+                ShowTaskViewer();
+            }
+            groupOperation.StartAsync();
+        }
         #endregion Method-调查报表-导出Excel
 
         #region Method-摸底核实表
