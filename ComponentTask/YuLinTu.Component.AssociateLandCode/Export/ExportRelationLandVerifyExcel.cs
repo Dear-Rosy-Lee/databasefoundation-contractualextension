@@ -313,10 +313,12 @@ namespace YuLinTu.Library.Business
             {
                 var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
                 if (bhqk != null)
+                {
                     InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
+                }
                 else
                 {
-                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "其他直接顺延");
+                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "人地信息均不变");
                 }
             }
             index += height;
