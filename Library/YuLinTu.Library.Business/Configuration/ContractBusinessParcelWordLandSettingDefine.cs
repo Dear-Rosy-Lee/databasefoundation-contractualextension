@@ -29,7 +29,8 @@ namespace YuLinTu.Library.Business
         private bool isFixedLandGeoWordExtend;
         private double landGeoWordWidth;
         private double landGeoWordHeight;
-        private System.Windows.Media.Color ownerLandColor;      
+        private System.Windows.Media.Color ownerLandColor;
+        private System.Windows.Media.Color boundaryCircleColor;
         private double ownerLandBorderThickness; 
 
         private bool exportContractLandType;

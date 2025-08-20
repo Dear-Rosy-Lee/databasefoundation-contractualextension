@@ -336,7 +336,7 @@ namespace YuLinTu.Library.Controls
         {
             try
             {
-                if (currentZone.Level > eZoneLevel.Town)
+                if (currentZone != null && currentZone.Level > eZoneLevel.Town)
                 {
                     IDbContext dbContext = DataBaseSource.GetDataBaseSource();
                     dbContext.CreateQuery<LandVirtualPerson>().FirstOrDefault();
@@ -8264,14 +8264,12 @@ namespace YuLinTu.Library.Controls
                 var vpStation = DbContext.CreateVirtualPersonStation<LandVirtualPerson>();
                 var landStation = DbContext.CreateContractLandWorkstation();
                 int childrenCount = zoneStation.Count(currentZone.FullCode, eLevelOption.Subs);
-                if (currentZone.Level == eZoneLevel.Village || currentZone.Level == eZoneLevel.Town || currentZone.Level == eZoneLevel.County ||
-                    currentZone.Level == eZoneLevel.City || currentZone.Level == eZoneLevel.Province)
+                if (currentZone.Level >= eZoneLevel.Town || (currentZone.Level == eZoneLevel.Village && childrenCount > 0))
                 {
                     //选择地域大于镇
                     ShowBox("调整地块", "请选择在组级地域进行调整地块!");
                     return;
                 }
-
                 else
                 {
                     var dictStation = DbContext.CreateDictWorkStation();

@@ -222,6 +222,16 @@ namespace YuLinTu.Library.Controls
         public const string LandNameNullVisibility = "检索地块名称为空";
 
         /// <summary>
+        /// 导出四荒地调查表Word
+        /// </summary>
+        public const string ExportDesertLandDataWord = "导出四荒地调查表";
+
+        /// <summary>
+        /// 导出地块调查表Word没有选择承包方
+        /// </summary>
+        public const string ExportDesertLandDataWordNoSelected = "请选择组下要导出四荒地调查表的承包方!";
+
+        /// <summary>
         /// 工具中检索二轮合同面积为空值
         /// </summary>
         public const string ContractAreaNullVisibility = "检索二轮合同面积为空";

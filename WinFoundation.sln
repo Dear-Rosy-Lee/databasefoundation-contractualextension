@@ -166,6 +166,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.ImportRes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Library.Aux", "Library\YuLinTu.Library.Aux\YuLinTu.Library.Aux.csproj", "{7B05A4EC-0279-47D1-886A-C2EECF030976}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuLinTu.Component.VectorDataTreatTask", "ComponentTask\YuLinTu.Component.VectorDataTreatTask\YuLinTu.Component.VectorDataTreatTask.csproj", "{4ED2B604-435F-4486-BA2F-8F0E301C07F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -819,6 +821,22 @@ Global
 		{7B05A4EC-0279-47D1-886A-C2EECF030976}.Release|x64.Build.0 = Release|x64
 		{7B05A4EC-0279-47D1-886A-C2EECF030976}.Release|x86.ActiveCfg = Release|x86
 		{7B05A4EC-0279-47D1-886A-C2EECF030976}.Release|x86.Build.0 = Release|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|x86.ActiveCfg = Debug|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Debug|x86.Build.0 = Debug|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|x64.Build.0 = Release|Any CPU
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|x86.ActiveCfg = Release|x86
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -865,6 +883,7 @@ Global
 		{C42C2FF4-C3D0-416D-A279-E440533FFB0E} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{DABFC851-98B3-4E84-A81E-451573B07BC1} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 		{7B05A4EC-0279-47D1-886A-C2EECF030976} = {5E8BEC2E-E812-453F-A292-FD91C9EC9E7E}
+		{4ED2B604-435F-4486-BA2F-8F0E301C07F5} = {19BBA784-0A40-4E8A-9DCA-B60EBE900ACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1AD91C12-2BD4-444D-A690-F2AA0E7ABF34}

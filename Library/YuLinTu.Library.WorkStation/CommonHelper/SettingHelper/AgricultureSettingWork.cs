@@ -583,7 +583,7 @@ namespace YuLinTu.Library.WorkStation
             {
                 int median = 0;
                 bool config = CheckConfiguration();
-                string value = config ? ToolConfiguration.GetSpecialAppSettingValue(SYSTEMBOOKMARKNUMBER, "6") : ToolAssemblyInfoConfig.GetSpecialAppSettingValue(SYSTEMBOOKMARKNUMBER, "6");
+                string value = config ? ToolConfiguration.GetSpecialAppSettingValue(SYSTEMBOOKMARKNUMBER, "5") : ToolAssemblyInfoConfig.GetSpecialAppSettingValue(SYSTEMBOOKMARKNUMBER, "5");
                 Int32.TryParse(value, out median);
                 return median <= 0 ? 6 : median;
             }

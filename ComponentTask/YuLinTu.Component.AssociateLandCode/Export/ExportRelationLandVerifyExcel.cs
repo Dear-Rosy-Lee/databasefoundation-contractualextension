@@ -254,6 +254,10 @@ namespace YuLinTu.Library.Business
             landDels.RemoveAll(t => setlandnumber.Contains(t.DKBM));
             foreach (ContractLand_Del landDel in landDels)
             {
+                if (cvp != null)
+                {
+                    cvp.DelLandList.Add(landDel);
+                }
                 SetRowHeight(aindex, 27.75);
                 WriteDelLandInformation(landFamily.CurrentFamily, landDel, aindex);
                 aindex++;
@@ -309,10 +313,12 @@ namespace YuLinTu.Library.Business
             {
                 var bhqk = bhqkList.Find(t => t.Value == landFamily.CurrentFamily.ChangeSituation);
                 if (bhqk != null)
+                {
                     InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), bhqk.DisplayName);
+                }
                 else
                 {
-                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "其他直接顺延");
+                    InitalizeRangeValue("AI" + index, "AI" + (index + height - 1), "人地信息均不变");
                 }
             }
             index += height;
@@ -437,10 +443,20 @@ namespace YuLinTu.Library.Business
                 styleFlag.Locked = true;
                 // 保护工作表
                 sheet.Protect(ProtectionType.All, "Ylt@123456", ""); // 设置密码
-                                                                    // 创建一个范围，例如A1:C10，然后解锁这个范围
+                                                                     // 创建一个范围，例如A1:C10，然后解锁这个范围
                 Cells cells = sheet.Cells;
                 Range range = cells.CreateRange("AI3:AI" + (index - 1));
                 range.ApplyStyle(unlockStyle, styleFlag); // 应用样式但不锁定范围 
+
+
+                Worksheet sheet2 = workbook.Worksheets[2];
+                // 保护工作表
+                sheet2.Protect(ProtectionType.All, "Ylt@ysb", ""); // 设置密码
+                                                                   // 创建一个范围，例如A1:C10，然后解锁这个范围
+                Cells cells2 = sheet2.Cells;
+                Range range2 = cells.CreateRange("A1:E" + (index - 1));
+                range2.ApplyStyle(unlockStyle, styleFlag); // 应用样式但不锁定范围 
+
                 workbook.Save(fileName);
             }
             catch (Exception ex)
@@ -462,6 +478,7 @@ namespace YuLinTu.Library.Business
             var newVpkeys = new List<string>();
             var oldLandkeys = new List<string>();
             var newLandkeys = new List<string>();
+            var delLandkeys = new List<string>();
 
             foreach (var cvpe in checkVpEntities)
             {
@@ -472,6 +489,10 @@ namespace YuLinTu.Library.Business
                 {
                     oldLandkeys.Add(item.OldLandCode == null ? "" : item.OldLandCode);
                     newLandkeys.Add(item.NewLandCode);
+                }
+                foreach (var item in cvpe.DelLandList)
+                {
+                    delLandkeys.Add(item.DKBM);
                 }
             }
 
@@ -486,7 +507,13 @@ namespace YuLinTu.Library.Business
             ollist.ForEach(t => stringBuilder.AppendLine($"原地块编码：{t.Key}重复挂接"));
             nllist.ForEach(t => stringBuilder.AppendLine($"地块编码：{t.Key}存在重复"));
 
-
+            delLandkeys.ForEach(f =>
+            {
+                if (newLandkeys.Contains(f))
+                {
+                    stringBuilder.AppendLine($"地块编码：{f}存在重复处理的情况，请核实数据");
+                }
+            });
 
             var nexitvps = newVpkeys.FindAll(t => oldvpkeys.Contains(t));//新编码在旧编码中存在的情况
             var nexitlands = newLandkeys.FindAll(t => oldLandkeys.Contains(t));//新编码在旧编码中存在的情况
@@ -549,9 +576,12 @@ namespace YuLinTu.Library.Business
 
             public List<CheckLandEntity> LandList { get; set; }
 
+            public List<ContractLand_Del> DelLandList { get; set; }
+
             public CheckVpEntity()
             {
                 LandList = new List<CheckLandEntity>();
+                DelLandList = new List<ContractLand_Del>();
             }
         }
 

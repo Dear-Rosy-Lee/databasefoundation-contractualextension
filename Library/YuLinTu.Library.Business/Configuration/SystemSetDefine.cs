@@ -441,6 +441,16 @@ namespace YuLinTu.Library.Business
             return AreaIsZero ? " " : "0.00";
         }
 
+        /// <summary>
+        /// 发包方名称替换
+        /// </summary>
+        public string SenderNameReplacement
+        {
+            get { return senderNameReplacement; }
+            set { senderNameReplacement = value; NotifyPropertyChanged("SenderNameReplacement"); }
+        }
+        private string senderNameReplacement;
+
         #endregion 其他设置
 
         #endregion Properties

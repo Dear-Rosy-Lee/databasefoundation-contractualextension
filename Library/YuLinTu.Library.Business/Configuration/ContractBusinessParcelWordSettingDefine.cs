@@ -92,6 +92,26 @@ namespace YuLinTu.Library.Business
         }
 
         /// <summary>
+        /// 全域图分辨率倍率
+        /// </summary>
+        public double ViewOfAllMultiParcelScale
+        {
+            get { return _ViewOfAllMultiParcelScale; }
+            set { _ViewOfAllMultiParcelScale = value; NotifyPropertyChanged(() => ViewOfAllMultiParcelScale); }
+        }
+        private double _ViewOfAllMultiParcelScale;
+
+        /// <summary>
+        /// 中心标注分割线宽度
+        /// </summary>
+        public double SeparatorWidth
+        {
+            get { return _SeparatorWidth; }
+            set { _SeparatorWidth = value; NotifyPropertyChanged(() => SeparatorWidth); }
+        }
+        private double _SeparatorWidth;
+
+        /// <summary>
         /// 邻宗地分辨率倍率
         /// </summary>
         public double NeighborLandScale
@@ -118,6 +138,15 @@ namespace YuLinTu.Library.Business
         {
             get { return landNumberIndex; }
             set { landNumberIndex = value; NotifyPropertyChanged("LandNumberIndex"); }
+        }
+
+        /// <summary>
+        /// 界址圈颜色
+        /// </summary>
+        public System.Windows.Media.Color BoundaryCircleColor
+        {
+            get { return boundaryCircleColor; }
+            set { boundaryCircleColor = value; NotifyPropertyChanged("BoundaryCircleColor"); }
         }
 
         /// <summary>
@@ -218,6 +247,7 @@ namespace YuLinTu.Library.Business
             LandGeoWordHeight = 140;
             OwnerLandColor = System.Windows.Media.Color.FromArgb(255, 255, 0, 0);
             NeighborLandColor = System.Windows.Media.Color.FromArgb(255, 255, 0, 0);
+            BoundaryCircleColor = System.Windows.Media.Color.FromArgb(255, 255, 0, 0);
             OwnerLandBorderThickness = 1;
             NeighborLandBorderThickness = 1;
 

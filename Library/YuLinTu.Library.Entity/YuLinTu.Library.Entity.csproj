@@ -301,6 +301,7 @@
     <Compile Include="Enum\eMapSelect.cs" />
     <Compile Include="Enum\ePlantProtectType.cs" />
     <Compile Include="Enum\ePropertyRightType.cs" />
+    <Compile Include="Enum\eQRType.cs" />
     <Compile Include="Enum\eStatus.cs" />
     <Compile Include="Enum\eTaskType.cs" />
     <Compile Include="Enum\eTissueMemberType.cs" />

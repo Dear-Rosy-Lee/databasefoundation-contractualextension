@@ -62,6 +62,33 @@ namespace YuLinTu.Library.Business
 
         #endregion 流水号设置
 
+        #region 证书设置
+
+        [DisplayLanguage("登记簿空间坐标代号")]
+        [DescriptionLanguage("登记簿空间坐标代号")]
+        [PropertyDescriptor(Catalog = "证书设置")]
+        public string RegisterSpaceCode
+        {
+            get { return _RegisterSpaceCode; }
+            set { _RegisterSpaceCode = value; NotifyPropertyChanged(() => RegisterSpaceCode); }
+        }
+
+        private string _RegisterSpaceCode;
+
+        [DisplayLanguage("证书编号字母")]
+        [DescriptionLanguage("证书编号字母")]
+        [PropertyDescriptor(Catalog = "证书设置")]
+        public string WarrantNumberLetter
+        {
+            get { return _WarrantNumberLetter; }
+            set { _WarrantNumberLetter = value; NotifyPropertyChanged(() => WarrantNumberLetter); }
+        }
+
+        private string _WarrantNumberLetter;
+
+        #endregion 证书设置
+
+
         #region 登记簿设置
 
         [Enabled(false)]
